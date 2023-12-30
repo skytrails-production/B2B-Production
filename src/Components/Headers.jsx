@@ -153,7 +153,7 @@ const isValidMobileNumber = (mobileNumber) => {
 
       if (response.ok) {
         const data = await response.json();
-        proceedPayment(data.result.access, "test", data.result.key);
+        proceedPayment(data.result.access, "prod", data.result.key);
         // console.log("API call successful:", data);
         setAmount("");
         setMobileNumber("");
