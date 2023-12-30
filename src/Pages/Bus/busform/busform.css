@@ -1,0 +1,262 @@
+.form_input {
+  height: 90%;
+  position: relative;
+  width: 100%;
+}
+
+.form_input input {
+  width: 100%;
+  height: 100%;
+  padding-left: 25px;
+  border-radius: 20px;
+  border: 3px solid #70707069;
+}
+
+.form_input .lable {
+  font-size: 13px;
+  color: #4e4c4c;
+  font-weight: 700;
+  font-family: "Quicksand", sans-serif;
+}
+
+.form_input .from_input::placeholder,
+.to_input::placeholder {
+  color: #4e4c4ca1;
+  font-size: 18px;
+  font-weight: 700;
+  font-family: "Quicksand", sans-serif;
+}
+
+.form_lable {
+  color: #4e4c4c;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: "Quicksand", sans-serif;
+  left: 10px;
+  line-height: 14px;
+  pointer-events: none;
+  position: absolute;
+  transform-origin: 0 50%;
+  top: 24px;
+  transform: translateY(-30px) translateX(10px);
+  background: #fff;
+  padding: 0px 8px;
+}
+
+.form_lable1 {
+  color: #4e4c4c;
+  font-size: 13px;
+  font-weight: Bold;
+  margin-bottom: 1rem;
+}
+
+.form_input_select {
+  width: 78%;
+  border: 10px;
+  border-radius: 10px;
+  height: 2.5rem;
+  border: 3px solid #70707069;
+}
+
+.error {
+  color: red;
+}
+
+#error1 {
+  color: red;
+  font-size: 10px !important;
+  font-weight: bold !important;
+  padding-left: 5px;
+}
+
+/* .datePick {
+  width: 343px !important;
+} */
+
+
+
+
+.bgBusImg {
+  height: 380px;
+  /* width: 100%; */
+  border-radius: 12px 0px 0px 12px;
+  background-image: url(../../../Images/busForm.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+
+
+
+
+.BusForm {
+  flex: 1;
+  background-color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bgBusForm {
+  border-radius: 0px 12px 12px 0px;
+  background-color: white;
+}
+
+.BusForm input::placeholder {
+  color: #BBB;
+  font-family: 'Montserrat';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+
+.BusForm input,
+.BusForm #departure {
+  height: 50px;
+  padding: 10px;
+  padding-left: 40px;
+  border: 1px solid #21325D;
+  border-radius: 8px;
+  width: 100%;
+
+  color: #3e3d3d;
+  font-family: 'Montserrat';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+
+
+.BusForm>div>div {
+  margin-bottom: 10px;
+}
+
+.BusForm label {
+  margin-bottom: 8px;
+  color: #000;
+
+  font-family: 'Montserrat';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+
+.locationFrom,
+.locationTo,
+.dateDepart {
+  position: relative;
+}
+
+.locationFrom .locationFromIcon {
+  position: absolute;
+  left: 10px;
+  color: #21325D;
+  top: 50%;
+  transform: translate(0, -50%);
+  z-index: 1;
+}
+
+.locationTo .locationToIcon {
+  position: absolute;
+  left: 10px;
+  color: #21325D;
+  top: 50%;
+  transform: translate(0, -50%);
+  z-index: 1;
+}
+
+.dateDepart .dateIcon {
+  position: absolute;
+  left: 10px;
+  color: #21325D;
+  top: 50%;
+  transform: translate(0, -50%);
+  z-index: 1;
+}
+
+
+.BusSubmitForm button {
+  width: 100%;
+  height: 50px;
+  background-color: #21325D;
+  color: white;
+  border: 2px solid #21325D;
+  transition: 0.3s all;
+  border-radius: 7px;
+}
+
+
+.BusForm input {
+  position: relative;
+
+}
+
+.busFormRes {
+  position: absolute;
+  border: 1px solid #ddd;
+  width: 362px;
+  border-radius: 0px 0px 5px 5px;
+  z-index: 3;
+}
+
+.busFormRes ul {
+
+  margin: 0 !important;
+  max-height: 180px;
+  overflow: hidden;
+  overflow-y: scroll;
+  padding-left: 0 !important;
+
+
+}
+
+.busFormRes ul li {
+  padding: 8px;
+  cursor: pointer;
+  list-style-type: none;
+  border-bottom: 1px solid #ddd;
+}
+
+
+
+
+
+
+
+
+
+
+.busToRes {
+  position: absolute;
+  border: 1px solid #ddd;
+  width: 362px;
+  border-radius: 0px 0px 5px 5px;
+  z-index: 3;
+}
+
+.busToRes ul {
+
+  margin: 0 !important;
+  max-height: 180px;
+  overflow: hidden;
+  overflow-y: scroll;
+  padding-left: 0 !important;
+
+
+}
+
+.busToRes ul li {
+  padding: 8px;
+  cursor: pointer;
+  list-style-type: none;
+  border-bottom: 1px solid #ddd;
+}
+
+/* busToRes */

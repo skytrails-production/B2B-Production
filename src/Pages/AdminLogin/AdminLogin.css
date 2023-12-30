@@ -1,0 +1,124 @@
+/* AdminLogin.css */
+
+
+  
+  .background-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    background: linear-gradient(45deg, #21325D, #207cca, #2989d8, #207cca, #21325D);
+    background-size: 1000% 1000%;
+    animation: gradientAnimation 15s infinite;
+    overflow-y: hidden;
+    overflow-x: hidden;
+  }
+  
+  @keyframes gradientAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  .login_field {
+    background: rgba(137, 165, 234, 0.7); /* Adjust the alpha value for transparency */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); /* Adjust the box shadow for a subtle effect */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border-radius: 10px;
+    padding-bottom:38px;
+    text-align: center;
+    color: #fff;
+  }
+  
+  .login_field h1 {
+    margin-top: 20px;
+    color: #fff;
+  }
+  
+  .login_field form {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .form{
+    /* height: 80vh; */
+    border: #ff0000;
+  }
+  
+  .form_input {
+    margin-bottom: 20px;
+  }
+  
+  .form_lable {
+    display: block;
+    text-align: left;
+    color: #fff;
+    margin-bottom: 5px;
+    transition: opacity 0.3s ease-in-out;
+  }
+  .css-1sf3xto {
+    padding-top: 16px;
+    padding-bottom: 1px !important;
+}
+  
+  .input-box {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #333;
+    outline: none;
+    transition: border-color 0.3s ease-in-out;
+  }
+  
+  /* Add hover effect for the input box */
+  .input-box:hover {
+    border-color: #0052D0;
+  }
+  
+  /* Add focus effect for the .input-box box */
+  .input-box:focus {
+    border-color: #0052D0;
+  }
+  
+  /* Add styles for when .input-box is not empty */
+  .input-box:not(:placeholder-shown) + .form_lable {
+    opacity: 0.5;
+  }
+  
+  .error-message {
+    color: #ff0000;
+    margin-top: 5px;
+  }
+  
+  .forget_pass {
+    color: #fff;
+    margin-bottom: 10px;
+    display: block;
+  }
+  
+  .loginButton {
+    background-color: #0052D0;
+    color: #fff;
+    width: 100%;
+    border: none;
+    padding: 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .loginButton:hover {
+    background-color: #003366;
+  }
+  

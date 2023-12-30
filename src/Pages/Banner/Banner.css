@@ -1,0 +1,13 @@
+.banners{
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+     justify-content: space-around;
+    width: 100%;
+    margin-bottom: 50px;
+    margin-top: -20px;
+    height: 950px;
+    border-radius: 10px;
+    opacity:1;
+    }
+    

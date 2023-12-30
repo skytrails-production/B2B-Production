@@ -1,0 +1,467 @@
+.container1 {
+  height: 143px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: space-between;
+  flex-direction: column;
+  margin-bottom: '10px';
+
+  justify-content: center;
+}
+
+.flight_name1 {
+
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+  font-weight: bolder;
+}
+
+.flight_class_code1 {
+  font-size: 8px;
+  color: #b03737;
+  line-height: 9.75px;
+  font-family: Montserrat;
+  font-size: 8px;
+  font-weight: 400;
+  line-height: 10px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.flight_class_code>span {
+  color: #000000;
+}
+
+.time_container1 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.flight_city1 {
+  color: #000;
+
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.terminal1 {
+  color: #000;
+
+  font-family: Montserrat;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  word-break: keep-all;
+}
+
+.seat_left11 {
+  color: #e73c33;
+
+  font-family: Montserrat;
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-align: center;
+}
+
+.flight_price11 {
+  color: black;
+  font-size: 10px;
+  font-family: Montserrat;
+  font-weight: 400;
+  word-wrap: break-word;
+}
+
+.publish1 {
+  width: "35px";
+  height: "14px";
+  padding: "2px";
+  background-color: #d2f8e7;
+  border-radius: "10px";
+  display: flex;
+  justify-content: "center";
+  align-items: "center";
+  gap: "2px";
+}
+
+.publish_text {
+  color: #000000;
+}
+
+#buttons {
+  font-size: 15px;
+  border-radius: 4px;
+  background-color: #21325d;
+
+
+  align-items: center;
+
+  padding: 8px 20px;
+  color: #fff;
+
+  font-family: Montserrat;
+
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+
+  margin-top: 20px;
+}
+
+.saverFare1 {
+  display: flex;
+  width: -webkit-fill-available;
+  padding: 6px 16px;
+  align-items: center;
+  gap: 10px;
+  border-radius: 4px;
+  background: #d9d9d9;
+}
+
+.saverFareP1 {
+  color: #0048ff;
+  font-family: Montserrat;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+#stop1 {
+  color: #bbb;
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 12px;
+}
+
+
+.singleFlightBox {
+  display: flex;
+  flex-direction: row;
+  margin: 10px 0px;
+  border-radius: 8px;
+  border: 1px solid #9e9e9e;
+  background-color: #fffbfb;
+  padding: 15px 10px;
+  justify-content: space-between;
+}
+
+.singleFlightBox>div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.singleFlightBoxOne img {
+  width: 80px;
+}
+
+.singleFlightBoxOne span {
+  color: #000;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.singleFlightBoxOne p {
+  color: #B03737;
+  font-family: 'Montserrat';
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+
+.singleFlightBoxTwo span {
+  color: #000;
+  font-family: 'Montserrat';
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.singleFlightBoxTwo p {
+  color: #000;
+  font-family: 'Montserrat';
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+
+.singleFlightBoxThree h4 {
+  color: #000;
+
+  font-family: Montserrat;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.singleFlightBoxThree>div {
+  width: 105px;
+}
+
+.singleFlightBoxThree>div img {
+  width: 100%;
+}
+
+.singleFlightBoxThree p {
+  font-weight: 500;
+
+}
+
+.singleFlightBoxThree span {
+  color: #E73C33;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+
+
+.singleFlightBoxFour span {
+  color: #000;
+  font-family: 'Montserrat';
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.singleFlightBoxFour p {
+  color: #000;
+  font-family: 'Montserrat';
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+
+}
+
+
+.singleFlightBoxFive span {
+  color: #21325d;
+  font-family: 'Montserrat';
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.singleFlightBoxFive p {
+  color: #21325d;
+  font-family: 'Montserrat';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  border-radius: 2px;
+  background: #D2F8E7;
+  padding: 3px 5px;
+}
+
+.singleFlightBoxSix {
+  color: #21325d !important;
+}
+
+.singleFlightBoxSeven button {
+  padding: 8px 20px;
+  border-radius: 4px;
+  background: #21325D;
+  color: #FFF;
+  font-family: 'Montserrat';
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  border: 2px solid #21325D;
+  transition: all 0.3s;
+}
+
+
+
+
+
+
+
+
+
+/* single data return design  */
+
+.singleDataReturnBox {
+  display: flex;
+  flex-direction: row;
+  margin: 10px 0px;
+  border-radius: 8px;
+  border: 1px solid #9e9e9e;
+  background-color: #fffbfb;
+  padding: 15px 10px;
+  justify-content: space-between;
+}
+
+.singleDataReturnBox>div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.returnBoxOne img {
+  width: 68px;
+}
+
+.returnBoxOne span {
+  color: #000;
+  font-family: Montserrat;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.returnBoxOne p {
+  color: #B03737;
+  font-family: 'Montserrat';
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+
+.returnBoxTwo span {
+  color: #000;
+  font-family: 'Montserrat';
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.returnBoxTwo p {
+  color: #000;
+  font-family: 'Montserrat';
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+
+.returnBoxThree h4 {
+  color: #000;
+
+  font-family: Montserrat;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.returnBoxThree>div {
+  width: 105px;
+}
+
+.returnBoxThree>div img {
+  width: 100%;
+}
+
+.returnBoxThree p {
+  font-weight: 500;
+  font-size: 14px;
+
+}
+
+.returnBoxThree span {
+  color: #E73C33;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+
+
+.returnBoxFour span {
+  color: #000;
+  font-family: 'Montserrat';
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.returnBoxFour p {
+  color: #000;
+  font-family: 'Montserrat';
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+
+}
+
+
+.returnBoxFive span {
+  color: #21325d;
+  font-family: 'Montserrat';
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.returnBoxFive p {
+  color: #21325d;
+  font-family: 'Montserrat';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  border-radius: 2px;
+  background: #D2F8E7;
+  padding: 3px 5px;
+}
+
+.returnBoxSix {
+  color: #21325d !important;
+}
+
+.singlereturnBoxSix button {
+  padding: 8px 20px;
+  border-radius: 4px;
+  background: #21325D;
+  color: #FFF;
+  font-family: 'Montserrat';
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  border: 2px solid #21325D;
+  transition: all 0.3s;
+}
+
+
+/* single data return design  */

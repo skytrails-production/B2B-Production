@@ -1,0 +1,56 @@
+/* HotelBookings.css */
+
+/* Style for the main container */
+.hotel-container {
+    padding-top: 80px; /* Adjust this value based on the top bar's height */
+    margin: 0 auto;
+    max-width: 1200px;
+    overflow-x: scroll;
+    position: relative;
+  }
+  
+  /* Entire table styling */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  table th,
+  table td {
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  table th {
+    background-color: #f0f0f0;
+  }
+  
+  /* Pagination buttons */
+  .hotelButton {
+    margin: 5px;
+    border: none;
+    padding: 1px 10px;
+    border-radius: 4px;
+    background-color: rgb(20, 20, 20);
+    color: #ffffff;
+    cursor: pointer;
+    justify-content: right;
+  }
+  
+  /* Active page button */
+  button.active {
+    background-color: #f3f4f4;
+  }
+  
+  /* Heading style */
+  .hotelh1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+ 

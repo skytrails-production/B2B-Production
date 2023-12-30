@@ -1,0 +1,51 @@
+.flightContainer {
+    /* padding: 20px; */
+    position: fixed;
+    width: 85%;
+    margin: auto;
+
+
+
+    /* background: rgb(13, 34, 224); */
+
+
+
+
+}
+
+.flightNavBar {
+    width: 100%;
+    margin-top: 300px;
+    border: "5px solid black"
+}
+
+.flightNavBarContainer {
+    width: 800%;
+    height: auto;
+    margin: 20px;
+}
+
+#margin-pecentage-large {
+    margin: 0px 20%;
+    background-color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+
+@media (min-width:1050px) {
+    #margin-pecentage-large {
+        margin: 0px 20%;
+        background-color: white;
+        padding: 10px 15px;
+        border-radius: 8px;
+    }
+}
+
+@media(max-width:1050px) {
+    #margin-pecentage-large {
+        margin: 0px 13%;
+        background-color: white;
+        padding: 10px 15px;
+        border-radius: 8px;
+    }
+}

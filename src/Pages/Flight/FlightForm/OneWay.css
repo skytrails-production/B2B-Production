@@ -1,0 +1,374 @@
+.container {
+  margin-top: 1rem !important;
+}
+
+.form_input {
+  height: 90%;
+  position: relative;
+
+}
+
+.form_input input {
+  width: 332px;
+  height: 56px;
+  border-radius: 8px;
+  border: 1px solid #5C85A4;
+  background: #FFFBFB;
+}
+
+.form_input .lable {
+  font-size: 13px;
+
+  font-weight: 700;
+  font-family: "Quicksand", sans-serif;
+}
+
+.form_input .from_input::placeholder,
+.to_input::placeholder {
+  font-size: 18px;
+  font-weight: 700;
+  font-family: "Quicksand", sans-serif;
+}
+
+.form_lable {
+
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  font-family: "Quicksand", sans-serif !important;
+  left: 10px !important;
+  line-height: 14px !important;
+  pointer-events: none !important;
+  position: unset !important;
+  transform-origin: 0 50%;
+  top: 24px;
+  transform: translateY(-6px) translateX(-1px) !important;
+  background: unset !important;
+  padding: 0px 8px;
+}
+
+.form_lable1 {
+
+
+  font-weight: Bold;
+  margin-bottom: 1rem;
+}
+
+
+.bottom-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.form_input_select1 {
+  width: 550px;
+  border: 10px;
+  border-radius: 10px;
+  height: 40px;
+  color: #9E9E9E;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  border: 1px solid #5C85A4;
+  background: #FFFBFB;
+
+}
+
+
+.formFlightSearch {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.formFlightSearch {
+  margin-top: 20px;
+}
+
+.ristrictSearch {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(310px, max-content));
+  grid-gap: 16px;
+  justify-content: center;
+  padding: initial;
+}
+
+.inputSelect {
+  font-size: 10px;
+}
+
+.faireRadiao {
+  background: #00bdc4;
+  margin-left: 10px;
+  border-radius: 20px;
+  padding-top: 10px;
+}
+
+.showDirectFligthDiv {
+  margin-top: -25px;
+  padding: auto;
+
+  width: 170px;
+  border-radius: 10px;
+  font-size: 11px;
+  border: 1px solid #5C85A4;
+  font: Quicksand, SemiBold;
+  height: 30px;
+  padding: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.showDirectFligthDiv>input {
+  margin-left: 10px;
+  font-size: 5px;
+  /* width: 10px; */
+  margin-right: 2px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  font: Quicksand, SemiBold;
+}
+
+.showDirectFligthDiv>span {
+  font-weight: bold;
+}
+
+.creditBox {
+  height: 50px;
+}
+
+
+
+#cssbuttons-io-button {
+
+  color: white;
+  font-family: inherit;
+  padding: 0.35em;
+  padding-left: 1.2em;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  box-shadow: inset 0 0 1.6em -0.6em #714da6;
+  margin: 5px;
+  height: 50px !important;
+  padding-right: 3.3em;
+  width: 100%;
+  height: 95px;
+}
+
+#cssbuttons-io-button #icon {
+  background: white;
+  margin-left: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.2em;
+  width: 2.2em;
+  box-shadow: 0.1em 0.1em 0.6em 0.2em #7b52b9;
+  right: 0.3em;
+  transition: all 0.3s;
+}
+
+#cssbuttons-io-button:hover #icon {
+  width: calc(100% - 0.6em);
+}
+
+#cssbuttons-io-button #icon svg {
+  width: 1.1em;
+  transition: transform 0.3s;
+  color: #7b52b9;
+}
+
+#cssbuttons-io-button:hover #icon svg {
+  transform: translateX(0.1em);
+}
+
+#cssbuttons-io-button:active #icon {
+  transform: scale(0.95);
+}
+
+
+.interchange img {
+  width: 50px;
+}
+
+
+
+#oneWay-btn {
+  background: #00bdc4;
+  color: white;
+  font-family: inherit;
+  padding: 0.35em;
+  padding-left: 1.2em;
+  font-size: 17px;
+  font-weight: 500;
+  border-radius: 0.9em;
+  border: none;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  box-shadow: inset 0 0 1.6em -0.6em #714da6;
+  overflow: hidden;
+  position: relative;
+  height: 2.8em;
+  padding-right: 3.3em;
+}
+
+#oneWay-btn #icon svg {
+  width: 1.1em;
+  transition: transform 0.3s;
+  color: #7b52b9;
+}
+
+
+@media screen and (max-width: 600px) {
+
+  .form_input {
+    margin-bottom: 15px;
+
+  }
+
+  .grid-container {
+    display: grid;
+    grid-template-rows: repeat(7, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .col-xs-3,
+  .col-md-3 {
+    width: 100%;
+  }
+
+  .span,
+  button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+
+
+/* Media query for screens up to 600px width */
+@media (max-width: 600px) {
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+  }
+}
+
+.toggle-label {
+  display: inline-block;
+  background-color: #00BDC4;
+  /* Background color for the label when it's active */
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+input[type="checkbox"] {
+  /* display: none; */
+}
+
+input[type="checkbox"]:checked+.toggle-label {
+  background-color: #8D8985;
+  /* Background color for the label when it's not active */
+}
+
+
+.formFlightSearchOneWay {
+  padding: 0 !important;
+}
+
+
+.flightFormSubmit {
+  width: 100%;
+  font-family: 'Montserrat';
+  font-weight: 700;
+  border-radius: 10px;
+  font-size: 17px;
+  background-color: #21325d;
+  text-align: center;
+  height: 48px;
+  border: 2px solid #21325d;
+  color: #fff;
+}
+
+.flightFormSubmit svg {
+  transform: rotate(45deg);
+  margin-left: 8px;
+  font-size: 32px;
+}
+
+/* // sx={{
+//   mb: 2,
+//   display: "flex",
+//   flexDirection: "column",
+//   maxHeight: 150,
+//   overflow: "hidden",
+//   overflowY: "scroll",
+// }}
+className="chooseAbs" */
+
+
+/* <div className="chooseAbsBox"
+// style={{
+//   backgroundColor: "white",
+//   borderRadius: "10px",
+//   zIndex: 1,
+//   width: "100%",
+//   boxShadow: "rgba(0, 0, 0, 0.09) 0px 3px 12px",
+//   textAlign: "left",
+//   cursor: "pointer",
+//   display: displayTo ? "block" : "none",
+// }}
+> */
+
+.chooseAbsBox {
+  background-color: white;
+  border-radius: 0px 0px 10px 10px;
+  z-index: 1;
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
+  cursor: pointer;
+  text-align: left;
+  position: absolute;
+  border: 1px solid #999;
+}
+
+.chooseAbsBox ul {
+  padding-left: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.chooseAbsBox ul li {
+  padding: 7px;
+  border-bottom: 1px solid #999;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-sizing: border-box !important;
+
+}
+
+.chooseAbs {
+  max-height: 170px;
+  overflow: hidden;
+  overflow-y: scroll;
+}

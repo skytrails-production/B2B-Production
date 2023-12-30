@@ -1,0 +1,29 @@
+.gst_input{
+    border: none; 
+    text-decoration: none;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+.gst_input::placeholder{
+    color: black;
+    padding: 2px 10px;
+    background-color: #d2cece29;
+}
+.flightContainer {
+    padding: 20px;
+  }
+  
+  .gst_input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 3px 6px #00000029;
+    height: auto;
+    font-size: 14px;
+    color: #666666;
+  }
+  
+  /* Add more styles as needed */
+  

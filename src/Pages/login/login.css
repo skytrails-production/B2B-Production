@@ -1,0 +1,542 @@
+/* .outer_box {
+  background-color: white !important;
+  border-radius: 10px !important;
+  display: flex !important;
+  justify-content: center !important;
+  padding: 20px;
+}
+.loginContainer {
+  min-width: 100vh;
+  min-height: 100vh;
+  border-radius: 20px;
+  background: url("../../Images/loginbackground.gif");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.logo_text {
+  text-align: center !important;
+  font-size: 43px !important;
+  font-weight: bold !important;
+  letter-spacing: 0px !important;
+
+  color: #000000 ;
+  opacity: 1 !important;
+}
+
+.flightNavBar {
+  width: 100%;
+
+  margin-top: 20px;
+}
+.flightNavBarContainer {
+  width: 80%;
+  height: auto;
+  margin: 20px;
+}
+
+
+.form_input {
+  height: 90%;
+  position: relative;
+  width: 100%;
+  z-index: 2;
+}
+
+.form_input input {
+  width: 100%;
+  height: 100%;
+  padding-left: 25px;
+  border-radius: 20px;
+  border: 3px solid white;
+  background: white;
+}
+
+.form_input .lable {
+  font-size: 13px;
+  color: white;
+  font-weight: 700;
+  font-family: "Quicksand", sans-serif;
+}
+
+.form_input .from_input::placeholder,
+.to_input::placeholder {
+  color: white !important;
+  font-size: 18px;
+  font-weight: 700;
+  font-family: "Quicksand", sans-serif;
+}
+
+.form_lable {
+  color: rgb(17, 2, 2);
+  font-size: 13px;
+  font-weight: 700;
+  font-family: "Quicksand", sans-serif;
+  left: 10px;
+  line-height: 14px;
+  pointer-events: none;
+  position: absolute;
+  transform-origin: 0 50%;
+  top: 24px;
+  transform: translateY(-30px) translateX(10px);
+  background: transparent;
+  padding: 0px 8px;
+  z-index: 1;
+}
+
+.form_lable1 {
+  color: #f9f8f8;
+  font-size: 13px;
+  font-weight: Bold;
+  margin-bottom: 1rem;
+}
+.form_input_select {
+  width: 78%;
+  border: 10px;
+  border-radius: 10px;
+  height: 2.5rem;
+  border: 3px solid #cf151569;
+}
+
+
+
+.text {
+  list-style: none;
+}
+.logo_login {
+  background-color: transparent;
+  border-radius: 5px;
+  text-align: center;
+}
+
+
+.login_field {
+
+  border-radius: 12px;
+background: #FFF;
+box-shadow: 0px 4px 12px 4px rgba(0, 0, 0, 0.25);
+  opacity: 1;
+  padding: 25px;
+  margin-top: 50px;
+}
+
+.forget_pass {
+ 
+  font-size: 14px !important;
+  font-weight: bold !important;
+  letter-spacing: 0px !important;
+  color: #252525 !important;
+  opacity: 1 !important;
+}
+
+.Login_min {
+  font-size: 20px !important;
+  font-weight: bold !important;
+  color: #006fff;
+}
+
+.capt {
+  width: 100px !important;
+  height: 30px !important;
+  background-color: #666666 !important;
+  color: white !important;
+  border-radius: 20px;
+  border: none;
+}
+.capt::placeholder {
+  padding: 10px;
+  font-size: 12px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  align-items: center;
+  display: flex;
+}
+.textinput {
+  width: 100px !important;
+  height: 30px !important;
+  border-radius: 20px;
+}
+.textinput::placeholder {
+  padding: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+}
+.textinput[value] {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
+
+
+
+
+
+/* new shaan design  */
+body {
+  height: 100%;
+  width: 100%;
+  /* background-color: #f1f1f1; */
+  background-color: lightgray;
+}
+
+.loginContainer {
+  background-color: #21325D;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginContainerInner {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-direction: row;
+  max-width: 950px;
+  height: 450px;
+  margin: 0px 25px;
+
+}
+
+
+
+.loginForm {
+  flex: 1;
+  background-color: white;
+  padding: 25px;
+  border-radius: 0px 12px 12px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginForm input {
+  height: 50px;
+  padding: 10px;
+  padding-left: 40px;
+  border: 1px solid #21325D;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.loginForm>div {
+  margin-bottom: 20px;
+}
+
+.loginForm>div>div {
+  margin-bottom: 20px;
+}
+
+.loginForm>div>div label {
+  margin-bottom: 8px;
+}
+
+.loginImg {
+  flex: 2;
+  height: 450px;
+  position: relative;
+}
+
+.loginImg img {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px 0px 0px 12px;
+}
+
+
+
+.loginImg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #0242e381;
+  z-index: 1;
+  border-radius: 12px 0px 0px 12px;
+}
+
+.overlay {
+  position: absolute;
+  z-index: 2;
+  color: white;
+  top: 35%;
+  left: 10%;
+}
+
+.overlay h3 {
+  font-size: 50px;
+  font-weight: 900;
+  font-family: 'Montserrat';
+}
+
+
+
+.loginForm p {
+  color: #000;
+  text-align: center;
+  font-family: 'Montserrat';
+  font-size: 23px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.loginForm label {
+  color: #071C2C;
+
+  text-align: center;
+  font-family: 'Montserrat';
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.mailBox {
+  position: relative;
+}
+
+.mailBox .mailIcon {
+  position: absolute;
+  left: 10px;
+  color: #21325D;
+  top: 55%;
+}
+
+
+.passwordBox {
+  position: relative;
+}
+
+.passwordBox .passIcon {
+  position: absolute;
+  left: 10px;
+  color: #21325D;
+  top: 55%;
+}
+
+
+.abs-logo {
+  position: absolute;
+  left: 28%;
+  top: 0;
+  z-index: 3;
+  width: 300px;
+}
+
+
+.reges {
+  color: #ddd;
+  text-decoration: none !important;
+  cursor: pointer;
+  text-align: center;
+  font-family: 'Montserrat';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+
+
+
+@media screen and (min-width: 600px) and (max-width: 700px) {
+
+  .loginContainerInner {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 950px;
+    margin: 40px;
+    height: 100%;
+
+  }
+
+  .loginContainer {
+    background-color: #21325D;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  .loginImg {
+    margin: 0px 60px;
+  }
+
+  .loginImg img {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px 12px 0px 0px;
+  }
+
+  .loginImg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0242e381;
+    z-index: 1;
+    border-radius: 12px 12px 0px 0px;
+  }
+
+  .overlay h3 {
+    font-size: 32px;
+    font-weight: 900;
+    font-family: 'Montserrat';
+    text-align: center;
+  }
+
+  .overlay {
+    left: 1%;
+    top: 45%;
+  }
+
+  .loginForm {
+    position: relative;
+    margin-top: -26px;
+    border-radius: 12px;
+    z-index: 5;
+  }
+
+  .abs-logo {
+    position: absolute;
+    left: 16%;
+    top: 0;
+    z-index: 3;
+    width: 300px;
+  }
+}
+
+
+
+@media screen and (min-width: 750px) and (max-width: 800px) {
+
+  .loginContainerInner {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 950px;
+    margin: 40px;
+    height: 100%;
+
+  }
+
+  .loginContainer {
+    background-color: #21325D;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  .loginImg {
+    margin: 0px 60px;
+  }
+
+  .loginImg img {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px 12px 0px 0px;
+  }
+
+  .overlay {
+    left: 5%;
+    top: 36%;
+  }
+
+  .overlay h3 {
+    font-size: 36px;
+  }
+
+
+  .loginForm {
+    position: relative;
+    margin-top: -146px;
+    border-radius: 12px;
+    z-index: 5;
+  }
+
+}
+
+
+
+@media screen and (min-width: 700px) and (max-width: 750px) {
+
+  .loginContainerInner {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 950px;
+    margin: 40px;
+    height: 100%;
+
+  }
+
+  .loginContainer {
+    background-color: #21325D;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  .loginImg {
+    margin: 0px 60px;
+  }
+
+  .loginImg img {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px 12px 0px 0px;
+  }
+
+  .loginImg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0242e381;
+    z-index: 1;
+    border-radius: 12px 12px 0px 0px;
+  }
+
+  .overlay h3 {
+    font-size: 32px;
+    font-weight: 900;
+    font-family: 'Montserrat';
+    text-align: center;
+  }
+
+  .overlay {
+    left: 1%;
+    top: 45%;
+  }
+
+  .loginForm {
+    position: relative;
+    margin-top: -26px;
+    border-radius: 12px;
+    z-index: 5;
+  }
+}
+
+
+
+/* new shaan design  */

@@ -1,0 +1,167 @@
+* {
+  box-sizing: border-box !important;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+
+
+.innerNav1 {
+
+
+  gap: 10px;
+  margin-top: 10px;
+  width: 100%;
+  height: 80px;
+  /* z-index: 10; */
+  border-radius: 10px;
+  box-shadow: 0px 3px 6px #00000029;
+  ;
+  opacity: 1;
+
+}
+
+.innermorecard {
+  margin: auto;
+  justify-content: space-around;
+  margin-top: 10px;
+
+  height: 80px;
+  z-index: 10;
+  border-radius: 10px;
+  box-shadow: 0px 3px 6px #00000029;
+  ;
+  opacity: 1;
+
+}
+
+
+/* Define styles for the active-nav class */
+
+/* <div  color={className===null ? "red" : "55px solid #0048FF"}> */
+
+
+.innerNav {
+  display: flex;
+  /* justify-content: space-around; */
+  justify-content: center;
+  gap: 32px;
+  width: 100%;
+  /* height: 120px; */
+  position: sticky;
+  top: 0;
+  opacity: 1;
+  padding: 20px 10px;
+  background-color: white;
+  z-index: 2;
+  border-bottom: 2px solid #21325D;
+  /* overflow-y: scroll;
+  white-space: nowrap; */
+}
+
+
+.navItems {
+  display: flex;
+  flex-direction: row;
+  border-radius: 15px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.navItems a {
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  gap: 10px;
+  padding: 10px;
+  color: #21325D;
+  font-family: Montserrat;
+  text-decoration: none;
+}
+
+
+.navTitle {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.navIcons svg {
+  font-size: 21px;
+}
+
+
+
+.dropBox {
+  position: absolute;
+  top: 35px;
+  left: -40px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  /* width: 200px; */
+  z-index: 9999;
+}
+
+.dropBox ul {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.dropBox li {
+  list-style-type: none;
+}
+
+
+.dropBox a {
+  padding: 10px;
+  text-decoration: none;
+  color: #000;
+  display: block;
+  width: 100%;
+  font-size: 18px;
+  text-wrap: nowrap;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.dropBox a:hover {
+  background-color: #f9f9f9;
+}
+
+
+
+.dropBox a:not(:last-child) {
+  border-bottom: 1px solid #ddd;
+  /* Add your desired border style, color, and width here */
+}
+
+.dropBox li a:not(:last-child) {
+  border-bottom: 1px solid #ddd;
+  /* Add your desired border style, color, and width here */
+}
+
+
+
+
+@media (max-width: 910px) {
+  .innerNav {
+    display: flex;
+    justify-content: space-between;
+    white-space: nowrap;
+    overflow-y: hidden;
+    overflow-x: auto;
+    /* Enable horizontal scrolling */
+    scroll-snap-type: x mandatory;
+    /* Enable smooth horizontal scrolling */
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* Internet Explorer and Edge */
+  }
+
+  .innerNav::-webkit-scrollbar {
+    display: none;
+    /* Hide the scrollbar in Webkit browsers (Chrome, Safari) */
+  }
+}

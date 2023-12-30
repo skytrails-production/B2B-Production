@@ -1,0 +1,305 @@
+.top_head {
+
+  padding: 32px 16px;
+  border-radius: 12px;
+  border: 0.5px solid #888;
+
+  background: #FFF;
+}
+
+.main_tab {
+  background: #cff5ff 0% 0% no-repeat padding-box;
+  border-radius: 20px;
+  opacity: 1;
+  padding: 20px;
+}
+
+
+.outerseat,
+.outerlowerseat {
+  position: relative;
+  width: auto;
+  height: 50%;
+  display: block;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-left: 20px;
+}
+
+.busSeatlft,
+.busSeatrgt {
+  /* border: 2px solid red; */
+  height: 45%;
+  width: auto;
+}
+
+.upper {
+  position: relative;
+}
+
+.busSeat {
+  display: block;
+  flex-direction: column;
+}
+
+.seatcontainer {
+  position: relative;
+  align-self: center;
+}
+
+
+
+.acFilter button {
+  border: 2px solid #21325D;
+  padding: 6px 14px;
+  color: #666;
+  font-family: 'Montserrat';
+  background-color: transparent;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.acFilter button:hover {
+  border: 2px solid #21325D !important;
+}
+
+
+.seatFilter button {
+  border: 2px solid #21325D;
+  padding: 6px 14px;
+  color: #666;
+  font-family: 'Montserrat';
+  background-color: transparent;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.seatFilter button:hover {
+  border: 2px solid #21325D !important;
+}
+
+/* .notSelectedAC {
+  border: 2px solid #21325D;
+  padding: 6px 20px;
+  color: #fff;
+  font-family: 'Montserrat';
+  background-color: #21325D;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+} */
+
+.applyFilter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.applyFilter button {
+  padding: 8px 22px;
+  background-color: #21325D;
+  color: white;
+  font-family: 'Montserrat';
+  font-size: 16px;
+}
+
+
+.px4 {
+  margin: 0px 60px !important;
+  background-color: transparent !important;
+}
+
+.busType {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  background: #D9D9D9;
+  margin: 20px 0px 10px 0px;
+}
+
+.busType p {
+  color: #000;
+  font-family: 'Montserrat';
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.titlePickup {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  /* background: #D9D9D9; */
+  margin: 20px 0px 10px 0px;
+}
+
+.pickUpBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  background: #fff;
+  margin: 20px 0px 10px 0px;
+}
+
+.titlePickup p {
+  color: #000;
+  font-family: 'Montserrat';
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.busResultBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 32px 16px;
+  border-radius: 12px;
+  border: 0.5px solid #888;
+  background: #FFF;
+}
+
+.busResultBox p {
+  color: #000;
+
+  font-family: 'Montserrat';
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-wrap: nowrap;
+}
+
+.busResultBox span {
+  color: #000;
+
+  font-family: 'Montserrat';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.busResultBox .busImage {
+  max-width: 30%;
+}
+
+.busResultBox img {
+  max-width: 90%;
+}
+
+.busResultBox button {
+  padding: 8px 12px;
+  border-radius: 4px;
+  background: #21325D;
+  color: #FFF;
+
+  font-family: 'Montserrat';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  border: 2px solid #21325D;
+  transition: all 0.3s;
+  text-wrap: nowrap;
+}
+
+.busSearchOne {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.busSearchTwo {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+}
+
+.busSearchTwo>div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.busSearchThree {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.busSearchFour {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 15px;
+}
+
+
+
+.pickDropDetails {
+  padding: 21px;
+  border-radius: 8px;
+  border: 0.5px solid #777;
+  background: #FFFBFB;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+
+
+.passengerHeading p {
+  color: #000;
+  margin-left: 15px;
+  font-family: 'Montserrat';
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+
+.btn-busPassenger {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.btn-busPassenger button {
+  padding: 20px 54px;
+  border-radius: 8px;
+  background: #21325D;
+  color: #FFF;
+  font-family: 'Montserrat';
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  border: 2px solid #21325D;
+  transition: all 0.3s;
+}

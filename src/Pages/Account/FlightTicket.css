@@ -1,0 +1,251 @@
+/* FlightTicket.css */
+.container {
+  margin-top: 5rem;
+  /* margin-right: 342px; */
+}
+
+/* .ticket {
+    display: flex;
+    border: 1px solid #ddd;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #fff;
+    justify-content: space-between;
+    align-items: center;
+  } */
+.ticketcart {
+  display: flex;
+  border: 1px solid #ddd;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #fff;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-request button {
+  padding: 12px 13px;
+  border-radius: 3px;
+  gap: 3px;
+  background: #21325D;
+  border: none;
+  color: #FFF;
+  font-family: Montserrat;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.action {
+  display: flex;
+  top: 783px;
+  left: 46px;
+  padding: 8px 20px 8px 20px;
+  border-radius: 4px;
+  gap: 339px;
+  background: #DFE6F7;
+  margin-top: -10px;
+}
+
+.action a {
+  margin: 1rem;
+}
+
+.action button {
+  padding: 9.94px 29.83px 9.94px 29.83px;
+  border-radius: 2.49px;
+  gap: 7.46px;
+  background: #21325D;
+  font-family: Montserrat;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 12px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #FFFFFF;
+
+}
+
+
+.css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected {
+  color: #fff !important;
+  background-color: #21325D !important;
+}
+
+button:hover {
+  background-color: white;
+  color: #21325D;
+}
+
+
+
+
+.spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  /* Adjust the height as needed */
+  font-size: 1.5rem;
+  color: #007BFF;
+  /* Adjust the color as needed */
+}
+
+.spinner:before {
+  content: "";
+  border: 6px solid #f3f3f3;
+  /* Light gray border color */
+  border-top: 6px solid #007BFF;
+  /* Your chosen spinner color */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.modalBox{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: auto;
+  width: 80vw;
+  height: 80vh;
+  background-color: #f9f9f9;
+  box-shadow: 10;
+  padding: 20px;
+}
+.modalButton {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  padding: 5px;
+}
+
+.modalButton .buttonClose{
+  padding: 10px 20px;
+  border: none;
+  background-color: rgb(227, 169, 169);
+  border-radius: 10px;
+  font-size: large;
+}
+.modal-header {
+  background-color: #DFE6F7;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+
+}
+
+.modal-header h2 {
+  font-size: 24px;
+}
+
+.input-text {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+form label {
+  font-weight: 400;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.input-text input {
+  padding: 10px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.input-check {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #ddd;
+  width: 68%;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+
+.modal-button {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+
+}
+
+.modal-button button {
+  background-color: white;
+  border: 1px solid #21325D;
+  outline: none;
+  padding: 8px 22px;
+  font-weight: 700;
+}
+
+.modal-button .second {
+  background-color: #21325D;
+  color: #fff;
+
+}
+
+
+.buttonBox {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.buttonBox button {
+  padding: 10px 22px;
+  background-color: #21325D;
+  color: white;
+  border-radius: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: none;
+  outline: none;
+}
+
+
+.pagination{
+  margin: 10px;
+  padding: 5px;
+  align-items: center;
+  justify-content: space-between;
+}
+.pagination button{
+  padding: 10px 15px;
+
+}
+
+.swal2-container{
+  z-index: 99999999999; 
+}

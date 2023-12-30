@@ -1,0 +1,492 @@
+.header_top {
+  background: #fcffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #00000029;
+  border-radius: 10px;
+  opacity: 1;
+  padding: 20px;
+}
+
+.h_time {
+  text-align: right !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+  letter-spacing: 0px !important;
+  color: #252525 !important;
+  opacity: 1;
+}
+
+.h_address {
+  text-align: right !important;
+  color: #707070 !important;
+  font-size: 12px !important;
+  font-weight: bold !important;
+}
+
+p {
+  margin-bottom: 0 !important;
+}
+
+.p_time {
+  text-align: right !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+  letter-spacing: 0px !important;
+  color: #252525 !important;
+  opacity: 1;
+}
+
+.p_address {
+  text-align: right !important;
+  color: #707070 !important;
+  font-size: 12px !important;
+  font-weight: bold !important;
+}
+
+.r_address {
+  text-align: center !important;
+  color: #707070 !important;
+  font-size: 12px !important;
+  font-weight: bold !important;
+}
+
+
+.packageName {
+  background-color: #DFE6F7;
+  padding: 12px 10px;
+}
+
+.packageName p {
+  color: #071C2C;
+
+  font-family: Montserrat;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.packageName span {
+  padding: 4px 12px;
+  border-radius: 4px;
+  background: #071C2C;
+  color: #FFF;
+
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.packageLocation {
+  display: flex;
+  height: 64px;
+  width: 64px;
+  padding: 12px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 8px;
+  background: #071C2C;
+  color: #ddd;
+  font-size: 25px;
+}
+
+.packageLocation svg {
+  font-size: 45px;
+}
+
+.packageLocation+div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  margin-left: 20px;
+}
+
+.packageLocation+div p {
+  margin-bottom: 0 !important;
+  color: #071C2C;
+
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.packageLocation+div span {
+  color: #BBB;
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.TripHighlight p {
+  color: #071C2C;
+  font-family: 'Montserrat';
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.icon-boxHighlight {
+  border-radius: 4px;
+  border: 2px solid #BBB;
+  padding: 16px;
+  display: grid;
+  justify-content: space-between;
+  grid-template-columns: auto auto;
+}
+
+.icon-boxHighlight .singleIcon {
+  display: flex;
+  flex-direction: row;
+  column-gap: 13px;
+  align-items: center;
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.icon-boxHighlight .singleIcon:nth-child(2n) {
+  text-align: left;
+}
+
+.icon-boxHighlight .singleIcon p {
+  color: #071C2C;
+
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+
+
+.overviewBox {
+  border-radius: 12px;
+  border: 2px solid #BBB;
+  padding: 28px 24px;
+  background: #FFFBFB;
+}
+
+.overviewBox span {
+  color: #071C2C;
+  text-align: center;
+  font-family: 'Montserrat';
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+
+.holiday_but {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.holiday_but button {
+  padding: 10px 29px;
+  font-size: 14px;
+  color: white;
+  font-family: "Montserrat";
+  border-radius: 7px;
+  border: 2px solid #21325D;
+  background-color: #21325D;
+  transition: all 0.2s;
+  font-weight: 600;
+
+}
+
+.holiday_but button:hover {
+  font-size: 14px;
+  color: #21325D;
+  font-family: "Montserrat";
+  border-radius: 7px;
+  border: 2px solid #21325D;
+  background-color: transparent;
+
+}
+
+.overviewBox p {
+  color: #071C2C;
+
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 156%;
+  /* 24.96px */
+}
+
+.hotelDetailsTab h2 {
+  color: #000;
+  font-family: Montserrat;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.hotelDetailsTab p {
+  color: #071C2C;
+
+  font-family: Montserrat;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+
+.inclusionTab {
+  padding: 32px 36px 36px 36px;
+  border-radius: 8px;
+  border: 2px solid #BBB;
+
+  background: #FFFBFB;
+}
+
+.inclusionTab h2 {
+  color: #000;
+  text-align: left;
+  font-family: 'Montserrat';
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-bottom: 15px;
+}
+
+.inclusionTab p {
+  color: #071C2C;
+  font-family: 'Montserrat';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+
+
+.tandC {
+  padding: 32px 36px 36px 36px;
+  border-radius: 8px;
+  border: 2px solid #BBB;
+
+  background: #FFFBFB;
+}
+
+.tandC h2 {
+  color: #000;
+  text-align: left;
+  font-family: 'Montserrat';
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-bottom: 15px;
+}
+
+.tandC p {
+  color: #071C2C;
+  font-family: 'Montserrat';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+
+
+.cancelTab {
+  padding: 32px 36px 36px 36px;
+  border-radius: 8px;
+  border: 2px solid #BBB;
+
+  background: #FFFBFB;
+}
+
+.cancelTab h2 {
+  color: #000;
+  text-align: left;
+  font-family: 'Montserrat';
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-bottom: 15px;
+}
+
+.cancelTab p {
+  color: #071C2C;
+  font-family: 'Montserrat';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+
+
+
+
+/* side promo css area  */
+
+
+.sidePromo {
+  padding: 28px 24px;
+  border-radius: 8px;
+  border: 2px solid #BBB;
+
+  background: #FFFBFB;
+}
+
+
+.sidePromoImg {
+  width: 100%;
+}
+
+.sidePromoImg img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+
+.promoBottom {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  align-items: flex-start;
+}
+
+.promoTitle {
+  color: #071C2C;
+  font-family: 'Montserrat';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+
+.promoIcons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.promoDestination {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.promoDestination ul {
+  margin: 0 !important;
+  padding-left: 1rem !important;
+}
+
+.promoDestination ul li {
+  color: #BBB;
+
+  font-family: 'Montserrat';
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.promoDestination div {
+  display: flex;
+  flex-direction: column;
+}
+
+.promoDestination div p {
+  color: #000;
+  text-align: center;
+  font-family: 'Montserrat';
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.promoDestination div span {
+  color: #9E9E9E;
+  text-align: right;
+  font-family: 'Montserrat';
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+
+.promoBottomButton {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 0 !important;
+  width: 100%;
+}
+
+.promoBottomButton p {
+  color: #21325D;
+  text-align: center;
+  font-family: 'Montserrat';
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.promoBottomButton button {
+  padding: 11.28px 28.199px;
+  border-radius: 5.64px;
+  background: #21325D;
+  color: #FFF;
+  font-family: 'Montserrat';
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 600;
+  width: 100%;
+  line-height: normal;
+  border: 2px solid #21325D;
+}
+
+/* side promo css area  */
+
+
+
+.packageImgBox {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: flex-start;
+}
+
+.PackageImg {
+  max-width: 300px;
+
+}
+
+.PackageImg img {
+  width: 100%;
+  border-radius: 8px;
+}

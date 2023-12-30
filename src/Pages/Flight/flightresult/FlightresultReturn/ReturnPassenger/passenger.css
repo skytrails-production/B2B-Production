@@ -1,0 +1,209 @@
+.Top_header1 {
+  background: #e6f9ff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #00000029;
+  border-radius: 10px;
+}
+
+.Top_txt1 {
+  font-family: "Montserrat";
+
+  font-weight: bold;
+  font-size: 24px;
+
+  line-height: 29.26px;
+  color: #000000;
+}
+
+.text-dark1 {
+  font-family: "Montserrat";
+
+  font-weight: bold;
+  font-size: 24px;
+
+  line-height: 29.26px;
+
+}
+
+.sub_txt1 {
+  text-align: left;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+
+  color: #0048ff;
+}
+
+.mid_header1 {
+  background: #ffffff 0% 0% no-repeat padding-box;
+  opacity: 1;
+  border: 1.15px solid #9E9E9E;
+  background-color: #fffbfb;
+  border-radius: 8px;
+}
+
+.form_input_select1 {
+  width: 150px;
+  border: 10px;
+  border-radius: 10px;
+  height: 2.5rem;
+  border: 3px solid #70707069;
+}
+
+.inner_box1 {
+  background: #f5f5f5 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #00000029;
+  opacity: 1;
+  padding: 10px 15px;
+}
+
+.lis_item1 {
+  color: "red";
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.border_input1 {
+  border: 1px solid #5C85A4;
+}
+
+.form_input_input1 {
+  background-color: #5C85A4;
+  padding-left: 25px;
+
+}
+
+.req {
+  border: red;
+}
+
+.regouter_box1 {
+  background-color: white !important;
+  border-radius: 10px !important;
+  display: flex !important;
+  justify-content: center !important;
+  padding: 20px;
+}
+
+.registerContainer1 {
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  background: white !important;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.flightNavBar1 {
+  width: 100%;
+
+  margin-top: 20px;
+}
+
+.flightNavBarContainer1 {
+  width: 80%;
+  height: auto;
+  margin: 20px;
+}
+
+/* form input */
+
+.form_input1 {
+  height: 90% !important;
+  position: relative !important;
+  width: 100% !important;
+}
+
+.form_input1 input {
+  width: 100% !important;
+  height: 50px !important;
+  padding-left: 10px !important;
+  border-radius: 10px !important;
+  border: 1px solid #5C85A4 !important;
+}
+
+.form_input1 .lable1 {
+  font-size: 13px !important;
+  color: #4e4c4c !important;
+  font-weight: 700 !important;
+  font-family: "Quicksand", sans-serif !important;
+}
+
+.form_input1 .from_inpu1::placeholder,
+.to_input::placeholder {
+  color: #4e4c4ca1 !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  font-family: "Quicksand", sans-serif !important;
+}
+
+.form_lable1_1 {
+  color: #4e4c4c !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  font-family: "Quicksand", sans-serif !important;
+  left: 10px !important;
+  line-height: 14px !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  transform-origin: 0 50% !important;
+  top: 24px;
+  transform: translateY(-30px) translateX(10px) !important;
+  background: #fff !important;
+  padding: 0px 8px !important;
+}
+
+.form_lable1_1_1 {
+  color: #4e4c4c !important;
+  font-size: 13px !important;
+  font-weight: Bold !important;
+  margin-bottom: 1rem !important;
+}
+
+.form_input_select1 {
+  width: 100% !important;
+  border: 10px;
+  border-radius: 10px !important;
+  height: 48px !important;
+  border: 1px solid #5C85A4;
+}
+
+/*end  */
+
+.input_size1 {
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.registrationNNContainer1 {
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  /* background: url("../../Images/loginbackground.gif"); */
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.leftdiv {
+  color: #000;
+  font-family: Montserrat;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.rightdiv {
+  color: #0048FF;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: -10px;
+  border-bottom: 1px solid #0048FF;
+}

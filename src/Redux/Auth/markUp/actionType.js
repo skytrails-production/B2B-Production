@@ -1,0 +1,2 @@
+export const MARK_UP_SUCCESS = "MARK_UP_SUCCESS";
+export const MARK_UP_REQUEST = "MARK_UP_REQUEST";

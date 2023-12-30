@@ -1,0 +1,27 @@
+
+
+  
+  h1 {
+    font-size: 18px;
+  }
+  
+  h2 {
+    font-size: 16px;
+  }
+  
+  h3 {
+    font-size: 12px;
+  }
+  
+  p {
+    font-size: 12px;
+  }
+  
+  .info {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+  }
+  

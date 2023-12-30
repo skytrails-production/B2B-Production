@@ -1,0 +1,220 @@
+.Top_header {
+  justify-content: space-between;
+  display: flex;
+}
+
+.Top_txt {
+  text-align: left;
+  letter-spacing: 0px;
+  font-size: 16px !important;
+  font-size: bold;
+  color: #008fcc;
+  opacity: 1;
+}
+
+.sub_txt {
+  text-align: left;
+  font-size: 10px !important;
+  font-size: bold;
+  letter-spacing: 0px;
+  color: #707070;
+  opacity: 1;
+}
+
+.mid_header {
+  border-radius: 4.587px;
+
+  background: #fffbfb;
+}
+
+.form_input_select {
+  width: 150px;
+  border: 10px;
+  border-radius: 10px;
+  height: 2.5rem;
+  border: 3px solid #70707069;
+}
+
+.inner_box {
+  background: #f5f5f5 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #00000029;
+  opacity: 1;
+  padding: 10px 15px;
+}
+
+.lis_item {
+  color: "red";
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.leftdiv {
+  color: #000;
+  font-family: Montserrat;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.rightdiv {
+  color: #0048ff;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: -10px;
+  border-bottom: 1px solid #0048ff;
+}
+
+.margin-pecentage {
+  margin: 0px 20%;
+  background-color: white;
+  padding: 10px 15px !important;
+  border-radius: 8px;
+}
+
+.headingflightPassenger {
+  padding: 12px 20px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  background: #dfe6f7;
+}
+
+.headingflightPassenger p {
+  color: #000;
+  font-family: "Montserrat";
+  font-size: 21px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.headingflightPassenger span {
+  font-weight: 600;
+}
+
+.BaggageSector {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.BaggageSector > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.BaggageSector p {
+  color: black;
+  font-size: 18.15px;
+  font-family: Montserrat;
+  font-weight: 400;
+}
+
+.BaggageSector span {
+  color: black;
+  font-size: 16px;
+  font-family: Montserrat;
+  font-weight: 600;
+  background-color: #dfe6f7;
+  padding: 8px 16px;
+  border-radius: 6px;
+}
+
+.listBox {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.listBox > div p {
+  color: black;
+  font-size: 18.15px;
+  font-family: Montserrat;
+  font-weight: 400;
+}
+
+.listBox > div li {
+  color: black;
+  font-size: 16px;
+  font-family: Montserrat;
+  font-weight: 600;
+  /* background-color: #DFE6F7;
+    padding: 8px 16px;
+    border-radius: 6px; */
+}
+
+.htmlFare {
+  color: black;
+  font-size: 16px;
+  font-family: Montserrat;
+  font-weight: 400;
+}
+
+.htmlFare li {
+  color: black;
+  font-size: 14px;
+  font-family: Montserrat;
+  font-weight: 400;
+}
+
+.fareRuleleft p {
+  color: #21325d;
+  font-size: 16px;
+  font-family: Montserrat;
+  font-weight: 500;
+  background-color: #dfe6f7;
+  padding: 7px;
+  border-radius: 6px;
+  margin-bottom: 0;
+}
+
+.fareRuleleft span {
+  color: #21325d;
+  font-size: 14px;
+  font-family: Montserrat;
+  font-weight: 500;
+}
+
+.fareRuleleft > div > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.accor_dian .accordion {
+  border-color: #21325d !important;
+}
+
+.leftDetBut {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.leftDetBut button {
+  color: white;
+  font-size: 22px;
+  font-family: Montserrat;
+  font-weight: 600;
+  padding: 10px 30px;
+  background-color: #21325d;
+  border-radius: 8px;
+  border: 2px solid #21325d;
+}
+.alert_passenger {
+  position: fixed;
+  top: 100px;
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: 9999999999999999999999999;
+}

@@ -1,0 +1,165 @@
+.main-head {
+    background: #ffffff 0% 0% no-repeat padding-box !important;
+    box-shadow: 0px 3px 6px #00000029 !important;
+    border-radius: 20px !important;
+    padding: 20px !important;
+    opacity: 1;
+
+}
+
+.holiday_txt {
+
+    font-size: 20px !important;
+    font-weight: bold !important;
+}
+
+.holiday_txt_b {
+    color: #252525;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    display: flex;
+    text-align: center;
+    align-items: center;
+}
+
+.holiday_txt_v {
+    color: #FF8900;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    display: flex;
+    text-align: center;
+    align-items: center;
+}
+
+.special_request::placeholder {
+    padding-left: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #70707057;
+}
+
+
+
+
+
+
+
+.input_shadow {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px #00000029;
+    border-radius: 10px;
+    opacity: 1;
+    padding: 5px;
+    margin-left: 5px;
+}
+
+.input_decor {
+    border: none;
+    border-radius: 10px;
+}
+
+.label_field {
+    text-align: left;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    letter-spacing: 0px;
+    opacity: 1;
+}
+
+
+
+.noOfTravellers {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 3px;
+}
+
+
+.totCOmm>div:not(:last-child) {
+    border-bottom: 1px solid #666;
+}
+
+.totCOmm .feesTax {
+    font-weight: 700;
+}
+
+
+
+.headingGuestHoliday {
+    padding: 12px 20px;
+    border-radius: 4px;
+    background: #DFE6F7;
+}
+
+.headingGuestHoliday p {
+    color: #000;
+    font-family: 'Montserrat';
+    font-size: 21px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.btnAddGuest {
+    width: 100%;
+    height: 100%;
+    border-radius: 5.64px;
+    background: #21325D;
+    color: #FFF;
+    font-weight: 700;
+    font-family: 'Montserrat';
+    border: 2px solid #21325D;
+    transition: all 0.3s;
+}
+
+
+.travellerDetailsForm {
+    padding: 15px;
+}
+
+.travellerDetailsForm .addGuest {
+    color: #21325D;
+    font-weight: 700;
+}
+
+.travellerDetailsForm .addedGuest {
+    margin: 10px 0px;
+}
+
+.travellerDetailsForm .addedGuest p {
+    font-family: 'Montserrat';
+    font-weight: 500;
+
+}
+
+.travellerDetailsForm .addedGuest svg {
+    color: #21325D;
+    font-size: 25px;
+
+}
+
+.itinerary p {
+    font-family: 'Montserrat';
+    font-weight: 500;
+
+}
+
+.proceedToBookHoliPack {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.proceedToBookHoliPack button {
+    /* width: 100%;
+            height: 100%; */
+    border-radius: 5.64px;
+    background: #21325D;
+    color: #FFF;
+    font-weight: 700;
+    font-family: 'Montserrat';
+    border: 2px solid #21325D;
+    transition: all 0.3s;
+    padding: 14px 22px;
+}

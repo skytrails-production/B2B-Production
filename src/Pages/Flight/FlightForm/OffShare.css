@@ -1,0 +1,158 @@
+
+  .form_input {
+    height: 90%;
+    position: relative;
+    width: 100%;
+}
+
+.form_input input {
+    width: 100%;
+    height: 100%;
+    padding-left: 25px;
+    border-radius: 20px;
+    border: 3px solid #70707069;
+}
+
+.form_input .lable {
+    font-size: 13px;
+    color: #4E4C4C;
+    font-weight: 700;
+    font-family: 'Quicksand', sans-serif;
+
+}
+
+.form_input .from_input::placeholder, .to_input::placeholder {
+    color: #4E4C4CA1;
+    font-size: 18px;
+    font-weight: 700;
+    font-family: 'Quicksand', sans-serif;
+
+}
+
+.form_lable {
+    color: #4E4C4C;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'Quicksand', sans-serif;
+    left: 10px;
+    line-height: 14px;
+    pointer-events: none;
+    position: absolute;
+    transform-origin: 0 50%;
+    top: 24px;
+    transform: translateY(-30px) translateX(10px);
+    background: #fff;
+    padding: 0px 8px;
+}
+.row{
+    margin-top:30px;
+   
+
+}
+
+.form_lable1{
+    color: #4E4C4C;
+    font-size: 13px;
+    font-weight: Bold;
+    /* font-family: 'Quicksand', sans-serif; */
+    /* left: 10px;
+    line-height: 14px;
+    pointer-events: none;
+    position: absolute;
+    /* transform-origin: 0 50%; */
+    /* top: 24px; */
+    /* transform: translateY(-30px) translateX(10px); */
+    /* background: #fff; */
+    /* padding: 0px 8px;     */
+ 
+}
+.form_input_select{
+    width: 78%;
+    border: 10PX;
+    border-radius: 10px;
+    height: 2.5rem; 
+
+    border: 3px solid #70707069; 
+    }
+
+    .formFlightSearch{
+        margin-top: 20px;
+    }
+    .ristrictSearch{
+       
+ width:100%;
+display:grid;
+grid-template-columns: repeat(5, minmax(310px, max-content));
+grid-gap:16px;
+justify-content:center;
+padding: initial;
+
+    }
+    .inputSelect {
+     border: 1px solid red;
+     width:15px;
+     height: 15px;
+     border-radius: 50%;
+}
+
+    .option_select{
+       
+        margin-left: 20px;
+        font-weight: 300 !important;
+       
+       
+        text-transform: uppercase;
+    }
+    .inputSelectCheck{
+        width: 15px;
+        height: 15px;
+        border-radius: 100%;
+
+    }
+    .radioReturn{
+        display: flex;
+        flex-direction: row;
+        
+        width: 100%;
+        justify-content:center;
+
+
+    }
+
+    .radioReturnActiv{
+        color: orangered;
+    }
+    .radioReturnInActiv{
+        color: none;
+    }
+    .radioReturn>input{
+        width: 20px;
+        height:20px
+    }
+    .radioReturn>span{
+       margin-left: 20px;
+       font-size: 30px;
+       color: #252525;
+       font: normal normal bold 17px/21px Quicksand;
+       /* font-weight: bold; */
+    }
+    .flightSearchButton{
+      width: 400px;
+      height: 50px;
+      
+    }
+.form-check-input:checked{
+  color: #d75e5e;
+  border-color: #292829;
+}
+input[type="radio"]:checked{
+   background-color:orange;
+   border-color: rgb(243, 135, 4);
+   ;
+}
+label{
+    font-weight: bold;
+}
+input[type="radio"]:checked+label{
+    color: orange;
+}

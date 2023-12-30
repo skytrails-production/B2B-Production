@@ -1,0 +1,102 @@
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+.error {
+  color: red;
+}
+
+
+.visaButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.visaButton button {
+  background-color: #21325d;
+  color: white;
+  border: 2px solid #21325d;
+  font-family: "Montserrat";
+  padding: 12px 32px;
+  font-size: 18px;
+  border-radius: 8px;
+}
+
+
+.headingVisa {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #21325d;
+  font-weight: 600;
+  font-size: 2rem;
+  background-color: #b1c6fc;
+  border-radius: 9px;
+  padding: 10px 0px;
+}
+
+.headingVisaItems {
+  margin-top: 15px;
+}
+
+.headingVisaItems ul li::marker {
+  color: red;
+}
+
+.headingVisaItems ul li {
+  color: #21325d;
+  font-weight: 600;
+  font-family: "Montserrat";
+  font-size: 19px;
+  padding: 8px 0px;
+}
+
+.headingVisaItems ul li:not(:last-child) {
+  border-bottom: 1px dashed #21325d;
+}
+
+
+.bottomVisaHeading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.bottomVisaHeading p {
+  font-size: 24px;
+  font-weight: 700;
+  color: #21325d;
+
+}
+
+.bottomVisaHeading span {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+
+.visaTexts {
+  padding: 10px 30px;
+}
+
+.visaTexts h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #21325d;
+  text-align: left;
+
+}
+
+.visaTexts h4 {
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+  text-align: justify;
+
+}

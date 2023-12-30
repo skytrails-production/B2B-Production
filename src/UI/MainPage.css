@@ -1,0 +1,86 @@
+* {
+  box-sizing: border-box;
+}
+
+.mainBox {
+  position: relative;
+  padding-top: 20px;
+
+  height: 100%;
+  padding-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: lightgray;
+
+}
+
+.body {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  /* background: rgba(255, 255, 255, 1); */
+  background: lightgray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 185 !important;
+}
+
+.mainBox::before {
+  content: "";
+  /* background-image: url("../Images/mainImage.png"); */
+  /* background-repeat: no-repeat; */
+  /* background-size: cover; */
+  /* opacity: 0.8; */
+  /* Adjust the opacity value as needed (0.5 for 50%) */
+  /* position: absolute; */
+  /* top: 0; */
+  /* left: 0; */
+  /* right: 0; */
+  /* bottom: 0; */
+  z-index: -1;
+}
+
+.header_section {
+  position: sticky;
+  /* width: 85% !important;
+  margin: auto; */
+  top: 0;
+  display: flex;
+  flex-wrap: wrap;
+  /* background-color: rgba(255, 255, 255, 0.8); */
+  backdrop-filter: blur(1px);
+  z-index: 1;
+  /* display: none; */
+}
+
+.componentsContainer {
+
+  /* display: grid; */
+
+  width: 100%;
+
+  border-radius: 10px;
+  opacity: 1;
+  /* position: absolute;
+  top: 300px; */
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+
+}
+
+@media screen and (max-width: 600px) {
+  .header_section {
+    /* Add styles specific to screens with a minimum width of 566px */
+    font-size: 20px;
+    width: 100% !important;
+    margin: auto;
+
+  }
+}

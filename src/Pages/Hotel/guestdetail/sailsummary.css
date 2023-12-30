@@ -1,0 +1,103 @@
+.priceSummary {
+    border-radius: 8px;
+    border: 1px solid #5C85A4;
+    background: #FFF;
+    padding: 16px;
+}
+
+.head {
+    border-radius: 4px 4px 0px 0px;
+    background: #B8CCFF;
+    padding: 10px;
+}
+
+.head span {
+    color: #000;
+    font-family: 'Montserrat';
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.hotName {
+
+    margin: 12px 0px;
+}
+
+.hotName p {
+    color: #000;
+    font-family: 'Montserrat';
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    padding: 10px;
+}
+
+.priceChart {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 5px;
+}
+
+p {
+    margin-bottom: 0 !important;
+}
+
+
+
+.priceChart>div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.priceChart>div:not(:last-child) {
+    border-bottom: 1px solid #ddd;
+}
+
+.totCOmm {
+    display: flex;
+    flex-direction: column;
+    background: #DFE6F7;
+    gap: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+
+.totCOmm>div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+
+
+.TotGst {
+    display: flex;
+    flex-direction: column;
+    background: #B8CCFF;
+    padding: 10px;
+    gap: 5px;
+}
+
+.TotGst>div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+
+.text-bold {
+    font-weight: 600;
+}

@@ -1,0 +1,21 @@
+.holiday_submit{
+    color: white;
+    background-color: #00BDC4;
+    width: 300px;
+    height: 56px;
+    box-shadow: 0px 3px 6px #00000029;
+    border: 1px solid #DFDFDF;
+    border-radius: 10px;
+    
+    opacity: 1;
+    margin-top: 5px;
+}
+
+.search__Input{
+    margin: 5px 15px !important;
+}
+
+.holiday_submit:hover{
+    background-color: rgb(61, 144, 144);
+    color: white;
+}

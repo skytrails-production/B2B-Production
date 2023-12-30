@@ -1,0 +1,3 @@
+export const VISA_REQUEST = "VISA_REQUEST";
+export const VISA_SUCCESS = "VISA_SUCCESS";
+export const VISA_FAILURE = "VISA_FAILURE";

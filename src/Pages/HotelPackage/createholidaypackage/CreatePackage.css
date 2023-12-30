@@ -1,0 +1,346 @@
+.toggle_button {
+  background-color: red;
+  border: none;
+  width: 100%;
+  height: 33px;
+  border-radius: 5px;
+  margin: 2px !important;
+  cursor: pointer;
+}
+
+.toggle_close {
+  background-color: #006fff !important;
+  border: none;
+  width: 100%;
+  border-radius: 5px;
+  margin: 2px !important;
+  cursor: pointer;
+}
+
+.toggle_button {
+  box-shadow: 0px 3px 6px #00000029;
+  border-radius: 5px;
+  width: 100%;
+  border: none;
+}
+
+.tag__Container {
+  width: 100%;
+  margin: 0 !important;
+}
+
+.package__Container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.style_Textarea {
+  margin-top: 10px;
+  width: 553px;
+  height: 100px;
+  -moz-border-bottom-colors: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  /* background: none repeat scroll 0 0 rgba(215, 215, 215, 0.07);
+  border-color: -moz-use-text-color #4a4a4a #504e4e -moz-use-text-color; */
+  border-image: none;
+  border-radius: 6px 6px 6px 6px;
+  border-style: none solid solid none;
+  border-width: medium 1px 1px medium;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 1) inset;
+  color: #bbbbbb;
+  /* font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; */
+  font-family: "Montserrat";
+  border: 1px #5c85a4 solid;
+  background-color: #FFFBFB;
+  /* font-size: 1em;
+line-height: 1.4em;
+padding: 5px 8px;
+transition: background-color 0.2s ease 0s; */
+}
+
+.style_Textarea:focus {
+  /* background: none repeat scroll 0 0 #ffffff;
+  outline-width: 0; */
+  border: 1.5px #5c85a4 solid;
+}
+
+/* new */
+.label__container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.relevant__tag {
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100% !important;
+}
+
+.label__container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+  font-size: 20px;
+  user-select: none;
+  border: 1px #5c85a4 solid;
+  background: #fffbfb;
+  padding: 5px 15px;
+  height: 50px;
+  /* width: 150px; */
+  width: auto;
+  border-radius: 5px;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background: #ffff;
+  border: 1.82px black solid;
+  /* background-color: #ccc; */
+  border-radius: 25px;
+
+  transition: 0.15s;
+}
+
+/* When the checkbox is checked, add a blue background */
+.label__container input:checked~.checkmark {
+  background-color: limegreen;
+  border: none;
+  border-radius: 25px;
+  transition: 0.15s;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.label__container input:checked~.checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.label__container .checkmark:after {
+  left: 0.3em;
+  top: 0.1em;
+  width: 0.25em;
+  height: 0.5em;
+  border: solid white;
+  border-width: 0 0.15em 0.15em 0;
+  transform: rotate(45deg);
+  margin: 2px;
+}
+
+.tag__title {
+  margin-left: 7px;
+  font-size: 14px;
+  color: #333;
+  font-weight: 400;
+}
+
+.day_Textarea {
+  width: 660px;
+  height: 80px;
+}
+
+.flightContainer {
+  /* padding: 20px; */
+  width: 100%;
+  /* height: 100%; */
+
+  background: white;
+  margin-bottom: 20px;
+  border: 2px solid #e4e0e0;
+  margin: 0px 30px;
+  border-radius: 15px;
+  /* background: #f1f1f1; */
+}
+
+.title_text_1 {
+  font-size: 20px;
+  color: #000000
+}
+
+.radio input[type='radio'] {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #e41515;
+}
+
+.radio input[type='radio']:checked {
+  color: #5C85A4;
+
+}
+
+.input_file::file-selector-button {
+  background-color: #000000;
+  color: #FFFFFF;
+  width: 150px;
+  height: 40px;
+  box-shadow: 0px 6.55555534362793px 13.11111068725586px rgba(0, 0, 0, 0.16);
+  border: none;
+  border-radius: 4px;
+
+
+
+
+}
+
+
+
+.container-fluid {
+  background-color: white !important;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px !important;
+  /* padding: 0 !important; */
+}
+
+.headerBoxOuter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+
+.headerBox {
+  width: 900px;
+  max-width: 900px;
+  background-color: rgb(34, 52, 79);
+  padding: 20px;
+  font-size: 1.8rem;
+  text-align: center;
+  color: white;
+  margin: 10px 40px;
+  border-radius: 15px;
+}
+
+.headerBox p {
+  margin-bottom: 0 !important;
+}
+
+.pricing {
+  display: flex;
+  width: auto;
+  gap: 15px;
+  align-items: center;
+}
+
+.draft {
+  background-color: transparent;
+  color: #21325D;
+  text-decoration: underline;
+  outline: none;
+  border: none;
+}
+
+.buttonBoxPackage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.buttonBoxPackage .packageSubmit {
+  padding: 10px 22px;
+  background-color: #21325D;
+  color: white;
+  border-radius: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: none;
+  outline: none;
+}
+
+
+.createHolidayPackage {
+  background-color: #DFE6F7;
+  border-radius: 10px;
+  padding: 30px 30px;
+}
+
+
+
+.groupinpbut {
+  position: relative;
+}
+
+.groupinpbut .form-floating {
+  position: absolute;
+  width: 100%;
+}
+
+/* .inputwithButton {
+  position: absolute;
+} */
+
+.insideButton {
+  position: absolute !important;
+  right: 10px !important;
+  transform: translate(0%, 25%);
+  border-radius: 30px;
+  border: 2px solid #111 !important;
+  background-color: #111 !important;
+}
+
+.insideButton:hover {
+  background-color: #DFE6F7 !important;
+  color: #111 !important;
+  border: 2px solid #111 !important;
+}
+
+/* .form-floating>flootting {
+  height: 50px !important;
+} */
+
+
+.createHolidayPackage .form-label {
+  color: #111;
+  font-weight: bold;
+  font-size: 17px;
+}
+
+.createHolidayPackage::placeholder {
+  color: #ddd !important;
+}
+
+
+.form-floating>label {
+  color: #888;
+}
+
+
+.form-control:focus {
+  color: #212529;
+  background-color: #fff;
+  border-color: unset !important;
+  outline: 0;
+  box-shadow: unset !important;
+}
+
+
+
+div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
+  border: 0;
+  border-radius: 0.25em;
+  background: initial;
+  background-color: #21325D;
+  color: #fff;
+  font-size: 1em;
+}

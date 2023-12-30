@@ -1,0 +1,72 @@
+/* AdvertisementTable.css */
+.advertisement-container {
+    margin-top: 20px; /* Adjust margin-top as needed */
+    /* padding-top: 20px; */
+    margin: 0 auto;
+    max-width: 1000px; /* Adjust the max-width as needed */
+    overflow-x: scroll;
+    position: relative;
+  }
+  
+  /* .search-field {
+    margin-bottom: 20px;
+  } */
+  
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .table-head {
+    background-color: #f0f0f0;
+  }
+  
+  .table-row {
+      background-color: #052251; /* Lighter color for hover effect */
+      color: black; /* Text color on hover */
+    }
+  .table-row:hover {
+    background-color: #e0e0e0; /* Lighter color for hover effect */
+    color: black; /* Text color on hover */
+  }
+  
+  
+  /* .table-row {
+    &:hover {
+      background-color: #ed8d8d;
+      color: #100101;
+    }
+  } */
+  
+  .table-cell {
+    border: 1px solid #ddd;
+    padding: 12px; /* Adjust the padding as needed */
+    text-align: left;
+  }
+  
+  .table-cell img {
+    max-width: 100px; /* Adjust the max-width for images */
+    max-height: 100px; /* Adjust the max-height for images */
+  }
+  
+  .paginate {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .adsButton {
+    margin: 0 5px;
+    padding: 8px 16px; /* Adjust padding as needed */
+    cursor: pointer;
+    background-color: #040404;
+    color: white;
+    border: none;
+    border-radius: 3px;
+  }
+  
+  .adsButton:hover {
+    background-color: #fe8c6c;
+  }
+  

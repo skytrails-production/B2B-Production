@@ -1,0 +1,21 @@
+.travellerData {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 25px;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.travellerData p {
+    color: #21325D;
+    font-family: 'Montserrat';
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.travellerData span {
+    font-weight: 700;
+}

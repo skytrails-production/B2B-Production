@@ -1,0 +1,141 @@
+/* .hero {
+  background-color: blue;
+} */
+
+.flight_price {
+  color: '#071C2C';
+  font-size: '16px';
+  font-family: 'Montserrat';
+  font-weight: '600';
+  word-wrap: 'break-word'
+}
+
+.flight_price_total {
+  font: normal normal bold 20px/1px Quicksand !important;
+  letter-spacing: 0px !important;
+  color: #341883 !important;
+  opacity: 1 !important;
+}
+
+
+
+
+
+.returnheadicons {
+  display: flex;
+  padding: 8px 24px;
+  align-items: center;
+  gap: 16px;
+  border-radius: 4px;
+  border: 1px solid #BBB;
+  background: #FFFBFB;
+  justify-content: space-between;
+}
+
+.returnheadicons>div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.returnheadicons p {
+  color: #21325D;
+  font-family: 'Montserrat';
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.returnheadicons span {
+  color: #21325D;
+  font-family: 'Montserrat';
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* last */
+.hero>div:nth-child(1)>div>:nth-child(2) {
+  background-color: rgb(125, 81, 247) !important;
+
+  /* height: 200px;
+    overflow-y: auto; */
+  display: none !important;
+  color: #341883;
+}
+
+/* .hero > div:nth-child(1) #footer{
+    background-color: rgb(125, 81, 247) !important;
+  } */
+/* .hero > div:nth-child(1)>div {
+    display: "none";
+  
+  } */
+/* .hero > div:nth-child(2){
+      
+  } */
+/* .hero > div:nth-child(2)>div{
+    background-color: rgb(125, 81, 247) !important;
+  
+    height: 200px;
+    overflow-y: auto;
+  } */
+/* .hero > div:nth-child(2) > div > {
+    background-color: rgb(227, 117, 241) !important;
+  
+    
+  }  */
+/* .hero>div:nth-child(2)>div>div>div>div {
+      background-color: rgb(66, 69, 236) !important;
+      display: flex;
+      height: 180px;
+      overflow-y: auto;
+      width: auto;
+      
+  
+  
+  }  */
+#hero>div:nth-child(1)>div>div>div> :nth-child(1) {
+  display: none;
+}
+
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

@@ -1,0 +1,1 @@
+// export {default as successGIF} from "../Images/successReviewholiday.png"

@@ -1,0 +1,147 @@
+/* General styles */
+
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
+/* Form container */
+
+.form-container-agent {
+  width: 500px;
+  margin: 50px auto;
+  padding: 30px;
+  border-radius: 15px;
+  background-color: #b6c9f3;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.15);
+  animation: fadeIn ease 1s;
+  overflow: hidden;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Form title */
+
+.form-title-agent {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  color: rgb(14, 12, 12);
+  justify-content: center;
+}
+
+.form-agent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom, rgb(164, 194, 224) 0%, #f38282 100%);
+  /* padding: 50px; */
+  width: 100%;
+  animation: gradientAnimation 10sinfinite alternate;
+  -webkit-animation: gradientAnimation 10sinfinite alternate;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+/* Form elements */
+
+.form-agent {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group-agent {
+  display: flex;
+  align-items: center;
+}
+
+.form-label-agent {
+  width: 150px;
+  font-size: 16px;
+  font-weight: normal;
+  margin-right: 10px;
+  color: #2e7ebd;
+}
+
+.form-input-agent {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  outline: none;
+  background-color: #fafaf4;
+  transition: 0.3s ease-in-out;
+}
+
+.form-input-agent:focus {
+  border-color: #007bff;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-button-agent {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #187de9;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  justify-content: center;
+  margin-left: 30px;
+}
+
+.form-button-agent:hover {
+  background-color: #98c1ec;
+}
+
+/* Additional animations and effects */
+
+.form-label-agent:hover {
+  transform: scale(1.1);
+}
+
+.form-button-agent:active {
+  transform: translateY(2px);
+}
+
+.form-container-agent.success {
+  animation: confetti 5s ease-in-out;
+}
+
+@keyframes confetti {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0, 100px) rotate(360deg);
+  }
+}
+
+
+.agent-image{
+  align-items: center;
+  justify-content: center;
+}
+/* Feel free to add more styles and animations as needed! */
