@@ -26,7 +26,7 @@ const FlightReviewbooking = () => {
   const PassengersSaved = reducerState?.passengers?.passengersData;
   const markUpamount =
     reducerState?.userData?.userData?.data?.data?.markup?.flight;
-  console.log("reducerState", reducerState);
+  // console.log("reducerState", reducerState);
   const TicketDetails =
     reducerState?.flightBook?.flightBookDataGDS?.Response ||
     reducerState?.flightBook?.flightBookData?.Response;

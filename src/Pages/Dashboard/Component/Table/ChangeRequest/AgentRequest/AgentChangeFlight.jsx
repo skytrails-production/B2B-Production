@@ -40,7 +40,7 @@ const AllFlightChangeTickets = () => {
         setLoading(false);
       }
     }
-    console.log("hotelBookings========", flightBookings);
+    // console.log("hotelBookings========", flightBookings);
     fetchFlightBookings();
   }, [currentPage, searchTerm]);
   const handlePageChange = (page) => {

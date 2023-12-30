@@ -49,9 +49,9 @@ const AllAdvertisementTable = () => {
     setCurrentPage(page);
   };
   const handleSearch = (event) => {
-    console.log("event",event)
+    // console.log("event",event)
     setSearchTerm(event.target.value);
-    console.log("event.target.value",event.target.value)
+    // console.log("event.target.value",event.target.value)
     setCurrentPage(1); // Reset to the first page when performing a new search
   };
   const tableHeadings = [

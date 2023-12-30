@@ -22,7 +22,7 @@ const CreateAgentPage = () => {
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-console.log("============",e)
+// console.log("============",e)
     try {
       const response = await fetch(`${apiURL.baseURL}/skytrails/api/agent/createAgent`, {
         method: 'POST',
@@ -34,7 +34,7 @@ console.log("============",e)
 
       if (response.ok) {
         const data = await response.json();
-        console.log('Agent created successfully:', data);
+        // console.log('Agent created successfully:', data);
         alert('Agent created successfully!');
         navigate('/admin/dashboard');
       } else{

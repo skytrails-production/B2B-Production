@@ -77,7 +77,7 @@ export default function Popularfilter() {
 
   const markUpamount =
     reducerState?.userData?.userData?.data?.data?.markup?.flight;
-  console.log("fareValue 🤞", fareofall);
+  // console.log("fareValue 🤞", fareofall);
 
 
   // flight departure
@@ -152,10 +152,10 @@ export default function Popularfilter() {
     markUpamount
   );
 
-  console.log(fareValueDepart, "fare departure")
-  console.log(fareValueReturn, "fare return")
+  // console.log(fareValueDepart, "fare departure")
+  // console.log(fareValueReturn, "fare return")
 
-  console.log(totalFare, "totalFare")
+  // console.log(totalFare, "totalFare")
 
   let total = 0;
 

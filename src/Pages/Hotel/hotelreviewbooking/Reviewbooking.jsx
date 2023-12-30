@@ -30,7 +30,7 @@ const Guestdetail = () => {
   });
 
 
-  console.log(reducerState?.hotelSearchResult, "hotelreducer shaan")
+  // console.log(reducerState?.hotelSearchResult, "hotelreducer shaan")
   // const hotelll = reducerState?.hotelSearchResult?.isLoadingHotelRoom
   // console.log(hotelll, "hotelll")
   // useEffect(() => {

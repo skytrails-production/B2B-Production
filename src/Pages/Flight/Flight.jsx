@@ -18,7 +18,7 @@ const Flight = () => {
   const [loader, setLoader] = useState(false);
   const dispatch = useDispatch()
 
-  console.log("reducerState", reducerState);
+  // console.log("reducerState", reducerState);
   async function AllFlightCLEAR_Function() {
     await dispatch(ClearAllActionReturn())
     await dispatch(flightReducerClear())

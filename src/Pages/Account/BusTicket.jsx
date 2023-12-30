@@ -29,7 +29,7 @@ const BusTicket = () => {
         );
         if (response?.data) {
           setData(response?.data);
-          console.log("Data fetched:", response.data);
+          // console.log("Data fetched:", response.data);
         } else {
           console.error("No data received.");
         }
@@ -151,7 +151,7 @@ const BusTicket = () => {
     //    TicketId,
     //   ...formData
     // }
-    console.log('Form Data:',emailTicket);    
+    // console.log('Form Data:',emailTicket);    
     setLoading(true);
     try {
       const response = await axios.post(`${apiURL.baseURL}/skyTrails/bus/emailTicket`,

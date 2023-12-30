@@ -33,7 +33,7 @@ const AdminDashboardData = () => {
       try {
         const bookingListResponse = await axios.get(`${apiURL.baseURL}/skytrails/api/admin/getAllFlightBookingList`);
         // Handle the booking list data as needed
-        console.log('Booking List:', bookingListResponse.data.result);
+        // console.log('Booking List:', bookingListResponse.data.result);
       } catch (error) {
         console.error('Error fetching booking list data:', error);
       }

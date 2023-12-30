@@ -121,7 +121,7 @@ const Visaform = () => {
   }, []);
 
 
-  console.log(countries, "country data")
+  // console.log(countries, "country data")
 
   const validateForm = () => {
     const newErrors = {};

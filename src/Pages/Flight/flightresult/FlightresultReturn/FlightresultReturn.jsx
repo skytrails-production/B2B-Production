@@ -30,7 +30,7 @@ const FlightresultReturn = () => {
     }
   }, [result])
   
-  console.log(result, "resultCheck", reducerState)
+  // console.log(result, "resultCheck", reducerState)
   let initialGoFlight;
   let initialReturnFlight;
   let destination

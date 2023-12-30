@@ -169,7 +169,7 @@ const OneWay = () => {
   const validateDeparture = (departure) => {
     const result1 = fromSearchResults.filter((item) => item.id === departure)
     const result = result1.length > 0 ? true : false;
-    console.log(result1.length, "result1.....")
+    // console.log(result1.length, "result1.....")
 
     return result
 
@@ -177,7 +177,7 @@ const OneWay = () => {
   const validateArival = (departure) => {
     const result1 = toSearchResults.filter((item) => item.id === departure)
     const result = result1.length > 0 ? true : false;
-    console.log(result1.length, "result2.....")
+    // console.log(result1.length, "result2.....")
 
     return result
 
@@ -189,7 +189,7 @@ const OneWay = () => {
     const adultCount = formData.get("adult");
     const infantCount = formData.get("infant");
     const childCount = formData.get("child");
-    console.log(+adultCount + +infantCount + +childCount, "check")
+    // console.log(+adultCount + +infantCount + +childCount, "check")
     if (+adultCount + +infantCount + +childCount > 9) {
       setValidationError("Total Number of passenger should be less then 9");
       return;

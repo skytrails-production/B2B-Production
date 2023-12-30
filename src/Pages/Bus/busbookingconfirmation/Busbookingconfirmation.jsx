@@ -45,7 +45,7 @@ const Busbookingconfirmation = () => {
   const passengerNames = JSON.parse(sessionStorage.getItem("busPassName"));
   const markUpamount =
     reducerState?.userData?.userData?.data?.data?.markup?.bus;
-  console.log("passengerNames", passengerNames);
+  // console.log("passengerNames", passengerNames);
   // console.log("dispatchhhhhhh", dispatch);
   // console.log("_______________", reducerState);
   const busFullData =
@@ -152,12 +152,12 @@ const Busbookingconfirmation = () => {
   const passengerCount = parsedSeatData?.blockedSeatArray.length;
   const resultIndex = parsedSeatData?.resultIndex;
   const selectedBus = busFullData?.BusResults.find((bus) => bus.ResultIndex === resultIndex);
-  console.log(selectedBus, "selectedBus")
+  // console.log(selectedBus, "selectedBus")
   const cancellationPolicy = selectedBus?.CancellationPolicies;
-  console.log(cancellationPolicy, "cancel policy")
+  // console.log(cancellationPolicy, "cancel policy")
   const departureDate = dayjs(selectedBus?.DepartureTime);
   const arrivalDate = dayjs(selectedBus?.ArrivalTime);
-  console.log(cancellationPolicy, "cancel policy")
+  // console.log(cancellationPolicy, "cancel policy")
   // Format the dates
   const departureFormattedDate = departureDate.format("DD MMM, YY");
   const arrivalFormattedDate = arrivalDate.format("DD MMM, YY");
@@ -186,7 +186,7 @@ const Busbookingconfirmation = () => {
     //   icon: "success"
     // }).then(() => {
     dispatch(clearBusSearchReducer());
-    console.log("bus reducer cleared successfully", reducerState)
+    // console.log("bus reducer cleared successfully", reducerState)
     navigate("/");
     // });
   }

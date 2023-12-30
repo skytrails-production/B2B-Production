@@ -83,7 +83,7 @@ const Flightdetail = () => {
 
 
 
-  console.log(selectedCategory, "selected")
+  // console.log(selectedCategory, "selected")
 
 
 

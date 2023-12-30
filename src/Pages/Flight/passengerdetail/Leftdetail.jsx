@@ -504,7 +504,7 @@ const Leftdetail = () => {
 
 
   const fareQuoteData = reducerState?.flightFare?.flightQuoteData?.Results;
-  console.log(fareQuoteData, "fare quote data")
+  // console.log(fareQuoteData, "fare quote data");
 
 
   const img = fareQuoteData?.Segments?.[0]?.[0]?.Airline?.AirlineCode;

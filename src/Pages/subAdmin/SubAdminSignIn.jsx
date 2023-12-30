@@ -21,7 +21,7 @@ function handleclick(){
 }
  const handleSubmit = async (e) => {
     e.preventDefault();
-console.log("e",e)
+// console.log("e",e)
     try {
       const response = await fetch(`${apiURL.baseURL}/skytrails/api/subAdmin/subAdminLogin`, {
         method: 'POST',

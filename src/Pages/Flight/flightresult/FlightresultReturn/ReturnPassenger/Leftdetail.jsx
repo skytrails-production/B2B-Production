@@ -38,7 +38,7 @@ const Leftdetail = () => {
   const fareRule = reducerState?.flightFare?.flightRuleData?.FareRules;
   const fareRuleReturn =
     reducerState?.flightFare?.flightRuleDataReturn?.FareRules;
-  console.log(fareValueReturn, fareRuleReturn, "vivekk");
+  // console.log(fareValueReturn, fareRuleReturn, "vivekk");
   const data = reducerState?.oneWay?.oneWayData?.data?.data?.Response;
   const isPassportRequired =
     reducerState?.flightFare?.flightQuoteData?.Results
@@ -52,8 +52,8 @@ useEffect(()=>{
     navigate("/FlightresultReturn")
   }
 })
-  console.log(flightDeparture, "flight departure")
-  console.log(flightReturn, "flight return ")
+  // console.log(flightDeparture, "flight departure")
+  // console.log(flightReturn, "flight return ")
 
 
   const passengerTemplate = {

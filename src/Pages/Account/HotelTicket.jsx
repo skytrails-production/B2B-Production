@@ -31,7 +31,7 @@ const HotelTicket = () => {
         );
         if (response?.data) {
           setData(response?.data);
-          console.log("Data fetched:", response.data);
+          // console.log("Data fetched:", response.data);
         } else {
           console.error("No data received.");
         }
@@ -135,7 +135,7 @@ const HotelTicket = () => {
     //    TicketId,
     //   ...formData
     // }
-    console.log("Form Data:", emailTicket, TicketId);
+    // console.log("Form Data:", emailTicket, TicketId);
     setLoading(true);
     try {
       const response = await axios.post(

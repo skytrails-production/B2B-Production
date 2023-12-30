@@ -33,7 +33,7 @@ const AllFlightChangeTickets = () => {
         setLoading(false);
       }
     }
-    console.log("hotelBookings========", hotelBookings);
+    // console.log("hotelBookings========", hotelBookings);
     fetchHotelBookings();
   }, [currentPage, searchTerm]);
   const handlePageChange = (page) => {

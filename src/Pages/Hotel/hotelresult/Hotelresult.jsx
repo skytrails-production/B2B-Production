@@ -154,7 +154,7 @@ export default function Popularfilter() {
   };
 
 
-  console.log(selectedCategory, "selected category");
+  // console.log(selectedCategory, "selected category");
 
 
 
@@ -163,7 +163,7 @@ export default function Popularfilter() {
 
   const sortedAndFilteredResults = result?.HotelResults
     ?.filter((item) => {
-      console.log("Item:", item);
+      // console.log("Item:", item);
       const starRating = item?.StarRating;
       const publishedPrice = item?.Price?.PublishedPrice;
       const categoryFilters = selectedCategory?.map((category) => {
@@ -193,7 +193,7 @@ export default function Popularfilter() {
         }
       });
       return categoryFilters?.every((filter) => filter);
-      console.log("Category Filters:", categoryFilters);
+      // console.log("Category Filters:", categoryFilters);
     })
     ?.sort((a, b) =>
       sortOption === "lowToHigh"

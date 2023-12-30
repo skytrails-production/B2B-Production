@@ -72,7 +72,7 @@ const Flightbookingdetail = () => {
   //   paymentOption,
   //   ResultIndex
   // );
-  console.log("reducerState", reducerState);
+  // console.log("reducerState", reducerState);
   const fareQuote =
     reducerState?.flightFare?.flightQuoteData?.Results?.Segments;
   // const flightReviewDetails =
@@ -362,7 +362,7 @@ const Flightbookingdetail = () => {
 
   const handleSubmit = (e) => {
     if (fareValue && fareValueReturn) {
-      console.log("returnInitiated")
+      // console.log("returnInitiated")
       if (
         fareValue?.Fare?.BaseFare +
           fareValue?.Fare?.Tax +

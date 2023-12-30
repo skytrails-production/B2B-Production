@@ -70,7 +70,7 @@ const BusForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const reducerState = useSelector((state) => state);
-  console.log(reducerState);
+  // console.log(reducerState);
   const [isLoading, setIsLoading] = useState(false);
   const [fromSearchResults, setFromSearchResults] = useState([]);
   const [toSearchResults, setToSearchResults] = useState([]);

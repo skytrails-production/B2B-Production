@@ -57,10 +57,10 @@ const SubAdminTable = () => {
     };
   
     const handleStatusChange = async (userId) => {
-        console.log("handleStatusChange called for userId:", userId);
-        console.log("selectedUserStatusMap[userId]",selectedUserStatusMap[userId])
+        // console.log("handleStatusChange called for userId:", userId);
+        // console.log("selectedUserStatusMap[userId]",selectedUserStatusMap[userId])
       const status = selectedUserStatusMap[userId];
-      console.log("status",status)
+      // console.log("status",status)
       try {
         const response = await axios.put(
           `${apiURL.baseURL}/skytrails/api/admin/updateSubAdminStatus`,
@@ -71,7 +71,7 @@ const SubAdminTable = () => {
         );
   
         // Log the response for debugging (you can remove this in production)
-        console.log(response);
+        // console.log(response);
   
         // Refetch the user data after updating the status
         fetchUserData();

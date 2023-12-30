@@ -12,7 +12,7 @@ const FlightReturnConfirmationDetails = (props) => {
 
     const reducerState = useSelector((state) => state);
 
-    console.log(reducerState, "reducerstate")
+    // console.log(reducerState, "reducerstate")
 
     const adults = sessionStorage.getItem("adults");
     const childs = sessionStorage.getItem("childs");
@@ -20,7 +20,7 @@ const FlightReturnConfirmationDetails = (props) => {
     const { ticket } = props;
     const [loader, setLoader] = useState(true)
 
-    console.log(ticket, "ticket")
+    // console.log(ticket, "ticket")
    
 // if (loader) {
     Swal.fire({
@@ -382,7 +382,7 @@ const FlightReturnConfirmationDetails = (props) => {
     const fareQuoteData = reducerState?.flightFare?.flightQuoteData?.Results;
     // console.log(fareQuoteData, "fare quote data");
     const flightDetails = reducerState?.flightFare;
-    console.log(flightDetails, "flight ka detial")
+    // console.log(flightDetails, "flight ka detial")
 
     const img = fareQuoteData?.Segments?.[0]?.[0]?.Airline?.AirlineCode;
     const airlineName = fareQuoteData?.Segments?.[0]?.[0]?.Airline?.AirlineName;
@@ -438,7 +438,7 @@ const FlightReturnConfirmationDetails = (props) => {
 
     const flightBookDataReturn = reducerState?.flightBook?.flightBookDataReturnGDS?.Response ||
         reducerState?.flightBook?.flightBookDataReturn?.Response;
-    console.log(flightBookDataReturn, "flight data return");
+    // console.log(flightBookDataReturn, "flight data return");
     // return flight data details
 
 
@@ -451,9 +451,9 @@ const FlightReturnConfirmationDetails = (props) => {
 
 
     const fareQuoteDataReturn = reducerState?.flightFare?.flightQuoteDataReturn?.Results;
-    console.log(fareQuoteData, "fare quote data");
+    // console.log(fareQuoteData, "fare quote data");
     // const flightDetails = reducerState?.flightFare;
-    console.log(fareQuoteDataReturn, "flight ka detial")
+    // console.log(fareQuoteDataReturn, "flight ka detial")
 
     const imgReturn = fareQuoteDataReturn?.Segments?.[0]?.[0]?.Airline?.AirlineCode;
     const airlineNameReturn = fareQuoteDataReturn?.Segments?.[0]?.[0]?.Airline?.AirlineName;

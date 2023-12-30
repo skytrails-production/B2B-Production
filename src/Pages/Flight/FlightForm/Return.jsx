@@ -210,7 +210,7 @@ const Return = () => {
   const validateDeparture = (departure) => {
     const result1 = fromSearchResults.filter((item) => item.id === departure)
     const result = result1.length > 0 ? true : false;
-    console.log(result1.length, "result1.....")
+    // console.log(result1.length, "result1.....")
 
     return result
 
@@ -218,7 +218,7 @@ const Return = () => {
   const validateArive = (departure) => {
     const result1 = toSearchResults.filter((item) => item.id === departure)
     const result = result1.length > 0 ? true : false;
-    console.log(result1.length, "result2.....")
+    // console.log(result1.length, "result2.....")
 
     return result
 

@@ -29,9 +29,9 @@ const CreateAdvertisementForm = () => {
   };
 
   const handleFileChange = (e) => {
-    console.log("e==============>>>>", e)
+    // console.log("e==============>>>>", e)
     const file = e.target.files[0];
-  console.log("file", file)
+  // console.log("file", file)
     setFormValues({
       ...formValues,
       images: file,
@@ -73,14 +73,14 @@ const CreateAdvertisementForm = () => {
         },
       });
       if (response.status >= 200 && response.status < 300) {
-        console.log('Advertisement created successfully:', response.data);
+        // console.log('Advertisement created successfully:', response.data);
         alert('Advertisement created successfully!');
         navigate('/admin/dashboard'); // Redirect to admin dashboard
       } else {
         alert('Failed to create Advertisement!');
-        console.error('Failed to create Advertisement:', response.statusText);
+        // console.error('Failed to create Advertisement:', response.statusText);
       }
-      console.log('API Response:', response.data);
+      // console.log('API Response:', response.data);
       // Handle success or further actions as needed
     } catch (error) {
       console.error('API Error:', error.response.data);

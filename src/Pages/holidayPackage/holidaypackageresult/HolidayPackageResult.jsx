@@ -130,7 +130,7 @@ const HolidayPackageResult = () => {
 
 
 
-  console.log(filteredPackage, "filtered package");
+  // console.log(filteredPackage, "filtered package");
   const sortedAndFilteredResults = filteredPackage?.filter((item) => {
     const publishedPrice = item?.pakage_amount.amount;
     const isIncluded = item.insclusions.some((inclusion) => inclusion[selectedCategory] === 'true');

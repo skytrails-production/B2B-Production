@@ -154,8 +154,7 @@ const isValidMobileNumber = (mobileNumber) => {
       if (response.ok) {
         const data = await response.json();
         proceedPayment(data.result.access, "test", data.result.key);
-        console.log("API call successful:", data);
-
+        // console.log("API call successful:", data);
         setAmount("");
         setMobileNumber("");
         handleCloseModal();
@@ -178,7 +177,7 @@ const isValidMobileNumber = (mobileNumber) => {
     const options = {
       access_key: `${accessKey}`,
       onResponse: async (response) => {
-        console.log(response, "response");
+        // console.log(response, "response");
         if (response.status === "success") {
           try {
             // Make API call if payment status is 'success'
@@ -200,7 +199,7 @@ const isValidMobileNumber = (mobileNumber) => {
             const verifyResponse = await axios.post(`
               ${apiURL.baseURL}/skyTrails/paymentFailure?merchantTransactionId=${response.txnid}`
             );
-            console.log(verifyResponse.data);
+            // console.log(verifyResponse.data);
             // Handle verifyResponse as needed
           } catch (error) {
             console.error("Error verifying payment:", error);

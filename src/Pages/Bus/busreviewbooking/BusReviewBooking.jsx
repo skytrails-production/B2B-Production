@@ -62,7 +62,7 @@ const BusReviewBooking = () => {
     reducerState?.userData?.userData?.data?.data?.markup?.bus;
 
   // console.log(seatObject);
-  console.log(reducerState, "reducer state");
+  // console.log(reducerState, "reducer state");
 
   const published = seatObject.reduce(function (
     accumulator,

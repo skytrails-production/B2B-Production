@@ -100,7 +100,7 @@ const FlightReturnBookingDetails = () => {
     reducerState?.flightFare?.flightQuoteDataReturn?.Results;
   // console.log(fareValue, "😍Fare value", fareValueReturn);
   const Passengers = reducerState?.passengers?.passengersData;
-  console.log(Passengers, "passenger ka data");
+  // console.log(Passengers, "passenger ka data");
   const PassengersReturn = reducerState?.passengers?.passengerDataReturn;
   const userId = reducerState?.logIn?.loginData?.data?.data?.id;
   const currentBalance = reducerState?.userData?.userData?.data?.data?.balance;
@@ -617,7 +617,7 @@ const FlightReturnBookingDetails = () => {
   };
 
   const fareQuoteData = reducerState?.flightFare?.flightQuoteData?.Results;
-  console.log(fareQuoteData, "fare quote data");
+  // console.log(fareQuoteData, "fare quote data");
 
   const img = fareQuoteData?.Segments?.[0]?.[0]?.Airline?.AirlineCode;
   const airlineName = fareQuoteData?.Segments?.[0]?.[0]?.Airline?.AirlineName;
@@ -644,8 +644,8 @@ const FlightReturnBookingDetails = () => {
   const flightReturn =
     reducerState?.flightFare?.flightQuoteDataReturn?.Results?.Segments[0]?.[0];
 
-  console.log(flightDeparture, "flight departure");
-  console.log(flightReturn, "flight return ");
+  // console.log(flightDeparture, "flight departure");
+  // console.log(flightReturn, "flight return ");
 
   const duration1 = `${Math.floor(flightDeparture?.Duration / 60)}hr ${
     flightDeparture?.Duration % 60
@@ -677,8 +677,8 @@ const FlightReturnBookingDetails = () => {
   const formattedDate1 = date2.toLocaleString("en-US", options1);
   const [month1, day1, year1, time1, ampm1] = formattedDate1.split(" ");
   const desiredFormat1 = `${day1}${month1}-${year1} ${time1} ${ampm1}`;
-  console.log(desiredFormat1, "desired format");
-  console.log(desiredFormat, "desired format");
+  // console.log(desiredFormat1, "desired format");
+  // console.log(desiredFormat, "desired format");
 
   const duration3 = `${Math.floor(flightReturn?.Duration / 60)}hr ${
     flightReturn?.Duration % 60
@@ -710,8 +710,8 @@ const FlightReturnBookingDetails = () => {
   const formattedDate4 = date4.toLocaleString("en-US", options4);
   const [month4, day4, year4, time4, ampm4] = formattedDate4.split(" ");
   const desiredFormat4 = `${day4}${month4}-${year4} ${time4} ${ampm4}`;
-  console.log(desiredFormat4, "desired format");
-  console.log(desiredFormat3, "desired format");
+  // console.log(desiredFormat4, "desired format");
+  // console.log(desiredFormat3, "desired format");
 
   if (loading) {
     return (

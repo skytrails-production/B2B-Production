@@ -93,7 +93,7 @@ const Holidayguestinfo = ({ setadultCount, setchildCount }) => {
   const savedData = JSON.parse(savedDataString);
   const savedDestination = savedData.destination.toUpperCase();
   const savedDays = savedData.days;
-  console.log(reducerForm,"reducer form.................")
+  // console.log(reducerForm,"reducer form.................")
 
   const handlePersonChange = (e) => {
     const { name, value } = e.target;
@@ -234,7 +234,7 @@ const Holidayguestinfo = ({ setadultCount, setchildCount }) => {
 
         }
       }).catch((data) => {
-        console.log("dataddddddddddd", data);
+        // console.log("dataddddddddddd", data);
       })
     }
     // handleSuccessandNavigate();
