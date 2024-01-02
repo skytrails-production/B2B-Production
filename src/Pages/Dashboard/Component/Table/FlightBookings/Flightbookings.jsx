@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  Paper,
   TextField,
   InputAdornment,
 } from "@mui/material";
@@ -78,7 +73,6 @@ const AllFlightBooking = () => {
             <th>Flight Name</th>
             <th>Origin</th>
             <th>Destination </th>
-            <th>Gender</th>
           </tr>
         </thead>
         <tbody>
@@ -91,10 +85,9 @@ const AllFlightBooking = () => {
               <td>{`${booking.passengerDetails[0]?.firstName} ${booking.passengerDetails[0]?.lastName}`||"No Data"}</td>
               <td>{booking.passengerDetails[0]?.email||"No Data"}</td>
               <td>{booking.passengerDetails[0]?.ContactNo || "N/A"}</td>
-              <td>{booking.airlineDetails.AirlineName||"No Data"}</td>
+              <td>{booking.airlineDetails[0]?.Airline.AirlineName||"No Data"}</td>
               <td>{booking.origin||"No Data"}</td>
               <td>{booking.destination||"No Data"}</td>
-              <td>{booking.passengerDetails[0].gender||"No Data"}</td>
 
             </tr>
           ))}
@@ -102,15 +95,17 @@ const AllFlightBooking = () => {
       </table>
       {/* Pagination */}
       <div className="paginate">
-        {Array.from({ length: totalPages }, (_, i) => (
-          <button
-            className="flightButton"
-            key={i}
-            onClick={() => handlePageChange(i + 1)}
-          >
-            <h5 className="flightButton">{i + 1}</h5>
-          </button>
-        ))}
+      {Array.from({ length: totalPages }, (_, i) => (
+        <button
+          className={`flightButton ${currentPage === i + 1 ? 'activePage' : ''}`}
+          key={i}
+          onClick={() => handlePageChange(i + 1)}
+          disabled={currentPage === i + 1 || i + 1 > totalPages}
+        >
+          <h5 className="flightButton">{i + 1}</h5>
+        </button>
+      ))}
+      
       </div>
     </div>
   );

@@ -71,8 +71,8 @@ import CreateHolidayPackage from "../Pages/HotelPackage/createholidaypackage/Cre
 import EditHolidayPackage from "../Pages/Dashboard/Component/Table/packageUpdate/EditPackage";
 import Queue from "../Pages/Account/Queue";
 import MainBox from "../Layout/MainBox";
-
-import { useNavigate, useParams, useLocation , Navigate } from "react-router-dom";
+import CreateMarkupForm from '../Pages/Dashboard/Component/Table/AddMarkup'
+import { useNavigate, useParams, useLocation, Navigate } from "react-router-dom";
 import { useDispatch, useSelector, useReducer } from "react-redux";
 import { ipAction, tokenAction } from "../Redux/IP/actionIp";
 // import Slider from "../Pages/Banner/Slider";
@@ -96,6 +96,9 @@ import BusOneTicket from "../Pages/Account/BusTicket";
 import HotelOneTicket from "../Pages/Account/HotelTicket";
 import FlightOpen from "../Pages/Account/FlightOpen";
 import CreateAgentPage from "../Pages/Dashboard/Component/Table/AddAgent"
+import CreateEventForm from "../Pages/Dashboard/Component/Table/AddEvent"
+import Download from "./Download";
+
 const MainPage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -106,11 +109,44 @@ const MainPage = () => {
   const isDashboard = location.pathname === "/admin/dashboard";
   const isSubAdminLogin = location.pathname === "/subAdminLogin";
   const isSubAdmindashboard = location.pathname === "/subAdmin/dashboard";
+  const isAddMarkup = location.pathname === "/addMarkup"
   const navigate = useNavigate();
   const { id } = useParams();
   const isFlightEticketPage = location.pathname.startsWith('/FlightEticket');
   const isBusEticketPage = location.pathname.startsWith('/BusEticket');
   const isHotelEticketPage = location.pathname.startsWith('/HotelEticket');
+
+
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth > 750);
+  const [scrollY, setScrollY] = useState(0);
+
+
+
+  // if wesbite width will go below 750px
+
+
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth > 750);
+    };
+
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+
+  }, [scrollY, windowWidth]);
 
   useEffect(() => {
     if (
@@ -123,8 +159,10 @@ const MainPage = () => {
     } else if (location.pathname === "/admin/dashboard") {
       if (!reducerState?.adminAuth?.adminData?.data) {
         navigate("/admin/dashboard");
-      } else {
+      }
+      else {
         navigate("/adminLogin");
+        navigate("/addMarkup")
       }
     } else if (location.pathname === "/subAdmin/dashboard") {
       if (!reducerState?.adminAuth?.adminData?.data) {
@@ -160,6 +198,17 @@ const MainPage = () => {
     return <LoadingSpinner />;
   }
 
+
+
+
+  if (!windowWidth) {
+    return (
+      <>
+        <Download />
+      </>
+    )
+  }
+
   return (
     <>
       {/* <div className="header_section" style={{ width: "100vw" }}>
@@ -168,8 +217,8 @@ const MainPage = () => {
       </div> */}
 
       {/* <Headers/> */}
-      {location.pathname === "/Login" || location.pathname === "/Registration" || isFlightEticketPage || isBusEticketPage || isHotelEticketPage ? null :<Headers />}
-      {location.pathname === "/" || location.pathname === "/Login" || location.pathname === "/Registration" || isFlightEticketPage || isBusEticketPage || isHotelEticketPage ? null :<InnerNavbar />}
+      {location.pathname === "/Login" || location.pathname === "/Registration" || location.pathname === "/addMarkup" || location.pathname === "/addEvents" || isFlightEticketPage || isBusEticketPage || isHotelEticketPage ? null : <Headers />}
+      {location.pathname === "/" || location.pathname === "/Login" || location.pathname === "/Registration" || location.pathname === "/addMarkup" || location.pathname === "/addEvents" || isFlightEticketPage || isBusEticketPage || isHotelEticketPage ? null : <InnerNavbar />}
 
       {!isLoginRoute && !isRegisterRoute &&
         !isDashboard &&
@@ -412,20 +461,30 @@ const MainPage = () => {
                   element={<CreateSubAdminPage />}
                 />
                 <Route
-                exact
-                path="/addAgent"
-                element={<CreateAgentPage />}
-              />
-              <Route
-              exact
-              path="/addAdvertisement"
-              element={<CreateAdvertisementForm />}
-            />
-            <Route 
-            exact
-              path="/addWebAdvertisement"
-              element={<CreateWebAdvertisementForm />}
-            />
+                  exact
+                  path="/addAgent"
+                  element={<CreateAgentPage />}
+                />
+                <Route
+                  exact
+                  path="/addAdvertisement"
+                  element={<CreateAdvertisementForm />}
+                />
+                <Route
+                  exact
+                  path="/addWebAdvertisement"
+                  element={<CreateWebAdvertisementForm />}
+                />
+                <Route
+                  exact
+                  path="/addMarkup"
+                  element={<CreateMarkupForm />}
+                />
+                <Route
+                  exact
+                  path="/addEvents"
+                  element={<CreateEventForm />}
+                />
                 <Route
                   exact
                   path="/AdminUserForm"
@@ -458,14 +517,14 @@ const MainPage = () => {
                 ></Route>
                 <Route exact path="/Queue" element={<Queue />}></Route>
                 <Route exact path="/FlightConfirmBooking/:id" element={<FlightOpen />} />
-                <Route exact path="/FlightEticket/:id" element={<FlightOneTicket />} /> 
+                <Route exact path="/FlightEticket/:id" element={<FlightOneTicket />} />
                 <Route exact path="/BusEticket/:id" element={<BusOneTicket />} />
-                <Route exact path="/HotelEticket/:id" element={<HotelOneTicket />} /> 
+                <Route exact path="/HotelEticket/:id" element={<HotelOneTicket />} />
               </Routes>
             </div>
 
 
-                        
+
             {/* main page footer */}
             {/* {!isLoginRoute && <Footer />} */}
           </div>
@@ -483,13 +542,20 @@ const MainPage = () => {
           <Route exact path="/adminLogin" element={<AdminLogin />}></Route>
           <Route exact path="/subAdmin/dashboard/*" element={<SubAdminDashboard />} > </Route>
           {isSubAdminLogin && (
-          <Route
-            exact
-            path="/subAdminLogin"
-            element={<SubAdminLoginPage />}></Route>
+            <Route
+              exact
+              path="/subAdminLogin"
+              element={<SubAdminLoginPage />}></Route>
+          )}
+          {isAddMarkup && (
+            <Route
+              exact
+              path="/addMarkup"
+              element={<CreateMarkupForm />}></Route>
           )}
         </Routes>
-        
+
+
       </div>
 
       {/* main page footer */}

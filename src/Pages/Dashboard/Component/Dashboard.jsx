@@ -249,6 +249,10 @@ export default function VerticalTabs() {
   const createEvents = () => {
     navigate("/addEvents");
   };
+
+  const createMarkup=()=>{
+    navigate("/addMarkup")
+  }
   // const [value, setValue] = useState(0);
   // const handleChange = (event, newValue) => {
   //   setValue(newValue);
@@ -496,13 +500,24 @@ export default function VerticalTabs() {
                 <MenuItem
                   onClick={() => {
                     handleClose();
-                    createWebAdvertisemnet();
+                    createEvents();
                   }}
                 >
                   <AddPhotoAlternateIcon>
                     <PersonAdd fontSize="small" />
                   </AddPhotoAlternateIcon>
                   Add Events
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    createMarkup();
+                  }}
+                >
+                  <AddPhotoAlternateIcon>
+                    <PersonAdd fontSize="small" />
+                  </AddPhotoAlternateIcon>
+                  Add Markup
                 </MenuItem>
                 <MenuItem
                   onClick={() => {

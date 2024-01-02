@@ -3,14 +3,14 @@ import React, { useState } from 'react';
 import './AddAgent.css'; // Import the CSS file
 import { apiURL } from '../../../../Constants/constant';
 import { useNavigate } from 'react-router-dom';
-import profilePicUrl from '../../../../Images/logo.jpeg'
+import profilePicUrl from '../../../../Images/logo.jpeg';
 
 const CreateAgentPage = () => {
   const [formData, setFormData] = useState({
-    username: '',
     email: '',
     password: '',
     mobile_number: '',
+    panNumber: '',
   });
 
   const handleChange = (e) => {
@@ -22,9 +22,11 @@ const CreateAgentPage = () => {
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
+
 // console.log("============",e)
+
     try {
-      const response = await fetch(`${apiURL.baseURL}/skytrails/api/agent/createAgent`, {
+      const response = await fetch(`${apiURL.baseURL}/skyTrails/api/admin/createAgent`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -37,14 +39,14 @@ const CreateAgentPage = () => {
         // console.log('Agent created successfully:', data);
         alert('Agent created successfully!');
         navigate('/admin/dashboard');
-      } else{
-        if(response.status === 409){
+      } else {
+        if (response.status === 409) {
           alert('Agent with this username or email already exists!');
-          console.error('SubAdmin already exist:.', response.statusText);
-        }else {
-          alert('Failed to create subadmin:!');
-        console.error('Failed to create subadmin:', response.statusText);
-      }
+          console.error('SubAdmin already exists:', response.statusText);
+        } else {
+          alert('Failed to create subadmin!');
+          console.error('Failed to create subadmin:', response.statusText);
+        }
       }
     } catch (error) {
       console.error('Error creating subadmin:', error.message);
@@ -54,21 +56,10 @@ const CreateAgentPage = () => {
   return (
     <div className="form-container-agent">
       <form className="form-agent" onSubmit={handleSubmit}>
-    <img  src={profilePicUrl} height={50}  alt='logo' className="agent-image"/>
-      <h1 className="form-title-agent"><strong>Create Agent</strong></h1>
-        <div className="form-group-agent">
-          <label htmlFor="username" className="form-label">
-            Username:
-          </label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            className="form-input-agent"
-          />
-        </div>
+        <img src={profilePicUrl} height={50} alt="logo" className="agent-image" />
+        <h1 className="form-title-agent">
+          <strong>Create Agent</strong>
+        </h1>
 
         <div className="form-group-agent">
           <label htmlFor="email" className="form-label">
@@ -86,7 +77,7 @@ const CreateAgentPage = () => {
 
         <div className="form-group-agent">
           <label htmlFor="password" className="form-label">
-           Password:
+            Password:
           </label>
           <input
             type="password"
@@ -111,6 +102,21 @@ const CreateAgentPage = () => {
             className="form-input-agent"
           />
         </div>
+
+        <div className="form-group-agent">
+          <label htmlFor="panNumber" className="form-label">
+            PAN Number:
+          </label>
+          <input
+            type="text"
+            id="panNumber"
+            name="panNumber"
+            value={formData.panNumber}
+            onChange={handleChange}
+            className="form-input-agent"
+          />
+        </div>
+
         <div className="form-group-agent">
           <button type="submit" className="form-button-agent">
             Create Agent
