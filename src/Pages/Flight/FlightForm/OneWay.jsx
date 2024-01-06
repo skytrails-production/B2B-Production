@@ -63,55 +63,61 @@ const OneWay = () => {
   const [toError, setToError] = useState("");
   const [dateError, setDateError] = useState("");
 
+  // useEffect(() => {
+  //   clearPassengersReducer();
+  //   let mounted = true;
+
+  //   const fetchSearchResults = async () => {
+  //     setIsLoading(true);
+
+  //     // make an API call to get search results
+
+  //     const results = await axios.get(
+  //       `${apiURL.baseURL}/skyTrails/city/searchCityData?keyword=${fromQuery}`
+  //     );
+  //     if (mounted) {
+  //       setFromSearchResults(results?.data?.data);
+  //       setIsLoading(false);
+  //     }
+  //   };
+
+
+  //   return () => {
+  //     mounted = false;
+  //   };
+  // }, [fromQuery]);
   useEffect(() => {
-    clearPassengersReducer();
-    let mounted = true;
-
     const fetchSearchResults = async () => {
-      setIsLoading(true);
-
       // make an API call to get search results
-
       const results = await axios.get(
-        `${apiURL.baseURL}/skyTrails/city/searchCityData?keyword=${fromQuery}`
-      );
-      if (mounted) {
-        setFromSearchResults(results?.data?.data);
-        setIsLoading(false);
-      }
-    };
+        `${apiURL.baseURL}/skyTrails/city/searchCityData?keyword=${fromQuery}`);
+      setFromSearchResults(results?.data?.data);
 
-    if (fromQuery.length >= 2) {
-      fetchSearchResults();
     }
-    return () => {
-      mounted = false;
-    };
-  }, [fromQuery]);
+    const getData = setTimeout(() => {
+      if (fromQuery.length >= 2) {
+        fetchSearchResults();
+      }
+    }, 500)
+
+    return () => clearTimeout(getData)
+  }, [fromQuery])
 
   useEffect(() => {
-    let mounted = true;
-
     const fetchSearchResults = async () => {
-      setIsLoading(true);
-
       // make an API call to get search results
-
       const results = await axios.get(
-        `${apiURL.baseURL}/skyTrails/city/searchCityData?keyword=${toQuery}`
-      );
-      if (mounted) {
-        setToSearchResults(results?.data?.data);
-        setIsLoading(false);
-      }
-    };
+        `${apiURL.baseURL}/skyTrails/city/searchCityData?keyword=${toQuery}`);
+      setToSearchResults(results?.data?.data);
 
-    if (toQuery.length >= 2) {
-      fetchSearchResults();
     }
-    return () => {
-      mounted = false;
-    };
+    const getData = setTimeout(() => {
+      if (toQuery.length >= 2) {
+        fetchSearchResults();
+      }
+    }, 500)
+
+    return () => clearTimeout(getData)
   }, [toQuery]);
 
   // Get the current date in the format "YYYY-MM-DD"
@@ -168,7 +174,8 @@ const OneWay = () => {
   };
   const validateDeparture = (departure) => {
     const result1 = fromSearchResults.filter((item) => item.id === departure)
-    const result = result1.length > 0 ? true : false;
+    const result2 = toSearchResults.filter((item) => item.id === departure)
+    const result = (result1.length> 0 || result2.length> 0) ? true : false;
     // console.log(result1.length, "result1.....")
 
     return result
@@ -176,7 +183,8 @@ const OneWay = () => {
   }
   const validateArival = (departure) => {
     const result1 = toSearchResults.filter((item) => item.id === departure)
-    const result = result1.length > 0 ? true : false;
+    const result2 = fromSearchResults.filter((item) => item.id === departure)
+    const result = (result1.length> 0 || result2.length> 0) ? true : false;
     // console.log(result1.length, "result2.....")
 
     return result
@@ -190,14 +198,16 @@ const OneWay = () => {
     const infantCount = formData.get("infant");
     const childCount = formData.get("child");
     // console.log(+adultCount + +infantCount + +childCount, "check")
-    if (+adultCount + +infantCount + +childCount > 9) {
+    if (Number(adultCount) + Number(childCount) > 9) {
+      alert(adultCount + childCount)
       setValidationError("Total Number of passenger should be less then 9");
       return;
     }
-    if (adultCount < infantCount) {
+    if (Number(adultCount) < Number(infantCount)) {
       setValidationError("Infant count should be less than adult count");
       return;
     }
+
     if (!validateDeparture(formData.get("from")) || formData.get("from") === "") {
       setFromError("Enter A Valid Destination City");
       console.warn(validateDeparture(formData.get("from")), "Enter A Valid Destination City")
@@ -270,6 +280,11 @@ const OneWay = () => {
     dispatch(oneWayAction(payload));
     // dispatch(oneWayEMTAction(emtPayload));
   }
+  const handleRoundClick = async () => {
+    const temp = await [from]
+    await setFrom(to)
+    await setTO(temp)
+  }
   // style={{ width: "305px", height: "56px", position: "relative" }}
   // style={{ width: "305px", height: "56px" }}
 
@@ -322,7 +337,7 @@ const OneWay = () => {
                   )}
               </div>
             </motion.div>
-            <motion.div variants={variants} className="col-md-1 d-flex justify-content-center interchange ps-0 ">
+            <motion.div onClick={() => handleRoundClick()} variants={variants} className="col-md-1 d-flex justify-content-center interchange ps-0 ">
               <img src={interchange} alt="name" className="align-self-center" />
 
             </motion.div>
@@ -431,6 +446,12 @@ const OneWay = () => {
                   <option value="0">0</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
                 </select>
               </div>
             </motion.div>

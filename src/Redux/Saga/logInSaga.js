@@ -13,7 +13,7 @@ function* userLoginRequest(action) {
     yield put(fetchLogIn(user));
     console.log("hshshsh", fetchLogIn(user))
   } catch (error) {
-    yield put(fetchLogIn({}));
+    yield put(fetchLogIn({error:true}));
   }
 }
 

@@ -19,6 +19,7 @@ import {
 } from "../../../../../Redux/Passengers/passenger";
 import FlightLoader from "../../../FlightLoader/FlightLoader";
 import { setLoading } from "../../../../../Redux/FlightFareQuoteRule/actionFlightQuote";
+import Alert from '@mui/material/Alert';
 const Leftdetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ const Leftdetail = () => {
   const [farePrice, setFarePrice] = useState("");
   const [farePriceReturn, setFarePriceReturn] = useState("");
   const [sub, setSub] = useState(false);
+  const [showAleart, setShowAleart] = useState(false);
   const fareValue = reducerState?.flightFare?.flightQuoteData?.Results;
   const fareValueReturn =
     reducerState?.flightFare?.flightQuoteDataReturn?.Results;
@@ -47,11 +49,11 @@ const Leftdetail = () => {
   // const img = flight?.Airline?.AirlineCode;
   const flightDeparture = reducerState?.flightFare?.flightQuoteData?.Results?.Segments[0]?.[0];
   const flightReturn = reducerState?.flightFare?.flightQuoteDataReturn?.Results?.Segments[0]?.[0];
-useEffect(()=>{
-  if(adults===undefined||adults===null||childs===undefined|| childs===null||infants===undefined||infants===null){
-    navigate("/FlightresultReturn")
-  }
-})
+  useEffect(() => {
+    if (adults === undefined || adults === null || childs === undefined || childs === null || infants === undefined || infants === null) {
+      navigate("/FlightresultReturn")
+    }
+  })
   // console.log(flightDeparture, "flight departure")
   // console.log(flightReturn, "flight return ")
 
@@ -305,7 +307,10 @@ useEffect(()=>{
     )
 
     if (valid.length !== 0 && emailVal.length !== 0) {
-      alert("Please enter a details")
+      setShowAleart(true)
+      setTimeout(() => {
+        setShowAleart(false)
+      }, 3000);
       return
     }
 
@@ -454,6 +459,20 @@ useEffect(()=>{
 
   return (
     <div>
+      <div style={{
+        position: "fixed",
+        top: "20%",
+        left: 0,
+        display: "flex",
+        width: "100%",
+        alignItems: 'center',
+        justifyContent: "center",
+        zIndex: 99999
+
+      }}>
+        {showAleart &&
+          <Alert severity="error">Please fill all the details</Alert>}
+      </div>
 
       <div className="col-lg-12">
         <div className="row">

@@ -124,8 +124,8 @@ const Holidayguestinfo = ({ setadultCount, setchildCount }) => {
   };
 
   const handlePersonAdd = () => {
-    setAdd(true)
     if (validationAdd()) {
+      setAdd(true)
       return
     }
     dispatch(addFormEntry(formData));

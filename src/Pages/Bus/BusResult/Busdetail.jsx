@@ -31,6 +31,7 @@ import dayjs from "dayjs";
 import busArrow from '../../../Images/busArrow.png'
 import { motion } from "framer-motion";
 import Divider from "@mui/material/Divider";
+import Swal from "sweetalert2";
 
 
 const variants = {
@@ -57,9 +58,9 @@ const Busdetail = () => {
   const [resulttIndex, setResulttIndex] = useState("");
 
   const [selectedOrigin, setSelectedOrigin] = useState("");
-  const [selectedDropPoint, setSelectedDropPoint] = useState("");
   const [origin, setOrigin] = useState([]);
   const [destination, setDestination] = useState([]);
+  const [selectedDropPoint, setSelectedDropPoint] = useState("");
   const [flatArray, setFlatArray] = useState([]);
   const [modal, setModal] = useState(false);
   const [seatLayoutData, setSeatLayoutData] = useState({});
@@ -69,6 +70,7 @@ const Busdetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const reducerState = useSelector((state) => state);
+  console.log(reducerState)
   const busFullData =
     reducerState?.getBusResult?.busResult?.data?.data?.BusSearchResult;
   // console.log(busFullData);
@@ -82,6 +84,33 @@ const Busdetail = () => {
     }
     // console.warn("busDataResult", busDataResult)
   }, [])
+  useEffect(()=>{
+    if(seatLayoutData?.data?.GetBusSeatLayOutResult?.Error?.ErrorCode!==0 &&seatLayoutData?.data?.GetBusSeatLayOutResult?.Error?.ErrorCode!==undefined){
+      Swal.fire({
+        title:seatLayoutData?.data?.GetBusSeatLayOutResult?.Error?.ErrorMessage ,
+        text: "Redirecting to home page...",
+        // text:TicketDetails,
+        icon: "question",
+        timer: 3000,
+        showClass: {
+          popup: `
+            animate__animated
+            animate__fadeInUp
+            animate__faster
+          `,
+        },
+        hideClass: {
+          popup: `
+            animate__animated
+            animate__fadeOutDown
+            animate__faster
+          `,
+        },
+      });
+      navigate("/")
+    }
+      
+  },[seatLayoutData])
 
 
 
@@ -103,6 +132,7 @@ const Busdetail = () => {
         })
         .then((response) => {
           setSeatLayoutData(response.data);
+          console.warn(response.data.data,"response data");
 
           const finalLayout = handleSeatLayoutStringTwo(
             response.data?.data?.GetBusSeatLayOutResult?.SeatLayoutDetails
@@ -120,7 +150,7 @@ const Busdetail = () => {
               ?.SeatLayout?.SeatDetails;
           // console.log("seatDetailssAraayyy", SeatDetailsArray);
 
-          let singleArray = SeatDetailsArray.reduce(
+          let singleArray = SeatDetailsArray?.reduce(
             (acc, currentArray) => [...acc, ...currentArray],
             []
           );
@@ -144,11 +174,11 @@ const Busdetail = () => {
   // console.log(seatLayoutData);
   // console.log("flattArayyyyyy", flatArray);
   // console.log("originnnnnnnnn", origin);
-  flatArray.forEach((obj) => {
+  flatArray?.forEach((obj) => {
     if (obj?.IsUpper === true) {
-      upperArray.push(obj);
+      upperArray?.push(obj);
     } else if (obj?.IsUpper === false) {
-      lowerArray.push(obj);
+      lowerArray?.push(obj);
     }
   });
 
@@ -264,6 +294,10 @@ const Busdetail = () => {
     navigate("/BusPassengerDetail");
   }
 
+  useEffect(()=>{
+
+    console.warn(origin,"origin jdidsfuidfnuvire")
+  },[origin])
 
 
   // filter box 

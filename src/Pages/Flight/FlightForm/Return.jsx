@@ -98,59 +98,94 @@ const Return = () => {
   const [dateError, setDateError] = useState("");
   const [sub, setSub] = useState(false);
 
+  // useEffect(() => {
+  //   let mounted = true;
+
+  //   const fetchSearchResults = async () => {
+  //     setIsLoading(true);
+
+  //     // make an API call to get search results
+
+  //     const results = await axios.get(
+  //       `${apiURL.baseURL}/skyTrails/city/searchCityData?keyword=${fromQuery}`
+  //     );
+  //     if (mounted) {
+  //       setFromSearchResults(results?.data?.data);
+  //       setIsLoading(false);
+  //     }
+  //   };
+
+  //   if (fromQuery.length >= 2) {
+  //     fetchSearchResults();
+  //   }
+  //   return () => {
+  //     mounted = false;
+  //   };
+  // }, [fromQuery]);
   useEffect(() => {
-    let mounted = true;
-
     const fetchSearchResults = async () => {
-      setIsLoading(true);
-
       // make an API call to get search results
-
       const results = await axios.get(
-        `${apiURL.baseURL}/skyTrails/city/searchCityData?keyword=${fromQuery}`
-      );
-      if (mounted) {
-        setFromSearchResults(results?.data?.data);
-        setIsLoading(false);
-      }
-    };
+        `${apiURL.baseURL}/skyTrails/city/searchCityData?keyword=${fromQuery}`);
+      setFromSearchResults(results?.data?.data);
 
-    if (fromQuery.length >= 2) {
-      fetchSearchResults();
     }
-    return () => {
-      mounted = false;
-    };
-  }, [fromQuery]);
+    const getData = setTimeout(() => {
+      if (fromQuery.length >= 2) {
+        fetchSearchResults();
+      }
+    }, 500)
 
+    return () => clearTimeout(getData)
+  }, [fromQuery])
+
+
+
+  // useEffect(() => {
+  //   let mounted = true;
+
+  //   const fetchSearchResults = async () => {
+  //     setIsLoading(true);
+
+  //     // make an API call to get search results
+
+  //     const results = await axios.get(
+  //       `${apiURL.baseURL}/skyTrails/city/searchCityData?keyword=${toQuery}`
+  //     );
+  //     if (mounted) {
+  //       setToSearchResults(results?.data?.data);
+  //       setIsLoading(false);
+  //     }
+  //   };
+
+  //   if (toQuery.length >= 2) {
+  //     fetchSearchResults();
+  //   }
+  //   return () => {
+  //     mounted = false;
+  //   };
+  // }, [toQuery]);
   useEffect(() => {
-    let mounted = true;
-
     const fetchSearchResults = async () => {
-      setIsLoading(true);
-
       // make an API call to get search results
-
       const results = await axios.get(
-        `${apiURL.baseURL}/skyTrails/city/searchCityData?keyword=${toQuery}`
-      );
-      if (mounted) {
-        setToSearchResults(results?.data?.data);
-        setIsLoading(false);
-      }
-    };
+        `${apiURL.baseURL}/skyTrails/city/searchCityData?keyword=${toQuery}`);
+      setToSearchResults(results?.data?.data);
 
-    if (toQuery.length >= 2) {
-      fetchSearchResults();
     }
-    return () => {
-      mounted = false;
-    };
+    const getData = setTimeout(() => {
+      if (toQuery.length >= 2) {
+        fetchSearchResults();
+      }
+    }, 500)
+
+    return () => clearTimeout(getData)
   }, [toQuery]);
 
   useEffect(() => {
     dispatch(clearReturnReducer());
   }, [dispatch]);
+  
 
   const handleFromClick = (result) => {
     setFrom(result.AirportCode);
@@ -202,9 +237,14 @@ const Return = () => {
     const selectedDepartureDate = event.target.value;
     setDepartureDate(selectedDepartureDate);
 
+
     // Calculate the minimum return date (1 day after the selected departure date)
     const newMinReturnDate = new Date(selectedDepartureDate);
-    newMinReturnDate.setDate(newMinReturnDate.getDate() + 1);
+    newMinReturnDate.setDate(newMinReturnDate.getDate() );
+    if(returnDate && returnDate<selectedDepartureDate){
+      setReturnDate(selectedDepartureDate)
+      
+    }
     setMinReturnDate(newMinReturnDate.toISOString().split("T")[0]);
   };
   const validateDeparture = (departure) => {
@@ -302,6 +342,11 @@ const Return = () => {
     sessionStorage.setItem("infants", formData.get("infant"));
     dispatch(returnAction(payload));
   }
+  const handleRoundClick = async () => {
+    const temp = await [from]
+    await setFrom(to)
+    await setTO(temp)
+  }
 
   return (
     <div className="">
@@ -347,7 +392,7 @@ const Return = () => {
                 )}
               </div>
             </motion.div>
-            <motion.div variants={variants} className="col-xs-12 col-md-1 col-lg-1 d-flex interchange justify-content-center ps-0">
+            <motion.div onClick={()=>handleRoundClick()} variants={variants} className="col-xs-12 col-md-1 col-lg-1 d-flex interchange justify-content-center ps-0">
               <img src={interchange} alt="name" className="align-self-center" />
             </motion.div>
 
@@ -423,7 +468,7 @@ const Return = () => {
                   id="departure1"
                   className="deaprture_input"
                   placeholder="Enter city or airport"
-                  min={minReturnDate}
+                  min={minReturnDate?minReturnDate:new Date().toISOString().split("T")[0]}
                   value={returnDate}
                   autoComplete="off"
                   onChange={(event) => setReturnDate(event.target.value)}

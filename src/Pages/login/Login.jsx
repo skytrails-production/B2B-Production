@@ -13,17 +13,24 @@ import "./login.css";
 
 const Login = () => {
   const reducerState = useSelector((state) => state);
+
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [sub, setSub] = useState(false);
 
   useEffect(() => {
     if (reducerState?.logIn?.loginData?.data?.data) {
       navigate("/");
     }
   }, [reducerState, navigate]);
+  useEffect(() => {
+    if (reducerState?.logIn?.loginData?.error) {
+      setSub(true)
+    }
+  }, [reducerState?.logIn]);
 
-
+  console.warn(reducerState)
 
   const handlelinkRegister = () => {
     navigate("/Registration")
@@ -59,7 +66,10 @@ const Login = () => {
                   type="email"
                   placeholder="Enter your Email "
                   value={email}
-                  onChange={(event) => setEmail(event.target.value)} />
+                  onChange={(event) => {
+                    setEmail(event.target.value);
+                    setSub(false)
+                  }} />
               </div>
               <div className="passwordBox">
                 <HttpsIcon className="passIcon" />
@@ -67,7 +77,12 @@ const Login = () => {
                 <input type="password"
                   placeholder="Enter Your Password"
                   value={password}
-                  onChange={(event) => setPassword(event.target.value)} />
+                  onChange={(event) => {
+                    setPassword(event.target.value);
+                    setSub(false)
+                  }} />
+                {sub &&
+                  <span style={{ color: 'red', fontSize: '10px' }}>Invalid Password!</span>}
               </div>
               <Capchacode email={email} password={password} />
               <div className="text-center" >
