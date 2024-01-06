@@ -35,12 +35,11 @@ const Visaform = () => {
     destination: "",
     visaType: "",
   });
-  const [errors, setErrors] = useState({});//errors
-  const [successMessage, setSuccessMessage] = useState(""); // success msg
+  const [errors, setErrors] = useState({});
+  const [successMessage, setSuccessMessage] = useState(""); 
   const [countries, setCountries] = useState([]);
   const [whichVisaType, setWhichVisaType] = useState([]);
-  //useRef input focus
-
+  
   const nameInputRef = useRef(null);
   const emailInputRef = useRef(null);
   const mobileInputRef = useRef(null);
@@ -74,7 +73,7 @@ const Visaform = () => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        return response.json(); // Parse response as JSON
+        return response.json(); 
       })
       .then((data) => {
         if (data && data.countries) {

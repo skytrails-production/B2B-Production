@@ -63,7 +63,7 @@ const CreateWebAdvertisementForm = () => {
       formData.append('images', formValues.images);
   
       const response = await axios.post(
-        `${apiURL.baseURL}/skyTrails/api/admin/createadvertisment`,
+        `${apiURL.baseURL}/skyTrails/api/admin/createWebAdvertisment`,
         formData,
         {
           method: 'POST',

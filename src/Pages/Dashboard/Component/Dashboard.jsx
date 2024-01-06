@@ -73,6 +73,7 @@ import {
   InputBase,
   Badge,
 } from "@mui/material";
+import { FormControl, InputLabel, Select } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Groups3Icon from "@mui/icons-material/Groups3";
@@ -87,6 +88,13 @@ import AllFlightCancelTickets from "./Table/CancelTicketRequest/UserCancelFlight
 // import AddSubadmin from "../Component/Table/AddSubadmin";
 // import AddAdvertisement from "../Component/Table/AddAdvertisement"
 import AllAdvertisementTable from "./Table/AdvertisementData/AdvertisementTable";
+import Visacountry from "../../Visapage/Visacountry";
+import Documentcategory from "../../Visapage/Documentcategory";
+import Visacategory from "../../Visapage/Visacategory";
+import Requireddocument from "../../Visapage/Requireddocument";
+import Visacountryselect from "../../Visapage/Visacountryselect";
+import Visacategorytable from "../../Visapage/Tablevisa/Visacategorytable";
+import Visacountrytable from "../../Visapage/Tablevisa/Visacountrytable";
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -250,9 +258,9 @@ export default function VerticalTabs() {
     navigate("/addEvents");
   };
 
-  const createMarkup=()=>{
-    navigate("/addMarkup")
-  }
+  const createMarkup = () => {
+    navigate("/addMarkup");
+  };
   // const [value, setValue] = useState(0);
   // const handleChange = (event, newValue) => {
   //   setValue(newValue);
@@ -301,6 +309,16 @@ export default function VerticalTabs() {
     setOpenCollapseFive(!openCollapseFive);
   };
 
+///////////////////////////////////////////////////////////////////////////////////
+  const [openCollapsetwenty, setopenCollapsetwenty] = useState(false);
+
+  const handleButtonClicktwent = () => {
+    setopenCollapsetwenty(!openCollapsetwenty);
+  };
+
+
+  // ////////////////////////////////////////////////////////////////////////////////
+
   const [openCollapseSix, setOpenCollapseSix] = useState(false);
 
   const handleButtonClickSix = () => {
@@ -315,6 +333,12 @@ export default function VerticalTabs() {
   const [openCollapseEight, setOpenCollapseEight] = useState(false);
   const handleButtonClickEight = () => {
     setOpenCollapseEight(!openCollapseEight);
+  };
+
+  const [selectedValue, setSelectedValue] = useState("");
+
+  const handleChange = (event) => {
+    setSelectedValue(event.target.value);
   };
 
   return (
@@ -381,7 +405,28 @@ export default function VerticalTabs() {
                 />
               </div>
             </div>
-            <div style={{ display: "flex", alignItems: "center" }}>
+
+            <div style={{ display: "flex", alignItems: "center"  }}>
+              {/*  */}
+              <InputLabel id="dropdown-label"  style={{padding:"2px", color:"black", fontSize:"18px "}}>VISA : </InputLabel>
+              <FormControl>
+                <Select
+                style={{width:"100%", height:"10%"}}
+                  labelId="dropdown-label"
+                  id="dropdown"
+                  value={selectedValue}
+                  onChange={handleChange}
+                >
+                  <MenuItem value="option1" onClick={() => handleMenuItemClick("visacountry")}>Visa Country</MenuItem>
+                  <MenuItem value="option2" onClick={() => handleMenuItemClick("visacategory")}>Visa Category</MenuItem>
+                  <MenuItem value="option3" onClick={() => handleMenuItemClick("Documenttype")}>Document Type</MenuItem>
+                  <MenuItem value="option4" onClick={() => handleMenuItemClick("DocumentCategory")}>Document Category</MenuItem>                                                                                       
+                  <MenuItem value="option5" onClick={() => handleMenuItemClick("Requireddocument")}>Required Documents</MenuItem>
+                  
+                </Select>
+              </FormControl>
+              {/* //////////visa/////////////////// */}
+
               {/* Notification Icon */}
               <IconButton color="inherit" size="large">
                 <Badge badgeContent={4} color="error">
@@ -1716,6 +1761,132 @@ export default function VerticalTabs() {
                 />
               </ListItemButton>
             </ListItem>
+          {/* ////////////////////////////////////////////////////////////////////////////////////////// */}
+
+            <ListItem disablePadding sx={{ display: "block" }}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "center" : "center",
+                  px: 2.5,
+                  ...((menuData === "AGENT Bookings"
+                    ? activeMenuItemClass
+                    : inactiveMenuItemClass) || {}),
+                }}
+                onClick={handleButtonClicktwent}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: openCollapse ? 3 : "3",
+                    justifyContent: "center",
+                  }}
+                >
+                  <AccountBoxIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary="VISA BOOKING"
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+              <Collapse in={openCollapsetwenty} timeout="auto" unmountOnExit>
+                <ListItem
+                  disablePadding
+                  sx={{ display: "block" }}
+                  onClick={() => handleMenuItemClick("Visa Category")}
+                >
+                  <ListItemButton
+                    sx={{
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
+                      ...((menuData === "Visa Category"
+                        ? activeMenuItemClass
+                        : inactiveMenuItemClass) || {}),
+                    }}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <AccountBoxIcon />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary="Visa Category"
+                      sx={{ opacity: open ? 1 : 0 }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+
+                <ListItem
+                  disablePadding
+                  sx={{ display: "block" }}
+                  onClick={() => handleMenuItemClick("Visa Country")}
+                >
+                  <ListItemButton
+                    sx={{
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
+                      ...((menuData === "Visa Country"
+                        ? activeMenuItemClass
+                        : inactiveMenuItemClass) || {}),
+                    }}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <AccountBoxIcon />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary="Visa Country"
+                      sx={{ opacity: open ? 1 : 0 }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+                <ListItem
+                  disablePadding
+                  sx={{ display: "block" }}
+                  onClick={() => handleMenuItemClick("Bus Bookings")}
+                >
+                  <ListItemButton
+                    sx={{
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
+                      ...((menuData === "Bus Bookings"
+                        ? activeMenuItemClass
+                        : inactiveMenuItemClass) || {}),
+                    }}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <AccountBoxIcon />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary="Bus Bookings"
+                      sx={{ opacity: open ? 1 : 0 }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+              </Collapse>
+            </ListItem>
+
+
+{/* //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
+            
           </List>
           <Divider />
         </Drawer>
@@ -1742,6 +1913,13 @@ export default function VerticalTabs() {
             </div>
           ) : (
             <div>
+            {menuData === "Visa Country" && <Visacountrytable/>}
+            {menuData === "Visa Category" && <Visacategorytable/>}
+            {menuData === "visacountry" && <Visacountryselect/>}
+            {menuData === "Requireddocument" && <Requireddocument/>}
+            {menuData === "visacategory" && <Visacategory/>}
+            {menuData === "DocumentCategory" && <Documentcategory/>}
+              {menuData === "Documenttype" && <Visacountry/>}
               {menuData === "Home" && <AdminDashboard />}
               {menuData === "Agent Table" && <Tables />}
               {menuData === "User Table" && <Usertables />}

@@ -1,5 +1,5 @@
 .addEvent-div {
-    max-width: 600px;
+    max-width: 100%;
     margin: 0 auto;
     background: linear-gradient(to bottom, rgb(164, 194, 224) 0%, #f38282 100%);
     padding: 20px;
@@ -7,9 +7,12 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     animation: fadeIn 0.5s ease;
     transition: background-color 0.3s ease-in-out;
-    display: flex;
-    flex-direction: column;
-  }
+    /*display: flex;
+    *//*flex-direction: column;
+    */-webkit-animation: fadeIn 0.5s ease;
+    animation: fadeIn 0.5s ease;
+    -webkit-animation: fadeIn 0.5s ease;
+}
   
   .addEvent-form {
     display: flex;
@@ -193,8 +196,4 @@
         opacity: 1;
         transform: translateY(0);
     }
-}
-
-.addEvent-div {
-    animation: fadeIn 0.5s ease;
 }

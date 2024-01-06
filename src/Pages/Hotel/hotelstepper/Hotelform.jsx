@@ -78,6 +78,7 @@ const HotelForm = () => {
   };
   const [open, setOpen] = useState(false);
   const [loader, setLoader] = useState(false);
+  const [minReturnDate, setMinReturnDate] = useState();
   const [values, setValues] = useState(initialvalue);
   const [error, setError] = useState({
     nationality: false,
@@ -276,9 +277,16 @@ const HotelForm = () => {
     });
   };
 
-  const handleStartDateChange = (date) => {
-    setValues({ ...values, departure: date }); // Update the departure date
+  const handleStartDateChange =async (date) => {
+   await setValues({ ...values, departure: date }); // Update the departure date
     // setCheckInError("");
+    // setMinReturnDate(date);
+    if(values?.checkOutDeparture && values?.checkOutDeparture<date){
+      setValues({...values,checkOutDeparture:date,departure: date});
+      // Update the checkOutDeparture
+      console.warn(values.checkOutDeparture-date,"values.checkOutDeparture<values.departure")
+    }
+    console.log(values,"values")
   };
 
   const handleEndDateChange = (date) => {
