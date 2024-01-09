@@ -190,7 +190,7 @@ console.log("Required Document Categories:", formData.requiredDocCategory);
               </Select>
             </FormControl>
 
-            <InputLabel id="requiredDocuments-label">
+            <InputLabel id="requiredDocuments-label" style={{marginTop:"2rem", fontWeight:"bold", margin_left: "-22rem"}}>
               Required Documents
             </InputLabel>
 

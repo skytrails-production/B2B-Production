@@ -94,7 +94,7 @@ transition: background-color 0.2s ease 0s; */
   user-select: none;
   border: 1px #5c85a4 solid;
   background: #fffbfb;
-  padding: 5px 15px;
+  padding: 5px 21px;
   height: 50px;
   /* width: 150px; */
   width: auto;
@@ -104,24 +104,24 @@ transition: background-color 0.2s ease 0s; */
 /* Create a custom checkbox */
 .checkmark {
   position: relative;
-  top: 0;
-  left: 0;
-  height: 20px;
-  width: 20px;
-  background: #ffff;
+  top: 14px !important;
+  left: 5px !important;
+  height: 20px !important;
+  width: 20px !important;
+  background: #fff !important;
   border: 1.82px black solid;
   /* background-color: #ccc; */
-  border-radius: 25px;
+  border-radius: 25px !important;
 
   transition: 0.15s;
 }
 
 /* When the checkbox is checked, add a blue background */
 .label__container input:checked~.checkmark {
-  background-color: limegreen;
-  border: none;
-  border-radius: 25px;
-  transition: 0.15s;
+  background-color: limegreen !important;
+  border: none !important;
+  border-radius: 25px !important;
+  transition: 0.15s !important;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -207,7 +207,7 @@ transition: background-color 0.2s ease 0s; */
 
 .container-fluid {
   background-color: white !important;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px !important;
+  /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px !important; */
   /* padding: 0 !important; */
 }
 
@@ -270,9 +270,10 @@ transition: background-color 0.2s ease 0s; */
 
 
 .createHolidayPackage {
-  background-color: #DFE6F7;
+  background-color: #fff;
   border-radius: 10px;
   padding: 30px 30px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
 

@@ -16,7 +16,7 @@ import Link from "@mui/material/Link";
 import Busmoredetail from "./Busmoredetail";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { height } from "@mui/system";
+import { height, width } from "@mui/system";
 // import { CheckBox } from "@mui/icons-material";
 import Checkbox from "@mui/material/Checkbox";
 import { apiURL } from "../../../Constants/constant";
@@ -63,6 +63,8 @@ const Busdetail = () => {
   const [selectedDropPoint, setSelectedDropPoint] = useState("");
   const [flatArray, setFlatArray] = useState([]);
   const [modal, setModal] = useState(false);
+  const [sub, setSub] = useState(false);
+  const [subIndex, setSubIndex] = useState(0);
   const [seatLayoutData, setSeatLayoutData] = useState({});
   const [layout, setLayout] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState([]);
@@ -84,10 +86,10 @@ const Busdetail = () => {
     }
     // console.warn("busDataResult", busDataResult)
   }, [])
-  useEffect(()=>{
-    if(seatLayoutData?.data?.GetBusSeatLayOutResult?.Error?.ErrorCode!==0 &&seatLayoutData?.data?.GetBusSeatLayOutResult?.Error?.ErrorCode!==undefined){
+  useEffect(() => {
+    if (seatLayoutData?.data?.GetBusSeatLayOutResult?.Error?.ErrorCode !== 0 && seatLayoutData?.data?.GetBusSeatLayOutResult?.Error?.ErrorCode !== undefined) {
       Swal.fire({
-        title:seatLayoutData?.data?.GetBusSeatLayOutResult?.Error?.ErrorMessage ,
+        title: seatLayoutData?.data?.GetBusSeatLayOutResult?.Error?.ErrorMessage,
         text: "Redirecting to home page...",
         // text:TicketDetails,
         icon: "question",
@@ -109,13 +111,15 @@ const Busdetail = () => {
       });
       navigate("/")
     }
-      
-  },[seatLayoutData])
+
+  }, [seatLayoutData])
 
 
 
-  const handleBuslayout = (resultIndex) => {
+  const handleBuslayout = async (resultIndex) => {
     // console.log("resultIndexxxxxxxxxxxx", resultIndex);
+
+
     const requestData = {
       EndUserIp: reducerState?.ip?.ipData,
       ResultIndex: resultIndex,
@@ -124,15 +128,17 @@ const Busdetail = () => {
     };
 
     try {
-      axios
-        .post(`${apiURL.baseURL}/skyTrails/bus/seatlayout`, requestData, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
+
+      axios.post(`${apiURL.baseURL}/skyTrails/bus/seatlayout`, requestData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
         .then((response) => {
           setSeatLayoutData(response.data);
-          console.warn(response.data.data,"response data");
+          console.warn(response.data.data, "response data");
+          setSub(false);
+          setSubIndex(0);
 
           const finalLayout = handleSeatLayoutStringTwo(
             response.data?.data?.GetBusSeatLayOutResult?.SeatLayoutDetails
@@ -159,6 +165,8 @@ const Busdetail = () => {
             if (item?.ResultIndex === resultIndex) {
               setOrigin(item?.BoardingPointsDetails);
               setDestination(item?.DroppingPointsDetails);
+              setSelectedOrigin(item?.BoardingPointsDetails[0]?.CityPointIndex)
+              setSelectedDropPoint(item?.DroppingPointsDetails[0]?.CityPointIndex)
             }
           });
           setResulttIndex(resultIndex);
@@ -167,6 +175,10 @@ const Busdetail = () => {
           setModal((prev) => !prev);
         });
     } catch (error) {
+
+      setSub(false);
+      setSubIndex(0);
+
       console.error("Try-Catch Error:", error);
     }
   };
@@ -275,29 +287,42 @@ const Busdetail = () => {
     setModal((prev) => !prev);
   }
 
-  function handleContinue() {
+  async function handleContinue() {
     if (
       blockedSeatArray.length === 0 || selectedOrigin === "" || destination.length === 0 ||
       selectedDropPoint === "" || origin === ""
     ) {
       return
     }
-    const dataToSave = {
+    const dataToSave = await {
       blockedSeatArray: blockedSeatArray,
-      selectedOrigin: selectedOrigin,
-      selectedDropPoint: selectedDropPoint,
+      selectedOrigin: Number(selectedOrigin)
+      ,
+      selectedDropPoint: Number(selectedDropPoint)
+      ,
       resultIndex: resulttIndex,
     };
 
     // Save the combined state object to session storage
-    sessionStorage.setItem("seatData", JSON.stringify(dataToSave));
+  await  sessionStorage.setItem("seatData", JSON.stringify(dataToSave));
+    console.warn(selectedOrigin, selectedDropPoint, "selectedOrigin,selectedDropPoint")
     navigate("/BusPassengerDetail");
+
   }
 
-  useEffect(()=>{
+  // useEffect(()=>{
 
-    console.warn(origin,"origin jdidsfuidfnuvire")
-  },[origin])
+  //   console.warn(origin,"origin jdidsfuidfnuvire",selectedOrigin ,"selectedOrigin......")
+  //   console.warn(origin,"origin jdidsfuidfnuvire",selectedOrigin ,"selectedOrigin......")
+  //   if(origin.length > 0){
+  //     setSelectedOrigin(origin[0].CityPointIndex)
+  //   }
+  //   if(selectedDropPoint.length > 0){
+  //     setSelectedDropPoint(destination[0].CityPointIndex)
+  //   }
+
+
+  // },[origin])
 
 
   // filter box 
@@ -565,7 +590,7 @@ const Busdetail = () => {
             <motion.div variants={variants} initial="initial"
               whileInView="animate" className="row top_head">
               {sortedAndFilteredResults && sortedAndFilteredResults.length > 0 ? (
-                sortedAndFilteredResults?.map((item) => {
+                sortedAndFilteredResults?.map((item, index) => {
 
                   const departureDate = dayjs(item?.DepartureTime);
                   const arrivalDate = dayjs(item?.ArrivalTime);
@@ -616,7 +641,12 @@ const Busdetail = () => {
                           <div className="">
                             <p>₹ {item?.BusPrice?.BasePrice}</p>
                           </div>
-                          <button onClick={() => handleBuslayout(item?.ResultIndex)}>Select Seat</button>
+
+                          <button onClick={() => {
+                            handleBuslayout(item?.ResultIndex); setSub(true);
+                            setSubIndex(index);
+                          }}>{(sub && subIndex === index) ? <div className="buslodingBtn" ></div> : 'Select Seat'}</button>
+
                         </div>
                       </motion.div>
                       <div className="col-lg-12">
@@ -853,7 +883,7 @@ const Busdetail = () => {
                         </h2>
                       </div>
                     );
-                  })()}
+                  })}
                 </Box>
               </Box>
 
@@ -868,7 +898,7 @@ const Busdetail = () => {
                 <label>Origin</label>
                 <select
                   value={selectedOrigin} // Bind the selected value to the state variable.
-                  onClick={(e) => setSelectedOrigin(e.target.value)} // Use onChange to handle value changes.
+                  onChange={(e) => setSelectedOrigin(e.target.value)} // Use onChange to handle value changes.
                   style={{ borderRadius: "10px", width: "120px" }}
                 >
                   {origin.map((name, index) => (
@@ -895,7 +925,7 @@ const Busdetail = () => {
                 <label>Destination</label>
                 <select
                   value={selectedDropPoint}
-                  onClick={(e) => setSelectedDropPoint(e.target.value)}
+                  onChange={(e) => setSelectedDropPoint(e.target.value)}
                   style={{ borderRadius: "10px", width: "120px" }}
                 >
                   {destination.map((name, index) => (

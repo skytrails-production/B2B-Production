@@ -9,6 +9,7 @@ import {
   Paper,
 } from "@mui/material";
 import axios from "axios";
+import { apiURL } from "../../../Constants/constant";
 
 const Visacategorytable = () => {
   const [data, setData] = useState([]);
@@ -16,7 +17,7 @@ const Visacategorytable = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8000/skyTrails/api/visa/getVisaCategory"
+        `${apiURL.baseURL}/skyTrails/api/visa/getVisaCategory`
       );
       const result = response.data.result;
       setData(result);
@@ -30,11 +31,11 @@ const Visacategorytable = () => {
   }, []);
 
   return (
-    <div>
+    <div  style={{marginTop:"64px"}}>
       <h4 style={{ textAlign: "center", fontSize: "30px" }}>Visa Category Table</h4>
 
       <TableContainer component={Paper}>
-        <Table aria-label="customized table">
+        <Table aria-label="customized table" style={{marginTop:"0px",marginBottom:"0px"}}>
           <TableHead style={{ background: "#16113A" }}>
             <TableRow>
               <TableCell>Visa Type</TableCell>

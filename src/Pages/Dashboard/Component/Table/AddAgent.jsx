@@ -1,6 +1,6 @@
 // CreateSubAdminPage.js
 import React, { useState } from 'react';
-import './AddAgent.css'; // Import the CSS file
+import './AddSubadmin.css';
 import { apiURL } from '../../../../Constants/constant';
 import { useNavigate } from 'react-router-dom';
 import profilePicUrl from '../../../../Images/logo.jpeg';
@@ -42,27 +42,27 @@ const CreateAgentPage = () => {
       } else {
         if (response.status === 409) {
           alert('Agent with this username or email already exists!');
-          console.error('SubAdmin already exists:', response.statusText);
+          console.error('agent already exists:', response.statusText);
         } else {
-          alert('Failed to create subadmin!');
-          console.error('Failed to create subadmin:', response.statusText);
+          alert('Failed to create agent!');
+          console.error('Failed to create agent:', response.statusText);
         }
       }
     } catch (error) {
-      console.error('Error creating subadmin:', error.message);
+      console.error('Error creating agent:', error.message);
     }
   };
 
   return (
-    <div className="form-container-agent">
+    <div className="form-container">
       <form className="form-agent" onSubmit={handleSubmit}>
-        <img src={profilePicUrl} height={50} alt="logo" className="agent-image" />
-        <h1 className="form-title-agent">
+        <img src={profilePicUrl} height={50} alt="logo" className="agent-image image-div" />
+        <h1 className="form-title">
           <strong>Create Agent</strong>
         </h1>
 
-        <div className="form-group-agent">
-          <label htmlFor="email" className="form-label">
+        <div className="form-group">
+          <label htmlFor="email" className="form-label-subAdmin">
             Email:
           </label>
           <input
@@ -71,12 +71,12 @@ const CreateAgentPage = () => {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            className="form-input-agent"
+            className="form-input"
           />
         </div>
 
         <div className="form-group-agent">
-          <label htmlFor="password" className="form-label">
+          <label htmlFor="password" className="form-label-subAdmin">
             Password:
           </label>
           <input
@@ -85,12 +85,12 @@ const CreateAgentPage = () => {
             name="password"
             value={formData.password}
             onChange={handleChange}
-            className="form-input-agent"
+            className="form-input"
           />
         </div>
 
         <div className="form-group-agent">
-          <label htmlFor="mobile_number" className="form-label">
+          <label htmlFor="mobile_number" className="form-label-subAdmin">
             Mobile Number:
           </label>
           <input
@@ -99,12 +99,12 @@ const CreateAgentPage = () => {
             name="mobile_number"
             value={formData.mobile_number}
             onChange={handleChange}
-            className="form-input-agent"
+            className="form-input"
           />
         </div>
 
         <div className="form-group-agent">
-          <label htmlFor="panNumber" className="form-label">
+          <label htmlFor="panNumber" className="form-label-subAdmin">
             PAN Number:
           </label>
           <input
@@ -113,7 +113,7 @@ const CreateAgentPage = () => {
             name="panNumber"
             value={formData.panNumber}
             onChange={handleChange}
-            className="form-input-agent"
+            className="form-input"
           />
         </div>
 

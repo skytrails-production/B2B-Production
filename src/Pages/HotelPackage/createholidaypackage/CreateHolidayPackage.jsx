@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
-import TagFacesIcon from "@mui/icons-material/TagFaces";
+// import TagFacesIcon from "@mui/icons-material/TagFaces";
 import color from "../../../color/color";
 import Editor from "react-simple-wysiwyg";
 import "./CreatePackage.css";
@@ -18,7 +18,7 @@ import "./CreatePackage.css";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 
-import DeleteIcon from "@mui/icons-material/Delete";
+// import DeleteIcon from "@mui/icons-material/Delete";
 import CommitIcon from "@mui/icons-material/Commit";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Checkbox from "@mui/material/Checkbox";
@@ -58,12 +58,12 @@ import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 import WifiPasswordIcon from "@mui/icons-material/WifiPassword";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
+// import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { createPackageAction } from "../../../Redux/CreatePackage/actionCreatePackage";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+// import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import Accordion from "react-bootstrap/Accordion";
 import { GrAddCircle } from "react-icons/gr";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -232,6 +232,12 @@ const CreateHolidayPackage = () => {
   };
 
   const [hotelDetails, setHotelDetails] = useState("");
+  const [inclusion,setInclusion]=useState("");
+  const [exclusion,setExclusion]=useState("");
+  const [termAndCondition,setTermAndCondition]=useState("");
+  const[cancellation,setCancellation]=useState("")
+  const[overView,setOverView]=useState("")
+
 
   const handleHotel = (e) => {
     setHotelDetails(e.target.value);
@@ -251,131 +257,141 @@ const CreateHolidayPackage = () => {
     // setHtml(newValues);
   };
   console.warn("days", html);
- 
+
   console.warn("daysDetailsValues", daysDetailsValues);
 
   // Form handle code
   const handleCreatePackage = (event) => {
     event.preventDefault();
-    setSub(true)
+    setSub(true);
     const file1 = document.getElementById("user_card_document").files[0];
-    console.warn( filterTrueProps(tag).length,filterTrueProps(tag).length,"filrter prooooddsndjndhnhjnnnnnnnnnnnnnnnnnnn")
+    console.warn(
+      filterTrueProps(tag).length,
+      filterTrueProps(tag).length,
+      "filrter prooooddsndjndhnhjnnnnnnnnnnnnnnnnnnn"
+    );
 
     const formData = new FormData(event.target);
-    if(formData.get("exclusion_note")===""|| file1.length===0||chipData.length === 0||amount===0||formData.get("term_Conditions")===""||
-    formData.get("cancellation_Policy")===""||filterTrueProps(checkedItem)===0||
-    filterTrueProps(tag)===0
-    ){
+    if (
+      exclusion === "" ||
+      file1.length === 0 ||
+      chipData.length === 0 ||
+      amount === 0 ||
+      termAndCondition === "" ||
+      cancellation === "" ||
+      filterTrueProps(checkedItem) === 0 ||
+      filterTrueProps(tag) === 0
+    ) {
       setTimeout(() => {
-        setSub(false)
+        setSub(false);
       }, 7000);
-      return ;
+      return;
+    } else {
+      const payload = {
+        pakage_title: formData.get("package_title"),
+        destination: inputList,
+        country: formData.get("country"),
+        days: days,
+        schedule: {
+          flexible: true,
+          fixed_departure: false,
+        },
+        pakage_amount: {
+          currency: "INR",
+          amount: amount,
+        },
+        insclusions: [
+          { flexibility: checkedItem.flexibility },
+          { train: checkedItem.train },
+          { bus: checkedItem.bus },
+          { cab: checkedItem.cab },
+          { moterBike: checkedItem.motorbike },
+          { hotel: checkedItem.hotel },
+          { homeStays: checkedItem.homeStays },
+          { guestHouse: checkedItem.guestHouse },
+          { cruise: checkedItem.cruise },
+          { sightSeeing: checkedItem.sightSeeing },
+          { guide: checkedItem.guide },
+          { meals: checkedItem.meals },
+          { breakfast: checkedItem.breakfast },
+          { drink: checkedItem.drink },
+          { visa: checkedItem.visa },
+          { travelInsurance: checkedItem.travelInsurance },
+          { wildlife: checkedItem.wildlife },
+          { heritage: checkedItem.heritage },
+          { adventure: checkedItem.adventure },
+          { beach: checkedItem.beach },
+          { hillStation: checkedItem.hillStation },
+          { nature: checkedItem.nature },
+          { wellness: checkedItem.wellness },
+          { hiddenGem: checkedItem.hiddenGem },
+          { tax: checkedItem.tax },
+          { discount: checkedItem.discount },
+          { waterActivities: checkedItem.waterActivities },
+          { optionalActivities: checkedItem.optionalActivities },
+          { flexibleBooking: checkedItem.flexibleBooking },
+          { wifi: checkedItem.wifi },
+        ],
+        hotel_details: hotelDetails,
+        insclusion_note: inclusion,
+        exclusion_note: exclusion,
+        detailed_ltinerary: daysDetailsValues,
+        overview: overView,
+        select_tags: [
+          { domestic: tag.domestic },
+          { international: tag.international },
+          { budget: tag.budget },
+          { holiday: tag.holiday },
+          { mid_range: tag.mid_range },
+          { luxury: tag.luxury },
+          { honeymoon: tag.honeymoon },
+          { anniversary: tag.anniversary },
+          { weekend_gateway: tag.weekend_gateway },
+          { couples: tag.couples },
+          { family: tag.family },
+          { solo: tag.solo },
+          { group: tag.group },
+          { girl_only: tag.girl_only },
+          { boy_only: tag.boy_only },
+          { family_with_children: tag.family_with_children },
+          { bagpacker: tag.bagpacker },
+          { nature: tag.nature },
+          { wildlife: tag.wildlife },
+          { historical: tag.historical },
+          { piligrimage: tag.piligrimage },
+          { offbeat: tag.offbeat },
+          { sightseeing: tag.sightseeing },
+          { recreation: tag.recreation },
+          { nature: tag.nature },
+          { adventure: tag.adventure },
+          { dining: tag.dining },
+          { shopping: tag.shopping },
+          { nightlife: tag.nightlife },
+          { relaxation: tag.relaxation },
+          { nature: tag.nature },
+        ],
+        term_Conditions: termAndCondition,
+        cancellation_Policy: cancellation,
+      };
+      // console.log("payload", payload);
+      const formData1 = new FormData();
+      formData1.append("file", file1);
+      formData1.append("data", JSON.stringify(payload));
+      // console.log(formData1);
+      dispatch(createPackageAction(formData1));
+
+      Swal.fire({
+        icon: "success",
+        title: "Done.",
+        text: ` Your Package is created Sucessfully `,
+        showCancelButton: false,
+        confirmButtonText: "OK",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/");
+        }
+      });
     }
-    else{
-    const payload = {
-      pakage_title: formData.get("package_title"),
-      destination: inputList,
-      days: days,
-      schedule: {
-        flexible: true,
-        fixed_departure: false,
-      },
-      pakage_amount: {
-        currency: "INR",
-        amount: amount,
-      },
-      insclusions: [
-        { flexibility: checkedItem.flexibility },
-        { train: checkedItem.train },
-        { bus: checkedItem.bus },
-        { cab: checkedItem.cab },
-        { moterBike: checkedItem.motorbike },
-        { hotel: checkedItem.hotel },
-        { homeStays: checkedItem.homeStays },
-        { guestHouse: checkedItem.guestHouse },
-        { cruise: checkedItem.cruise },
-        { sightSeeing: checkedItem.sightSeeing },
-        { guide: checkedItem.guide },
-        { meals: checkedItem.meals },
-        { breakfast: checkedItem.breakfast },
-        { drink: checkedItem.drink },
-        { visa: checkedItem.visa },
-        { travelInsurance: checkedItem.travelInsurance },
-        { wildlife: checkedItem.wildlife },
-        { heritage: checkedItem.heritage },
-        { adventure: checkedItem.adventure },
-        { beach: checkedItem.beach },
-        { hillStation: checkedItem.hillStation },
-        { nature: checkedItem.nature },
-        { wellness: checkedItem.wellness },
-        { hiddenGem: checkedItem.hiddenGem },
-        { tax: checkedItem.tax },
-        { discount: checkedItem.discount },
-        { waterActivities: checkedItem.waterActivities },
-        { optionalActivities: checkedItem.optionalActivities },
-        { flexibleBooking: checkedItem.flexibleBooking },
-        { wifi: checkedItem.wifi },
-      ],
-      hotel_details: hotelDetails,
-      insclusion_note: formData.get("insclusion_note"),
-      exclusion_note: formData.get("exclusion_note"),
-      detailed_ltinerary: daysDetailsValues,
-      overview: formData.get("overview"),
-      select_tags: [
-        { domestic: tag.domestic },
-        { international: tag.international },
-        { budget: tag.budget },
-        { holiday: tag.holiday },
-        { mid_range: tag.mid_range },
-        { luxury: tag.luxury },
-        { honeymoon: tag.honeymoon },
-        { anniversary: tag.anniversary },
-        { weekend_gateway: tag.weekend_gateway },
-        { couples: tag.couples },
-        { family: tag.family },
-        { solo: tag.solo },
-        { group: tag.group },
-        { girl_only: tag.girl_only },
-        { boy_only: tag.boy_only },
-        { family_with_children: tag.family_with_children },
-        { bagpacker: tag.bagpacker },
-        { nature: tag.nature },
-        { wildlife: tag.wildlife },
-        { historical: tag.historical },
-        { piligrimage: tag.piligrimage },
-        { offbeat: tag.offbeat },
-        { sightseeing: tag.sightseeing },
-        { recreation: tag.recreation },
-        { nature: tag.nature },
-        { adventure: tag.adventure },
-        { dining: tag.dining },
-        { shopping: tag.shopping },
-        { nightlife: tag.nightlife },
-        { relaxation: tag.relaxation },
-        { nature: tag.nature },
-      ],
-      term_Conditions: formData.get("term_Conditions"),
-      cancellation_Policy: formData.get("cancellation_Policy"),
-    };
-    // console.log("payload", payload);
-    const formData1 = new FormData();
-    formData1.append("file", file1);
-    formData1.append("data", JSON.stringify(payload));
-    // console.log(formData1);
-    dispatch(createPackageAction(formData1));
-
-
-    Swal.fire({
-      icon: "success",
-      title: "Done.",
-      text: ` Your Package is created Sucessfully `,
-      showCancelButton: false,
-      confirmButtonText: "OK",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        navigate("/");
-      }
-    });}
     // event.target.reset();
     // setDaysDetails([]);
     // setCheckedItem({
@@ -413,12 +429,17 @@ const CreateHolidayPackage = () => {
     //   wifi: false,
     // })
   };
-  function validation(event){
+  function validation(event) {
     const formData = new FormData(event.target);
     const file1 = document.getElementById("user_card_document").files[0];
-    if(formData.get("exclusion_note")===""|| file1.length===0||chipData.length === 0||amount===0||formData.get("term_Conditions")===""||
-    formData.get("cancellation_Policy")===""
-    ){
+    if (
+      formData.get("exclusion_note") === "" ||
+      file1.length === 0 ||
+      chipData.length === 0 ||
+      amount === 0 ||
+      formData.get("term_Conditions") === "" ||
+      formData.get("cancellation_Policy") === ""
+    ) {
       return false;
     }
   }
@@ -429,12 +450,15 @@ const CreateHolidayPackage = () => {
         filteredObj[key] = obj[key];
       }
     }
-    return Object.keys(filteredObj).length ;
+    return Object.keys(filteredObj).length;
   };
-  console.warn( filterTrueProps(checkedItem),filterTrueProps(tag),"filrter prooooddsndjndhnhjnnnnnnnnnnnnnnnnnnn")
+  console.warn(
+    filterTrueProps(checkedItem),
+    filterTrueProps(tag),
+    "filrter prooooddsndjndhnhjnnnnnnnnnnnnnnnnnnn"
+  );
   return (
-    <div className="container-fluid">
-
+    <div className="container-xxl">
       {/* for heading text of packages */}
 
       <div className="row">
@@ -447,35 +471,69 @@ const CreateHolidayPackage = () => {
         </div>
       </div>
 
-
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
             <form onSubmit={handleCreatePackage}>
               <div className="createHolidayPackage">
                 <div class="mb-3">
-                  <label class="form-label">Package Title <span style={{ color: "red" }}>*</span></label>
+                  <label class="form-label">
+                    Package Title <span style={{ color: "red" }}>*</span>
+                  </label>
                   <div className="form-floating">
-                    <input type="text" name="package_title" 
-                    id="package_title"
-                    class="form-control" placeholder="Enter Your Package Title" />
-                    <label for="floatingInput">Give a Name to this Package</label>
+                    <input
+                      type="text"
+                      name="package_title"
+                      id="package_title"
+                      class="form-control"
+                      placeholder="Enter Your Package Title"
+                    />
+                    <label for="floatingInput">
+                      Give a Name to this Package
+                    </label>
                   </div>
-                  {sub && document.getElementById("package_title").value==="" &&
-                  <span id="error1">Package Name is required</span>}
+                  {sub &&
+                    document.getElementById("package_title").value === "" && (
+                      <span id="error1">Package Name is required</span>
+                    )}
                 </div>
                 <div class="mb-3">
-                  <label class="form-label">Upload a picture of the package{" "}<span style={{ color: "red" }}>*</span></label>
-                  <input type="file" accept="image/png, image/jpeg" name="user_card_document" id="user_card_document" class="form-control input_file" placeholder="Enter Your Package Title" />
-                  {sub && document.getElementById("user_card_document").files.length===0 &&
-                  <span id="error1">Upload Image</span>}
-
+                  <label class="form-label">
+                    Upload a picture of the package{" "}
+                    <span style={{ color: "red" }}>*</span>
+                  </label>
+                  <input
+                    type="file"
+                    accept="image/png, image/jpeg"
+                    name="user_card_document"
+                    id="user_card_document"
+                    class="form-control input_file"
+                    placeholder="Enter Your Package Title"
+                  />
+                  {sub &&
+                    document.getElementById("user_card_document").files
+                      .length === 0 && <span id="error1">Upload Image</span>}
                 </div>
-
+                <div class="mb-3">
+                  <label class="form-label">
+                    Enter Country <span style={{ color: "red" }}>*</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="country"
+                    id="user_card_document"
+                    class="form-control input_file"
+                    placeholder="Enter Country"
+                  />
+                  {sub &&
+                    document.getElementById("user_card_document").files
+                      .length === 0 && <span id="error1">Enter Country</span>}
+                </div>
 
                 <div className="mb-5">
                   <label className="form-label">
-                    What destinations does this package cover? <span style={{ color: "red" }}>*</span>
+                    What destinations does this package cover?{" "}
+                    <span style={{ color: "red" }}>*</span>
                   </label>
 
                   {chipData.length > 0 && (
@@ -508,7 +566,6 @@ const CreateHolidayPackage = () => {
                     </Paper>
                   )}
 
-
                   <div className="groupinpbut">
                     <div className="form-floating">
                       <input
@@ -523,8 +580,9 @@ const CreateHolidayPackage = () => {
                           }
                         }}
                       />
-                      <label className="flootting" for="floatingInput">Give a Name to this Package</label>
-
+                      <label className="flootting" for="floatingInput">
+                        Give a Name to this Package
+                      </label>
                     </div>
 
                     <Button
@@ -536,17 +594,21 @@ const CreateHolidayPackage = () => {
                     >
                       Add
                     </Button>
-
                   </div>
                 </div>
-                {sub && chipData.length===0 &&
-                <span id="error1">Package Name is required</span>}
-
+                {sub && chipData.length === 0 && (
+                  <span id="error1">Package Name is required</span>
+                )}
 
                 <div class="mb-3 pt-4 mt-5">
                   <label class="form-label">How Many Days ?</label>
                   <Box style={styles1.container}>
-                    <Button onClick={() => days === 1 ? setDays(1) : setDays(days - 1)} style={styles1.button}>
+                    <Button
+                      onClick={() =>
+                        days === 1 ? setDays(1) : setDays(days - 1)
+                      }
+                      style={styles1.button}
+                    >
                       <RemoveIcon style={{ fontSize: "16px" }} />
                     </Button>
                     <input
@@ -565,11 +627,14 @@ const CreateHolidayPackage = () => {
                 </div>
 
                 <div class="mb-3">
-                  <label class="form-label">What is the schedule?{" "}<span style={{ color: "red" }}>*</span></label>
+                  <label class="form-label">
+                    What is the schedule?{" "}
+                    <span style={{ color: "red" }}>*</span>
+                  </label>
                   <Box
                     display="flex"
                     gap="15px"
-                    justifyContent='center'
+                    justifyContent="center"
                     alignItems="center"
                     style={{
                       paddingTop: "20px",
@@ -644,7 +709,9 @@ const CreateHolidayPackage = () => {
                   </Box>
                 </div>
                 <div class="mb-3">
-                  <label class="form-label">Set up package price{" "}<span style={{ color: "red" }}>*</span></label>
+                  <label class="form-label">
+                    Set up package price <span style={{ color: "red" }}>*</span>
+                  </label>
                   <div className="pricing">
                     <FormControl style={{ border: "1px sold black" }}>
                       <NativeSelect
@@ -679,12 +746,10 @@ const CreateHolidayPackage = () => {
                     </Box>
                     <label class="form-label">Per Person</label>
                   </div>
-                  {sub && amount===0 &&
-
-                  <span id ="error1">Amount</span>}
+                  {sub && amount === 0 && <span id="error1">Amount</span>}
                 </div>
 
-                <Box style={{ fontSize: "16px", }}>
+                <Box style={{ fontSize: "16px" }}>
                   <Typography
                     style={{
                       color: "#5C85A4",
@@ -700,7 +765,10 @@ const CreateHolidayPackage = () => {
                     unselected for Not Applicable
                   </Typography>
 
-                  <label class="form-label">Inclusions / Exclusions{" "}<span style={{ color: "red" }}>*</span></label>
+                  <label class="form-label">
+                    Inclusions / Exclusions{" "}
+                    <span style={{ color: "red" }}>*</span>
+                  </label>
                 </Box>
                 <Grid container>
                   <Grid item lg={5} md={5} sm={12} mt={3}>
@@ -1323,9 +1391,7 @@ const CreateHolidayPackage = () => {
                   </Grid>
 
                   {/* for space in between */}
-                  <Grid item lg={2} md={2} mt={3}>
-
-                  </Grid>
+                  <Grid item lg={2} md={2} mt={3}></Grid>
                   <Grid item lg={5} md={5} sm={12} mt={3}>
                     <Box>
                       <Box
@@ -1943,37 +2009,67 @@ const CreateHolidayPackage = () => {
                 <Box my={2}>
                   <label class="form-label">Hotel Details</label>
                   <div class="form-floating">
-                    <textarea class="form-control" onChange={handleHotel} name="hotel_details" placeholder="Add Hotel Details ..." id="hotel_details" style={{ height: "100px" }}></textarea>
-                    <label for="floatingTextarea2">Add Hotel Details ...</label>
+                    <Editor
+                      class="form-control"
+                      onChange={(e) => setHotelDetails(e.target.value)}
+                      value={hotelDetails}
+                      name="hotel_details"
+                      placeholder="Add Hotel Details ..."
+                      id="hotel_details"
+                      style={{ height: "100px" }}
+                    ></Editor>
+                    {/* <label for="floatingTextarea2">Add Hotel Details ...</label> */}
                   </div>
                 </Box>
 
                 <Grid container>
-                  <Grid item lg={5} md={12} sm={12}>
+                  <Grid item lg={12} md={12} sm={12}>
                     <Box my={2}>
                       <label class="form-label">Inclusion Note</label>
                       <div class="form-floating">
-                        <textarea class="form-control" name="insclusion_note" placeholder="Add Inclusion Note ..." id="insclusion_note" style={{ height: "100px" }}></textarea>
-                        <label for="floatingTextarea2">Add Inclusion Note</label>
+                        <Editor
+                          class="form-control"
+                          name="insclusion_note"
+                          placeholder="Add Inclusion Note ..."
+                          id="insclusion_note"
+                          style={{ height: "100px" }}
+                          value={inclusion}
+                          onChange={(e) => setInclusion(e.target.value)}
+                        ></Editor>
+                        {/* <label for="floatingTextarea2">
+                          Add Inclusion Note
+                        </label> */}
                       </div>
                     </Box>
                   </Grid>
                 </Grid>
 
                 <Grid container>
-                  <Grid item lg={5} md={12} sm={12}>
+                  <Grid item lg={12} md={12} sm={12}>
                     <Box my={2}>
                       <label class="form-label">Exclusion Note</label>
                       <div class="form-floating">
-                        <textarea class="form-control" name="exclusion_note" placeholder="Add Exclusion Note ..." id="exclusion_note" style={{ height: "100px" }}></textarea>
-                        <label for="floatingTextarea2">Add Exclusion Note</label>
+                        <Editor
+                          class="form-control"
+                          name="exclusion_note"
+                          placeholder="Add Exclusion Note ..."
+                          id="exclusion_note"
+                          style={{ height: "100px" }}
+                          value={exclusion}
+                          onChange={(e) => setExclusion(e.target.value)}
+                        ></Editor>
+                        {/* <label for="floatingTextarea2">
+                          Add Exclusion Note
+                        </label> */}
                       </div>
                     </Box>
                   </Grid>
                 </Grid>
                 <Box my={2}>
-
-                  <label class="form-label"> Detailed Itinerary<span style={{ color: "red" }}>*</span></label>
+                  <label class="form-label">
+                    {" "}
+                    Detailed Itinerary<span style={{ color: "red" }}>*</span>
+                  </label>
                   {Array.from({ length: days }, (_, i) => (
                     <>
                       <Accordion style={{ marginBottom: "10px" }}>
@@ -1993,8 +2089,8 @@ const CreateHolidayPackage = () => {
                               type="text"
                               name="detailed_ltinerary"
                               placeholder={`Days ${i + 1}`}
-                            // value={daysDetailsValues[i] || ""}
-                            // onChange={(event) => handleDaysDetail(i, event)}
+                              // value={daysDetailsValues[i] || ""}
+                              // onChange={(event) => handleDaysDetail(i, event)}
                             >
                               <Editor
                                 name="detailed_ltinerary"
@@ -2006,33 +2102,41 @@ const CreateHolidayPackage = () => {
                           </Accordion.Body>
                         </Accordion.Item>
                       </Accordion>
-                      {sub && daysDetailsValues.length===0 &&
-                      <span id ="error1">Detailed Itinerary</span>}
+                      {sub && daysDetailsValues.length === 0 && (
+                        <span id="error1">Detailed Itinerary</span>
+                      )}
                     </>
                   ))}
                 </Box>
 
-
                 <Grid container>
-                  <Grid item lg={5} md={12} sm={12}>
+                  <Grid item lg={12} md={12} sm={12}>
                     <Box my={2}>
                       <label class="form-label">Overview</label>
                       <div class="form-floating">
-                        <textarea class="form-control" name="overview" placeholder="" id="exclusion_note" style={{ height: "100px" }}></textarea>
-                        <label for="floatingTextarea2">Overview</label>
+                        <Editor
+                          class="form-control"
+                          name="overview"
+                          placeholder="overview"
+                          id="exclusion_note"
+                          style={{ height: "100px" }}
+                          value={overView}
+                          onChange={(e) => setOverView(e.target.value)}
+                        ></Editor>
                       </div>
                     </Box>
                   </Grid>
                 </Grid>
 
                 <div class="mb-3">
-                  <label class="form-label">Select Tags <span style={{ color: "red" }}>*</span></label>
-                  { sub && 
-                  //  (checkedItem.find(el => el.value === true).length===0) 
-                  // &&
-                  <span id ="error1">Package Name is required</span>}
+                  <label class="form-label">
+                    Select Tags <span style={{ color: "red" }}>*</span>
+                  </label>
+
                   <br />
-                  <label class="form-label">Select tags most relevant to your packages</label>
+                  <label class="form-label">
+                    Select tags most relevant to your packages
+                  </label>
                 </div>
 
                 <div className="tag__Container">
@@ -2254,64 +2358,119 @@ const CreateHolidayPackage = () => {
                       <span className="tag__title">Family With Children</span>
                     </label>
                   </div>
-
                 </div>
 
                 <div className="col-lg-12 col-sm-12">
                   <div className="row">
-                    <div className="col-lg-6 col-md-12 col-sm-12">
+                    <div className="col-lg-12 col-md-12 col-sm-12">
                       <Box my={2}>
-                        <label class="form-label">Term & Conditions <span style={{ color: "red" }}>*</span></label>
+                        <label class="form-label">
+                          Term & Conditions{" "}
+                          <span style={{ color: "red" }}>*</span>
+                        </label>
                         <div class="form-floating">
-                          <textarea class="form-control" name="term_Conditions" placeholder="Enter Term And Condition" id="term_Conditions" style={{ height: "100px" }}></textarea>
-                          <label for="floatingTextarea2">EnterTerm & Conditions</label>
+                          <Editor
+                            class="form-control"
+                            name="term_Conditions"
+                            placeholder="Enter Term And Condition"
+                            id="term_Conditions"
+                            style={{ height: "100px" }}
+                            value={termAndCondition}
+                            onChange={(e)=>setTermAndCondition(e.target.value)}
+                          ></Editor>
                         </div>
-                        {sub && document.getElementById("term_Conditions").value==="" &&
-                        <span id ="error1">EnterTerm & Conditions</span>}
+                        {sub &&
+                          document.getElementById("term_Conditions").value ===
+                            "" && (
+                            <span id="error1">EnterTerm & Conditions</span>
+                          )}
                       </Box>
                     </div>
-                    <div className="col-lg-6 col-md-12 col-sm-12">
+                    {/* <div className="col-lg-6 col-md-12 col-sm-12">
                       <Box my={2}>
-                        <label class="form-label"> Write a descriptive summary of the T&C..... <span style={{ color: "red" }}>*</span></label>
+                        <label class="form-label">
+                          {" "}
+                          Write a descriptive summary of the T&C.....{" "}
+                          <span style={{ color: "red" }}>*</span>
+                        </label>
                         <div class="form-floating">
-                          <textarea class="form-control" name="term_Conditions" placeholder="Enter Term And Condition" id="descriptive_summary" style={{ height: "100px" }}></textarea>
-                          <label for="floatingTextarea2">Enter Term & Conditions</label>
+                          <textarea
+                            class="form-control"
+                            name="term_Conditions"
+                            placeholder="Enter Term And Condition"
+                            id="descriptive_summary"
+                            style={{ height: "100px" }}
+                          ></textarea>
+                          <label for="floatingTextarea2">
+                            Enter Term & Conditions
+                          </label>
                         </div>
-                        {sub && document.getElementById("descriptive_summary").value==="" &&
-                        <span id ="error1">descriptive Summary</span>}
+                        {sub &&
+                          document.getElementById("descriptive_summary")
+                            .value === "" && (
+                            <span id="error1">descriptive Summary</span>
+                          )}
                       </Box>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
-
 
                 <div className="col-lg-12 col-sm-12">
                   <div className="row">
-                    <div className="col-lg-6 col-md-12 col-sm-12">
+                    <div className="col-lg-12 col-md-12 col-sm-12">
                       <Box my={2}>
-                        <label class="form-label">Cancellation Policy<span style={{ color: "red" }}>*</span></label>
+                        <label class="form-label">
+                          Cancellation Policy
+                          <span style={{ color: "red" }}>*</span>
+                        </label>
                         <div class="form-floating">
-                          <textarea class="form-control" name="cancellation_Policy" placeholder="Cancellation Policy...." id="cancellation_Policy" style={{ height: "100px" }}></textarea>
-                          <label for="floatingTextarea2">Enter Term & Conditions</label>
+                          <Editor
+                            class="form-control"
+                            name="cancellation_Policy"
+                            placeholder="Cancellation Policy...."
+                            id="cancellation_Policy"
+                            style={{ height: "100px" }}
+                            value={cancellation}
+                            onChange={(e)=>setCancellation(e.target.value)}
+                          ></Editor>
                         </div>
-                        {sub && document.getElementById("cancellation_Policy").value==="" &&
-                        <span id ="error1">Term & Conditions</span>}
+                        {sub &&
+                          document.getElementById("cancellation_Policy")
+                            .value === "" && (
+                            <span id="error1">Term & Conditions</span>
+                          )}
                       </Box>
                     </div>
-                    <div className="col-lg-6 col-md-12 col-sm-12">
+                    {/* <div className="col-lg-6 col-md-12 col-sm-12">
                       <Box my={2}>
-                        <label class="form-label"> Write a descriptive summary of the Cancellation Policy...... <span style={{ color: "red" }}>*</span></label>
+                        <label class="form-label">
+                          {" "}
+                          Write a descriptive summary of the Cancellation
+                          Policy...... <span style={{ color: "red" }}>*</span>
+                        </label>
                         <div class="form-floating">
-                          <textarea class="form-control" name="term_Conditions" placeholder="Descriptive Cancellation Policy...." id="descriptive_cancellation" style={{ height: "100px" }}></textarea>
-                          <label for="floatingTextarea2">Descriptive Cancellation Policy....</label>
+                          <textarea
+                            class="form-control"
+                            name="term_Conditions"
+                            placeholder="Descriptive Cancellation Policy...."
+                            id="descriptive_cancellation"
+                            style={{ height: "100px" }}
+                          ></textarea>
+                          <label for="floatingTextarea2">
+                            Descriptive Cancellation Policy....
+                          </label>
                         </div>
-                        {sub && document.getElementById("descriptive_cancellation").value==="" &&
-                        <span id ="error1">Descriptive Cancellation Policy</span>}
+                        {sub &&
+                          document.getElementById("descriptive_cancellation")
+                            .value === "" && (
+                            <span id="error1">
+                              Descriptive Cancellation Policy
+                            </span>
+                          )}
                       </Box>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
-
 
                 {/* <Box
                   my={2}
@@ -2348,8 +2507,10 @@ const CreateHolidayPackage = () => {
                 </Box> */}
 
                 <div className="buttonBoxPackage">
-                  <button className="draft">Save As Draft</button>
-                  <button type="submit" class="packageSubmit">Submit Request</button>
+                  {/* <button className="draft">Save As Draft</button> */}
+                  <button type="submit" class="packageSubmit">
+                    Submit Request
+                  </button>
                 </div>
               </div>
             </form>

@@ -49,14 +49,17 @@ const BusPassengerDetail = () => {
   const passengerLists = [];
   const [accordionExpanded, setAccordionExpanded] = useState(false);
   const [sub, setSub] = useState(false);
+
   const seatData = sessionStorage.getItem("seatData");
   const parsedSeatData = JSON.parse(seatData);
   // console.log(parsedSeatData, "parsed seat data");
   const passengerCount = parsedSeatData?.blockedSeatArray.length;
   const resultIndex = parsedSeatData?.resultIndex;
-  const boardingPoint = parsedSeatData?.selectedOrigin;
+  const boardingPoint = parsedSeatData?.selectedOrigin; 
+
   const droppingPoint = parsedSeatData?.selectedDropPoint;
-  console.warn(parsedSeatData,"parsedSeatData..................")
+
+  console.warn(boardingPoint,droppingPoint,"parsedSeatData..................")
   useEffect(()=>{
     if(parsedSeatData===undefined || parsedSeatData===null || seatData===undefined){
       navigate("/")
@@ -152,8 +155,9 @@ const BusPassengerDetail = () => {
   }
 
   const selectedBus = busFullData?.BusResults?.find((bus) => bus?.ResultIndex === resultIndex);
+  
   const cancellationPolicy = selectedBus?.CancellationPolicies;
-  // console.log(selectedBus, "selectedBus")
+  console.log(selectedBus, "selectedBus")
 
   const departureDate = dayjs(selectedBus?.DepartureTime);
   const arrivalDate = dayjs(selectedBus?.ArrivalTime);
@@ -223,7 +227,7 @@ const BusPassengerDetail = () => {
                     <p>
                       {selectedBus?.BoardingPointsDetails &&
                         selectedBus.BoardingPointsDetails.length > 0 &&
-                        selectedBus.BoardingPointsDetails[0].CityPointLocation}
+                        selectedBus.BoardingPointsDetails[boardingPoint-1]?.CityPointLocation}
                     </p>
                   </div>
                   <div>
@@ -241,7 +245,7 @@ const BusPassengerDetail = () => {
                     <p>
                       {selectedBus?.DroppingPointsDetails &&
                         selectedBus.DroppingPointsDetails.length > 0 &&
-                        selectedBus.DroppingPointsDetails[0].CityPointLocation}
+                        selectedBus.DroppingPointsDetails[droppingPoint-1]?.CityPointLocation}
                     </p>
                   </div>
                   <div>

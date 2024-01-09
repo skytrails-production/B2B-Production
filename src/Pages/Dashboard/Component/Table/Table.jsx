@@ -314,7 +314,7 @@ export default function Tables() {
     <>
       <Box height={100} />
       <TableContainer
-        style={{ width: "85%" }}
+       
         sx={{
           margin: "auto",
           overflowX: "scroll",

@@ -16,6 +16,7 @@ import { apiURL } from "../../../Constants/constant.js";
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import FmdGoodIcon from '@mui/icons-material/FmdGood';
 import NavBarBox from "../../../Components/NavBarBox.jsx";
+import BusLoading from "../busLoading/BusLoading.jsx"
 
 
 
@@ -85,6 +86,7 @@ const BusForm = () => {
   const [selectedTo, setSelectedTo] = useState(null);
   const [displayFrom, setdisplayFrom] = useState(true);
   const [displayTo, setdisplayTo] = useState(true);
+  const [loader, setLoader] = useState(false);
   const [startDate, setStartDate] = useState(null);
   const inputRef = useRef(null);
   const fromInputRef = useRef(null);
@@ -230,6 +232,7 @@ const BusForm = () => {
   };
   useEffect(() => {
     if (reducerState?.getBusResult?.busResult?.data?.data?.BusSearchResult?.Error?.ErrorCode === 0) {
+      setLoader(false)
       navigate("/BusResult");
     }
     console.warn(reducerState?.getBusResult?.busResult?.data?.data?.BusSearchResult?.Error?.ErrorCode
@@ -241,6 +244,7 @@ const BusForm = () => {
     event.preventDefault();
 
     const isValid = validateForm();
+    setLoader(true)
     if (isValid) {
       const formData = new FormData(event.target);
       // Format the selected date as "MM/dd/yyyy"
@@ -346,7 +350,9 @@ const BusForm = () => {
 
   // export default MainBox;      
 
-
+if(loader){
+ return(<BusLoading/>) 
+}
 
 
   return (

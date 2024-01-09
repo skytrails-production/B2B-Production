@@ -78,7 +78,7 @@ export default function Demo(props) {
         />
         <input className="textinput" value={text} onChange={handleText}></input>
       </Box> */}
-      <Box display="flex" justifyContent="space-between" width="100%" mt={3}>
+      <Box display="flex" justifyContent="space-between" width="100%" >
         <Button
           variant="contained"
           style={{

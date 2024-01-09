@@ -14,8 +14,10 @@ import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import profilePicUrl from "../../../Images/Admin.svg";
 // import profilePicUrl from '../../../Images/Admin.svg'
+import WebIcon from '@mui/icons-material/Web';
+import InventoryIcon from '@mui/icons-material/Inventory';
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
-
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import {
   ListItem,
   ListItemButton,
@@ -73,11 +75,13 @@ import {
   InputBase,
   Badge,
 } from "@mui/material";
+import AddIcon from '@mui/icons-material/Add';
 import { FormControl, InputLabel, Select } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Groups3Icon from "@mui/icons-material/Groups3";
 import AdminDashboard from "./AdminDashboard";
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import OfferList from "./Table/OfferList/OfferList";
 import AgentCancelHotel from "./Table/CancelTicketRequest/AgentCancelHotel";
 import AgentCancelFlight from "./Table/CancelTicketRequest/AgentCancelFlight";
@@ -95,6 +99,14 @@ import Requireddocument from "../../Visapage/Requireddocument";
 import Visacountryselect from "../../Visapage/Visacountryselect";
 import Visacategorytable from "../../Visapage/Tablevisa/Visacategorytable";
 import Visacountrytable from "../../Visapage/Tablevisa/Visacountrytable";
+import Visadoctype from "../../Visapage/Tablevisa/Visadoctype";
+import Visadoccategory from "../../Visapage/Tablevisa/Visadoccategory";
+import RequireDocument from "../../Visapage/Tablevisa/RequireDocument";
+import AllWebAdvertisement from "./Table/AdvertisementData/WebAdvertisement";
+import Searchtable from "../../Historytable/Searchtable";
+import Getevent from "../../Historytable/Getevent";
+import Package from "../../Historytable/Package";
+
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -261,6 +273,12 @@ export default function VerticalTabs() {
   const createMarkup = () => {
     navigate("/addMarkup");
   };
+
+  const handleButtonClick2 = () => {
+    // Navigate to the desired route when the button is clicked
+    navigate('/addMarkup');
+  };
+
   // const [value, setValue] = useState(0);
   // const handleChange = (event, newValue) => {
   //   setValue(newValue);
@@ -405,6 +423,39 @@ export default function VerticalTabs() {
                 />
               </div>
             </div>
+
+            {/* <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                margin: "0 auto",
+              }}
+            >
+              <div style={{ position: "relative" }}>
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                  }}
+                >
+                  <AddIcon  />
+                </div>
+                <InputBase
+                  placeholder="AddAppMarkup"
+                  style={{ paddingLeft: "30px" }}
+                />
+              </div>
+            </div> */}
+
+
+            <IconButton color="inherit" sx={{ fontSize: 80,'&:hover': {
+          backgroundColor: 'black',
+        }, }} size="large" onClick={handleButtonClick2}>
+                
+                  <AddCircleOutlineIcon  />
+               
+              </IconButton>
 
             <div style={{ display: "flex", alignItems: "center"  }}>
               {/*  */}
@@ -1753,10 +1804,154 @@ export default function VerticalTabs() {
                     justifyContent: "center",
                   }}
                 >
-                  <HomeOutlinedIcon />
+                  <WebIcon />
                 </ListItemIcon>
                 <ListItemText
                   primary="Advertisment"
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => handleMenuItemClick("Web Advertisment")}
+              className={
+                menuData === "Web Advertisment"
+                  ? "active-menu-item"
+                  : "inactive-menu-item"
+              }
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                  ...((menuData === "Web Advertisment"
+                    ? activeMenuItemClass
+                    : inactiveMenuItemClass) || {}),
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <HomeOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Web Advertisment"
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+
+
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => handleMenuItemClick("Getallevent")}
+              className={
+                menuData === "Getallevent"
+                  ? "active-menu-item"
+                  : "inactive-menu-item"
+              }
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                  ...((menuData === "Getallevent"
+                    ? activeMenuItemClass
+                    : inactiveMenuItemClass) || {}),
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <WebIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Get Events"
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+
+            {/* /////// */}
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => handleMenuItemClick("Searchdata")}
+              className={
+                menuData === "Searchdata"
+                  ? "active-menu-item"
+                  : "inactive-menu-item"
+              }
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                  ...((menuData === "Searchdata"
+                    ? activeMenuItemClass
+                    : inactiveMenuItemClass) || {}),
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <PersonSearchIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Search Data"
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => handleMenuItemClick("Packageenquiry")}
+              className={
+                menuData === "Packageenquiry"
+                  ? "active-menu-item"
+                  : "inactive-menu-item"
+              }
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                  ...((menuData === "Packageenquiry"
+                    ? activeMenuItemClass
+                    : inactiveMenuItemClass) || {}),
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <InventoryIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Package Enquiry"
                   sx={{ opacity: open ? 1 : 0 }}
                 />
               </ListItemButton>
@@ -1851,17 +2046,21 @@ export default function VerticalTabs() {
                     />
                   </ListItemButton>
                 </ListItem>
+                
+
+
+
                 <ListItem
                   disablePadding
                   sx={{ display: "block" }}
-                  onClick={() => handleMenuItemClick("Bus Bookings")}
+                  onClick={() => handleMenuItemClick("Visadoctype")}
                 >
                   <ListItemButton
                     sx={{
                       minHeight: 48,
                       justifyContent: open ? "initial" : "center",
                       px: 2.5,
-                      ...((menuData === "Bus Bookings"
+                      ...((menuData === "Visadoctype"
                         ? activeMenuItemClass
                         : inactiveMenuItemClass) || {}),
                     }}
@@ -1876,7 +2075,70 @@ export default function VerticalTabs() {
                       <AccountBoxIcon />
                     </ListItemIcon>
                     <ListItemText
-                      primary="Bus Bookings"
+                      primary="Visa Document Type"
+                      sx={{ opacity: open ? 1 : 0 }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+
+
+                <ListItem
+                  disablePadding
+                  sx={{ display: "block" }}
+                  onClick={() => handleMenuItemClick("Visadoccategory")}
+                >
+                  <ListItemButton
+                    sx={{
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
+                      ...((menuData === "Visadoccategory"
+                        ? activeMenuItemClass
+                        : inactiveMenuItemClass) || {}),
+                    }}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <AccountBoxIcon />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary="Visa Document Category"
+                      sx={{ opacity: open ? 1 : 0 }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+
+                <ListItem
+                  disablePadding
+                  sx={{ display: "block" }}
+                  onClick={() => handleMenuItemClick("RequireDocument")}
+                >
+                  <ListItemButton
+                    sx={{
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
+                      ...((menuData === "RequireDocument"
+                        ? activeMenuItemClass
+                        : inactiveMenuItemClass) || {}),
+                    }}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <AccountBoxIcon />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary="Require Document"
                       sx={{ opacity: open ? 1 : 0 }}
                     />
                   </ListItemButton>
@@ -1913,6 +2175,12 @@ export default function VerticalTabs() {
             </div>
           ) : (
             <div>
+            {menuData === "Packageenquiry" && <Package/>}
+            {menuData === "Getallevent" && <Getevent/>}
+            {menuData === "Searchdata" && <Searchtable/>}
+            {menuData === "RequireDocument" && <RequireDocument/>}
+            {menuData === "Visadoccategory" && <Visadoccategory/>}
+            {menuData === "Visadoctype" && <Visadoctype/>}
             {menuData === "Visa Country" && <Visacountrytable/>}
             {menuData === "Visa Category" && <Visacategorytable/>}
             {menuData === "visacountry" && <Visacountryselect/>}
@@ -1959,6 +2227,7 @@ export default function VerticalTabs() {
                 <FixedDepartureControl />
               )}
               {menuData === "Advertisment" && <AllAdvertisementTable />}
+              {menuData==="Web Advertisment"&&<AllWebAdvertisement/>}
             </div>
           )}
         </Box>

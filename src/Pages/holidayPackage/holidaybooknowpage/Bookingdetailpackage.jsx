@@ -79,12 +79,12 @@ const Bookingdetailpackage = () => {
   const savedData = JSON.parse(savedDataString);
   const savedDestination = savedData?.destination?.toUpperCase();
   const savedDays = savedData?.days;
-  console.warn(savedDataString,"savedDataString,,,,,,,,,,,,,,,,")
-  useEffect(()=>{
-   if( savedDataString===undefined||savedDataString===null){
-    return(navigate("/holidayPackage/HolidaypackageResult"))
-   }
-  },[])
+  console.warn(savedDataString, "savedDataString,,,,,,,,,,,,,,,,")
+  useEffect(() => {
+    if (savedDataString === undefined || savedDataString === null) {
+      return (navigate("/holidayPackage/HolidaypackageResult"))
+    }
+  }, [])
 
 
   const [value, setValue] = React.useState('1');
@@ -92,7 +92,7 @@ const Bookingdetailpackage = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  if(savedDataString===undefined||savedDataString===null){
+  if (savedDataString === undefined || savedDataString === null) {
     return (
       <>Loading......</>
     )
@@ -100,13 +100,13 @@ const Bookingdetailpackage = () => {
 
   return (
     <>
-      <div className="col-lg-9">
+      <div className="col-lg-12">
         <div className="row">
           <div className="col-lg-12 mb-4">
             <div className="outerFilterBox">
               <div className="filterBox">
                 <p className="searchDestination">Seach Destination{' '}: <b>{savedDestination}</b></p>
-                <p className="searchDestination">Days {' '} <b>{savedDays}</b></p>
+                {/* <p className="searchDestination">Days {' '} <b>{savedDays}</b></p> */}
               </div>
             </div>
           </div>
@@ -389,7 +389,7 @@ const Bookingdetailpackage = () => {
 
       </div>
 
-      <div className="col-lg-3">
+      {/* <div className="col-lg-3">
         <div className="sidePromo">
           <div className="col-lg-12 sidePromoImg">
             <img src={goa} alt="" />
@@ -440,7 +440,7 @@ const Bookingdetailpackage = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="col-lg-12">
         <div className="row">
@@ -489,7 +489,8 @@ const Bookingdetailpackage = () => {
                                     fontWeight: "bold",
                                   }}
                                 >
-                                  {item}
+                                  {/* {item} */}
+                                  <div dangerouslySetInnerHTML={{ __html: item }}></div>
                                 </Typography>
                               </Accordion.Body>
                             </Accordion.Item>

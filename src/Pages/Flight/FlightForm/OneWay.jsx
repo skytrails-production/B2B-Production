@@ -397,6 +397,7 @@ const OneWay = () => {
                   id="departure"
                   ref={inputRef}
                   className="deaprture_input"
+                  readonly
                 />
                 {dateError !== "" && <span className="error">{dateError}</span>}
               </div>

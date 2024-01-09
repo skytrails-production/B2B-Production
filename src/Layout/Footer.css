@@ -1,47 +1,65 @@
-.footerContainer {
-  /* margin-top: -140px; */
-  width: 100%;
-  height: 500px;
-  background-color:white;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+.footer {
+  /* margin-top: 50px; */
+  padding: 40px 40px 20px 40px;
+  background-color: #21325d !important;
+  color: white !important;
+  position: relative !important;
+  bottom: 0 !important;
 }
-.containetArticals {
-  /* margin-top: 150px; */
-  width: 100%;
-  /* height: 80px; */
 
+.footer .container-fluid {
+  background-color: transparent !important;
+  box-shadow: unset !important;
+}
+
+.footer a:hover {
+  color: #fff !important;
+}
+
+.footer a {
+  color: white;
+  text-decoration: none;
+
+}
+
+.footer h5 {
+  font-size: 22px !important;
+}
+
+
+.addressFooter {
   display: flex;
   flex-direction: column;
-  margin-bottom: 30px;
-}
-.containetArticals2Div {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-top: 30px;
-}
-.containetArticals1Div {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-top: 50px;
-}
-.skdTravel {
-  color: #005778;
-  margin: auto;
-  align-content: center;
   align-items: center;
-}
-.line {
-  width: 85%;
-  height: 5px;
-  margin: auto;
-  background-color: #005778;
+  /* width: 40%; */
+  justify-content: center;
 }
 
-.copyRightFooter {
-  color: #005778;
-  margin: auto;
+.addressFooter span {
+  width: 50%;
+  text-align: center;
+}
+
+.footer li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 7px 0px;
+  transition: all 0.2s;
+}
+
+.footer li:hover {
+  gap: 10px;
+}
+
+.footer .footerIconBox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.footerIconBox svg {
+  font-size: 25px;
 }

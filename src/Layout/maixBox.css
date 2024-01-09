@@ -22,10 +22,11 @@
 .centered-box-top {
     position: absolute;
     /* background-color: #21325D; */
-    background-color: #e73c33;
+    /* background-color: #e73c33; */
+    background: linear-gradient(360deg, #d90429, #d904279c);
     height: 70px;
     border-radius: 15px;
-    width: 89%;
+    width: 80%;
     top: -35px;
     display: flex;
     justify-content: center;

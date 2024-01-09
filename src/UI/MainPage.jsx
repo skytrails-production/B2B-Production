@@ -99,6 +99,16 @@ import CreateAgentPage from "../Pages/Dashboard/Component/Table/AddAgent"
 import CreateEventForm from "../Pages/Dashboard/Component/Table/AddEvent"
 import Download from "./Download";
 
+
+
+
+
+import AboutUs from "../Layout/AboutUs"
+import ContactUs from "../Layout/ContactUs"
+import PrivacyPolicy from "../Layout/PrivacyPolicy"
+import RefundPolicy from "../Layout/RefundPolicy"
+import TermandCondition from "../Layout/TermandCondition"
+
 const MainPage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -217,8 +227,8 @@ const MainPage = () => {
       </div> */}
 
       {/* <Headers/> */}
-      {location.pathname === "/Login" || location.pathname === "/Registration" || location.pathname === "/addMarkup" || location.pathname === "/addEvents" || isFlightEticketPage || isBusEticketPage || isHotelEticketPage ? null : <Headers />}
-      {location.pathname === "/" || location.pathname === "/Login" || location.pathname === "/Registration" || location.pathname === "/addMarkup" || location.pathname === "/addEvents" || isFlightEticketPage || isBusEticketPage || isHotelEticketPage ? null : <InnerNavbar />}
+      {location.pathname === "/Login" || location.pathname === "/aboutus" || location.pathname === "/contactus" || location.pathname === "/privacypolicy" || location.pathname === "/termAndCondition" || location.pathname === "/refundPolicy" || location.pathname === "/Registration" || location.pathname === "/addMarkup" || location.pathname === "/addEvents" || isFlightEticketPage || isBusEticketPage || isHotelEticketPage ? null : <Headers />}
+      {location.pathname === "/" || location.pathname === "/aboutus" || location.pathname === "/contactus" || location.pathname === "/privacypolicy" || location.pathname === "/termAndCondition" || location.pathname === "/refundPolicy" || location.pathname === "/Login" || location.pathname === "/Registration" || location.pathname === "/addMarkup" || location.pathname === "/addEvents" || isFlightEticketPage || isBusEticketPage || isHotelEticketPage ? null : <InnerNavbar />}
 
       {!isLoginRoute && !isRegisterRoute &&
         !isDashboard &&
@@ -520,12 +530,25 @@ const MainPage = () => {
                 <Route exact path="/FlightEticket/:id" element={<FlightOneTicket />} />
                 <Route exact path="/BusEticket/:id" element={<BusOneTicket />} />
                 <Route exact path="/HotelEticket/:id" element={<HotelOneTicket />} />
+
+
+                <Route path="/aboutus" element={<AboutUs />}></Route>
+                <Route path="/contactus" element={<ContactUs />}></Route>
+                <Route path="/privacypolicy" element={<PrivacyPolicy />}></Route>
+                <Route path="/termAndCondition" element={<TermandCondition />}></Route>
+                <Route path="/refundPolicy" element={<RefundPolicy />}></Route>
+
+
               </Routes>
             </div>
 
 
 
+
             {/* main page footer */}
+
+
+
             {/* {!isLoginRoute && <Footer />} */}
           </div>
         )}
@@ -547,12 +570,12 @@ const MainPage = () => {
               path="/subAdminLogin"
               element={<SubAdminLoginPage />}></Route>
           )}
-          {isAddMarkup && (
+          {/* {isAddMarkup && (
             <Route
               exact
               path="/addMarkup"
               element={<CreateMarkupForm />}></Route>
-          )}
+          )} */}
         </Routes>
 
 

@@ -116,7 +116,7 @@ const Administration = () => {
             </div>
           </motion.div>
           <motion.div className="col-lg-3" variants={variants}>
-            <div onClick={Queues}><p  >Queues</p></div>
+            <div onClick={Queues}><p  >Bookings</p></div>
           </motion.div>
           {/* <motion.div className="col-lg-3" variants={variants}>
             <div onClick={GST}><p >GST</p></div>

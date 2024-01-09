@@ -8,7 +8,7 @@ import "./holidayform.css";
 import { useDispatch, useSelector } from "react-redux";
 import { searchPackageAction } from "../../../Redux/SearchPackage/actionSearchPackage";
 import { clearHolidayReducer } from "../../../Redux/OnePackageSearchResult/actionOneSearchPackage";
-import {packageBookingActionClear} from "../../../Redux/HolidayBookingRequest/actionBooking.js"
+import { packageBookingActionClear } from "../../../Redux/HolidayBookingRequest/actionBooking.js"
 import color from "../../../../src/color/color.js"
 
 import { motion } from "framer-motion";
@@ -57,15 +57,15 @@ const HolidayForm = () => {
   const dispatch = useDispatch();
   const destinationInputRef = useRef(null);
   const daysSearchInputRef = useRef(null);
-  console.warn("reducer state ",reducerState)
+  console.warn("reducer state ", reducerState)
 
   useEffect(() => {
     dispatch(clearHolidayReducer());
     dispatch(packageBookingActionClear());
     dispatch(clearHolidayPackage());
     sessionStorage.removeItem("searchPackageData")
-    console.warn("reducer state useEffect",reducerState)
-    
+    console.warn("reducer state useEffect", reducerState)
+
   }, []);
 
   const navigate = useNavigate();
@@ -81,7 +81,7 @@ const HolidayForm = () => {
     if (isValid) {
       const payload = {
         destination,
-        days: daysSearch,
+        days: 0,
       };
       // console.log(payload);
       dispatch(searchPackageAction(payload));
@@ -90,26 +90,27 @@ const HolidayForm = () => {
       // Focus on the first empty field
       if (!destination.trim()) {
         destinationInputRef.current.focus();
-      } else if (isNaN(daysSearch) || daysSearch <= 0) {
-        daysSearchInputRef.current.focus();
       }
+      // else if (isNaN(daysSearch) || daysSearch <= 0) {
+      //   daysSearchInputRef.current.focus();
+      // }
     }
   };
 
   // Form validation function
   const validateForm = () => {
     let valid = true;
-    const newErrors = { destination: "", daysSearch: "" };
+    const newErrors = { destination: "" };
 
     if (!destination.trim()) {
       newErrors.destination = "Destination is required";
       valid = false;
     }
 
-    if (isNaN(daysSearch) || daysSearch <= 0) {
-      newErrors.daysSearch = "Days must be a positive number";
-      valid = false;
-    }
+    // if (isNaN(daysSearch) || daysSearch <= 0) {
+    //   newErrors.daysSearch = "Days must be a positive number";
+    //   valid = false;
+    // }
 
     setError(newErrors);
 
@@ -154,7 +155,7 @@ const HolidayForm = () => {
                 <Typography color="error">{error.destination}</Typography>
               )}
             </motion.div>
-            <motion.div variants={variants} className="col-lg-12">
+            {/* <motion.div variants={variants} className="col-lg-12">
               <label>Days</label>
               <div class="form-floating mb-3">
                 <input type="number" name="destination" placeholder="Days" class="form-control" id="filled-basic" onChange={handleDaysSearchChange} required />
@@ -163,7 +164,7 @@ const HolidayForm = () => {
               {error.daysSearch && (
                 <Typography color="error">{error.daysSearch}</Typography>
               )}
-            </motion.div>
+            </motion.div> */}
 
             <motion.div variants={variants} className="col-lg-12">
               <div className="buttonBoxHoliday">
