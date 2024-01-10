@@ -13,6 +13,7 @@ import color from "../../../../src/color/color.js"
 
 import { motion } from "framer-motion";
 import { clearHolidayPackage } from "../../../Redux/HolidayPackageTravellerDetails/HolidayPackageTravellerDetailsAction.js";
+import axios from "axios";
 
 
 
@@ -45,8 +46,12 @@ const HolidayForm = () => {
 
 
   const reducerState = useSelector((state) => state);
-  const [destination, setDestination] = useState("");
+  const [destination, setDestination] = useState("goa");
   const [daysSearch, setDaySearch] = useState(0);
+  const [Query, setToQuery] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const populearSearch = ['uttarakhand', 'goa', 'kashmir', 'andaman', 'karala', 'himachal pradesh']
+  const [result, setResult] = useState([]);
   const [error, setError] = useState({
     destination: "",
     daysSearch: "",
@@ -57,6 +62,9 @@ const HolidayForm = () => {
   const dispatch = useDispatch();
   const destinationInputRef = useRef(null);
   const daysSearchInputRef = useRef(null);
+  const [sub, setSub] = useState(false)
+
+
   console.warn("reducer state ", reducerState)
 
   useEffect(() => {
@@ -67,6 +75,23 @@ const HolidayForm = () => {
     console.warn("reducer state useEffect", reducerState)
 
   }, []);
+  useEffect(() => {
+    const fetchSearchResults = async () => {
+      //make a API call to get search results
+      const results = await axios.get(`http://localhost:8000/skyTrails/packagecitylist?keyword=${Query}`);
+      await setResult(results?.data?.data);
+      // console.warn(result)
+    }
+    const getData = setTimeout(() => {
+      if (Query.length >= 2) {
+        fetchSearchResults()
+      }
+    }, 500);
+    return () => clearTimeout(getData);
+  }, [Query]);
+  useEffect(() => {
+    console.warn(result, "result........")
+  }, [result])
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -81,7 +106,7 @@ const HolidayForm = () => {
     if (isValid) {
       const payload = {
         destination,
-        days: 0,
+        days: daysSearch,
       };
       // console.log(payload);
       dispatch(searchPackageAction(payload));
@@ -90,17 +115,16 @@ const HolidayForm = () => {
       // Focus on the first empty field
       if (!destination.trim()) {
         destinationInputRef.current.focus();
+      } else if ( isNaN(daysSearch) || daysSearch <= 0) {
+        daysSearchInputRef.current.focus();
       }
-      // else if (isNaN(daysSearch) || daysSearch <= 0) {
-      //   daysSearchInputRef.current.focus();
-      // }
     }
   };
 
   // Form validation function
   const validateForm = () => {
     let valid = true;
-    const newErrors = { destination: "" };
+    const newErrors = { destination: "", daysSearch: "" };
 
     if (!destination.trim()) {
       newErrors.destination = "Destination is required";
@@ -118,9 +142,20 @@ const HolidayForm = () => {
   };
 
   const handleDestinationChange = (e) => {
-    setError({ ...error, destination: "" }); // Clear the error when the user types in the destination field
-    setDestination(e.target.value);
+    // setError({ ...error, destination: "" }); 
+    // Clear the error when the user types in the destination field
+    setSearchTerm(e.target.value);
+    setToQuery(e.target.value);
   };
+  const handleDestinationChangeClick = (e, item) => {
+    e.stopPropagation();
+    setDestination(item);
+    setSearchTerm(item);
+    setToQuery("");
+    setResult([]);
+    setSub(false)
+    console.warn(item, "item................")
+  }
 
   const handleDaysSearchChange = (e) => {
     setError({ ...error, daysSearch: "" }); // Clear the error when the user types in the days field
@@ -145,21 +180,49 @@ const HolidayForm = () => {
           whileInView="animate">
           <div className="row holidayForm">
 
-            <motion.div variants={variants} className="col-lg-12">
-              <label>Destination</label>
+            <motion.div onClick={(e) => { e.stopPropagation(); setSub(true) }} variants={variants} className="col-lg-12">
+              <label className="label">Destination</label>
               <div class="form-floating mb-3">
-                <input type="text" name="destination" placeholder="Search From Destination" class="form-control" id="filled-basic" onChange={handleDestinationChange} required />
-                <label for="floatingInput">Search From Destination</label>
+                <input type="text" value={searchTerm} onChange={(e) => handleDestinationChange(e)} name="destination" placeholder="Search From Destination" class="form-control" id="filled-basic" required />
+                <label className="label" for="floatingInput">Search From Destination</label>
+                {sub && <div className="holidayPackagefromchild">
+                  {/* <div className="holidayPackagefromchildSearchDev">
+                    <input value={searchTerm} onChange={(e) => handleDestinationChange(e)} />
+                  </div> */}
+                  {result.length === 0 ?
+                    <div className="packageScroll">
+
+
+                      <div className="dest-citypicker-title">Popular Destinations</div>
+                      <div className="dest-city-container" >
+                        {populearSearch?.map((item, index) => (
+                          <div onClick={(e) => handleDestinationChangeClick(e,item)}
+                            className="dest-city-container-div" key={index}>{item}</div>
+                        ))}
+                      </div>
+                    </div> : <div className="packageScroll">
+
+
+                      {/* <div className="dest-citypicker-title">Popular Destinations</div> */}
+                      <div className="dest-city-container" >
+                        {result?.map((item, index) => (
+                          <div onClick={(e) => handleDestinationChangeClick(e,item)}
+                            className="dest-city-container-div" key={index}>{item}</div>
+                        ))}
+                      </div>
+                    </div>}
+
+                </div>}
               </div>
               {error.destination && (
                 <Typography color="error">{error.destination}</Typography>
               )}
             </motion.div>
             {/* <motion.div variants={variants} className="col-lg-12">
-              <label>Days</label>
+              <label className="lable">Days</label>
               <div class="form-floating mb-3">
-                <input type="number" name="destination" placeholder="Days" class="form-control" id="filled-basic" onChange={handleDaysSearchChange} required />
-                <label for="floatingInput">Days</label>
+                <input className="input" type="number" name="destination" placeholder="Days" class="form-control" id="filled-basic" onChange={handleDaysSearchChange} required />
+                <label className="label" for="floatingInput">Days</label>
               </div>
               {error.daysSearch && (
                 <Typography color="error">{error.daysSearch}</Typography>

@@ -281,8 +281,10 @@ const HotelForm = () => {
    await setValues({ ...values, departure: date }); // Update the departure date
     // setCheckInError("");
     // setMinReturnDate(date);
-    if(values?.checkOutDeparture && values?.checkOutDeparture<date){
-      setValues({...values,checkOutDeparture:date,departure: date});
+    if(values?.checkOutDeparture && values?.checkOutDeparture<=date){
+       const increasedDate = new Date(date);
+       increasedDate.setDate(increasedDate.getDate() + 1);
+      setValues({...values,checkOutDeparture: increasedDate,departure: date});
       // Update the checkOutDeparture
       console.warn(values.checkOutDeparture-date,"values.checkOutDeparture<values.departure")
     }
