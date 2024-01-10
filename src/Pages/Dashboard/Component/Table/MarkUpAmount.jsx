@@ -1,152 +1,374 @@
-import * as React from "react";
-import { styled } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { useSelector } from "react-redux";
-import Box from "@mui/material/Box";
-import { DataGrid } from "@mui/x-data-grid";
+//Orignal code
 
-const columns = [
-  { field: "id", headerName: "User ID", width: 90 },
-  {
-    field: "flight",
-    headerName: "Flight Markup",
-    width: 150,
-    editable: true,
-  },
-  {
-    field: "hotel",
-    headerName: "Hotel Markup",
-    width: 110,
-    editable: true,
-  },
-  {
-    field: "holiday",
-    headerName: "HHoliday Markup",
-    width: 150,
-    editable: true,
-  },
-  {
-    field: "bus",
-    headerName: "Bus Markup",
-    width: 110,
-    editable: true,
-  },
-];
-const markup = [
-  {
-    id: 1,
-    flight: 0.1,
-    hotel: 0.15,
-    holiday: 0.12,
-    bus: 0.08,
-  },
-  {
-    id: 2,
-    flight: 0.08,
-    hotel: 0.12,
-    holiday: 0.1,
-    bus: 0.06,
-  },
-  {
-    id: 3,
-    flight: 0.12,
-    hotel: 0.18,
-    holiday: 0.15,
-    bus: 0.1,
-  },
-  {
-    id: 4,
-    flight: 0.09,
-    hotel: 0.14,
-    holiday: 0.11,
-    bus: 0.07,
-  },
-  {
-    id: 5,
-    flight: 0.11,
-    hotel: 0.16,
-    holiday: 0.13,
-    bus: 0.09,
-  },
-  {
-    id: 6,
-    flight: 0.11,
-    hotel: 0.16,
-    holiday: 0.13,
-    bus: 0.09,
-  },
-  {
-    id: 7,
-    flight: 0.11,
-    hotel: 0.16,
-    holiday: 0.13,
-    bus: 0.09,
-  },
-];
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+  TableHead,
+  TextField,
+  Button,
+} from "@mui/material";
+import { apiURL } from "../../../../Constants/constant";
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
+const MarkUpAmount = () => {
+  const [markupData, setMarkupData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [editMode, setEditMode] = useState(false);
+  const [editedMarkup, setEditedMarkup] = useState({});
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  "&:last-child td, &:last-child th": {
-    border: 0,
-  },
-}));
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.get(
+          `${apiURL.baseURL}/skyTrails/api/admin/getMarkup`
+        );
+        setMarkupData(response.data.result);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      }
+    }
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
+    fetchData();
+  }, []);
 
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
+  const handleEditClick = (data) => {
+    setEditMode(true);
+    setEditedMarkup(data);
+  };
 
-export default function MarkUpAmount() {
-  const reducerState = useSelector((state) => state);
+  const handleSaveClick = async () => {
+    try {
+      const response = await axios.put(
+        `${apiURL.baseURL}/skyTrails/api/admin/updateMarkup/${editedMarkup._id}`,
+        editedMarkup
+      );
 
-  // Table data to be rendered
-  const tableData = reducerState?.userTableData?.userData?.data?.data;
-  // console.log(reducerState, "tableData", tableData);
+      // Handle success, update local state or trigger a refetch
+      console.log("Update successful:", response.data);
+
+      // Reset edit mode and clear edited data
+      setEditMode(false);
+      setEditedMarkup({});
+    } catch (error) {
+      console.error("Error updating markup:", error);
+    }
+  };
+
+  const rowHeadings = [
+    "Hotel Markup",
+    "Flight Markup",
+    "Bus Markup",
+    "Holiday Package Markup",
+  ];
+
+  const tableHeadings = [
+    "Package",
+    "MarkupAmount",
+    "Status",
+    "Created At",
+    "Updated At",
+    "Edit",
+  ];
+
   return (
-    <>
-      <Box height={100} />
-      <Box sx={{ height: 400, width: "100%" }}>
-        <DataGrid
-          rows={markup}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 5,
-              },
-            },
-          }}
-          pageSizeOptions={[5]}
-          checkboxSelection
-          disableRowSelectionOnClick
-        />
-      </Box>
-    </>
+    <div className="markup-table-container">
+      <h2>Markup Data Table</h2>
+      <div className="markup-table">
+        <Table>
+          <TableHead>
+            <TableRow>
+              {tableHeadings.map((heading, index) => (
+                <TableCell key={index}>{heading}</TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rowHeadings.map((rowHeading, rowIndex) => (
+              <TableRow key={rowIndex}>
+                <TableCell style={{color:"white"}}>{rowHeading}</TableCell>
+                
+                <TableCell style={{color:"white"}}>
+                {editMode ? (
+                  // Use a TextField for editing
+                  <TextField
+                    value={editedMarkup.markupAmount || ""}
+                    onChange={(e) =>
+                      setEditedMarkup({
+                        ...editedMarkup,
+                        markupAmount: e.target.value,
+                      })
+                    }
+                  />
+                ) : (
+                  // Display markupAmount from the API response
+                  markupData.length > 0
+                    ? `${markupData[0].hotelMarkup || "No Data"} (Hotel), ${markupData[0].flightMarkup || "No Data"} (Flight), ${markupData[0].busMarkup || "No Data"} (Bus), ${markupData[0].holidayPackageMarkup || "No Data"} (Holiday Package)`
+                    : "No Data"
+                )}
+              </TableCell>
+              <TableCell style={{color:"white"}}>
+                  {editMode ? (
+                    <TextField
+                      value={editedMarkup.status || ""}
+                      onChange={(e) =>
+                        setEditedMarkup({
+                          ...editedMarkup,
+                          status: e.target.value,
+                        })
+                      }
+                    />
+                  ) : markupData.length > 0
+                    ? markupData[0].status || "No Data"
+                    : "No Data"}
+                </TableCell>
+                <TableCell style={{color:"white"}}>
+                  {editMode ? (
+                    <TextField
+                      value={editedMarkup.createdAt || ""}
+                      onChange={(e) =>
+                        setEditedMarkup({
+                          ...editedMarkup,
+                          createdAt: e.target.value,
+                        })
+                      }
+                    />
+                  ) : markupData.length > 0
+                    ? markupData[0].createdAt || "No Data"
+                    : "No Data"}
+                </TableCell>
+                <TableCell style={{color:"white"}}>
+                  {editMode ? (
+                    <TextField
+                      value={editedMarkup.updatedAt || ""}
+                      onChange={(e) =>
+                        setEditedMarkup({
+                          ...editedMarkup,
+                          updatedAt: e.target.value,
+                        })
+                      }
+                    />
+                  ) : markupData.length > 0
+                    ? markupData[0].updatedAt || "No Data"
+                    : "No Data"}
+                </TableCell>
+                <TableCell style={{color:"white"}}>
+                  {editMode ? (
+                    <Button onClick={handleSaveClick}>Save</Button>
+                  ) : (
+                    <Button onClick={() => handleEditClick(markupData[0])}>
+                      Edit
+                    </Button>
+                  )}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+    </div>
   );
-}
+};
+
+export default MarkUpAmount;
+
+
+// import React, { useState, useEffect } from "react";
+// import axios from "axios";
+// import {
+//   Table,
+//   TableBody,
+//   TableCell,
+//   TableRow,
+//   TableHead,
+//   TextField,
+//   Button,
+// } from "@mui/material";
+// import { apiURL } from "../../../../Constants/constant";
+
+// const MarkUpAmount = () => {
+//   const [markupData, setMarkupData] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [editMode, setEditMode] = useState(false);
+//   const [editedMarkup, setEditedMarkup] = useState({});
+
+//   // useEffect(() => {
+//   //   async function fetchData() {
+//   //     try {
+//   //       const response = await axios.get(
+//   //         `${apiURL.baseURL}/skyTrails/api/admin/getMarkup`
+//   //       );
+//   //       setMarkupData(response.data.result);
+//   //       setLoading(false);
+//   //     } catch (error) {
+//   //       console.error("Error fetching data:", error);
+//   //       setLoading(false);
+//   //     }
+//   //   }
+
+//   //   fetchData();
+//   // }, []);
+
+//   // const handleEditClick = (data) => {
+//   //   setEditMode(true);
+//   //   setEditedMarkup(data);
+//   // };
+
+//   useEffect(() => {
+//     async function fetchData() {
+//       try {
+//         const response = await axios.get(
+//           `${apiURL.baseURL}/skyTrails/api/admin/getMarkup`
+//         );
+//         setMarkupData(response.data.result);
+//         setLoading(false);
+//       } catch (error) {
+//         console.error("Error fetching data:", error);
+//         setLoading(false);
+//       }
+//     }
+
+//     fetchData();
+//   }, []);
+
+//   const handleSaveClick = async () => {
+//     try {
+//       const response = await axios.put(
+//         `${apiURL.baseURL}/skyTrails/api/admin/updateMarkup/${editedMarkup._id}`,
+//         editedMarkup
+//       );
+
+//       // Handle success, update local state or trigger a refetch
+//       console.log("Update successful:", response.data);
+
+//       // Reset edit mode and clear edited data
+//       setEditMode(false);
+//       setEditedMarkup({});
+//     } catch (error) {
+//       console.error("Error updating markup:", error);
+//     }
+//   };
+//   const handleEditClick = (data) => {
+//     setEditMode(true);
+//     setEditedMarkup(data);
+//   };
+
+//   const rowHeadings = [
+//     "Hotel Markup",
+//     "Flight Markup",
+//     "Bus Markup",
+//     "Holiday Package Markup",
+//   ];
+
+//   const tableHeadings = [
+//     "Package",
+//     "MarkupAmount",
+//     "Status",
+//     "Created At",
+//     "Updated At",
+//     "Edit",
+//   ];
+
+//   return (
+//     <div className="markup-table-container">
+//       <h2>Markup Data Table</h2>
+//       <div className="markup-table">
+//         <Table>
+//           <TableHead>
+//           <TableRow>
+//           {tableHeadings.map((heading, index) => (
+//             <TableCell key={index}>{heading}</TableCell>
+//           ))}
+//         </TableRow>
+//       </TableHead>
+//       <TableBody>
+//         {rowHeadings.map((rowHeading, rowIndex) => (
+//           <TableRow key={rowIndex}>
+//             <TableCell>{rowHeading}</TableCell>
+//             <TableCell>
+//               {editMode ? (
+//                 <TextField
+//                   value={
+//                     editedMarkup[`${rowHeading.toLowerCase()}Markup`] || ""
+//                   }
+//                   onChange={(e) =>
+//                     setEditedMarkup({
+//                       ...editedMarkup,
+//                       [`${rowHeading}Markup`]: e.target.value,
+//                     })
+//                   }
+//                 />
+//               ) : (
+//                 markupData.length > 0
+//                   ? markupData[0][`${rowHeading}Markup`] || "No Data"
+//                   : "No Data"
+//               )}
+//             </TableCell>
+//                 <TableCell>
+//                   {editMode ? (
+//                     <TextField
+//                       value={editedMarkup.status || ""}
+//                       onChange={(e) =>
+//                         setEditedMarkup({
+//                           ...editedMarkup,
+//                           status: e.target.value,
+//                         })
+//                       }
+//                     />
+//                   ) : markupData.length > 0
+//                     ? markupData[0].status || "No Data"
+//                     : "No Data"}
+//                 </TableCell>
+//                 <TableCell>
+//                   {editMode ? (
+//                     <TextField
+//                       value={editedMarkup.createdAt || ""}
+//                       onChange={(e) =>
+//                         setEditedMarkup({
+//                           ...editedMarkup,
+//                           createdAt: e.target.value,
+//                         })
+//                       }
+//                     />
+//                   ) : markupData.length > 0
+//                     ? markupData[0].createdAt || "No Data"
+//                     : "No Data"}
+//                 </TableCell>
+//                 <TableCell>
+//                   {editMode ? (
+//                     <TextField
+//                       value={editedMarkup.updatedAt || ""}
+//                       onChange={(e) =>
+//                         setEditedMarkup({
+//                           ...editedMarkup,
+//                           updatedAt: e.target.value,
+//                         })
+//                       }
+//                     />
+//                   ) : markupData.length > 0
+//                     ? markupData[0].updatedAt || "No Data"
+//                     : "No Data"}
+//                 </TableCell>
+//                 <TableCell>
+//                   {editMode ? (
+//                     <Button onClick={handleSaveClick}>Save</Button>
+//                   ) : (
+//                     <Button onClick={() => handleEditClick(markupData[0])}>
+//                       Edit
+//                     </Button>
+//                   )}
+//                 </TableCell>
+//               </TableRow>
+//             ))}
+//           </TableBody>
+//         </Table>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default MarkUpAmount;

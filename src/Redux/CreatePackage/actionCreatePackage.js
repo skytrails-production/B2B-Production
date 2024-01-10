@@ -16,3 +16,16 @@ export const createPackageAction = (user) => {
     };
   }
 };
+export const createPackageActionFail = () => {
+  // console.log("data",user);
+ 
+    return {
+      type: types.CREATE_PACKAGE_FAILURE,
+    };
+  };
+ export const createPackageActionClear=()=>{
+  return {
+    type:types.CLEAR_PACKAGE_REDUCER,
+  }
+ }
+

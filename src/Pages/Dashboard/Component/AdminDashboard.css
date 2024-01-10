@@ -7,6 +7,7 @@
     align-items: center;
     background: linear-gradient(to bottom, rgb(164, 194, 224) 0%, #d0e9f7 100%);
     padding: 50px;
+ 
     overflow-y: hidden;
     overflow-x: hidden;
     width: 100%;

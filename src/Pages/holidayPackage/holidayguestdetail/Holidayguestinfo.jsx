@@ -408,7 +408,8 @@ const Holidayguestinfo = ({ setadultCount, setchildCount }) => {
                     <p>Day{index + 1}</p>
                   </div>
                   <div className="itinerary">
-                    <p>{item}</p>
+                    {/* <p>{item}</p> */}
+                    <div dangerouslySetInnerHTML={{ __html: item }}></div>
                   </div>
                 </div>
               </>
@@ -428,7 +429,8 @@ const Holidayguestinfo = ({ setadultCount, setchildCount }) => {
           <div className="travellerDetailsForm">
 
             <div className="itinerary">
-              <p>{onePackage?.cancellation_Policy}</p>
+              {/* <p>{onePackage?.cancellation_Policy}</p> */}
+              <p dangerouslySetInnerHTML={{ __html: onePackage?.cancellation_Policy }}></p>
             </div>
           </div>
 
@@ -444,7 +446,8 @@ const Holidayguestinfo = ({ setadultCount, setchildCount }) => {
           <div className="travellerDetailsForm">
 
             <div className="itinerary">
-              <p>{onePackage?.term_Conditions}</p>
+              {/* <p>{onePackage?.term_Conditions}</p> */}
+              <p dangerouslySetInnerHTML={{ __html: onePackage?.term_Conditions }}></p>
             </div>
           </div>
 

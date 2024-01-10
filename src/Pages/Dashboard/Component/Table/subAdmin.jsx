@@ -89,7 +89,8 @@ const SubAdminTable = () => {
   
     return (
       <div className="subadmin-container">
-        <div className="top-search button">
+       <h2 style={{textAlign:"center", marginTop:"50px"}}>USER TABLE</h2>
+        <div className="top-search button" style={{height:"3rem"}}>
           <input
             type="text"
             placeholder="Search by username or email"

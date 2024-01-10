@@ -14,6 +14,9 @@ import color from "../../../../src/color/color.js"
 import { motion } from "framer-motion";
 import { clearHolidayPackage } from "../../../Redux/HolidayPackageTravellerDetails/HolidayPackageTravellerDetailsAction.js";
 import axios from "axios";
+import { MdTravelExplore } from "react-icons/md";
+import { apiURL } from "../../../Constants/constant.js";
+
 
 
 
@@ -50,7 +53,7 @@ const HolidayForm = () => {
   const [daysSearch, setDaySearch] = useState(0);
   const [Query, setToQuery] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const populearSearch = ['uttarakhand', 'goa', 'kashmir', 'andaman', 'karala', 'himachal pradesh']
+  const [populearSearch, setPopulearSearch] = useState([])
   const [result, setResult] = useState([]);
   const [error, setError] = useState({
     destination: "",
@@ -62,26 +65,67 @@ const HolidayForm = () => {
   const dispatch = useDispatch();
   const destinationInputRef = useRef(null);
   const daysSearchInputRef = useRef(null);
+  const listRef = useRef(null);
   const [sub, setSub] = useState(false)
 
 
+
   console.warn("reducer state ", reducerState)
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (listRef.current && !listRef.current.contains(event.target)) {
+        // Clicked outside the list, so close it
+        setSub(false);
+      }
+    };
+
+    // Attach the event listener when the component mounts
+    document.addEventListener('mousedown', handleClickOutside);
+
+    // Detach the event listener when the component unmounts
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [listRef]);
+  const fetchSearchResultsPopular = async () => {
+    //make a API call to get search results
+    const localPupulardata =await localStorage.getItem('holidayPopularSearch')
+    
+    if (localPupulardata) {
+      setPopulearSearch(JSON.parse(localPupulardata))
+      // alert("localStorage")
+    }
+    else {
+      const results = await axios.get(`${apiURL.baseURL}/skyTrails/packagecitylist?keyword=${Query}`);
+      await setPopulearSearch(results?.data?.data);
+      localStorage.setItem("holidayPopularSearch", JSON.stringify(results?.data?.data))
+      console.warn(results?.data?.data)
+    }
+
+    return 
+    // console.warn(result)
+  }
+  const fetchSearchResults = async () => {
+    //make a API call to get search results
+    const results = await axios.get(`${apiURL.baseURL}/skyTrails/packagecitylist?keyword=${Query}`);
+    await setResult(results?.data?.data);
+    return results?.data?.data
+    // console.warn(result)
+  }
 
   useEffect(() => {
     dispatch(clearHolidayReducer());
     dispatch(packageBookingActionClear());
     dispatch(clearHolidayPackage());
-    sessionStorage.removeItem("searchPackageData")
-    console.warn("reducer state useEffect", reducerState)
+    sessionStorage.removeItem("searchPackageData");
+    console.warn("reducer state useEffect", reducerState);
+    fetchSearchResultsPopular()
+
+
 
   }, []);
   useEffect(() => {
-    const fetchSearchResults = async () => {
-      //make a API call to get search results
-      const results = await axios.get(`http://localhost:8000/skyTrails/packagecitylist?keyword=${Query}`);
-      await setResult(results?.data?.data);
-      // console.warn(result)
-    }
+
     const getData = setTimeout(() => {
       if (Query.length >= 2) {
         fetchSearchResults()
@@ -115,7 +159,7 @@ const HolidayForm = () => {
       // Focus on the first empty field
       if (!destination.trim()) {
         destinationInputRef.current.focus();
-      } else if ( isNaN(daysSearch) || daysSearch <= 0) {
+      } else if (isNaN(daysSearch) || daysSearch <= 0) {
         daysSearchInputRef.current.focus();
       }
     }
@@ -189,28 +233,36 @@ const HolidayForm = () => {
                   {/* <div className="holidayPackagefromchildSearchDev">
                     <input value={searchTerm} onChange={(e) => handleDestinationChange(e)} />
                   </div> */}
-                  {result.length === 0 ?
-                    <div className="packageScroll">
+                  < div ref={listRef} className="packageScroll">
+                    {Query?.length < 3 ?
+                      < div className="packageScroll-div">
 
 
-                      <div className="dest-citypicker-title">Popular Destinations</div>
-                      <div className="dest-city-container" >
-                        {populearSearch?.map((item, index) => (
-                          <div onClick={(e) => handleDestinationChangeClick(e,item)}
-                            className="dest-city-container-div" key={index}>{item}</div>
-                        ))}
+                        <div className="dest-citypicker-title">Popular Destinations</div>
+                        <div className="dest-city-container" >
+                          {populearSearch?.map((item, index) => (
+                            <div onClick={(e) => handleDestinationChangeClick(e, item)}
+                              className="dest-city-container-div" key={index}>< MdTravelExplore size={20} />
+                              <p className="package-p">{item}</p></div>
+                          ))}
+                        </div>
                       </div>
-                    </div> : <div className="packageScroll">
+                      : <div className="packageScroll-div">
 
 
-                      {/* <div className="dest-citypicker-title">Popular Destinations</div> */}
-                      <div className="dest-city-container" >
-                        {result?.map((item, index) => (
-                          <div onClick={(e) => handleDestinationChangeClick(e,item)}
-                            className="dest-city-container-div" key={index}>{item}</div>
-                        ))}
+                        {/* <div className="dest-citypicker-title">Popular Destinations</div> */}
+                        <div className="dest-city-container" >
+                          {result?.map((item, index) => (
+                            <div onClick={(e) => handleDestinationChangeClick(e, item)}
+                              className="dest-city-container-div" key={index}>
+                              < MdTravelExplore size={20} />
+                              <p className="package-p">{item}</p>
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                    </div>}
+                    }
+                  </div>
 
                 </div>}
               </div>

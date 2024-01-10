@@ -33,7 +33,7 @@ function Visacategory() {
       [name]: value,
     });
 
-    // Manually validate the changed field
+   
     validationSchema
       .validateAt(name, { [name]: value })
       .then(() => setFormErrors({ ...formErrors, [name]: '' }))

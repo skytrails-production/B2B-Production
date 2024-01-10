@@ -448,14 +448,7 @@ export default function VerticalTabs() {
               </div>
             </div> */}
 
-
-            <IconButton color="inherit" sx={{ fontSize: 80,'&:hover': {
-          backgroundColor: 'black',
-        }, }} size="large" onClick={handleButtonClick2}>
-                
-                  <AddCircleOutlineIcon  />
-               
-              </IconButton>
+           
 
             <div style={{ display: "flex", alignItems: "center"  }}>
               {/*  */}
@@ -680,6 +673,37 @@ export default function VerticalTabs() {
                   <HomeOutlinedIcon />
                 </ListItemIcon>
                 <ListItemText primary="Home" sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem>
+
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={handleButtonClick2}
+              className={
+                menuData === "Home" ? "active-menu-item" : "inactive-menu-item"
+              }
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                  ...((menuData === "Markup"
+                    ? activeMenuItemClass
+                    : inactiveMenuItemClass) || {}),
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <AddCircleOutlineIcon />
+                </ListItemIcon>
+                <ListItemText primary="Add MarkUp" sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
             <ListItem

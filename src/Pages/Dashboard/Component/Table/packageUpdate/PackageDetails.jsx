@@ -96,6 +96,7 @@ function PackageDetails() {
   return (
     <>
       <Box height={100} />
+      <h2>Package Details</h2>
       <Table
         striped
         bordered
@@ -108,7 +109,7 @@ function PackageDetails() {
         }}
       >
         <thead>
-          <tr>
+          <tr style={{backgroundColor:"grey"}}>
             <th>IMG</th>
             <th>Package Title</th>
             <th>Days</th>
@@ -140,17 +141,17 @@ function PackageDetails() {
                       src={ele.pakage_img}
                     />{" "}
                   </td>
-                  <td>{ele?.pakage_title}</td>
-                  <td>{ele?.days}</td>
-                  <td>{ele?.pakage_amount?.amount}</td>
-                  <td>{ele?.hotel_details}</td>
-                  <td>{ele?.insclusion_note}</td>
-                  <td>{ele?.exclusion_note}</td>
-                  <td>
-                    <div style={{ width: "350px" }}>{ele?.overview}</div>{" "}
+                  <td style={{color:"white"}}>{ele?.pakage_title}</td>
+                  <td style={{color:"white"}}>{ele?.days}</td>
+                  <td style={{color:"white"}}>{ele?.pakage_amount?.amount}</td>
+                  <td style={{color:"white"}}>{ele?.hotel_details}</td>
+                  <td style={{color:"white"}}>{ele?.insclusion_note}</td>
+                  <td style={{color:"white"}}>{ele?.exclusion_note}</td>
+                  <td style={{color:"white"}}>
+                    <div style={{ width: "350px", color:"white" }}>{ele?.overview}</div>{" "}
                   </td>
-                  <td>{ele?.detailed_ltinerary[0]?.slice(7, 55) + "..."}</td>
-                  <td>
+                  <td style={{color:"white"}}>{ele?.detailed_ltinerary[0]?.slice(7, 55) + "..."}</td>
+                  <td style={{color:"white"}}>
                     <div>
                       {ele?.select_tags?.map((tag, index) => {
                         // console.log("tag",tag);
@@ -164,12 +165,12 @@ function PackageDetails() {
                       })}
                     </div>
                   </td>
-                  <td>{ele?.term_Conditions}</td>
-                  <td>{ele?.cancellation_Policy}</td>
-                  <td>
+                  <td style={{color:"white"}}>{ele?.term_Conditions}</td>
+                  <td style={{color:"white"}} >{ele?.cancellation_Policy}</td>
+                  <td style={{color:"white"}}>
                     <button onClick={(e) => handleEdit(ele._id)}>Edit</button>
                   </td>
-                  <td>
+                  <td style={{color:"white"}}>
                     <button>Delete</button>
                   </td>
                 </tr>

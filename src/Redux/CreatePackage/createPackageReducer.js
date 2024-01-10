@@ -28,6 +28,16 @@ export const createPackageReducer = (state = initState, action) => {
         isError: false,
         showSuccessMessage: true,
       };
+    case types.CREATE_PACKAGE_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        showSuccessMessage: true,
+      };
+    case types.CLEAR_PACKAGE_REDUCER:
+      return initState;
+       
 
     default:
       return state;

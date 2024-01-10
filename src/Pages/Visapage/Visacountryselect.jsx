@@ -44,7 +44,7 @@ function Visacountryselect() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/skyTrails/api/visa/getVisaCategory")
+      .get(`${apiURL.baseURL}/skyTrails/api/visa/getVisaCategory`)
       .then((response) => {
         const categories = response.data.result;
         setVisaCategories(categories);

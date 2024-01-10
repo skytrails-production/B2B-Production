@@ -379,7 +379,8 @@ const Bookingdetailpackage = () => {
               <div className="col-lg-10">
                 <div className="overviewBox">
                   <span>Overview</span>
-                  <p>{onePackage?.overview}</p>
+                  {/* <p>{onePackage?.overview}</p> */}
+                  <p dangerouslySetInnerHTML={{ __html: onePackage?.overview }}></p>
                 </div>
               </div>
             </div>
@@ -507,7 +508,8 @@ const Bookingdetailpackage = () => {
                 <div className="col-lg-12">
                   <div className="hotelDetailsTab">
                     <h2 className="mb-4">HOTEL DETAILS</h2>
-                    <p>{onePackage?.hotel_details}</p>
+                    {/* <p>{onePackage?.hotel_details}</p> */}
+                    <p dangerouslySetInnerHTML={{ __html: onePackage?.hotel_details }}></p>
                   </div>
                 </div>
               </TabPanel>
@@ -518,12 +520,14 @@ const Bookingdetailpackage = () => {
                       <div className="col-lg-6">
                         <h2>Inclusion</h2>
 
-                        <p>{onePackage?.insclusion_note}</p>
+                        {/* <p>{onePackage?.insclusion_note}</p> */}
+                        <p dangerouslySetInnerHTML={{ __html: onePackage?.insclusion_note }}></p>
                       </div>
                       <div className="col-lg-6">
                         <h2>Exclusion</h2>
 
-                        <p>{onePackage?.exclusion_note}</p>
+                        {/* <p>{onePackage?.exclusion_note}</p> */}
+                        <p dangerouslySetInnerHTML={{ __html: onePackage?.exclusion_note }}></p>
                       </div>
                     </div>
                   </div>
@@ -536,7 +540,8 @@ const Bookingdetailpackage = () => {
                       <div className="col-lg-12">
                         <h2>Term & Condition</h2>
 
-                        <p>{onePackage?.term_Conditions}</p>
+                        {/* <p>{onePackage?.term_Conditions}</p> */}
+                        <p dangerouslySetInnerHTML={{ __html: onePackage?.term_Conditions }}></p>
                       </div>
 
                     </div>
@@ -550,7 +555,8 @@ const Bookingdetailpackage = () => {
                       <div className="col-lg-12">
                         <h2>Cancellation Policy</h2>
 
-                        <p>{onePackage?.cancellation_Policy}</p>
+                        {/* <p>{onePackage?.cancellation_Policy}</p> */}
+                        <p dangerouslySetInnerHTML={{ __html: onePackage?.cancellation_Policy }}></p>
                       </div>
 
                     </div>

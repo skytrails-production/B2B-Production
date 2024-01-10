@@ -56,7 +56,9 @@ const Usertables = () => {
 
   return (
     <div className="userData-cotaiiner">
+    <h2 style={{textAlign:"center", marginTop:"14px"}}>USER TABLE</h2>
       <div className="headings-div">
+      
       <TextField
         type="text"
         value={searchTerm}
@@ -70,7 +72,7 @@ const Usertables = () => {
           ),
         }}
       />
-      <h2>USER TABLE</h2></div>
+      </div>
       <table className="userTable">
         <thead>
           <tr>

@@ -133,18 +133,21 @@ const HolidayPackageResult = () => {
   // console.log(filteredPackage, "filtered package");
   const sortedAndFilteredResults = filteredPackage?.filter((item) => {
     const publishedPrice = item?.pakage_amount.amount;
-    const isIncluded = item.insclusions.some((inclusion) => inclusion[selectedCategory] === 'true');
-    const selectTag = item.select_tags.some((tag) => tag[selectedCategory]);
-
+    const noOfDays = item?.days;
+    const starRating = item?.StarRating;
     const categoryFilters = selectedCategory?.map((category) => {
       switch (category) {
-        case "wildlife":
-        case "beach":
-          return isIncluded;
-        case "family":
-        case "group":
-        case "solo":
-          return selectTag;
+
+        case "0-3Days":
+          return noOfDays >= 0 && noOfDays <= 3;
+        case "4-7Days":
+          return noOfDays >= 4 && noOfDays <= 7;
+        case "7-12Days":
+          return noOfDays >= 7 && noOfDays <= 12;
+        case "12-20Days":
+          return noOfDays >= 12 && noOfDays <= 20;
+        case "20-30Days":
+          return noOfDays >= 20 && noOfDays <= 30;
         case "5000":
           return publishedPrice <= 5000;
         case "5001":
@@ -223,27 +226,27 @@ const HolidayPackageResult = () => {
 
                       <div>
                         <label className="sidebar-label-container">
-                          <input type="checkbox" onChange={handleRadioChange} value="wildlife" name="test" />
-                          <span className="checkmark"></span>WildLife
+                          <input type="checkbox" onChange={handleRadioChange} value="0-3 Days" name="test" />
+                          <span className="checkmark"></span>0-3 Days
                         </label>
 
                         <label className="sidebar-label-container">
-                          <input type="checkbox" onChange={handleRadioChange} value="family" name="test" />
-                          <span className="checkmark"></span>Family
+                          <input type="checkbox" onChange={handleRadioChange} value="4-7Days" name="test" />
+                          <span className="checkmark"></span>4-7 Days
                         </label>
 
                         <label className="sidebar-label-container">
-                          <input type="checkbox" onChange={handleRadioChange} value="group" name="test" />
-                          <span className="checkmark"></span>Group
+                          <input type="checkbox" onChange={handleRadioChange} value="7-12Days" name="test" />
+                          <span className="checkmark"></span>7-12Days
                         </label>
 
                         <label className="sidebar-label-container">
-                          <input type="checkbox" onChange={handleRadioChange} value="solo" name="test" />
-                          <span className="checkmark"></span>Solo
+                          <input type="checkbox" onChange={handleRadioChange} value="12-20Days" name="test" />
+                          <span className="checkmark"></span>12-20 Days
                         </label>
                         <label className="sidebar-label-container">
-                          <input type="checkbox" onChange={handleRadioChange} value="beach" name="test" />
-                          <span className="checkmark"></span>Beach
+                          <input type="checkbox" onChange={handleRadioChange} value="20-30Days" name="test" />
+                          <span className="checkmark"></span>20-30 Days
                         </label>
 
                       </div>

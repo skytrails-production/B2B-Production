@@ -59,7 +59,7 @@ import WifiPasswordIcon from "@mui/icons-material/WifiPassword";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 // import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { createPackageAction } from "../../../Redux/CreatePackage/actionCreatePackage";
+import { createPackageAction,createPackageActionClear } from "../../../Redux/CreatePackage/actionCreatePackage";
 // import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import Accordion from "react-bootstrap/Accordion";
 import { GrAddCircle } from "react-icons/gr";
@@ -72,8 +72,9 @@ const CreateHolidayPackage = () => {
   // Redux- saga
   const dispatch = useDispatch();
   const reducerState = useSelector((state) => state);
+  const [loader,setLoader]=useState(false);
   const navigate = useNavigate();
-  // console.log("create Package", reducerState);
+  console.log("createPackage", reducerState);
   const ListItem = styled("li")(({ theme }) => ({
     margin: theme.spacing(0.5),
   }));
@@ -256,13 +257,29 @@ const CreateHolidayPackage = () => {
     setDaysDetails(newValues);
     // setHtml(newValues);
   };
-  console.warn("days", html);
+   useEffect(() => {
+    if (reducerState?.createPackage?.showSuccessMessage == true) {
+      setLoader(false)
+       Swal.fire({
+         icon: "success",
+         title: "Done.",
+         text: ` Your Package is created Sucessfully `,
+         showCancelButton: false,
+         confirmButtonText: "OK",
+       }).then((result) => {
+         if (result.isConfirmed) {
+           navigate("/");
+           dispatch(createPackageActionClear());
+         }
+       });
 
-  console.warn("daysDetailsValues", daysDetailsValues);
+    }
+   }, [reducerState?.createPackage]);
 
   // Form handle code
   const handleCreatePackage = (event) => {
     event.preventDefault();
+     setLoader(true)
     setSub(true);
     const file1 = document.getElementById("user_card_document").files[0];
     console.warn(
@@ -380,17 +397,7 @@ const CreateHolidayPackage = () => {
       // console.log(formData1);
       dispatch(createPackageAction(formData1));
 
-      Swal.fire({
-        icon: "success",
-        title: "Done.",
-        text: ` Your Package is created Sucessfully `,
-        showCancelButton: false,
-        confirmButtonText: "OK",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          navigate("/");
-        }
-      });
+     
     }
     // event.target.reset();
     // setDaysDetails([]);
@@ -452,11 +459,7 @@ const CreateHolidayPackage = () => {
     }
     return Object.keys(filteredObj).length;
   };
-  console.warn(
-    filterTrueProps(checkedItem),
-    filterTrueProps(tag),
-    "filrter prooooddsndjndhnhjnnnnnnnnnnnnnnnnnnn"
-  );
+  
   return (
     <div className="container-xxl">
       {/* for heading text of packages */}
@@ -2016,7 +2019,7 @@ const CreateHolidayPackage = () => {
                       name="hotel_details"
                       placeholder="Add Hotel Details ..."
                       id="hotel_details"
-                      style={{ height: "100px" }}
+                     
                     ></Editor>
                     {/* <label for="floatingTextarea2">Add Hotel Details ...</label> */}
                   </div>
@@ -2032,7 +2035,7 @@ const CreateHolidayPackage = () => {
                           name="insclusion_note"
                           placeholder="Add Inclusion Note ..."
                           id="insclusion_note"
-                          style={{ height: "100px" }}
+                   
                           value={inclusion}
                           onChange={(e) => setInclusion(e.target.value)}
                         ></Editor>
@@ -2054,7 +2057,7 @@ const CreateHolidayPackage = () => {
                           name="exclusion_note"
                           placeholder="Add Exclusion Note ..."
                           id="exclusion_note"
-                          style={{ height: "100px" }}
+                         
                           value={exclusion}
                           onChange={(e) => setExclusion(e.target.value)}
                         ></Editor>
@@ -2096,7 +2099,7 @@ const CreateHolidayPackage = () => {
                                 name="detailed_ltinerary"
                                 value={daysDetailsValues[i]}
                                 onChange={(event) => handleDaysDetail(i, event)}
-                                style={{ height: "199px" }}
+                             
                               />
                             </span>
                           </Accordion.Body>
@@ -2119,7 +2122,7 @@ const CreateHolidayPackage = () => {
                           name="overview"
                           placeholder="overview"
                           id="exclusion_note"
-                          style={{ height: "100px" }}
+                        
                           value={overView}
                           onChange={(e) => setOverView(e.target.value)}
                         ></Editor>
@@ -2374,7 +2377,7 @@ const CreateHolidayPackage = () => {
                             name="term_Conditions"
                             placeholder="Enter Term And Condition"
                             id="term_Conditions"
-                            style={{ height: "100px" }}
+                         
                             value={termAndCondition}
                             onChange={(e)=>setTermAndCondition(e.target.value)}
                           ></Editor>
@@ -2429,7 +2432,7 @@ const CreateHolidayPackage = () => {
                             name="cancellation_Policy"
                             placeholder="Cancellation Policy...."
                             id="cancellation_Policy"
-                            style={{ height: "100px" }}
+                     
                             value={cancellation}
                             onChange={(e)=>setCancellation(e.target.value)}
                           ></Editor>
@@ -2509,8 +2512,9 @@ const CreateHolidayPackage = () => {
                 <div className="buttonBoxPackage">
                   {/* <button className="draft">Save As Draft</button> */}
                   <button type="submit" class="packageSubmit">
-                    Submit Request
-                  </button>
+                    {
+                      loader?<div id="packageloadingdetails"></div>:"Submit Request"
+                    }                  </button>
                 </div>
               </div>
             </form>

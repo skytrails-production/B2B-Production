@@ -5,6 +5,7 @@
   .background-animation {
     position: fixed;
     top: 0;
+    height: 100vh;
     left: 0;
     width: 100vw;
     background: linear-gradient(45deg, #21325D, #207cca, #2989d8, #207cca, #21325D);

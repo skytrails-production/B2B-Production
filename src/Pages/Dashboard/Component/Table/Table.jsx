@@ -313,6 +313,7 @@ export default function Tables() {
   return (
     <>
       <Box height={100} />
+      <h3>AGENT TABLE</h3>
       <TableContainer
        
         sx={{
@@ -322,7 +323,7 @@ export default function Tables() {
         }}
         component={Paper}
       >
-        <Table sx={{ minWidth: 800 }} aria-label="customized table">
+        <Table sx={{ minWidth: 800 , marginTop:"0px"}} aria-label="customized table">
           <TableHead>
             <TableRow>
               <StyledTableCell> Document Image</StyledTableCell>
@@ -403,46 +404,46 @@ export default function Tables() {
                             />
                           </Button>
                         </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
+                        <StyledTableCell style={{color:"white"}} scope="row">
                           {ele.personal_details?.first_name || "NA"}
                         </StyledTableCell>
-                        <StyledTableCell align="right">
+                        <StyledTableCell align="right" style={{color:"white"}}>
                           {ele.agency_details.agency_name&&
                             ele.agency_details.agency_name 
                             ? ele.agency_details.agency_name
                             : "NA"}
                         </StyledTableCell>
-                        <StyledTableCell align="right">
+                        <StyledTableCell align="right" style={{color:"white"}}>
                         {ele.agency_gst_details?.agency_classification || "NA"}
                       </StyledTableCell>
                       
-                      <StyledTableCell align="right">
+                      <StyledTableCell align="right" style={{color:"white"}}>
                         {ele.agency_details?.address || "NA"}
                       </StyledTableCell>
                       
-                      <StyledTableCell align="right">
+                      <StyledTableCell align="right" style={{color:"white"}}>
                         {ele.agency_gst_details?.email || "NA"}
                       </StyledTableCell>
                       
-                      <StyledTableCell align="right">
+                      <StyledTableCell align="right" style={{color:"white"}}>
                         {ele.agency_gst_details?.agency_name || "NA"}
                       </StyledTableCell>
                       
-                      <StyledTableCell align="right">
+                      <StyledTableCell align="right" style={{color:"white"}}>
                         {ele.agency_gst_details?.provisional_GSTIN || "NA"}
                       </StyledTableCell>
                       
-                      <StyledTableCell align="right">
+                      <StyledTableCell align="right" style={{color:"white"}}>
                         {ele.personal_details?.mobile?.mobile_number || "NA"}
                       </StyledTableCell>
                       
-                      <StyledTableCell align="right">
+                      <StyledTableCell align="right" style={{color:"white"}}>
                         {ele.personal_details?.password?.slice(0, 32) || "NA"}
                         <br />
                         {ele.personal_details?.password?.slice(32) || "NA"}
                       </StyledTableCell>
                       
-                      <StyledTableCell align="right">
+                      <StyledTableCell align="right" style={{color:"white"}}>
                         {ele.is_active == 1 && (
                           <span
                             style={{
@@ -470,6 +471,7 @@ export default function Tables() {
                           </span>
                         )}
                         <select
+                        
                           value={ele.is_active}
                           onChange={(e) => handleToggle(e.target.value, ele._id)}
                         >
@@ -591,6 +593,7 @@ export default function Tables() {
                           }}
                         >
                           <TextField
+                          style={{color:"white"}}
                             placeholder={markupData[index]?.holiday || "0"}
                             name="holiday"
                             defaultValue={markupData[index]?.holiday || "0"}

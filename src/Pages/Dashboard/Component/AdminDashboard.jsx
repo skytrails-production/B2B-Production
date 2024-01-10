@@ -44,7 +44,7 @@ const AdminDashboardData = () => {
   return (
     <>
   
-    <Grid container spacing={3} className="admin-dashboard-grid" style={{ marginTop: '50px' }}>
+    <Grid container spacing={3} className="admin-dashboard-grid" style={{  height: "100vh" }}>
     
     {Object.keys(dashboardData).map((key, index) => (
       <Grid item xs={12} sm={6} md={4} key={index} className={`grid-item grid-item-${index}`}>

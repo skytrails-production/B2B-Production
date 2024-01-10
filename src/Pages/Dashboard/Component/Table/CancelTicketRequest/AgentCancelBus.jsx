@@ -91,19 +91,19 @@ const AllBusCancelTickets = () => {
               <TableBody>
                 {hotelBookings.map((booking) => (
                   <TableRow key={booking._id}>
-                    <TableCell>{booking.busId}</TableCell>
-                    <TableCell>{booking.userDetails.agency_details.agency_name}</TableCell>
-                    <TableCell>{`${booking.userDetails.personal_details.first_name} ${booking.userDetails.personal_details.last_name}`}</TableCell>
-                    <TableCell>{booking.userDetails.personal_details.mobile.mobile_number}</TableCell>
-                    <TableCell>{booking.userDetails.personal_details.email}</TableCell>
-                    <TableCell>{booking.reason}</TableCell>
-                    <TableCell>{booking.bustDetails.pnr}</TableCell>
-                    <TableCell>{booking.bustDetails.amount}</TableCell>
-                    <TableCell>{booking.bustDetails.origin}</TableCell>
-                    <TableCell>{booking.bustDetails.destination}</TableCell>
-                    <TableCell>{booking.bustDetails.departureTime}</TableCell>
-                    <TableCell>{booking.bustDetails.busType}</TableCell>
-                    <TableCell><button>APPROVE</button></TableCell>
+                    <TableCell style={{color:"white"}}>{booking.busId}</TableCell>
+                    <TableCell style={{color:"white"}}>{booking.userDetails.agency_details.agency_name}</TableCell>
+                    <TableCell style={{color:"white"}}>{`${booking.userDetails.personal_details.first_name} ${booking.userDetails.personal_details.last_name}`}</TableCell>
+                    <TableCell style={{color:"white"}}>{booking.userDetails.personal_details.mobile.mobile_number}</TableCell>
+                    <TableCell style={{color:"white"}}>{booking.userDetails.personal_details.email}</TableCell>
+                    <TableCell style={{color:"white"}}>{booking.reason}</TableCell>
+                    <TableCell style={{color:"white"}}>{booking.bustDetails.pnr}</TableCell>
+                    <TableCell style={{color:"white"}}>{booking.bustDetails.amount}</TableCell>
+                    <TableCell style={{color:"white"}}>{booking.bustDetails.origin}</TableCell>
+                    <TableCell style={{color:"white"}}>{booking.bustDetails.destination}</TableCell>
+                    <TableCell style={{color:"white"}}>{booking.bustDetails.departureTime}</TableCell>
+                    <TableCell style={{color:"white"}}>{booking.bustDetails.busType}</TableCell>
+                    <TableCell style={{color:"white"}}><button>APPROVE</button></TableCell>
                   </TableRow>
                 ))}
               </TableBody>

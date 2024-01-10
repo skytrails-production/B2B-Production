@@ -54,7 +54,7 @@
   /* font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; */
   font-family: "Montserrat";
   border: 1px #5c85a4 solid;
-  background-color: #FFFBFB;
+  background-color: #fffbfb;
   /* font-size: 1em;
 line-height: 1.4em;
 padding: 5px 8px;
@@ -77,7 +77,6 @@ transition: background-color 0.2s ease 0s; */
 }
 
 .relevant__tag {
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -117,7 +116,7 @@ transition: background-color 0.2s ease 0s; */
 }
 
 /* When the checkbox is checked, add a blue background */
-.label__container input:checked~.checkmark {
+.label__container input:checked ~ .checkmark {
   background-color: limegreen !important;
   border: none !important;
   border-radius: 25px !important;
@@ -132,7 +131,7 @@ transition: background-color 0.2s ease 0s; */
 }
 
 /* Show the checkmark when checked */
-.label__container input:checked~.checkmark:after {
+.label__container input:checked ~ .checkmark:after {
   display: block;
 }
 
@@ -175,35 +174,28 @@ transition: background-color 0.2s ease 0s; */
 
 .title_text_1 {
   font-size: 20px;
-  color: #000000
+  color: #000000;
 }
 
-.radio input[type='radio'] {
+.radio input[type="radio"] {
   width: 20px;
   height: 20px;
   border: 2px solid #e41515;
 }
 
-.radio input[type='radio']:checked {
-  color: #5C85A4;
-
+.radio input[type="radio"]:checked {
+  color: #5c85a4;
 }
 
 .input_file::file-selector-button {
   background-color: #000000;
-  color: #FFFFFF;
+  color: #ffffff;
   width: 150px;
   height: 40px;
   box-shadow: 0px 6.55555534362793px 13.11111068725586px rgba(0, 0, 0, 0.16);
   border: none;
   border-radius: 4px;
-
-
-
-
 }
-
-
 
 .container-fluid {
   background-color: white !important;
@@ -217,7 +209,6 @@ transition: background-color 0.2s ease 0s; */
   align-items: center;
   width: 100%;
 }
-
 
 .headerBox {
   width: 900px;
@@ -244,7 +235,7 @@ transition: background-color 0.2s ease 0s; */
 
 .draft {
   background-color: transparent;
-  color: #21325D;
+  color: #21325d;
   text-decoration: underline;
   outline: none;
   border: none;
@@ -259,7 +250,7 @@ transition: background-color 0.2s ease 0s; */
 
 .buttonBoxPackage .packageSubmit {
   padding: 10px 22px;
-  background-color: #21325D;
+  background-color: #21325d;
   color: white;
   border-radius: 8px;
   font-weight: 700;
@@ -268,15 +259,12 @@ transition: background-color 0.2s ease 0s; */
   outline: none;
 }
 
-
 .createHolidayPackage {
   background-color: #fff;
   border-radius: 10px;
   padding: 30px 30px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
-
-
 
 .groupinpbut {
   position: relative;
@@ -301,7 +289,7 @@ transition: background-color 0.2s ease 0s; */
 }
 
 .insideButton:hover {
-  background-color: #DFE6F7 !important;
+  background-color: #dfe6f7 !important;
   color: #111 !important;
   border: 2px solid #111 !important;
 }
@@ -309,7 +297,6 @@ transition: background-color 0.2s ease 0s; */
 /* .form-floating>flootting {
   height: 50px !important;
 } */
-
 
 .createHolidayPackage .form-label {
   color: #111;
@@ -321,11 +308,9 @@ transition: background-color 0.2s ease 0s; */
   color: #ddd !important;
 }
 
-
-.form-floating>label {
+.form-floating > label {
   color: #888;
 }
-
 
 .form-control:focus {
   color: #212529;
@@ -335,13 +320,26 @@ transition: background-color 0.2s ease 0s; */
   box-shadow: unset !important;
 }
 
-
-
 div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
   border: 0;
   border-radius: 0.25em;
   background: initial;
-  background-color: #21325D;
+  background-color: #21325d;
   color: #fff;
   font-size: 1em;
+}
+#packageloadingdetails {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  border-top: 2px solid #333;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
