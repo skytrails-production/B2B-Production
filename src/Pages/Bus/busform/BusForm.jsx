@@ -17,6 +17,7 @@ import DateRangeIcon from '@mui/icons-material/DateRange';
 import FmdGoodIcon from '@mui/icons-material/FmdGood';
 import NavBarBox from "../../../Components/NavBarBox.jsx";
 import BusLoading from "../busLoading/BusLoading.jsx"
+import Swal from "sweetalert2";
 
 
 
@@ -82,7 +83,10 @@ const BusForm = () => {
     cityName: "",
   });
   const [selectedFrom, setSelectedFrom] = useState(null);
-  const [to, setTO] = useState("");
+  const [to, setTO] = useState({
+    cityId: "",
+    cityName: "",
+  });
   const [selectedTo, setSelectedTo] = useState(null);
   const [displayFrom, setdisplayFrom] = useState(true);
   const [displayTo, setdisplayTo] = useState(true);
@@ -98,6 +102,9 @@ const BusForm = () => {
     to: "",
     date: "",
   });
+  useEffect(() => {
+    console.warn(from, "from value")
+  }, [from])
 
   useEffect(() => {
     dispatch(clearBusSearchReducer());
@@ -175,7 +182,7 @@ const BusForm = () => {
     setFrom((prevState) => ({
       ...prevState,
       cityId: result?.CityId,
-      cityName: result?.CityId,
+      cityName: result?.CityName,
     }));
 
     setSelectedFrom(result?.CityId);
@@ -183,7 +190,7 @@ const BusForm = () => {
   };
 
   const handleToClick = (result) => {
-    setTO(result.CityId);
+    setTO({ cityId: result.CityId, cityName: result.CityName });
     setSelectedTo(result.CityId);
     setdisplayTo(false);
   };
@@ -194,7 +201,7 @@ const BusForm = () => {
 
   const handleToInputChange = (event) => {
     setErrors({ ...errors, to: "" });
-    setTO(event.target.value);
+    setTO({ ...to, cityName: event.target.value });
     setSelectedTo(null);
   };
 
@@ -235,6 +242,30 @@ const BusForm = () => {
       setLoader(false)
       navigate("/BusResult");
     }
+    else if (reducerState?.getBusResult?.busResult?.data?.data?.BusSearchResult?.Error?.ErrorCode !== 0 && reducerState?.getBusResult?.busResult?.data?.data?.BusSearchResult?.Error?.ErrorCode !== undefined) {
+      Swal.fire({
+        title: "Something went wrong",
+        text: reducerState?.getBusResult?.busResult?.data?.data?.BusSearchResult?.Error?.ErrorMessage,
+        // text:TicketDetails,
+        icon: "question",
+        timer: 3000,
+        showClass: {
+          popup: `
+            animate__animated
+            animate__fadeInUp
+            animate__faster
+          `,
+        },
+        hideClass: {
+          popup: `
+            animate__animated
+            animate__fadeOutDown
+            animate__faster
+          `,
+        },
+      });
+      setLoader(false)
+    }
     console.warn(reducerState?.getBusResult?.busResult?.data?.data?.BusSearchResult?.Error?.ErrorCode
       , "reducerState?.getBusResult?.data?.data?.BusSearchResult?.Error?.ErrorCode")
   }, [reducerState?.getBusResult])
@@ -262,8 +293,8 @@ const BusForm = () => {
         EndUserIp: reducerState?.ip?.ipData,
         TokenId: reducerState?.ip?.tokenData,
         DateOfJourney: formattedDate,
-        DestinationId: formData.get("to"),
-        OriginId: formData.get("from"),
+        DestinationId: to.cityId,
+        OriginId: from.cityId,
       };
       // console.log("payload", payload);
       dispatch(busSearchAction(payload));
@@ -350,9 +381,9 @@ const BusForm = () => {
 
   // export default MainBox;      
 
-if(loader){
- return(<BusLoading/>) 
-}
+  if (loader) {
+    return (<BusLoading />)
+  }
 
 
   return (
@@ -378,7 +409,7 @@ if(loader){
                       name="from"
                       placeholder="Enter city or airport"
                       autoComplete="off"
-                      value={from.cityId}
+                      value={from.cityName}
                       onChange={(event) => {
                         handleFromInputChange(event);
                         handleFromSearch(event.target.value);
@@ -387,7 +418,7 @@ if(loader){
                       style={{ width: "100%" }}
                     />
                   </div>
-                  {isLoading && <div>Loading...</div>}
+                  {/* {isLoading && <div>Loading...</div>} */}
                   {fromSearchResults && fromSearchResults.length > 0 && (
                     <div
                       style={{
@@ -422,7 +453,7 @@ if(loader){
                       name="to"
                       placeholder="Enter city or airport"
                       autoComplete="off"
-                      value={to}
+                      value={to.cityName}
                       onChange={(event) => {
                         handleToInputChange(event);
                         handleToSearch(event.target.value);
@@ -430,7 +461,7 @@ if(loader){
                       ref={toInputRef}
                     />
                   </div>
-                  {isLoading && <div>Loading...</div>}
+                  {/* {isLoading && <div>Loading...</div>} */}
                   {toSearchResults && toSearchResults.length > 0 && (
                     <div
                       style={{

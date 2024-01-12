@@ -315,15 +315,17 @@ export default function Tables() {
       <Box height={100} />
       <h3>AGENT TABLE</h3>
       <TableContainer
-       
         sx={{
           margin: "auto",
-          overflowX: "scroll",
-          overflowY: "hidden",
+          overflowX: "auto",
         }}
         component={Paper}
       >
-        <Table sx={{ minWidth: 800 , marginTop:"0px"}} aria-label="customized table">
+        <Table
+          sx={{ minWidth: 800, marginTop: "0px" }}
+          aria-label="customized table"
+          // sx={{ overflowX: "auto" }}
+        >
           <TableHead>
             <TableRow>
               <StyledTableCell> Document Image</StyledTableCell>
@@ -404,217 +406,246 @@ export default function Tables() {
                             />
                           </Button>
                         </StyledTableCell>
-                        <StyledTableCell style={{color:"white"}} scope="row">
+                        <StyledTableCell style={{ color: "white" }} scope="row">
                           {ele.personal_details?.first_name || "NA"}
                         </StyledTableCell>
-                        <StyledTableCell align="right" style={{color:"white"}}>
-                          {ele.agency_details.agency_name&&
-                            ele.agency_details.agency_name 
+                        <StyledTableCell
+                          align="right"
+                          style={{ color: "white" }}
+                        >
+                          {ele.agency_details.agency_name &&
+                          ele.agency_details.agency_name
                             ? ele.agency_details.agency_name
                             : "NA"}
                         </StyledTableCell>
-                        <StyledTableCell align="right" style={{color:"white"}}>
-                        {ele.agency_gst_details?.agency_classification || "NA"}
-                      </StyledTableCell>
-                      
-                      <StyledTableCell align="right" style={{color:"white"}}>
-                        {ele.agency_details?.address || "NA"}
-                      </StyledTableCell>
-                      
-                      <StyledTableCell align="right" style={{color:"white"}}>
-                        {ele.agency_gst_details?.email || "NA"}
-                      </StyledTableCell>
-                      
-                      <StyledTableCell align="right" style={{color:"white"}}>
-                        {ele.agency_gst_details?.agency_name || "NA"}
-                      </StyledTableCell>
-                      
-                      <StyledTableCell align="right" style={{color:"white"}}>
-                        {ele.agency_gst_details?.provisional_GSTIN || "NA"}
-                      </StyledTableCell>
-                      
-                      <StyledTableCell align="right" style={{color:"white"}}>
-                        {ele.personal_details?.mobile?.mobile_number || "NA"}
-                      </StyledTableCell>
-                      
-                      <StyledTableCell align="right" style={{color:"white"}}>
-                        {ele.personal_details?.password?.slice(0, 32) || "NA"}
-                        <br />
-                        {ele.personal_details?.password?.slice(32) || "NA"}
-                      </StyledTableCell>
-                      
-                      <StyledTableCell align="right" style={{color:"white"}}>
-                        {ele.is_active == 1 && (
-                          <span
-                            style={{
-                              backgroundColor: "green",
-                              padding: "5px 10px",
-                              borderRadius: "7px",
-                              color: "white",
-                              marginRight: "8px",
-                            }}
-                          >
-                            Active
-                          </span>
-                        )}
-                        {ele.is_active === 0 && (
-                          <span
-                            style={{
-                              backgroundColor: "red",
-                              padding: "5px 10px",
-                              borderRadius: "7px",
-                              color: "white",
-                              marginRight: "8px",
-                            }}
-                          >
-                            Inactive
-                          </span>
-                        )}
-                        <select
-                        
-                          value={ele.is_active}
-                          onChange={(e) => handleToggle(e.target.value, ele._id)}
+                        <StyledTableCell
+                          align="right"
+                          style={{ color: "white" }}
                         >
-                          <option>Update</option>
-                          <option value="active">Active</option>
-                          <option value="inactive">Inactive</option>
-                        </select>
-                      </StyledTableCell>
-                      
-                      <StyledTableCell align="center">
-                        <Box
-                          sx={{
-                            width: 150,
-                            maxWidth: "100%",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            marginRight: "-10px",
-                          }}
+                          {ele.agency_gst_details?.agency_classification ||
+                            "NA"}
+                        </StyledTableCell>
+
+                        <StyledTableCell
+                          align="right"
+                          style={{ color: "white" }}
                         >
-                          <TextField
-                            className="mark__Up__Input"
-                            placeholder={markUpValues.flight || "0"}
-                            defaultValue={markupData[index]?.flight || "0"}
+                          {ele.agency_details?.address || "NA"}
+                        </StyledTableCell>
+
+                        <StyledTableCell
+                          align="right"
+                          style={{ color: "white" }}
+                        >
+                          {ele.agency_gst_details?.email || "NA"}
+                        </StyledTableCell>
+
+                        <StyledTableCell
+                          align="right"
+                          style={{ color: "white" }}
+                        >
+                          {ele.agency_gst_details?.agency_name || "NA"}
+                        </StyledTableCell>
+
+                        <StyledTableCell
+                          align="right"
+                          style={{ color: "white" }}
+                        >
+                          {ele.agency_gst_details?.provisional_GSTIN || "NA"}
+                        </StyledTableCell>
+
+                        <StyledTableCell
+                          align="right"
+                          style={{ color: "white" }}
+                        >
+                          {ele.personal_details?.mobile?.mobile_number || "NA"}
+                        </StyledTableCell>
+
+                        <StyledTableCell
+                          align="right"
+                          style={{ color: "white" }}
+                        >
+                          {ele.personal_details?.password?.slice(0, 32) || "NA"}
+                          <br />
+                          {ele.personal_details?.password?.slice(32) || "NA"}
+                        </StyledTableCell>
+
+                        <StyledTableCell
+                          align="right"
+                          style={{ color: "white" }}
+                        >
+                          {ele.is_active == 1 && (
+                            <span
+                              style={{
+                                backgroundColor: "green",
+                                padding: "5px 10px",
+                                borderRadius: "7px",
+                                color: "white",
+                                marginRight: "8px",
+                              }}
+                            >
+                              Active
+                            </span>
+                          )}
+                          {ele.is_active === 0 && (
+                            <span
+                              style={{
+                                backgroundColor: "red",
+                                padding: "5px 10px",
+                                borderRadius: "7px",
+                                color: "white",
+                                marginRight: "8px",
+                              }}
+                            >
+                              Inactive
+                            </span>
+                          )}
+                          <select
+                            value={ele.is_active}
+                            onChange={(e) =>
+                              handleToggle(e.target.value, ele._id)
+                            }
+                          >
+                            <option>Update</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                          </select>
+                        </StyledTableCell>
+
+                        <StyledTableCell align="center">
+                          <Box
                             sx={{
-                              width: "108px",
-                              marginRight: "10px",
-                              fontSize: "18px",
+                              width: 150,
+                              maxWidth: "100%",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              marginRight: "-10px",
                             }}
-                            variant="standard"
-                            fullWidth
-                            name="flight"
-                            onChange={(event) => handleMarkUp(event, ele._id)}
-                          />
-                          <button
-                            color="success"
-                            className="mark__up__btn"
-                            onClick={handleStatusUpdate1}
                           >
-                            <DoneIcon />
-                          </button>
-                        </Box>
-                      </StyledTableCell>
-                      
-                      <StyledTableCell align="center">
-                        <Box
-                          sx={{
-                            width: 150,
-                            maxWidth: "100%",
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                          }}
-                        >
-                          <TextField
-                            placeholder={markupData[index]?.hotel || "0"}
-                            defaultValue={markupData[index]?.hotel || "0"}
-                            name="hotel"
+                            <TextField
+                              className="mark__Up__Input"
+                              placeholder={markUpValues.flight || "0"}
+                              defaultValue={markupData[index]?.flight || "0"}
+                              sx={{
+                                width: "108px",
+                                marginRight: "10px",
+                                fontSize: "18px",
+                              }}
+                              variant="standard"
+                              fullWidth
+                              name="flight"
+                              onChange={(event) => handleMarkUp(event, ele._id)}
+                            />
+                            <button
+                              color="success"
+                              className="mark__up__btn"
+                              onClick={handleStatusUpdate1}
+                            >
+                              <DoneIcon />
+                            </button>
+                          </Box>
+                        </StyledTableCell>
+
+                        <StyledTableCell align="center">
+                          <Box
                             sx={{
-                              width: "128px",
-                              marginRight: "10px",
-                              fontSize: "18px",
+                              width: 150,
+                              maxWidth: "100%",
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
                             }}
-                            variant="standard"
-                            fullWidth
-                            onChange={(event) => handleMarkUp(event, ele._id)}
-                          />
-                          <button
-                            color="success"
-                            className="mark__up__btn"
-                            onClick={handleStatusUpdate2}
                           >
-                            <DoneIcon />
-                          </button>
-                        </Box>
-                      </StyledTableCell>
-                      
-                      <StyledTableCell align="center">
-                        <Box
-                          sx={{
-                            width: 150,
-                            maxWidth: "100%",
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                          }}
-                        >
-                          <TextField
-                            placeholder={markupData[index]?.bus || "0"}
-                            name="bus"
-                            defaultValue={markupData[index]?.bus || "0"}
+                            <TextField
+                              placeholder={markupData[index]?.hotel || "0"}
+                              defaultValue={markupData[index]?.hotel || "0"}
+                              name="hotel"
+                              sx={{
+                                width: "128px",
+                                marginRight: "10px",
+                                fontSize: "18px",
+                              }}
+                              variant="standard"
+                              fullWidth
+                              onChange={(event) => handleMarkUp(event, ele._id)}
+                            />
+                            <button
+                              color="success"
+                              className="mark__up__btn"
+                              onClick={handleStatusUpdate2}
+                            >
+                              <DoneIcon />
+                            </button>
+                          </Box>
+                        </StyledTableCell>
+
+                        <StyledTableCell align="center">
+                          <Box
                             sx={{
-                              width: "128px",
-                              marginRight: "10px",
-                              fontSize: "18px",
+                              width: 150,
+                              maxWidth: "100%",
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
                             }}
-                            variant="standard"
-                            fullWidth
-                            onChange={(event) => handleMarkUp(event, ele._id)}
-                          />
-                          <button
-                            color="success"
-                            className="mark__up__btn"
-                            onClick={handleStatusUpdate3}
                           >
-                            <DoneIcon />
-                          </button>
-                        </Box>
-                      </StyledTableCell>
-                      
-                      <StyledTableCell align="center">
-                        <Box
-                          sx={{
-                            width: 250,
-                            maxWidth: "100%",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                          }}
-                        >
-                          <TextField
-                          style={{color:"white"}}
-                            placeholder={markupData[index]?.holiday || "0"}
-                            name="holiday"
-                            defaultValue={markupData[index]?.holiday || "0"}
+                            <TextField
+                              placeholder={markupData[index]?.bus || "0"}
+                              name="bus"
+                              defaultValue={markupData[index]?.bus || "0"}
+                              sx={{
+                                width: "128px",
+                                marginRight: "10px",
+                                fontSize: "18px",
+                              }}
+                              variant="standard"
+                              fullWidth
+                              onChange={(event) => handleMarkUp(event, ele._id)}
+                            />
+                            <button
+                              color="success"
+                              className="mark__up__btn"
+                              onClick={handleStatusUpdate3}
+                            >
+                              <DoneIcon />
+                            </button>
+                          </Box>
+                        </StyledTableCell>
+
+                        <StyledTableCell align="center">
+                          <Box
                             sx={{
-                              width: "85px",
-                              marginRight: "10px",
-                              fontSize: "18px",
+                              width: 250,
+                              maxWidth: "100%",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
                             }}
-                            variant="standard"
-                            fullWidth
-                            onChange={(event) => handleMarkUp(event, ele._id)}
-                          />
-                          <button
-                            color="success"
-                            className="mark__up__btn"
-                            onClick={handleStatusUpdate4}
                           >
-                            <DoneIcon />
-                          </button>
-                        </Box>
-                      </StyledTableCell>                      
+                            <TextField
+                              style={{ color: "white" }}
+                              placeholder={markupData[index]?.holiday || "0"}
+                              name="holiday"
+                              defaultValue={markupData[index]?.holiday || "0"}
+                              sx={{
+                                width: "85px",
+                                marginRight: "10px",
+                                fontSize: "18px",
+                              }}
+                              variant="standard"
+                              fullWidth
+                              onChange={(event) => handleMarkUp(event, ele._id)}
+                            />
+                            <button
+                              color="success"
+                              className="mark__up__btn"
+                              onClick={handleStatusUpdate4}
+                            >
+                              <DoneIcon />
+                            </button>
+                          </Box>
+                        </StyledTableCell>
                         <td>
                           <Button
                             className="add_vendor_btn"

@@ -21,10 +21,10 @@ const Sidebar = () => {
 
   return (
     <>
-      <Topbar />
-      <section className="flex gap-12 top-0 fixed ">
+      {/* <Topbar /> */}
+      <section className="flex gap-12 top-0 fixed " style={{border:"1px solid red"}}>
         <div
-          className={`bg-[#6778EF] min-h-screen ${
+          className={`bg-[#6778] min-h-screen ${
             open ? "w-72" : "w-16"
           } duration-500 text-gray-100 px-4`}
           style={{ height: "110vh" }}

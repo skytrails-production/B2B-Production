@@ -72,6 +72,7 @@ const CreateHolidayPackage = () => {
   // Redux- saga
   const dispatch = useDispatch();
   const reducerState = useSelector((state) => state);
+  const userId = reducerState?.logIn?.loginData?.data?.data?.id;
   const [loader,setLoader]=useState(false);
   const navigate = useNavigate();
   console.log("createPackage", reducerState);
@@ -305,6 +306,7 @@ const CreateHolidayPackage = () => {
       return;
     } else {
       const payload = {
+        userId: userId,
         pakage_title: formData.get("package_title"),
         destination: inputList,
         country: formData.get("country"),
@@ -2019,7 +2021,7 @@ const CreateHolidayPackage = () => {
                       name="hotel_details"
                       placeholder="Add Hotel Details ..."
                       id="hotel_details"
-                     
+                      containerProps={{ style: { resize: "vertical" } }}
                     ></Editor>
                     {/* <label for="floatingTextarea2">Add Hotel Details ...</label> */}
                   </div>
@@ -2035,9 +2037,9 @@ const CreateHolidayPackage = () => {
                           name="insclusion_note"
                           placeholder="Add Inclusion Note ..."
                           id="insclusion_note"
-                   
                           value={inclusion}
                           onChange={(e) => setInclusion(e.target.value)}
+                          containerProps={{ style: { resize: "vertical" } }}
                         ></Editor>
                         {/* <label for="floatingTextarea2">
                           Add Inclusion Note
@@ -2053,11 +2055,11 @@ const CreateHolidayPackage = () => {
                       <label class="form-label">Exclusion Note</label>
                       <div class="form-floating">
                         <Editor
+                          containerProps={{ style: { resize: "vertical" } }}
                           class="form-control"
                           name="exclusion_note"
                           placeholder="Add Exclusion Note ..."
                           id="exclusion_note"
-                         
                           value={exclusion}
                           onChange={(e) => setExclusion(e.target.value)}
                         ></Editor>
@@ -2086,7 +2088,7 @@ const CreateHolidayPackage = () => {
                               style={{ fontSize: "20px", color: "#000000" }}
                             >{`Days ${i + 1}`}</p>
                           </Accordion.Header>
-                          <Accordion.Body style={{ height: "300px" }}>
+                          <Accordion.Body>
                             <span
                               key={i}
                               type="text"
@@ -2099,7 +2101,9 @@ const CreateHolidayPackage = () => {
                                 name="detailed_ltinerary"
                                 value={daysDetailsValues[i]}
                                 onChange={(event) => handleDaysDetail(i, event)}
-                             
+                                containerProps={{
+                                  style: { resize: "vertical",height:"300px",overflow:"scroll" },
+                                }}
                               />
                             </span>
                           </Accordion.Body>
@@ -2122,8 +2126,8 @@ const CreateHolidayPackage = () => {
                           name="overview"
                           placeholder="overview"
                           id="exclusion_note"
-                        
                           value={overView}
+                          containerProps={{ style: { resize: "vertical" } }}
                           onChange={(e) => setOverView(e.target.value)}
                         ></Editor>
                       </div>
@@ -2377,9 +2381,11 @@ const CreateHolidayPackage = () => {
                             name="term_Conditions"
                             placeholder="Enter Term And Condition"
                             id="term_Conditions"
-                         
+                            containerProps={{ style: { resize: "vertical" } }}
                             value={termAndCondition}
-                            onChange={(e)=>setTermAndCondition(e.target.value)}
+                            onChange={(e) =>
+                              setTermAndCondition(e.target.value)
+                            }
                           ></Editor>
                         </div>
                         {sub &&
@@ -2432,9 +2438,9 @@ const CreateHolidayPackage = () => {
                             name="cancellation_Policy"
                             placeholder="Cancellation Policy...."
                             id="cancellation_Policy"
-                     
+                            containerProps={{ style: { resize: "vertical" } }}
                             value={cancellation}
-                            onChange={(e)=>setCancellation(e.target.value)}
+                            onChange={(e) => setCancellation(e.target.value)}
                           ></Editor>
                         </div>
                         {sub &&
@@ -2512,9 +2518,12 @@ const CreateHolidayPackage = () => {
                 <div className="buttonBoxPackage">
                   {/* <button className="draft">Save As Draft</button> */}
                   <button type="submit" class="packageSubmit">
-                    {
-                      loader?<div id="packageloadingdetails"></div>:"Submit Request"
-                    }                  </button>
+                    {loader ? (
+                      <div id="packageloadingdetails"></div>
+                    ) : (
+                      "Submit Request"
+                    )}{" "}
+                  </button>
                 </div>
               </div>
             </form>

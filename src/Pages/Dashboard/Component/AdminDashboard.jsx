@@ -1,27 +1,73 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import {
+  Grid,
+  Card,
+  CardActionArea,
+  CardContent,
+  Typography,
+  Box,
+  LinearProgress,
+} from "@mui/material";
+import {
+  Groups3 as Groups3Icon,
+  AccountBox as AccountBoxIcon,
+  GroupsTwo as Groups2Icon,
+  PeopleAlt as Diversity1Icon,
+  CollectionsBookmark as CollectionsBookmarkIcon,
+  Flight as FlightIcon,
+  DirectionsBus as BusIcon,
+  Hotel as HotelIcon,
+  CollectionsBookmark as TotalBookingsIcon,
+} from "@mui/icons-material";
+import { apiURL } from "../../../Constants/constant";
+import "./AdminDashboard.css";
+import AddMarkup from "./Table/AddMarkup";
+import {
+  Groups as AdminIcon, // Add the import for the Admin icon
+} from "@mui/icons-material";
+import {
+  RequestQuote as ChangeRequestIcon, // Add the import for the Change Request icon
+} from "@mui/icons-material";
+import {
+  Cancel as CancelledIcon, // Add the import for the Cancelled icon
+} from "@mui/icons-material";
 
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Grid, Card, CardActionArea, CardContent, Typography,Box } from '@mui/material';
-import Groups3Icon from '@mui/icons-material/Groups3';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import Groups2Icon from '@mui/icons-material/Groups2';
-import Diversity1Icon from '@mui/icons-material/Diversity1';
-import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
-import { apiURL } from '../../../Constants/constant';
-import './AdminDashboard.css'; 
-import AddMarkup from "./Table/AddMarkup"
 const AdminDashboardData = () => {
-
   const [dashboardData, setDashboardData] = useState({});
-  const icons = [CollectionsBookmarkIcon, CollectionsBookmarkIcon,CollectionsBookmarkIcon ,CollectionsBookmarkIcon,Groups3Icon,Diversity1Icon,AccountBoxIcon]; 
+  const icons = [
+    HotelIcon,
+    FlightIcon,
+    BusIcon, // Added BusIcon
+    TotalBookingsIcon, //total bookings
+    AdminIcon,
+    ChangeRequestIcon,
+
+    Groups3Icon,
+    CancelledIcon, 
+    AdminIcon,
+  ];
+  const headingsArray = [
+    "Hotel",
+    "Flight",
+    "Bus",
+    "TotalBookings",
+    "Subadmin",
+    "Change Request",
+    "Agent",
+    "Cancelled",
+    "User",
+  ];
 
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const response = await axios.get(`${apiURL.baseURL}/skytrails/api/admin/adminDashBoard`);
+        const response = await axios.get(
+          `${apiURL.baseURL}/skytrails/api/admin/adminDashBoard`
+        );
         setDashboardData(response.data.result);
       } catch (error) {
-        console.error('Error fetching dashboard data:', error);
+        console.error("Error fetching dashboard data:", error);
       }
     };
 
@@ -29,59 +75,150 @@ const AdminDashboardData = () => {
   }, []);
 
   const handleCardClick = async (key) => {
-    if (key === 'TotalBooking') {
+    if (key === "TotalBooking") {
       try {
-        const bookingListResponse = await axios.get(`${apiURL.baseURL}/skytrails/api/admin/getAllFlightBookingList`);
+        const bookingListResponse = await axios.get(
+          `${apiURL.baseURL}/skytrails/api/admin/getAllFlightBookingList`
+        );
         // Handle the booking list data as needed
         // console.log('Booking List:', bookingListResponse.data.result);
       } catch (error) {
-        console.error('Error fetching booking list data:', error);
+        console.error("Error fetching booking list data:", error);
       }
     }
     // Add more conditions for other sections if needed
   };
 
   return (
-    <>
-  
-    <Grid container spacing={3} className="admin-dashboard-grid" style={{  height: "100vh" }}>
-    
-    {Object.keys(dashboardData).map((key, index) => (
-      <Grid item xs={12} sm={6} md={4} key={index} className={`grid-item grid-item-${index}`}>
-        <Card
-          className={`admin-dashboard-card admin-dashboard-card-${index}`}
-          sx={{ position: 'relative', maxWidth: 345, width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}
-          onClick={() => handleCardClick(key)}
-        >
-          <CardActionArea className={`card-action-area card-action-area-${index}`}>
-            <CardContent className={`card-content card-content-${index}`}>
-              <Box position="absolute" top={0} right={0} className={`box box-${index}`}>
-                {icons[index % icons.length] && React.createElement(icons[index % icons.length])}
-              </Box>
-              <Typography gutterBottom variant="h6" component="div" className={`typography-h6 typography-h6-${index}`}>
-                {key}
-              </Typography>
-              <Typography variant="body2" color="text.secondary" className={`typography-body2 typography-body2-${index}`}>
-                {dashboardData[key]}
-              </Typography>
-              {key === 'TotalBookings' && (
-                <div className="progress-bar-container">
-                  <div className="progress-bar"></div>
-                </div>
-              )}
-            </CardContent>
-          </CardActionArea>
-        </Card>
-      </Grid>
-    ))}
-  </Grid>
 
+    // <Grid container spacing={3} className="admin-dashboard-grid">
+    //   {Object.keys(dashboardData).map((key, index) => (
+    //     <Grid item xs={12} sm={6} md={4} key={index}>
+    //       <Card
+    //         className={`admin-dashboard-card admin-dashboard-card-${index}`}
+    //         onClick={() => handleCardClick(key)}
+    //         style={{
+    //           border: "1px solid #e0e0e0",
+    //           borderRadius: 8,
+    //           position: "relative",
+    //           zIndex: 0, // Ensure the stacking context
+    //         }}
+    //       >
+    //         <CardActionArea>
+    //           <div
+    //             className="icon-container"
+    //             style={{
+    //               position: "relative", // Change to relative position
+    //               left: "5px", // Adjust the left position as needed
+    //               width: "60px",
+    //               height: "60px",
+    //               zIndex: 5, // Ensure the icon container is above the content
+    //               backgroundColor: "#21325D",
+    //               display: "flex",
+    //               alignItems: "center",
+    //               justifyContent: "center",
+    //               borderRadius: "8px",
+    //             }}
+    //           >
+    //             {icons[index % icons.length] &&
+    //               React.createElement(icons[index % icons.length], {
+    //                 fontSize: "large",
+    //                 style: { color: "white" }, // Set the icon color to white
+    //               })}
+    //           </div>
 
+    //           <CardContent>
+    //             <Box
+    //               display="flex"
+    //               justifyContent="space-between"
+    //               alignItems="center"
+    //               backgroundColor="red"
+    //             >
+    //               <Typography variant="h6">{key}</Typography>
+    //             </Box>
+    //             <Typography variant="body2" color="text.secondary">
+    //               {dashboardData[key]}
+    //             </Typography>
+    //             {key === "TotalBookings" && (
+    //               <div className="progress-bar-container">
+    //                 <LinearProgress
+    //                   variant="determinate"
+    //                   value={50} // Set the progress value accordingly
+    //                   sx={{ height: 10, borderRadius: 5 }}
+    //                 />
+    //               </div>
+    //             )}
+    //           </CardContent>
+    //         </CardActionArea>
+    //       </Card>
+    //     </Grid>
+    //   ))}
+    // </Grid>
+    <Grid container spacing={3} className="admin-dashboard-grid">
+      {Object.keys(dashboardData).map((key, index) => (
+        <Grid item xs={12} sm={6} md={4} key={index}>
+          <Card
+            className={`admin-dashboard-card admin-dashboard-card-${index}`}
+            onClick={() => handleCardClick(key)}
+            style={{
+              border: "1px solid #e0e0e0",
+              borderRadius: 8,
+              position: "relative",
+              zIndex: 0, // Ensure the stacking context
+              height: "110px",
+            }}
+          >
+            <CardActionArea
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                height: "100%", // Ensure the CardActionArea takes up the full height
+              }}
+            >
+              <div
+                className="icon-container"
+                style={{
+                  position: "relative", // Change to relative position
+                  left: "10px", // Adjust the left position as needed
+                  width: "60px",
+                  height: "60px",
+                  zIndex: 5, // Ensure the icon container is above the content
+                  backgroundColor: "#21325D",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: "8px",
+                }}
+              >
+                {icons[index % icons.length] &&
+                  React.createElement(icons[index % icons.length], {
+                    fontSize: "large",
+                    style: { color: "white" }, // Set the icon color to white
+                  })}
+              </div>
 
-    </>
-    
+              <CardContent>
+                <Typography variant="body2" color="text.secondary">
+                  {headingsArray[index]}
+                </Typography>
+                <Typography variant="h5">{dashboardData[key]}</Typography>
+                {key === "TotalBookings" && (
+                  <div className="progress-bar-container">
+                    <LinearProgress
+                      variant="determinate"
+                      value={50} // Set the progress value accordingly
+                      sx={{ height: 10, borderRadius: 5 }}
+                    />
+                  </div>
+                )}
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        </Grid>
+      ))}
+    </Grid>
+
   );
 };
 
 export default AdminDashboardData;
-

@@ -1,125 +1,129 @@
 /* AdminLogin.css */
 
-
-  
-  .background-animation {
-    position: fixed;
-    top: 0;
-    height: 100vh;
-    left: 0;
-    width: 100vw;
-    background: linear-gradient(45deg, #21325D, #207cca, #2989d8, #207cca, #21325D);
-    background-size: 1000% 1000%;
-    animation: gradientAnimation 15s infinite;
-    overflow-y: hidden;
-    overflow-x: hidden;
-  }
-  
-  @keyframes gradientAnimation {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-  
-  .login_field {
-    background: rgba(137, 165, 234, 0.7); /* Adjust the alpha value for transparency */
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); /* Adjust the box shadow for a subtle effect */
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border-radius: 10px;
-    padding-bottom:38px;
-    text-align: center;
-    color: #fff;
-  }
-  
-  .login_field h1 {
-    margin-top: 20px;
-    color: #fff;
-  }
-  
-  .login_field form {
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-  }
-
-  .form{
-    /* height: 80vh; */
-    border: #ff0000;
-  }
-  
-  .form_input {
-    margin-bottom: 20px;
-  }
-  
-  .form_lable {
-    display: block;
-    text-align: left;
-    color: #fff;
-    margin-bottom: 5px;
-    transition: opacity 0.3s ease-in-out;
-  }
-  .css-1sf3xto {
-    padding-top: 16px;
-    padding-bottom: 1px !important;
+:root {
+  --c-blue: #21325d;
+  --c-white: #fefefe;
+  --t-blue: #21325d;
+  --g-blue: linear-gradient(var(--t-blue), var(--t-blue));
+  --s-basic: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
-  
-  .input-box {
+
+/* body {
+  padding-bottom: 20px;
+  font-family: "Nunito", sans-serif;
+  color: var(--c-white);
+  background: var(--c-white);
+} */
+
+.Adminwrapper {
+  margin: auto;
+  width: 350px;
+  box-shadow: var(--s-basic);
+  margin-top: 80px;
+  border-radius: 5px;
+  background-color: #ffffff;
+}
+
+.sectionad {
+  padding: 1rem;
+  background-color: #21325d;
+  width: 300px;
+  box-shadow: 0 8px 16px -6px rgba(216, 206, 206, 0.2);
+  margin: auto;
+  border-radius: 5px;
+  color: var(--c-white);
+  text-align: center;
+  margin-bottom: 20px;
+  position: absolute;
+}
+
+.headead h1 {
+  font-size: 2rem;
+  color: #fff; /* Adjust the color as needed */
+}
+
+.headers {
+  position: relative;
+  text-align: center;
+
+  &__text {
+    position: relative;
+    padding: 3.5rem 0 7rem;
+
+    > h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+  }
+
+  > .trapezoid {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-    color: #333;
-    outline: none;
-    transition: border-color 0.3s ease-in-out;
+    height: 100%;
+    transform: skewY(-10deg);
+    transform-origin: top left;
+    box-shadow: var(--s-basic);
+    background: var(--g-blue),
+      url("https://images.pexels.com/photos/520936/pexels-photo-520936.jpeg?w=940&h=650&auto=compress&cs=tinysrgb");
+    background-position: top center;
+    background-attachment: fixed;
   }
-  
-  /* Add hover effect for the input box */
-  .input-box:hover {
-    border-color: #0052D0;
+}
+
+.formadmin {
+  margin: 0 auto;
+  max-width: 17rem;
+  overflow: auto;
+
+  > * + * {
+    margin-top: 1rem;
   }
-  
-  /* Add focus effect for the .input-box box */
-  .input-box:focus {
-    border-color: #0052D0;
-  }
-  
-  /* Add styles for when .input-box is not empty */
-  .input-box:not(:placeholder-shown) + .form_lable {
-    opacity: 0.5;
-  }
-  
-  .error-message {
-    color: #ff0000;
-    margin-top: 5px;
-  }
-  
-  .forget_pass {
-    color: #fff;
-    margin-bottom: 10px;
-    display: block;
-  }
-  
-  .loginButton {
-    background-color: #0052D0;
-    color: #fff;
+
+  > .admininput {
+    border: 0;
+    border-bottom: 1px solid var(--c-blue);
+    border-radius: 0;
     width: 100%;
-    border: none;
-    padding: 10px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 16px;
+    height: 2rem;
+    padding: 0 0 0.25rem 0;
+    font-size: 1rem;
+    color: var(--c-blue);
+    background: var(--c-white);
+
+    &:focus {
+      outline: none;
+    }
+
+    &::placeholder {
+      color: var(--c-blue);
+    }
   }
-  
-  .loginButton:hover {
-    background-color: #003366;
+
+  > .btnadmin {
+    margin-top: 2rem;
+    border: 0;
+    border-radius: 200px;
+    width: 100%;
+    padding: 0.85rem;
+    font-size: 1rem;
+    color: var(--c-white);
+    background: var(--c-blue);
+
+    &:focus {
+      outline: none;
+    }
   }
-  
+
+  > p {
+    margin: 0.25rem 0 0;
+    text-align: center;
+    color: var(--c-blue);
+  }
+}
+
+.opposite-btn1,
+.opposite-btn2 {
+  cursor: pointer;
+}

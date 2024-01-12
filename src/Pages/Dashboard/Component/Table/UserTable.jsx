@@ -67,7 +67,7 @@ const Usertables = () => {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <SearchIcon />
+              <SearchIcon/>
             </InputAdornment>
           ),
         }}
