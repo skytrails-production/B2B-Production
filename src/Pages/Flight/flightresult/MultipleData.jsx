@@ -109,7 +109,9 @@ const MultipleData = (props) => {
     }min`;
 
 
-    
+    console.log("flightData", flight)
+
+
   const dateString = flight[0]?.Origin?.DepTime;
   const dateString1 = flight[1]?.Destination?.ArrTime;
   const date2 = new Date(dateString1);
@@ -171,13 +173,13 @@ const MultipleData = (props) => {
       <div className="singleFlightBoxThree">
         <h4>{time}{" - "}{time3}</h4>
         <div><img src={flightdir} /></div>
-        <p>{`1 stop via ${flight[0]?.Destination?.Airport?.CityName}`}</p>
-        <span>{flight?.NoOfSeatAvailable} Seats Left</span>
+        <p>{`${flight.length-1} stop via ${flight[0]?.Destination?.Airport?.CityName}`}</p>
+        {/* <span>{flight?.NoOfSeatAvailable} Seats Left</span> */}
       </div>
       <div className="singleFlightBoxFour">
-        <span>{flight[1]?.Destination?.Airport?.CityName}</span>
-        <p>{dayjs(flight[1]?.Destination?.ArrTime).format("DD MMM, YY")}</p>
-        <p style={{ fontSize: "14px" }}>{dayjs(flight[1]?.Destination?.ArrTime).format("h:mm A")}</p>
+        <span>{flight[flight.length-1]?.Destination?.Airport?.CityName}</span>
+        <p>{dayjs(flight[flight.length-1]?.Destination?.ArrTime).format("DD MMM, YY")}</p>
+        <p style={{ fontSize: "14px" }}>{dayjs(flight[flight.length-1]?.Destination?.ArrTime).format("h:mm A")}</p>
       </div>
       <div className="singleFlightBoxFive">
         <span>₹{fare}</span>

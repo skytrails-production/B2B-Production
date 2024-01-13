@@ -265,7 +265,7 @@ function api() {
     const { destination, days } = payload;
     // ?filter=${days}&keyword=${destination}
     return axios.get(
-      `${apiURL.baseURL}/skyTrails/international/getAll?filter=${days}&keyword=${destination}`
+      `${apiURL.baseURL}/skyTrails/international/getAll?keyword=${destination}`
     );
   };
 

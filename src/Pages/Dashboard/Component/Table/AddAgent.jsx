@@ -11,6 +11,7 @@ const CreateAgentPage = () => {
     password: '',
     mobile_number: '',
     panNumber: '',
+    agency_name:''
   });
 
   const handleChange = (e) => {
@@ -112,6 +113,19 @@ const CreateAgentPage = () => {
             id="panNumber"
             name="panNumber"
             value={formData.panNumber}
+            onChange={handleChange}
+            className="form-input"
+          />
+        </div>
+        <div className="form-group-agent">
+          <label htmlFor="agency_name" className="form-label-subAdmin">
+            Agency Name:
+          </label>
+          <input
+            type="text"
+            id="agency_name"
+            name="agency_name"
+            value={formData.agency_name}
             onChange={handleChange}
             className="form-input"
           />

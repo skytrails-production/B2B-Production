@@ -512,10 +512,10 @@ const Leftdetail = () => {
   const airlineCode = fareQuoteData?.Segments?.[0]?.[0]?.Airline?.AirlineCode;
   const flightNumber = fareQuoteData?.Segments?.[0]?.[0]?.Airline?.FlightNumber;
   const originCity = fareQuoteData?.Segments?.[0]?.[0]?.Origin?.Airport?.CityName;
-  const DestinationCity = fareQuoteData?.Segments?.[0]?.[0]?.Destination?.Airport?.CityName;
+  const DestinationCity = fareQuoteData?.Segments?.[0]?.[fareQuoteData?.Segments[0].length-1]?.Destination?.Airport?.CityName;
   const flightFare = fareQuoteData?.Fare?.PublishedFare;
   const originTerminal = fareQuoteData?.Segments?.[0]?.[0]?.Origin?.Airport?.Terminal;
-  const destinationTerminal = fareQuoteData?.Segments?.[0]?.[0]?.Destination?.Airport?.Terminal;
+  const destinationTerminal = fareQuoteData?.Segments?.[0]?.[fareQuoteData?.Segments[0].length-1]?.Destination?.Airport?.Terminal;
 
 
 
@@ -629,16 +629,16 @@ var formattedTimeStop = dateTime.toLocaleTimeString('en-US', optionsTime);
           <h4>{fareQuoteData?.Segments[0].length===2?`${timeDuration} ${" - "} ${Math.floor(fareQuoteData?.Segments?.[0]?.[1]?.Duration / 60)}hr ${fareQuoteData?.Segments?.[0]?.[1]?.Duration % 60
     }min`:`${timeDuration}`}</h4>
           <div><img src={flightdir} /></div>
-          <p>{fareQuoteData?.Segments[0].length===2?`1 stop via ${DestinationCity}`:'Direct Flight'}</p>
+          <p>{fareQuoteData?.Segments[0].length===2?`${fareQuoteData?.Segments[0].length-1} stop via ${DestinationCity}`:'Direct Flight'}</p>
           <span>Refundable</span>
         </div>
         <div className="singleFlightBoxFour">
   {fareQuoteData?.Segments[0].length === 2 ? (
     <>
-      <span>{fareQuoteData?.Segments[0][1]?.Destination?.Airport?.CityName}</span>           
+      <span>{fareQuoteData?.Segments[0][fareQuoteData?.Segments[0].length-1]?.Destination?.Airport?.CityName}</span>           
       <p>{formattedDateStop}</p>
       <p>{formattedTimeStop}</p>
-      <p>Terminal {fareQuoteData?.Segments[0][1]?.Destination?.Airport?.Terminal}</p>
+      <p>Terminal {fareQuoteData?.Segments[0][fareQuoteData?.Segments[0].length-1]?.Destination?.Airport?.Terminal}</p>
     </>
   ) : (
     <>
