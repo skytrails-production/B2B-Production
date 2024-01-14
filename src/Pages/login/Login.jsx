@@ -128,7 +128,7 @@ const Login = () => {
               <div class="hero-one-text">
                 <h1>The Smart Way to
                   Grow Your Business</h1>
-                <h5>Welcome to myPartner, a platform built exclusively for travel agents to fulfill all their
+                <h5>Welcome to B2B Skytrails , a platform built exclusively for travel agents to fulfill all their
                   customer travel needs with
                   easy-to-use features and amazing deals.</h5>
                 <div class="afford">
