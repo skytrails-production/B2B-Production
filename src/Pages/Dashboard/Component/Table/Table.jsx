@@ -21,6 +21,8 @@ import {
   Fade,
   Switch,
   TextField,
+  InputAdornment,
+  Typography,
 } from "@mui/material";
 import "./Table.css";
 import { markUpAction } from "../../../../Redux/Auth/markUp/actionMarkUp";
@@ -28,7 +30,8 @@ import { activeStatusAction } from "../../../../Redux/Auth/activeStatus/actionAc
 import DoneIcon from "@mui/icons-material/Done";
 import { vendorAction } from "../../../../Redux/Auth/VendorAmount/vendorAmountData";
 import { AiFillEdit } from "react-icons/ai";
-
+import Pagination from "@mui/material/Pagination";
+import SearchIcon from "@mui/icons-material/Search";
 // React-bootstrap
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
@@ -59,11 +62,15 @@ const fromStyle = {
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
+
+    color: theme.palette.common.black,
+    fontSize: 16,
+    fontWeight: 'bold',
+    border: 'none',
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
+    border: 'none',
   },
 }));
 
@@ -81,6 +88,8 @@ export default function Tables() {
   const [imgUrl, setImgUrl] = useState(null);
   const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+
   const reducerState = useSelector((state) => state);
   const activeData = reducerState?.userTableData?.userData?.data?.data?.map(
     (ele) => ele.is_active
@@ -101,7 +110,17 @@ export default function Tables() {
     holiday: "",
     bus: "",
   });
+  const [page, setPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(1);
+  };
   // console.log(imgUrl);
 
   // const [openModal,setOpenModal] = useState(false)
@@ -310,393 +329,431 @@ export default function Tables() {
     setImgShow(true);
   };
 
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+
+  };
   return (
     <>
-      <Box height={100} />
-      <h3>AGENT TABLE</h3>
-      <TableContainer
-        sx={{
-          margin: "auto",
-          overflowX: "auto",
-        }}
-        component={Paper}
-      >
-        <Table
-          sx={{ minWidth: 800, marginTop: "0px" }}
-          aria-label="customized table"
-          // sx={{ overflowX: "auto" }}
+      <div className="user-table-container">
+        <div className="adminseacrch">
+          <TextField
+            type="text"
+            value={searchTerm}
+            onChange={handleSearch}
+            placeholder="Search by name, ID, etc."
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+          <Typography variant="h5" className="adtable-heading">
+            Agent Table
+          </Typography>
+        </div>
+        <TableContainer
+          component={Paper}
+          style={{ border: "none" }}
         >
-          <TableHead>
-            <TableRow>
-              <StyledTableCell> Document Image</StyledTableCell>
-              <StyledTableCell> Name</StyledTableCell>
-              <StyledTableCell align="center">Agency Name</StyledTableCell>
-              <StyledTableCell align="center">Agency Email</StyledTableCell>
-              <StyledTableCell align="center">
-                Agency Classification
-              </StyledTableCell>
-              <StyledTableCell width={300} align="center">
-                Agency Address
-              </StyledTableCell>
-              <StyledTableCell align="center">Contact Person</StyledTableCell>
-              <StyledTableCell align="center">
-                Provisional GSTIN
-              </StyledTableCell>
-              <StyledTableCell align="center">Mobile</StyledTableCell>
-              <StyledTableCell align="center">Password</StyledTableCell>
-              <StyledTableCell align="center">Is Active</StyledTableCell>
-              <StyledTableCell align="center">Flight Amount</StyledTableCell>
-              <StyledTableCell align="center">Hotel Amount</StyledTableCell>
-              <StyledTableCell align="center">Bus Amount</StyledTableCell>
-              <StyledTableCell align="center">Holiday Amount</StyledTableCell>
-              <StyledTableCell align="center">Vendor Amount</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {tableData || tableData === "undefined"
-              ? tableData.map((ele, index) => {
-                  return (
-                    <>
-                      <StyledTableRow key={index}>
-                        {/* <img src={ele.agency_details.document_details.pan_card_document}  alt={index} /> */}
-                        <StyledTableCell align="right">
-                          <Modal show={showImg} onHide={handleImgClose}>
-                            <Modal.Header closeButton>
-                              <Modal.Title>Document Image</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>
-                              <Box
-                                sx={{
-                                  width: 400,
-                                  maxWidth: "100%",
-                                  textAlign: "left",
-                                  padding: "20px",
-                                }}
-                              >
-                                <img
-                                  style={{
-                                    width: "100%",
-                                    height: "165px",
+          <Table
+            style={{ border: "none" }}
+            aria-label="customized table"
+            // sx={{ overflowX: "auto" }}
+            className="tablead"
+          >
+            <TableHead style={{ border: "none" }} className="tableheadadmin">
+              <TableRow style={{ border: "none" }}>
+                <StyledTableCell > Document Image</StyledTableCell>
+                <StyledTableCell> Name</StyledTableCell>
+                <StyledTableCell align="center">Agency Name</StyledTableCell>
+                <StyledTableCell align="center">Agency Email</StyledTableCell>
+                <StyledTableCell align="center">
+                  Agency Classification
+                </StyledTableCell>
+                <StyledTableCell width={300} align="center">
+                  Agency Address
+                </StyledTableCell>
+                <StyledTableCell align="center">Contact Person</StyledTableCell>
+                <StyledTableCell align="center">
+                  Provisional GSTIN
+                </StyledTableCell>
+                <StyledTableCell align="center">Mobile</StyledTableCell>
+                <StyledTableCell align="center">Password</StyledTableCell>
+                <StyledTableCell align="center">Is Active</StyledTableCell>
+                <StyledTableCell align="center">Flight Amount</StyledTableCell>
+                <StyledTableCell align="center">Hotel Amount</StyledTableCell>
+                <StyledTableCell align="center">Bus Amount</StyledTableCell>
+                <StyledTableCell align="center">Holiday Amount</StyledTableCell>
+                <StyledTableCell align="center">Vendor Amount</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody style={{ border: "none" }}>
+              {tableData
+                ? tableData
+                  .filter((ele) => {
+                    const fullName = ele.personal_details?.first_name || "";
+                    const lowerCaseFullName = fullName.toLowerCase();
+                    return lowerCaseFullName.includes(searchTerm.toLowerCase());
+                  })
+                  .slice((page - 1) * rowsPerPage, page * rowsPerPage)
+                  .map((ele, index) => {
+                    return (
+                      <>
+                        <StyledTableRow key={index}>
+                          {/* <img src={ele.agency_details.document_details.pan_card_document}  alt={index} /> */}
+                          <StyledTableCell align="right">
+                            <Modal show={showImg} onHide={handleImgClose}>
+                              <Modal.Header closeButton>
+                                <Modal.Title>Document Image</Modal.Title>
+                              </Modal.Header>
+                              <Modal.Body>
+                                <Box
+                                  sx={{
+                                    width: 400,
+                                    maxWidth: "100%",
+                                    textAlign: "left",
+                                    padding: "20px",
                                   }}
-                                  src={documentImgUrl}
-                                  alt={index}
-                                />
-                              </Box>
-                            </Modal.Body>
-                          </Modal>
+                                >
+                                  <img
+                                    style={{
+                                      width: "100%",
+                                      height: "165px",
+                                    }}
+                                    src={documentImgUrl}
+                                    alt={index}
+                                  />
+                                </Box>
+                              </Modal.Body>
+                            </Modal>
 
-                          <Button
-                            onClick={(e) =>
-                              handleImgShow(
-                                ele?.agency_details?.document_details
-                                  ?.pan_card_document
-                              )
-                            }
-                          >
-                            <img
-                              style={{
-                                width: "112px",
-                                height: "65px",
-                              }}
-                              // src={
-                              //   ele.agency_details.document_details
-                              //     .pan_card_document
-                              // }
-                              alt={index}
-                            />
-                          </Button>
-                        </StyledTableCell>
-                        <StyledTableCell style={{ color: "white" }} scope="row">
-                          {ele.personal_details?.first_name || "NA"}
-                        </StyledTableCell>
-                        <StyledTableCell
-                          align="right"
-                          style={{ color: "white" }}
-                        >
-                          {ele.agency_details.agency_name &&
-                          ele.agency_details.agency_name
-                            ? ele.agency_details.agency_name
-                            : "NA"}
-                        </StyledTableCell>
-                        <StyledTableCell
-                          align="right"
-                          style={{ color: "white" }}
-                        >
-                          {ele.agency_gst_details?.agency_classification ||
-                            "NA"}
-                        </StyledTableCell>
-
-                        <StyledTableCell
-                          align="right"
-                          style={{ color: "white" }}
-                        >
-                          {ele.agency_details?.address || "NA"}
-                        </StyledTableCell>
-
-                        <StyledTableCell
-                          align="right"
-                          style={{ color: "white" }}
-                        >
-                          {ele.agency_gst_details?.email || "NA"}
-                        </StyledTableCell>
-
-                        <StyledTableCell
-                          align="right"
-                          style={{ color: "white" }}
-                        >
-                          {ele.agency_gst_details?.agency_name || "NA"}
-                        </StyledTableCell>
-
-                        <StyledTableCell
-                          align="right"
-                          style={{ color: "white" }}
-                        >
-                          {ele.agency_gst_details?.provisional_GSTIN || "NA"}
-                        </StyledTableCell>
-
-                        <StyledTableCell
-                          align="right"
-                          style={{ color: "white" }}
-                        >
-                          {ele.personal_details?.mobile?.mobile_number || "NA"}
-                        </StyledTableCell>
-
-                        <StyledTableCell
-                          align="right"
-                          style={{ color: "white" }}
-                        >
-                          {ele.personal_details?.password?.slice(0, 32) || "NA"}
-                          <br />
-                          {ele.personal_details?.password?.slice(32) || "NA"}
-                        </StyledTableCell>
-
-                        <StyledTableCell
-                          align="right"
-                          style={{ color: "white" }}
-                        >
-                          {ele.is_active == 1 && (
-                            <span
-                              style={{
-                                backgroundColor: "green",
-                                padding: "5px 10px",
-                                borderRadius: "7px",
-                                color: "white",
-                                marginRight: "8px",
-                              }}
+                            <Button
+                              onClick={(e) =>
+                                handleImgShow(
+                                  ele?.agency_details?.document_details
+                                    ?.pan_card_document
+                                )
+                              }
                             >
-                              Active
-                            </span>
-                          )}
-                          {ele.is_active === 0 && (
-                            <span
-                              style={{
-                                backgroundColor: "red",
-                                padding: "5px 10px",
-                                borderRadius: "7px",
-                                color: "white",
-                                marginRight: "8px",
-                              }}
-                            >
-                              Inactive
-                            </span>
-                          )}
-                          <select
-                            value={ele.is_active}
-                            onChange={(e) =>
-                              handleToggle(e.target.value, ele._id)
-                            }
-                          >
-                            <option>Update</option>
-                            <option value="active">Active</option>
-                            <option value="inactive">Inactive</option>
-                          </select>
-                        </StyledTableCell>
+                              <img
+                                style={{
+                                  width: "112px",
+                                  height: "65px",
+                                }}
+                                // src={
+                                //   ele.agency_details.document_details
+                                //     .pan_card_document
+                                // }
+                                alt={index}
+                              />
+                            </Button>
+                          </StyledTableCell>
+                          <StyledTableCell scope="row">
+                            {ele.personal_details?.first_name || "NA"}
+                          </StyledTableCell>
+                          <StyledTableCell
+                            align="right"
 
-                        <StyledTableCell align="center">
-                          <Box
-                            sx={{
-                              width: 150,
-                              maxWidth: "100%",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              marginRight: "-10px",
-                            }}
                           >
-                            <TextField
-                              className="mark__Up__Input"
-                              placeholder={markUpValues.flight || "0"}
-                              defaultValue={markupData[index]?.flight || "0"}
-                              sx={{
-                                width: "108px",
-                                marginRight: "10px",
-                                fontSize: "18px",
-                              }}
-                              variant="standard"
-                              fullWidth
-                              name="flight"
-                              onChange={(event) => handleMarkUp(event, ele._id)}
-                            />
-                            <button
-                              color="success"
-                              className="mark__up__btn"
-                              onClick={handleStatusUpdate1}
-                            >
-                              <DoneIcon />
-                            </button>
-                          </Box>
-                        </StyledTableCell>
+                            {ele.agency_details.agency_name &&
+                              ele.agency_details.agency_name
+                              ? ele.agency_details.agency_name
+                              : "NA"}
+                          </StyledTableCell>
+                          <StyledTableCell
+                            align="right"
 
-                        <StyledTableCell align="center">
-                          <Box
-                            sx={{
-                              width: 150,
-                              maxWidth: "100%",
-                              display: "flex",
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                            }}
                           >
-                            <TextField
-                              placeholder={markupData[index]?.hotel || "0"}
-                              defaultValue={markupData[index]?.hotel || "0"}
-                              name="hotel"
-                              sx={{
-                                width: "128px",
-                                marginRight: "10px",
-                                fontSize: "18px",
-                              }}
-                              variant="standard"
-                              fullWidth
-                              onChange={(event) => handleMarkUp(event, ele._id)}
-                            />
-                            <button
-                              color="success"
-                              className="mark__up__btn"
-                              onClick={handleStatusUpdate2}
-                            >
-                              <DoneIcon />
-                            </button>
-                          </Box>
-                        </StyledTableCell>
+                            {ele.agency_gst_details?.agency_classification ||
+                              "NA"}
+                          </StyledTableCell>
 
-                        <StyledTableCell align="center">
-                          <Box
-                            sx={{
-                              width: 150,
-                              maxWidth: "100%",
-                              display: "flex",
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                            }}
-                          >
-                            <TextField
-                              placeholder={markupData[index]?.bus || "0"}
-                              name="bus"
-                              defaultValue={markupData[index]?.bus || "0"}
-                              sx={{
-                                width: "128px",
-                                marginRight: "10px",
-                                fontSize: "18px",
-                              }}
-                              variant="standard"
-                              fullWidth
-                              onChange={(event) => handleMarkUp(event, ele._id)}
-                            />
-                            <button
-                              color="success"
-                              className="mark__up__btn"
-                              onClick={handleStatusUpdate3}
-                            >
-                              <DoneIcon />
-                            </button>
-                          </Box>
-                        </StyledTableCell>
+                          <StyledTableCell
+                            align="right"
 
-                        <StyledTableCell align="center">
-                          <Box
-                            sx={{
-                              width: 250,
-                              maxWidth: "100%",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                            }}
                           >
-                            <TextField
-                              style={{ color: "white" }}
-                              placeholder={markupData[index]?.holiday || "0"}
-                              name="holiday"
-                              defaultValue={markupData[index]?.holiday || "0"}
-                              sx={{
-                                width: "85px",
-                                marginRight: "10px",
-                                fontSize: "18px",
-                              }}
-                              variant="standard"
-                              fullWidth
-                              onChange={(event) => handleMarkUp(event, ele._id)}
-                            />
-                            <button
-                              color="success"
-                              className="mark__up__btn"
-                              onClick={handleStatusUpdate4}
-                            >
-                              <DoneIcon />
-                            </button>
-                          </Box>
-                        </StyledTableCell>
-                        <td>
-                          <Button
-                            className="add_vendor_btn"
-                            variant="primary"
-                            onClick={(e) => handleShow(ele._id)}
+                            {ele.agency_details?.address || "NA"}
+                          </StyledTableCell>
+
+                          <StyledTableCell
+                            align="right"
+
                           >
-                            Add Amount
-                          </Button>
-                          {/* Modal  */}
-                          <Modal show={show} onHide={handleClose}>
-                            <Modal.Header closeButton>
-                              <Modal.Title>Vendor Amount </Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>
-                              <Box
-                                sx={{
-                                  width: 400,
-                                  maxWidth: "100%",
-                                  textAlign: "left",
-                                  padding: "20px",
+                            {ele.agency_gst_details?.email || "NA"}
+                          </StyledTableCell>
+
+                          <StyledTableCell
+                            align="right"
+
+                          >
+                            {ele.agency_gst_details?.agency_name || "NA"}
+                          </StyledTableCell>
+
+                          <StyledTableCell
+                            align="right"
+
+                          >
+                            {ele.agency_gst_details?.provisional_GSTIN || "NA"}
+                          </StyledTableCell>
+
+                          <StyledTableCell
+                            align="right"
+
+                          >
+                            {ele.personal_details?.mobile?.mobile_number || "NA"}
+                          </StyledTableCell>
+
+                          <StyledTableCell
+                            align="right"
+                            style={{ color: "black" }}
+                          >
+                            {ele.personal_details?.password?.slice(0, 32) || "NA"}
+                            <br />
+                            {ele.personal_details?.password?.slice(32) || "NA"}
+                          </StyledTableCell>
+
+                          <StyledTableCell
+                            align="right"
+                            style={{ color: "black" }}
+                          >
+                            {ele.is_active == 1 && (
+                              <span
+                                style={{
+                                  backgroundColor: "green",
+                                  padding: "5px 10px",
+                                  borderRadius: "7px",
+                                  color: "white",
+                                  marginRight: "8px",
                                 }}
                               >
-                                <TextField
-                                  size="large"
-                                  id="standard-basic"
-                                  label="Vendor Amount"
-                                  onChange={(e) => setAmount(e.target.value)}
-                                />
+                                Active
+                              </span>
+                            )}
+                            {ele.is_active === 0 && (
+                              <span
+                                style={{
+                                  backgroundColor: "red",
+                                  padding: "5px 10px",
+                                  borderRadius: "7px",
+                                  color: "white",
+                                  marginRight: "8px",
+                                }}
+                              >
+                                Inactive
+                              </span>
+                            )}
+                            <select
+                              value={ele.is_active}
+                              onChange={(e) =>
+                                handleToggle(e.target.value, ele._id)
+                              }
+                            >
+                              <option>Update</option>
+                              <option value="active">Active</option>
+                              <option value="inactive">Inactive</option>
+                            </select>
+                          </StyledTableCell>
 
-                                <Button
-                                  className="add_vendor_btn"
-                                  variant="contained"
-                                  color="success"
-                                  onClick={(e) =>
-                                    updateVendorAmount(ele?.walletid)
-                                  }
+                          <StyledTableCell align="center">
+                            <Box
+                              sx={{
+                                width: 150,
+                                maxWidth: "100%",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                marginRight: "-10px",
+                              }}
+                            >
+                              <TextField
+                                className="mark__Up__Input"
+                                placeholder={markUpValues.flight || "0"}
+                                defaultValue={markupData[index]?.flight || "0"}
+                                sx={{
+                                  width: "108px",
+                                  marginRight: "10px",
+                                  fontSize: "18px",
+                                }}
+                                variant="standard"
+                                fullWidth
+                                name="flight"
+                                onChange={(event) => handleMarkUp(event, ele._id)}
+                              />
+                              <button
+                                color="success"
+                                className="mark__up__btn"
+                                onClick={handleStatusUpdate1}
+                              >
+                                <DoneIcon />
+                              </button>
+                            </Box>
+                          </StyledTableCell>
+
+                          <StyledTableCell align="center">
+                            <Box
+                              sx={{
+                                width: 150,
+                                maxWidth: "100%",
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                              }}
+                            >
+                              <TextField
+                                placeholder={markupData[index]?.hotel || "0"}
+                                defaultValue={markupData[index]?.hotel || "0"}
+                                name="hotel"
+                                sx={{
+                                  width: "128px",
+                                  marginRight: "10px",
+                                  fontSize: "18px",
+                                }}
+                                variant="standard"
+                                fullWidth
+                                onChange={(event) => handleMarkUp(event, ele._id)}
+                              />
+                              <button
+                                color="success"
+                                className="mark__up__btn"
+                                onClick={handleStatusUpdate2}
+                              >
+                                <DoneIcon />
+                              </button>
+                            </Box>
+                          </StyledTableCell>
+
+                          <StyledTableCell align="center">
+                            <Box
+                              sx={{
+                                width: 150,
+                                maxWidth: "100%",
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                              }}
+                            >
+                              <TextField
+                                placeholder={markupData[index]?.bus || "0"}
+                                name="bus"
+                                defaultValue={markupData[index]?.bus || "0"}
+                                sx={{
+                                  width: "128px",
+                                  marginRight: "10px",
+                                  fontSize: "18px",
+                                }}
+                                variant="standard"
+                                fullWidth
+                                onChange={(event) => handleMarkUp(event, ele._id)}
+                              />
+                              <button
+                                color="success"
+                                className="mark__up__btn"
+                                onClick={handleStatusUpdate3}
+                              >
+                                <DoneIcon />
+                              </button>
+                            </Box>
+                          </StyledTableCell>
+
+                          <StyledTableCell align="center">
+                            <Box
+                              sx={{
+                                width: 250,
+                                maxWidth: "100%",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }}
+                            >
+                              <TextField
+                                style={{ color: "black" }}
+                                placeholder={markupData[index]?.holiday || "0"}
+                                name="holiday"
+                                defaultValue={markupData[index]?.holiday || "0"}
+                                sx={{
+                                  width: "85px",
+                                  marginRight: "10px",
+                                  fontSize: "18px",
+                                }}
+                                variant="standard"
+                                fullWidth
+                                onChange={(event) => handleMarkUp(event, ele._id)}
+                              />
+                              <button
+                                color="success"
+                                className="mark__up__btn"
+                                onClick={handleStatusUpdate4}
+                              >
+                                <DoneIcon />
+                              </button>
+                            </Box>
+                          </StyledTableCell>
+                          <StyledTableCell>
+                            <Button
+                              className="add_vendor_btn"
+                              variant="contained"
+                              color="primary"
+                              onClick={(e) => handleShow(ele._id)}
+                            >
+                              Add Amount
+                            </Button>
+                            {/* Modal  */}
+                            <Modal show={show} onHide={handleClose} centered>
+                              <Modal.Header closeButton>
+                                <Modal.Title>Vendor Amount</Modal.Title>
+                              </Modal.Header>
+                              <Modal.Body>
+                                <Box
+                                  sx={{
+                                    width: 400,
+                                    maxWidth: "100%",
+                                    textAlign: "left",
+                                    padding: "20px",
+                                  }}
                                 >
-                                  Add Amount
-                                </Button>
-                              </Box>
-                            </Modal.Body>
-                          </Modal>
-                        </td>
-                      </StyledTableRow>
-                    </>
-                  );
-                })
-              : ""}
-          </TableBody>
-        </Table>
-      </TableContainer>
+                                  <TextField
+                                    size="large"
+                                    id="standard-basic"
+                                    label="Vendor Amount"
+                                    onChange={(e) => setAmount(e.target.value)}
+                                    fullWidth
+                                    sx={{ marginBottom: 2 }}
+                                  />
+
+                                  <Button
+                                    className="add_vendor_btn"
+                                    variant="contained"
+                                    color="success"
+                                    onClick={(e) => updateVendorAmount(ele?.walletid)}
+                                    fullWidth
+                                  >
+                                    Add Amount
+                                  </Button>
+                                </Box>
+                              </Modal.Body>
+                            </Modal>
+                          </StyledTableCell>
+
+                        </StyledTableRow>
+                      </>
+                    );
+                  })
+                : ""}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}>
+          <Pagination
+            count={Math.ceil((tableData?.length || 1) / rowsPerPage)}
+            page={page}
+            onChange={handleChangePage}
+            color="primary"
+          />
+        </Box>
+      </div>
     </>
   );
 }

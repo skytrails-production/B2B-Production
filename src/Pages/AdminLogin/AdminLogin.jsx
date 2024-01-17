@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { adminAuthAction } from "../../Redux/Auth/AdminAuth/actionAdminAuth";
 import newlogo from "../../Images/whitelogo1.png";
+// import newlogo from "../../Images/whitelogo1.png"
 import { motion } from "framer-motion";
 import "./AdminLogin.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";

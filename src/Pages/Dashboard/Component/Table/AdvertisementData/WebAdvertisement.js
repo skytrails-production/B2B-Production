@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import './AdvertisementTable.css';
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  TableHead,
   TextField,
   InputAdornment,
+  Typography,
+  Paper,
+  Stack,
+  Pagination,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { apiURL } from "../../../../../Constants/constant";
 
 const AllWebAdvertisement = () => {
@@ -38,94 +37,84 @@ const AllWebAdvertisement = () => {
         setTotalPages(response.data.result.totalPages);
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching Bus bookings:", error);
+        console.error("Error fetching Web Advertisements:", error);
         setLoading(false);
       }
     }
 
     fetchAdvertisementData();
   }, [currentPage, searchTerm]);
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
+
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
     setCurrentPage(1); // Reset to the first page when performing a new search
   };
-  const tableHeadings = [
-    "Title",
-    "Start Date",
-    "End Date",
-    "Remaining Days",
-    "Status",
-    "AddType",
-    "Approval Status",
-    "Image",
+
+  const columns = [
+    { field: "title", headerName: "Title", flex: 1 },
+    { field: "startDate", headerName: "Start Date", flex: 1 },
+    { field: "endDate", headerName: "End Date", flex: 1 },
+    { field: "remainingDays", headerName: "Remaining Days", flex: 1 },
+    { field: "status", headerName: "Status", flex: 1 },
+    { field: "addType", headerName: "AddType", flex: 1 },
+    { field: "approvalStatus", headerName: "Approval Status", flex: 1 },
+    {
+      field: "image",
+      headerName: "Image",
+      flex: 1,
+      renderCell: (params) => (
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
+          <img
+            src={params.value}
+            alt={params.row.title}
+            style={{ maxWidth: "50px", maxHeight: "100px", borderRadius: "50%" }}
+          />
+        </div>
+      ),
+    },
   ];
+
   return (
-    <div className="bus-container">
-      <h2>Web Advertisement Table</h2>
-      <TextField
-        type="text"
-        value={searchTerm}
-        onChange={handleSearch}
-        placeholder="Search by name, ID, etc."
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon />
-            </InputAdornment>
-          ),
-        }} 
-      />
-      <div className="advertisement-container">
-        <table border="1">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-              <th>Remaining Days</th>
-              <th>Status</th>
-              <th>AddType</th>
-              <th>Approval Status</th>
-              <th>Image</th>
-            </tr>
-          </thead>
-          <tbody>
-            {advertisement.map((ad) => (
-              <tr key={ad._id} className="table-row">
-                <td className="table-cell">{ad.title || "No Data"}</td>
-                <td className="table-cell">{ad.startDate || "No Data"}</td>
-                <td className="table-cell">{ad.endDate || "No Data"}</td>
-                <td className="table-cell">{ad.remainingDays || "No Data"}</td>
-                <td className="table-cell">{ad.status || "No Data"}</td>
-                <td className="table-cell">{ad.addType || "No Data"}</td>
-                <td className="table-cell">{ad.approvalStatus || "No Data"}</td>
-                <td className="table-cell">
-                <img
-                  src={ad.image}
-                  alt={ad.title}
-                  style={{ maxWidth: "100px", maxHeight: "100px" }}
-                />
-              </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+    <Paper className="subada-table-container" elevation={3} style={{ position: "relative", width: "100%", backgroundColor: "white", padding: "20px", boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)" }}>
+      <div className="adsearch-bar" style={{ position: "absolute", top: 10, zIndex: 1, fontWeight: "bold", display: "flex", alignItems: "center" }}>
+        <TextField
+          type="text"
+          value={searchTerm}
+          onChange={handleSearch}
+          placeholder="Search by title, content, etc."
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
+        <Typography variant="h5" className="adtable-heading" style={{ marginLeft: "20px" }}>
+          Web Advertisement Table
+        </Typography>
       </div>
-      <div className="paginate">
-        {Array.from({ length: totalPages }, (_, i) => (
-          <button
-            className="adsButton"
-            key={i + 1}
-            onClick={() => handlePageChange(i + 1)}
-          >
-            <h5>{i + 1}</h5>
-          </button>
-        ))}
+      <div style={{ width: "100%" }}>
+        <DataGrid
+          rows={advertisement}
+          columns={columns}
+          pageSize={pageSize}
+          pagination
+          page={currentPage}
+          onPageChange={handlePageChange}
+          rowsPerPageOptions={[pageSize]}
+          getRowId={(row) => row._id}
+
+        />
       </div>
-    </div>
+      <Stack spacing={2} direction="row" justifyContent="center" alignItems="center">
+        <Pagination    color="primary" count={totalPages} page={currentPage} onChange={(event, page) => handlePageChange(page)} />
+      </Stack>
+    </Paper>
   );
 };
 

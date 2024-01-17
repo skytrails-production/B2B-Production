@@ -1,7 +1,7 @@
 import { all } from "redux-saga/effects";
 
 import { loginWatcher } from "./Saga/logInSaga";
-import { signUpWatcher } from "./Saga/signUpSaga";
+import { signUpWatcher,onbordingWatcher } from "./Saga/signUpSaga";
 import { ipWatcher } from "./Saga/ipSaga";
 import { oneWayWatcher } from "./Saga/oneWaySaga";
 import { returnWatcher } from "./Saga/returnSaga";
@@ -67,6 +67,7 @@ export function* rootSaga() {
     getHolidayBookingWatcher(),
     watchFormSubmission(),
     userDataWatcher(),
-    balanceSubtractWatcher()
+    balanceSubtractWatcher(),
+    onbordingWatcher()
   ]);
 }

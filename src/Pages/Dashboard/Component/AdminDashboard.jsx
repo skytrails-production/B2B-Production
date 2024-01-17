@@ -44,7 +44,7 @@ const AdminDashboardData = () => {
     ChangeRequestIcon,
 
     Groups3Icon,
-    CancelledIcon, 
+    CancelledIcon,
     AdminIcon,
   ];
   const headingsArray = [
@@ -157,46 +157,56 @@ const AdminDashboardData = () => {
     <Grid container spacing={3} className="admin-dashboard-grid">
       {Object.keys(dashboardData).map((key, index) => (
         <Grid item xs={12} sm={6} md={4} key={index}>
+          <div style={{
+            position: 'relative',
+            top: '8px',
+            left: '60px'
+          }}>
+            <div
+              className="icon-container"
+              style={{
+                position: 'absolute',
+                zIndex: '1',
+                boxShadow: "0px 4px 8px rgba(33, 50, 93, 0.5)",
+                transform: 'translateX(-50%)',
+                width: "60px",
+                height: "60px",
+                backgroundColor: "#21325D",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "8px",
+
+
+              }}
+            >
+              {icons[index % icons.length] &&
+                React.createElement(icons[index % icons.length], {
+                  fontSize: "large",
+                  style: { color: "white" },
+                })}
+            </div>
+          </div>
+
+
           <Card
             className={`admin-dashboard-card admin-dashboard-card-${index}`}
             onClick={() => handleCardClick(key)}
             style={{
-              border: "1px solid #e0e0e0",
+
               borderRadius: 8,
-              position: "relative",
-              zIndex: 0, // Ensure the stacking context
+              zIndex: 0,
               height: "110px",
+              // position: 'relative',
             }}
           >
             <CardActionArea
               style={{
                 display: "flex",
-                justifyContent: "space-between",
-                height: "100%", // Ensure the CardActionArea takes up the full height
+                justifyContent: "right",
+                height: "100%",
               }}
             >
-              <div
-                className="icon-container"
-                style={{
-                  position: "relative", // Change to relative position
-                  left: "10px", // Adjust the left position as needed
-                  width: "60px",
-                  height: "60px",
-                  zIndex: 5, // Ensure the icon container is above the content
-                  backgroundColor: "#21325D",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  borderRadius: "8px",
-                }}
-              >
-                {icons[index % icons.length] &&
-                  React.createElement(icons[index % icons.length], {
-                    fontSize: "large",
-                    style: { color: "white" }, // Set the icon color to white
-                  })}
-              </div>
-
               <CardContent>
                 <Typography variant="body2" color="text.secondary">
                   {headingsArray[index]}
@@ -206,7 +216,7 @@ const AdminDashboardData = () => {
                   <div className="progress-bar-container">
                     <LinearProgress
                       variant="determinate"
-                      value={50} // Set the progress value accordingly
+                      value={50}
                       sx={{ height: 10, borderRadius: 5 }}
                     />
                   </div>
@@ -217,6 +227,7 @@ const AdminDashboardData = () => {
         </Grid>
       ))}
     </Grid>
+
 
   );
 };

@@ -1,11 +1,5 @@
 import React, { useState } from "react";
 import Admini from "../../Images/Admin.svg";
-// import AccountDetails from "./AccountDetails"; // Import the Account component
-// import Queue from "./Queue"; // Import the Queue component
-// import Tickets from "./Ticket"; // Import the Tickets component
-// import Stack from "@mui/material/Stack";
-// import { Button, Box } from "@mui/material";
-// import color from "../../color/color";
 import { useNavigate } from "react-router-dom";
 import "./Administration.css";
 import { motion } from "framer-motion";
@@ -40,6 +34,7 @@ const Administration = () => {
     GST: false,
     Service_Request: false,
     Forex: false,
+    AgentPackages:false
   });
 
   const handleHover = (item) => {
@@ -74,6 +69,10 @@ const Administration = () => {
   const Forex = () => {
     navigate("/Forex");
   };
+
+  const AgentPackages=()=>{
+    navigate("/holidayPackages");
+  }
   return (
 
     <div className="container-fluid " id="margin-pecentage-large">
@@ -100,6 +99,10 @@ const Administration = () => {
           </motion.div>
           <motion.div className="col-lg-3" variants={variants}>
             <div onClick={Accounts}><p >Accounts</p></div>
+          </motion.div>
+          
+          <motion.div className="col-lg-3" variants={variants}>
+            <div onClick={AgentPackages}><p >My Packges</p></div>
           </motion.div>
           {/* <motion.div className="col-lg-3" variants={variants}>
             <div onClick={Reports}><p >Reports</p></div>

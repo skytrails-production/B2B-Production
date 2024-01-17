@@ -1,74 +1,122 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { searchPackageAction } from "../../../../../Redux/SearchPackage/actionSearchPackage";
-
-// new
+import { apiURL } from "../../../../../Constants/constant";
 import {
   Box,
-  Button,
-  FormControl,
-  Grid,
-  NativeSelect,
-  Typography,
 } from "@mui/material";
 import "./packageUpdate.css";
-//   import "./selectclickbutton.css";
-import RemoveIcon from "@mui/icons-material/Remove";
-import AddIcon from "@mui/icons-material/Add";
-import CommitIcon from "@mui/icons-material/Commit";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import Checkbox from "@mui/material/Checkbox";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import CancelIcon from "@mui/icons-material/Cancel";
-import TramIcon from "@mui/icons-material/Tram";
-import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
-import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
-import TwoWheelerIcon from "@mui/icons-material/TwoWheeler";
-import ApartmentIcon from "@mui/icons-material/Apartment";
-import HolidayVillageIcon from "@mui/icons-material/HolidayVillage";
-import LocationCityIcon from "@mui/icons-material/LocationCity";
-import CabinIcon from "@mui/icons-material/Cabin";
-import BlurOnIcon from "@mui/icons-material/BlurOn";
-import DeckIcon from "@mui/icons-material/Deck";
-import EngineeringIcon from "@mui/icons-material/Engineering";
-import FastfoodIcon from "@mui/icons-material/Fastfood";
-import DinnerDiningIcon from "@mui/icons-material/DinnerDining";
-import LiquorIcon from "@mui/icons-material/Liquor";
-import ArticleIcon from "@mui/icons-material/Article";
-import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
-import ParaglidingIcon from "@mui/icons-material/Paragliding";
-import NaturePeopleIcon from "@mui/icons-material/NaturePeople";
-import LandslideIcon from "@mui/icons-material/Landslide";
-import KitesurfingIcon from "@mui/icons-material/Kitesurfing";
-import PoolIcon from "@mui/icons-material/Pool";
-import DownhillSkiingIcon from "@mui/icons-material/DownhillSkiing";
-import ForestIcon from "@mui/icons-material/Forest";
-import SelfImprovementIcon from "@mui/icons-material/SelfImprovement";
-import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
-import FolderDeleteIcon from "@mui/icons-material/FolderDelete";
-import LocalOfferIcon from "@mui/icons-material/LocalOffer";
-import KayakingIcon from "@mui/icons-material/Kayaking";
-import SportsKabaddiIcon from "@mui/icons-material/SportsKabaddi";
-import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
-import WifiPasswordIcon from "@mui/icons-material/WifiPassword";
 
-// React-bootstrap
-import Modal from "react-bootstrap/Modal";
+import axios from "axios";
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import EditHolidayPackage from "./EditPackage";
+import ViewPackage from "./ViewPackage";
 
-import Accordion from "react-bootstrap/Accordion";
-import { createPackageAction } from "../../../../../Redux/CreatePackage/actionCreatePackage";
-import Loader from "../../../../Loader/Loader";
-const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 function PackageDetails() {
+
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
+
+
+
+
+
+  const [open, setOpen] = React.useState(false);
+  const [openApprove, setOpenApprove] = React.useState(false);
+  const [openEdit, setOpenEdit] = React.useState(false);
+  const [selectedPackageApprove, setSelectedPackageApprove] = useState("");
+  const [selectedPackageDelete, setSelectedPackageDelete] = useState("");
+
+
+
+  // view modal
+
+  const [openView, setOpenView] = useState(false);
+
+  const handleOpenView = (item) => {
+    sessionStorage.setItem("selectedPackage", JSON.stringify(item));
+    setOpenView(true);
+  }
+
+
+  const handleCloseView = () => {
+    setOpenView(false);
+  }
+
+
+  // view modal 
+
+
+  // approve modal
+
+  const handleOpenApprove = (item) => {
+    setSelectedPackageApprove(item);
+    setOpenApprove(true);
+    // console.log(selectedPackageApprove, "selected pacakge for approve")
+  }
+
+  const handleCloseApprove = () => setOpenApprove(false);
+
+  const handleApprove = async () => {
+    // console.log("approved")
+    const packageId = selectedPackageApprove?._id;
+    try {
+      const res = await axios({
+        method: "post",
+        url: `${apiURL.baseURL}/skyTrails/international/setactive`,
+        data: {
+          "pakageId": packageId,
+          "isAdmin": isAdmin,
+          "activeStatus": 1
+        },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      if (res.status === 200) {
+        handleCloseApprove();
+      }
+    } catch (error) {
+      console.log("error while deleting this package")
+    }
+  }
+
+  // approve modal 
+
+
+  const handleOpenEdit = (item) => {
+    setOpenEdit(true);
+    sessionStorage.setItem("selectedPackage", JSON.stringify(item));
+    // console.log(item, "selected package")
+  }
+  const handleCloseEdit = () => setOpenEdit(false);
+
+
+  const handleOpen = (item) => {
+    setOpen(true);
+    setSelectedPackageDelete(item);
+    // console.log(selectedPackageDelete, "selected package")
+  }
+  const handleClose = () => setOpen(false);
+
+
   const reducerState = useSelector((state) => state);
-  // console.log("holiday",reducerState?.searchResult?.packageSearchResult?.data?.data?.pakage );
   const holidayPackage =
     reducerState?.searchResult?.packageSearchResult?.data?.data?.pakage;
-  // console.log(holidayPackage);
+  const isAdmin = reducerState?.adminAuth?.adminData?.data?.id;
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -78,20 +126,42 @@ function PackageDetails() {
       destination: "",
       days: 0,
     };
-    // console.log(payload);
     dispatch(searchPackageAction(payload));
   }, []);
 
-  const [package_id, setPackage_id] = useState("");
+  useEffect(() => {
 
-  const handleEdit = (ele) => {
-    // console.log("package_id", ele);
-    setPackage_id(ele);
-    sessionStorage.setItem("package_id", ele);
-    navigate("/admin/dashboard/EditHolidayPackage");
+  }, [holidayPackage])
+
+
+  // const handleEdit = (item) => {
+  //   sessionStorage.setItem("selectedPackage", JSON.stringify(item));
+  //   navigate("/admin/dashboard/EditHolidayPackage");
+  // };
+
+
+  const handleDelete = async () => {
+    const packageId = selectedPackageDelete?._id;
+
+    try {
+      const res = await axios({
+        method: "delete",
+        url: `${apiURL.baseURL}/skyTrails/international/deleteone/${packageId}`,
+        data: {
+          "isAdmin": isAdmin
+        },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      if (res.status === 200) {
+        handleClose();
+      }
+    } catch (error) {
+      console.log("error while deleting this package")
+    }
   };
 
-  // console.log("package_id", package_id);
 
   return (
     <>
@@ -109,21 +179,23 @@ function PackageDetails() {
         }}
       >
         <thead>
-          <tr style={{backgroundColor:"grey"}}>
-            <th>IMG</th>
+          <tr style={{ backgroundColor: "grey" }}>
+            {/* <th>IMG</th> */}
             <th>Package Title</th>
             <th>Days</th>
             <th>Package Amount</th>
-            <th>Hotel Detail</th>
-            <th>Inclusion Note</th>
-            <th>Exclusion Note</th>
-            <th>Overview</th>
-            <th>Detailed Itinerary</th>
-            <th>Select Tags</th>
-            <th>Term And Condition</th>
-            <th>Cancellation Policy</th>
+            {/* <th>Hotel Detail</th> */}
+            {/* <th>Inclusion Note</th> */}
+            {/* <th>Exclusion Note</th> */}
+            {/* <th>Overview</th> */}
+            {/* <th>Detailed Itinerary</th> */}
+            {/* <th>Select Tags</th> */}
+            {/* <th>Term And Condition</th> */}
+            {/* <th>Cancellation Policy</th> */}
             <th>Edit</th>
             <th>Delete</th>
+            <th>Approve</th>
+            <th>View</th>
           </tr>
         </thead>
         <tbody>
@@ -131,7 +203,7 @@ function PackageDetails() {
             return (
               <>
                 <tr>
-                  <td>
+                  {/* <td>
                     <img
                       style={{
                         width: "120px",
@@ -140,22 +212,20 @@ function PackageDetails() {
                       }}
                       src={ele.pakage_img}
                     />{" "}
-                  </td>
-                  <td style={{color:"white"}}>{ele?.pakage_title}</td>
-                  <td style={{color:"white"}}>{ele?.days}</td>
-                  <td style={{color:"white"}}>{ele?.pakage_amount?.amount}</td>
-                  <td style={{color:"white"}}>{ele?.hotel_details}</td>
-                  <td style={{color:"white"}}>{ele?.insclusion_note}</td>
-                  <td style={{color:"white"}}>{ele?.exclusion_note}</td>
-                  <td style={{color:"white"}}>
-                    <div style={{ width: "350px", color:"white" }}>{ele?.overview}</div>{" "}
-                  </td>
-                  <td style={{color:"white"}}>{ele?.detailed_ltinerary[0]?.slice(7, 55) + "..."}</td>
-                  <td style={{color:"white"}}>
+                  </td> */}
+                  <td style={{ color: "white" }}>{ele?.pakage_title}</td>
+                  <td style={{ color: "white" }}>{ele?.days}</td>
+                  <td style={{ color: "white" }}>{ele?.pakage_amount?.amount}</td>
+                  {/* <td style={{ color: "white" }}>{ele?.hotel_details}</td> */}
+                  {/* <td style={{ color: "white" }}>{ele?.insclusion_note}</td> */}
+                  {/* <td style={{ color: "white" }}>{ele?.exclusion_note}</td> */}
+                  {/* <td style={{ color: "white" }}>
+                    <div style={{ width: "350px", color: "white" }}>{ele?.overview}</div>{" "}
+                  </td> */}
+                  {/* <td style={{ color: "white" }}>{ele?.detailed_ltinerary[0]?.slice(7, 55) + "..."}</td> */}
+                  {/* <td style={{ color: "white" }}>
                     <div>
                       {ele?.select_tags?.map((tag, index) => {
-                        // console.log("tag",tag);
-
                         return (
                           <>
                             {tag?.domestic && <span>Domestic</span>}
@@ -164,14 +234,21 @@ function PackageDetails() {
                         );
                       })}
                     </div>
+                  </td> */}
+                  {/* <td style={{ color: "white" }}>{ele?.term_Conditions}</td> */}
+                  {/* <td style={{ color: "white" }} >{ele?.cancellation_Policy}</td> */}
+                  <td style={{ color: "white" }}>
+                    {/* <button onClick={(e) => handleEdit(ele)}>Edit</button> */}
+                    <button onClick={(e) => handleOpenEdit(ele)}>Edit</button>
                   </td>
-                  <td style={{color:"white"}}>{ele?.term_Conditions}</td>
-                  <td style={{color:"white"}} >{ele?.cancellation_Policy}</td>
-                  <td style={{color:"white"}}>
-                    <button onClick={(e) => handleEdit(ele._id)}>Edit</button>
+                  <td style={{ color: "white" }}>
+                    <button onClick={(e) => handleOpen(ele)}>Delete</button>
                   </td>
-                  <td style={{color:"white"}}>
-                    <button>Delete</button>
+                  <td style={{ color: "white" }}>
+                    <button onClick={(e) => handleOpenApprove(ele)}>Approve</button>
+                  </td>
+                  <td style={{ color: "white" }}>
+                    <button onClick={(e) => handleOpenView(ele)} >View</button>
                   </td>
                 </tr>
               </>
@@ -179,6 +256,125 @@ function PackageDetails() {
           })}
         </tbody>
       </Table>
+
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Are you sure You want to delete this package
+          </Typography>
+          <button onClick={handleClose}>No</button>
+          <button onClick={handleDelete}>Yes</button>
+        </Box>
+      </Modal>
+      <Modal
+        open={openEdit}
+        onClose={handleCloseEdit}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '100%',
+            maxWidth: '80%',
+            maxHeight: '90vh',
+            bgcolor: 'background.paper',
+            border: '2px solid #000',
+            boxShadow: 24,
+            p: 4,
+            overflowY: 'auto',
+          }}
+        >
+          <Box>
+            <EditHolidayPackage />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: 'center'
+            }}
+          >
+            <button onClick={handleCloseEdit}>Close</button>
+          </Box>
+        </Box>
+
+
+      </Modal>
+
+
+
+      {/* approve modal  */}
+
+
+      <Modal
+        open={openApprove}
+        onClose={handleCloseApprove}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Are you sure You want to Approve this package
+          </Typography>
+          <button onClick={handleCloseApprove}>No</button>
+          <button onClick={handleApprove}>Yes</button>
+        </Box>
+      </Modal>
+
+      {/* approve modal  */}
+
+
+      {/* view modal  */}
+
+      <Modal
+        open={openView}
+        onClose={handleCloseView}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '100%',
+          maxWidth: '80%',
+          maxHeight: '90vh',
+          bgcolor: 'background.paper',
+          border: '2px solid #000',
+          boxShadow: 24,
+          p: 4,
+          overflowY: 'auto',
+        }}>
+
+
+
+
+          <Box>
+            <ViewPackage />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: 'center'
+            }}
+          >
+            <button onClick={handleCloseView}>Close</button>
+          </Box>
+        </Box>
+      </Modal>
+
+
+      {/* view modal  */}
     </>
   );
 }

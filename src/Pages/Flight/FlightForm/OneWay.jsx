@@ -40,6 +40,9 @@ const OneWay = () => {
   const navigate = useNavigate();
   const reducerState = useSelector((state) => state);
   const inputRef = useRef(null);
+  const listFromRef = useRef(null);
+  const listToRef = useRef(null);
+
   const [validationError, setValidationError] = useState("");
 
   // console.log("reducerState", reducerState);
@@ -62,6 +65,35 @@ const OneWay = () => {
   const [fromError, setFromError] = useState("");
   const [toError, setToError] = useState("");
   const [dateError, setDateError] = useState("");
+  const [toggleFrom, setToggleFrom] = useState(false)
+  const [toggleTo, setToggleTo] = useState(false)
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (listToRef.current && !listToRef.current.contains(event.target)) {
+        // Clicked outside the list, so close it
+        setToggleTo(false);
+      }
+    };
+
+    // Attach the event listener when the component mounts
+    document.addEventListener('mousedown', handleClickOutside);
+
+    // Detach the event listener when the component unmounts
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [listToRef]);
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (listFromRef.current && !listFromRef.current.contains(event.target)) {
+        setToggleFrom(false);
+      }
+    }
+    document.addEventListener("mousedown", handleOutsideClick)
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick)
+    }
+  }, [listFromRef])
 
   // useEffect(() => {
   //   clearPassengersReducer();
@@ -136,13 +168,14 @@ const OneWay = () => {
   const handleFromClick = (result) => {
     setFrom(result.AirportCode);
     setSelectedFrom(result);
-    setdisplayFrom(false);
-  };
+    setToggleFrom(false)
+  }
 
   const handleToClick = (result) => {
     setTO(result.AirportCode);
     setSelectedTo(result);
-    setdisplayTo(false);
+    // setdisplayTo(false);
+    setToggleTo(false);
   };
 
   const handleClick = () => {
@@ -175,7 +208,7 @@ const OneWay = () => {
   const validateDeparture = (departure) => {
     const result1 = fromSearchResults.filter((item) => item.id === departure)
     const result2 = toSearchResults.filter((item) => item.id === departure)
-    const result = (result1.length> 0 || result2.length> 0) ? true : false;
+    const result = (result1.length > 0 || result2.length > 0) ? true : false;
     // console.log(result1.length, "result1.....")
 
     return result
@@ -184,7 +217,7 @@ const OneWay = () => {
   const validateArival = (departure) => {
     const result1 = toSearchResults.filter((item) => item.id === departure)
     const result2 = fromSearchResults.filter((item) => item.id === departure)
-    const result = (result1.length> 0 || result2.length> 0) ? true : false;
+    const result = (result1.length > 0 || result2.length > 0) ? true : false;
     // console.log(result1.length, "result2.....")
 
     return result
@@ -303,7 +336,7 @@ const OneWay = () => {
                   name="from"
                   placeholder="Enter city or airport"
                   value={from}
-                  onClick={() => (setdisplayFrom(true), setdisplayTo(false))}
+                  onClick={() => { setToggleFrom(true); setToggleTo(false) }}
                   onChange={(event) => {
                     handleFromInputChange(event);
                     handleFromSearch(event.target.value);
@@ -313,28 +346,27 @@ const OneWay = () => {
                 />
                 {fromError !== "" && <span className="error">{fromError}</span>}
                 {/* {isLoading && <div>Loading...</div>} */}
-                {fromSearchResults &&
-                  fromSearchResults.length > 0 &&
-                  fromQuery.length >= 2 && (
-                    <div
-                      className="chooseAbsBox"
-                      style={{ display: displayFrom ? "block" : "none" }}
-                    >
-                      <ul>
-                        <div className="chooseAbs">
-                          {fromSearchResults.map((result) => (
-                            <li
-                              key={result._id}
-                              onClick={() => handleFromClick(result)}
-                            >
-                              <strong>{result.AirportCode}</strong>{" "}
-                              {result.name} {result.code}
-                            </li>
-                          ))}
-                        </div>
-                      </ul>
-                    </div>
-                  )}
+                {toggleFrom && (
+                  <div
+                    className="chooseAbsBox"
+                    style={{ display: "block" }}
+                    ref={listFromRef}
+                  >
+                    <ul>
+                      <div className="chooseAbs">
+                        {fromSearchResults.map((result) => (
+                          <li
+                            key={result._id}
+                            onClick={() => handleFromClick(result)}
+                          >
+                            <strong>{result.AirportCode}</strong>{" "}
+                            {result.name} {result.code}
+                          </li>
+                        ))}
+                      </div>
+                    </ul>
+                  </div>
+                )}
               </div>
             </motion.div>
             <motion.div onClick={() => handleRoundClick()} variants={variants} className="col-md-1 d-flex justify-content-center interchange ps-0 ">
@@ -349,7 +381,7 @@ const OneWay = () => {
                   name="to"
                   placeholder="Enter city or airport"
                   value={to}
-                  onClick={() => (setdisplayFrom(false), setdisplayTo(true))}
+                  onClick={() => (setToggleTo(true))}
                   // onMouseLeave={() => (
                   //   setdisplayFrom(false),
                   //   setdisplayTo(false)
@@ -363,12 +395,11 @@ const OneWay = () => {
                 />
                 {toError !== "" && <span className="error">{toError}</span>}
                 {/* {isLoading && <div>Loading...</div>} */}
-                {toSearchResults &&
-                  toSearchResults.length > 0 &&
-                  toQuery.length >= 2 && (
+                {toggleTo && (
                     <div
                       className="chooseAbsBox"
-                      style={{ display: displayTo ? "block" : "none" }}
+                      style={{ display:  "block"  }}
+                      ref={listToRef}
                     >
                       <ul>
                         <div className="chooseAbs">

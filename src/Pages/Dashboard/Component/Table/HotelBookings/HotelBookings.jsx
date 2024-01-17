@@ -1,10 +1,19 @@
 // AllHotelBooking.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Table, TableBody, TableCell, TableRow, Paper,TextField,InputAdornment } from '@mui/material';
-import './HotelBookings.css';
+import {
+  TextField,
+  InputAdornment,
+  Typography,
+  Stack,
+  Pagination,
+  Paper,
+} from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
 import SearchIcon from '@mui/icons-material/Search';
 import { apiURL } from '../../../../../Constants/constant';
+import './HotelBookings.css';
+
 const AllHotelBooking = () => {
   const [hotelBookings, setHotelBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -12,6 +21,7 @@ const AllHotelBooking = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
+
   useEffect(() => {
     async function fetchHotelBookings() {
       try {
@@ -22,7 +32,7 @@ const AllHotelBooking = () => {
               page: currentPage,
               size: pageSize,
               search: searchTerm,
-            }
+            },
           }
         );
         setHotelBookings(response.data.result.docs);
@@ -33,72 +43,76 @@ const AllHotelBooking = () => {
         setLoading(false);
       }
     }
-    // console.log("hotelBookings========", hotelBookings);
+
     fetchHotelBookings();
   }, [currentPage, searchTerm]);
+
   const handlePageChange = (page) => {
-    // console.log("page", page)
     setCurrentPage(page);
   };
+
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
     setCurrentPage(1); // Reset to the first page when performing a new search
   };
-  return (
 
-    <div className='hotel-container'>
-      <TextField
-        type="text"
-        value={searchTerm}
-        onChange={handleSearch}
-        placeholder="Search by name, ID, etc."
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon />
-            </InputAdornment>
-          ),
-        }}
-      />
-      <table border="1">
-        <thead>
-          <tr>
-            <th>Booking ID</th>
-            <th>User Name</th>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>CheckInDate</th>
-            <th>CheckOutDate</th>
-            <th>HotelName</th>
-            <th>CityName</th>
-            {/* Add more table headers based on your data */}
-          </tr>
-        </thead>
-        <tbody>
-          {hotelBookings.map(booking => (
-            <tr key={booking._id}>
-              <td>{booking.hotelId||"No Data"}</td>
-              <td>{booking.userDetails?.username||"No Data"}</td>
-              <td>{booking.name||"No Data"}</td>
-              <td>{booking.phone||"No Data"}</td>
-              <td>{booking.email||"No Data"}</td>
-              <td>{new Date(booking.CheckInDate).toDateString()||"No Data"}</td>
-              <td>{new Date(booking.CheckOutDate).toDateString()||"No Data"}</td>
-              <td>{booking.hotelName||"No Data"}</td>
-              <td>{booking.cityName||"No Data"}</td>
-              {/* Add more table data cells based on your data */}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      {/* Pagination */}
-      <div className="paginate">
-        {Array.from({ length: totalPages }, (_, i) => (
-          <button className='hotelButton' key={i + 1} onClick={() => handlePageChange(i + 1)}>
-            <h5>{i + 1}</h5>
-          </button>
-        ))}
+  const columns = [
+    { field: 'hotelId', headerName: 'Booking ID', flex: 1, valueGetter: (params) => params.row.hotelId || 'No Data' },
+    { field: 'userDetails.username', headerName: 'User Name', flex: 1, valueGetter: (params) => params.row.userDetails?.username || 'No Data' },
+    { field: 'name', headerName: 'Name', flex: 1, valueGetter: (params) => params.row.name || 'No Data' },
+    { field: 'phone', headerName: 'Phone', flex: 1, valueGetter: (params) => params.row.phone || 'No Data' },
+    { field: 'email', headerName: 'Email', flex: 1, valueGetter: (params) => params.row.email || 'No Data' },
+    { field: 'CheckInDate', headerName: 'CheckInDate', flex: 1, valueGetter: (params) => new Date(params.row.CheckInDate).toDateString() || 'No Data' },
+    { field: 'CheckOutDate', headerName: 'CheckOutDate', flex: 1, valueGetter: (params) => new Date(params.row.CheckOutDate).toDateString() || 'No Data' },
+    { field: 'hotelName', headerName: 'Hotel Name', flex: 1, valueGetter: (params) => params.row.hotelName || 'No Data' },
+    { field: 'cityName', headerName: 'City Name', flex: 1, valueGetter: (params) => params.row.cityName || 'No Data' },
+    // Add more columns based on your data
+  ];
+  
+
+  return (
+    <div className="subada-table-container" style={{ position: 'relative', width: "100%" }}>
+    <div className='adsearch-bar' style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold' }}>
+        <TextField
+          type='text'
+          value={searchTerm}
+          onChange={handleSearch}
+          placeholder='Search by name, ID, etc.'
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position='start'>
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
+        <Typography variant='h5' className='adtable-heading'>
+          Hotel Booking
+        </Typography>
+      </div>
+
+      <Paper>
+        <DataGrid
+          rows={hotelBookings}
+          columns={columns}
+          pageSize={pageSize}
+          rowsPerPageOptions={[pageSize]}
+          pagination
+          getRowId={(row) => row._id} // Use _id as the unique identifier
+          style={{ width: '100%' }}
+        />
+
+      </Paper>
+
+      <div className='paginate'>
+        <Stack spacing={2} direction='row' justifyContent='center'>
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={(event, page) => handlePageChange(page)}
+            color='primary'
+          />
+        </Stack>
       </div>
     </div>
   );

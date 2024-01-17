@@ -63,6 +63,18 @@ function api() {
       },
     });
   };
+  
+  const userB2BOnbording=(formData1)=>{
+    return axios({
+      method: "POST",
+      url: "/skyTrails/b2b/updateProfile",
+      baseURL: `${apiURL.baseURL}`,
+      data: formData1,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  }
 
   const adminAuth = (payload) => {
     return axios({
@@ -602,6 +614,7 @@ function api() {
 
   return {
     userB2BRegistration,
+    userB2BOnbording,
     userIP,
     usersTableData,
     userB2BToken,

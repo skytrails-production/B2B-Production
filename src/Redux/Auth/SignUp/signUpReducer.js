@@ -28,6 +28,15 @@ export const signUpReducer = (state = initState, action) => {
         isError: false,
         showSuccessMessage: true,
       };
+      case types.ONBORDING_REQUEST:
+      return {
+        ...state,
+        signUpData: payload,
+        isLoading: false,
+        isError: false,
+        showSuccessMessage: true,
+      };
+
     case types.SIGNUP_SUCCESS:
       return {
         signUpData: [],

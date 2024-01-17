@@ -84,3 +84,20 @@ select {
 .pending {
   background-color: lightblue;
 }
+
+.subada-table-container {
+
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  margin-top: 90px;
+  position: relative;
+  /* Added for positioning */
+}
+
+/* styles.css */
+.custom-table-container {
+  background-color: #fff;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Your desired box shadow */
+  border-radius: 8px; /* Your desired border radius */
+}

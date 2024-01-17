@@ -1,7 +1,7 @@
 import { apiURL } from "../../../Constants/constant";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import { Button } from "@mui/material";
-import { useDispatch, useSelector, useRef } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
@@ -84,6 +84,20 @@ const HotelForm = () => {
     nationality: false,
   });
   const [sub, setSub] = useState(false)
+  const listRef=useRef(null)
+  
+
+  useEffect(()=>{
+    const handleClickOutside=(event)=>{
+      if(listRef.current && !listRef.current.contains(event.target)){
+        setToggleSearch(false)
+      }
+    }
+    document.addEventListener('mousedown',handleClickOutside);
+    return ()=>{
+      document.removeEventListener('mousedown',handleClickOutside);
+    }
+  },[listRef])
 
   const [isVisible, setIsVisible] = useState(false);
   const changeHandler = (e) => {
@@ -464,8 +478,8 @@ const HotelForm = () => {
                 )}
 
                 {/* {loading && <div>Loading...</div>} */}
-                {toggleSearch && results.length > 0 && (
-                  <ul id="citySearchId">
+                {toggleSearch && (
+                  <ul id="citySearchId" ref={listRef}>
                     {results.map((city, index) => (
                       <li key={index} onClick={() => handleResultClick(city)}>
                         {city.Destination}

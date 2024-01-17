@@ -18,6 +18,10 @@ import FmdGoodIcon from '@mui/icons-material/FmdGood';
 import NavBarBox from "../../../Components/NavBarBox.jsx";
 import BusLoading from "../busLoading/BusLoading.jsx"
 import Swal from "sweetalert2";
+import { PiBusDuotone } from "react-icons/pi";
+import { GiIndiaGate } from "react-icons/gi";
+import { BsBusFront } from "react-icons/bs";
+import { IoLocationOutline } from "react-icons/io5";
 
 
 
@@ -91,12 +95,51 @@ const BusForm = () => {
   const [displayFrom, setdisplayFrom] = useState(true);
   const [displayTo, setdisplayTo] = useState(true);
   const [loader, setLoader] = useState(false);
+  const [subFrom, setSubfrom] = useState(false);
+  const [subTo, setSubTo] = useState(false);
   const [startDate, setStartDate] = useState(null);
   const inputRef = useRef(null);
   const fromInputRef = useRef(null);
   const toInputRef = useRef(null);
   const [fromData, setFromData] = useState([]);
   const [origin, setOrigin] = useState([]);
+  const listFromRef = useRef(null);
+  const lisToRef = useRef(null);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (listFromRef.current && !listFromRef.current.contains(event.target)) {
+        // Clicked outside the list, so close it
+        setSubfrom(false);
+      }
+    }
+
+
+    // Attach the event listener when the component mounts
+    document.addEventListener('mousedown', handleClickOutside);
+
+    // Detach the event listener when the component unmounts
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [listFromRef]);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (lisToRef.current && !lisToRef.current.contains(event.target) ) {
+        // Clicked outside the list, so close it
+        setSubTo(false);
+      }
+    };
+
+    // Attach the event listener when the component mounts
+    document.addEventListener('mousedown', handleClickOutside);
+
+    // Detach the event listener when the component unmounts
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [lisToRef]);
+
+
   const [errors, setErrors] = useState({
     from: "",
     to: "",
@@ -186,13 +229,15 @@ const BusForm = () => {
     }));
 
     setSelectedFrom(result?.CityId);
-    setdisplayFrom(false);
+    // setdisplayFrom(false);
+    setSubfrom(false)
   };
 
   const handleToClick = (result) => {
     setTO({ cityId: result.CityId, cityName: result.CityName });
     setSelectedTo(result.CityId);
-    setdisplayTo(false);
+    // setdisplayTo(false);
+    setSubTo(false)
   };
 
   const handleFromSearch = (e) => {
@@ -223,7 +268,7 @@ const BusForm = () => {
       valid = false;
     }
 
-    if (!to) {
+    if (!to.cityId) {
       newErrors.to = "Please select a city or airport *";
       valid = false;
     }
@@ -275,7 +320,6 @@ const BusForm = () => {
     event.preventDefault();
 
     const isValid = validateForm();
-    setLoader(true)
     if (isValid) {
       const formData = new FormData(event.target);
       // Format the selected date as "MM/dd/yyyy"
@@ -288,14 +332,15 @@ const BusForm = () => {
         formattedDate = `${year}/${month.toString().padStart(2, "0")}/${day
           .toString()
           .padStart(2, "0")}`;
-      }
-      const payload = {
-        EndUserIp: reducerState?.ip?.ipData,
-        TokenId: reducerState?.ip?.tokenData,
-        DateOfJourney: formattedDate,
-        DestinationId: to.cityId,
-        OriginId: from.cityId,
-      };
+        }
+        const payload = {
+          EndUserIp: reducerState?.ip?.ipData,
+          TokenId: reducerState?.ip?.tokenData,
+          DateOfJourney: formattedDate,
+          DestinationId: to.cityId,
+          OriginId: from.cityId,
+        };
+        setLoader(true)
       // console.log("payload", payload);
       dispatch(busSearchAction(payload));
 
@@ -404,7 +449,8 @@ const BusForm = () => {
                 <div >
                   <label>FROM</label>
                   <div className="locationFrom">
-                    <FmdGoodIcon className="locationFromIcon" />
+                    {/* <FmdGoodIcon className="locationFromIcon" /> */}
+                    <BsBusFront className="locationFromIcon" />
                     <input
                       name="from"
                       placeholder="Enter city or airport"
@@ -413,34 +459,42 @@ const BusForm = () => {
                       onChange={(event) => {
                         handleFromInputChange(event);
                         handleFromSearch(event.target.value);
+                        // setSubfrom(true)
+                        console.log(subFrom)
+
                       }}
+                      onClick={() => setSubfrom(true)}
                       ref={fromInputRef}
                       style={{ width: "100%" }}
                     />
+
+                    {/* {isLoading && <div>Loading...</div>} */}
+                    {subFrom && (
+                      <div
+                        style={{
+                          backgroundColor: "white",
+                          display:"block" ,
+                        }}
+                        className="busFormRes"
+                        ref={listFromRef}
+
+                      >
+                        <ul>
+                          {fromSearchResults.map((result) => (
+                            <li
+                              key={result._id}
+                              onClick={() => handleFromClick(result)}
+
+                            >
+                              <strong>{<GiIndiaGate />}</strong> {result.CityName}{" "}
+                              {/* {result.CityId} */}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    {errors.from && <div className="error">{errors.from}</div>}
                   </div>
-                  {/* {isLoading && <div>Loading...</div>} */}
-                  {fromSearchResults && fromSearchResults.length > 0 && (
-                    <div
-                      style={{
-                        backgroundColor: "white",
-                        display: displayFrom ? "block" : "none",
-                      }}
-                      className="busFormRes"
-                    >
-                      <ul>
-                        {fromSearchResults.map((result) => (
-                          <li
-                            key={result._id}
-                            onClick={() => handleFromClick(result)}
-                          >
-                            <strong>{result.CityId}</strong> {result.CityName}{" "}
-                            {/* {result.CityId} */}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  {errors.from && <div className="error">{errors.from}</div>}
                 </div>
               </motion.div>
 
@@ -459,43 +513,47 @@ const BusForm = () => {
                         handleToSearch(event.target.value);
                       }}
                       ref={toInputRef}
+                      onClick={() => setSubTo(true)}
+                      style={{ width: "100%" }}
                     />
-                  </div>
-                  {/* {isLoading && <div>Loading...</div>} */}
-                  {toSearchResults && toSearchResults.length > 0 && (
-                    <div
-                      style={{
-                        backgroundColor: "white",
 
-                        display: displayTo ? "block" : "none",
-                      }}
-                      className="busToRes"
-                    >
-                      <ul>
-                        <Box
-                          sx={{
-                            mb: 2,
-                            display: "flex",
-                            flexDirection: "column",
-                            maxHeight: 150,
-                            overflow: "hidden",
-                            overflowY: "scroll",
-                          }}
-                        >
-                          {toSearchResults.map((result) => (
-                            <li
-                              key={result._id}
-                              onClick={() => handleToClick(result)}
-                            >
-                              <strong>{result.CityId}</strong> {result.CityName}{" "}
-                              {result.CityId}
-                            </li>
-                          ))}
-                        </Box>
-                      </ul>
-                    </div>
-                  )}
-                  {errors.to && <div className="error">{errors.to}</div>}
+                    {/* {isLoading && <div>Loading...</div>} */}
+                    {subTo && (
+                      <div
+                        style={{
+                          backgroundColor: "white",
+
+                          display: displayTo ? "block" : "none",
+                        }}
+                        className="busToRes"
+                        ref={lisToRef}
+                      >
+                        <ul>
+                          <Box
+                            sx={{
+                              mb: 2,
+                              display: "flex",
+                              flexDirection: "column",
+                              maxHeight: 150,
+                              overflow: "hidden",
+                              overflowY: "scroll",
+                            }}
+                          >
+                            {toSearchResults.map((result) => (
+                              <li
+                                key={result._id}
+                                onClick={() => handleToClick(result)}
+                              >
+                                <strong>{<GiIndiaGate />}</strong> {result.CityName}{" "}
+
+                              </li>
+                            ))}
+                          </Box>
+                        </ul>
+                      </div>
+                    )}
+                    {errors.to && <div className="error">{errors.to}</div>}
+                  </div>
                 </div>
               </motion.div>
 

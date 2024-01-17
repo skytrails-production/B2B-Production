@@ -16,6 +16,14 @@ export const signUpAction = (user) => {
     };
   }
 };
+export const onBordingAction = (user) => {
+  if (user) {
+    return {
+      type: types.ONBORDING_REQUEST,
+      payload: user,
+    };
+  }
+};
 export const signUpActionClear = () => {
 
   

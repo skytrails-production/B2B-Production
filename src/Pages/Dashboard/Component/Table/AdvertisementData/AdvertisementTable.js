@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import './AdvertisementTable.css';
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  TableHead,
   TextField,
   InputAdornment,
+  Typography,
+  Paper,
+  Stack,
+  Pagination,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { apiURL } from "../../../../../Constants/constant";
 
 const AllAdvertisementTable = () => {
@@ -38,88 +38,86 @@ const AllAdvertisementTable = () => {
         setTotalPages(response.data.result.totalPages);
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching Bus bookings:", error);
+        console.error("Error fetching Advertisement data:", error);
         setLoading(false);
       }
     }
 
     fetchAdvertisementData();
   }, [currentPage, searchTerm]);
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
+
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
     setCurrentPage(1); // Reset to the first page when performing a new search
   };
-  const tableHeadings = [
-    "Title",
-    "Content",
-    "Start Date",
-    "End Date",
-    "Remaining Days",
-    "Image",
-  ];
-  return (
-    <div className="bus-container">
-      <h2>Advertisement Table</h2>
-      <TextField
-        type="text"
-        value={searchTerm}
-        onChange={handleSearch}
-        placeholder="Search by name, ID, etc."
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon />
-            </InputAdornment>
-          ),
-        }} 
+
+  const renderImageCell = (params) => (
+    <div style={{ display: "flex", alignItems: "center" }}>
+      <img
+        src={params.value}
+        alt={params.row.title}
+        style={{ maxWidth: "70px", maxHeight: "70px", borderRadius: "50%" }}
       />
-      <div className="advertisement-container">
-        <table border="1">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Content</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-              <th>Remaining Days</th>
-              <th>Image</th>
-            </tr>
-          </thead>
-          <tbody>
-            {advertisement.map((ad) => (
-              <tr key={ad._id} className="table-row">
-                <td className="table-cell">{ad.title || "No Data"}</td>
-                <td className="table-cell">{ad.content || "No Data"}</td>
-                <td className="table-cell">{ad.startDate || "No Data"}</td>
-                <td className="table-cell">{ad.endDate || "No Data"}</td>
-                <td className="table-cell">{ad.remainingDays || "No Data"}</td>
-                <td className="table-cell">
-                  <img
-                    src={ad.image}
-                    alt={ad.title}
-                    style={{ maxWidth: "100px", maxHeight: "100px" }}
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <div className="paginate">
-        {Array.from({ length: totalPages }, (_, i) => (
-          <button
-            className="adsButton"
-            key={i + 1}
-            onClick={() => handlePageChange(i + 1)}
-          >
-            <h5>{i + 1}</h5>
-          </button>
-        ))}
-      </div>
     </div>
+  );
+
+  const columns = [
+    { field: "title", headerName: "Title", flex: 1 },
+    { field: "content", headerName: "Content", flex: 1 },
+    { field: "startDate", headerName: "Start Date", flex: 1 },
+    { field: "endDate", headerName: "End Date", flex: 1 },
+    { field: "remainingDays", headerName: "Remaining Days", flex: 1 },
+    {
+      field: "image",
+      headerName: "Image",
+      flex: 1,
+      renderCell: renderImageCell,
+    },
+  ];
+
+  return (
+    <Paper className="subada-table-container" elevation={3} style={{ position: "relative", width: "100%", backgroundColor: "white", padding: "20px", boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)" }}>
+      <div className="adsearch-bar" style={{ position: "absolute", top: 10, zIndex: 1, fontWeight: "bold", display: "flex", alignItems: "center" }}>
+        <TextField
+          type="text"
+          value={searchTerm}
+          onChange={handleSearch}
+          placeholder="Search by title, content, etc."
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
+        <Typography variant="h5" className="adtable-heading" style={{ marginLeft: "20px" }}>
+          Advertisement Table
+        </Typography>
+      </div>
+      <div style={{ width: "100%" }}>
+        <DataGrid
+          rows={advertisement}
+          columns={columns}
+          pageSize={pageSize}
+          pagination
+          page={currentPage}
+          onPageChange={handlePageChange}
+          rowsPerPageOptions={[pageSize]}
+          getRowId={(row) => row._id}
+          components={{
+            Toolbar: GridToolbar,
+          }}
+        />
+      </div>
+      <Stack spacing={2} direction="row" justifyContent="center" alignItems="center">
+        <Pagination color="primary" count={totalPages} page={currentPage} onChange={(event, page) => handlePageChange(page)} />
+      </Stack>
+    </Paper>
   );
 };
 

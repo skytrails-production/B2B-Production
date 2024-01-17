@@ -1,21 +1,22 @@
-import React,{useEffect, useState} from 'react';
+import React, { useEffect, useState } from "react";
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Paper,
-    Pagination,
-  } from "@mui/material";
-  import axios from "axios";
-  import { apiURL } from "../../Constants/constant";
+  Paper,
+  Typography,
+  Pagination,
+  Stack,
+  TextField,
+  InputAdornment,
+} from "@mui/material";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import axios from "axios";
+import SearchIcon from "@mui/icons-material/Search";
+import { apiURL } from "../../Constants/constant";
 
 function Package() {
-    const [data, setData] = useState([]);
-  const [page, setPage] = useState(1);
+  const [data, setData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const fetchData = async (pageNumber) => {
     try {
@@ -30,69 +31,105 @@ function Package() {
     }
   };
 
-  const handlePageChange = (event, value) => {
-    setPage(value);
+  const handlePageChange = (event, newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+    setCurrentPage(1); // Reset to the first page when performing a new search
   };
 
   useEffect(() => {
-    fetchData(page);
-  }, [page]);
-  return (
-    <div style={{ marginTop: "64px" }}>
-    <h4 style={{ textAlign: "center", fontSize: "30px" }}>All Package Enquiry</h4>
-    <TableContainer component={Paper} style={{marginTop:"0px"}}>
-      <Table aria-label="customized table" style={{marginTop:"0px",marginBottom:"0px"}}>
-        <TableHead style={{ background: "#16113A" }}>
-          <TableRow>
-        
-          <TableCell>User Id</TableCell>
-          <TableCell>Full Name</TableCell>
-            <TableCell>Contact Number</TableCell>
-            <TableCell>Email</TableCell>
-            <TableCell>Departure City</TableCell>
-            <TableCell>Adults</TableCell>
-            <TableCell>Child</TableCell>
-            <TableCell>Package Type</TableCell>
-            <TableCell>Departure Date</TableCell>
-            <TableCell>Connected</TableCell>
-            <TableCell>No Of People</TableCell>
-            <TableCell>Status</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-  {data.map((packageItem) => (
-    <TableRow key={packageItem._id}>
-      
-      <TableCell style={{color:"white"}}>{packageItem.userId}</TableCell>
-      <TableCell style={{color:"white"}}>{packageItem.fullName}</TableCell>
-      <TableCell style={{color:"white"}}>{packageItem.contactNumber.phone}</TableCell>
-      <TableCell style={{color:"white"}}>{packageItem.email}</TableCell>
-      <TableCell style={{color:"white"}}>{packageItem.departureCity}</TableCell>
-      <TableCell style={{color:"white"}}>{packageItem.adults}</TableCell>
-      <TableCell style={{color:"white"}}>{packageItem.child}</TableCell>
-      <TableCell style={{color:"white"}}>{packageItem.packageType}</TableCell>
-      <TableCell style={{color:"white"}}>{packageItem.departureDate}</TableCell>
-      <TableCell style={{color:"white"}}>{packageItem.connected ? "Yes" : "No"}</TableCell>
-      <TableCell style={{color:"white"}}>{packageItem.noOfPeople}</TableCell>
-      <TableCell style={{color:"white"}}>{packageItem.status}</TableCell>
-    </TableRow>
-  ))}
-</TableBody>
-      </Table>
-    </TableContainer>
+    fetchData(currentPage);
+  }, [currentPage]);
 
-    <div style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
-      <Pagination
-        count={totalPages}
-        page={page}
-        onChange={handlePageChange}
-        variant="outlined"
-        shape="rounded"
-      />
-    </div>
-  </div>
-    
-  )
+  const columns = [
+    { field: "userId", headerName: "User Id", flex: 1 },
+    { field: "fullName", headerName: "Full Name", flex: 1 },
+    { field: "contactNumber.phone", headerName: "Contact Number", flex: 1 },
+    { field: "email", headerName: "Email", flex: 1 },
+    { field: "departureCity", headerName: "Departure City", flex: 1 },
+    { field: "adults", headerName: "Adults", flex: 1 },
+    { field: "child", headerName: "Child", flex: 1 },
+    { field: "packageType", headerName: "Package Type", flex: 1 },
+    { field: "departureDate", headerName: "Departure Date", flex: 1 },
+    {
+      field: "connected",
+      headerName: "Connected",
+      flex: 1,
+      valueGetter: (params) => (params.row.connected ? "Yes" : "No"),
+    },
+    { field: "noOfPeople", headerName: "No Of People", flex: 1 },
+    { field: "status", headerName: "Status", flex: 1 },
+  ];
+
+  return (
+    <Paper
+      className="subada-table-container"
+      elevation={3}
+      style={{
+        position: "relative",
+        width: "100%",
+        backgroundColor: "white",
+        padding: "20px",
+        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+      }}
+    >
+      <div
+        className="adsearch-bar"
+        style={{
+          position: "absolute",
+          top: 10,
+          zIndex: 1,
+          fontWeight: "bold",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <TextField
+          type="text"
+          value={searchTerm}
+          onChange={handleSearch}
+          placeholder="Search by name, ID, etc."
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
+        <Typography variant="h5" className="adtable-heading" style={{ marginLeft: "20px" }}>
+          All Package Enquiry
+        </Typography>
+      </div>
+      <div style={{ width: "100%" }}>
+        <DataGrid
+          rows={data}
+          columns={columns}
+          pageSize={10}
+          pagination
+          page={currentPage}
+          onPageChange={handlePageChange}
+          rowsPerPageOptions={[]}
+          components={{
+            Toolbar: GridToolbar,
+          }}
+          getRowId={(row) => row._id}
+        />
+      </div>
+      <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
+        <Pagination
+          count={totalPages}
+          page={currentPage}
+          onChange={(event, newPage) => handlePageChange(event, newPage)}
+          color="primary"
+        />
+
+      </Stack>
+    </Paper>
+  );
 }
 
-export default Package
+export default Package;

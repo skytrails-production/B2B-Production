@@ -201,7 +201,7 @@
 .busFormRes {
   position: absolute;
   border: 1px solid #ddd;
-  width: 362px;
+  width: 100%;
   border-radius: 0px 0px 5px 5px;
   z-index: 3;
 }
@@ -236,7 +236,7 @@
 .busToRes {
   position: absolute;
   border: 1px solid #ddd;
-  width: 362px;
+  width: 100%;
   border-radius: 0px 0px 5px 5px;
   z-index: 3;
 }

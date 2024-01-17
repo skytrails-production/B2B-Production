@@ -1,11 +1,10 @@
 exports.apiURL = {
-  // baseURL: "https://api.skyTrails.com",
-  // baseURL: "https://stagingapi.easemytrip.com",
-
-  baseURL:"https://back.theskytrails.com",
+  // baseURL: "https://api.travvolt.com",
+  // baseURL: "https://tourfinderbackend-production.up.railway.app",
+   baseURL: "https://back.theskytrails.com",
   // baseURL: "http://localhost:8000",
-
   flightEmail: "shivam@theskytrails.com",
-  phoneNo: "8287850111",
-
+  phoneNo: "9999479696"
 };
+
+

@@ -2,12 +2,14 @@
   width: 10px !important;
   text-align: left;
 }
+
 .modal__img {
   width: "300px";
   height: "200px";
   transition: 2s all ease-in;
   cursor: pointer;
 }
+
 .mark__up__btn {
   position: relative;
   box-sizing: border-box;
@@ -41,7 +43,7 @@
     box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
     border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
     color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  background-color: #2e7d32 !important;
+  background-color: #21325D !important;
   color: #fff !important;
   margin: 0 0 3px -10px !important;
 }
@@ -79,7 +81,43 @@
     box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
     border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
     color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  background-color: #2e7d32 !important;
+  background-color: #21325D !important;
   color: #fff !important;
   margin: 0 0 3px 10px !important;
+}
+
+
+.adminseacrch {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  background-color: #2196f3;
+
+  width: 93%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  /* Centering the search bar horizontally */
+  padding: 20px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  margin-top: -50px;
+}
+
+.tablead {
+  background-color: #fff;
+  border: none;
+  color: black;
+}
+
+.tableheadadmin{
+  background-color: none !important;
+}
+.addVendorButton {
+  /* Add your "Add Amount" button styles here */
+  background-color: #007bff; /* Change the background color as needed */
+  color: #ffffff; /* Change the text color as needed */
+  &:hover {
+    background-color: #0056b3; /* Change the hover background color as needed */
+  }
 }

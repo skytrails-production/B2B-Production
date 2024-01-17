@@ -6,7 +6,7 @@ import {
   NativeSelect,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
@@ -59,23 +59,29 @@ import WifiPasswordIcon from "@mui/icons-material/WifiPassword";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 // import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { createPackageAction,createPackageActionClear } from "../../../Redux/CreatePackage/actionCreatePackage";
+
+import { createPackageAction, createPackageActionClear } from "../../../Redux/CreatePackage/actionCreatePackage";
+
 // import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import Accordion from "react-bootstrap/Accordion";
 import { GrAddCircle } from "react-icons/gr";
 import Swal from "sweetalert2";
+import Modal from "@mui/material/Modal";
+import loginOtp from "../../../../src/Images/login-01.jpg";
+import { IoIosClose } from "react-icons/io";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const CreateHolidayPackage = () => {
-  // const [inputList, setInputList] = useState([{ addMore: "" }]);
-  // Redux- saga
+
+
+
   const dispatch = useDispatch();
   const reducerState = useSelector((state) => state);
   const userId = reducerState?.logIn?.loginData?.data?.data?.id;
-  const [loader,setLoader]=useState(false);
+  const [loader, setLoader] = useState(false);
   const navigate = useNavigate();
-  console.log("createPackage", reducerState);
+  // console.log("createPackage", reducerState);
   const ListItem = styled("li")(({ theme }) => ({
     margin: theme.spacing(0.5),
   }));
@@ -86,7 +92,25 @@ const CreateHolidayPackage = () => {
       chips.filter((chip) => chip.key !== chipToDelete.key)
     );
   };
-
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const submitRef = useRef(null)
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (submitRef.current && !submitRef.current.contains(event.target)) {
+        setOpen(false);
+        navigate("/");
+      }
+    }
+    document.addEventListener("mousedown", handleOutsideClick)
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick)
+    }
+  }, [submitRef])
+  const handleClose = () => {
+    setOpen(false);
+    // setDisableButton(false);
+  };
   const handleAddChip = () => {
     if (input.trim() !== "") {
       setChipData((chips) => [...chips, { key: Date.now(), addMore: input }]);
@@ -96,32 +120,31 @@ const CreateHolidayPackage = () => {
   };
   const inputList = chipData.map((item) => ({ addMore: item.addMore }));
 
-  // console.log("inputList", inputList);
-  //  console.log("chipdata", chipData);
-  // function textEditorChange(e) {
-  //   setHtml(e.target.value);
-  // }
+ 
+  const userData = reducerState?.userData?.userData?.data?.data;
+  const openToggle = () => {
+    
+    if (userData?.personal_details?.address_details?.city === ""
+      || userData?.personal_details?.address_details?.country === ""
+      || userData?.personal_details?.address_details?.pincode === ""
+      || userData?.personal_details?.address_details?.residential_address === ""
+      || userData?.personal_details?.first_name === ""
+      || userData?.personal_details?.last_name
 
-  // handle input change
-  // const handleInputChange = (e, index) => {
-  //   const { name, value } = e.target;
-  //   const list = [...inputList];
-  //   list[index][name] = value;
-  //   setInputList(list);
-  // };
 
-  // handle click event of the Remove button
-  // const handleRemoveClick = (index) => {
-  //   const list = [...inputList];
-  //   list.splice(index, 1);
-  //   setInputList(list);
-  // };
+    ) {
+      
 
-  // handle click event of the Add button
-  // const handleAddClick = () => {
-  //   setInputList([...inputList, { addMore: "" }]);
-  // };
-
+      setOpen(true)
+      return
+    }
+    else {
+      setOpen(false)
+    }
+  }
+  useEffect(() => {
+    openToggle()
+  }, [])
   const [tag, setTag] = useState({
     domestic: false,
     international: false,
@@ -161,6 +184,22 @@ const CreateHolidayPackage = () => {
       [e.target.name]: e.target.checked,
     });
   };
+
+
+  const [scheduleType, setScheduleType] = useState({
+    flexible: false,
+    fixed_departure: false,
+  })
+
+  const handleScheduleChange = (event) => {
+    const selectedScheduleType = event.target.value;
+
+    setScheduleType((prevScheduleType) => ({
+      ...prevScheduleType,
+      [selectedScheduleType]: true,
+    }));
+  };
+
 
   const [checkedItem, setCheckedItem] = useState({
     flexibility: false,
@@ -234,11 +273,13 @@ const CreateHolidayPackage = () => {
   };
 
   const [hotelDetails, setHotelDetails] = useState("");
-  const [inclusion,setInclusion]=useState("");
-  const [exclusion,setExclusion]=useState("");
-  const [termAndCondition,setTermAndCondition]=useState("");
-  const[cancellation,setCancellation]=useState("")
-  const[overView,setOverView]=useState("")
+  const [inclusion, setInclusion] = useState("");
+  const [exclusion, setExclusion] = useState("");
+  const [termAndCondition, setTermAndCondition] = useState("");
+
+  const [cancellation, setCancellation] = useState("")
+  const [overView, setOverView] = useState("")
+
 
 
   const handleHotel = (e) => {
@@ -258,36 +299,35 @@ const CreateHolidayPackage = () => {
     setDaysDetails(newValues);
     // setHtml(newValues);
   };
-   useEffect(() => {
+  useEffect(() => {
     if (reducerState?.createPackage?.showSuccessMessage == true) {
+
       setLoader(false)
-       Swal.fire({
-         icon: "success",
-         title: "Done.",
-         text: ` Your Package is created Sucessfully `,
-         showCancelButton: false,
-         confirmButtonText: "OK",
-       }).then((result) => {
-         if (result.isConfirmed) {
-           navigate("/");
-           dispatch(createPackageActionClear());
-         }
-       });
+
+      Swal.fire({
+        icon: "success",
+        title: "Done.",
+        text: ` Your Package is created Sucessfully `,
+        showCancelButton: false,
+        confirmButtonText: "OK",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/");
+          dispatch(createPackageActionClear());
+        }
+      });
 
     }
-   }, [reducerState?.createPackage]);
+  }, [reducerState?.createPackage]);
 
   // Form handle code
   const handleCreatePackage = (event) => {
     event.preventDefault();
-     setLoader(true)
+
+    setLoader(true)
+
     setSub(true);
     const file1 = document.getElementById("user_card_document").files[0];
-    console.warn(
-      filterTrueProps(tag).length,
-      filterTrueProps(tag).length,
-      "filrter prooooddsndjndhnhjnnnnnnnnnnnnnnnnnnn"
-    );
 
     const formData = new FormData(event.target);
     if (
@@ -315,6 +355,7 @@ const CreateHolidayPackage = () => {
           flexible: true,
           fixed_departure: false,
         },
+
         pakage_amount: {
           currency: "INR",
           amount: amount,
@@ -392,51 +433,18 @@ const CreateHolidayPackage = () => {
         term_Conditions: termAndCondition,
         cancellation_Policy: cancellation,
       };
-      // console.log("payload", payload);
+
+
+
       const formData1 = new FormData();
       formData1.append("file", file1);
       formData1.append("data", JSON.stringify(payload));
-      // console.log(formData1);
+      // console.log(payload, "payload")
+
       dispatch(createPackageAction(formData1));
 
-     
     }
-    // event.target.reset();
-    // setDaysDetails([]);
-    // setCheckedItem({
-    //   flexibility: false,
-    //   train: false,
-    //   bus: false,
-    //   cab: false,
-    //   motorbike: false,
-    //   hotel: false,
-    //   homeStays: false,
-    //   guestHouse: false,
-    //   camp: false,
-    //   cruise: false,
-    //   sightSeeing: false,
-    //   guide: false,
-    //   meals: false,
-    //   breakfast: false,
-    //   drink: false,
-    //   visa: false,
-    //   travelInsurance: false,
-    //   safeTravel: false,
-    //   wildlife: false,
-    //   heritage: false,
-    //   adventure: false,
-    //   beach: false,
-    //   hillStation: false,
-    //   nature: false,
-    //   wellness: false,
-    //   hiddenGem: false,
-    //   tax: false,
-    //   discount: false,
-    //   waterActivities: false,
-    //   optionalActivities: false,
-    //   flexibleBooking: false,
-    //   wifi: false,
-    // })
+
   };
   function validation(event) {
     const formData = new FormData(event.target);
@@ -461,11 +469,9 @@ const CreateHolidayPackage = () => {
     }
     return Object.keys(filteredObj).length;
   };
-  
+
   return (
     <div className="container-xxl">
-      {/* for heading text of packages */}
-
       <div className="row">
         <div className="col-lg-12">
           <div className="headerBoxOuter">
@@ -662,35 +668,7 @@ const CreateHolidayPackage = () => {
                           id="schedule"
                           value="fixed departure"
                           width="32px"
-                          checked
-                        />
-                      </Box>
-                      <Box>
-                        <Typography
-                          style={{
-                            fontSize: "20px",
-                            color: "#000",
-
-                            fontFamily: "Montserrat",
-                          }}
-                        >
-                          Flexible
-                        </Typography>
-                        {/* <Typography
-                        style={{ fontSize: "10px", color: "#666666" }}
-                      >
-                        can be booked anytime
-                      </Typography> */}
-                      </Box>
-                    </Box>
-
-                    <Box display="flex" alignItems="center" gap="5px">
-                      <Box className="radio">
-                        <input
-                          type="radio"
-                          name="schedule"
-                          id="schedule"
-                          value="flexible departure"
+                          onChange={handleScheduleChange}
                         />
                       </Box>
                       <Box>
@@ -704,11 +682,31 @@ const CreateHolidayPackage = () => {
                         >
                           Fixed Departure
                         </Typography>
-                        {/* <Typography
-                        style={{ fontSize: "10px", color: "#666666" }}
-                      >
-                        Departure are scheduled
-                      </Typography> */}
+
+                      </Box>
+                    </Box>
+
+                    <Box display="flex" alignItems="center" gap="5px">
+                      <Box className="radio">
+                        <input
+                          type="radio"
+                          name="schedule"
+                          id="schedule"
+                          value="flexible"
+                          onChange={handleScheduleChange}
+                        />
+                      </Box>
+                      <Box>
+                        <Typography
+                          style={{
+                            fontSize: "20px",
+                            color: "#000",
+
+                            fontFamily: "Montserrat",
+                          }}
+                        >
+                          Flexible
+                        </Typography>
                       </Box>
                     </Box>
                   </Box>
@@ -2094,15 +2092,17 @@ const CreateHolidayPackage = () => {
                               type="text"
                               name="detailed_ltinerary"
                               placeholder={`Days ${i + 1}`}
-                              // value={daysDetailsValues[i] || ""}
-                              // onChange={(event) => handleDaysDetail(i, event)}
+                            // value={daysDetailsValues[i] || ""}
+                            // onChange={(event) => handleDaysDetail(i, event)}
                             >
                               <Editor
                                 name="detailed_ltinerary"
                                 value={daysDetailsValues[i]}
                                 onChange={(event) => handleDaysDetail(i, event)}
                                 containerProps={{
-                                  style: { resize: "vertical",height:"300px",overflow:"scroll" },
+
+                                  style: { resize: "vertical", height: "300px", overflow: "scroll" },
+
                                 }}
                               />
                             </span>
@@ -2154,7 +2154,7 @@ const CreateHolidayPackage = () => {
                         name="domestic"
                         onChange={handleTagChange}
                       />
-                      <div class="checkmark"></div>
+                      {/* <div class="checkmark"></div> */}
                       <span className="tag__title">Domestic</span>
                     </label>
 
@@ -2164,7 +2164,7 @@ const CreateHolidayPackage = () => {
                         name="international"
                         onChange={handleTagChange}
                       />
-                      <div class="checkmark"></div>
+                      {/* <div class="checkmark"></div> */}
                       <span className="tag__title">International</span>
                     </label>
 
@@ -2174,7 +2174,7 @@ const CreateHolidayPackage = () => {
                         name="budget"
                         onChange={handleTagChange}
                       />
-                      <div class="checkmark"></div>
+                      {/* <div class="checkmark"></div> */}
                       <span className="tag__title">Budget</span>
                     </label>
 
@@ -2184,7 +2184,7 @@ const CreateHolidayPackage = () => {
                         name="holiday"
                         onChange={handleTagChange}
                       />
-                      <div class="checkmark"></div>
+                      {/* <div class="checkmark"></div> */}
                       <span className="tag__title">Holiday</span>
                     </label>
 
@@ -2194,7 +2194,7 @@ const CreateHolidayPackage = () => {
                         name="luxury"
                         onChange={handleTagChange}
                       />
-                      <div class="checkmark"></div>
+                      {/* <div class="checkmark"></div> */}
                       <span className="tag__title">Luxury</span>
                     </label>
 
@@ -2204,7 +2204,7 @@ const CreateHolidayPackage = () => {
                         name="couples"
                         onChange={handleTagChange}
                       />
-                      <div class="checkmark"></div>
+                      {/* <div class="checkmark"></div> */}
                       <span className="tag__title">Couples</span>
                     </label>
 
@@ -2214,7 +2214,7 @@ const CreateHolidayPackage = () => {
                         name="family"
                         onChange={handleTagChange}
                       />
-                      <div class="checkmark"></div>
+                      {/* <div class="checkmark"></div> */}
                       <span className="tag__title">family</span>
                     </label>
 
@@ -2224,7 +2224,7 @@ const CreateHolidayPackage = () => {
                         name="honeymoon"
                         onChange={handleTagChange}
                       />
-                      <div class="checkmark"></div>
+                      {/* <div class="checkmark"></div> */}
                       <span className="tag__title">Honeymoon</span>
                     </label>
 
@@ -2234,7 +2234,7 @@ const CreateHolidayPackage = () => {
                         name="solo"
                         onChange={handleTagChange}
                       />
-                      <div class="checkmark"></div>
+                      {/* <div class="checkmark"></div> */}
                       <span className="tag__title">Solo</span>
                     </label>
 
@@ -2244,7 +2244,7 @@ const CreateHolidayPackage = () => {
                         name="group"
                         onChange={handleTagChange}
                       />
-                      <div class="checkmark"></div>
+                      {/* <div class="checkmark"></div> */}
                       <span className="tag__title">Group</span>
                     </label>
 
@@ -2254,7 +2254,7 @@ const CreateHolidayPackage = () => {
                         name="Girl Only"
                         onChange={handleTagChange}
                       />
-                      <div class="checkmark"></div>
+                      {/* <div class="checkmark"></div> */}
                       <span className="tag__title">Girl Only</span>
                     </label>
                     <label class="label__container">
@@ -2263,7 +2263,7 @@ const CreateHolidayPackage = () => {
                         name="Boy Only"
                         onChange={handleTagChange}
                       />
-                      <div class="checkmark"></div>
+                      {/* <div class="checkmark"></div> */}
                       <span className="tag__title">Boy Only</span>
                     </label>
 
@@ -2273,7 +2273,7 @@ const CreateHolidayPackage = () => {
                         name="anniversary"
                         onChange={handleTagChange}
                       />
-                      <div class="checkmark"></div>
+                      {/* <div class="checkmark"></div> */}
                       <span className="tag__title">Anniversary</span>
                     </label>
 
@@ -2283,7 +2283,7 @@ const CreateHolidayPackage = () => {
                         name="Business"
                         onChange={handleTagChange}
                       />
-                      <div class="checkmark"></div>
+                      {/* <div class="checkmark"></div> */}
                       <span className="tag__title">Business</span>
                     </label>
 
@@ -2293,7 +2293,7 @@ const CreateHolidayPackage = () => {
                         name="Bagpacker"
                         onChange={handleTagChange}
                       />
-                      <div class="checkmark"></div>
+                      {/* <div class="checkmark"></div> */}
                       <span className="tag__title">Bagpacker</span>
                     </label>
                     <label class="label__container">
@@ -2302,7 +2302,7 @@ const CreateHolidayPackage = () => {
                         name="Nature"
                         onChange={handleTagChange}
                       />
-                      <div class="checkmark"></div>
+                      {/* <div class="checkmark"></div> */}
                       <span className="tag__title">Nature</span>
                     </label>
 
@@ -2312,7 +2312,7 @@ const CreateHolidayPackage = () => {
                         name="Wildlife"
                         onChange={handleTagChange}
                       />
-                      <div class="checkmark"></div>
+                      {/* <div class="checkmark"></div> */}
                       <span className="tag__title">Wildlife</span>
                     </label>
                     <label class="label__container">
@@ -2321,7 +2321,7 @@ const CreateHolidayPackage = () => {
                         name="historical"
                         onChange={handleTagChange}
                       />
-                      <div class="checkmark"></div>
+                      {/* <div class="checkmark"></div> */}
                       <span className="tag__title">historical</span>
                     </label>
 
@@ -2331,7 +2331,7 @@ const CreateHolidayPackage = () => {
                         name="domestic"
                         onChange={handleTagChange}
                       />
-                      <div class="checkmark"></div>
+                      {/* <div class="checkmark"></div> */}
                       <span className="tag__title">Domestic</span>
                     </label>
 
@@ -2341,7 +2341,7 @@ const CreateHolidayPackage = () => {
                         name="weekend gateway"
                         onChange={handleTagChange}
                       />
-                      <div class="checkmark"></div>
+                      {/* <div class="checkmark"></div> */}
                       <span className="tag__title">Weekend Gateway</span>
                     </label>
 
@@ -2351,7 +2351,7 @@ const CreateHolidayPackage = () => {
                         name="mid-Range"
                         onChange={handleTagChange}
                       />
-                      <div class="checkmark"></div>
+                      {/* <div class="checkmark"></div> */}
                       <span className="tag__title">Mid-Range</span>
                     </label>
 
@@ -2361,7 +2361,7 @@ const CreateHolidayPackage = () => {
                         name="Family With Children"
                         onChange={handleTagChange}
                       />
-                      <div class="checkmark"></div>
+                      {/* <div class="checkmark"></div> */}
                       <span className="tag__title">Family With Children</span>
                     </label>
                   </div>
@@ -2390,37 +2390,12 @@ const CreateHolidayPackage = () => {
                         </div>
                         {sub &&
                           document.getElementById("term_Conditions").value ===
-                            "" && (
+                          "" && (
                             <span id="error1">EnterTerm & Conditions</span>
                           )}
                       </Box>
                     </div>
-                    {/* <div className="col-lg-6 col-md-12 col-sm-12">
-                      <Box my={2}>
-                        <label class="form-label">
-                          {" "}
-                          Write a descriptive summary of the T&C.....{" "}
-                          <span style={{ color: "red" }}>*</span>
-                        </label>
-                        <div class="form-floating">
-                          <textarea
-                            class="form-control"
-                            name="term_Conditions"
-                            placeholder="Enter Term And Condition"
-                            id="descriptive_summary"
-                            style={{ height: "100px" }}
-                          ></textarea>
-                          <label for="floatingTextarea2">
-                            Enter Term & Conditions
-                          </label>
-                        </div>
-                        {sub &&
-                          document.getElementById("descriptive_summary")
-                            .value === "" && (
-                            <span id="error1">descriptive Summary</span>
-                          )}
-                      </Box>
-                    </div> */}
+
                   </div>
                 </div>
 
@@ -2450,79 +2425,16 @@ const CreateHolidayPackage = () => {
                           )}
                       </Box>
                     </div>
-                    {/* <div className="col-lg-6 col-md-12 col-sm-12">
-                      <Box my={2}>
-                        <label class="form-label">
-                          {" "}
-                          Write a descriptive summary of the Cancellation
-                          Policy...... <span style={{ color: "red" }}>*</span>
-                        </label>
-                        <div class="form-floating">
-                          <textarea
-                            class="form-control"
-                            name="term_Conditions"
-                            placeholder="Descriptive Cancellation Policy...."
-                            id="descriptive_cancellation"
-                            style={{ height: "100px" }}
-                          ></textarea>
-                          <label for="floatingTextarea2">
-                            Descriptive Cancellation Policy....
-                          </label>
-                        </div>
-                        {sub &&
-                          document.getElementById("descriptive_cancellation")
-                            .value === "" && (
-                            <span id="error1">
-                              Descriptive Cancellation Policy
-                            </span>
-                          )}
-                      </Box>
-                    </div> */}
                   </div>
                 </div>
-
-                {/* <Box
-                  my={2}
-                  marginLeft="20px"
-                  display="flex"
-                  justifyContent="start"
-                >
-                  <Box mx={1}>
-                    <Button
-                      style={{
-                        textDecoration: "underline",
-                        borderColor: color.red1,
-                        color: "#000000",
-                      }}
-                    >
-                      Save As Draft
-                    </Button>
-                  </Box>
-                  <Box mx={1}>
-                    <Button
-                      variant="primary"
-                      type="submit"
-                      style={{
-                        border: "1px solid #707070",
-                        borderRadius: "px",
-                        backgroundColor: color.bluedark,
-                        color: "#fff",
-                        marginBottom: "20px",
-                      }}
-                    >
-                      Submit Request
-                    </Button>
-                  </Box>
-                </Box> */}
-
                 <div className="buttonBoxPackage">
                   {/* <button className="draft">Save As Draft</button> */}
                   <button type="submit" class="packageSubmit">
-                    {loader ? (
+                    {/* {loader ? (
                       <div id="packageloadingdetails"></div>
-                    ) : (
-                      "Submit Request"
-                    )}{" "}
+                    ) : ( */}
+                    "Submit Request"
+                    {/* )}{" "} */}
                   </button>
                 </div>
               </div>
@@ -2530,6 +2442,46 @@ const CreateHolidayPackage = () => {
           </div>
         </div>
       </div>
+      <Modal
+        open={open}
+        onClose={() => {
+          handleClose();
+        }}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        sx={{ zIndex: "999" }}
+      >
+        <div className="packageModelContainer">
+          <div ref={submitRef} className="packageModelContainerInner">
+            <div
+              className="packageModelimageContainerClose"
+              onClick={() => {
+                setOpen(false);
+                navigate("/")
+              }}
+            >
+              <IoIosClose size={"30px"}  color="#fff" />
+            </div>
+            <div className="packageModelimageContainer">
+              <img src={loginOtp} alt="loginGif" />
+            </div>
+            <div className="packageModelContainerInneritem">
+              <div>
+                <p>Please Compleate your profile </p>
+              </div>
+              <div>
+                <button
+                  className="packageModelBtnn"
+                  
+                  onClick={() => navigate("/onbording")}
+                >
+                  Continue
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

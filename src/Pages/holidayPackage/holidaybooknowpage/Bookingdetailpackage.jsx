@@ -65,7 +65,7 @@ const Bookingdetailpackage = () => {
   const reducerState = useSelector((state) => state);
   const onePackage =
     reducerState?.searchOneResult?.OneSearchPackageResult?.data?.data;
-  // console.log("One Package", onePackage);
+  console.log("One Package", onePackage);
   const [daysDetailsValues, setDaysDetails] = useState([]);
   const handleDaysDetail = (index, e) => {
     const newValues = [...daysDetailsValues];
@@ -79,7 +79,7 @@ const Bookingdetailpackage = () => {
   const savedData = JSON.parse(savedDataString);
   const savedDestination = savedData?.destination?.toUpperCase();
   const savedDays = savedData?.days;
-  console.warn(savedDataString, "savedDataString,,,,,,,,,,,,,,,,")
+  // console.warn(savedDataString, "savedDataString,,,,,,,,,,,,,,,,")
   useEffect(() => {
     if (savedDataString === undefined || savedDataString === null) {
       return (navigate("/holidayPackage/HolidaypackageResult"))
@@ -97,6 +97,8 @@ const Bookingdetailpackage = () => {
       <>Loading......</>
     )
   }
+
+  // console.log(onePackage, "one package")
 
   return (
     <>

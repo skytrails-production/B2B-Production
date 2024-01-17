@@ -15,6 +15,7 @@ import Calander from "../Pages/Flight/FlightForm/Calendar";
 import Return from "../Pages/Flight/FlightForm/Return";
 import Flightresult from "../Pages/Flight/flightresult/Flightresult";
 import Registration from "../Pages/registration/Registration";
+import Onbording from "../Pages/registration/Onbording";
 import Login from "../Pages/login/Login";
 import HotelSearch from "../Pages/Hotel/hotelsearch/HotelSearch";
 import Booknow from "../Pages/Flight/booknow/Booknow";
@@ -65,14 +66,20 @@ import GSTform from "../Pages/gst/GSTform";
 import Visaform from "../Pages/visa/Visaform";
 import HotelbookingConfirmation from "../Pages/Hotel/hotelreviewbooking/HotelbookingConfirmation";
 import Dashboard from "../Pages/Dashboard/Component/Dashboard";
-import SubAdminDashboard from "../Pages/subAdmin/subAdminDashboard/subAdminDashboard"
+import SubAdminDashboard from "../Pages/subAdmin/subAdminDashboard/subAdminDashboard";
 import AdminLogin from "../Pages/AdminLogin/AdminLogin";
 import CreateHolidayPackage from "../Pages/HotelPackage/createholidaypackage/CreateHolidayPackage";
 import EditHolidayPackage from "../Pages/Dashboard/Component/Table/packageUpdate/EditPackage";
 import Queue from "../Pages/Account/Queue";
+import HolidayPackages from "../Pages/Account/HolidayPackages";
 import MainBox from "../Layout/MainBox";
-import CreateMarkupForm from '../Pages/Dashboard/Component/Table/AddMarkup'
-import { useNavigate, useParams, useLocation, Navigate } from "react-router-dom";
+import CreateMarkupForm from "../Pages/Dashboard/Component/Table/AddMarkup";
+import {
+  useNavigate,
+  useParams,
+  useLocation,
+  Navigate,
+} from "react-router-dom";
 import { useDispatch, useSelector, useReducer } from "react-redux";
 import { ipAction, tokenAction } from "../Redux/IP/actionIp";
 // import Slider from "../Pages/Banner/Slider";
@@ -88,26 +95,22 @@ import FlightResResult from "../Pages/Flight/flightresult/FlightresultReturn/Fli
 import FlightReturnReviewbooking from "../Pages/Flight/flightresult/FlightresultReturn/ReturnPassenger/FlightReturnReviewbooking";
 import FlightReturnBookingConfirmation from "../Pages/Flight/flightresult/FlightresultReturn/ReturnPassenger/FlightReturnBookingConfirmation";
 import CreateSubAdminPage from "../Pages/Dashboard/Component/Table/AddSubadmin";
-import CreateAdvertisementForm from "../Pages/Dashboard/Component/Table/AddAdvertisement"
-import CreateWebAdvertisementForm from "../Pages/Dashboard/Component/Table/AddWebAdvertisement"
+import CreateAdvertisementForm from "../Pages/Dashboard/Component/Table/AddAdvertisement";
+import CreateWebAdvertisementForm from "../Pages/Dashboard/Component/Table/AddWebAdvertisement";
 import SubAdminLoginPage from "../Pages/subAdmin/SubAdminSignIn"; // Import SubAdminLoginPage
 import FlightOneTicket from "../Pages/Account/FlightOneTicket";
 import BusOneTicket from "../Pages/Account/BusTicket";
 import HotelOneTicket from "../Pages/Account/HotelTicket";
 import FlightOpen from "../Pages/Account/FlightOpen";
-import CreateAgentPage from "../Pages/Dashboard/Component/Table/AddAgent"
-import CreateEventForm from "../Pages/Dashboard/Component/Table/AddEvent"
+import CreateAgentPage from "../Pages/Dashboard/Component/Table/AddAgent";
+import CreateEventForm from "../Pages/Dashboard/Component/Table/AddEvent";
 import Download from "./Download";
 
-
-
-
-
-import AboutUs from "../Layout/AboutUs"
-import ContactUs from "../Layout/ContactUs"
-import PrivacyPolicy from "../Layout/PrivacyPolicy"
-import RefundPolicy from "../Layout/RefundPolicy"
-import TermandCondition from "../Layout/TermandCondition"
+import AboutUs from "../Layout/AboutUs";
+import ContactUs from "../Layout/ContactUs";
+import PrivacyPolicy from "../Layout/PrivacyPolicy";
+import RefundPolicy from "../Layout/RefundPolicy";
+import TermandCondition from "../Layout/TermandCondition";
 
 const MainPage = () => {
   const dispatch = useDispatch();
@@ -119,22 +122,17 @@ const MainPage = () => {
   const isDashboard = location.pathname === "/admin/dashboard";
   const isSubAdminLogin = location.pathname === "/subAdminLogin";
   const isSubAdmindashboard = location.pathname === "/subAdmin/dashboard";
-  const isAddMarkup = location.pathname === "/addMarkup"
+  const isAddMarkup = location.pathname === "/addMarkup";
   const navigate = useNavigate();
   const { id } = useParams();
-  const isFlightEticketPage = location.pathname.startsWith('/FlightEticket');
-  const isBusEticketPage = location.pathname.startsWith('/BusEticket');
-  const isHotelEticketPage = location.pathname.startsWith('/HotelEticket');
-
+  const isFlightEticketPage = location.pathname.startsWith("/FlightEticket");
+  const isBusEticketPage = location.pathname.startsWith("/BusEticket");
+  const isHotelEticketPage = location.pathname.startsWith("/HotelEticket");
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth > 750);
   const [scrollY, setScrollY] = useState(0);
 
-
-
   // if wesbite width will go below 750px
-
-
 
   useEffect(() => {
     const handleResize = () => {
@@ -154,9 +152,7 @@ const MainPage = () => {
     };
   }, []);
 
-  useEffect(() => {
-
-  }, [scrollY, windowWidth]);
+  useEffect(() => {}, [scrollY, windowWidth]);
 
   useEffect(() => {
     if (
@@ -169,10 +165,9 @@ const MainPage = () => {
     } else if (location.pathname === "/admin/dashboard") {
       if (!reducerState?.adminAuth?.adminData?.data) {
         navigate("/admin/dashboard");
-      }
-      else {
+      } else {
         navigate("/adminLogin");
-        navigate("/addMarkup")
+        navigate("/addMarkup");
       }
     } else if (location.pathname === "/subAdmin/dashboard") {
       if (!reducerState?.adminAuth?.adminData?.data) {
@@ -208,15 +203,12 @@ const MainPage = () => {
     return <LoadingSpinner />;
   }
 
-
-
-
   if (!windowWidth) {
     return (
       <>
         <Download />
       </>
-    )
+    );
   }
 
   return (
@@ -227,10 +219,40 @@ const MainPage = () => {
       </div> */}
 
       {/* <Headers/> */}
-      {location.pathname === "/Login" || location.pathname === "/aboutus" || location.pathname === "/contactus" || location.pathname === "/privacypolicy" || location.pathname === "/termAndCondition" || location.pathname === "/refundPolicy" || location.pathname === "/Registration" || location.pathname === "/addMarkup" || location.pathname === "/addEvents" || isFlightEticketPage || isBusEticketPage || isHotelEticketPage ? null : <Headers />}
-      {location.pathname === "/" || location.pathname === "/aboutus" || location.pathname === "/contactus" || location.pathname === "/privacypolicy" || location.pathname === "/termAndCondition" || location.pathname === "/refundPolicy" || location.pathname === "/Login" || location.pathname === "/Registration" || location.pathname === "/addMarkup" || location.pathname === "/addEvents" || isFlightEticketPage || isBusEticketPage || isHotelEticketPage ? null : <InnerNavbar />}
 
-      {!isLoginRoute && !isRegisterRoute &&
+      {location.pathname === "/Login" ||
+      location.pathname === "/aboutus" ||
+      location.pathname === "/contactus" ||
+      location.pathname === "/privacypolicy" ||
+      location.pathname === "/termAndCondition" ||
+      location.pathname === "/refundPolicy" ||
+      location.pathname === "/Registration" ||
+      location.pathname === "/addMarkup" ||
+      location.pathname === "/addEvents" ||
+      isFlightEticketPage ||
+      isBusEticketPage ||
+      isHotelEticketPage ? null : (
+        <Headers />
+      )}
+      {location.pathname === "/" ||
+      location.pathname === "/aboutus" ||
+      location.pathname === "/contactus" ||
+      location.pathname === "/privacypolicy" ||
+      location.pathname === "/termAndCondition" ||
+      location.pathname === "/refundPolicy" ||
+      location.pathname === "/Login" ||
+      location.pathname === "/Registration" ||
+      location.pathname === "/addMarkup" ||
+      location.pathname === "/addEvents" ||
+      isFlightEticketPage ||
+      isBusEticketPage ||
+      isHotelEticketPage ? null : (
+        <InnerNavbar />
+      )}
+
+      {!isLoginRoute &&
+        !isRegisterRoute &&
+
         !isDashboard &&
         !isLogin &&
         !isSubAdmindashboard &&
@@ -278,6 +300,7 @@ const MainPage = () => {
                   path="/Flightresult/booknow"
                   element={<Booknow />}
                 />
+                <Route exact path="/onbording" element={<Onbording />} />
                 <Route path="/flights/*" element={<Flight />}>
                   <Route exact path="oneway" element={<OneWay />} />
                   <Route exact path="offShare" element={<OffShare />} />
@@ -352,7 +375,6 @@ const MainPage = () => {
                   path="/holidaypackage/Holidaybooknow"
                   element={<Holidaybooknow />}
                 />
-
 
                 <Route
                   exact
@@ -470,11 +492,7 @@ const MainPage = () => {
                   path="/addSubAdmin"
                   element={<CreateSubAdminPage />}
                 />
-                <Route
-                  exact
-                  path="/addAgent"
-                  element={<CreateAgentPage />}
-                />
+                <Route exact path="/addAgent" element={<CreateAgentPage />} />
                 <Route
                   exact
                   path="/addAdvertisement"
@@ -485,16 +503,8 @@ const MainPage = () => {
                   path="/addWebAdvertisement"
                   element={<CreateWebAdvertisementForm />}
                 />
-                <Route
-                  exact
-                  path="/addMarkup"
-                  element={<CreateMarkupForm />}
-                />
-                <Route
-                  exact
-                  path="/addEvents"
-                  element={<CreateEventForm />}
-                />
+                <Route exact path="/addMarkup" element={<CreateMarkupForm />} />
+                <Route exact path="/addEvents" element={<CreateEventForm />} />
                 <Route
                   exact
                   path="/AdminUserForm"
@@ -522,32 +532,34 @@ const MainPage = () => {
                 ></Route>
                 <Route
                   exact
-                  path="/EditHolidayPackage"
+                  path="admin/dashboard/EditHolidayPackage"
                   element={<EditHolidayPackage />}
                 ></Route>
                 <Route exact path="/Queue" element={<Queue />}></Route>
+
+                
+                <Route exact path="/holidayPackages" element={<HolidayPackages />}></Route>
                 <Route exact path="/FlightConfirmBooking/:id" element={<FlightOpen />} />
                 <Route exact path="/FlightEticket/:id" element={<FlightOneTicket />} />
                 <Route exact path="/BusEticket/:id" element={<BusOneTicket />} />
                 <Route exact path="/HotelEticket/:id" element={<HotelOneTicket />} />
-
+                  
 
                 <Route path="/aboutus" element={<AboutUs />}></Route>
                 <Route path="/contactus" element={<ContactUs />}></Route>
-                <Route path="/privacypolicy" element={<PrivacyPolicy />}></Route>
-                <Route path="/termAndCondition" element={<TermandCondition />}></Route>
+                <Route
+                  path="/privacypolicy"
+                  element={<PrivacyPolicy />}
+                ></Route>
+                <Route
+                  path="/termAndCondition"
+                  element={<TermandCondition />}
+                ></Route>
                 <Route path="/refundPolicy" element={<RefundPolicy />}></Route>
-
-
               </Routes>
             </div>
 
-
-
-
             {/* main page footer */}
-
-
 
             {/* {!isLoginRoute && <Footer />} */}
           </div>
@@ -563,12 +575,19 @@ const MainPage = () => {
             element={<Dashboard />}
           ></Route>
           <Route exact path="/adminLogin" element={<AdminLogin />}></Route>
-          <Route exact path="/subAdmin/dashboard/*" element={<SubAdminDashboard />} > </Route>
+          <Route
+            exact
+            path="/subAdmin/dashboard/*"
+            element={<SubAdminDashboard />}
+          >
+            {" "}
+          </Route>
           {isSubAdminLogin && (
             <Route
               exact
               path="/subAdminLogin"
-              element={<SubAdminLoginPage />}></Route>
+              element={<SubAdminLoginPage />}
+            ></Route>
           )}
           {/* {isAddMarkup && (
             <Route
@@ -577,8 +596,6 @@ const MainPage = () => {
               element={<CreateMarkupForm />}></Route>
           )} */}
         </Routes>
-
-
       </div>
 
       {/* main page footer */}

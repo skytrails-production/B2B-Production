@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Typography } from "@mui/material";
 import "./Return.css";
 import transfer from "../../../Images/transfer.png";
@@ -87,7 +87,7 @@ const Return = () => {
   const [departureDate, setDepartureDate] = useState(""); // To store the selected departure date
   const [returnDate, setReturnDate] = useState(""); // To store the selected return date
   const [minReturnDate, setMinReturnDate] = useState(""); // To store the minimum return date
-  const [displayFrom, setdisplayFrom] = useState(true);
+  const [displayFrom, setdisplayFrom] = useState(false);
   const [displayTo, setdisplayTo] = useState(true);
 
 
@@ -97,6 +97,31 @@ const Return = () => {
   const [toError, setToError] = useState("");
   const [dateError, setDateError] = useState("");
   const [sub, setSub] = useState(false);
+  const listFromRef = useRef(null);
+  const listToRef = useRef(null);
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (listFromRef.current && !listFromRef.current.contains(event.target)) {
+        setdisplayFrom(false);
+      }
+    }
+    document.addEventListener("mousedown", handleOutsideClick)
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick)
+    }
+  }, [listFromRef])
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (listToRef.current && !listToRef.current.contains(event.target)) {
+        setdisplayTo(false);
+      }
+    }
+    document.addEventListener("mousedown", handleOutsideClick)
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick)
+    }
+  }, [listToRef])
+ 
 
   // useEffect(() => {
   //   let mounted = true;
@@ -185,7 +210,7 @@ const Return = () => {
   useEffect(() => {
     dispatch(clearReturnReducer());
   }, [dispatch]);
-  
+
 
   const handleFromClick = (result) => {
     setFrom(result.AirportCode);
@@ -240,10 +265,10 @@ const Return = () => {
 
     // Calculate the minimum return date (1 day after the selected departure date)
     const newMinReturnDate = new Date(selectedDepartureDate);
-    newMinReturnDate.setDate(newMinReturnDate.getDate() );
-    if(returnDate && returnDate<selectedDepartureDate){
+    newMinReturnDate.setDate(newMinReturnDate.getDate());
+    if (returnDate && returnDate < selectedDepartureDate) {
       setReturnDate(selectedDepartureDate)
-      
+
     }
     setMinReturnDate(newMinReturnDate.toISOString().split("T")[0]);
   };
@@ -362,7 +387,7 @@ const Return = () => {
                   placeholder="Enter city or airport"
                   value={from}
                   autoComplete="off"
-                  onClick={() => (setdisplayFrom(true), setdisplayTo(false))}
+                  onClick={() => (setdisplayFrom(true))}
 
                   onChange={(event) => {
                     handleFromInputChange(event);
@@ -374,7 +399,7 @@ const Return = () => {
                 {sub === true && fromError && <p id="error1">Enter city or airport </p>}
                 {/* {isLoading && displayFrom && <div>Loading...</div>} */}
                 {fromSearchResults && fromSearchResults.length > 0 && fromQuery.length >= 2 && (
-                  <div className="chooseAbsBox" style={{ display: displayFrom ? "block" : "none" }}>
+                  <div className="chooseAbsBox" ref={listFromRef} style={{ display: displayFrom ? "block" : "none" }}>
                     <ul>
                       <div className="chooseAbs">
                         {fromSearchResults.map((result) => (
@@ -392,7 +417,7 @@ const Return = () => {
                 )}
               </div>
             </motion.div>
-            <motion.div onClick={()=>handleRoundClick()} variants={variants} className="col-xs-12 col-md-1 col-lg-1 d-flex interchange justify-content-center ps-0">
+            <motion.div onClick={() => handleRoundClick()} variants={variants} className="col-xs-12 col-md-1 col-lg-1 d-flex interchange justify-content-center ps-0">
               <img src={interchange} alt="name" className="align-self-center" />
             </motion.div>
 
@@ -407,17 +432,17 @@ const Return = () => {
                   placeholder="Enter city or airport"
                   value={to}
                   autoComplete="off"
-                  onClick={() => (setdisplayFrom(false), setdisplayTo(true))}
+                  onClick={() => { setdisplayTo(true) }}
 
                   onChange={(event) => {
                     handleToInputChange(event);
                     handleToSearch(event.target.value);
                   }}
                 />
-               {sub === true && toError!=="" && <p id="error1">Enter city or airport </p>}
+                {sub === true && toError !== "" && <p id="error1">Enter city or airport </p>}
                 {/* {isLoading && displayTo && <div>Loading...</div>} */}
-                {toSearchResults && toSearchResults.length > 0 && toQuery.length >= 2 && (
-                  <div className="chooseAbsBox" style={{ display: displayTo ? "block" : "none" }}>
+                {displayTo && (
+                  <div className="chooseAbsBox" ref={listToRef} style={{ display: "block" }}>
                     <ul>
                       <div className="chooseAbs">
                         {toSearchResults.map((result) => (
@@ -468,7 +493,7 @@ const Return = () => {
                   id="departure1"
                   className="deaprture_input"
                   placeholder="Enter city or airport"
-                  min={minReturnDate?minReturnDate:new Date().toISOString().split("T")[0]}
+                  min={minReturnDate ? minReturnDate : new Date().toISOString().split("T")[0]}
                   value={returnDate}
                   autoComplete="off"
                   onChange={(event) => setReturnDate(event.target.value)}

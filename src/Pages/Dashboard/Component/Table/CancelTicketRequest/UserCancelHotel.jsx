@@ -1,21 +1,38 @@
-// AllHotelBooking.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Table, TableBody, TableCell, TableRow, Paper,TextField,InputAdornment } from '@mui/material';
-import '../HotelBookings/HotelBookings.css';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  TextField,
+  InputAdornment,
+  Button,
+  Typography,
+  Stack,
+  Pagination,
+  IconButton
+} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { apiURL } from '../../../../../Constants/constant';
+import ApprovalIcon from '@mui/icons-material/CheckCircleOutline';
+import "./style.css";
 const AllHotelCancelTickets = () => {
   const [hotelBookings, setHotelBookings] = useState([]);
   const [loading, setLoading] = useState(true);
-  const pageSize = 5; // Number of items per page
+  const pageSize = 5;
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
+  const [filteredData, setFilteredData] = useState([]);
+
   useEffect(() => {
     async function fetchHotelBookings() {
-      console.log("jjjjjjj")
       try {
+        setLoading(true);
         const response = await axios.get(
           `${apiURL.baseURL}/skyTrails/api/admin/getCancelUserHotelBooking`,
           {
@@ -23,30 +40,31 @@ const AllHotelCancelTickets = () => {
               page: currentPage,
               size: pageSize,
               search: searchTerm,
-            }
+            },
           }
         );
         setHotelBookings(response.data.result.docs);
         setTotalPages(response.data.result.totalPages);
+        setFilteredData(response.data.result.docs);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching hotel bookings:', error);
         setLoading(false);
       }
     }
-    // console.log("hotelBookings========", hotelBookings);
+
     fetchHotelBookings();
   }, [currentPage, searchTerm]);
+
   const handlePageChange = (page) => {
-    // console.log("page", page)
     setCurrentPage(page);
   };
+
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
-    setCurrentPage(1); // Reset to the first page when performing a new search
+    setCurrentPage(1);
   };
 
-  
   const calculateStayDuration = (checkInDate, checkOutDate) => {
     const startDate = new Date(checkInDate);
     const endDate = new Date(checkOutDate);
@@ -54,65 +72,86 @@ const AllHotelCancelTickets = () => {
     const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
     return daysDifference;
   };
-  return (
 
-    <div className='hotel-container'>
-    <h3>USER BUSTICKET CANCEL REQUEST</h3>
-      <TextField
-        type="text"
-        value={searchTerm}
-        onChange={handleSearch}
-        placeholder="Search by name, ID, etc."
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon />
-            </InputAdornment>
-          ),
-        }}
-      />
-      <table border="1">
-        <thead>
-          <tr>
-            <th>Booking ID</th>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Reason</th>
-            <th>Hotel ID</th>
-            <th>Amount</th>
-            <th>CheckInDate</th>
-            <th>Stay Duration (Days)</th>
-            <th>Destination</th>
-            <th>Hotel Name</th>
-            <th>Approve</th>
-          </tr>
-        </thead>
-        <tbody>
-          {hotelBookings.map(booking => (
-            <tr key={booking._id}>
-            <td>{booking.bookingId}</td>
-            <td>{booking.userDetails?.username}</td>
-            <td>{booking.userDetails?.phone?.mobile_number}</td>
-            <td>{booking.reason}</td>
-            <td>{booking.hotelDetails?.hotelId}</td>
-            <td>{booking.hotelDetails?.amount}</td>
-            <td>{booking.hotelDetails?.CheckInDate}</td>
-            <td>{calculateStayDuration(booking.hotelDetails?.CheckInDate, booking.hotelDetails?.CheckOutDate)}</td>
-            <td>{booking.hotelDetails?.cityName}</td>
-            <td>{booking.hotelDetails?.hotelName}</td>
-            <td><button>APPROVE</button></td>
-          </tr>
-          ))}
-        </tbody>
-      </table>
-      {/* Pagination */}
-      <div className="paginate">
-        {Array.from({ length: totalPages }, (_, i) => (
-          <button className='hotelButton' key={i + 1} onClick={() => handlePageChange(i + 1)}>
-            <h5>{i + 1}</h5>
-          </button>
-        ))}
+  return (
+    <div className="subada-table-container">
+      <div className="adsearch-bar">
+        <TextField
+          type="text"
+          value={searchTerm}
+          onChange={handleSearch}
+          placeholder="Search by name, ID, etc."
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
+        <Typography variant="h5" className="adtable-heading">
+         
+          USer Hotel Ticket Cancel Request
+        </Typography>
       </div>
+
+      <TableContainer component={Paper} className="custom-table-container">
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Booking ID</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Phone</TableCell>
+              <TableCell>Reason</TableCell>
+              <TableCell>Hotel ID</TableCell>
+              <TableCell>Amount</TableCell>
+              <TableCell>Check In Date</TableCell>
+              <TableCell>Stay Duration (Days)</TableCell>
+              <TableCell>Destination</TableCell>
+              <TableCell>Hotel Name</TableCell>
+              <TableCell>Approve</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody className="tableadagents">
+          {filteredData.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={7} align="center" style={{ border: 'none' }}>
+                  <Typography variant="h6">Not Available</Typography>
+                </TableCell>
+              </TableRow>
+            ) : (
+              filteredData.map((booking) => (
+              <TableRow key={booking._id}>
+                <TableCell>{booking.bookingId}</TableCell>
+                <TableCell>{booking.userDetails?.username}</TableCell>
+                <TableCell>{booking.userDetails?.phone?.mobile_number}</TableCell>
+                <TableCell>{booking.reason}</TableCell>
+                <TableCell>{booking.hotelDetails?.hotelId}</TableCell>
+                <TableCell>{booking.hotelDetails?.amount}</TableCell>
+                <TableCell>{booking.hotelDetails?.CheckInDate}</TableCell>
+                <TableCell>{calculateStayDuration(booking.hotelDetails?.CheckInDate, booking.hotelDetails?.CheckOutDate)}</TableCell>
+                <TableCell>{booking.hotelDetails?.cityName}</TableCell>
+                <TableCell>{booking.hotelDetails?.hotelName}</TableCell>
+                <TableCell style={{ border: 'none', alignItems: 'center', justifyContent: 'center', display: 'flex' }}>
+                    <IconButton size="small" style={{ backgroundColor: '#21325D', color: '#FFFFFF' }}>
+                      <ApprovalIcon />
+                    </IconButton>
+                  </TableCell>
+              </TableRow>
+            )))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      {/* Pagination */}
+      <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
+        <Pagination
+          count={totalPages}
+          page={currentPage}
+          onChange={(event, page) => handlePageChange(page)}
+          color="primary"
+        />
+      </Stack>
     </div>
   );
 };

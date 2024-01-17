@@ -44,6 +44,7 @@ import three from "../../Images/regestration/3.png"
 import four from "../../Images/regestration/4.png"
 import five from "../../Images/regestration/5.png"
 import whiteLogo from "../../Images/whiteLogo.png"
+import { motion } from "framer-motion";
 const Login = () => {
   const [agencyPage, setAgencyPage] = useState(1);
   const dispatch = useDispatch();
@@ -511,35 +512,57 @@ const Login = () => {
 
                     <Box display='flex' style={{ height: "100%", justifyContant: 'center', alignItems: 'space-between' }} >
                       {agencyPage === 1 && <Box flex={1} style={{ display: "flex", width: "100%" }} alignItems='center' justifyContent='center' >
-                        <div style={{
+                        <motion.div style={{
                           height: "100%",
                           width: "100%",
                           display: "flex",
                           alignItems: 'center',
                           justifyContent: 'center'
-                        }}>
+                        }}
+                          initial={{ opacity: 0, scale: 0.5 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: 0.5 }}
+
+                        >
 
                           <img src={one} width={"90%"} height={"90%"} alt="r1" />
-                        </div>
+                        </motion.div>
                       </Box>}
                       {agencyPage === 2 &&
                         <Box flex={1} style={{ height: '100%', gap: "100px", display: "flex", justifyContent: 'center' }} alignItems='space-between' flexDirection='column' >
-                          <Box style={{ height: '50%', display: 'flex', alignItems: 'center', }} justifyContent='center' >
+                          <motion.Box style={{ height: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                            initial={{ opacity: 0, scale: 0 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.5 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: false }}
+
+                          >
 
                             <img src={two} width={350} alt="r1" />
-                          </Box>
-                          <Box display='flex' justifyContent='center' alignItems='center'>
+                          </motion.Box>
+                          <motion.div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                            initial={{ opacity: 0, scale: 0 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: false }}
+                          >
                             <img src={three} width={350} alt="r1" />
-                          </Box>
+                          </motion.div>
                         </Box>}
                       {agencyPage === 3 && <Box flex={1} style={{ height: 'auto', gap: "100px", display: "flex", }} justifyContent='center' alignItems='space-between' flexDirection='column' >
-                        <Box style={{ height: '50%', display: 'flex', alignItems: 'center', }} justifyContent='center' >
+                        <motion.div style={{ height: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                          initial={{ scale: 0, opacity: 0 }}
+                          whileInView={{ scale: 1, opacity: 1 }}
+                          whileHover={{ scale: 0.9 }}
+                        >
 
                           <img src={four} width={350} alt="r1" />
-                        </Box>
-                        <Box display='flex' justifyContent='center' alignItems='center'>
+                        </motion.div>
+                        <motion.div initial={{ scale: 0, opacity: 0 }}
+                          whileInView={{ scale: 1, opacity: 1 }}
+                          whileHover={{ scale: 0.9 }} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                           <img src={five} width={350} alt="r1" />
-                        </Box>
+                        </motion.div>
                       </Box>}
 
 

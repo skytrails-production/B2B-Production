@@ -1,0 +1,27 @@
+.subadminseacrch {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #2196f3;
+    color: white;
+    width:93%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); /* Centering the search bar horizontally */
+    padding:20px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    margin-top: -50px;
+  }
+  .tablead{
+    background-color: #fff !important;
+    color:#fff;
+    border: none;
+}
+.subad-table-container{
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    margin-top: 90px;
+    position: relative; /* Added for positioning */
+}
