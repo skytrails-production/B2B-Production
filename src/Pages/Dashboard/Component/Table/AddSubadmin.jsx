@@ -4,7 +4,7 @@ import './AddSubadmin.css'; // Import the CSS file
 import { apiURL } from '../../../../Constants/constant';
 import { useNavigate } from 'react-router-dom';
 import profilePicUrl from '../../../../Images/logo.jpeg'
-
+import "./AddAgent.css";
 const CreateSubAdminPage = () => {
   const [formData, setFormData] = useState({
     username: '',
@@ -22,7 +22,7 @@ const CreateSubAdminPage = () => {
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-// console.log("============",e)
+    // console.log("============",e)
     try {
       const response = await fetch(`${apiURL.baseURL}/skytrails/api/subAdmin/createSubAdmin`, {
         method: 'POST',
@@ -37,14 +37,14 @@ const CreateSubAdminPage = () => {
         // console.log('Subadmin created successfully:', data);
         alert('Subadmin created successfully!');
         navigate('/admin/dashboard');
-      } else{
-        if(response.status === 409){
+      } else {
+        if (response.status === 409) {
           alert('Subadmin with this username or email already exists!');
           console.error('SubAdmin already exist:.', response.statusText);
-        }else {
+        } else {
           alert('Failed to create subadmin:!');
-        console.error('Failed to create subadmin:', response.statusText);
-      }
+          console.error('Failed to create subadmin:', response.statusText);
+        }
       }
     } catch (error) {
       console.error('Error creating subadmin:', error.message);
@@ -52,10 +52,15 @@ const CreateSubAdminPage = () => {
   };
 
   return (
-    <div className="form-container">
-  <div className='image-div'><img  src={profilePicUrl}   alt='logo' className="agent-image"/></div>
-      <h1 className="form-title"><strong>Create Subadmin</strong></h1>
-      <form className="subadmin-form" onSubmit={handleSubmit}>
+    <div className="form-containers">
+
+      <header className="sectionagent headersagent">
+        <div className="headead">
+          {/* <img src={profilePicUrl} style={{ width: "80%" }} alt="Logo" /> */}
+          <h2>Create Subadmin</h2>
+        </div>
+      </header>
+      <form className="form-agent" onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="username" className="form-label-subAdmin">
             Username:
@@ -117,7 +122,7 @@ const CreateSubAdminPage = () => {
           </label>
           <input
             type="text"
-            id="authType"
+            id="authType" 
             name="authType"
             value={formData.authType}
             onChange={handleChange}
@@ -125,9 +130,9 @@ const CreateSubAdminPage = () => {
             placeholder='REQUEST_HANDLER,ADS_HANDLER,PACKAGE_HANDLER'
           />
         </div>
-        <div className="form-group">
-          <button type="submit" className="form-button">
-            Create Subadmin
+        <div className="form-group-sub">
+          <button type="submit" className="form-button-sub">
+          Create Subadmin
           </button>
         </div>
       </form>

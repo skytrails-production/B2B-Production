@@ -1,5 +1,63 @@
 /* General styles */
 
+.sectionagent {
+  padding: 1rem;
+  background-color: #21325d;
+  width: 350px;
+  box-shadow: 0px 4px 8px rgba(33, 50, 93, 0.5);
+  /* Add shadow to the color #21325d */
+  top: -20px;
+  /* Set a negative margin from the top */
+  margin: auto;
+  border-radius: 5px;
+  color: var(--c-white);
+  text-align: center;
+  margin-bottom: 20px;
+  position: absolute;
+  z-index: 1;
+}
+
+/* AdminLogin.css */
+
+
+
+
+
+.headead h1 {
+  font-size: 2rem;
+  color: #fff;
+  /* Adjust the color as needed */
+}
+
+.headersagent {
+  position: relative;
+  text-align: center;
+
+  &__text {
+    position: relative;
+    padding: 3.5rem 0 7rem;
+
+    >h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+  }
+
+  >.trapezoid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: skewY(-10deg);
+    transform-origin: top left;
+    box-shadow: var(--s-basic);
+    background: var(--g-blue),
+      url("https://images.pexels.com/photos/520936/pexels-photo-520936.jpeg?w=940&h=650&auto=compress&cs=tinysrgb");
+    background-position: top center;
+    background-attachment: fixed;
+  }
+}
 
 @keyframes gradientAnimation {
   0% {
@@ -9,17 +67,57 @@
     background-position: 100% 100%;
   }
 }
+
 /* Form container */
 
-.form-container-agent {
+/* General styles */
+
+/* ... Your existing styles ... */
+
+/* Form container */
+.form-containers {
   width: 500px;
-  margin: 50px auto;
+  margin:  auto;
   padding: 30px;
   border-radius: 15px;
-  background-color: #b6c9f3;
-  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.15);
+  /* White background color */
+  /* box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.15); */
   animation: fadeIn ease 1s;
   overflow: hidden;
+}
+
+/* Heading section */
+.headers {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.headead img {
+  width: 80%;
+}
+
+.headead h2 {
+  font-size: 24px;
+  margin-left: 20px;
+  color: #fff;
+}
+
+/* Button style */
+.form-button-agent {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #187de9;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.form-button-agent:hover {
+  background-color: #98c1ec;
 }
 
 @keyframes fadeIn {
@@ -39,34 +137,27 @@
   text-align: center;
   margin-bottom: 20px;
   color: rgb(14, 12, 12);
-  justify-content: center;
 }
 
 .form-agent {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(to bottom, rgb(164, 194, 224) 0%, #f38282 100%);
-  /* padding: 50px; */
+  background:#fff;
   width: 100%;
-  animation: gradientAnimation 10sinfinite alternate;
-  -webkit-animation: gradientAnimation 10sinfinite alternate;
+  box-shadow: var(--s-basic);
+  animation: gradientAnimation 10s infinite alternate;
 }
 
-@keyframes gradientAnimation {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 100% 50%;
-  }
-}
 /* Form elements */
 
 .form-agent {
   display: flex;
-  flex-direction: column;
-  gap: 15px;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: -85px;
+    padding-top: 66px;
+    border-radius: 10px 
 }
 
 .form-group-agent {
@@ -85,7 +176,7 @@
 .form-input-agent {
   flex: 1;
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #e22b2b;
   border-radius: 5px;
   font-size: 14px;
   outline: none;
@@ -98,22 +189,10 @@
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
 }
 
-.form-button-agent {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  background-color: #187de9;
-  color: #fff;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.3s ease-in-out;
-  justify-content: center;
-  margin-left: 30px;
-}
 
-.form-button-agent:hover {
+/* .form-button-agent:hover {
   background-color: #98c1ec;
-}
+} */
 
 /* Additional animations and effects */
 
@@ -125,23 +204,19 @@
   transform: translateY(2px);
 }
 
-.form-container-agent.success {
-  animation: confetti 5s ease-in-out;
+.agent-image {
+  align-self: center; /* Center the image within the container */
+  margin-bottom: 20px; /* Add space between the image and the form */
 }
 
-@keyframes confetti {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    transform: translate(0, 100px) rotate(360deg);
-  }
-}
-
-
-.agent-image{
-  align-items: center;
-  justify-content: center;
-}
 /* Feel free to add more styles and animations as needed! */
+.form-button-agents{
+  background-color: #21325D;
+  color: white;
+  padding: 10px 142px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  width:100%;
+}

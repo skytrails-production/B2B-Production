@@ -1,29 +1,24 @@
-// AllAdvertisementTable.js
-
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { DataGrid } from "@mui/x-data-grid";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
   TextField,
   InputAdornment,
   Typography,
-  IconButton, // Import IconButton
+  IconButton,
+  Pagination,
+  Stack,
+  ToggleButtonGroup,
+  ToggleButton, 
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import FilterListIcon from "@mui/icons-material/FilterList";
+import TuneIcon from "@mui/icons-material/Tune";
+import Button from "@mui/material/Button";
+import ApprovalIcon from "@mui/icons-material/CheckCircleOutline";
+import axios from "axios";
 import { apiURL } from "../../../../../Constants/constant";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward"; // Import ArrowUpwardIcon
 import "./AgentRequest.css";
-import FilterListIcon from "@mui/icons-material/FilterList"; // Import FilterListIcon
-import TuneIcon from "@mui/icons-material/Tune"; // Import TuneIcon
-import Button from "@mui/material/Button"; // Import Button
-import ApprovalIcon from "@mui/icons-material/CheckCircleOutline"; // Import an approval icon
 
 const AllAdvertisementTable = () => {
   const [advertisement, setAdvertisement] = useState([]);
@@ -33,8 +28,14 @@ const AllAdvertisementTable = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredData, setFilteredData] = useState([]);
-  const [sortOrder, setSortOrder] = useState({ column: "", order: "" });
+  const [sortOrder, setSortOrder] = useState({ field: "", order: "asc" });
+  const [approveStatus, setApproveStatus] = useState("all");
 
+  const handleApproveStatusChange = (event, newStatus) => {
+    if (newStatus !== null) {
+      setApproveStatus(newStatus);
+    }
+  };
   useEffect(() => {
     async function fetchAdvertisementData() {
       try {
@@ -73,9 +74,12 @@ const AllAdvertisementTable = () => {
     const filtered = advertisement.filter((item) => {
       const usernameMatch =
         item.personal_details?.first_name?.toLowerCase().includes(term) || false;
-      const dobMatch = item.personal_details?.email?.toLowerCase().includes(term) || false;
+      const dobMatch =
+        item.personal_details?.email?.toLowerCase().includes(term) || false;
       const mobileNumberMatch =
-        item.personal_details?.mobile?.mobile_number.toLowerCase().includes(term) || false;
+        item.personal_details?.mobile?.mobile_number
+          .toLowerCase()
+          .includes(term) || false;
 
       return usernameMatch || dobMatch || mobileNumberMatch;
     });
@@ -83,28 +87,46 @@ const AllAdvertisementTable = () => {
     setFilteredData(filtered);
   };
 
-  const handleSorting = (columnName) => {
-    const isAsc = sortOrder.column === columnName && sortOrder.order === "asc";
-    const order = isAsc ? "desc" : "asc";
-
-    const sortedData = [...filteredData].sort((a, b) => {
-      const aValue = a.personal_details[columnName] || "";
-      const bValue = b.personal_details[columnName] || "";
-
-      if (order === "asc") {
-        return aValue.localeCompare(bValue);
-      } else {
-        return bValue.localeCompare(aValue);
-      }
+  const handleSorting = (field) => {
+    setSortOrder({
+      field,
+      order: sortOrder.field === field ? (sortOrder.order === "asc" ? "desc" : "asc") : "asc",
     });
-
-    setFilteredData(sortedData);
-    setSortOrder({ column: columnName, order: order });
   };
 
+  const columns = [
+    { field: "agentName", headerName: "Agent Name", width: 200, sortable: false, valueGetter: (params) => `${params.row.personal_details?.first_name || ""} ${params.row.personal_details?.last_name || ""}` },
+    { field: "contact", headerName: "Contact", width: 150, sortable: false, valueGetter: (params) => params.row.personal_details?.mobile?.mobile_number || "No Data" },
+    { field: "email", headerName: "Email", width: 200, sortable: false, valueGetter: (params) => params.row.personal_details?.email || "No Data" },
+    { field: "agencyLocation", headerName: "Agency Location", width: 200, sortable: false, valueGetter: (params) => params.row.agency_details?.address || "No Data" },
+    { field: "panNumber", headerName: "Pan Number", width: 150, sortable: false, valueGetter: (params) => params.row.agency_details?.pan_number || "No Data" },
+    {
+      field: "approveStatus",
+      headerName: "APPROVE STATUS",
+      width: 150,
+      renderCell: (params) => (
+        <ToggleButtonGroup
+          value={params.row.approveStatus}
+          exclusive
+          onChange={(event, value) => handleApproveStatusChange(params.row.id, value)}
+        >
+          <ToggleButton value="approved" style={{ backgroundColor: "#21325D", color: "#FFFFFF" }}>
+            <ApprovalIcon />
+          </ToggleButton>
+          <ToggleButton value="notApproved" style={{ backgroundColor: "#FF0000", color: "#FFFFFF" }}>
+            Not Approved
+          </ToggleButton>
+        </ToggleButtonGroup>
+      ),
+      sortable: false,
+    },
+  ];
+  
+
+
   return (
-    <div className="subada-table-container">
-      <div className="adsearch-bar">
+    <div className="subada-table-container"style={{ position: 'relative', width: "100%" }}>
+      <div className="adsearch-bar" style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold' }}>
         <TextField
           type="text"
           value={searchTerm}
@@ -118,108 +140,21 @@ const AllAdvertisementTable = () => {
             ),
           }}
         />
-
         <Typography variant="h5" className="adtable-heading">
           Agent Request Table
         </Typography>
       </div>
-      <TableContainer className="custom-table-container">
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell
-                style={{ border: "none", cursor: "pointer" }}
-                onClick={() => handleSorting("first_name")}
-              >
-                Agent Name
-                {sortOrder.column === "first_name" && sortOrder.order === "asc" && (
-                  <ArrowUpwardIcon fontSize="small" />
-                )}
-                <TuneIcon style={{ marginLeft: 4, verticalAlign: "middle" }} />
-              </TableCell>
-              <TableCell
-                style={{ border: "none", cursor: "pointer" }}
-                onClick={() => handleSorting("mobile_number")}
-              >
-                Contact
-                {sortOrder.column === "mobile_number" && sortOrder.order === "asc" && (
-                  <ArrowUpwardIcon fontSize="small" />
-                )}
-                <TuneIcon style={{ marginLeft: 4, verticalAlign: "middle" }} />
-              </TableCell>
-              <TableCell
-                style={{ border: "none", cursor: "pointer" }}
-                onClick={() => handleSorting("email")}
-              >
-                Email
-                {sortOrder.column === "email" && sortOrder.order === "asc" && (
-                  <ArrowUpwardIcon fontSize="small" />
-                )}
-                <TuneIcon style={{ marginLeft: 4, verticalAlign: "middle" }} />
-              </TableCell>
-
-              <TableCell
-                style={{ border: "none", cursor: "pointer" }}
-                onClick={() => handleSorting("address")}
-              >
-                Agency Location
-                {sortOrder.column === "address" && sortOrder.order === "asc" && (
-                  <ArrowUpwardIcon fontSize="small" />
-                )}
-              </TableCell>
-              <TableCell
-                style={{ border: "none", cursor: "pointer" }}
-                onClick={() => handleSorting("pan_number")}
-              >
-                Pan Number
-                {sortOrder.column === "pan_number" && sortOrder.order === "asc" && (
-                  <ArrowUpwardIcon fontSize="small" />
-                )}
-              </TableCell>
-              <TableCell style={{ border: "none" }}>APPROVE STATUS</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className="tablead">
-            {filteredData.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={7} align="center" style={{ border: "none" }}>
-                  <Typography variant="h6">Not Available</Typography>
-                </TableCell>
-              </TableRow>
-            ) : (
-              filteredData.map((ad) => (
-                <TableRow key={ad._id}>
-                  <TableCell style={{ border: "none" }}>
-                    {`${ad.personal_details?.first_name} ${ad.personal_details?.last_name}` ||
-                      "No Data"}
-                  </TableCell>
-                  <TableCell style={{ border: "none" }}>
-                    {ad.personal_details?.mobile?.mobile_number || "No Data"}
-                  </TableCell>
-                  <TableCell style={{ border: "none" }}>
-                    {ad.personal_details?.email || "No Data"}
-                  </TableCell>
-
-                  <TableCell style={{ border: "none" }}>
-                    {ad.agency_details?.address || "No Data"}
-                  </TableCell>
-                  <TableCell style={{ border: "none" }}>
-                    {ad.agency_details?.pan_number || "No Data"}
-                  </TableCell>
-                  <TableCell style={{ border: "none", alignItems: "center",justifyContent:"center",display:"flex" }}>
-                    <IconButton
-                      size="small"
-                      style={{ backgroundColor: "#21325D", color: "#FFFFFF" }}
-                    >
-                      <ApprovalIcon />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <div style={{width: "100%",backgroundColor:"#fff" }}>
+        <DataGrid
+          rows={filteredData}
+          columns={columns}
+          pageSize={pageSize}
+          rowsPerPageOptions={[]}
+          page={currentPage - 1}
+          onPageChange={(params) => handlePageChange(params.page + 1)}
+          getRowId={(row) => row._id}
+        />
+      </div>
       <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
         <Pagination
           count={totalPages}

@@ -113,9 +113,9 @@ function Package() {
           page={currentPage}
           onPageChange={handlePageChange}
           rowsPerPageOptions={[]}
-          components={{
-            Toolbar: GridToolbar,
-          }}
+          // components={{
+          //   Toolbar: GridToolbar,
+          // }}
           getRowId={(row) => row._id}
         />
       </div>

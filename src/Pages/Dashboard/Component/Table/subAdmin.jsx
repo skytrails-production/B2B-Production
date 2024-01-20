@@ -6,21 +6,16 @@ import { useNavigate } from "react-router-dom";
 import "./UserTable.css";
 import SearchIcon from "@mui/icons-material/Search";
 import "./subAdmin.css";
-
-import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+import Pagination from "@mui/material/Pagination";
+import { DataGrid } from "@mui/x-data-grid";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
   TextField,
   InputAdornment,
   Typography,
+  Button,
 } from "@mui/material";
+
 const SubAdminTable = () => {
   const [userData, setUserData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -74,10 +69,7 @@ const SubAdminTable = () => {
   };
 
   const handleStatusChange = async (userId) => {
-    // console.log("handleStatusChange called for userId:", userId);
-    // console.log("selectedUserStatusMap[userId]",selectedUserStatusMap[userId])
     const status = selectedUserStatusMap[userId];
-    // console.log("status",status)
     try {
       const response = await axios.put(
         `${apiURL.baseURL}/skytrails/api/admin/updateSubAdminStatus`,
@@ -104,11 +96,34 @@ const SubAdminTable = () => {
     }));
   };
 
+  const columns = [
+    { field: "userName", headerName: "User Name", flex: 1 },
+    { field: "email", headerName: "Email", flex: 1 },
+    { field: "contactNumber", headerName: "Contact Number", flex: 1 },
+    { field: "authType", headerName: "Auth Type", flex: 1 },
+    {
+      field: "status",
+      headerName: "Status",
+      flex: 1,
+      renderCell: (params) => (
+        <select
+          value={selectedUserStatusMap[params.id]}
+          onChange={(e) => {
+            handleStatusSelectChange(params.id, e.target.value);
+            handleStatusChange(params.id);
+          }}
+        >
+          <option value="ACTIVE">Active</option>
+          <option value="BLOCK">Block</option>
+          <option value="DELETE">Delete</option>
+        </select>
+      ),
+    },
+  ];
+
   return (
-
-    <div className="subad-table-container">
-
-      <div className="subadminseacrch">
+    <div className="subad-table-container" style={{ position: 'relative', width: "100%" }}>
+      <div className="adsearch-bar" style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold' }}>
         <TextField
           type="text"
           value={searchTerm}
@@ -126,43 +141,18 @@ const SubAdminTable = () => {
           Subadmin Table
         </Typography>
       </div>
-      <TableContainer component={Paper} style={{ border: "none" }} >
-        <Table style={{ border: "none" }} className="tablead">
-          <TableHead style={{ border: "none" }}>
-            <TableRow style={{ border: "none" }}>
-              <TableCell>User Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Contact Number</TableCell>
-              <TableCell>Auth Type</TableCell>
-              <TableCell>Status</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {userData.map((user) => (
-              <TableRow key={user._id}>
-                <TableCell>{user.userName}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>{user.contactNumber}</TableCell>
-                <TableCell>{user.authType}</TableCell>
-                <TableCell>
-                  <select
-                    value={selectedUserStatusMap[user._id]}
-                    onChange={(e) => {
-                      handleStatusSelectChange(user._id, e.target.value);
-                      handleStatusChange(user._id);
-                    }}
-                  >
-                    <option value="ACTIVE">Active</option>
-                    <option value="BLOCK">Block</option>
-                    <option value="DELETE">Delete</option>
-                  </select>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
+      <div style={{ width: "100%",backgroundColor:"#fff" }}>
+      <DataGrid
+        rows={userData}
+        columns={columns}
+        pageSize={pageSize}
+        page={currentPage - 1}
+        onPageChange={(params) => handlePageChange(params.page + 1)}
+        pagination
+        getRowId={(row) => row._id}
+      />
+</div>
+<Stack spacing={2} direction="row" justifyContent="center" mt={2}>
         <Pagination
           count={totalPages}
           page={currentPage}

@@ -61,16 +61,16 @@ console.log("formI=============",formId)
   };
 
   return (
-    <div className="form-container">
-      <div className="image-div">
-        <img src={profilePicUrl} alt="logo" className="agent-image" />
-      </div>
-      <h1 className="form-title">
-        <strong>Create Markup</strong>
-      </h1>
+    <div className="form-containers">
+       <header className="sectionagent headersagent">
+        <div className="headead">
+          {/* <img src={profilePicUrl} style={{ width: "80%" }} alt="Logo" /> */}
+          <h2>Add Markup</h2>
+        </div>
+      </header>
       <form className={`markup-form ${formId}`} onSubmit={handleSubmit}>
         <div className="mark-form-group">
-          <label htmlFor="hotelMarkup" className="form-label-addmarkup">
+          <label htmlFor="hotelMarkup" className="form-label-subAdmin">
             Hotel Markup:
           </label>
           <input
@@ -79,7 +79,7 @@ console.log("formI=============",formId)
             name="hotelMarkup"
             value={formData.hotelMarkup}
             onChange={handleChange}
-            className="mark-form-input"
+            className="form-input"
           />
         </div>
 

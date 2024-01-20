@@ -18,7 +18,7 @@ const AllEventsTable = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
-
+ const [locationNames, setLocationNames] = useState({});
   useEffect(() => {
     async function fetchData() {
       try {
@@ -58,9 +58,33 @@ const AllEventsTable = () => {
     { field: "content", headerName: "Content", flex: 1 },
     { field: "startDate", headerName: "Start Date", flex: 1 },
     { field: "endDate", headerName: "End Date", flex: 1 },
-    { field: "location", headerName: "Location", flex: 1 },
-    { field: "slot", headerName: "Slot", flex: 1 },
+    {
+      field: "location",
+      headerName: "Location",
+      flex: 2,
+      renderCell: (params) => (
+        <div style={{alignItems: "center" }}>
+          <div style={{ marginRight: "10px" }}>
+            <strong>Latitude:</strong> {params.row.location.coordinates[1]}
+          </div>
+          <div>
+            <strong>Longitude:</strong> {params.row.location.coordinates[0]}
+          </div>
+        </div>
+      ),
+    },
+    { 
+      field: "slot", 
+      headerName: "Slot", 
+      flex: 1, 
+      renderCell: (params) => (
+        <div>
+          {params.row.slot.filter((s) => s.isAvailable).length} Available
+        </div>
+      ),
+    },
   ];
+  
 
   return (
     <Paper

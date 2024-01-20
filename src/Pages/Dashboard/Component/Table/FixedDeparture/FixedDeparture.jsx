@@ -15,6 +15,7 @@ import { Add as AddIcon, CloudUpload as CloudUploadIcon } from "@mui/icons-mater
 import userApi from "../../../../../Redux/API/api";
 import axios from "axios";
 import { apiURL } from "../../../../../Constants/constant";
+//import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 const FixedDeparture = () => {
   const [sector, setSector] = useState("");
@@ -52,47 +53,49 @@ const FixedDeparture = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" sx={{ marginTop: "10%" }}>
       <CssBaseline />
       <Paper elevation={3} style={{ padding: "20px", marginTop: "50px", display: "flex", flexDirection: "column", alignItems: "center" }}>
-        <Typography variant="h4" component="h2" mb="20px">
-          Add Sector
+        <Typography variant="h4" component="h2" mb="20px" sx={{ textAlign: "center", fontWeight: "bold", fontSize: "2rem", color: "#1976D2", textTransform: "uppercase", marginBottom: "20px", textShadow: "2px 2px 4px rgba(0, 0, 0, 0.3)", }}>
+          Fixed Departure
         </Typography>
-        <TextField
-          label="Sector"
-          variant="outlined"
-          value={sector}
-          onChange={(e) => setSector(e.target.value)}
-          fullWidth
-          sx={{ marginBottom: "20px" }}
-        />
-        <Button variant="contained" onClick={addSector} endIcon={<AddIcon />}>
-          Add
-        </Button>
 
-        <Typography variant="h5" component="h3" mt="30px" mb="20px">
-          Add CSV Fix Departure File
-        </Typography>
-        <form onSubmit={handleSubmitFile} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-          <input
-            type="file"
-            accept=".csv"
-            onChange={handleFileChange}
-            style={{ display: "none" }}
-            id="fileInput"
+        <Box sx={{ width: "100%", display: "flex", flexDirection: "row", alignItems: "center", marginBottom: "20px" }}>
+          <TextField
+            variant="outlined"
+            value={sector}
+            onChange={(e) => setSector(e.target.value)}
+            fullWidth
+            placeholder="Enter sector..."
           />
-          <label htmlFor="fileInput">
-            <IconButton color="primary" aria-label="upload file" component="span">
-              <CloudUploadIcon />
-            </IconButton>
+          <Button variant="contained" onClick={addSector} endIcon={<AddIcon />} sx={{ marginLeft: "10px" }}>
+            Add
+          </Button>
+        </Box>
+
+        <Box sx={{ width: "100%", display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: "20px" }}>
+          <label htmlFor="fileInput" style={{ flex: "1" }}>
+            <input
+              type="file"
+              accept=".csv"
+              onChange={handleFileChange}
+              style={{ display: "none" }}
+              id="fileInput"
+            />
+            <Button
+              variant="contained"
+              component="span"
+              startIcon={<CloudUploadIcon />}
+              sx={{ width: "100%" }}
+            >
+              Upload CSV
+            </Button>
           </label>
-          <Typography variant="body2" color="textSecondary" mt="10px">
-            Select a CSV file
-          </Typography>
-          <Button variant="contained" type="submit" sx={{ marginTop: "20px" }}>
+          <Button variant="contained" type="submit" sx={{ marginLeft: "10px" }}>
             Upload
           </Button>
-        </form>
+        </Box>
+
       </Paper>
     </Container>
   );

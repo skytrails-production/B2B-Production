@@ -120,31 +120,52 @@ const CreateHolidayPackage = () => {
   };
   const inputList = chipData.map((item) => ({ addMore: item.addMore }));
 
- 
+
+  // console.log("inputList", inputList);
+  //  console.log("chipdata", chipData);
+  // function textEditorChange(e) {
+  //   setHtml(e.target.value);
+  // }
+
+  // handle input change
+  // const handleInputChange = (e, index) => {
+  //   const { name, value } = e.target;
+  //   const list = [...inputList];
+  //   list[index][name] = value;
+  //   setInputList(list);
+  // };
+
+  // handle click event of the Remove button
+  // const handleRemoveClick = (index) => {
+  //   const list = [...inputList];
+  //   list.splice(index, 1);
+  //   setInputList(list);
+  // };
+
+  // handle click event of the Add button
+  // const handleAddClick = () => {
+  //   setInputList([...inputList, { addMore: "" }]);
+  // };
   const userData = reducerState?.userData?.userData?.data?.data;
   const openToggle = () => {
-    
-    if (userData?.personal_details?.address_details?.city === ""
-      || userData?.personal_details?.address_details?.country === ""
-      || userData?.personal_details?.address_details?.pincode === ""
-      || userData?.personal_details?.address_details?.residential_address === ""
-      || userData?.personal_details?.first_name === ""
-      || userData?.personal_details?.last_name
-
-
+    if (
+      userData?.personal_details?.address_details?.city === "" ||
+      userData?.personal_details?.address_details?.country === "" ||
+      userData?.personal_details?.address_details?.pincode === "" ||
+      userData?.personal_details?.address_details?.residential_address === "" ||
+      userData?.personal_details?.first_name === "" ||
+      userData?.personal_details?.last_name === ""
     ) {
-      
-
-      setOpen(true)
-      return
+      setOpen(true);
+      return;
+    }else{
+     setOpen(false);
     }
-    else {
-      setOpen(false)
-    }
-  }
+  };
   useEffect(() => {
-    openToggle()
-  }, [])
+    openToggle();
+  }, []);
+
   const [tag, setTag] = useState({
     domestic: false,
     international: false,
@@ -2460,7 +2481,9 @@ const CreateHolidayPackage = () => {
                 navigate("/")
               }}
             >
+
               <IoIosClose size={"30px"}  color="#fff" />
+
             </div>
             <div className="packageModelimageContainer">
               <img src={loginOtp} alt="loginGif" />

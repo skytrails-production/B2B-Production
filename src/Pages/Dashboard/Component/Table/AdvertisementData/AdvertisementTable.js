@@ -109,9 +109,9 @@ const AllAdvertisementTable = () => {
           onPageChange={handlePageChange}
           rowsPerPageOptions={[pageSize]}
           getRowId={(row) => row._id}
-          components={{
-            Toolbar: GridToolbar,
-          }}
+          // components={{
+          //   Toolbar: GridToolbar,
+          // }}
         />
       </div>
       <Stack spacing={2} direction="row" justifyContent="center" alignItems="center">

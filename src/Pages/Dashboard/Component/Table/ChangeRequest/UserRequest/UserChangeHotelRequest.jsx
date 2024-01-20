@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { DataGrid } from '@mui/x-data-grid';
 import {
-  Table, TableBody, TableCell, TableRow, Paper, TextField, InputAdornment, IconButton, Typography,
+  TextField,
+  InputAdornment,
+  IconButton,
+  Typography,
   Stack,
   Pagination,
-  TableContainer,
-  TableHead,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import { apiURL } from '../../../../../../Constants/constant';
 import ApprovalIcon from '@mui/icons-material/CheckCircleOutline';
+import { apiURL } from '../../../../../../Constants/constant';
+
 const AllHotelCancelTickets = () => {
   const [hotelBookings, setHotelBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,10 +20,12 @@ const AllHotelCancelTickets = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredData, setFilteredData] = useState([]); // New state for filtered data
+  const [filteredData, setFilteredData] = useState([]);
+
   useEffect(() => {
     async function fetchHotelBookings() {
       try {
+        setLoading(true);
         const response = await axios.get(
           `${apiURL.baseURL}/skytrails/api/agent/getCancelHotelBooking`,
           {
@@ -28,7 +33,7 @@ const AllHotelCancelTickets = () => {
               page: currentPage,
               size: pageSize,
               search: searchTerm,
-            }
+            },
           }
         );
         setHotelBookings(response.data.result.docs);
@@ -40,6 +45,7 @@ const AllHotelCancelTickets = () => {
         setLoading(false);
       }
     }
+
     fetchHotelBookings();
   }, [currentPage, searchTerm]);
 
@@ -52,97 +58,112 @@ const AllHotelCancelTickets = () => {
     setCurrentPage(1);
   };
 
+  const columns = [
+    { field: 'bookingId', headerName: 'Booking ID', width: 120 },
+    {
+      field: 'name',
+      headerName: 'Name',
+      width: 150,
+      valueGetter: (params) =>
+        `${params.row.userDetails.personal_details.first_name} ${params.row.userDetails.personal_details.last_name}` ||
+        'No Data',
+    },
+    {
+      field: 'phone',
+      headerName: 'Phone',
+      width: 130,
+      valueGetter: (params) =>
+        params.row.userDetails.personal_details.mobile.mobile_number || 'No Data',
+    },
+    {
+      field: 'email',
+      headerName: 'Email',
+      width: 150,
+      valueGetter: (params) =>
+        params.row.userDetails.personal_details.email || 'No Data',
+    },
+    { field: 'reason', headerName: 'Reason', width: 150 },
+    { field: 'hotelId', headerName: 'Hotel ID', width: 120 ,  valueGetter: (params) =>
+    params.row.hotelDetails?.hotelId || 'No Data',},
+    { field: 'amount', headerName: 'Amount', width: 120,valueGetter: (params) =>
+    params.row.hotelDetails?.amount || 'No Data', },
+    { field: 'CheckInDate', headerName: 'Check In Date', width: 180,valueGetter: (params) =>
+    params.row.hotelDetails?.CheckInDate || 'No Data', },
+    {
+      field: 'destination',
+      headerName: 'Destination',
+      width: 150,
+      valueGetter: (params) =>
+        params.row.hotelDetails?.destination || 'No Data',
+    },
+    {
+      field: 'room',
+      headerName: 'Rooms',
+      width: 120,
+      valueGetter: (params) =>
+        params.row.hotelDetails?.room || 'No Data',
+    },
+    {
+      field: 'hotelName',
+      headerName: 'Hotel Name',
+      width: 150,
+      valueGetter: (params) =>
+        params.row.hotelDetails?.hotelName || 'No Data',
+    },
+    {
+      field: 'approve',
+      headerName: 'Approve',
+      width: 120,
+      renderCell: (params) => (
+        <IconButton
+          size="small"
+          style={{ backgroundColor: '#21325D', color: '#FFFFFF' }}
+        >
+          <ApprovalIcon />
+        </IconButton>
+      ),
+    },
+  ];
+
   return (
-    <div className="subada-table-container">
-      <div className='adsearch-bar'>
+    <div className="subada-table-container" style={{ position: 'relative', width: "100%" }}>
+      <div className="adsearch-bar" style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold' }}>
         <TextField
-          type='text'
+          type="text"
           value={searchTerm}
           onChange={handleSearch}
-          placeholder='Search by name, ID, etc.'
+          placeholder="Search by name, ID, etc."
           InputProps={{
             startAdornment: (
-              <InputAdornment position='start'>
+              <InputAdornment position="start">
                 <SearchIcon />
               </InputAdornment>
             ),
           }}
         />
-        <Typography variant='h5' className='adtable-heading'>
-          AGENT HOTEL TICKET CHANGE REQUEST
+        <Typography variant="h5" className="adtable-heading">
+          USER HOTEL TICKET CHANGE REQUEST
         </Typography>
       </div>
 
-      {/* <th>Booking ID</th>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>Reason</th>
-            <th>Hotel ID</th>
-            <th>Amount</th>
-            <th>CheckInDate</th>
-            <th>Destination</th>
-            <th>Rooms</th>
-            <th>Hotel Name</th>
-            <th>Approve</th> */}
-      <TableContainer component={Paper} className='custom-table-container'>
-        <Table>
-          <TableHead>
-            <TableRow> <TableCell>Booking ID</TableCell>
+      <div style={{width: '100%',backgroundColor:"white" }}>
+        <DataGrid
+          rows={filteredData}
+          columns={columns}
+          pageSize={5}
+          autoHeight
+          disableSelectionOnClick
+          getRowId={(row) => row._id}
+        />
+      </div>
 
-              <TableCell>Name</TableCell>
-              <TableCell>Phone</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Reason</TableCell>
-              <TableCell>Hotel ID</TableCell>
-              <TableCell>Amount</TableCell>
-              <TableCell>CheckInDate</TableCell>
-              <TableCell>Destination</TableCell>
-              <TableCell>Rooms</TableCell>
-              <TableCell>Hotel Name</TableCell>
-              <TableCell>Approve</TableCell>
-            </TableRow>
-
-          </TableHead>
-
-          <TableBody className="tableadagent">
-            {filteredData.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={7} align="center" style={{ border: 'none' }}>
-                  <Typography variant="h6">Not Available</Typography>
-                </TableCell>
-              </TableRow>
-            ) : (
-              filteredData.map((booking) => (
-                <TableRow key={booking?.bookingId}>
-                  <TableCell>{booking?.bookingId}</TableCell>
-                  <TableCell>{`${booking?.userDetails.personal_details.first_name} ${booking.userDetails.personal_details.last_name}` || "No Data"}</TableCell>
-                  <TableCell>{booking?.userDetails.personal_details.mobile.mobile_number || "No Data"}</TableCell>
-                  <TableCell>{booking?.userDetails.personal_details.email || "No Data"}</TableCell>
-                  <TableCell>{booking?.reason || "No Data"}</TableCell>
-                  <TableCell>{booking?.hotelDetails.hotelId || "No Data"}</TableCell>
-                  <TableCell>{booking?.hotelDetails.amount || "No Data"}</TableCell>
-                  <TableCell>{booking?.hotelDetails.CheckInDate || "No Data"}</TableCell>
-                  <TableCell>{booking?.hotelDetails.destination || "No Data"}</TableCell>
-                  <TableCell>{booking?.hotelDetails.room || "No Data"}</TableCell>
-                  <TableCell>{booking?.hotelDetails.hotelName || "No Data"}</TableCell>
-                  <TableCell style={{ border: 'none', alignItems: 'center', justifyContent: 'center', display: 'flex' }}>
-                    <IconButton size="small" style={{ backgroundColor: '#21325D', color: '#FFFFFF' }}>
-                      <ApprovalIcon />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-
-              )))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Stack spacing={2} direction='row' justifyContent='center' mt={2}>
+      {/* Pagination */}
+      <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
         <Pagination
           count={totalPages}
           page={currentPage}
           onChange={(event, page) => handlePageChange(page)}
-          color='primary'
+          color="primary"
         />
       </Stack>
     </div>

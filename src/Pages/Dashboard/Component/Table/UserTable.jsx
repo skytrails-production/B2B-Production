@@ -1,15 +1,7 @@
-// Usertables.js
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
+ 
   TextField,
   InputAdornment,
   Typography,
@@ -19,6 +11,7 @@ import { apiURL } from "../../../../Constants/constant";
 import "./UserTable.css";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+import { DataGrid } from '@mui/x-data-grid';
 const Usertables = () => {
   const [userData, setUserData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -61,10 +54,37 @@ const Usertables = () => {
     setCurrentPage(1); // Reset to the first page when performing a new search
   };
 
-  return (
-    <div className="user-table-container">
+  const columns = [
+    { field: "username", headerName: "UserName", flex: 1 },
+    { field: "email", headerName: "Email", flex: 1 },
+    { field: "dob", headerName: "DOB", flex: 1 },
+    {
+      field: "phone.mobile_number",
+      headerName: "Phone Number",
+      flex: 1,
+      valueGetter: (params) => params.row.phone?.mobile_number || "No Data",
+    },
+    {
+      field: "profilePic",
+      headerName: "ProfilePic",
+      flex: 1,
+      renderCell: (params) => (
+        <div style={{ borderRadius: "50%", overflow: "hidden", width: 50, height: 50 }}>
+          <img
+            src={params.value}
+            alt="profilepic"
+            className="profile-image"
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        </div>
+      ),
+    },
+  ];
+  
 
-      <div className="adsearch-bar">
+  return (
+    <div className="user-table-container" style={{ position: 'relative', width: "100%" }}>
+      <div className="adsearch-bar" style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold' }}>
         <TextField
           type="text"
           value={searchTerm}
@@ -82,36 +102,19 @@ const Usertables = () => {
           User Table
         </Typography>
       </div>
-      <TableContainer component={Paper} style={{border:"none"}} >
-        <Table style={{border:"none"}}>
-          <TableHead style={{border:"none"}}>
-            <TableRow style={{border:"none"}}>
-              <TableCell >UserName</TableCell>
-              <TableCell >Email</TableCell>
-              <TableCell>DOB</TableCell>
-              <TableCell>Phone Number</TableCell>
-              <TableCell>ProfilePic</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className="tablead" style={{border:"none"}}>
-            {userData.map((user) => (
-              <TableRow key={user._id} style={{border:"none"}} >
-                <TableCell>{user.username || "No Data"}</TableCell>
-                <TableCell>{user.email || "No Data"}</TableCell>
-                <TableCell>{user.dob || "No Data"}</TableCell>
-                <TableCell>{user.phone?.mobile_number || "No Data"}</TableCell>
-                <TableCell>
-                  <img
-                    src={user.profilePic}
-                    alt="profilepic"
-                    className="profile-image rounded-circle"
-                  />
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <div style={{ width: "100%",backgroundColor:"#fff" }}>
+        <DataGrid
+          rows={userData}
+          columns={columns}
+          pageSize={pageSize}
+          page={currentPage - 1}
+          pagination
+          rowCount={totalPages * pageSize}
+          onPageChange={(params) => handlePageChange(params.page + 1)}
+          loading={loading}
+          getRowId={(row) => row._id}
+        />
+      </div>
       <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
         <Pagination
           count={totalPages}

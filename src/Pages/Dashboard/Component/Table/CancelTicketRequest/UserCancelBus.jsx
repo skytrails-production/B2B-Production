@@ -1,18 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { DataGrid } from '@mui/x-data-grid';
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
   TextField,
   InputAdornment,
   Typography,
-  Button,
-  IconButton
+  IconButton,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import Pagination from '@mui/material/Pagination';
@@ -20,6 +13,7 @@ import Stack from '@mui/material/Stack';
 import { apiURL } from '../../../../../Constants/constant';
 import './CancelTicketRequest.css'; // Import your custom styles if needed
 import ApprovalIcon from '@mui/icons-material/CheckCircleOutline';
+
 const AllBusCancelTickets = () => {
   const [busBookings, setBusBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -32,7 +26,7 @@ const AllBusCancelTickets = () => {
   useEffect(() => {
     async function fetchBusBookings() {
       try {
-        setLoading(true); // Set loading to true when fetching data
+        setLoading(true);
         const response = await axios.get(
           `${apiURL.baseURL}/skyTrails/api/admin/getCancelUserBusBooking`,
           {
@@ -65,9 +59,36 @@ const AllBusCancelTickets = () => {
     setCurrentPage(1);
   };
 
+  const columns = [
+    { field: 'busId', headerName: 'Bus ID', width: 120 },
+    { field: 'name', headerName: 'Name', width: 150, valueGetter: (params) => params.row.userDetails?.username || 'No Data' },
+    { field: 'phone', headerName: 'Phone', width: 130, valueGetter: (params) => params.row.userDetails?.phone?.mobile_number || 'No Data' },
+    { field: 'reason', headerName: 'Reason', width: 150 },
+    { field: 'pnr', headerName: 'PNR', width: 120, valueGetter: (params) => params.row.busDetails?.pnr || 'No Data' },
+    { field: 'amount', headerName: 'Amount', width: 120, valueGetter: (params) => params.row.busDetails?.amount || 'No Data' },
+    { field: 'origin', headerName: 'Origin', width: 150, valueGetter: (params) => params.row.busDetails?.origin || 'No Data' },
+    { field: 'destination', headerName: 'Destination', width: 150, valueGetter: (params) => params.row.busDetails?.destination || 'No Data' },
+    { field: 'dateOfJourney', headerName: 'Date Of Journey', width: 180, valueGetter: (params) => params.row.busDetails?.dateOfJourney || 'No Data' },
+    { field: 'busType', headerName: 'Bus Type', width: 150, valueGetter: (params) => params.row.busDetails?.busType || 'No Data' },
+    { field: 'noOfSeats', headerName: 'No of Seats', width: 150, valueGetter: (params) => params.row.busDetails?.noOfSeats || 'No Data' },
+    {
+      field: 'approve',
+      headerName: 'Approve',
+      width: 120,
+      renderCell: (params) => (
+        <IconButton
+          size="small"
+          style={{ backgroundColor: '#21325D', color: '#FFFFFF' }}
+        >
+          <ApprovalIcon />
+        </IconButton>
+      ),
+    },
+  ];
+
   return (
-    <div className="subada-table-container">
-      <div className="adsearch-bar">
+    <div className="subada-table-container" style={{ position: 'relative', width: "100%" }}>
+      <div className="adsearch-bar" style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold' }}>
         <TextField
           type="text"
           value={searchTerm}
@@ -81,64 +102,20 @@ const AllBusCancelTickets = () => {
             ),
           }}
         />
-
         <Typography variant="h5" className="adtable-heading">
           User Bus Ticket Cancel Request
         </Typography>
       </div>
-
-      <TableContainer component={Paper} className="custom-table-container">
-        <Table style={{ border: 'none' }}>
-          <TableHead>
-            <TableRow>
-              <TableCell>Bus ID</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Phone</TableCell>
-              <TableCell>Reason</TableCell>
-              <TableCell>PNR</TableCell>
-              <TableCell>Amount</TableCell>
-              <TableCell>Origin</TableCell>
-              <TableCell>Destination</TableCell>
-              <TableCell>Date Of Journey</TableCell>
-              <TableCell>Bus Type</TableCell>
-              <TableCell>No of Seats</TableCell>
-              <TableCell>Approve</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className="tableadagent">
-            {filteredData.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={7} align="center" style={{ border: 'none' }}>
-                  <Typography variant="h6">Not Available</Typography>
-                </TableCell>
-              </TableRow>
-            ) : (
-              filteredData.map((booking) => (
-                <TableRow key={booking._id}>
-                  <TableCell>{booking?.busId}</TableCell>
-                  <TableCell>{booking?.userDetails?.username || 'No Data'}</TableCell>
-                  <TableCell>{booking?.userDetails?.phone.mobile_number || 'No Data'}</TableCell>
-                  <TableCell>{booking?.reason}</TableCell>
-                  <TableCell>{booking?.busDetails?.pnr || 'No Data'}</TableCell>
-                  <TableCell>{booking?.busDetails?.amount || 'No Data'}</TableCell>
-                  <TableCell>{booking?.busDetails?.origin || 'No Data'}</TableCell>
-                  <TableCell>{booking?.busDetails?.destination || 'No Data'}</TableCell>
-                  <TableCell>{booking?.busDetails?.dateOfJourney || 'No Data'}</TableCell>
-                  <TableCell>{booking?.busDetails?.busType || 'No Data'}</TableCell>
-                  <TableCell>{booking?.busDetails?.noOfSeats || 'No Data'}</TableCell>
-                  <TableCell style={{ border: 'none', alignItems: 'center', justifyContent: 'center', display: 'flex' }}>
-                    <IconButton size="small" style={{ backgroundColor: '#21325D', color: '#FFFFFF' }}>
-                      <ApprovalIcon />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-
-      {/* Pagination */}
+      <div style={{ width: '100%',backgroundColor:"#fff" }}>
+        <DataGrid
+          rows={filteredData}
+          columns={columns}
+          pageSize={10}
+          autoHeight
+          disableSelectionOnClick
+          getRowId={(row) => row._id}
+        />
+      </div>
       <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
         <Pagination
           count={totalPages}

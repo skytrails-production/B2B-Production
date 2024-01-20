@@ -19,27 +19,40 @@
   margin: auto;
   width: 350px;
   box-shadow: var(--s-basic);
-  margin-top: 80px;
-  border-radius: 5px;
+  margin-top: -80px;
+  border-radius: 10px;
   background-color: #ffffff;
+  position: relative;
+  height:57vh;
 }
 
 .sectionad {
   padding: 1rem;
   background-color: #21325d;
   width: 300px;
-  box-shadow: 0 8px 16px -6px rgba(216, 206, 206, 0.2);
+  box-shadow: 0px 4px 8px rgba(33, 50, 93, 0.5);
+  /* Add shadow to the color #21325d */
+  top: -20px;
+  /* Set a negative margin from the top */
   margin: auto;
   border-radius: 5px;
   color: var(--c-white);
   text-align: center;
   margin-bottom: 20px;
   position: absolute;
+  z-index: 1;
 }
+
+/* AdminLogin.css */
+
+
+
+
 
 .headead h1 {
   font-size: 2rem;
-  color: #fff; /* Adjust the color as needed */
+  color: #fff;
+  /* Adjust the color as needed */
 }
 
 .headers {
@@ -50,13 +63,13 @@
     position: relative;
     padding: 3.5rem 0 7rem;
 
-    > h1 {
+    >h1 {
       margin: 0;
       font-size: 2.5rem;
     }
   }
 
-  > .trapezoid {
+  >.trapezoid {
     position: absolute;
     top: 0;
     left: 0;
@@ -72,28 +85,34 @@
   }
 }
 
+/* AdminLogin.css */
+
+/* ... (existing styles) ... */
+
 .formadmin {
   margin: 0 auto;
-  max-width: 17rem;
+  max-width: 20rem;
+  margin-top: -25px;
   overflow: auto;
 
-  > * + * {
+  >*+* {
     margin-top: 1rem;
   }
 
-  > .admininput {
-    border: 0;
-    border-bottom: 1px solid var(--c-blue);
-    border-radius: 0;
+  >.admininput {
+    border: 1px solid var(--c-blue);
+    border-radius: 5px;
     width: 100%;
-    height: 2rem;
-    padding: 0 0 0.25rem 0;
+
+    padding: 0.5rem;
     font-size: 1rem;
     color: var(--c-blue);
     background: var(--c-white);
 
+    outline: none;
+
     &:focus {
-      outline: none;
+      border-color: var(--t-blue);
     }
 
     &::placeholder {
@@ -101,29 +120,63 @@
     }
   }
 
-  > .btnadmin {
-    margin-top: 2rem;
+  >.btnadmin {
+
     border: 0;
-    border-radius: 200px;
+    border-radius: 5px;
     width: 100%;
     padding: 0.85rem;
     font-size: 1rem;
     color: var(--c-white);
     background: var(--c-blue);
+    margin-top: -2px;
 
     &:focus {
       outline: none;
     }
   }
 
-  > p {
-    margin: 0.25rem 0 0;
+  >p {
+    margin: 0.25rem 0 1rem;
     text-align: center;
+    color: var(--c-blue);
+  }
+
+  /* Add styles for the eye icon */
+  .password-container {
+    position: relative;
+    margin-top: -5px;
+  }
+
+  .password-container .admininput {
+    border: 1px solid var(--c-blue);
+    border-radius: 5px;
+    width: calc(100%);
+
+    padding: 1rem;
+    font-size: 1rem;
+    color: var(--c-blue);
+    background: var(--c-white);
+
+    outline: none;
+
+    &:focus {
+      border-color: var(--t-blue);
+    }
+
+    &::placeholder {
+      color: var(--c-blue);
+    }
+  }
+
+  .password-container .eye-icon {
+    position: absolute;
+    top: 38%;
+    right: 20px;
+    transform: translateY(-50%);
+    cursor: pointer;
     color: var(--c-blue);
   }
 }
 
-.opposite-btn1,
-.opposite-btn2 {
-  cursor: pointer;
-}
+/* ... (existing styles) ... */

@@ -90,8 +90,13 @@ const CreateWebAdvertisementForm = () => {
   };
   
   return (
-    <div className='advertisement-div'>
-    <div className='web-heading'><h1><strong>Add Web Advertisemnet</strong></h1></div>
+    <div className="form-containers">
+     <header className="sectionagent headersagent">
+        <div className="headead">
+          {/* <img src={profilePicUrl} style={{ width: "80%" }} alt="Logo" /> */}
+          <h2>Create WebAdvertisement</h2>
+        </div>
+      </header>
     <form onSubmit={handleSubmit} className="advertisement-form">
       <label className="form-label">
         Title:

@@ -104,6 +104,7 @@ import HotelOneTicket from "../Pages/Account/HotelTicket";
 import FlightOpen from "../Pages/Account/FlightOpen";
 import CreateAgentPage from "../Pages/Dashboard/Component/Table/AddAgent";
 import CreateEventForm from "../Pages/Dashboard/Component/Table/AddEvent";
+import CreateCouponForm from "../Pages/Dashboard/Component/Table/AddCoupons"
 import Download from "./Download";
 
 import AboutUs from "../Layout/AboutUs";
@@ -229,6 +230,11 @@ const MainPage = () => {
       location.pathname === "/Registration" ||
       location.pathname === "/addMarkup" ||
       location.pathname === "/addEvents" ||
+
+      location.pathname === "/admin/addCoupons"||
+
+      location.pathname==="/adminlogin" ||
+
       isFlightEticketPage ||
       isBusEticketPage ||
       isHotelEticketPage ? null : (
@@ -244,6 +250,11 @@ const MainPage = () => {
       location.pathname === "/Registration" ||
       location.pathname === "/addMarkup" ||
       location.pathname === "/addEvents" ||
+
+      location.pathname === "/admin/addCoupons"||
+
+      location.pathname==="/adminlogin" ||
+
       isFlightEticketPage ||
       isBusEticketPage ||
       isHotelEticketPage ? null : (
@@ -505,6 +516,7 @@ const MainPage = () => {
                 />
                 <Route exact path="/addMarkup" element={<CreateMarkupForm />} />
                 <Route exact path="/addEvents" element={<CreateEventForm />} />
+                <Route  exact path="/admin/addCoupons" element={<CreateCouponForm />}/>
                 <Route
                   exact
                   path="/AdminUserForm"

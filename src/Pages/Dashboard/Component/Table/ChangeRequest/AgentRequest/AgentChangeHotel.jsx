@@ -1,24 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { DataGrid } from '@mui/x-data-grid';
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  Paper,
   TextField,
   InputAdornment,
-  Button,
   Typography,
+  IconButton,
   Stack,
   Pagination,
-  TableContainer,
-  TableHead,
-  IconButton
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { apiURL } from '../../../../../../Constants/constant';
 import ApprovalIcon from '@mui/icons-material/CheckCircleOutline';
+
 const AllHotelCancelTickets = () => {
   const [hotelBookings, setHotelBookings] = useState([]);
   const [filteredData, setFilteredData] = useState([]); // New state for filtered data
@@ -75,9 +69,37 @@ const AllHotelCancelTickets = () => {
     setCurrentPage(1); // Reset to the first page when performing a new search
   };
 
+  const columns = [
+    { field: 'bookingId', headerName: 'Booking ID', width: 120 },
+    { field: 'agencyName', headerName: 'Agency Name', width: 150, valueGetter: (params) => params.row.userDetails.agency_details.agency_name || 'No Data' },
+    { field: 'name', headerName: 'Name', width: 150, valueGetter: (params) => `${params.row.userDetails.personal_details.first_name} ${params.row.userDetails.personal_details.last_name}` || 'No Data' },
+    { field: 'phone', headerName: 'Phone', width: 130, valueGetter: (params) => params.row.userDetails.personal_details.mobile.mobile_number || 'No Data' },
+    { field: 'email', headerName: 'Email', width: 150, valueGetter: (params) => params.row.userDetails.personal_details.email || 'No Data' },
+    { field: 'reason', headerName: 'Reason', width: 150 },
+    { field: 'hotelId', headerName: 'Hotel ID', width: 120, valueGetter: (params) => params.row.hotelDetails.hotelId || 'No Data' },
+    { field: 'amount', headerName: 'Amount', width: 120, valueGetter: (params) => params.row.hotelDetails.amount || 'No Data' },
+    { field: 'checkInDate', headerName: 'CheckIn Date', width: 180, valueGetter: (params) => params.row.hotelDetails.CheckInDate || 'No Data' },
+    { field: 'destination', headerName: 'Destination', width: 150, valueGetter: (params) => params.row.hotelDetails.destination || 'No Data' },
+    { field: 'rooms', headerName: 'Rooms', width: 120, valueGetter: (params) => params.row.hotelDetails.room || 'No Data' },
+    { field: 'hotelName', headerName: 'Hotel Name', width: 150, valueGetter: (params) => params.row.hotelDetails.hotelName || 'No Data' },
+    {
+      field: 'approve',
+      headerName: 'Approve',
+      width: 120,
+      renderCell: (params) => (
+        <IconButton
+          size="small"
+          style={{ backgroundColor: '#21325D', color: '#FFFFFF' }}
+        >
+          <ApprovalIcon />
+        </IconButton>
+      ),
+    },
+  ];
+
   return (
-    <div className="subada-table-container">
-      <div className='adsearch-bar'>
+    <div className="subada-table-container" style={{ position: 'relative', width: "100%" }}>
+      <div className='adsearch-bar' style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold' }}>
         <TextField
           type='text'
           value={searchTerm}
@@ -96,60 +118,16 @@ const AllHotelCancelTickets = () => {
         </Typography>
       </div>
 
-      <TableContainer component={Paper} className='custom-table-container'>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Booking ID</TableCell>
-              <TableCell>Agency Name</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Phone</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Reason</TableCell>
-              <TableCell>Hotel ID</TableCell>
-              <TableCell>Amount</TableCell>
-              <TableCell>CheckInDate</TableCell>
-              <TableCell>Destination</TableCell>
-              <TableCell>Rooms</TableCell>
-              <TableCell>Hotel Name</TableCell>
-              <TableCell>Approve</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className="tableadagent">
-            {filteredData.map((booking) => (
-              <TableRow key={booking.bookingId}>
-                <TableCell>{booking.bookingId}</TableCell>
-                <TableCell>
-                  {booking.userDetails.agency_details.agency_name || 'No Data'}
-                </TableCell>
-                <TableCell>
-                  {`${booking.userDetails.personal_details.first_name} ${booking.userDetails.personal_details.last_name}` ||
-                    'No Data'}
-                </TableCell>
-                <TableCell>
-                  {booking.userDetails.personal_details.mobile.mobile_number ||
-                    'No Data'}
-                </TableCell>
-                <TableCell>
-                  {booking.userDetails.personal_details.email || 'No Data'}
-                </TableCell>
-                <TableCell>{booking.reason || 'No Data'}</TableCell>
-                <TableCell>{booking.hotelDetails.hotelId || 'No Data'}</TableCell>
-                <TableCell>{booking.hotelDetails.amount || 'No Data'}</TableCell>
-                <TableCell>{booking.hotelDetails.CheckInDate || 'No Data'}</TableCell>
-                <TableCell>{booking.hotelDetails.destination || 'No Data'}</TableCell>
-                <TableCell>{booking.hotelDetails.room || 'No Data'}</TableCell>
-                <TableCell>{booking.hotelDetails.hotelName || 'No Data'}</TableCell>
-                <TableCell style={{ border: 'none', alignItems: 'center', justifyContent: 'center', display: 'flex' }}>
-                  <IconButton size="small" style={{ backgroundColor: '#21325D', color: '#FFFFFF' }}>
-                    <ApprovalIcon />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <div style={{width: '100%',backgroundColor:"#fff" }}>
+        <DataGrid
+          rows={filteredData}
+          columns={columns}
+          pageSize={10}
+          autoHeight
+          disableSelectionOnClick
+          getRowId={(row) => row._id}
+        />
+      </div>
 
       {/* Pagination */}
       <Stack spacing={2} direction='row' justifyContent='center' mt={2}>

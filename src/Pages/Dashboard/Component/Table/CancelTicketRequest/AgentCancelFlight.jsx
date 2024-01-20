@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { DataGrid } from '@mui/x-data-grid';
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
   TextField,
   InputAdornment,
   Typography,
@@ -78,9 +72,37 @@ const AllFlightCancelTickets = () => {
     setFilteredData(filtered);
   };
 
+  const columns = [
+    { field: 'bookingId', headerName: 'Booking ID', width: 120 },
+    { field: 'agencyName', headerName: 'Agency Name', width: 200, valueGetter: (params) => params.row.userDetails.agency_details.agency_name || 'NA' },
+    { field: 'name', headerName: 'Name', width: 150, valueGetter: (params) => `${params.row.userDetails.personal_details.first_name || 'NA'} ${params.row.userDetails.personal_details.last_name || 'NA'}` },
+    { field: 'phone', headerName: 'Phone', width: 130, valueGetter: (params) => params.row.userDetails.personal_details.mobile.mobile_number || 'NA' },
+    { field: 'email', headerName: 'Email', width: 200, valueGetter: (params) => params.row.userDetails.personal_details.email || 'NA' },
+    { field: 'reason', headerName: 'Reason', width: 150, valueGetter: (params) => params.row.reason || 'NA' },
+    { field: 'pnr', headerName: 'PNR', width: 120, valueGetter: (params) => params.row.pnr || 'NA' },
+    { field: 'amount', headerName: 'Amount', width: 120, valueGetter: (params) => params.row.flightDetails.totalAmount || 'NA' },
+    { field: 'origin', headerName: 'Origin', width: 150, valueGetter: (params) => params.row.flightDetails.origin || 'NA' },
+    { field: 'destination', headerName: 'Destination', width: 150, valueGetter: (params) => params.row.flightDetails.destination || 'NA' },
+    { field: 'dateOfJourney', headerName: 'Date Of Journey', width: 180, valueGetter: (params) => params.row.flightDetails.airlineDetails[0].Origin.DepTime || 'NA' },
+    { field: 'airlineName', headerName: 'Airline Name', width: 150, valueGetter: (params) => params.row.flightDetails.airlineDetails[0].Airline.AirlineName || 'NA' },
+    {
+      field: 'approve',
+      headerName: 'APPROVE',
+      width: 120,
+      renderCell: (params) => (
+        <IconButton
+          size="small"
+          style={{ backgroundColor: '#21325D', color: '#FFFFFF' }}
+        >
+          <ApprovalIcon />
+        </IconButton>
+      ),
+    },
+  ];
+
   return (
-    <div className="subada-table-container">
-      <div className="adsearch-bar">
+    <div className="subada-table-container"style={{ position: 'relative', width: "100%" }}>
+      <div className="adsearch-bar"  style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold' }}>
         <TextField
           type="text"
           value={searchTerm}
@@ -94,68 +116,20 @@ const AllFlightCancelTickets = () => {
             ),
           }}
         />
-
         <Typography variant="h5" className="adtable-heading">
-           Agent Flight Cancel Ticket Request
+          Agent Flight Cancel Ticket Request
         </Typography>
       </div>
-
-      <TableContainer component={Paper} className="custom-table-container">
-        <Table style={{ border: 'none' }}>
-          <TableHead>
-            <TableRow>
-              <TableCell>Booking ID</TableCell>
-              <TableCell>Agency Name</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Phone</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Reason</TableCell>
-              <TableCell>PNR</TableCell>
-              <TableCell>Amount</TableCell>
-              <TableCell>Origin</TableCell>
-              <TableCell>Destination</TableCell>
-              <TableCell>Date Of Journey</TableCell>
-              <TableCell>Airline Name</TableCell>
-              <TableCell>APPROVE</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className="tableadagent">
-            {filteredData.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={7} align="center" style={{ border: 'none' }}>
-                  <Typography variant="h6">Not Available</Typography>
-                </TableCell>
-              </TableRow>
-            ) : (
-              filteredData.map((booking) => (
-                <TableRow key={booking.bookingId}>
-                  <TableCell>{booking.bookingId || 'NA'}</TableCell>
-                  <TableCell>{booking.userDetails.agency_details.agency_name || 'NA'}</TableCell>
-                  <TableCell>{`${booking.userDetails.personal_details.first_name || 'NA'} ${
-                    booking.userDetails.personal_details.last_name || 'NA'
-                  }`}</TableCell>
-                  <TableCell>{booking.userDetails.personal_details.mobile.mobile_number || 'NA'}</TableCell>
-                  <TableCell>{booking.userDetails.personal_details.email || 'NA'}</TableCell>
-                  <TableCell>{booking.reason || 'NA'}</TableCell>
-                  <TableCell>{booking.pnr || 'NA'}</TableCell>
-                  <TableCell>{booking.flightDetails.totalAmount || 'NA'}</TableCell>
-                  <TableCell>{booking.flightDetails.origin || 'NA'}</TableCell>
-                  <TableCell>{booking.flightDetails.destination || 'NA'}</TableCell>
-                  <TableCell>{booking.flightDetails.airlineDetails[0].Origin.DepTime || 'NA'}</TableCell>
-                  <TableCell>{booking.flightDetails.airlineDetails[0].Airline.AirlineName || 'NA'}</TableCell>
-                  <TableCell style={{ border: 'none', alignItems: 'center', justifyContent: 'center', display: 'flex' }}>
-                    <IconButton size="small" style={{ backgroundColor: '#21325D', color: '#FFFFFF' }}>
-                      <ApprovalIcon />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-
-      {/* Pagination */}
+      <div style={{width: '100%',backgroundColor:"#fff" }}>
+        <DataGrid
+          rows={filteredData}
+          columns={columns}
+          pageSize={5}
+          autoHeight
+          disableSelectionOnClick
+          getRowId={(row) => row._id}
+        />
+      </div>
       <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
         <Pagination
           count={totalPages}

@@ -8,6 +8,10 @@
   cursor: pointer;
 }
 
+.custom-header {
+  text-align: center; /* Change this to the desired color */
+}
+
 .toggle_close {
   background-color: #006fff !important;
   border: none;

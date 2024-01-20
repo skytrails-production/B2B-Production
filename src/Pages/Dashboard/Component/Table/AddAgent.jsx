@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import './AddSubadmin.css';
 import { apiURL } from '../../../../Constants/constant';
 import { useNavigate } from 'react-router-dom';
-import profilePicUrl from '../../../../Images/logo.jpeg';
+import profilePicUrl from '../../../../Images/whitelogo1.png';
 
 const CreateAgentPage = () => {
   const [formData, setFormData] = useState({
@@ -55,12 +55,16 @@ const CreateAgentPage = () => {
   };
 
   return (
-    <div className="form-container">
+    <div className="form-containers">
+      <header className="sectionagent headersagent">
+        <div className="headead">
+          {/* <img src={profilePicUrl} style={{ width: "80%" }} alt="Logo" /> */}
+          <h2>Create Agent</h2>
+        </div>
+      </header>
       <form className="form-agent" onSubmit={handleSubmit}>
-        <img src={profilePicUrl} height={50} alt="logo" className="agent-image image-div" />
-        <h1 className="form-title">
-          <strong>Create Agent</strong>
-        </h1>
+       
+       
 
         <div className="form-group">
           <label htmlFor="email" className="form-label-subAdmin">
@@ -132,7 +136,7 @@ const CreateAgentPage = () => {
         </div>
 
         <div className="form-group-agent">
-          <button type="submit" className="form-button-agent">
+          <button type="submit" className="form-button-agents">
             Create Agent
           </button>
         </div>

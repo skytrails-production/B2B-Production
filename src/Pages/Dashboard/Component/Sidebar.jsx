@@ -52,7 +52,7 @@ const Sidebar = () => {
                     transitionDelay: `${i + 3}00ms`,
                   }}
                   className={`whitespace-pre duration-500 ${
-                    !open && "opacity-0 translate-x-28 overflow-hidden"
+                    !open && "opacity-0 translate-x-28"
                   }`}
                 >
                   {menu?.name}
@@ -68,7 +68,7 @@ const Sidebar = () => {
             ))}
           </div>
         </div>
-        <div></div>
+      
       </section>
     </>
   );

@@ -1,0 +1,105 @@
+/* AddCoupons.css */
+.addCoupon-heading {
+    background-color: #08121b;
+    color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    margin-top: -35px;
+  }
+  
+  .addCoupon-heading strong {
+    font-size: 24px;
+  }
+.addCoupon-div {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .addCoupon-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    
+  }
+  
+  .Coupon-form-label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .Coupon-form-input-ads,
+  .form-input-image-ads {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 50px;
+  }
+  
+  .form-label-image {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  @media (max-width: 768px) {
+    .addCoupon-div {
+      width: 100%;
+      padding: 15px;
+    }
+  }
+  
+  /* Additional Professional Styling */
+  h3 {
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+  }
+  
+  /* SweetAlert2 Styling */
+  .swal2-popup {
+    font-size: 16px;
+  }
+  
+  .swal2-title {
+    font-size: 20px;
+  }
+  
+  .swal2-icon {
+    font-size: 32px;
+  }
+  
+  .swal2-actions button {
+    font-size: 16px;
+  }
+  

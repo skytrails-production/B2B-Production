@@ -13,11 +13,12 @@
 }
 
 .advertisement-form {
-  max-width: 800px;
+  max-width: 900px;
   padding: 20px;
   border: 1px solid #ffffff;
   border-radius: 8px;
-  background-color: rgba(240, 248, 255, 0.5); /* LightBlue background color with some transparency */
+  margin-top: -60px;
+  background-color:#fff; /* LightBlue background color with some transparency */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
   backdrop-filter: blur(8px); /* Add a glass effect */
   animation: fadeIn 1s ease; /* Add fade-in animation */
@@ -35,7 +36,7 @@
 
 .form-label {
   display: block;
-  margin-bottom: 8px;
+ margin-bottom: 0px;
   font-weight: bold;
   color: #090808; /* Darken label text color */
 }
@@ -66,7 +67,7 @@
   padding: 10px;
   margin-bottom: 16px;
   box-sizing: border-box;
-  background-color: #ff6347;
+  background-color: #21325D;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -75,7 +76,7 @@
 }
 
 .form-button:hover {
-  background-color: #ff3b20;
+  background-color: #242fce;
 }
 
 .form-textarea {

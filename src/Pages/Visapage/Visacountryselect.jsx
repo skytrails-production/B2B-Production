@@ -18,7 +18,7 @@ import { apiURL } from "../../Constants/constant";
 function Visacountryselect() {
   const [formData, setFormData] = useState({
     countryName: "",
-    issuedType: "", 
+    issuedType: "",
     continent: "",
     daysToProcess: "",
     visaCategoryName: "",
@@ -30,9 +30,16 @@ function Visacountryselect() {
     continent: "",
     daysToProcess: "",
     visaCategoryName: "",
+    governmentFee: "",
+    platFormFees: "",
   });
 
   const [visaCategories, setVisaCategories] = useState([]);
+
+  const [additionalFields, setAdditionalFields] = useState({
+    governmentFee: "",
+    platFormFees: "",
+  });
 
   const validationSchema = Yup.object({
     countryName: Yup.string().required("Country Name is required"),
@@ -40,6 +47,14 @@ function Visacountryselect() {
     continent: Yup.string().required("Continent is required"),
     daysToProcess: Yup.string().required("Days To Process is required"),
     visaCategoryName: Yup.string().required("Visa Category Name is required"),
+    governmentFee: Yup.string().when('issuedType', {
+      is: (val) => val === 'WEEKLY VISA' || val === 'MONTHLY VISA',
+      then: Yup.string().required('Government Fee is required'),
+    }),
+    platFormFees: Yup.string().when('issuedType', {
+      is: (val) => val === 'WEEKLY VISA' || val === 'MONTHLY VISA',
+      then: Yup.string().required('PlatForm Fees is required'),
+    }),
   });
 
   useEffect(() => {
@@ -51,16 +66,25 @@ function Visacountryselect() {
         setFormData({
           ...formData,
           visaCategoryName:
-            categories.length > 0 ? categories[0].categoryName : "", // Set default value or handle as needed
+            categories.length > 0 ? categories[0].categoryName : "",
         });
       })
       .catch((error) => {
         console.error("Error fetching visa categories:", error);
       });
-  }, []); // Empty dependency array to ensure it runs only once
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
+    if (name === "issuedType" && (value === "WEEKLY VISA" || value === "MONTHLY VISA")) {
+      setAdditionalFields({
+        governmentFee: "",
+        platFormFees: "",
+      });
+    } else {
+      setAdditionalFields({});
+    }
 
     setFormData({
       ...formData,
@@ -77,16 +101,13 @@ function Visacountryselect() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    console.log('Submitting form with data:', formData);
-  
+
     validationSchema
       .validate(formData, { abortEarly: false })
       .then(() => {
         axios
           .post(`${apiURL.baseURL}/skyTrails/api/visa/createVisa`, formData)
           .then((response) => {
-            console.log('API response:', response.data);
             setFormData({
               countryName: '',
               issuedType: '',
@@ -111,7 +132,7 @@ function Visacountryselect() {
   return (
     <>
       <>
-        <Container component="main" maxWidth="sm" className="visaform">
+        <Container component="main" maxWidth="sm" className="visaform" style={{ paddingTop: "80px" }}>
           <form className="formacontainer2" onSubmit={handleSubmit}>
             <Typography
               variant="h6"
@@ -213,6 +234,34 @@ function Visacountryselect() {
               {formErrors.visaCategoryName && (
                 <p style={{ color: "red" }}>{formErrors.visaCategoryName}</p>
               )}
+            </Box>
+            <Box mb={2}>
+              <TextField
+                label="Government Fee"
+                variant="outlined"
+                fullWidth
+                multiline
+                name="governmentFee"
+                value={additionalFields.governmentFee}
+                onChange={(e) => setAdditionalFields({ ...additionalFields, governmentFee: e.target.value })}
+                error={formErrors.governmentFee !== ""}
+                helperText={formErrors.governmentFee}
+                style={{ display: (formData.issuedType === "WEEKLY VISA" || formData.issuedType === "MONTHLY VISA") ? 'block' : 'none' }}
+              />
+            </Box>
+            <Box mb={2}>
+              <TextField
+                label="PlatForm Fees"
+                variant="outlined"
+                fullWidth
+                multiline
+                name="platFormFees"
+                value={additionalFields.platFormFees}
+                onChange={(e) => setAdditionalFields({ ...additionalFields, platFormFees: e.target.value })}
+                error={formErrors.platFormFees !== ""}
+                helperText={formErrors.platFormFees}
+                style={{ display: (formData.issuedType === "WEEKLY VISA" || formData.issuedType === "MONTHLY VISA") ? 'block' : 'none' }}
+              />
             </Box>
             <Box mt={2}>
               <Button

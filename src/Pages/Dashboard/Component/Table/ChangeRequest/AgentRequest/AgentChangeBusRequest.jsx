@@ -1,24 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { DataGrid } from '@mui/x-data-grid';
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  Paper,
   TextField,
   InputAdornment,
-  TableHead,
-  Button,
   Typography,
+  IconButton,
   Stack,
   Pagination,
-  TableContainer,
-  IconButton
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { apiURL } from '../../../../../../Constants/constant';
 import ApprovalIcon from '@mui/icons-material/CheckCircleOutline';
+
 const AllBusChangeTickets = () => {
   const [hotelBookings, setHotelBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -64,9 +58,37 @@ const AllBusChangeTickets = () => {
     setCurrentPage(1);
   };
 
+  const columns = [
+    { field: 'busId', headerName: 'Bus ID', width: 120 },
+    { field: 'agencyName', headerName: 'Agency Name', width: 150, valueGetter: (params) => params.row.userDetails.agency_details.agency_name || 'No Data' },
+    { field: 'name', headerName: 'Name', width: 150, valueGetter: (params) => `${params.row.userDetails.personal_details.first_name} ${params.row.userDetails.personal_details.last_name}` || 'No Data' },
+    { field: 'phone', headerName: 'Phone', width: 130, valueGetter: (params) => params.row.userDetails.personal_details.mobile.mobile_number || 'No Data' },
+    { field: 'email', headerName: 'Email', width: 150, valueGetter: (params) => params.row.userDetails.personal_details.email || 'No Data' },
+    { field: 'reason', headerName: 'Reason', width: 150 },
+    { field: 'pnr', headerName: 'PNR', width: 120, valueGetter: (params) => params.row.busDetails.pnr || 'No Data' },
+    { field: 'amount', headerName: 'Amount', width: 120, valueGetter: (params) => params.row.busDetails.amount || 'No Data' },
+    { field: 'origin', headerName: 'Origin', width: 120, valueGetter: (params) => params.row.busDetails.origin || 'No Data' },
+    { field: 'destination', headerName: 'Destination', width: 150, valueGetter: (params) => params.row.busDetails.destination || 'No Data' },
+    { field: 'dateOfJourney', headerName: 'Date Of Journey', width: 180, valueGetter: (params) => params.row.busDetails.dateOfJourney || 'No Data' },
+    { field: 'busType', headerName: 'Bus Type', width: 120, valueGetter: (params) => params.row.busDetails.busType || 'No Data' },
+    {
+      field: 'approve',
+      headerName: 'Approve',
+      width: 120,
+      renderCell: (params) => (
+        <IconButton
+          size="small"
+          style={{ backgroundColor: '#21325D', color: '#FFFFFF' }}
+        >
+          <ApprovalIcon />
+        </IconButton>
+      ),
+    },
+  ];
+
   return (
-    <div className='subada-table-container'>
-      <div className="adsearch-bar">
+    <div className='subada-table-container' style={{ position: 'relative', width: "100%" }}>
+      <div className="adsearch-bar" style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold' }}>
         <TextField
           type="text"
           value={searchTerm}
@@ -85,58 +107,16 @@ const AllBusChangeTickets = () => {
         </Typography>
       </div>
 
-      <TableContainer component={Paper} className="custom-table-container">
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Bus ID</TableCell>
-              <TableCell>Agency Name</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Phone</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Reason</TableCell>
-              <TableCell>PNR</TableCell>
-              <TableCell>Amount</TableCell>
-              <TableCell>Origin</TableCell>
-              <TableCell>Destination</TableCell>
-              <TableCell>Date Of Journey</TableCell>
-              <TableCell>Bus Type</TableCell>
-              <TableCell>Approve</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className="tableadagent">
-          {filteredData.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={7} align="center" style={{ border: 'none' }}>
-                  <Typography variant="h6">Not Available</Typography>
-                </TableCell>
-              </TableRow>
-            ) : (
-              filteredData.map((booking) => (
-              <TableRow key={booking._id}>
-                <TableCell>{booking.busDetails.busId || "No Data"}</TableCell>
-                <TableCell>{booking.userDetails.agency_details.agency_name || "No Data"}</TableCell>
-                <TableCell>{`${booking.userDetails.personal_details.first_name} ${booking.userDetails.personal_details.last_name}` || "No Data"}</TableCell>
-                <TableCell>{booking.userDetails.personal_details.mobile.mobile_number || "No Data"}</TableCell>
-                <TableCell>{booking.userDetails.personal_details.email || "No Data"}</TableCell>
-                <TableCell>{booking.reason || "No Data"}</TableCell>
-                <TableCell>{booking.busDetails.pnr || "No Data"}</TableCell>
-                <TableCell>{booking.busDetails.amount || "No Data"}</TableCell>
-                <TableCell>{booking.busDetails.origin || "No Data"}</TableCell>
-                <TableCell>{booking.busDetails.destination || "No Data"}</TableCell>
-                <TableCell>{booking.busDetails.dateOfJourney || "No Data"}</TableCell>
-                <TableCell>{booking.busDetails.busType || "No Data"}</TableCell>
-                <TableCell style={{ border: 'none', alignItems: 'center', justifyContent: 'center', display: 'flex' }}>
-                    <IconButton size="small" style={{ backgroundColor: '#21325D', color: '#FFFFFF' }}>
-                      <ApprovalIcon />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <div style={{ width: "100%",backgroundColor:"#fff" }}>
+        <DataGrid
+          rows={filteredData}
+          columns={columns}
+          pageSize={10}
+          autoHeight
+          disableSelectionOnClick
+          getRowId={(row) => row._id}
+        />
+      </div>
 
       {/* Pagination */}
       <Stack spacing={2} direction="row" justifyContent="center" mt={2}>

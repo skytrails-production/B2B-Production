@@ -69,7 +69,7 @@ function VisaCountry() {
 
   return (
     <>
-      <Container component="main" maxWidth="sm" className='visaform'>
+      <Container component="main" maxWidth="sm" className='visaform' style={{paddingTop:"80px"}}>
         <form className="formacontainer2" onSubmit={handleSubmit}>
           <Typography variant="h6" gutterBottom style={{ textAlign: 'center', fontSize: '2rem', color: 'white', backgroundColor: 'rgb(22,17,58)', fontWeight: 'bold' }}>
             Document Type
@@ -77,7 +77,7 @@ function VisaCountry() {
           <Box
             mb={2}
             sx={{
-              marginTop: 8,
+              marginTop: 2,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',

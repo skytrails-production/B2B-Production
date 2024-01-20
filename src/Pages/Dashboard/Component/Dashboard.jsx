@@ -108,7 +108,9 @@ import Getevent from "../../Historytable/Getevent";
 import Package from "../../Historytable/Package";
 import newlogo from "../../../Images/whitelogo1.png";
 import PersonIcon from "@mui/icons-material/Person";
-
+import ImageIcon from '@mui/icons-material/Image'; // Import the Image icon
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+import ChangeCircleOutlinedIcon from '@mui/icons-material/ChangeCircleOutlined';
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -280,6 +282,12 @@ export default function VerticalTabs() {
     // Navigate to the desired route when the button is clicked
     navigate("/addMarkup");
   };
+
+  const createCoupon = () => {
+    // Navigate to the desired route when the button is clicked
+    navigate("/admin/addCoupons");
+  };
+
 
   // const [value, setValue] = useState(0);
   // const handleChange = (event, newValue) => {
@@ -469,11 +477,27 @@ export default function VerticalTabs() {
               </InputLabel>
               <FormControl>
                 <Select
-                  style={{ width: "200px", height: "40px", color: "white" }}
+                  style={{ width: "200px", height: "40px", color: "white", border: "1px solid white" }}
                   labelId="dropdown-label"
                   id="dropdown"
                   value={selectedValue}
                   onChange={handleChange}
+                  MenuProps={{ // Use MenuProps to customize the menu
+                    anchorOrigin: {
+                      vertical: "bottom",
+                      horizontal: "left"
+                    },
+                    transformOrigin: {
+                      vertical: "top",
+                      horizontal: "left"
+                    },
+                    getContentAnchorEl: null // This prevents the menu from being positioned incorrectly
+                  }}
+                  IconComponent={() => (
+                    <div style={{ color: "white", padding: "5px", borderRadius: "0 4px 4px 0" }}>
+                      &#9660; {/* Unicode character for down arrow */}
+                    </div>
+                  )}
                 >
                   <MenuItem
                     value="option1"
@@ -566,101 +590,79 @@ export default function VerticalTabs() {
                 transformOrigin={{ horizontal: "right", vertical: "top" }}
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
               >
-                <MenuItem onClick={handleClose}>
+                <MenuItem >
                   <Avatar /> Profile
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
+                <MenuItem >
                   <Avatar /> My account
                 </MenuItem>
                 <Divider />
-                <MenuItem onClick={handleClose}>
+                <MenuItem >
                   <ListItemIcon>
                     <PersonAdd fontSize="small" />
                   </ListItemIcon>
                   Add another account
                 </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    handleClose();
-                    createSubAdmin();
-                  }}
-                >
+                <MenuItem onClick={() => { handleClose(); createSubAdmin(); }}>
                   <ListItemIcon>
                     <PersonAdd fontSize="small" />
                   </ListItemIcon>
                   Add SUBADMIN
                 </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    handleClose();
-                    createAgent();
-                  }}
-                >
+                <MenuItem onClick={() => { handleClose(); createAgent(); }}>
                   <ListItemIcon>
                     <PersonAdd fontSize="small" />
                   </ListItemIcon>
                   Add Agent
                 </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    handleClose();
-                    createAdvertisemnet();
-                  }}
-                >
-                  <AddPhotoAlternateIcon>
+                <MenuItem onClick={() => { handleClose(); createAdvertisemnet(); }}>
+                  <ListItemIcon>
                     <PersonAdd fontSize="small" />
-                  </AddPhotoAlternateIcon>
-                  Add Advertisemnt
+                  </ListItemIcon>
+                  Add Advertisement
                 </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    handleClose();
-                    createWebAdvertisemnet();
-                  }}
-                >
-                  <AddPhotoAlternateIcon>
+                <MenuItem onClick={() => { handleClose(); createWebAdvertisemnet(); }}>
+                  <ListItemIcon>
                     <PersonAdd fontSize="small" />
-                  </AddPhotoAlternateIcon>
-                  Add WebAdvertisemnt
+                  </ListItemIcon>
+                  Add Web Advertisement
                 </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    handleClose();
-                    createEvents();
-                  }}
-                >
-                  <AddPhotoAlternateIcon>
+                <MenuItem onClick={() => { handleClose(); createEvents(); }}>
+                  <ListItemIcon>
                     <PersonAdd fontSize="small" />
-                  </AddPhotoAlternateIcon>
+                  </ListItemIcon>
                   Add Events
                 </MenuItem>
+                <MenuItem onClick={() => { handleClose(); createMarkup(); }}>
+                  <ListItemIcon>
+                    <PersonAdd fontSize="small" />
+                  </ListItemIcon>
+                  Add Markup
+                </MenuItem>
+
                 <MenuItem
                   onClick={() => {
                     handleClose();
-                    createMarkup();
+                    createCoupon();
                   }}
                 >
                   <AddPhotoAlternateIcon>
                     <PersonAdd fontSize="small" />
                   </AddPhotoAlternateIcon>
-                  Add Markup
+                  Add Coupon
                 </MenuItem>
                 <MenuItem
                   onClick={() => {
                     handleClose();
                   }}
                 >
+
                   <ListItemIcon>
                     <Settings fontSize="small" />
                   </ListItemIcon>
                   Settings
                 </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    handleClose();
-                    signOutAdmin();
-                  }}
-                >
+                <MenuItem onClick={() => { handleClose(); signOutAdmin(); }}>
                   <ListItemIcon>
                     <Logout fontSize="small" />
                   </ListItemIcon>
@@ -921,7 +923,7 @@ export default function VerticalTabs() {
               </ListItemButton>
             </ListItem>
 
-            <ListItem
+            {/* <ListItem
               disablePadding
               sx={{ display: "block" }}
               onClick={handleButtonClick2}
@@ -949,11 +951,11 @@ export default function VerticalTabs() {
                   <AddCircleOutlineIcon sx={{ color: "white" }} />
                 </ListItemIcon>
                 <ListItemText
-                  primary="Add Markup"
+                  primary="Add Markups"
                   sx={{ opacity: open ? 1 : 0, color: "white" }}
                 />
               </ListItemButton>
-            </ListItem>
+            </ListItem> */}
             <ListItem
               disablePadding
               sx={{ display: "block" }}
@@ -1074,7 +1076,7 @@ export default function VerticalTabs() {
                 />
               </ListItemButton>
             </ListItem>
-           
+
 
             <ListItem disablePadding sx={{ display: "block" }}>
               <ListItemButton
@@ -1095,11 +1097,11 @@ export default function VerticalTabs() {
                     justifyContent: "center",
                   }}
                 >
-                  <CalendarTodayOutlinedIcon sx={{ color: "white" }} />
+                  <CancelOutlinedIcon sx={{ color: "white" }} />
                 </ListItemIcon>
                 <ListItemText
                   primary="Cancel Ticket"
-                  sx={{ opacity: open ? 1 : 0, color: "white" }}
+                  sx={{ opacity: open ? 1 : 0, color: "white", marginLeft: "20px" }}
                 />
               </ListItemButton>
               <Collapse in={openCollapse} timeout="auto" unmountOnExit>
@@ -1370,11 +1372,11 @@ export default function VerticalTabs() {
                     justifyContent: "center",
                   }}
                 >
-                  <CalendarTodayOutlinedIcon sx={{ color: "white" }} />
+                  <ChangeCircleOutlinedIcon sx={{ color: "white" }} />
                 </ListItemIcon>
                 <ListItemText
                   primary="Change Request"
-                  sx={{ opacity: open ? 1 : 0, color: "white" }}
+                  sx={{ opacity: open ? 1 : 0, color: "white",marginLeft: "20px" }}
                 />
               </ListItemButton>
               <Collapse in={openCollapseSix} timeout="auto" unmountOnExit>
@@ -1725,7 +1727,7 @@ export default function VerticalTabs() {
                 </ListItemIcon>
                 <ListItemText
                   primary="AGENT Bookings"
-                  sx={{ opacity: open ? 1 : 0, color: "white" }}
+                  sx={{ opacity: open ? 1 : 0, color: "white", marginLeft: "20px" }}
                 />
               </ListItemButton>
               <Collapse in={openCollapseFour} timeout="auto" unmountOnExit>
@@ -1845,7 +1847,7 @@ export default function VerticalTabs() {
                 </ListItemIcon>
                 <ListItemText
                   primary="USER Bookings"
-                  sx={{ opacity: open ? 1 : 0, color: "white" }}
+                  sx={{ opacity: open ? 1 : 0, color: "white", marginLeft: "20px" }}
                 />
               </ListItemButton>
               <Collapse in={openCollapseFive} timeout="auto" unmountOnExit>
@@ -2265,7 +2267,7 @@ export default function VerticalTabs() {
                 </ListItemIcon>
                 <ListItemText
                   primary="VISA BOOKING"
-                  sx={{ opacity: open ? 1 : 0, color: "white" }}
+                  sx={{ opacity: open ? 1 : 0, color: "white",marginLeft: "20px" }}
                 />
               </ListItemButton>
               <Collapse in={openCollapsetwenty} timeout="auto" unmountOnExit>
@@ -2428,7 +2430,7 @@ export default function VerticalTabs() {
 
             {/* //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
           </List>
-          <Divider/>
+          <Divider />
         </Drawer>
 
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
@@ -2489,10 +2491,10 @@ export default function VerticalTabs() {
                 <UserFlightChangeRequest />
               )}
               {menuData === "Bus ChangeTickets" && <UserBusChangeRequest />}
-              {menuData === "User MarkUp Amount" && <MarkUpAmount/>}
-              {menuData === "Edit Holiday Package" && <PackageDetails/>}
-              {menuData === "Forex" && <ForexData/>}
-              {menuData === "Visa Request" && <VisaData/>}
+              {menuData === "User MarkUp Amount" && <MarkUpAmount />}
+              {menuData === "Edit Holiday Package" && <PackageDetails />}
+              {menuData === "Forex" && <ForexData />}
+              {menuData === "Visa Request" && <VisaData />}
               {menuData === "Hotel Bookings" && <AgentHotelBookings />}
               {menuData === "Flight Bookings" && <AgentFlightBookings />}
               {menuData === "Bus Bookings" && <AgentBusBookings />}

@@ -5,72 +5,81 @@
 } */
 
 .addMarkupForm {
-    display: flex;
-      flex-direction: column;
-      gap: 0px !important;
-      padding: 20px;
-      overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0px !important;
+
+  overflow: hidden;
+}
+
+.form-containers {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  margin:auto;
+  padding: 30px;
+  border-radius: 10px;
+  /* background-color: #fff; */
+  opacity: 0.8;
+  /* Adjust opacity as needed */
+  backdrop-filter: blur(5px);
+  /* Creates a blur effect behind the form */
+  animation: fadeIn ease 1s;
+  /* Fade in animation */
+  /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
+  overflow-y: hidden;
+  overflow: hidden;
+  overflow-x: hidden;
+  transition: 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
-  .form-container {
-    display: flex;
-    flex-direction: column;
-    width: 500px;
-    margin: 50px auto;
-    padding: 30px;
-    border-radius: 10px;
-    background: linear-gradient(to bottom, rgb(164, 194, 224) 0%, #f38282 100%);
-    opacity: 0.8; /* Adjust opacity as needed */
-    backdrop-filter: blur(5px); /* Creates a blur effect behind the form */
-    animation: fadeIn ease 1s; /* Fade in animation */
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    overflow-y: hidden;
-    overflow: hidden;
-    overflow-x: hidden;
-    transition: 0.3s ease-in-out;
+
+  to {
+    opacity: 1;
   }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  
-  .form-title {
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  .markup-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px
-  }
-  
-  .mark-form-group{
-    display: flex;
-    align-items: center;
-  }
-  
-  .form-label-addmarkup {
-    width: 150px;
-    font-size: 16px;
-    font-weight: normal;
-    margin-right: 10px;
-    color: #030101;
-    cursor: pointer;
-    transition: 0.3s ease-in-out;
-  }
-  
-  
-  
-  /* .mark-form-input {
+}
+
+.form-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.markup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background-color: #fff;
+  margin-top: -60px;
+  padding-top:50px;
+  padding-bottom: 20px;
+  border-radius: 8px;
+}
+
+.mark-form-group {
+  display: flex;
+  align-items: center;
+}
+
+.form-label-addmarkup {
+  width: 150px;
+  font-size: 16px;
+  font-weight: normal;
+  margin-right: 10px;
+  color: #030101;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+
+
+/* .mark-form-input {
     flex: 1;
     padding: 10px;
     border: 1px solid #ddd;
@@ -79,148 +88,151 @@
     outline: none;
     transition: 0.3s ease-in-out;
   } */
-  
-  .mark-form-input:focus {
-    border-color: #007bff;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+
+.mark-form-input:focus {
+  border-color: #007bff;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+.mark-form-button {
+  padding: 10px 140px !important;
+  border: none;
+  border-radius: 5px;
+  background-color: #21325D;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  margin: auto;
+  transition: 0.3s ease-in-out;
+}
+
+.mark-form-button:hover {
+  background-color: #117df0;
+}
+
+.form-container {
+  width: 500px;
+  margin: 50px auto;
+  padding: 30px;
+  border-radius: 10px;
+  background-color: #f5f5f5;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  animation: fadeIn ease 1s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
-  .mark-form-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #78b7eb;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-    margin: auto;
-    transition: 0.3s ease-in-out;
+
+  to {
+    opacity: 1;
   }
-  
-  .mark-form-button:hover {
-    background-color: #007bff;
-  }
-  .form-container {
-    width: 500px;
-    margin: 50px auto;
-    padding: 30px;
-    border-radius: 10px;
-    background-color: #f5f5f5;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    animation: fadeIn ease 1s;
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  
-  .form-title {
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .subadmin-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .form-group {
-    display: flex;
-    align-items: center;
-  }
-  
-  .form-label-subAdmin {
-    width: 150px;
-    font-size: 16px;
-    font-weight: normal;
-    margin-right: 10px;
-  }
-  
-  .form-label-subAdmin:hover{
-    color: #f0dddd;
-  }
-  
-  .form-label-subAdmin:focus{
-    background-color: lightblue;
-  }
-  .mark-form-input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #eba9a9;
-    border-radius: 5px;
-    font-size: 14px;
-    outline: none;
-    transition: 0.3s ease-in-out;
-  }
-  
-  .mark-form-input:focus {
-    border-color: #007bff;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .mark-form-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.3s ease-in-out;
-  }
-  
-  .mark-form-button:hover {
-    background-color: #0062cc;
-  }
-  
-  /* Classic form enhancements */
-  
-  /* body {
+}
+
+.form-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.subadmin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+}
+
+.form-label-subAdmin {
+  width: 150px;
+  font-size: 16px;
+  font-weight: normal;
+  margin-right: 10px;
+}
+
+.form-label-subAdmin:hover {
+  color: #f0dddd;
+}
+
+.form-label-subAdmin:focus {
+  background-color: lightblue;
+}
+
+.mark-form-input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #eba9a9;
+  border-radius: 5px;
+  font-size: 14px;
+  outline: none;
+  transition: 0.3s ease-in-out;
+}
+
+.mark-form-input:focus {
+  border-color: #007bff;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+.mark-form-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+ 
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+/* .mark-form-button:hover {
+  background-color: #0062cc;
+} */
+
+/* Classic form enhancements */
+
+/* body {
     font-family: 'Helvetica Neue', sans-serif;
     margin: 0;
     padding: 0;
   } */
-  
-  .form-container {
-    background-color: #fff;
-    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
-  }
-  
-  .form-title {
-    color: #333;
-  }
-  
-  /* .form-label-subAdmin {
+
+.form-container {
+  background-color: #fff;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.form-title {
+  color: #333;
+}
+
+/* .form-label-subAdmin {
     color: #000000;
   } */
-  
-  .mark-form-input {
-    background-color: #eee;
-  }
-  
-  .mark-form-button {
-    background-color: #333;
-    color: #fff;
-  }
-  
-  .agent-image{
-    /* align-items: center;
+
+.mark-form-input {
+  background-color: #eee;
+}
+
+.mark-form-button {
+  /* background-color: #333; */
+  color: #fff;
+}
+
+.agent-image {
+  /* align-items: center;
     justify-content: center; */
-    height: 50px;
-    width: 150px;
-    /* margin: auto; */
-  }
-  .image-div{
-    align-items: center;
-    justify-content: center;
-    margin: auto;
-  }
-  
+  height: 50px;
+  width: 150px;
+  /* margin: auto; */
+}
+
+.image-div {
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
