@@ -128,12 +128,16 @@ const Holidayguestinfo = ({ setadultCount, setchildCount }) => {
       setAdd(true)
       return
     }
-    dispatch(addFormEntry(formData));
-    setFormData({
-      name: "",
-      dob: "",
-      gender: "male",
-    });
+    else{
+      dispatch(addFormEntry(formData));
+      setFormData({
+        name: "",
+        dob: "",
+        gender: "male",
+      });
+      setAdd(false)
+    }
+   
   };
   function validateEmail(email) {
     // Define the regular expression pattern for a valid phone number

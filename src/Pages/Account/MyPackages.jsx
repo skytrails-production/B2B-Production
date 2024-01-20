@@ -39,7 +39,7 @@ const MyPackages = () => {
 
   useEffect(() => {
     fetchData("all");
-  }, [data]);
+  }, []);
 
   const memoizedData = useMemo(() => data, [data]);
 

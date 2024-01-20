@@ -20,18 +20,18 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const  Holidaysalesummary = ({ childCount, adultCount }) => {
+const Holidaysalesummary = ({ childCount, adultCount }) => {
   const [grandTotal, setgrandTotal] = useState(0);
   const dispatch = useDispatch();
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const reducerState = useSelector((state) => state);
   const onePackage =
     reducerState?.searchOneResult?.OneSearchPackageResult?.data?.data;
   const reducerForm = reducerState?.form?.formEntries;
-  console.warn("reducerForm",reducerForm)
-if(reducerForm===undefined){
-  return(<div></div>)
-}
+  console.warn("reducerForm", reducerForm)
+  if (reducerForm === undefined) {
+    return (<div></div>)
+  }
   return (
 
     <>
@@ -59,9 +59,9 @@ if(reducerForm===undefined){
               <span>Total Basic Cost</span>
               <span>{" "}
                 Travellers {reducerForm?.length - 1} x{" "}₹
-                {onePackage?.pakage_amount.amount}</span>
+                {(onePackage?.pakage_amount.amount).toFixed(2)}</span>
             </div>
-            <p>{'₹'}{(reducerForm?.length - 1) * onePackage?.pakage_amount.amount}</p>
+            <p>{'₹'}{((Number(reducerForm?.length - 1)) * Number(onePackage?.pakage_amount.amount)).toFixed(2)}</p>
           </div>
         </div>
         <div className="totCOmm">
@@ -70,24 +70,24 @@ if(reducerForm===undefined){
           </div>
           <div >
             <span>GST 5.0%</span>
-            <p>{'₹'}{(reducerForm.length - 1) *
+            <p>{'₹'}{((reducerForm.length - 1) *
               onePackage?.pakage_amount.amount *
-              0.05}</p>
+              0.05).toFixed(2)}</p>
           </div>
           <div >
             <span>Total GST</span>
-            <p>{'₹'}{(reducerForm.length - 1) *
+            <p>{'₹'}{((reducerForm.length - 1) *
               onePackage?.pakage_amount.amount *
-              0.05}</p>
+              0.05).toFixed(2)}</p>
           </div>
         </div>
         <div className="TotGst">
           <div >
             <span>Grand Total:</span>
-            <p>{'₹'}{(reducerForm.length - 1) *
+            <p>{'₹'}{((reducerForm.length - 1) *
               onePackage?.pakage_amount?.amount *
               0.05 +
-              (reducerForm?.length - 1) * onePackage?.pakage_amount?.amount}</p>
+              (reducerForm?.length - 1) * onePackage?.pakage_amount?.amount).toFixed(2)}</p>
           </div>
         </div>
 

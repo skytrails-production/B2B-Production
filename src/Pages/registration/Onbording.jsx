@@ -48,6 +48,8 @@ import three from "../../Images/regestration/3.png";
 import four from "../../Images/regestration/4.png";
 import five from "../../Images/regestration/5.png";
 import whiteLogo from "../../Images/whiteLogo.png";
+import { motion, useAnimation ,variant,AnimatePresence} from "framer-motion";
+
 
 const Onbording = () => {
   const [agencyPage, setAgencyPage] = useState(1);
@@ -469,6 +471,20 @@ const Onbording = () => {
       return false;
     } else return true;
   }
+  const variants = {
+    initial: {
+      y: 50,
+      opacity: 0,
+    },
+    animate: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+        staggerChildren: 0.1,
+      },
+    },
+  };
 
   return (
     <div>
@@ -746,7 +762,7 @@ const Onbording = () => {
                               justifyContent="space-between"
                               style={{ gap: "10px" }}
                             >
-                              <div className="form_input" mx={2}>
+                              <motion.div className="form_input" variants={variants} mx={2}>
                                 <label
                                   htmlFor="first_name"
                                   className="form_lable"
@@ -772,7 +788,7 @@ const Onbording = () => {
                                   personalDetail.first_name === "" && (
                                     <span id="error1">Enter First Name</span>
                                   )}
-                              </div>
+                              </motion.div>
                               <div className="form_input" mx={2}>
                                 <label className="form_lable">Last Name</label>
                                 <input

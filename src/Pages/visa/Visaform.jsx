@@ -216,7 +216,7 @@ const Visaform = () => {
       };
 
       try {
-        const response = await axios.post('https://dev.theskytrails.com/FrontWebsite/', payload, { headers });
+        const response = await axios.post('https://crm.theskytrails.com/FrontWebsite/', payload, { headers });
         // dispatch(createVisaAction(payload));
 
         setSuccessMessage("Your query was submitted successfully. We will call you shortly.");
