@@ -238,10 +238,17 @@ const FlightChangeReq = () => {
   <p>Flight Name: {flight?.airlineDetails?.[0]?.Airline?.AirlineName}</p>
   <p>Departure: {formatDate(flight?.airlineDetails?.[0]?.Origin?.DepTime)}</p>
   <p>
-    {flight?.airlineDetails?.[0]?.Origin?.CityName}
-    <ArrowForwardIcon /> {flight?.airlineDetails?.[0]?.Destination?.CityName}
+    {flight?.airlineDetails?.[0]?.Origin?.CityName} 
+   
+   <ArrowForwardIcon /> {flight?.airlineDetails?.[0]?.Destination?.CityName}
     {flight?.airlineDetails?.length > 1 && <ArrowForwardIcon />}
     {flight?.airlineDetails?.[1]?.Destination?.CityName}
+    {flight?.airlineDetails?.length > 2 && <ArrowForwardIcon />}
+    {flight?.airlineDetails?.[2]?.Destination?.CityName} 
+    {flight?.airlineDetails?.length > 3 && <ArrowForwardIcon />}
+    {flight?.airlineDetails?.[3]?.Destination?.CityName}
+    {flight?.airlineDetails?.length > 4 && <ArrowForwardIcon />}
+    {flight?.airlineDetails?.[4]?.Destination?.CityName}  
   </p>
 </div>
 

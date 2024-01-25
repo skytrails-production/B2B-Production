@@ -166,34 +166,33 @@ export default function Tables() {
   const [value, setValue] = React.useState("");
 
   const handleToggle = async (value, userId) => {
-    setLoading(true);
-    // Get the current status of the user
-    const currentStatus = activeUsers[userId];
-    // Invert the current status to get the updated status
-    const updatedStatus = !currentStatus;
-    // Update the activeUsers state with the new status
-    // console.log("undated status", updatedStatus);
-    setActive({ ...activeUsers, [userId]: updatedStatus });
+  setLoading(true);
 
-    // console.log("value", value);
+  const currentStatus = activeUsers[userId];
+  const updatedStatus = !currentStatus;
 
-    if (value === "active") {
-      const payload = {
-        user_id: userId,
-        is_active: 1,
-      };
-      dispatch(activeStatusAction(payload));
-    } else if (value == "inactive") {
-      const payload = {
-        user_id: userId,
-        is_active: 0,
-      };
-      setLoading(false);
-      dispatch(activeStatusAction(payload));
+  setActive({ ...activeUsers, [userId]: updatedStatus });
+
+  if (value === "active" || value === "inactive") {
+    const payload = {
+      user_id: userId,
+      is_active: value === "active" ? 1 : 0,
+    };
+
+    try {
+      await dispatch(activeStatusAction(payload));
+      // If the dispatch is successful, you don't need to reload the entire page.
+    } catch (error) {
+      console.error("Error updating status:", error);
     }
-    setValue(value);
-    window.location.reload();
-  };
+  }
+
+  setLoading(false);
+  setValue(value);
+};
+
+
+
   // console.log("value", value);
   useEffect(() => {
     dispatch(getUserAction());
@@ -717,7 +716,8 @@ export default function Tables() {
                                   <TextField
                                     size="large"
                                     id="standard-basic"
-                                    label="Vendor Amount"
+                                    // label="Vendor Amount"
+                                    placeholder="Vendor Amount"
                                     onChange={(e) => setAmount(e.target.value)}
                                     fullWidth
                                     sx={{ marginBottom: 2 }}

@@ -22,6 +22,7 @@ const AllHotelCancelTickets = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState([]);
+  const [selectedStatusMap, setSelectedStatusMap] = useState(new Map());
 
   useEffect(() => {
     async function fetchHotelBookings() {
@@ -71,6 +72,12 @@ const AllHotelCancelTickets = () => {
 
     setFilteredData(filtered);
   };
+  const handleStatusChange = (id, selectedValue) => {
+    setSelectedStatusMap(new Map(selectedStatusMap.set(id, selectedValue)));
+    // Add logic to update the status in your data or trigger an API call
+    console.log(`Status changed to ${selectedValue} for row with id ${id}`);
+    // Add additional logic as needed
+  };
 
   const columns = [
     { field: 'bookingId', headerName: 'Booking ID', width: 120 },
@@ -90,14 +97,25 @@ const AllHotelCancelTickets = () => {
       headerName: 'APPROVE',
       width: 120,
       renderCell: (params) => (
-        <IconButton
-          size="small"
-          style={{ backgroundColor: "#21325D", color: "#FFFFFF" }}
-        >
-          <ApprovalIcon />
-        </IconButton>
+        <div>
+          <select
+            value={selectedStatusMap.get(params.row._id) || params.row.status || ''}
+            onChange={(e) => handleStatusChange(params.row._id, e.target.value)}
+            style={{
+              backgroundColor: selectedStatusMap.get(params.row._id) === 'ACTIVE' ? '#008000' : '#FF0000',
+              color: '#FFFFFF',
+              padding: '5px',
+              borderRadius: '5px',
+            }}
+          >
+            <option value="">{params.row.status}</option>
+            <option value="ACTIVE">Active</option>
+            <option value="NOT ACTIVE">Not Active</option>
+          </select>
+        </div>
       ),
     },
+
   ];
 
   return (
@@ -120,7 +138,7 @@ const AllHotelCancelTickets = () => {
           Agent Hotel Cancel Ticket Request
         </Typography>
       </div>
-      <div style={{width: '100%',backgroundColor:"#fff" }}>
+      <div style={{ width: '100%', backgroundColor: "#fff" }}>
         <DataGrid
           rows={filteredData}
           columns={columns}

@@ -6,7 +6,7 @@ import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { Modal, Box, TextField, Button,Typography } from '@mui/material';
 import "./FlightTicket.css";
 import { useNavigate } from "react-router-dom";
-import html2pdf from "html2pdf.js";
+
 import Swal from "sweetalert2";
 const pdfLogo = "https://travvolt.s3.amazonaws.com/ST-Main-LogoPdf.png";
 const Spinner = () => {
@@ -86,11 +86,7 @@ const BusTicket = () => {
   const journeyDateFormatted = formatDate(data?.data[0]?.departureTime, 'ddd, DD MMM YYYY');
   const depTimeFormatted = formatDate(data?.data[0]?.departureTime, 'hh:mm A');
 
-  // Function to handle PDF download
-  // const handleDownloadAsPDF = () => {
-  //   const element = document.getElementById("pdf-content"); // Get the element to convert to PDF
-  //   html2pdf().from(element).save(); // Convert to PDF and save
-  // };
+ 
 
   // Function to handle printing
   const handlePrintTicket = () => {

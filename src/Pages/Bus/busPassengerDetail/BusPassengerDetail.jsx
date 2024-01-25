@@ -21,6 +21,7 @@ import dayjs from "dayjs";
 import busArrow from '../../../Images/busArrow.png'
 import { motion } from "framer-motion";
 import { apiURL } from "../../../Constants/constant";
+import {validateName,validateEmail,validatePhoneNumber} from  '../../../utils/validation'
 
 
 const variants = {
@@ -107,18 +108,18 @@ const BusPassengerDetail = () => {
 
   };
   // console.log(passengerData);
-  function validateEmail(email) {
-    const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    return regex.test(email);
-  }
-  function validatePhoneNumber(phoneNumber) {
-    const regex = /^\d{10}$/;
-    return regex.test(phoneNumber);
-  }
+  // function validateEmail(email) {
+  //   const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  //   return regex.test(email);
+  // }
+  // function validatePhoneNumber(phoneNumber) {
+  //   const regex = /^\d{10}$/;
+  //   return regex.test(phoneNumber);
+  // }
   function validate() {
     if (
       (passengerData.filter((item) => (
-        item.FirstName === "" || item.LastName === "" || item.Address === "" || !validateEmail(item.Email) || !validatePhoneNumber(item.Phoneno)
+        !validateName( item.FirstName) || !validateName( item.LastName)|| item.Address === "" || !validateEmail(item.Email) || !validatePhoneNumber(item.Phoneno)
       ))).length > 0) {
 
       return true;
@@ -289,7 +290,7 @@ const BusPassengerDetail = () => {
                                         hotel_form_input
                                         className="form_lable"
                                       >
-                                        First name*
+                                        First Name
                                       </label>
                                       <input
                                         name="FirstName"
@@ -311,7 +312,7 @@ const BusPassengerDetail = () => {
                                         hotel_form_input
                                         className="form_lable"
                                       >
-                                        Last name*
+                                        Last Name
                                       </label>
                                       <input
                                         name="LastName"
@@ -354,7 +355,7 @@ const BusPassengerDetail = () => {
                                         hotel_form_input
                                         className="form_lable"
                                       >
-                                        Email*
+                                        Email
                                       </label>
                                       <input
                                         name="Email"
@@ -377,7 +378,7 @@ const BusPassengerDetail = () => {
                                         hotel_form_input
                                         className="form_lable"
                                       >
-                                        Address*
+                                        Address
                                       </label>
                                       <input
                                         name="Address"
@@ -400,19 +401,19 @@ const BusPassengerDetail = () => {
                                         hotel_form_input
                                         className="form_lable"
                                       >
-                                        Phone*
+                                        Phone
                                       </label>
                                       <input
                                         name="Phoneno"
                                         type="text"
-                                        placeholder="Enter your Phoneno"
+                                        placeholder="Enter 10 digit number "
                                         value={passengerData.Phoneno}
                                         onChange={(e) =>
                                           handleServiceChange(e, index)
                                         }
                                       />
                                       {!validatePhoneNumber(passengerData[index].Phoneno) && sub &&
-                                        <span id="error1">Enter your Phonne Number</span>}
+                                        <span id="error1">Enter a valid 10 digit number  </span>}
 
                                     </div>
                                   </Box>

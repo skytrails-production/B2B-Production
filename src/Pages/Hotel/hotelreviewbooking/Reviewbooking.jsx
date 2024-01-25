@@ -15,6 +15,7 @@ import HotelLoading from "../hotelLoading/HotelLoading";
 
 
 
+
 const Guestdetail = () => {
   const [loader, setLoader] = useState(false);
   const reducerState = useSelector((state) => state);

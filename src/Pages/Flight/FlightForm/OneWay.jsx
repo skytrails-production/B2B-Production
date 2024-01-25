@@ -328,7 +328,7 @@ const OneWay = () => {
 
           <motion.div className="row rowcon" variants={variants} initial="initial"
             whileInView="animate">
-            <motion.div variants={variants} className="col-xs-12 col-md-3 ps-0 mb-3 ">
+            <motion.div variants={variants} className="col-xs-12 col-md-4 ps-0 mb-3 ">
               <div className="form_input " >
 
                 <label className="form_lable">Departure</label>
@@ -396,30 +396,30 @@ const OneWay = () => {
                 {toError !== "" && <span className="error">{toError}</span>}
                 {/* {isLoading && <div>Loading...</div>} */}
                 {toggleTo && (
-                    <div
-                      className="chooseAbsBox"
-                      style={{ display:  "block"  }}
-                      ref={listToRef}
-                    >
-                      <ul>
-                        <div className="chooseAbs">
-                          {toSearchResults.map((result) => (
-                            <li
-                              key={result._id}
-                              onClick={() => handleToClick(result)}
-                            >
-                              <strong>{result.AirportCode}</strong>{" "}
-                              {result.name} {result.code}
-                            </li>
-                          ))}
-                        </div>
-                      </ul>
-                    </div>
-                  )}
+                  <div
+                    className="chooseAbsBox"
+                    style={{ display: "block" }}
+                    ref={listToRef}
+                  >
+                    <ul>
+                      <div className="chooseAbs">
+                        {toSearchResults.map((result) => (
+                          <li
+                            key={result._id}
+                            onClick={() => handleToClick(result)}
+                          >
+                            <strong>{result.AirportCode}</strong>{" "}
+                            {result.name} {result.code}
+                          </li>
+                        ))}
+                      </div>
+                    </ul>
+                  </div>
+                )}
               </div>
             </motion.div>
 
-            <motion.div variants={variants} className="col-xs-12 col-md-4 ps-0 mb-3">
+            <motion.div variants={variants} className="col-xs-12 col-md-3 ps-0 mb-3">
               <div className="form_input" onClick={handleClick}>
                 <label className="form_lable">Departure Date</label>
                 <input
@@ -438,7 +438,7 @@ const OneWay = () => {
 
           <motion.div className="row" variants={variants} initial="initial"
             whileInView="animate">
-            <motion.div variants={variants} className=" col-md-3 col-lg-3 col-sm-12 col-12 mb-3 ps-0">
+            <motion.div variants={variants} className=" col-md-3 col-lg-4 col-sm-12 col-12 mb-3 ps-0">
               <div className="form_input">
                 <label className="form_lable">Adult(12+ Yrs)</label>
                 <select name="adult" id="" className="form_input_select">
@@ -455,7 +455,7 @@ const OneWay = () => {
               </div>
             </motion.div>
 
-            <motion.div variants={variants} className=" col-md-3 col-lg-3 col-sm-12 col-12 mb-3 ps-0">
+            <motion.div variants={variants} className=" col-md-3 col-lg-4 col-sm-12 col-12 mb-3 ps-0">
               <div className="form_input">
                 <label className="form_lable">Child(2-12 Yrs)</label>
                 <select name="child" id="" className="form_input_select">
@@ -471,7 +471,7 @@ const OneWay = () => {
                 </select>
               </div>
             </motion.div>
-            <motion.div variants={variants} className=" col-md-3 col-lg-3 col-sm-12 col-12 mb-3 ps-0">
+            <motion.div variants={variants} className=" col-md-3 col-lg-4 col-sm-12 col-12 mb-3 ps-0">
               <div className="form_input">
                 <label className="form_lable">Infant({"<"} 2 Yrs)</label>
                 <select name="infant" id="" className="form_input_select">
@@ -492,7 +492,7 @@ const OneWay = () => {
               <div className="form_input">
                 <label className="form_lable">Class</label>
                 <select name="class" id="" className="form_input_select">
-                  {/* <option value="1">All</option> */}
+                  <option value="1">All</option>
                   <option value="2">Ecomomy</option>
                   <option value="3">Premimum Economy</option>
                   <option value="4">Business</option>
@@ -506,22 +506,22 @@ const OneWay = () => {
 
             <div className="col-xs-12">
               <div className="row bottom-row">
-                <div variants={variants} className="col-md-6 col-lg-6 col-12 col-sm-12 mb-3 ps-0">
+                {/* <div variants={variants} className="col-md-6 col-lg-6 col-12 col-sm-12 mb-3 ps-0">
                   <div className="form_input mb-0">
                     <label className="form_lable">Preferred Airline</label>
                     <select name="adult" id="" className="form_input_select1">
                       <option value="1">Select Airline </option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
+                      <option value="2">Indigo</option>
+                      <option value="3">Vistara</option>
+                      <option value="4">SpiceJet</option>
+                      <option value="5">Air India</option>
                       <option value="6">6</option>
                       <option value="7">7</option>
                       <option value="8">8</option>
                       <option value="9">9</option>
                     </select>
                   </div>
-                </div>
+                </div> */}
 
 
                 <div variants={variants} className="col-md-6 col-lg-6 col-12 col-sm-12 mb-3 ps-0">

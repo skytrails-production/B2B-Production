@@ -365,6 +365,16 @@ const Holidayguestinfo = ({ setadultCount, setchildCount }) => {
                       {sub && !validateEmail(requestData.email) && <span id="error1">Enter Email</span>}
 
                     </div>
+                    <div className="col-lg-2">
+                      <div class="form-floating md-mb-3">
+                        <select class="form-select" name="countryCode" value={requestData.countryCode} onChange={handleRequestChange} id="floatingSelect" aria-label="Floating label select example">
+                          <option selected value="+91">+91</option>
+                          {/* <option value="+511">+511</option> */}
+                          {/* <option value="other">Other</option> */}
+                        </select>
+                        <label for="floatingSelect">Select Country Code</label>
+                      </div>
+                    </div>
                     <div className="col-lg-3">
                       <div class="form-floating md-mb-3">
                         <input type="text" class="form-control" name="mobile" value={requestData.mobile} onChange={handleRequestChange} id="floatingInput" placeholder="Enter Your Email" />
@@ -372,16 +382,7 @@ const Holidayguestinfo = ({ setadultCount, setchildCount }) => {
                       </div>
                       {sub && !validatePhoneNumber(requestData.mobile) && <span id="error1">Phone Number</span>}
                     </div>
-                    <div className="col-lg-2">
-                      <div class="form-floating md-mb-3">
-                        <select class="form-select" name="countryCode" value={requestData.countryCode} onChange={handleRequestChange} id="floatingSelect" aria-label="Floating label select example">
-                          <option value="+91">+91</option>
-                          <option value="+511">+511</option>
-                          <option value="other">Other</option>
-                        </select>
-                        <label for="floatingSelect">Select Country Code</label>
-                      </div>
-                    </div>
+                   
                     <div className="col-lg-3">
                       <div class="form-floating md-mb-3">
                         <input type="text" class="form-control" name="departureCity" value={requestData.departureCity} onChange={handleRequestChange} id="floatingInput" placeholder="Enter Your Email" />

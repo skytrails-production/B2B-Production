@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=Montserrat:wght@300;400;500;600;700;800&display=swap");
 
 .regouter_box {
   background-color: white !important;
@@ -16,6 +16,11 @@
   background: white !important;
   background-size: 100% 100%;
   background-repeat: no-repeat;
+
+  background-color: white;
+  border-radius: 10px;
+  padding: 25px;
+  background-size: 100% 100%;
 }
 
 .flightNavBar {
@@ -37,21 +42,49 @@
   position: relative !important;
   width: 100% !important;
 }
+.form_input_regestration {
+  height: 90% !important;
+  position: relative !important;
+  width: 100% !important;
+}
+.form_input_regestration > #error1 {
+  bottom: -14px;
+  position: absolute;
+  left: 1px;
+}
 
 .form_input input {
-
-  height: 48px !important;
-  padding-left: 8px !important;
+  height: 40px !important;
+  padding-left: 4px 8px !important;
   /* padding-right: 45px !important; */
   border-radius: 8px !important;
   border: 1px solid #777 !important;
   font-weight: 700 !important;
   color: #777 !important;
 
-  background: #FFFBFB !important;
-
+  background: #fffbfb !important;
 }
+.form_input input :focus {
+  border: 1px solid #5c85a4 !important;
+  outline: none;
+}
+.form_input_regestration input {
+  height: 40px !important;
+  padding-left: 8px !important;
+  /* padding-right: 45px !important; */
+  display: flex;
+  align-items: center;
+  border-radius: 8px !important;
+  border: 1px solid #777 !important;
+  font-weight: 700 !important;
+  color: #777 !important;
 
+  background: #fffbfb !important;
+  width: 100%;
+}
+.form_input_regestration input :focus {
+  border: 1px solid #5c85a4 !important;
+}
 .form_input_select {
   font-weight: 700 !important;
   color: #777 !important;
@@ -65,12 +98,25 @@
   overflow: hidden !important;
   text-overflow: ellipsis !important;
 }
+.form_input_regestration input::placeholder {
+  font-weight: 700 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  font-size: 13px !important;
+}
 
 .form_input .lable {
   font-size: 13px !important;
   color: #4e4c4c !important;
-  font-weight: 700 !important;
-  font-family: "Quicksand", sans-serif !important;
+  font-weight: 600 !important;
+  font-family: "Montserrat", sans-serif !important;
+}
+.form_input_regestration .lable {
+  font-size: 13px !important;
+  color: #4e4c4c !important;
+  font-weight: 600 !important;
+  font-family: "Montserrat", sans-serif !important;
 }
 
 .form_input .from_input::placeholder {
@@ -81,20 +127,33 @@
   /* white-space: nowrap !important; */
   /* overflow: hidden !important; */
   /* text-overflow: ellipsis !important; */
-  color: #BBB !important;
-  font-family: 'Montserrat' !important;
+  color: #bbb !important;
+  font-family: "Montserrat" !important;
   font-size: 16px !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: normal !important;
+}
+.form_input_regestration .form_input_regestration::placeholder {
+  /* color: #4e4c4ca1 !important; */
+  /* font-size: 18px !important; */
+  /* font-weight: 700 !important; */
+  /* font-family: "Quicksand", sans-serif !important; */
+  /* white-space: nowrap !important; */
+  /* overflow: hidden !important; */
+  /* text-overflow: ellipsis !important; */
+  color: #bbb !important;
+  font-family: "Montserrat" !important;
+  font-size: 13px !important;
   font-style: normal !important;
   font-weight: 400 !important;
   line-height: normal !important;
 }
 
 .form_lable {
-
-
   font-size: 13px !important;
   font-weight: 700 !important;
-  font-family: 'Montserrat', sans-serif !important;
+  font-family: "Montserrat", sans-serif !important;
   left: 10px !important;
   line-height: 14px !important;
   pointer-events: none !important;
@@ -103,7 +162,22 @@
   top: 24px;
   transform: translateY(-6px) translateX(-1px) !important;
   background: unset !important;
-  padding: 0px 8px;
+  padding: 0px 4px;
+  color: #000 !important;
+}
+.form_lable_regestration {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  font-family: "Montserrat", sans-serif !important;
+  left: 10px !important;
+  line-height: 14px !important;
+  pointer-events: none !important;
+  position: unset !important;
+  transform-origin: 0 50%;
+  /* top: 24px; */
+  transform: translateY(-6px) translateX(-1px) !important;
+  background: unset !important;
+  padding: 0px 4px;
   color: #000 !important;
 }
 
@@ -111,14 +185,14 @@
   color: #4e4c4c !important;
   font-size: 13px !important;
   font-weight: Bold !important;
-  margin-bottom: 1rem !important;
+  /* margin-bottom: 1rem !important; */
 }
 
 .form_input_select {
   width: 100% !important;
   border-radius: 8px !important;
   height: 48px !important;
-  border: 1px solid #5C85A4 !important;
+  border: 1px solid #5c85a4 !important;
 }
 
 /*end  */
@@ -126,7 +200,17 @@
 .input_size {
   display: flex !important;
   justify-content: center !important;
+  align-items: center;
   z-index: 1;
+}
+.input_size:focus {
+  border: 1px solid #5c85a4 !important;
+  outline: none;
+}
+.Regestration_inputFilds_Container {
+  width: 100%;
+  align-items: start;
+  margin-top: 10px;
 }
 
 /* .registrationNNContainer {
@@ -139,8 +223,12 @@
   background-repeat: no-repeat;
   background-attachment: fixed;
 } */
-
-
+.Regestration_box_container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 8px;
+}
 
 .hero-section-two {
   position: relative;
@@ -148,7 +236,6 @@
   padding-bottom: 155px;
   overflow: hidden;
 }
-
 
 .hero-section-two:before {
   content: "";
@@ -185,32 +272,95 @@
   top: 14%;
   left: -12%;
 }
+.boxContainerRegstration {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: space-between;
+}
 
-
+.regestration_Submit_Button {
+  background-color: #21325d;
+  width: 50%;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 10px;
+  transition-property: all;
+  transition-duration: 1s;
+}
+.regestration_Submit_Button:hover {
+  background-color: #ffffff;
+  width: 50%;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #21325d;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 10px;
+  border: 1px solid #21325d;
+}
+.boxContainerRegstration_innerdiv {
+  flex: 1;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+.Regestration_btn_div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
 
 @media (min-width: 1000px) and (max-width: 1200px) {
-
-
   .hero-section-two {
     position: relative;
     /* padding-top: 82px; */
     padding-bottom: 135px;
-
   }
-
-
 }
 
-
-
-@media (min-width: 769px) and (max-width: 1000px) {
-
-
+@media (min-width: 750px) and (max-width: 900px) {
   .hero-section-two {
     position: relative;
     /* padding-top: 44px; */
     padding-bottom: 135px;
+  }
 
+  .hero-section-two:before {
+    content: "";
+    position: absolute;
+    width: 135%;
+    height: 50%;
+    border-radius: 50%;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    top: -12%;
+  }
+  .boxContainerRegstration {
+    flex-direction: column;
+  }
+  .boxContainerRegstration_innerdiv {
+    height: 200px;
+  }
+
+  .hero-section-two:after {
+    left: -23%;
+  }
+}
+@media (min-width: 900px) and (max-width: 1000px) {
+  .hero-section-two {
+    position: relative;
+    /* padding-top: 44px; */
+    padding-bottom: 135px;
   }
 
   .hero-section-two:before {
@@ -227,8 +377,4 @@
   .hero-section-two:after {
     left: -23%;
   }
-
-
-
-
 }

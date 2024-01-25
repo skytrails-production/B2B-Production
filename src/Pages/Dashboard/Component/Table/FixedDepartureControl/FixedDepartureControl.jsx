@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import userApi from "../../../../../Redux/API/api";
-import { makeStyles } from "@mui/styles";
+
 
 // const useStyles = makeStyles((theme) => ({
 //   toolbar: {
@@ -42,6 +42,7 @@ const FixedDepartureControl = () => {
           `${apiURL.baseURL}/skytrails/api/admin/getAllFixDepartureBooking`
         );
         setData(response.data?.result?.docs || []);
+        console.log(response.data.result.docs);
         setTotalPages(response.data?.result?.totalPages || 0);
         setLoading(false);
       } catch (error) {

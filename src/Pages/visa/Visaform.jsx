@@ -7,6 +7,7 @@ import color from "../../color/color.js"
 import axios from "axios";
 import { motion } from "framer-motion";
 import { apiURL } from "../../Constants/constant.js";
+import { validatePhoneNumber, validateName, validateEmail } from "../../utils/validation.js"
 
 
 const variants = {
@@ -36,10 +37,10 @@ const Visaform = () => {
     visaType: "",
   });
   const [errors, setErrors] = useState({});
-  const [successMessage, setSuccessMessage] = useState(""); 
+  const [successMessage, setSuccessMessage] = useState("");
   const [countries, setCountries] = useState([]);
   const [whichVisaType, setWhichVisaType] = useState([]);
-  
+
   const nameInputRef = useRef(null);
   const emailInputRef = useRef(null);
   const mobileInputRef = useRef(null);
@@ -64,7 +65,7 @@ const Visaform = () => {
   };
 
 
- 
+
 
 
   useEffect(() => {
@@ -73,7 +74,7 @@ const Visaform = () => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        return response.json(); 
+        return response.json();
       })
       .then((data) => {
         if (data && data.countries) {
@@ -125,7 +126,7 @@ const Visaform = () => {
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.name) {
+    if (!validateName(formData.name)) {
       newErrors.name = "Name is required";
     }
     if (!formData.query) {
@@ -134,7 +135,7 @@ const Visaform = () => {
 
     if (!formData.email) {
       newErrors.email = "Email is required";
-    } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+    } else if (!validateEmail(formData.email)) {
       newErrors.email = "Invalid email address";
     }
 
@@ -203,7 +204,7 @@ const Visaform = () => {
       const payload = {
         name: formData.name,
         email: formData.email,
-        mobile: formData.mobile,
+        phone: formData.mobile,
         query: formData.query,
         country_name: formData.destination,
         category_name: formData.visaType,
@@ -227,19 +228,18 @@ const Visaform = () => {
       }
     } else {
       // Focus on the first empty field
-      if (!formData.name.trim()) {
+      if (!validateName(formData.name)) {
         nameInputRef.current.focus();
-      } else if (!formData.email) {
+      } else if (!validateEmail(formData.email)) {
         emailInputRef.current.focus();
-      } else if (!formData.mobile) {
+      } else if (!validatePhoneNumber(formData.mobile)) {
         mobileInputRef.current.focus();
       } else if (!formData.query) {
         queryRef.current.focus();
       } else if (!formData.destination) {
         destinationInputRef.current.focus();
-      } else {
-        visaTypeInputRef.current.focus();
-      }
+      } 
+      
     }
   };
   return (
@@ -308,9 +308,9 @@ const Visaform = () => {
                   onChange={handleChange}
                   ref={destinationInputRef}
                 >
-                  <option disabled>Select Destination</option>
+                  <option >Select Destination</option>
                   {countries.map((country) => (
-                    <option key={country.id} value={country.country}>
+                    <option key={country.id} value={country.id}>
                       {country.country}
                     </option>
                   ))}
@@ -344,14 +344,14 @@ const Visaform = () => {
                   onChange={handleChange}
                   ref={visaTypeInputRef}
                 >
-                  <option disabled>Select Visa Type</option>
+                  <option >Select Visa Type</option>
                   {whichVisaType.map((visaType) => (
-                    <option key={visaType.id} value={visaType.category}>
+                    <option key={visaType.id} value={visaType.id}>
                       {visaType.category}
                     </option>
                   ))}
                 </select>
-                {errors.visaType && <p className="error">{errors.visaType}</p>}
+               {errors.visaType && <p className="error">{errors.visaType}</p> }
               </div>
             </motion.div>
           </motion.div>
@@ -362,13 +362,13 @@ const Visaform = () => {
           )}
           <motion.div variants={variants} initial="initial"
             whileInView="animate" className="row">
-            <motion.div variants={variants} className="col-xs-12">
-              <Typography
+            <motion.div variants={variants} className="col-xs-12 mt-3">
+              {/* <Typography
                 sx={{ fontSize: "13px", fontWeight: "bold", color: color.red1 }}
                 textAlign="left"
               >
                 Note : All Document Required
-              </Typography>
+              </Typography> */}
               <div className="visaButton">
                 <button>Apply Now →</button>
               </div>

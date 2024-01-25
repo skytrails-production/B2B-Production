@@ -421,7 +421,7 @@ const Return = () => {
               <img src={interchange} alt="name" className="align-self-center" />
             </motion.div>
 
-            <motion.div variants={variants} className="col-xs-12 col-md-2 col-lg-2 ps-0 mb-3">
+            <motion.div variants={variants} className="col-xs-12 col-md-2 col-lg-3 ps-0 mb-3">
               <div className="form_input" style={{ zIndex: 10, position: "relative" }}>
 
                 <label for="to" className="form_lable">
@@ -481,7 +481,7 @@ const Return = () => {
                 {sub === true && departureDate === "" && <p id="error1">Enter date</p>}
               </div>
             </motion.div>
-            <motion.div variants={variants} className="col-xs-12 col-md-3 col-lg-3 ps-0 mb-3" >
+            <motion.div variants={variants} className="col-xs-12 col-md-3 col-lg-2 ps-0 mb-3" >
               <div className="form_input">
                 <label for="departure" className="form_lable">
                   RETURN
@@ -511,7 +511,7 @@ const Return = () => {
           <motion.div className="row" variants={variants} initial="initial"
             whileInView="animate">
 
-            <motion.div className="col-lg-3 col-md-6 col-12 mb-3 ps-0 mb-3" variants={variants}>
+            <motion.div className="col-lg-4 col-md-6 col-12 mb-3 ps-0 mb-3" variants={variants}>
               <div className="form_input">
 
                 <label className="form_lable">Adult(12+)</label>
@@ -531,7 +531,7 @@ const Return = () => {
             </motion.div>
 
 
-            <motion.div className="col-lg-3 col-md-6 col-12 mb-3 ps-0 mb-3" variants={variants}>
+            <motion.div className="col-lg-4 col-md-6 col-12 mb-3 ps-0 mb-3" variants={variants}>
               <div className="form_input">
 
                 <label className="form_lable">Child(2-11)</label>
@@ -548,7 +548,7 @@ const Return = () => {
                 </select>
               </div>
             </motion.div>
-            <motion.div className="col-lg-3 col-md-6 col-12 mb-3 ps-0 mb-3" variants={variants} style={{ position: "relative" }}>
+            <motion.div className="col-lg-4 col-md-6 col-12 mb-3 ps-0 mb-3" variants={variants} style={{ position: "relative" }}>
               <div className="form_input" style={{ position: "absolute", zIndex: "1" }} >
                 <label className="form_lable">Infant(Under 2 Yrs)</label>
                 <select name="infant" id="" className="form_input_select">
@@ -565,7 +565,7 @@ const Return = () => {
               </div>
             </motion.div>
 
-            <motion.div className="col-lg-3 col-md-6 col-12 mb-3 ps-0 mb-3" variants={variants}>
+            {/* <motion.div className="col-lg-3 col-md-6 col-12 mb-3 ps-0 mb-3" variants={variants}>
               <div className="form_input">
                 <label className="form_lable">Class</label>
                 <select name="class" id="" className="form_input_select">
@@ -577,14 +577,14 @@ const Return = () => {
                   <option value="6">First</option>
                 </select>
               </div>
-            </motion.div>
+            </motion.div> */}
           </motion.div>
           {/* </div> */}
           {/* </div> */}
 
           <div className="col-xs-12">
             <div className="row bottom-row">
-              <motion.div className="col-md-6 col-lg-6 col-12 col-sm-12 mb-3 ps-0" variants={variants} initial="initial"
+              {/* <motion.div className="col-md-6 col-lg-6 col-12 col-sm-12 mb-3 ps-0" variants={variants} initial="initial"
                 whileInView="animate" >
                 <motion.div variants={variants} className="form_input mb-0" >
                   <label className="form_lable">Preferred Airline</label>
@@ -601,7 +601,7 @@ const Return = () => {
                     <option value="9">9</option>
                   </select>
                 </motion.div>
-              </motion.div>
+              </motion.div> */}
 
               <motion.div variants={variants} initial="initial"
                 whileInView="animate" className="col-md-6 col-lg-6 col-12 col-sm-12 mb-3 ps-0" >

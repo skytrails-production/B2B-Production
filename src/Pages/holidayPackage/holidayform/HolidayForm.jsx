@@ -49,7 +49,7 @@ const HolidayForm = () => {
 
 
   const reducerState = useSelector((state) => state);
-  const [destination, setDestination] = useState("goa");
+  const [destination, setDestination] = useState("bali");
   const [daysSearch, setDaySearch] = useState(0);
   const [Query, setToQuery] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
@@ -67,6 +67,30 @@ const HolidayForm = () => {
   const daysSearchInputRef = useRef(null);
   const listRef = useRef(null);
   const [sub, setSub] = useState(false)
+
+  const [subsearh, setSubSearch] = useState(false)
+  const Typewriter = () => {
+    const [text, setText] = useState('....');
+    const [index, setIndex] = useState(0);
+
+    useEffect(() => {
+      const intervalId = setInterval(() => {
+        if (index === text.length) {
+          setIndex(0);
+        } else {
+          setIndex((prevIndex) => prevIndex + 1);
+        }
+      }, 400);
+
+      return () => clearInterval(intervalId);
+    }, [index, text]);
+
+    return (
+      <div>
+        Searching<span>{text.substring(0, index)}</span>
+      </div>
+    );
+  };
 
 
 
@@ -89,8 +113,8 @@ const HolidayForm = () => {
   }, [listRef]);
   const fetchSearchResultsPopular = async () => {
     //make a API call to get search results
-    const localPupulardata =await localStorage.getItem('holidayPopularSearch')
-    
+    const localPupulardata = await localStorage.getItem('holidayPopularSearch')
+
     if (localPupulardata) {
       setPopulearSearch(JSON.parse(localPupulardata))
       // alert("localStorage")
@@ -102,7 +126,7 @@ const HolidayForm = () => {
       console.warn(results?.data?.data)
     }
 
-    return 
+    return
     // console.warn(result)
   }
   const fetchSearchResults = async () => {
@@ -140,12 +164,14 @@ const HolidayForm = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (filteredPackage) {
+      setSubSearch(false);
       navigate("HolidaypackageResult");
     }
   }, [filteredPackage, navigate]);
   const clickUs = () => {
     // Validate the form before submission
     const isValid = validateForm();
+    setSubSearch(true)
 
     if (isValid) {
       const payload = {
@@ -283,12 +309,17 @@ const HolidayForm = () => {
 
             <motion.div variants={variants} className="col-lg-12">
               <div className="buttonBoxHoliday">
-                <button
+                {subsearh ? <button
+                  onClick={clickUs}
+                  variant="contained"
+                >
+                  <Typewriter />
+                </button> : <button
                   onClick={clickUs}
                   variant="contained"
                 >
                   Search Holiday Package
-                </button>
+                </button>}
               </div>
             </motion.div>
           </div>

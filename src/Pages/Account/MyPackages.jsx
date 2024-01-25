@@ -10,7 +10,9 @@ const MyPackages = () => {
   const [allPackages, setAllPackages] = useState(true);
   const [approvedPackages, setApprovedPackages] = useState(false);
   const [rejectPackages, setRejectPackages] = useState(false);
+  const [totalLeads, setTotalLeads] = useState(false);
   const [data, setData] = useState([]);
+  const [leadsData, setLeadsData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const fetchData = async (status) => {
@@ -25,7 +27,7 @@ const MyPackages = () => {
       const response = await axios.get(endpoint);
 
       if (response?.data) {
-        setData(response?.data.data.length);
+        setData(response?.data.data);
         console.log("Data fetched:", response.data.data);
       } else {
         console.error("No data received.");
@@ -36,9 +38,32 @@ const MyPackages = () => {
       setLoading(false);
     }
   };
+  
+  const fetchLeads= async()=>{
+    try {
+      setLoading(true);     
+      const  endpoint = `${apiURL.baseURL}/skyTrails/agent/leads?userId=${userId}`;
+      
+
+      const response = await axios.get(endpoint);
+
+      if (response?.data) {
+        setLeadsData(response?.data.data);
+        console.log("Leads Data fetched:", response.data.data);
+      } else {
+        console.error("No data received.");
+      }
+    } catch (error) {
+      console.error("Error fetching Packages", error);
+    } finally {
+      setLoading(false);
+    }
+
+  }
 
   useEffect(() => {
     fetchData("all");
+    
   }, []);
 
   const memoizedData = useMemo(() => data, [data]);
@@ -48,6 +73,7 @@ const MyPackages = () => {
     setAllPackages(true);
     setApprovedPackages(false);
     setRejectPackages(false);
+    setTotalLeads(false);
     fetchData("all");
   };
 
@@ -56,6 +82,7 @@ const MyPackages = () => {
     setAllPackages(false);
     setApprovedPackages(true);
     setRejectPackages(false);
+    setTotalLeads(false);
     fetchData(1);
   };
 
@@ -64,8 +91,59 @@ const MyPackages = () => {
     setAllPackages(false);
     setApprovedPackages(false);
     setRejectPackages(true);
+    setTotalLeads(false);
     fetchData(0);
   };
+
+  const handleLeadsClick = () =>{
+    setLoading(true);
+    setAllPackages(false);
+    setApprovedPackages(false);
+    setRejectPackages(false);
+    setTotalLeads(true);
+    fetchLeads();
+
+  }
+  const TotalPackage=()=>{
+
+    return ( 
+    <>
+    <h1>Total Packages {data.length}</h1>
+    </>
+    )
+   }
+
+   const ApprovedPackage=()=>{
+
+    return ( 
+    <>
+    <h1>Approved Packages {data.length}</h1>
+    </>
+    )
+   }
+
+   const HoldPackage=()=>{
+
+    return ( 
+    <>
+    <h1>Approved Packages {data.length}</h1>
+    </>
+    )
+   }         
+
+ 
+    
+   const Leads=()=>{
+    const agentLeads=Number(leadsData.userBookings.length)+Number(leadsData.agentBookings.length);
+   
+
+    return ( 
+    <>
+    <h1>Total Leads {leadsData? agentLeads:null}</h1>
+    </>
+    )
+   } 
+   
 
   return (
     <div className="container">
@@ -73,14 +151,16 @@ const MyPackages = () => {
         <button onClick={handleAllPackagesClick}>All Packages</button>
         <button onClick={handleApprovedPackagesClick}>Approved Packages</button>
         <button onClick={handleRejectPackagesClick}>Hold Packages</button>
+        <button onClick={handleLeadsClick}>Total Lead</button>
       </div>
 
       {loading && <p>Loading...</p>}
       {!loading && (
         <>
-          {allPackages && <h1>Total packages {memoizedData}</h1>}
-          {approvedPackages && <h1>Approved Packages {memoizedData}</h1>}
-          {rejectPackages && <h1>Reject Packages {memoizedData}</h1>}
+          {allPackages && <TotalPackage />}
+          {approvedPackages && <ApprovedPackage />}
+          {rejectPackages && <HoldPackage />} 
+          {totalLeads && <Leads />}
         </>
       )}
     </div>
@@ -88,3 +168,5 @@ const MyPackages = () => {
 };
 
 export default MyPackages;
+
+

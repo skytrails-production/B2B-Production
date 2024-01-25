@@ -1,11 +1,9 @@
 import * as React from "react";
 import moment from "moment";
-import { useState, useRef,useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   Grid,
   Box,
-  Typography,
-  Button,
   Accordion,
   AccordionDetails,
   AccordionSummary,
@@ -29,6 +27,7 @@ import { PassengersAction } from "../../../Redux/Passengers/passenger";
 import Custombutton from "../../../Custombuttom/Button";
 import HotelLoading from "../hotelLoading/HotelLoading";
 import Swal from "sweetalert2";
+import { validatePhoneNumber, validateEmail, validateName, validatePAN } from "../../../utils/validation"
 const styleLoader = {
   position: "absolute",
   top: "50%",
@@ -58,35 +57,35 @@ const Flightdetail = () => {
   const [bookingSuccess, setBookingSuccess] = useState(bookingStatus);
   const [passengerData, setPassengerData] = useState([]);
   const [sub, setSub] = useState(false);
-  console.warn("reducerstate::::::::::::::::", reducerState)
+  // console.warn("reducerstate::::::::::::::::", reducerState)
 
   // console.log("State Data", reducerState);
-  useEffect(()=>{
-  if(reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult?.Error?.ErrorCode!==0){
-    Swal.fire({
-      icon:"error",
-      title: "Oops! Something went wrong",
-      text: reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult?.Error?.ErrorMessage,
+  useEffect(() => {
+    if (reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult?.Error?.ErrorCode !== 0) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops! Something went wrong",
+        text: reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult?.Error?.ErrorMessage,
 
-      timer: 3000,
-      showClass: {
-        popup: `
+        timer: 3000,
+        showClass: {
+          popup: `
             animate__animated
             animate__fadeInUp
             animate__faster
           `,
-      },
-      hideClass: {
-        popup: `
+        },
+        hideClass: {
+          popup: `
             animate__animated
             animate__fadeOutDown
             animate__faster
           `,
-      },
-    });
-    navigate("/");
-  }
-},[])
+        },
+      });
+      navigate("/");
+    }
+  }, [])
   useEffect(() => {
     if (bookingStatus == 1) {
       setBookingSuccess(false);
@@ -196,7 +195,7 @@ const Flightdetail = () => {
 
   const hotelInfo = reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult;
 
-  // console.log("Hotel information", hotelInfo);
+
 
   const hotelRoom =
     reducerState?.hotelSearchResult?.hotelRoom?.GetHotelRoomResult;
@@ -216,7 +215,7 @@ const Flightdetail = () => {
   const cancellationFormattedEndingDate = moment(cancellationEndingDate).format(
     "MMMM DD, YYYY"
   );
-
+  console.log("Hotel information", reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult?.HotelDetails?.HotelPolicy);
   const cancellationCharge =
     hotelCancellationPolicies?.CancellationPolicies[0]?.Charge;
 
@@ -274,14 +273,14 @@ const Flightdetail = () => {
       knowIndex?.adultIndex !== undefined &&
       knowIndex?.adultIndex !== null
     ) {
-      console.log("adult");
+      // console.log("adult");
       const { name, value } = e.target;
       const filteredPassenger = passengerData.filter((item, index) => {
         return (
           item.roomIndex == roomIndex && item?.adultIndex == knowIndex?.adultIndex
         );
       });
-      console.log("filteredPassenger", filteredPassenger);
+      // console.log("filteredPassenger", filteredPassenger);
       const newFilteredPassenger = { ...filteredPassenger[0] };
       newFilteredPassenger[name] = value;
       const indexFind = passengerData.indexOf(filteredPassenger[0]);
@@ -294,7 +293,7 @@ const Flightdetail = () => {
       knowIndex?.childIndex !== undefined &&
       knowIndex?.childIndex !== null
     ) {
-      console.log("child");
+      // console.log("child");
       const { name, value } = e.target;
       const filteredPassenger = passengerData.filter((item, index) => {
         return (
@@ -302,7 +301,7 @@ const Flightdetail = () => {
           item?.childIndex == knowIndex?.childIndex
         );
       });
-      console.log("filteredPassenger", filteredPassenger);
+      // console.log("filteredPassenger", filteredPassenger);
       const newFilteredPassenger = { ...filteredPassenger[0] };
       newFilteredPassenger[name] = value;
       const indexFind = passengerData.indexOf(filteredPassenger[0]);
@@ -313,19 +312,19 @@ const Flightdetail = () => {
 
     }
 
-    console.log("passengerDataNew", passengerData);
+    // console.log("passengerDataNew", passengerData);
     const eml = document.getElementById("Email1").value;
     const con = document.getElementById("phoneNumber1").value;
     const val = validateEmail(eml);
     const valCon = validatePhoneNumber(con);
     setEmail(() => val);
     setContact(() => valCon);
-    console.warn(val, "email validationjfnjkdfnjdfjfddddddddddddddddddn");
+    // console.warn(val, "email validationjfnjkdfnjdfjfddddddddddddddddddn");
   };
 
   const handleClickSavePassenger = () => {
 
-    console.warn("emailrefffffffffffff", emailRef.current.value);
+    // console.warn("emailrefffffffffffff", emailRef.current.value);
     setSub(true);
     if (!validation()) {
       setTimeout(() => {
@@ -477,24 +476,24 @@ const Flightdetail = () => {
   const handleOtherChange = (panel) => (event, notexpanted) => {
     setExpandedOther(notexpanted ? panel : false);
   };
-  function validatePAN(panNumber) {
-    const regex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
-    return regex.test(panNumber);
-  }
-  function validatePhoneNumber(phoneNumber) {
-    // Define the regular expression pattern for a valid phone number
-    var phonePattern = /^\d{10}$/;
+  // function validatePAN(panNumber) {
+  //   const regex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+  //   return regex.test(panNumber);
+  // }
+  // function validatePhoneNumber(phoneNumber) {
+  //   // Define the regular expression pattern for a valid phone number
+  //   var phonePattern = /^\d{10}$/;
 
-    // Test the phone number against the pattern
-    return phonePattern.test(phoneNumber);
-  }
-  function validateEmail(email) {
-    // Define the regular expression pattern for a valid phone number
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //   // Test the phone number against the pattern
+  //   return phonePattern.test(phoneNumber);
+  // }
+  // function validateEmail(email) {
+  //   // Define the regular expression pattern for a valid phone number
+  //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    // Test the phone number against the pattern
-    return emailRegex.test(email);
-  }
+  //   // Test the phone number against the pattern
+  //   return emailRegex.test(email);
+  // }
 
   function validation() {
     const email = document.getElementById("Email1").value;
@@ -504,11 +503,11 @@ const Flightdetail = () => {
     const other = passengerData.filter(
       (item) =>
         toString(item.Age) === "" ||
-        item.FirstName === "" ||
-        item.LastName === "" ||
+        !validateName(item.FirstName) ||
+        !validateName(item.LastName) ||
         validatePAN(item.PAN) === false
     );
-    console.warn("dataddddddddd", other);
+    // console.warn("dataddddddddd", other);
     const result = em && con && other.length === 0;
     console.warn(result, "result");
     return result;
@@ -1000,7 +999,7 @@ const Flightdetail = () => {
 
             <div className="col-lg-12">
               <div className="services">
-                <Accordion
+                {/* <Accordion
                   expanded={expandedOther === "panel1"}
                   onChange={handleOtherChange("panel1")}
                   sx={{
@@ -1018,7 +1017,7 @@ const Flightdetail = () => {
                   <AccordionDetails>
                     <div>No data</div>
                   </AccordionDetails>
-                </Accordion>
+                </Accordion> */}
                 <Accordion
                   expanded={expandedOther === "panel2"}
                   onChange={handleOtherChange("panel2")}
@@ -1079,7 +1078,10 @@ const Flightdetail = () => {
                     <label>Amenities</label>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <div>No data</div>
+                    <ul>{reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult?.HotelRoomsDetails[0]?.Amenity.map((item) => (
+                      <li>{item}</li>
+
+                    ))}</ul>
                   </AccordionDetails>
                 </Accordion>
                 <Accordion
@@ -1098,7 +1100,7 @@ const Flightdetail = () => {
                     <label>Hotel Norms</label>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <div>No data</div>
+                    <div>{reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult?.HotelDetails?.HotelPolicy ? reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult?.HotelDetails?.HotelPolicy : "No data"}</div>
                   </AccordionDetails>
                 </Accordion>
               </div>

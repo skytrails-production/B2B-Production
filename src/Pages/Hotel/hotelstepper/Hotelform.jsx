@@ -1,5 +1,5 @@
 import { apiURL } from "../../../Constants/constant";
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -75,6 +75,7 @@ const HotelForm = () => {
   const initialvalue = {
     City: "",
     nationality: "IN",
+    star: 5
   };
   const [open, setOpen] = useState(false);
   const [loader, setLoader] = useState(false);
@@ -84,20 +85,20 @@ const HotelForm = () => {
     nationality: false,
   });
   const [sub, setSub] = useState(false)
-  const listRef=useRef(null)
-  
+  const listRef = useRef(null)
 
-  useEffect(()=>{
-    const handleClickOutside=(event)=>{
-      if(listRef.current && !listRef.current.contains(event.target)){
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (listRef.current && !listRef.current.contains(event.target)) {
         setToggleSearch(false)
       }
     }
-    document.addEventListener('mousedown',handleClickOutside);
-    return ()=>{
-      document.removeEventListener('mousedown',handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
     }
-  },[listRef])
+  }, [listRef])
 
   const [isVisible, setIsVisible] = useState(false);
   const changeHandler = (e) => {
@@ -291,18 +292,18 @@ const HotelForm = () => {
     });
   };
 
-  const handleStartDateChange =async (date) => {
-   await setValues({ ...values, departure: date }); // Update the departure date
+  const handleStartDateChange = async (date) => {
+    await setValues({ ...values, departure: date }); // Update the departure date
     // setCheckInError("");
     // setMinReturnDate(date);
-    if(values?.checkOutDeparture && values?.checkOutDeparture<=date){
-       const increasedDate = new Date(date);
-       increasedDate.setDate(increasedDate.getDate() + 1);
-      setValues({...values,checkOutDeparture: increasedDate,departure: date});
+    if (values?.checkOutDeparture && values?.checkOutDeparture <= date) {
+      const increasedDate = new Date(date);
+      increasedDate.setDate(increasedDate.getDate() + 1);
+      setValues({ ...values, checkOutDeparture: increasedDate, departure: date });
       // Update the checkOutDeparture
-      console.warn(values.checkOutDeparture-date,"values.checkOutDeparture<values.departure")
+      console.warn(values.checkOutDeparture - date, "values.checkOutDeparture<values.departure")
     }
-    console.log(values,"values")
+    console.log(values, "values")
   };
 
   const handleEndDateChange = (date) => {
@@ -315,14 +316,14 @@ const HotelForm = () => {
     setSub(true)
     if (!cityVal() || searchTerm === "") {
       setCityError("city a  valid city");
-      console.warn(cityVal(),"cityVallllll");
+      console.warn(cityVal(), "cityVallllll");
       setTimeout(() => {
         setCityError("")
       }, 5000);
       return
     }
-    
-    console.warn(values.departure, values.checkOutDeparture, "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
+
+    // console.warn(values.departure, values.checkOutDeparture, "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
     if (values.departure === ("" || undefined)) {
       return
     }
@@ -415,7 +416,7 @@ const HotelForm = () => {
         GuestNationality: "IN",
         NoOfRooms: condition,
         RoomGuests: [...formDataDynamic],
-        MaxRating: formData.get("star"),
+        MaxRating: Number(values.star),
         MinRating: 0,
         ReviewScore: null,
         IsNearBySearchAllowed: false,
@@ -442,12 +443,12 @@ const HotelForm = () => {
   const timeDifference = toDate.getTime() - currentDate.getTime();
   const nightdays = Math.ceil(timeDifference / (1000 * 3600 * 24));
   const cityVal = () => {
-    
-    console.warn("results.length()itemmmmmmmmmm", results.length)
-    const res = results.filter((item) =>  item.Destination === searchTerm);
+
+    // console.warn("results.length()itemmmmmmmmmm", results.length)
+    const res = results.filter((item) => item.Destination === searchTerm);
     // console.warn("itemmmmmmmmmm", item)
     const res1 = res.length > 0 ? true : false
-    console.warn(res, "res", res1, "res111111111111111111111111")
+    // console.warn(res, "res", res1, "res111111111111111111111111")
     return res1
   }
 
@@ -468,7 +469,7 @@ const HotelForm = () => {
                   type="text"
                   placeholder="Search for a city..."
                   value={searchTerm}
-                  onClick={()=>setToggleSearch(true)}
+                  onClick={() => setToggleSearch(true)}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   style={{ position: "relative" }}
                   autoComplete="off"
@@ -652,15 +653,15 @@ const HotelForm = () => {
                 <label className="form_label">Star Rating*</label>
                 <select
                   name="star"
-                  value={values.star || 5}
+                  value={values.star}
                   onChange={handleInputChange}
                   className="hotel_input_select"
                 >
-                  <option value="1">1 Star</option>
-                  <option value="2">2 Star</option>
-                  <option value="3">3 Star</option>
-                  <option value="4">4 Star</option>
-                  <option value="5">5 Star</option>
+                  <option value={5}>5 Star</option>
+                  <option value={4}>4 Star</option>
+                  <option value={3}>3 Star</option>
+                  <option value={2}>2 Star</option>
+                  <option value={1}>1 Star</option>
                 </select>
                 {error && values.star === "" && (
                   <label className="error_label">

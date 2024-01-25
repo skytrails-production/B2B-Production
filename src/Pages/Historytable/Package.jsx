@@ -47,7 +47,13 @@ function Package() {
   const columns = [
     { field: "userId", headerName: "User Id", flex: 1 },
     { field: "fullName", headerName: "Full Name", flex: 1 },
-    { field: "contactNumber.phone", headerName: "Contact Number", flex: 1 },
+
+    {
+      field: "contactNumber.phone",
+      headerName: "Contact Number",
+      flex: 2,
+      valueGetter: (params) => params.row.contactNumber?.phone || 'N/A',
+    },
     { field: "email", headerName: "Email", flex: 1 },
     { field: "departureCity", headerName: "Departure City", flex: 1 },
     { field: "adults", headerName: "Adults", flex: 1 },

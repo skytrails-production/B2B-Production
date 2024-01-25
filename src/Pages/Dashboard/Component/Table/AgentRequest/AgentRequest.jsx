@@ -8,7 +8,7 @@ import {
   Pagination,
   Stack,
   ToggleButtonGroup,
-  ToggleButton, 
+  ToggleButton,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
@@ -29,7 +29,7 @@ const AllAdvertisementTable = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [sortOrder, setSortOrder] = useState({ field: "", order: "asc" });
-  const [approveStatus, setApproveStatus] = useState("all");
+  const [approveStatus, setApproveStatus] = useState("");
 
   const handleApproveStatusChange = (event, newStatus) => {
     if (newStatus !== null) {
@@ -105,27 +105,31 @@ const AllAdvertisementTable = () => {
       headerName: "APPROVE STATUS",
       width: 150,
       renderCell: (params) => (
-        <ToggleButtonGroup
-          value={params.row.approveStatus}
-          exclusive
-          onChange={(event, value) => handleApproveStatusChange(params.row.id, value)}
+        <select
+          value={params.row.approveStatus === "APPROVED" ? "approved" : "rejected"}
+          onChange={(e) => handleApproveStatusChange(params.row.id, e.target.value)}
+          style={{
+            backgroundColor:
+              params.row.approveStatus === "APPROVED" ? "#008000" : "#FF0000",
+            color: "#FFFFFF",
+            padding: "5px",
+            borderRadius: "5px",
+          }}
         >
-          <ToggleButton value="approved" style={{ backgroundColor: "#21325D", color: "#FFFFFF" }}>
-            <ApprovalIcon />
-          </ToggleButton>
-          <ToggleButton value="notApproved" style={{ backgroundColor: "#FF0000", color: "#FFFFFF" }}>
-            Not Approved
-          </ToggleButton>
-        </ToggleButtonGroup>
+          <option value="APPROVED">Approved</option>
+          <option value="REJECTED">Rejected</option>
+        </select>
       ),
       sortable: false,
     },
+
+
   ];
-  
+
 
 
   return (
-    <div className="subada-table-container"style={{ position: 'relative', width: "100%" }}>
+    <div className="subada-table-container" style={{ position: 'relative', width: "100%" }}>
       <div className="adsearch-bar" style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold' }}>
         <TextField
           type="text"
@@ -144,7 +148,7 @@ const AllAdvertisementTable = () => {
           Agent Request Table
         </Typography>
       </div>
-      <div style={{width: "100%",backgroundColor:"#fff" }}>
+      <div style={{ width: "100%", backgroundColor: "#fff" }}>
         <DataGrid
           rows={filteredData}
           columns={columns}

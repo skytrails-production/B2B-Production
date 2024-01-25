@@ -111,6 +111,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import ImageIcon from '@mui/icons-material/Image'; // Import the Image icon
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import ChangeCircleOutlinedIcon from '@mui/icons-material/ChangeCircleOutlined';
+import AdminProfile from "./Table/AdminProfile";
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -287,7 +288,11 @@ export default function VerticalTabs() {
     // Navigate to the desired route when the button is clicked
     navigate("/admin/addCoupons");
   };
-
+  // /adminprofile
+  const AdminProfile = () => {
+    // Navigate to the desired route when the button is clicked
+    navigate("/adminprofile");
+  };
 
   // const [value, setValue] = useState(0);
   // const handleChange = (event, newValue) => {
@@ -461,6 +466,7 @@ export default function VerticalTabs() {
                 />
               </div>
             </div> */}
+            
             <div
               style={{
                 display: "flex",
@@ -590,8 +596,8 @@ export default function VerticalTabs() {
                 transformOrigin={{ horizontal: "right", vertical: "top" }}
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
               >
-                <MenuItem >
-                  <Avatar /> Profile
+                <MenuItem onClick={() => { handleClose(); AdminProfile(); }}>
+                  <Avatar /> Profile 
                 </MenuItem>
                 <MenuItem >
                   <Avatar /> My account
@@ -639,8 +645,14 @@ export default function VerticalTabs() {
                   </ListItemIcon>
                   Add Markup
                 </MenuItem>
+                <MenuItem onClick={() => { handleClose(); createCoupon(); }}>
+                  <ListItemIcon>
+                    <PersonAdd fontSize="small" />
+                  </ListItemIcon>
+                  Add Coupon
+                </MenuItem>
 
-                <MenuItem
+                {/* <MenuItem
                   onClick={() => {
                     handleClose();
                     createCoupon();
@@ -650,7 +662,7 @@ export default function VerticalTabs() {
                     <PersonAdd fontSize="small" />
                   </AddPhotoAlternateIcon>
                   Add Coupon
-                </MenuItem>
+                </MenuItem> */}
                 <MenuItem
                   onClick={() => {
                     handleClose();
@@ -889,6 +901,7 @@ export default function VerticalTabs() {
           </DrawerHeader>
           <Divider />
           <List style={{ backgroundColor: "#21325D" }}>
+         
             <ListItem
               disablePadding
               sx={{ display: "block", color: "white" }}
@@ -2455,6 +2468,8 @@ export default function VerticalTabs() {
             </div>
           ) : (
             <div>
+
+              {menuData === "Profile" && <AdminProfile/>}
               {menuData === "Packageenquiry" && <Package />}
               {menuData === "Getallevent" && <Getevent />}
               {menuData === "Searchdata" && <Searchtable />}

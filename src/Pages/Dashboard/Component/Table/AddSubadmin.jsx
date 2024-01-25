@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import './AddSubadmin.css'; // Import the CSS file
 import { apiURL } from '../../../../Constants/constant';
 import { useNavigate } from 'react-router-dom';
+
+import { Select, MenuItem } from '@mui/material';
 import profilePicUrl from '../../../../Images/logo.jpeg'
 import "./AddAgent.css";
 const CreateSubAdminPage = () => {
@@ -116,7 +118,7 @@ const CreateSubAdminPage = () => {
             className="form-input"
           />
         </div>
-        <div className="form-group">
+        {/* <div className="form-group">
           <label htmlFor="authType" className="form-label-subAdmin">
             Auth Type:
           </label>
@@ -129,10 +131,27 @@ const CreateSubAdminPage = () => {
             className="form-input"
             placeholder='REQUEST_HANDLER,ADS_HANDLER,PACKAGE_HANDLER'
           />
+        </div> */}
+        <div className="form-group" style={{width:"95%"}}>
+          <label htmlFor="authType" className="form-label-subAdmin">
+            Auth Type:
+          </label>
+          <Select
+            id="authType"
+            name="authType"
+            value={formData.authType}
+            onChange={handleChange}
+            style={{ width: "100%",height:"10%", padding: "-100px 10px" }}
+          >
+            <MenuItem value="ADS_HANDLER">ADS_HANDLER</MenuItem>
+            <MenuItem value="PACKAGE_HANDLER">PACKAGE_HANDLER</MenuItem>
+            <MenuItem value="REQUEST_HANDLER">REQUEST_HANDLER</MenuItem>
+            {/* Add more options as needed */}
+          </Select>
         </div>
         <div className="form-group-sub">
           <button type="submit" className="form-button-sub">
-          Create Subadmin
+            Create Subadmin
           </button>
         </div>
       </form>

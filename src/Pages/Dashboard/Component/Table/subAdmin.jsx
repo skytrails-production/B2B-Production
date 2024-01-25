@@ -42,7 +42,7 @@ const SubAdminTable = () => {
       // Initialize status for each user
       const initialStatusMap = {};
       response.data.result.docs.forEach((user) => {
-        initialStatusMap[user._id] = "ACTIVE"; // Default status
+        initialStatusMap[user._id] = ""; // Default status
       });
       setSelectedUserStatusMap(initialStatusMap);
       setUserData(response.data.result.docs);
@@ -68,14 +68,14 @@ const SubAdminTable = () => {
     setCurrentPage(1);
   };
 
-  const handleStatusChange = async (userId) => {
-    const status = selectedUserStatusMap[userId];
+  const handleStatusChange = async (userId,status) => {
+    
     try {
       const response = await axios.put(
         `${apiURL.baseURL}/skytrails/api/admin/updateSubAdminStatus`,
         {
-          userId: [userId],
-          status,
+          userId: userId,
+          approveStatus: status,
         }
       );
 
@@ -96,6 +96,26 @@ const SubAdminTable = () => {
     }));
   };
 
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "ACTIVE":
+        return "green";
+      case "BLOCK":
+        return "red";
+      case "DELETE":
+        return "orange";
+      default:
+        return "black";
+    }
+  };
+  const getStatusForbackgroundColor = (status) => {
+    switch (status) {
+      case "ACTIVE":
+        return "white";
+      default:
+        return "black"; // Default text color
+    }
+  };
   const columns = [
     { field: "userName", headerName: "User Name", flex: 1 },
     { field: "email", headerName: "Email", flex: 1 },
@@ -105,21 +125,33 @@ const SubAdminTable = () => {
       field: "status",
       headerName: "Status",
       flex: 1,
-      renderCell: (params) => (
-        <select
-          value={selectedUserStatusMap[params.id]}
-          onChange={(e) => {
-            handleStatusSelectChange(params.id, e.target.value);
-            handleStatusChange(params.id);
-          }}
-        >
-          <option value="ACTIVE">Active</option>
-          <option value="BLOCK">Block</option>
-          <option value="DELETE">Delete</option>
-        </select>
-      ),
+      renderCell: (params) => {
+        const selectedValue = selectedUserStatusMap[params.id] || params.row.status;
+  
+        return (
+          <select
+            value={selectedValue}
+            onChange={(event) => {
+              handleStatusSelectChange(params.id, event.target.value);
+              handleStatusChange(params.id, event.target.value);
+            }}
+            style={{ color: getStatusColor(selectedValue),
+            
+            }}
+          >
+            <option value="">{params.row.status}</option>
+            <option value="ACTIVE">Active</option>
+            <option value="BLOCK">Block</option>
+            <option value="DELETE">Delete</option>
+          </select>
+        );
+      },
     },
   ];
+  
+  
+  
+  
 
   return (
     <div className="subad-table-container" style={{ position: 'relative', width: "100%" }}>
@@ -141,18 +173,18 @@ const SubAdminTable = () => {
           Subadmin Table
         </Typography>
       </div>
-      <div style={{ width: "100%",backgroundColor:"#fff" }}>
-      <DataGrid
-        rows={userData}
-        columns={columns}
-        pageSize={pageSize}
-        page={currentPage - 1}
-        onPageChange={(params) => handlePageChange(params.page + 1)}
-        pagination
-        getRowId={(row) => row._id}
-      />
-</div>
-<Stack spacing={2} direction="row" justifyContent="center" mt={2}>
+      <div style={{ width: "100%", backgroundColor: "#fff" }}>
+        <DataGrid
+          rows={userData}
+          columns={columns}
+          pageSize={pageSize}
+          page={currentPage - 1}
+          onPageChange={(params) => handlePageChange(params.page + 1)}
+          pagination
+          getRowId={(row) => row._id}
+        />
+      </div>
+      <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
         <Pagination
           count={totalPages}
           page={currentPage}

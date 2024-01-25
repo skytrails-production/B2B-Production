@@ -51,7 +51,7 @@ const AdminLogin = () => {
         className="coverletter"
         style={{
 
-          borderRadius: "15px",
+          // borderRadius: "15px",
           width: "100%",
           margin: "auto",
           height: "250px", // Adjusted height

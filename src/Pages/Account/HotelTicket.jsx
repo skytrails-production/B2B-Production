@@ -8,7 +8,7 @@ import "./FlightTicket.css";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 import { useNavigate } from "react-router-dom";
-// import html2pdf from "html2pdf.js";
+
 import Swal from "sweetalert2";
 const pdfLogo = "https://travvolt.s3.amazonaws.com/ST-Main-LogoPdf.png";
 const Spinner = () => {
@@ -75,11 +75,7 @@ const HotelTicket = () => {
 
   // dateFormate
 
-  // Function to handle PDF download
-  // const handleDownloadAsPDF = () => {
-  //   const element = document.getElementById("pdf-content"); // Get the element to convert to PDF
-  //   html2pdf().from(element).save(); // Convert to PDF and save
-  // };
+  
 
   // Function to handle printing
   const handlePrintTicket = () => {

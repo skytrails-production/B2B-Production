@@ -63,6 +63,13 @@ const HolidayPackageResult = () => {
   };
   const filteredPackage =
     reducerState?.searchResult?.packageSearchResult?.data?.data?.pakage;
+  useEffect(() => {
+    console.warn(reducerState?.searchResult?.packageSearchResult?.data?.data?.pakage, "reducerState?.searchResult?.packageSearchResult?.data?.data?.pakage")
+    if (reducerState?.searchResult?.packageSearchResult?.data?.data?.pakage === undefined || reducerState?.searchResult?.packageSearchResult?.data?.data?.pakage.length === 0) {
+      navigate("/holidayPackage")
+      return;
+    }
+  }, [])
 
 
   const searchOneHoliday = (id) => {
@@ -97,6 +104,9 @@ const HolidayPackageResult = () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+ 
+
+
 
 
   const [sortOption, setSortOption] = useState("lowToHigh");
@@ -302,7 +312,7 @@ const HolidayPackageResult = () => {
               <div className="filterBox">
                 <p>Showing {' '}{filteredPackage?.length} {' '} Results</p>
                 <p className="searchDestination">Seach Destination{' '}: <b>{savedDestination}</b></p>
-                <p className="searchDestination">Days {' '} <b>{savedDays}</b></p>
+                {/* <p className="searchDestination">Days {' '} <b>{savedDays}</b></p> */}
                 <div className="d-flex align-items-center">
                   <label>Price <FilterAltIcon style={{ fontWeight: "600", fontFamily: "Montserrat", fontSize: '14px', marginLeft: "7px" }} /></label>
                   <select onChange={handleSortChange} value={sortOption}>

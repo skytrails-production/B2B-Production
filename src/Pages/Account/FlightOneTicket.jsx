@@ -522,10 +522,10 @@ const FlightOneTicket = () => {
                   {data?.data?.length > 0 &&
                     data?.data[0]?.passengerDetails.map((item,index) => (
                       <div
-                        
+                      key={index}
                         style={{ width: "100%", float: "left", padding: "5px" }}
                       >
-                        <div key={index}
+                        <div 
                           style={{
                             width: "100%",
                             float: "left",
@@ -650,11 +650,11 @@ const FlightOneTicket = () => {
                   {data?.data?.length > 0 &&
                     data?.data[0]?.airlineDetails.map((item) => (
                       <div
-                        
+                      key={item._id}
                         style={{ width: "100%", float: "left", padding: "5px" }}
                       >
                         {/* Airline Details Content */}
-                        <div key={item._id}
+                        <div 
                           style={{
                             width: "23%",
                             float: "left",

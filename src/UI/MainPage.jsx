@@ -112,6 +112,8 @@ import ContactUs from "../Layout/ContactUs";
 import PrivacyPolicy from "../Layout/PrivacyPolicy";
 import RefundPolicy from "../Layout/RefundPolicy";
 import TermandCondition from "../Layout/TermandCondition";
+import AdminProfile from "../Pages/Dashboard/Component/Table/AdminProfile";
+import {} from "../utils/validation"
 
 const MainPage = () => {
   const dispatch = useDispatch();
@@ -124,6 +126,7 @@ const MainPage = () => {
   const isSubAdminLogin = location.pathname === "/subAdminLogin";
   const isSubAdmindashboard = location.pathname === "/subAdmin/dashboard";
   const isAddMarkup = location.pathname === "/addMarkup";
+  const isAdminProfile = location.pathname === "/adminprofile";
   const navigate = useNavigate();
   const { id } = useParams();
   const isFlightEticketPage = location.pathname.startsWith("/FlightEticket");
@@ -132,6 +135,7 @@ const MainPage = () => {
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth > 750);
   const [scrollY, setScrollY] = useState(0);
+  
 
   // if wesbite width will go below 750px
 
@@ -230,6 +234,7 @@ const MainPage = () => {
       location.pathname === "/Registration" ||
       location.pathname === "/addMarkup" ||
       location.pathname === "/addEvents" ||
+      location.pathname === "/adminprofile" ||
 
       location.pathname === "/admin/addCoupons"||
 
@@ -250,7 +255,7 @@ const MainPage = () => {
       location.pathname === "/Registration" ||
       location.pathname === "/addMarkup" ||
       location.pathname === "/addEvents" ||
-
+      location.pathname === "/adminprofile" ||
       location.pathname === "/admin/addCoupons"||
 
       location.pathname==="/adminlogin" ||
@@ -515,6 +520,8 @@ const MainPage = () => {
                   element={<CreateWebAdvertisementForm />}
                 />
                 <Route exact path="/addMarkup" element={<CreateMarkupForm />} />
+                {/* <Route exact path="/adminprofile" element={<AdminProfile />} /> */}
+                {/* location.pathname === "/adminprofile" || */}
                 <Route exact path="/addEvents" element={<CreateEventForm />} />
                 <Route  exact path="/admin/addCoupons" element={<CreateCouponForm />}/>
                 <Route

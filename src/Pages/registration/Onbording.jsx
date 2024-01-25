@@ -48,7 +48,7 @@ import three from "../../Images/regestration/3.png";
 import four from "../../Images/regestration/4.png";
 import five from "../../Images/regestration/5.png";
 import whiteLogo from "../../Images/whiteLogo.png";
-import { motion, useAnimation ,variant,AnimatePresence} from "framer-motion";
+import { motion, useAnimation, variant, AnimatePresence } from "framer-motion";
 
 
 const Onbording = () => {
@@ -864,15 +864,6 @@ const Onbording = () => {
                                     </span>
                                   )}
                               </div>
-                            </Box>
-                          </Grid>
-                          <Grid width="100%" alignItems="center">
-                            <Box
-                              py={2}
-                              display="flex"
-                              justifyContent="space-between"
-                              style={{ gap: "10px" }}
-                            >
                               <div className="form_input">
                                 <label className="form_lable"> Address 2</label>
                                 <input
@@ -897,6 +888,7 @@ const Onbording = () => {
                               </div>
                             </Box>
                           </Grid>
+                        
                           <Grid width="100%" alignItems="center">
                             <Box
                               py={2}
@@ -1508,12 +1500,12 @@ const Onbording = () => {
                                   ref={panNumberRef}
 
                                   value={agencyDetails.pan_number}
-                                onChange={(e) =>
-                                  setAgencyDetails({
-                                    ...agencyDetails,
-                                    pan_number: e.target.value,
-                                  })
-                                }
+                                  onChange={(e) =>
+                                    setAgencyDetails({
+                                      ...agencyDetails,
+                                      pan_number: e.target.value,
+                                    })
+                                  }
                                 />
                                 {sub.agencyDetailsSub && agencyDetails.pan_number === "" && <span id="error1">Enter a Valid Pan number </span>}
 
