@@ -45,8 +45,10 @@
 }
 
 .subAdminheading{
-
   text-align: center;
+  /* display: flex; */
+  align-items: center;
+  margin-bottom: 20px;
 }
 /* Rest of your existing styles... */
 
@@ -57,13 +59,13 @@
   background-color: rgb(46, 177, 238);
 } */
 
-.form-label {
+.form-label-subAdmin {
   font-weight: bold;
   color: #0e0a0a;
   /* margin-bottom: 5px; */
 }
 
-.form-input {
+.form-input-subAdmin {
   padding: 10px 15px;
   border: 1px solid #fff;
   border-radius: 5px;
@@ -85,11 +87,11 @@
   transition: 0.3s ease-in-out;
 }
 
-.submit-button:hover {
+.submit-button-subAdmin:hover {
   background-color: #10771a;
 }
 
-.form-input:hover{
+.form-input-subAdmin:hover{
   color: rgb(168, 168, 159);
 }
   /* Optional styles for error message */

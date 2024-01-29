@@ -22,6 +22,7 @@ const AllBusCancelTickets = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState([]);
+  const [selectedStatusMap, setSelectedStatusMap] = useState(new Map());
 
   useEffect(() => {
     async function fetchBusBookings() {
@@ -58,7 +59,12 @@ const AllBusCancelTickets = () => {
     setSearchTerm(event.target.value);
     setCurrentPage(1);
   };
-
+  const handleStatusChange = (id, selectedValue) => {
+    setSelectedStatusMap(new Map(selectedStatusMap.set(id, selectedValue)));
+    // Add logic to update the status in your data or trigger an API call
+    console.log(`Status changed to ${selectedValue} for row with id ${id}`);
+    // Add additional logic as needed
+  };
   const columns = [
     { field: 'busId', headerName: 'Bus ID', width: 120 },
     { field: 'agencyName', headerName: 'Agency Name', width: 200, valueGetter: (params) => params.row.userDetails.agency_details.agency_name || 'NA' },
@@ -74,15 +80,25 @@ const AllBusCancelTickets = () => {
     { field: 'busType', headerName: 'Bus Type', width: 150, valueGetter: (params) => params.row.bustDetails.busType || 'NA' },
     {
       field: 'approve',
-      headerName: 'Approve',
+      headerName: 'APPROVE',
       width: 120,
       renderCell: (params) => (
-        <IconButton
-          size="small"
-          style={{ backgroundColor: '#21325D', color: '#FFFFFF' }}
-        >
-          <ApprovalIcon />
-        </IconButton>
+        <div>
+          <select
+            value={selectedStatusMap.get(params.row._id) || params.row.status || ''}
+            onChange={(e) => handleStatusChange(params.row._id, e.target.value)}
+            style={{
+              backgroundColor: selectedStatusMap.get(params.row._id) === 'ACTIVE' ? '#008000' : '#FF0000',
+              color: '#FFFFFF',
+              padding: '5px',
+              borderRadius: '5px',
+            }}
+          >
+            <option value="">{params.row.status}</option>
+            <option value="ACTIVE">Active</option>
+            <option value="NOT ACTIVE">Not Active</option>
+          </select>
+        </div>
       ),
     },
   ];

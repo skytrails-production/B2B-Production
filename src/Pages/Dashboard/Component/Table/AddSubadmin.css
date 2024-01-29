@@ -29,6 +29,19 @@
   margin-bottom: 15px;
 } */
 
+.form-input-authType{
+  width: 70%;
+  padding: 5px;
+  border: 1px solid #ddd;
+  gap:0px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+}
+
 .form-label-subAdmin {
   display: block;
   margin-bottom: 8px;

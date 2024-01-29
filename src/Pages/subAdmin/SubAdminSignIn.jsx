@@ -30,9 +30,10 @@ function handleclick(){
         },
         body: JSON.stringify({ userName, password }),
       });
-
+console.log("response===========",response)
       if (response.ok) {
         const data = await response.json();
+        console.log("data--------",data)
         // Store token and redirect to dashboard
         localStorage.setItem('token', data.token);
         navigate('/subAdmin/dashboard');
@@ -59,24 +60,24 @@ function handleclick(){
       <h2 className='subAdminheading'>SubAdmin Login</h2>
       {errorMessage && <p className="error-message">{errorMessage}</p>}
       <form className="subAdminForm" onSubmit={handleSubmit}>
-        <label className="form-label">
+        <label className="form-label-subAdmin">
           UserName:
           <input
             type="text"
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
-            className="form-input"
+            className="form-input-subAdmin"
             required
           />
         </label>
         <br />
-        <label className="form-label">
+        <label className="form-label-subAdmin">
           Password:
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="form-input"
+            className="form-input-subAdmin"
             required
           />
         </label>

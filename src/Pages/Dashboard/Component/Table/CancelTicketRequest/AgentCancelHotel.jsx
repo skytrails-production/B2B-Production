@@ -12,7 +12,6 @@ import './style.css';
 import { apiURL } from '../../../../../Constants/constant';
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import ApprovalIcon from "@mui/icons-material/CheckCircleOutline";
 
 const AllHotelCancelTickets = () => {
   const [hotelBookings, setHotelBookings] = useState([]);

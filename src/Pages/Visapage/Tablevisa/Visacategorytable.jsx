@@ -38,7 +38,7 @@ const Visacategorytable = () => {
     { field: "visaType", headerName: "Visa Type", flex: 1 },
     { field: "categoryName", headerName: "Category Name", flex: 1 },
     { field: "description", headerName: "Description", flex: 1 },
-    { field: "createdAt", headerName: "Created At", flex: 1 },
+    
   ];
 
   return (

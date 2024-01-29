@@ -289,10 +289,10 @@ export default function VerticalTabs() {
     navigate("/admin/addCoupons");
   };
   // /adminprofile
-  const AdminProfile = () => {
-    // Navigate to the desired route when the button is clicked
-    navigate("/adminprofile");
-  };
+  // const AdminProfile = () => {
+  //   // Navigate to the desired route when the button is clicked
+  //   navigate("/adminprofile");
+  // };
 
   // const [value, setValue] = useState(0);
   // const handleChange = (event, newValue) => {
@@ -466,7 +466,8 @@ export default function VerticalTabs() {
                 />
               </div>
             </div> */}
-            
+           
+
             <div
               style={{
                 display: "flex",
@@ -596,9 +597,9 @@ export default function VerticalTabs() {
                 transformOrigin={{ horizontal: "right", vertical: "top" }}
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
               >
-                <MenuItem onClick={() => { handleClose(); AdminProfile(); }}>
-                  <Avatar /> Profile 
-                </MenuItem>
+                {/* <MenuItem onClick={() => { handleClose(); AdminProfile(); }}>
+                  <Avatar /> Profile
+                </MenuItem> */}
                 <MenuItem >
                   <Avatar /> My account
                 </MenuItem>
@@ -901,7 +902,7 @@ export default function VerticalTabs() {
           </DrawerHeader>
           <Divider />
           <List style={{ backgroundColor: "#21325D" }}>
-         
+
             <ListItem
               disablePadding
               sx={{ display: "block", color: "white" }}
@@ -969,6 +970,7 @@ export default function VerticalTabs() {
                 />
               </ListItemButton>
             </ListItem> */}
+           
             <ListItem
               disablePadding
               sx={{ display: "block" }}
@@ -1389,7 +1391,7 @@ export default function VerticalTabs() {
                 </ListItemIcon>
                 <ListItemText
                   primary="Change Request"
-                  sx={{ opacity: open ? 1 : 0, color: "white",marginLeft: "20px" }}
+                  sx={{ opacity: open ? 1 : 0, color: "white", marginLeft: "20px" }}
                 />
               </ListItemButton>
               <Collapse in={openCollapseSix} timeout="auto" unmountOnExit>
@@ -2280,7 +2282,7 @@ export default function VerticalTabs() {
                 </ListItemIcon>
                 <ListItemText
                   primary="VISA BOOKING"
-                  sx={{ opacity: open ? 1 : 0, color: "white",marginLeft: "20px" }}
+                  sx={{ opacity: open ? 1 : 0, color: "white", marginLeft: "20px" }}
                 />
               </ListItemButton>
               <Collapse in={openCollapsetwenty} timeout="auto" unmountOnExit>
@@ -2468,8 +2470,13 @@ export default function VerticalTabs() {
             </div>
           ) : (
             <div>
+              {menuData === "profile" && (
+                <AdminProfile />
+              )}
+{menuData === "profile" && (
+  <AdminProfile />
+)}
 
-              {menuData === "Profile" && <AdminProfile/>}
               {menuData === "Packageenquiry" && <Package />}
               {menuData === "Getallevent" && <Getevent />}
               {menuData === "Searchdata" && <Searchtable />}

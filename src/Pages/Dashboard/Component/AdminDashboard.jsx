@@ -32,17 +32,20 @@ import {
 import {
   Cancel as CancelledIcon, // Add the import for the Cancelled icon
 } from "@mui/icons-material";
+import {
+  RingLoader,
+} from "react-spinners";
 
 const AdminDashboardData = () => {
   const [dashboardData, setDashboardData] = useState({});
+  const [loading, setLoading] = useState(true);
   const icons = [
     HotelIcon,
     FlightIcon,
-    BusIcon, // Added BusIcon
-    TotalBookingsIcon, //total bookings
+    BusIcon,
+    TotalBookingsIcon,
     AdminIcon,
     ChangeRequestIcon,
-
     Groups3Icon,
     CancelledIcon,
     AdminIcon,
@@ -68,6 +71,8 @@ const AdminDashboardData = () => {
         setDashboardData(response.data.result);
       } catch (error) {
         console.error("Error fetching dashboard data:", error);
+      } finally {
+        setLoading(false); // Set loading to false whether the request was successful or not
       }
     };
 
@@ -90,145 +95,88 @@ const AdminDashboardData = () => {
   };
 
   return (
-
-    // <Grid container spacing={3} className="admin-dashboard-grid">
-    //   {Object.keys(dashboardData).map((key, index) => (
-    //     <Grid item xs={12} sm={6} md={4} key={index}>
-    //       <Card
-    //         className={`admin-dashboard-card admin-dashboard-card-${index}`}
-    //         onClick={() => handleCardClick(key)}
-    //         style={{
-    //           border: "1px solid #e0e0e0",
-    //           borderRadius: 8,
-    //           position: "relative",
-    //           zIndex: 0, // Ensure the stacking context
-    //         }}
-    //       >
-    //         <CardActionArea>
-    //           <div
-    //             className="icon-container"
-    //             style={{
-    //               position: "relative", // Change to relative position
-    //               left: "5px", // Adjust the left position as needed
-    //               width: "60px",
-    //               height: "60px",
-    //               zIndex: 5, // Ensure the icon container is above the content
-    //               backgroundColor: "#21325D",
-    //               display: "flex",
-    //               alignItems: "center",
-    //               justifyContent: "center",
-    //               borderRadius: "8px",
-    //             }}
-    //           >
-    //             {icons[index % icons.length] &&
-    //               React.createElement(icons[index % icons.length], {
-    //                 fontSize: "large",
-    //                 style: { color: "white" }, // Set the icon color to white
-    //               })}
-    //           </div>
-
-    //           <CardContent>
-    //             <Box
-    //               display="flex"
-    //               justifyContent="space-between"
-    //               alignItems="center"
-    //               backgroundColor="red"
-    //             >
-    //               <Typography variant="h6">{key}</Typography>
-    //             </Box>
-    //             <Typography variant="body2" color="text.secondary">
-    //               {dashboardData[key]}
-    //             </Typography>
-    //             {key === "TotalBookings" && (
-    //               <div className="progress-bar-container">
-    //                 <LinearProgress
-    //                   variant="determinate"
-    //                   value={50} // Set the progress value accordingly
-    //                   sx={{ height: 10, borderRadius: 5 }}
-    //                 />
-    //               </div>
-    //             )}
-    //           </CardContent>
-    //         </CardActionArea>
-    //       </Card>
-    //     </Grid>
-    //   ))}
-    // </Grid>
     <Grid container spacing={3} className="admin-dashboard-grid">
-      {Object.keys(dashboardData).map((key, index) => (
-        <Grid item xs={12} sm={6} md={4} key={index}>
-          <div style={{
-            position: 'relative',
-            top: '8px',
-            left: '60px'
-          }}>
+      {loading ? (
+        // Display loader while data is being fetched
+        <RingLoader
+          loading={loading}
+          size={80}
+          sizeUnit={"px"}
+          color="#21325D"
+          // style={{ marginTop: "20px" }}
+        />
+      ) : (
+        Object.keys(dashboardData).map((key, index) => (
+          <Grid item xs={12} sm={6} md={4} key={index}>
             <div
-              className="icon-container"
               style={{
-                position: 'absolute',
-                zIndex: '1',
-                boxShadow: "0px 4px 8px rgba(33, 50, 93, 0.5)",
-                transform: 'translateX(-50%)',
-                width: "60px",
-                height: "60px",
-                backgroundColor: "#21325D",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: "8px",
-
-
+                position: 'relative',
+                top: '8px',
+                left: '60px',
               }}
             >
-              {icons[index % icons.length] &&
-                React.createElement(icons[index % icons.length], {
-                  fontSize: "large",
-                  style: { color: "white" },
-                })}
+              <div
+                className="icon-container"
+                style={{
+                  position: 'absolute',
+                  zIndex: '1',
+                  boxShadow: "0px 4px 8px rgba(33, 50, 93, 0.5)",
+                  transform: 'translateX(-50%)',
+                  width: "60px",
+                  height: "60px",
+                  backgroundColor: "#21325D",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: "8px",
+                }}
+              >
+                {icons[index % icons.length] &&
+                  React.createElement(icons[index % icons.length], {
+                    fontSize: "large",
+                    style: { color: "white" },
+                  })}
+              </div>
             </div>
-          </div>
 
-
-          <Card
-            className={`admin-dashboard-card admin-dashboard-card-${index}`}
-            onClick={() => handleCardClick(key)}
-            style={{
-
-              borderRadius: 8,
-              zIndex: 0,
-              height: "110px",
-              // position: 'relative',
-            }}
-          >
-            <CardActionArea
+            <Card
+              className={`admin-dashboard-card admin-dashboard-card-${index}`}
+              onClick={() => handleCardClick(key)}
               style={{
-                display: "flex",
-                justifyContent: "right",
-                height: "100%",
+                borderRadius: 8,
+                zIndex: 0,
+                height: "110px",
+                // position: 'relative',
               }}
             >
-              <CardContent>
-                <Typography variant="body2" color="text.secondary">
-                  {headingsArray[index]}
-                </Typography>
-                <Typography variant="h5">{dashboardData[key]}</Typography>
-                {key === "TotalBookings" && (
-                  <div className="progress-bar-container">
-                    <LinearProgress
-                      variant="determinate"
-                      value={50}
-                      sx={{ height: 10, borderRadius: 5 }}
-                    />
-                  </div>
-                )}
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Grid>
-      ))}
+              <CardActionArea
+                style={{
+                  display: "flex",
+                  justifyContent: "right",
+                  height: "100%",
+                }}
+              >
+                <CardContent>
+                  <Typography variant="body2" color="text.secondary">
+                    {headingsArray[index]}
+                  </Typography>
+                  <Typography variant="h5">{dashboardData[key]}</Typography>
+                  {key === "TotalBookings" && (
+                    <div className="progress-bar-container">
+                      <LinearProgress
+                        variant="determinate"
+                        value={50}
+                        sx={{ height: 10, borderRadius: 5 }}
+                      />
+                    </div>
+                  )}
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
+        ))
+      )}
     </Grid>
-
-
   );
 };
 
