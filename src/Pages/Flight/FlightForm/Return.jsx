@@ -565,7 +565,7 @@ const Return = () => {
               </div>
             </motion.div>
 
-            {/* <motion.div className="col-lg-3 col-md-6 col-12 mb-3 ps-0 mb-3" variants={variants}>
+            <motion.div className="col-lg-3 col-md-6 col-12 mb-3 ps-0 mb-3" variants={variants}>
               <div className="form_input">
                 <label className="form_lable">Class</label>
                 <select name="class" id="" className="form_input_select">
@@ -577,7 +577,7 @@ const Return = () => {
                   <option value="6">First</option>
                 </select>
               </div>
-            </motion.div> */}
+            </motion.div>
           </motion.div>
           {/* </div> */}
           {/* </div> */}
