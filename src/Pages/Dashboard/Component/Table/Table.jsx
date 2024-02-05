@@ -166,30 +166,30 @@ export default function Tables() {
   const [value, setValue] = React.useState("");
 
   const handleToggle = async (value, userId) => {
-  setLoading(true);
+    setLoading(true);
 
-  const currentStatus = activeUsers[userId];
-  const updatedStatus = !currentStatus;
+    const currentStatus = activeUsers[userId];
+    const updatedStatus = !currentStatus;
 
-  setActive({ ...activeUsers, [userId]: updatedStatus });
+    setActive({ ...activeUsers, [userId]: updatedStatus });
 
-  if (value === "active" || value === "inactive") {
-    const payload = {
-      user_id: userId,
-      is_active: value === "active" ? 1 : 0,
-    };
+    if (value === "active" || value === "inactive") {
+      const payload = {
+        user_id: userId,
+        is_active: value === "active" ? 1 : 0,
+      };
 
-    try {
-      await dispatch(activeStatusAction(payload));
-      // If the dispatch is successful, you don't need to reload the entire page.
-    } catch (error) {
-      console.error("Error updating status:", error);
+      try {
+        await dispatch(activeStatusAction(payload));
+        // If the dispatch is successful, you don't need to reload the entire page.
+      } catch (error) {
+        console.error("Error updating status:", error);
+      }
     }
-  }
 
-  setLoading(false);
-  setValue(value);
-};
+    setLoading(false);
+    setValue(value);
+  };
 
 
 
@@ -285,23 +285,41 @@ export default function Tables() {
   const [amount, setAmount] = React.useState("");
 
   const adminCheck = reducerState?.adminAuth?.adminData?.data?.id;
-  // console.log("adminCheck", adminCheck);
+  console.log("adminCheck", adminCheck);
 
   const updateVendorAmount = (id) => {
-    // console.log("wallet id", id);
+    // Check if id is undefined
+    if (id === undefined) {
+      console.error("Error: id is undefined.");
+      return;
+    }
+
+    // Fetch adminCheck
+    const adminCheck = reducerState?.adminAuth?.adminData?.data?.id;
+    console.log("adminCheck", adminCheck);
+
+    // Check if adminCheck is undefined
+    if (adminCheck === undefined) {
+      console.error("Error: adminCheck is undefined.");
+      return;
+    }
+
+    console.log("wallet id", id);
 
     const payload = {
       data: {
         isAdmin: adminCheck,
-        balance: amount,
+        balance: amount, // Assuming amount is defined elsewhere
         currency: "INR",
       },
       key: {
-        wallet_Id: id,
+        walletid: id
       },
     };
     dispatch(vendorAction(payload));
   };
+
+
 
   // React - modal
   const [show, setShow] = useState(false);
@@ -310,7 +328,7 @@ export default function Tables() {
   const handleClose = () => setShow(false);
 
   const handleShow = (ele) => {
-    // console.log("user Id", ele);
+    console.log("user Id", ele);
     setUser_id(ele);
     // console.log(user_id);
     setShow(true);
@@ -380,7 +398,7 @@ export default function Tables() {
                   Provisional GSTIN
                 </StyledTableCell>
                 <StyledTableCell align="center">Mobile</StyledTableCell>
-                <StyledTableCell align="center">Password</StyledTableCell>
+
                 <StyledTableCell align="center">Is Active</StyledTableCell>
                 <StyledTableCell align="center">Flight Amount</StyledTableCell>
                 <StyledTableCell align="center">Hotel Amount</StyledTableCell>
@@ -505,14 +523,7 @@ export default function Tables() {
                             {ele.personal_details?.mobile?.mobile_number || "NA"}
                           </StyledTableCell>
 
-                          <StyledTableCell
-                            align="right"
-                            style={{ color: "black" }}
-                          >
-                            {ele.personal_details?.password?.slice(0, 32) || "NA"}
-                            <br />
-                            {ele.personal_details?.password?.slice(32) || "NA"}
-                          </StyledTableCell>
+
 
                           <StyledTableCell
                             align="right"
@@ -695,11 +706,11 @@ export default function Tables() {
                               className="add_vendor_btn"
                               variant="contained"
                               color="primary"
-                              onClick={(e) => handleShow(ele._id)}
+                              onClick={() => handleShow(ele?._id)}
                             >
                               Add Amount
                             </Button>
-                            {/* Modal  */}
+                            {/* Modal */}
                             <Modal show={show} onHide={handleClose} centered>
                               <Modal.Header closeButton>
                                 <Modal.Title>Vendor Amount</Modal.Title>
@@ -716,7 +727,6 @@ export default function Tables() {
                                   <TextField
                                     size="large"
                                     id="standard-basic"
-                                    // label="Vendor Amount"
                                     placeholder="Vendor Amount"
                                     onChange={(e) => setAmount(e.target.value)}
                                     fullWidth
@@ -727,7 +737,7 @@ export default function Tables() {
                                     className="add_vendor_btn"
                                     variant="contained"
                                     color="success"
-                                    onClick={(e) => updateVendorAmount(ele?.walletid)}
+                                    onClick={() => updateVendorAmount(ele?.walletid)}
                                     fullWidth
                                   >
                                     Add Amount
@@ -736,6 +746,7 @@ export default function Tables() {
                               </Modal.Body>
                             </Modal>
                           </StyledTableCell>
+
 
                         </StyledTableRow>
                       </>

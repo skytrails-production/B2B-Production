@@ -70,26 +70,26 @@ const AllBusChangeTickets = () => {
   const columns = [
     { field: 'busDetails.busId', headerName: 'Bus ID', flex: 5, valueGetter: (params) => params.row.busDetails.busId || 'No Data', },
     {
-      field: 'userDetails.personal_details.first_name',
+      field: 'userDetails?.personal_details.first_name',
       headerName: 'First Name',
       width: 200,
       flex: 5,
       valueGetter: (params) => params.row.userDetails?.personal_details.first_name || 'No Data',
     },
     {
-      field: 'userDetails.personal_details.last_name',
+      field: 'userDetails?.personal_details.last_name',
       headerName: 'Last Name',
       flex: 5,
       valueGetter: (params) => params.row.userDetails?.personal_details.last_name || 'No Data',
     },
     {
-      field: 'userDetails.personal_details.mobile.mobile_number',
+      field: 'userDetails?.personal_details.mobile.mobile_number',
       headerName: 'Phone',
       flex: 5,
       width: 500,
       valueGetter: (params) => params.row.userDetails?.personal_details.mobile.mobile_number || 'No Data',
     },
-    { field: 'userDetails.personal_details.email', headerName: 'Email', flex: 5, valueGetter: (params) => params.row.userDetails?.personal_details.email || 'No Data' },
+    { field: 'userDetails?.personal_details.email', headerName: 'Email', flex: 5, valueGetter: (params) => params.row.userDetails?.personal_details.email || 'No Data' },
     {
       field: 'busDetails.pnr',
       headerName: 'PNR',

@@ -69,14 +69,17 @@ const AllWebAdvertisement = () => {
       flex: 1,
       renderCell: (params) => (
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
-          <img
-            src={params.value}
-            alt={params.row.title}
-            style={{ maxWidth: "50px", maxHeight: "100px", borderRadius: "50%" }}
-          />
+          <div style={{ width: "50px", height: "50px", borderRadius: "50%", overflow: "hidden" }}>
+            <img
+              src={params.value}
+              alt={params.row.title}
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            />
+          </div>
         </div>
       ),
     },
+    
   ];
 
   return (
@@ -96,7 +99,7 @@ const AllWebAdvertisement = () => {
           }}
         />
         <Typography variant="h5" className="adtable-heading" style={{ marginLeft: "20px" }}>
-          Web Advertisement Table
+          Web Advertisement
         </Typography>
       </div>
       <div style={{ width: "100%" }}>

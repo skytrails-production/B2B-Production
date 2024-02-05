@@ -27,7 +27,7 @@ function api() {
     const { data, key } = payload;
     return axios({
       method: "PUT",
-      url: `skyTrails/wallet/update_amount/${key.wallet_Id}`,
+      url: `skyTrails/wallet/update_amount/${key.walletid}`,
       baseURL: `${apiURL.baseURL}`,
       data: data,
       headers: {

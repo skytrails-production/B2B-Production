@@ -182,7 +182,7 @@ console.log("Required Document Categories:", formData.requiredDocCategory);
                 onChange={handleInputChange}
                 error={formErrors.visaCategory !== ""}
               >
-                {visaCategories.map((category) => (
+                {visaCategories?.map((category) => (
                   <MenuItem key={category._id} value={category.categoryName}>
                     {category.categoryName}
                   </MenuItem>

@@ -33,7 +33,7 @@ function Visacategory() {
       [name]: value,
     });
 
-   
+
     validationSchema
       .validateAt(name, { [name]: value })
       .then(() => setFormErrors({ ...formErrors, [name]: '' }))
@@ -71,46 +71,46 @@ function Visacategory() {
 
   return (
     <>
-      <Container component="main" maxWidth="sm" className='visaform' style={{paddingTop:"80px"}}>
+      <Container component="main" maxWidth="sm" className='visaform' style={{ paddingTop: "80px" }}>
         <form className="formacontainer2" onSubmit={handleSubmit}>
           <Typography variant="h6" gutterBottom style={{ textAlign: 'center', fontSize: '2rem', color: 'white', backgroundColor: 'rgb(22,17,58)', fontWeight: 'bold' }}>
             Visa Category
           </Typography>
           <Box
-      mb={2}
-      sx={{
-        marginTop: 8,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}
-    >
-      <FormControl fullWidth variant="outlined">
-        <InputLabel id="visaType-label">Visa Type</InputLabel>
-        <Select
-          labelId="visaType-label"
-          label="Visa Type"
-          name="visaType"
-          value={formData.visaType}
-          onChange={handleInputChange}
-          error={formErrors.visaType !== ''}
-        >
-          <MenuItem value="Tourist">Tourist</MenuItem>
-          <MenuItem value="Employment">Employment</MenuItem>
-          <MenuItem value="Student">Student</MenuItem>
-          <MenuItem value="Companion">Companion</MenuItem>
-          <MenuItem value="Crewmember">Crewmember</MenuItem>
-          <MenuItem value="Business">Business</MenuItem>
-          <MenuItem value="PR">PR</MenuItem>
-        </Select>
-      </FormControl>
-      {/* Display error message if there is any */}
-      {formErrors.visaType && (
-        <p style={{ color: 'red' }}>{formErrors.visaType}</p>
-      )}
-    </Box>
-             <Box mb={2}>
-              <TextField
+            mb={2}
+            sx={{
+              marginTop: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <FormControl fullWidth variant="outlined">
+              <InputLabel id="visaType-label">Visa Type</InputLabel>
+              <Select
+                labelId="visaType-label"
+                label="Visa Type"
+                name="visaType"
+                value={formData.visaType}
+                onChange={handleInputChange}
+                error={formErrors.visaType !== ''}
+              >
+                <MenuItem value="Tourist">Tourist</MenuItem>
+                <MenuItem value="Employment">Employment</MenuItem>
+                <MenuItem value="Student">Student</MenuItem>
+                <MenuItem value="Companion">Companion</MenuItem>
+                <MenuItem value="Crewmember">Crewmember</MenuItem>
+                <MenuItem value="Business">Business</MenuItem>
+                <MenuItem value="PR">PR</MenuItem>
+              </Select>
+            </FormControl>
+            {/* Display error message if there is any */}
+            {formErrors.visaType && (
+              <p style={{ color: 'red' }}>{formErrors.visaType}</p>
+            )}
+          </Box>
+          <Box mb={2}>
+            <TextField
               label="Category Name"
               variant="outlined"
               fullWidth
@@ -121,9 +121,9 @@ function Visacategory() {
               error={formErrors.categoryName !== ''}
               helperText={formErrors.categoryName}
             />
-             </Box>
-            
-        
+          </Box>
+
+
           <Box mb={2}>
             <TextField
               label="Description"

@@ -33,18 +33,7 @@ const Visacategorytable = () => {
   const columns = [
     { field: "countryName", headerName: "Country Name", flex: 5 },
     { field: "daysToProcess", headerName: "Days To Process", flex: 5 },
-    {
-      field: "gallery",
-      headerName: "Gallery",
-      flex: 5,
-      renderCell: (params) => (
-        <img
-          src={params.row.gallery.length > 0 ? params.row.gallery[0] : ""}
-          alt={params.row.countryName}
-          style={{ width: "50px", height: "50px", borderRadius: "50%" }}
-        />
-      ),
-    },
+
     { field: "status", headerName: "Status", flex: 5 },
     { field: "issuedType", headerName: "Issued Type", flex: 5 },
     { field: "createdAt", headerName: "Created At", flex: 5 },
@@ -70,7 +59,8 @@ const Visacategorytable = () => {
   };
 
   return (
-    <Paper className="subada-table-container"
+    <Paper
+      className="subada-table-container"
       elevation={3}
       style={{
         position: "relative",
@@ -78,7 +68,8 @@ const Visacategorytable = () => {
         backgroundColor: "white",
         padding: "20px",
         boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-      }}>
+      }}
+    >
       <div
         className="adsearch-bar"
         style={{
@@ -95,29 +86,38 @@ const Visacategorytable = () => {
         </Typography>
       </div>
 
-      <DataGrid
-        rows={data}
-        columns={columns}
-        pageSize={5} // Number of items per page
-        // components={{
-        //   Toolbar: GridToolbar,
-        // }}
-        pagination
-        page={page}
-        onPageChange={handlePageChange}
-        rowsPerPageOptions={[]}
-        getRowId={(row) => row._id}
-      />
+      {data.length === 0 ? (
+        <Typography variant="body1" style={{ marginTop: 20, textAlign: "center" }}>
+          No data available
+        </Typography>
+      ) : (
+        <>
+          <DataGrid
+            rows={data}
+            columns={columns}
+            pageSize={5} // Number of items per page
+            // components={{
+            //   Toolbar: GridToolbar,
+            // }}
+            pagination
+            page={page}
+            onPageChange={handlePageChange}
+            rowsPerPageOptions={[]}
+            getRowId={(row) => row._id}
+          />
 
-      <Pagination
-        count={totalPages}
-        page={page}
-        onChange={handlePageChange}
-        color="primary"
-        style={{ marginTop: "10px", display: "flex", justifyContent: "center" }}
-      />
+          <Pagination
+            count={totalPages}
+            page={page}
+            onChange={handlePageChange}
+            color="primary"
+            style={{ marginTop: "10px", display: "flex", justifyContent: "center" }}
+          />
+        </>
+      )}
     </Paper>
   );
+
 };
 
 export default Visacategorytable;

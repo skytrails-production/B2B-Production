@@ -42,6 +42,7 @@ const HotelForm = () => {
 
 
   const [searchTerm, setSearchTerm] = useState("");
+  const[countryCode,setCountryCode]=useState("");
   const [cityid, setCityid] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -250,6 +251,7 @@ const HotelForm = () => {
     setSearchTerm(city.Destination); // Set the input field's value to the selected city
     //Below is cityId to send in payload
     setCityid(city.cityid);
+    setCountryCode(city.countrycode)
     // setResults([]); // Clear the results
     setToggleSearch(false)
     setCityError("");
@@ -408,7 +410,7 @@ const HotelForm = () => {
         CheckInDate: formattedDate,
         // NoOfNights: formData.get("night"),
         NoOfNights: nightdays,
-        CountryCode: "IN",
+        CountryCode: countryCode,
         CityId: cityid,
         ResultCount: null,
         PreferredCurrency: "INR",
@@ -498,7 +500,7 @@ const HotelForm = () => {
                   selected={values.departure}
                   onChange={handleStartDateChange}
                   name="checkIn"
-                  dateFormat="dd/MM/yyyy"
+                  dateFormat="dd MMMyy"
                   placeholderText="Select Check-In Date"
                   isClearable
                   // id="datepic"
@@ -519,7 +521,7 @@ const HotelForm = () => {
                   selected={values.checkOutDeparture}
                   onChange={handleEndDateChange}
                   name="checkOut"
-                  dateFormat="dd/MM/yyyy"
+                  dateFormat="dd MMMyy"
                   placeholderText="Select Check-Out Date"
                   minDate={values.departure || new Date()} // Disable dates before Check-In date
                   isClearable

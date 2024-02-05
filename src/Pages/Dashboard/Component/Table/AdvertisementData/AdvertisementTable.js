@@ -71,12 +71,24 @@ const AllAdvertisementTable = () => {
     { field: "startDate", headerName: "Start Date", flex: 1 },
     { field: "endDate", headerName: "End Date", flex: 1 },
     { field: "remainingDays", headerName: "Remaining Days", flex: 1 },
+
     {
       field: "image",
       headerName: "Image",
       flex: 1,
-      renderCell: renderImageCell,
+      renderCell: (params) => (
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
+          <div style={{ width: "50px", height: "50px", borderRadius: "50%", overflow: "hidden" }}>
+            <img
+              src={params.value}
+              alt={params.row.title}
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            />
+          </div>
+        </div>
+      ),
     },
+
   ];
 
   return (
@@ -109,9 +121,9 @@ const AllAdvertisementTable = () => {
           onPageChange={handlePageChange}
           rowsPerPageOptions={[pageSize]}
           getRowId={(row) => row._id}
-          // components={{
-          //   Toolbar: GridToolbar,
-          // }}
+        // components={{
+        //   Toolbar: GridToolbar,
+        // }}
         />
       </div>
       <Stack spacing={2} direction="row" justifyContent="center" alignItems="center">

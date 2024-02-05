@@ -67,10 +67,10 @@ const AllBusCancelTickets = () => {
   };
   const columns = [
     { field: 'busId', headerName: 'Bus ID', width: 120 },
-    { field: 'agencyName', headerName: 'Agency Name', width: 200, valueGetter: (params) => params.row.userDetails.agency_details.agency_name || 'NA' },
-    { field: 'name', headerName: 'Name', width: 150, valueGetter: (params) => `${params.row.userDetails.personal_details.first_name || 'NA'} ${params.row.userDetails.personal_details.last_name || 'NA'}` },
-    { field: 'phone', headerName: 'Phone', width: 130, valueGetter: (params) => params.row.userDetails.personal_details.mobile.mobile_number || 'NA' },
-    { field: 'email', headerName: 'Email', width: 200, valueGetter: (params) => params.row.userDetails.personal_details.email || 'NA' },
+    { field: 'agencyName', headerName: 'Agency Name', width: 200, valueGetter: (params) => params.row.userDetails?.agency_details.agency_name || 'NA' },
+    { field: 'name', headerName: 'Name', width: 150, valueGetter: (params) => `${params.row.userDetails?.personal_details.first_name || 'NA'} ${params.row.userDetails?.personal_details.last_name || 'NA'}` },
+    { field: 'phone', headerName: 'Phone', width: 130, valueGetter: (params) => params.row.userDetails?.personal_details.mobile.mobile_number || 'NA' },
+    { field: 'email', headerName: 'Email', width: 200, valueGetter: (params) => params.row.userDetails?.personal_details.email || 'NA' },
     { field: 'reason', headerName: 'Reason', width: 150, valueGetter: (params) => params.row.reason || 'NA' },
     { field: 'pnr', headerName: 'PNR', width: 120, valueGetter: (params) => params.row.bustDetails.pnr || 'NA' },
     { field: 'amount', headerName: 'Amount', width: 120, valueGetter: (params) => params.row.bustDetails.amount || 'NA' },

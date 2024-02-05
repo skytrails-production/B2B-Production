@@ -54,8 +54,8 @@ const Flightbookingdetail = () => {
   const reducerState = useSelector((state) => state);
   const markUpamount =
     reducerState?.userData?.userData?.data?.data?.markup?.flight;
-
-  // console.log(userBalance,"hdhdhd")
+  const dummyPnrCheck = JSON.parse(sessionStorage.getItem("6989_n578j_j848433"));
+  console.log(dummyPnrCheck,"hdhdhd")
   const isPassportRequired =
     reducerState?.flightFare?.flightQuoteData?.Results
       ?.IsPassportRequiredAtTicket;
@@ -89,9 +89,13 @@ const Flightbookingdetail = () => {
   const currentBalance = reducerState?.userData?.userData?.data?.data?.balance;
 
   useEffect(() => {
-    if (reducerState?.flightBook?.flightBookDataGDS?.Response) {
-      getTicketForNonLCC();
+    if (reducerState?.flightBook?.flightBookDataGDS?.Response ) {
+      if (dummyPnrCheck){
+        balanceSubtractOneWay();
+        navigate("/Flightbookingconfirmation");
+      } else{getTicketForNonLCC()};
     }
+
     //  else if (reducerState?.flightBook?.flightBookDataGDS?.Error) {
     //   setLoading(false);
     //   alert(reducerState?.flightBook?.flightBookDataGDS?.Error?.ErrorMessage);
@@ -587,11 +591,11 @@ const Flightbookingdetail = () => {
     if (userId) {
       const balancePayload = {
         _id: userId,
-        amount:
+        amount:!dummyPnrCheck?
           fareValue?.Fare?.BaseFare +
           fareValue?.Fare?.Tax +
           fareValue?.Fare?.OtherCharges +
-          markUpamount,
+          markUpamount:99,
       };
 
       dispatch(balanceSubtractRequest(balancePayload));

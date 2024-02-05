@@ -3,15 +3,7 @@ import { debounce } from "lodash";
 import "./flightbookingconfirmation.css";
 import { Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Box, Flex, Spacer, Text } from "@chakra-ui/react";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import { Typography } from "@mui/material";
-import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
-import FlightLandIcon from "@mui/icons-material/FlightLand";
-import OneWay from "../FlightForm/OneWay";
-import { NavLink, Routes, Route, useNavigate } from "react-router-dom";
-import Fairsummary from "../flightreviewbooking/Fairsummary";
+import { useNavigate } from "react-router-dom";
 import Rightdetail from "../passengerdetail/Rightdetail";
 import Flightconfirmationdetail from "./Flightconfirmationdetail";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,6 +18,9 @@ const FlightReviewbooking = () => {
   const PassengersSaved = reducerState?.passengers?.passengersData;
   const markUpamount =
     reducerState?.userData?.userData?.data?.data?.markup?.flight;
+  const dummyPnrCheck = JSON.parse(
+    sessionStorage.getItem("6989_n578j_j848433")
+  );
   // console.log("reducerState", reducerState);
   const TicketDetails =
     reducerState?.flightBook?.flightBookDataGDS?.Response ||
@@ -37,12 +32,13 @@ const FlightReviewbooking = () => {
   const bookingDataLcc = reducerState?.flightBook?.flightBookData?.Response;
   const bookingDataNonLcc =
     reducerState?.flightBook?.flightTicketDataGDS?.data?.data?.Response
-      ?.Response;
+      ?.Response || reducerState?.flightBook?.flightBookDataGDS?.Response;
   const bookingDataLccReturn =
     reducerState?.flightBook?.flightBookDataReturn?.Response;
   const bookingDataNonLccReturn =
     reducerState?.flightBook?.flightBookDataGDSReturn?.data?.data?.Response
       ?.Response;
+  console.log(bookingDataNonLcc, "bookingDataNonLcc");
   const addBookingDetailsReturn = () => {
     if (bookingDataLccReturn) {
       // console.log("lccCheck");
@@ -250,8 +246,10 @@ const FlightReviewbooking = () => {
         origin: bookingDataNonLcc?.FlightItinerary?.Origin,
         destination: bookingDataNonLcc?.FlightItinerary?.Destination,
         paymentStatus: "success",
+        ticketType: dummyPnrCheck ? "Dummy Ticket" : "Original Ticket",
         totalAmount:
-          bookingDataNonLcc?.FlightItinerary?.InvoiceAmount + markUpamount,
+          bookingDataNonLcc?.FlightItinerary?.Fare?.PublishedFare +
+          markUpamount,
         airlineDetails: bookingDataNonLcc?.FlightItinerary?.Segments.map(
           (item, index) => {
             return {
@@ -294,10 +292,12 @@ const FlightReviewbooking = () => {
               email:
                 PassengersSaved[index]?.Email == undefined
                   ? ""
-                  : PassengersSaved[index]?.ContactNo,
+                  : PassengersSaved[index]?.Email,
               addressLine1: item?.addressLine1,
               city: item?.City,
-              TicketNumber: item?.Ticket?.TicketNumber,
+              TicketNumber: dummyPnrCheck
+                ? ""
+                : item?.Ticket?.TicketNumber || "",
               amount: item?.Fare?.PublishedFare?.toFixed(),
             };
           }

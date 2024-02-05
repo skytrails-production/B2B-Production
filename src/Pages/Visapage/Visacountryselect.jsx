@@ -62,17 +62,19 @@ function Visacountryselect() {
       .get(`${apiURL.baseURL}/skyTrails/api/visa/getVisaCategory`)
       .then((response) => {
         const categories = response.data.result;
-        setVisaCategories(categories);
-        setFormData({
-          ...formData,
-          visaCategoryName:
-            categories.length > 0 ? categories[0].categoryName : "",
-        });
+        if(categories && categories.length > 0) {
+          setVisaCategories(categories);
+          setFormData({
+            ...formData,
+            visaCategoryName: categories[0].categoryName,
+          });
+        }
       })
       .catch((error) => {
         console.error("Error fetching visa categories:", error);
       });
   }, []);
+  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

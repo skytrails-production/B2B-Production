@@ -29,13 +29,9 @@ const AllAdvertisementTable = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [sortOrder, setSortOrder] = useState({ field: "", order: "asc" });
-  const [approveStatus, setApproveStatus] = useState("");
+  const [selectedUserStatusMap, setSelectedUserStatusMap] = useState({}); // Map to store status for each user
 
-  const handleApproveStatusChange = (event, newStatus) => {
-    if (newStatus !== null) {
-      setApproveStatus(newStatus);
-    }
-  };
+  
   useEffect(() => {
     async function fetchAdvertisementData() {
       try {
@@ -50,9 +46,14 @@ const AllAdvertisementTable = () => {
           }
         );
         console.log("API Request URL:", response.config.url);
+        const initialStatusMap = {};
+        response.data.result.docs.forEach((user) => {
+          initialStatusMap[user._id] = ""; // Default status
+        });
         setAdvertisement(response.data.result.docs);
         setTotalPages(response.data.result.totalPages);
         setFilteredData(response.data.result.docs);
+        setSelectedUserStatusMap(initialStatusMap);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching Bus bookings:", error);
@@ -87,44 +88,107 @@ const AllAdvertisementTable = () => {
     setFilteredData(filtered);
   };
 
-  const handleSorting = (field) => {
-    setSortOrder({
-      field,
-      order: sortOrder.field === field ? (sortOrder.order === "asc" ? "desc" : "asc") : "asc",
-    });
+ 
+  const handleStatusChange = async (userId,status) => {
+    
+    try {
+      const response = await axios.put(
+        `${apiURL.baseURL}/skytrails/api/admin/approveAgent`,
+        {
+          userId: userId,
+          approveStatus: status,
+        }
+      );
+
+      // Log the response for debugging (you can remove this in production)
+      // console.log(response);
+
+      // Refetch the user data after updating the status
+      
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
+  };
+  const handleStatusSelectChange = (userId, status) => {
+    setSelectedUserStatusMap((prevStatusMap) => ({
+      ...prevStatusMap,
+      [userId]: status,
+    }));
   };
 
   const columns = [
-    { field: "agentName", headerName: "Agent Name", width: 200, sortable: false, valueGetter: (params) => `${params.row.personal_details?.first_name || ""} ${params.row.personal_details?.last_name || ""}` },
-    { field: "contact", headerName: "Contact", width: 150, sortable: false, valueGetter: (params) => params.row.personal_details?.mobile?.mobile_number || "No Data" },
-    { field: "email", headerName: "Email", width: 200, sortable: false, valueGetter: (params) => params.row.personal_details?.email || "No Data" },
-    { field: "agencyLocation", headerName: "Agency Location", width: 200, sortable: false, valueGetter: (params) => params.row.agency_details?.address || "No Data" },
-    { field: "panNumber", headerName: "Pan Number", width: 150, sortable: false, valueGetter: (params) => params.row.agency_details?.pan_number || "No Data" },
-    {
-      field: "approveStatus",
-      headerName: "APPROVE STATUS",
-      width: 150,
-      renderCell: (params) => (
-        <select
-          value={params.row.approveStatus === "APPROVED" ? "approved" : "rejected"}
-          onChange={(e) => handleApproveStatusChange(params.row.id, e.target.value)}
-          style={{
-            backgroundColor:
-              params.row.approveStatus === "APPROVED" ? "#008000" : "#FF0000",
-            color: "#FFFFFF",
-            padding: "5px",
-            borderRadius: "5px",
-          }}
-        >
-          <option value="APPROVED">Approved</option>
-          <option value="REJECTED">Rejected</option>
-        </select>
-      ),
-      sortable: false,
+    { 
+      field: "agentName", 
+      headerName: "Agent Name", 
+      width: 200, 
+      sortable: false, 
+      valueGetter: (params) => `${params.row.personal_details?.first_name || ""} ${params.row.personal_details?.last_name || ""}` 
     },
-
-
+    { 
+      field: "contact", 
+      headerName: "Contact", 
+      width: 150, 
+      sortable: false, 
+      valueGetter: (params) => params.row.personal_details?.mobile?.mobile_number || "No Data" 
+    },
+    { 
+      field: "email", 
+      headerName: "Email", 
+      width: 200, 
+      sortable: false, 
+      valueGetter: (params) => params.row.personal_details?.email || "No Data" 
+    },
+    { 
+      field: "agencyLocation", 
+      headerName: "Agency Location", 
+      width: 200, 
+      sortable: false, 
+      valueGetter: (params) => params.row.agency_details?.address || "No Data" 
+    },
+    { 
+      field: "panNumber", 
+      headerName: "Pan Number", 
+      width: 150, 
+      sortable: false, 
+      valueGetter: (params) => params.row.agency_details?.pan_number || "No Data" 
+    },
+    { 
+      field: "Approve",
+      headerName: "Approve",
+      width: 200, 
+      renderCell: (params) => {
+        const selectedValue = selectedUserStatusMap[params.id] || params.row.status;
+  
+        return (
+          <select
+            value={selectedValue}
+            onChange={(event) => {
+              handleStatusSelectChange(params.id, event.target.value);
+              handleStatusChange(params.id, event.target.value);
+            }}
+          >
+            <option value="">{params.row.status}</option>
+            <option value="APPROVED">Approve</option>
+            <option value="REJECT">Reject</option>
+          </select>
+        );
+      },
+    },
+    {
+      field: "status",
+      headerName: "Status",
+      width: 200, 
+      sortable: false,
+      valueGetter: (params) => {
+        if (params.row.approveStatus === "PENDING") {
+          return "Pending";
+        } else {
+          return params.row.status || "No Data";
+        }
+      },
+    },
   ];
+  
 
 
 

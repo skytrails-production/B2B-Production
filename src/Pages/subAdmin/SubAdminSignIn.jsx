@@ -1,27 +1,19 @@
-import React, { useEffect,useState } from 'react';
-import './SubAdminSignIn.css';
+import React, { useState } from 'react';
 import { apiURL } from '../../Constants/constant';
-import { background } from '@chakra-ui/react';
-import { useNavigate } from "react-router-dom";
-// import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector, useReducer } from "react-redux";
+import { useNavigate } from 'react-router-dom';
+import './SubAdminSignIn.css';
+import newlogo from "../../Images/whitelogo1.png";
+import { FaUser, FaLock, FaSignInAlt } from 'react-icons/fa';
+
 const SubAdminLoginForm = () => {
   const navigate = useNavigate();
-  const reducerState = useSelector((state) => state);
- const [userName, setUserName] = useState('');
- const [password, setPassword] = useState('');
- const [errorMessage, setErrorMessage] = useState('');
-//  useEffect(() => {
-//     if (reducerState?.subAdmin?.subAdminData?.data?.data) {
-//       navigate("/subAdmin");
-//     }
-//   }, [reducerState, navigate]);
-function handleclick(){
-  navigate('/subAdmin/dashboard')
-}
- const handleSubmit = async (e) => {
+  const [userName, setUserName] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-// console.log("e",e)
+
     try {
       const response = await fetch(`${apiURL.baseURL}/skytrails/api/subAdmin/subAdminLogin`, {
         method: 'POST',
@@ -30,21 +22,11 @@ function handleclick(){
         },
         body: JSON.stringify({ userName, password }),
       });
-console.log("response===========",response)
+
       if (response.ok) {
         const data = await response.json();
-        console.log("data--------",data)
-        // Store token and redirect to dashboard
         localStorage.setItem('token', data.token);
         navigate('/subAdmin/dashboard');
-        // Extract and store user information
-        const user = {
-          username: data.data.userName,
-          email: data.data.email,
-          userType: data.data.userType,
-          authType:data.data.authType
-          // Add other relevant details as needed
-        };
       } else {
         const errorData = await response.json();
         setErrorMessage(errorData.message || 'Login failed');
@@ -53,15 +35,20 @@ console.log("response===========",response)
       console.error('Error during login', error);
       setErrorMessage('Something went wrong. Please try again.');
     }
- }
+  };
 
- return (
-    <div className="sub-admin-login-form">
-      <h2 className='subAdminheading'>SubAdmin Login</h2>
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
+
+  return (
+    <div class="mainsubadmin">
+      {/* <header className="sectionad headers" style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}>
+          <div className="headead">
+            <img src={newlogo} style={{ width: "80%" }} alt="Logo" />
+            <h2 style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}>Subadmin Login</h2>
+          </div>
+      </header>
+      <section className="section sign-in">
       <form className="subAdminForm" onSubmit={handleSubmit}>
-        <label className="form-label-subAdmin">
-          UserName:
+      <div className="password-container">
           <input
             type="text"
             value={userName}
@@ -69,10 +56,9 @@ console.log("response===========",response)
             className="form-input-subAdmin"
             required
           />
-        </label>
-        <br />
-        <label className="form-label-subAdmin">
-          Password:
+      </div>
+       
+      <div className="password-container">
           <input
             type="password"
             value={password}
@@ -80,14 +66,59 @@ console.log("response===========",response)
             className="form-input-subAdmin"
             required
           />
-        </label>
+       </div>
         <br />
-        <button type="submit" onClick={handleclick}className="subAdminsubmit-button" >
+        <button type="submit" className="subAdminsubmit-button">
           Login
         </button>
       </form>
+      </section> */}
+
+      <div class="containersubadmin">
+
+        <div class="screensub">
+
+          <div class="screen__contentsub">
+
+            <form class="loginsubadmin" onSubmit={handleSubmit}>
+              <div class="login__fieldsub">
+                <i className="login__iconsub"><FaUser /></i>
+                <input type="text"
+                  class="login__inputsub"
+                  placeholder="username"
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+
+                  required />
+              </div>
+              <div class="login__fieldsub">
+                <i class="login__iconsub fas fa-lock"><FaLock /></i>
+                <input type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+
+                  required
+                  class="login__inputsub"
+                  placeholder="password" />
+              </div>
+              <button class="button login__submitsub" type="submit">
+                <span class="button__text">Login</span>
+                <i class="button__iconsub fas fa-chevron-right"><FaSignInAlt /></i>
+              </button>
+            </form>
+
+          </div>
+          <div class="screen__backgroundsub">
+            <span class="screen__background__shape screen__background__shape4"></span>
+            <span class="screen__background__shape screen__background__shape3"></span>
+            <span class="screen__background__shape screen__background__shape2"></span>
+            <span class="screen__background__shape screen__background__shape1"></span>
+          </div>
+        </div>
+      </div>
+
     </div>
- );
+  );
 };
 
 export default SubAdminLoginForm;

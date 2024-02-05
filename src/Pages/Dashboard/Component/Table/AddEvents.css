@@ -1,199 +1,264 @@
 .addEvent-div {
-    max-width: 100%;
-    margin: 0 auto;
-    background: linear-gradient(to bottom, rgb(164, 194, 224) 0%, #f38282 100%);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    animation: fadeIn 0.5s ease;
-    transition: background-color 0.3s ease-in-out;
-    /*display: flex;
-    *//*flex-direction: column;
-    */-webkit-animation: fadeIn 0.5s ease;
-    animation: fadeIn 0.5s ease;
-    -webkit-animation: fadeIn 0.5s ease;
+  max-width: 100%;
+  margin: 0 auto;
+  background-color: #FCFCFC;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease;
+  transition: background-color 0.3s ease-in-out;
+  /*display: flex;
+    */
+  /*flex-direction: column;
+    */
+  -webkit-animation: fadeIn 0.5s ease;
+  animation: fadeIn 0.5s ease;
+  -webkit-animation: fadeIn 0.5s ease;
 }
-  
-  .addEvent-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  /* Styles for Page 1 */
+
+.addEvent-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -30px;
+
+}
+
+/* Styles for Page 1 */
 .page-1 {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .page-1 .event-form-label {
-    margin: 10px 0;
-    display: block;
-    font-weight: bold;
+  margin: 10px 0;
+  display: block;
+  font-weight: bold;
 }
 
 .page-1 .event-form-input {
-    width: calc(100% - 22px);
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 15px;
-    box-sizing: border-box;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    transition: border-color 0.3s ease;
+  width: calc(100% - 22px);
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
 }
 
 .page-1 .event-form-input:focus {
-    border-color: #007bff;
+  border-color: #007bff;
 }
 
 .page-1 .event-form-button button {
-    background-color: transparent;
-    color: #3892f3;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-weight: normal;
-    transition: color 0.3s ease;
+  background-color: transparent;
+  color: #3892f3;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: normal;
+  transition: color 0.3s ease;
 }
 
 .page-1 .event-form-button button:hover {
-    font-weight: bold;
+  font-weight: bold;
 }
- 
+
 .event-form-label-p1 {
-    margin: 10px 0;
-    display: block;
-    font-weight: bold;
-  }
-  
-  .event-form-input-ads-p1 {
-    width: calc(100% - 22px);
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 15px;
-    box-sizing: border-box;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    transition: border-color 0.3s ease;
-  }
-  
-  .event-form-input-ads-p1:focus {
-    border-color: #007bff;
-  }
-
- 
-
-.page-1 .event-form-input-image-ads {
-    width: 50px;
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 15px;
-    box-sizing: border-box;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    transition: border-color 0.3s ease;
-}
-
-.page-1 .event-form-input-image-ads:focus {
-    border-color: #007bff;
-}
-
-  .event-form-button button{
-    background-color: transparent;
-    color: #3892f3;
-    border: none;
-    padding: 80px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-weight: normal;
-    transition: color 0.3s ease;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -ms-border-radius: 5px;
-    -o-border-radius: 5px;
-  }
-  .event-p-form-button {
-    /* display: flex; */
-    justify-content: space-between;
-    margin-top: 15px;
-    padding: 10px; /* Increased padding */
-  }
-  .event-p-form-button button {
-    background-color: transparent;
-    color: #3892f3;
-    border: none;
-    padding: 80px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-weight: normal;
-    transition: color 0.3s ease;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -ms-border-radius: 5px;
-    -o-border-radius: 5px;
-}
-  
-  .event-p-form-button button:hover {
-    font-weight: bold;
-  }
-  
-
-  .event-form-label-p1 {
-    margin: 10px 0;
-    display: block;
-    font-weight: bold;
+  margin: 10px 0;
+  display: block;
+  font-weight: bold;
 }
 
 .event-form-input-ads-p1 {
-    width: calc(100% - 22px);
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 15px;
-    box-sizing: border-box;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    transition: border-color 0.3s ease;
+  width: calc(100% - 22px);
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
 }
 
 .event-form-input-ads-p1:focus {
-    border-color: #007bff;
+  border-color: #007bff;
 }
+
+
+
+.page-1 .event-form-input-image-ads {
+  width: 50px;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
+}
+
+.page-1 .event-form-input-image-ads:focus {
+  border-color: #007bff;
+}
+
+.event-form-button button {
+  background-color: transparent;
+  color: #3892f3;
+  border: none;
+  padding: 80px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: normal;
+  transition: color 0.3s ease;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+
+.event-p-form-button {
+  /* display: flex; */
+  justify-content: space-between;
+  margin-top: 15px;
+  padding: 10px;
+  /* Increased padding */
+}
+
 .event-p-form-button button {
-    background-color: transparent;
-    color: #3892f3;
-    border: none;
-    padding: 10px; /* Adjusted padding for both pages */
-    cursor: pointer;
-    border-radius: 5px;
-    font-weight: normal;
-    transition: color 0.3s ease;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -ms-border-radius: 5px;
-    -o-border-radius: 5px;
+  background-color: transparent;
+  color: #3892f3;
+  border: none;
+  padding: 80px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: normal;
+  transition: color 0.3s ease;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+
+.event-p-form-button button:hover {
+  font-weight: bold;
+}
+
+
+.event-form-label-p1 {
+  margin: 10px 0;
+  display: block;
+  font-weight: bold;
+}
+
+.event-form-input-ads-p1 {
+  width: calc(100% - 22px);
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
+}
+
+.event-form-input-ads-p1:focus {
+  border-color: #007bff;
+}
+
+.event-p-form-button button {
+  background-color: transparent;
+  color: #3892f3;
+  border: none;
+  padding: 10px;
+  /* Adjusted padding for both pages */
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: normal;
+  transition: color 0.3s ease;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
 }
 
 .event-p-form-button button:hover,
 .event-form-button button:hover {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .event-p-form-button {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 15px;
-    padding: 10px; /* Adjusted padding for both pages */
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  padding: 10px;
+  /* Adjusted padding for both pages */
 }
 
 /* Add animations */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.addEvent-input-row {
+  display: flex;
+  margin-top: 5px;
+}
+
+.addEvent-input-row input {
+  flex: 1;
+  /* Distribute space equally */
+  margin-right: 10px;
+  /* Adjust as needed */
+  border:1px solid #21325D;
+}
+
+.addEvent-input-row input:last-child {
+  margin-right: 0;
+  /* Remove margin from the last input */
+}
+
+.addEvent-checkbox {
+  margin-right: 10px;
+}
+
+.addEvent-label {
+  margin-right: 20px;
+}
+.checkbox{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+.addEvent-button {
+  display: inline-block;
+  background-color: #21325D;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  border:1px solid #f0f1f5;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.addEvent-button:hover {
+  background-color: #557ad8;
+}
+
+.addEvent-button-text {
+  margin-right: 5px;
+}
+
+.addEvent-button-icon {
+  font-size: 16px;
 }

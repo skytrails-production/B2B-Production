@@ -11,6 +11,8 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import axios from "axios";
 import SearchIcon from "@mui/icons-material/Search";
 import { apiURL } from "../../Constants/constant";
+import Button from '@mui/material/Button'; // Assuming you're using Material-UI
+import Swal from 'sweetalert2'; // Import SweetAlert
 
 function Package() {
   const [data, setData] = useState([]);
@@ -44,9 +46,58 @@ function Package() {
     fetchData(currentPage);
   }, [currentPage]);
 
+  const handleShowAlert = (params) => {
+    const rowDetails = params.row;
+  
+    Swal.fire({
+      title: '<span style="background-color: #21325D; color: #fff; padding: 8px; border-radius: 10px 0px 10px 0px;">View All Details</span>',
+      html: `
+        <div style="text-align: left;">
+          <ol style="list-style-type:disc; padding-left: 20px;">
+            <li><strong style="color: #21325D;">Full Name:</strong> ${rowDetails.fullName}</li>
+            <li><strong style="color: #21325D;">Contact Number:</strong> ${rowDetails.contactNumber.phone}</li>
+            <li><strong style="color: #21325D;">Email:</strong> ${rowDetails.email}</li>
+            <li><strong style="color: #21325D;">Departure City:</strong> ${rowDetails.departureCity}</li>
+            <li><strong style="color: #21325D;">Adults:</strong> ${rowDetails.adults}</li>
+            <li><strong style="color: #21325D;">Child:</strong> ${rowDetails.child}</li>
+            <li><strong style="color: #21325D;">Package Type:</strong> ${rowDetails.packageType}</li>
+            <li><strong style="color: #21325D;">Departure Date:</strong> ${rowDetails.departureDate}</li>
+            <li><strong style="color: #21325D;">Connected:</strong> ${rowDetails.connected ? "Yes" : "No"}</li>
+            <li><strong style="color: #21325D;">No Of People:</strong> ${rowDetails.noOfPeople}</li>
+            <li><strong style="color: #21325D;">Status:</strong> ${rowDetails.status}</li>
+          </ol>
+        </div>
+      `,
+      showConfirmButton: false, // Remove the OK button
+      customClass: {
+        popup: 'swal-popup-custom' // Custom class for the entire popup
+      }
+    });
+  };
+  
+
+
+
   const columns = [
-    { field: "userId", headerName: "User Id", flex: 1 },
-    { field: "fullName", headerName: "Full Name", flex: 1 },
+    {
+      field: "viewDetails",
+      headerName: "View All Details",
+      flex: 3,
+      width: 130,
+      renderCell: (params) => {
+        return (
+          <Button
+            className="add_vendor_btn"
+            variant="contained"
+            color="primary"
+            onClick={() => handleShowAlert(params)}
+          >
+            View
+          </Button>
+        );
+      }
+    },
+    { field: "fullName", headerName: "Full Name", flex: 3, width: 130 },
 
     {
       field: "contactNumber.phone",
@@ -54,20 +105,20 @@ function Package() {
       flex: 2,
       valueGetter: (params) => params.row.contactNumber?.phone || 'N/A',
     },
-    { field: "email", headerName: "Email", flex: 1 },
-    { field: "departureCity", headerName: "Departure City", flex: 1 },
-    { field: "adults", headerName: "Adults", flex: 1 },
-    { field: "child", headerName: "Child", flex: 1 },
-    { field: "packageType", headerName: "Package Type", flex: 1 },
-    { field: "departureDate", headerName: "Departure Date", flex: 1 },
+    { field: "email", headerName: "Email", flex: 2 },
+    { field: "departureCity", headerName: "Departure City", flex: 3 },
+    { field: "adults", headerName: "Adults", flex: 2 },
+    { field: "child", headerName: "Child", flex: 2 },
+    { field: "packageType", headerName: "Package Type", flex: 3 },
+    { field: "departureDate", headerName: "Departure Date", flex: 3 },
     {
       field: "connected",
       headerName: "Connected",
-      flex: 1,
+      flex: 3,
       valueGetter: (params) => (params.row.connected ? "Yes" : "No"),
     },
-    { field: "noOfPeople", headerName: "No Of People", flex: 1 },
-    { field: "status", headerName: "Status", flex: 1 },
+    { field: "noOfPeople", headerName: "No Of People", flex: 3 },
+    { field: "status", headerName: "Status", flex: 4 },
   ];
 
   return (

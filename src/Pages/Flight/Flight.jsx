@@ -34,7 +34,7 @@ const Flight = () => {
     sessionStorage.removeItem("flightDetailsONGo")
     sessionStorage.removeItem("flightDetailsIncome")
 
-    sessionStorage.setItem("passengers")
+    // sessionStorage.setItem("passengers")
     // sessionStorage.setItem("passengers", {
     //   passengersData: [],
     //   passengerDataReturn: [],
@@ -136,12 +136,12 @@ const Flight = () => {
   const error =
     reducerState?.oneWay?.isError;
   useEffect(() => {
-
-    if (error) {
+    console.log(reducerState?.oneWay?.oneWayData?.data?.data?.Response?.Error?.ErrorCode, "reducerState?.oneWay?.oneWayData?.data?.data?.Response")
+    if (reducerState?.oneWay?.oneWayData?.data?.data?.Response?.Error?.ErrorCode !== 0 && reducerState?.oneWay?.oneWayData?.data?.data?.Response?.Error?.ErrorCode !== undefined) {
       setLoader(false);
       Swal.fire({
         title: "Hii Encountered Error Flight",
-        text: `${error}`,
+        text: `${reducerState?.oneWay?.oneWayData?.data?.data?.Response?.Error?.ErrorMessage}`,
         icon: "question",
         timer: 5000,
         showClass: {

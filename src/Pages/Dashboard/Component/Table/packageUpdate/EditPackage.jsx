@@ -2932,7 +2932,7 @@ const EditHolidayPackage = () => {
                     {/* {loader ? (
                       <div id="packageloadingdetails"></div>
                     ) : ( */}
-                    "Submit Request"
+                    Submit Request
                     {/* )}{" "} */}
                   </button>
                 </div>

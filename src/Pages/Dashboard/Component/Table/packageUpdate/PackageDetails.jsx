@@ -20,6 +20,39 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function PackageDetails() {
+
+
+    const reducerState = useSelector((state) => state);
+    // const holidayPackage = reducerState?.searchResult?.packageSearchResult?.data?.data?.pakage;
+
+    // useEffect(() => {
+    //     const payload = {
+    //         destination: "",
+    //         days: 0,
+    //     };
+    //     dispatch(searchPackageAction(payload));
+    // }, []);
+    const [holidayPackage, setHolidayPackage] = useState([]);
+
+    useEffect(() => {
+        const fetchHolidayPackages = async () => {
+            try {
+                const response = await axios.get(
+                    `${apiURL.baseURL}/skyTrails/international/getAllAdminPackage`
+                );
+                console.log(response.data, "----------------------");
+                setHolidayPackage(response.data.data.pakage);
+            } catch (error) {
+                console.error("Error fetching holiday packages:", error);
+            }
+        };
+
+        fetchHolidayPackages();
+    }, []);
+
+
+
+
     const style = {
         position: 'absolute',
         top: '50%',
@@ -36,7 +69,7 @@ function PackageDetails() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            
+
         },
         modalContent: {
             backgroundColor: 'white',
@@ -89,7 +122,7 @@ function PackageDetails() {
 
     const handleCloseApprove = () => setOpenApprove(false);
 
-   
+
 
     const handleApprove = async () => {
         const packageId = selectedPackageApprove?._id;
@@ -144,19 +177,11 @@ function PackageDetails() {
 
     const handleClose = () => setOpen(false);
 
-    const reducerState = useSelector((state) => state);
-    const holidayPackage = reducerState?.searchResult?.packageSearchResult?.data?.data?.pakage;
     const isAdmin = reducerState?.adminAuth?.adminData?.data?.id;
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const payload = {
-            destination: "",
-            days: 0,
-        };
-        dispatch(searchPackageAction(payload));
-    }, []);
+
 
     const handleDelete = async () => {
         const packageId = selectedPackageDelete?._id;
@@ -202,9 +227,22 @@ function PackageDetails() {
 
 
     const columns = [
-        { field: "pakage_title", headerName: "Package Title", flex: 1, headerClassName: 'custom-header' },
+        {
+            field: "pakage_title",
+            headerName: "Package Title",
+            flex: 1,
+            headerClassName: 'custom-header',
+            valueGetter: (params) => params.row.pakage_title || 'N/A'
+        },
         { field: "days", headerName: "Days", flex: 1, headerClassName: 'custom-header' },
-        { field: "pakage_amount.amount", headerName: "Package Amount", headerClassName: 'custom-header', flex: 1, valueGetter: (params) => params.pakage_amount?.amount || 'N/A' },
+        {
+            field: "pakage_amount.amount",
+            headerName: "Package Amount",
+            headerClassName: 'custom-header',
+            flex: 1,
+            valueGetter: (params) => params.row.pakage_amount?.amount || 'N/A'
+        },
+
         { field: "edit", headerName: "Edit", headerClassName: 'custom-header', flex: 1, renderCell: (params) => <Button style={{ color: "#21325D" }} onClick={() => handleOpenEdit(params.row)}>Edit</Button> },
         { field: "delete", headerName: "Delete", headerClassName: 'custom-header', flex: 1, renderCell: (params) => <Button style={{ color: "#21325D" }} onClick={() => handleOpen(params.row)}>Delete</Button> },
         {
@@ -232,17 +270,15 @@ function PackageDetails() {
             </div>
             <div style={{ width: "100%", backgroundColor: "#fff" }}>
 
-                {holidayPackage && holidayPackage.length > 0 ? (
-                    <DataGrid
-                        rows={holidayPackage}
-                        columns={columns}
-                        pageSize={5}
-                        checkboxSelection
-                        getRowId={(row) => row._id}
-                    />
-                ) : (
-                    <p style={{textAlign:"center",marginTop:"20px"}}>No data available</p>
-                )}
+
+                <DataGrid
+                    rows={holidayPackage}
+                    columns={columns}
+                    pageSize={5}
+                    checkboxSelection
+                    getRowId={(row) => row._id}
+                />
+
 
             </div>
             <Modal
@@ -256,11 +292,11 @@ function PackageDetails() {
                         Are you sure you want to delete this package?
                     </Typography>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
-                        <Button variant="outlined" onClick={handleDelete}  style={{ padding: '10px 20px', color: '#333', fontWeight: 'bold' }}>
-                             Yes
+                        <Button variant="outlined" onClick={handleDelete} style={{ padding: '10px 20px', color: '#333', fontWeight: 'bold' }}>
+                            Yes
                         </Button>
                         <Button variant="contained" onClick={handleClose} style={{ padding: '10px 20px', backgroundColor: '#ff0000', color: '#fff', fontWeight: 'bold' }}>
-                        No
+                            No
                         </Button>
                     </Box>
                 </Box>
@@ -322,11 +358,11 @@ function PackageDetails() {
                         </button>
                     </Box> */}
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
-                        <Button variant="outlined" onClick={handleApprove}  style={{ padding: '10px 20px', color: '#333', fontWeight: 'bold' }}>
-                             Yes
+                        <Button variant="outlined" onClick={handleApprove} style={{ padding: '10px 20px', color: '#333', fontWeight: 'bold' }}>
+                            Yes
                         </Button>
                         <Button variant="contained" onClick={handleCloseApprove} style={{ padding: '10px 20px', backgroundColor: '#ff0000', color: '#fff', fontWeight: 'bold' }}>
-                        No
+                            No
                         </Button>
                     </Box>
                 </Box>

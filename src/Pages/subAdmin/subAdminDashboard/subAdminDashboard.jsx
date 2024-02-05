@@ -6,7 +6,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
-import Home from "@mui/icons-material/Home";
+// import Home from "@mui/icons-material/Home";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -19,6 +19,8 @@ import Typography from "@mui/material/Typography";
 import RequestPageIcon from '@mui/icons-material/RequestPage';
 import CancelIcon from '@mui/icons-material/Cancel';
 import GroupIcon from '@mui/icons-material/Group';
+import stlogo from "../../../Images/ST-Main-Logo.png";
+import Home from "./Home";
 const drawerWidth = 240;
 
 function ResponsiveDrawer(props) {
@@ -31,46 +33,51 @@ function ResponsiveDrawer(props) {
 
   const drawer = (
     <div>
-      <Toolbar />
-      <Divider />
+      <div className="logo-container">
+        {/* Place your logo component or image here */}
+      <img src={stlogo} alt="" style={{width:"100%"}}/>
+      </div>
+    
+  
       <List>
         <ListItem disablePadding>
           <ListItemButton>
-              <Home/>
-            <ListItemText >Home</ListItemText>
+            
+            <ListItemText>Home</ListItemText>
           </ListItemButton>
         </ListItem>
-
+  
         <ListItem disablePadding>
           <ListItemButton>
-              <RequestPageIcon/>
-            <ListItemText >Change Request</ListItemText>
+            <RequestPageIcon />
+            <ListItemText>Change Request</ListItemText>
           </ListItemButton>
         </ListItem>
-
+  
         <ListItem disablePadding>
           <ListItemButton>
-              <CancelIcon />
+            <CancelIcon />
             <ListItemText>Cancel Request</ListItemText>
           </ListItemButton>
         </ListItem>
-
+  
         <ListItem disablePadding>
           <ListItemButton>
-              <GroupIcon/>
-            <ListItemText >Users</ListItemText>
+            <GroupIcon />
+            <ListItemText>Users</ListItemText>
           </ListItemButton>
         </ListItem>
-
+  
         <ListItem disablePadding>
           <ListItemButton>
-              <GroupIcon/>
-            <ListItemText >Agents</ListItemText>
+            <GroupIcon />
+            <ListItemText>Agents</ListItemText>
           </ListItemButton>
         </ListItem>
       </List>
     </div>
   );
+  
 
   // Remove this const when copying and pasting into your project.
   const container =
@@ -85,6 +92,7 @@ function ResponsiveDrawer(props) {
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
         }}
+        style={{backgroundColor:"#E73C33"}}
       >
         <Toolbar>
           <IconButton
@@ -96,8 +104,8 @@ function ResponsiveDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Responsive drawer
+          <Typography variant="h6" noWrap component="div" >
+            
           </Typography>
         </Toolbar>
       </AppBar>
@@ -152,7 +160,7 @@ function ResponsiveDrawer(props) {
          
         </Typography>
         <Typography paragraph>
-          Consequat 
+         <Home/>
         </Typography>
       </Box>
     </Box>

@@ -578,6 +578,7 @@ const BusForm = () => {
                       }}
                       minDate={new Date()}
                       className="datePick"
+                      dateFormat="dd MMMyy"
                     />
                   </div>
                 </div>

@@ -33,7 +33,7 @@ function Visadoctype() {
   const columns = [
     { field: "documentName", headerName: "Document Name", flex: 1 },
     { field: "description", headerName: "Description", flex: 1 },
-    { field: "createdAt", headerName: "Created At", flex: 1 },
+    
   ];
 
   return (

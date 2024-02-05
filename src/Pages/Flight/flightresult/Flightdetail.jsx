@@ -24,8 +24,8 @@ const Flightdetail = () => {
   const [selectedCategory, setSelectedCategory] = useState([]);
   const results =
     reducerState?.oneWay?.oneWayData?.data?.data?.Response?.Results || reducerState?.return?.returnData?.data?.data?.Response?.Results;
-
-  useEffect(() => {
+    useEffect(() => {
+    console.log(results,"results");
     if (results === undefined || results?.length === 0) {
       navigate("/flights");
     }

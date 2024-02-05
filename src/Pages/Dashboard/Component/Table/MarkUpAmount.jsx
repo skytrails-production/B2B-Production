@@ -66,7 +66,7 @@ const MarkUpAmount = () => {
     <div className="subad-table-container" style={{ position: 'relative', width: "100%" }}>
       <div className="adsearch-bar" style={{ position: 'absolute', top: 30, zIndex: 1, fontWeight: 'bold' }}>
         <Typography variant="h5" className="adtable-heading">
-          Subadmin Table
+         Markup table
         </Typography>
       </div>
       <div className="markup-table-container">

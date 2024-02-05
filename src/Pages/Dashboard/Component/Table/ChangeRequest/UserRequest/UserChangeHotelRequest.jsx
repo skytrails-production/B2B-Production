@@ -65,7 +65,7 @@ const AllHotelCancelTickets = () => {
       headerName: 'Name',
       width: 150,
       valueGetter: (params) =>
-        `${params.row.userDetails.personal_details.first_name} ${params.row.userDetails.personal_details.last_name}` ||
+        `${params.row.userDetails?.personal_details.first_name} ${params.row.userDetails?.personal_details.last_name}` ||
         'No Data',
     },
     {
@@ -73,14 +73,14 @@ const AllHotelCancelTickets = () => {
       headerName: 'Phone',
       width: 130,
       valueGetter: (params) =>
-        params.row.userDetails.personal_details.mobile.mobile_number || 'No Data',
+        params.row.userDetails?.personal_details.mobile.mobile_number || 'No Data',
     },
     {
       field: 'email',
       headerName: 'Email',
       width: 150,
       valueGetter: (params) =>
-        params.row.userDetails.personal_details.email || 'No Data',
+        params.row.userDetails?.personal_details.email || 'No Data',
     },
     { field: 'reason', headerName: 'Reason', width: 150 },
     { field: 'hotelId', headerName: 'Hotel ID', width: 120 ,  valueGetter: (params) =>

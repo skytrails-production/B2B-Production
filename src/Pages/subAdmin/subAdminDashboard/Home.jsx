@@ -1,144 +1,161 @@
-import React from 'react'
-import 
-{ BsFillArchiveFill, BsFillGrid3X3GapFill, BsPeopleFill, BsFillBellFill}
- from 'react-icons/bs'
- import 
- { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line } 
- from 'recharts';
+import React from 'react';
+import { useTheme, styled } from '@mui/material/styles';
+import { Grid, Card, CardHeader, CardContent, Typography, Divider, LinearProgress } from '@mui/material';
+import TrendingDownIcon from '@mui/icons-material/TrendingDown';
+import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
+import HotelIcon from '@mui/icons-material/Hotel';
+import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
+import BeachAccessIcon from '@mui/icons-material/BeachAccess';
 
-function Home() {
+const MuiCard = styled(Card)(({ theme }) => ({
+  border: '1px solid ' + theme.palette.background.default,
+  [theme.breakpoints.down('sm')]: {
+    border: 'none',
+    borderBottom: '1px solid ' + theme.palette.background.default,
+  },
+  [theme.breakpoints.down('md')]: {
+    borderBottom: '1px solid ' + theme.palette.background.default,
+  },
+  padding: '25px',
+}));
 
-    const data = [
-        {
-          name: 'Page A',
-          uv: 4000,
-          pv: 2400,
-          amt: 2400,
-        },
-        {
-          name: 'Page B',
-          uv: 3000,
-          pv: 1398,
-          amt: 2210,
-        },
-        {
-          name: 'Page C',
-          uv: 2000,
-          pv: 9800,
-          amt: 2290,
-        },
-        {
-          name: 'Page D',
-          uv: 2780,
-          pv: 3908,
-          amt: 2000,
-        },
-        {
-          name: 'Page E',
-          uv: 1890,
-          pv: 4800,
-          amt: 2181,
-        },
-        {
-          name: 'Page F',
-          uv: 2390,
-          pv: 3800,
-          amt: 2500,
-        },
-        {
-          name: 'Page G',
-          uv: 3490,
-          pv: 4300,
-          amt: 2100,
-        },
-      ];
-     
+const MuiCardContent = styled(CardContent)(({ theme }) => ({
+  p: '0 !important',
+}));
+
+const MuiLinearProgress = styled(LinearProgress)(({ theme }) => ({
+  height: '10px',
+  borderRadius: '5px',
+}));
+
+const MuiTypography = styled(Typography)(({ theme }) => ({
+  variant: 'subtitle2',
+  textAlign: 'left',
+}));
+
+const MuiGridItem = styled(Grid)(({ theme }) => ({
+  borderRight: '1px solid ' + theme.palette.background.default,
+  padding: '0px 15px',
+  [theme.breakpoints.down('md')]: {
+    borderRight: 'none',
+    borderBottom: '1px solid ' + theme.palette.background.default,
+  },
+}));
+
+const MuiGridItemNoBorder = styled(Grid)(({ theme }) => ({
+  padding: '0px 15px',
+  [theme.breakpoints.down('md')]: {
+    borderBottom: '1px solid ' + theme.palette.background.default,
+  },
+}));
+
+const MuiLinearProgressContainer = styled(Grid)(({ theme }) => ({
+  padding: '10px 0px',
+}));
+
+const Default = () => {
+  const theme = useTheme();
 
   return (
-    <main className='main-container'>
-        <div className='main-title'>
-            <h3>DASHBOARD</h3>
-        </div>
+    <Grid container spacing={3}>
+      <Grid item xs={12}>
+        <Grid container spacing={3} style={{border:"red"}}>
+          <MuiGridItem lg={3} sm={6} xs={12}>
+            <MuiCard>
+              <CardHeader title={<Typography component="div">200</Typography>} />
+              <Divider />
+              <MuiCardContent>
+                <MuiTypography align="left">Flight</MuiTypography>
+                <MuiLinearProgressContainer container alignItems="center" spacing={1}>
+                  <MuiGridItem>
+                    <MuiTypography variant="body2">Direct</MuiTypography>
+                  </MuiGridItem>
+                  <MuiGridItem>
+                    <Typography variant="body2" align="right">
+                      80%
+                    </Typography>
+                  </MuiGridItem>
+                  <MuiGridItem xs={12}>
+                    <MuiLinearProgress variant="determinate" aria-label="direct" value={80} color="primary" />
+                  </MuiGridItem>
+                </MuiLinearProgressContainer>
+              </MuiCardContent>
+            </MuiCard>
+          </MuiGridItem>
 
-        <div className='main-cards'>
-            <div className='card'>
-                <div className='card-inner'>
-                    <h3>PRODUCTS</h3>
-                    <BsFillArchiveFill className='card_icon'/>
-                </div>
-                <h1>300</h1>
-            </div>
-            <div className='card'>
-                <div className='card-inner'>
-                    <h3>CATEGORIES</h3>
-                    <BsFillGrid3X3GapFill className='card_icon'/>
-                </div>
-                <h1>12</h1>
-            </div>
-            <div className='card'>
-                <div className='card-inner'>
-                    <h3>CUSTOMERS</h3>
-                    <BsPeopleFill className='card_icon'/>
-                </div>
-                <h1>33</h1>
-            </div>
-            <div className='card'>
-                <div className='card-inner'>
-                    <h3>ALERTS</h3>
-                    <BsFillBellFill className='card_icon'/>
-                </div>
-                <h1>42</h1>
-            </div>
-        </div>
+          {/* Repeat similar structure for other cards */}
+          <MuiGridItem lg={3} sm={6} xs={12}>
+            <MuiCard>
+              <CardHeader title={<Typography component="div">145</Typography>} />
+              <Divider />
+              <MuiCardContent>
+                <MuiTypography align="left">Hotel</MuiTypography>
+                <MuiLinearProgressContainer container alignItems="center" spacing={1}>
+                  <MuiGridItem>
+                    <MuiTypography variant="body2">Social</MuiTypography>
+                  </MuiGridItem>
+                  <MuiGridItem>
+                    <Typography variant="body2" align="right">
+                      50%
+                    </Typography>
+                  </MuiGridItem>
+                  <MuiGridItem xs={12}>
+                    <MuiLinearProgress variant="determinate" aria-label="Social" value={50} color="secondary" />
+                  </MuiGridItem>
+                </MuiLinearProgressContainer>
+              </MuiCardContent>
+            </MuiCard>
+          </MuiGridItem>
 
-        <div className='charts'>
-            <ResponsiveContainer width="100%" height="100%">
-            <BarChart
-            width={500}
-            height={300}
-            data={data}
-            margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5,
-            }}
-            >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="pv" fill="#8884d8" />
-                <Bar dataKey="uv" fill="#82ca9d" />
-                </BarChart>
-            </ResponsiveContainer>
+          <MuiGridItem lg={3} sm={6} xs={12}>
+            <MuiCard>
+              <CardHeader title={<Typography component="div">290</Typography>} />
+              <Divider />
+              <MuiCardContent>
+                <MuiTypography align="left">Bus</MuiTypography>
+                <MuiLinearProgressContainer container alignItems="center" spacing={1}>
+                  <MuiGridItem>
+                    <MuiTypography variant="body2">Referral</MuiTypography>
+                  </MuiGridItem>
+                  <MuiGridItem>
+                    <Typography variant="body2" align="right">
+                      20%
+                    </Typography>
+                  </MuiGridItem>
+                  <MuiGridItem xs={12}>
+                    <MuiLinearProgress variant="determinate" aria-label="Referral" value={20} color="primary" />
+                  </MuiGridItem>
+                </MuiLinearProgressContainer>
+              </MuiCardContent>
+            </MuiCard>
+          </MuiGridItem>
 
-            <ResponsiveContainer width="100%" height="100%">
-                <LineChart
-                width={500}
-                height={300}
-                data={data}
-                margin={{
-                    top: 5,
-                    right: 30,
-                    left: 20,
-                    bottom: 5,
-                }}
-                >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
-                <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-                </LineChart>
-            </ResponsiveContainer>
+          <MuiGridItem lg={3} sm={6} xs={12}>
+            <MuiCard>
+              <CardHeader title={<Typography component="div">500</Typography>} />
+              <Divider />
+              <MuiCardContent>
+                <MuiTypography align="left">Package</MuiTypography>
+                <MuiLinearProgressContainer container alignItems="center" spacing={1}>
+                  <MuiGridItem>
+                    <MuiTypography variant="body2">Bounce</MuiTypography>
+                  </MuiGridItem>
+                  <MuiGridItem>
+                    <Typography variant="body2" align="right">
+                      60%
+                    </Typography>
+                  </MuiGridItem>
+                  <MuiGridItem xs={12}>
+                    <MuiLinearProgress variant="determinate" aria-label="Bounce" value={60} color="secondary" />
+                  </MuiGridItem>
+                </MuiLinearProgressContainer>
+              </MuiCardContent>
+            </MuiCard>
+          </MuiGridItem>
+        </Grid>
+      </Grid>
+    </Grid>
+  );
+};
 
-        </div>
-    </main>
-  )
-}
-
-export default Home
+export default Default;

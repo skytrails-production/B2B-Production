@@ -35,8 +35,8 @@ function Visadoccategory() {
       headerName: "Document Name",
       flex: 1,
       valueGetter: (params) =>
-        params.row.documentTypesId && params.row.documentTypesId.length
-          ? params.row.documentTypesId[0].documentName
+        params.row.documentTypesId && params?.row?.documentTypesId?.length
+          ? params?.row?.documentTypesId[0]?.documentName
           : "NA",
     },
     {
@@ -50,8 +50,8 @@ function Visadoccategory() {
     },
     { field: "createdAt", headerName: "Created At", flex: 1 },
   ];
-  
-  
+
+
 
 
   return (

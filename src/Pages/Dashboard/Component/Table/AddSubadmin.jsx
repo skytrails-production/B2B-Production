@@ -34,17 +34,23 @@ const CreateSubAdminPage = () => {
     email: '',
     password: '',
     mobile_number: '',
-    dynamicProperties: {},
+    dynamicProperties: '',
     authType: ''
   });
 
   const handleChange = (e) => {
+    const value = e.target.value;
+    const name = e.target.name;
+  
+    // If the input field is dynamicProperties, parse the string back to an object
+    // const newValue = name === 'dynamicProperties' ? JSON.parse(value) : value;
+  
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
   };
-
+  
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -142,37 +148,22 @@ const CreateSubAdminPage = () => {
         </div>
 
 
-        <div className="form-group">
-
-          <label htmlFor="authType" className="form-label-subAdmin">
-            Auth Type:
-          </label>
-          <select
-            name="authType"
-            value={formData.authType}
-            onChange={handleChange}
-            className="form-input-authType"
-          >
-            {authArray.map((type) => (
-              <option key={type} value={type}>
-                {type}
-              </option>
-            ))}
-          </select>
-        </div>
+        
 
         <div className="form-group">
           <label htmlFor="dynamicProperties" className="form-label-subAdmin">
             Dynamic Properties:
           </label>
           <input
+
             type="text"
             id="dynamicProperties"
             name="dynamicProperties"
-            value={JSON.stringify(formData.dynamicProperties)} // Convert object to string
+            value={formData.dynamicProperties} // Convert object to string
             onChange={handleChange}
             className="form-input"
           />
+
         </div> 
         <div className="form-group" style={{width:"95%"}}>
           <label htmlFor="authType" className="form-label-subAdmin">

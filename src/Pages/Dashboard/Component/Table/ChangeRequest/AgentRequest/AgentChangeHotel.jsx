@@ -72,9 +72,9 @@ const AllHotelCancelTickets = () => {
   const columns = [
     { field: 'bookingId', headerName: 'Booking ID', width: 120 },
     { field: 'agencyName', headerName: 'Agency Name', width: 150, valueGetter: (params) => params.row.userDetails.agency_details.agency_name || 'No Data' },
-    { field: 'name', headerName: 'Name', width: 150, valueGetter: (params) => `${params.row.userDetails.personal_details.first_name} ${params.row.userDetails.personal_details.last_name}` || 'No Data' },
-    { field: 'phone', headerName: 'Phone', width: 130, valueGetter: (params) => params.row.userDetails.personal_details.mobile.mobile_number || 'No Data' },
-    { field: 'email', headerName: 'Email', width: 150, valueGetter: (params) => params.row.userDetails.personal_details.email || 'No Data' },
+    { field: 'name', headerName: 'Name', width: 150, valueGetter: (params) => `${params.row.userDetails?.personal_details.first_name} ${params.row.userDetails?.personal_details.last_name}` || 'No Data' },
+    { field: 'phone', headerName: 'Phone', width: 130, valueGetter: (params) => params.row.userDetails?.personal_details.mobile.mobile_number || 'No Data' },
+    { field: 'email', headerName: 'Email', width: 150, valueGetter: (params) => params.row.userDetails?.personal_details.email || 'No Data' },
     { field: 'reason', headerName: 'Reason', width: 150 },
     { field: 'hotelId', headerName: 'Hotel ID', width: 120, valueGetter: (params) => params.row.hotelDetails.hotelId || 'No Data' },
     { field: 'amount', headerName: 'Amount', width: 120, valueGetter: (params) => params.row.hotelDetails.amount || 'No Data' },

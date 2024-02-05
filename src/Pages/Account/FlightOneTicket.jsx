@@ -134,6 +134,44 @@ const FlightOneTicket = () => {
     paymentHideElement.style.display = originalDisplayStyle;
   };
 
+  //with out logo ads
+
+  const handlePrintTiketWithOutAds = () => {
+    const paymentHideElement = document.getElementById("paymentHide");
+    const logoHideElement=document.getElementById("logo");
+    const bannerHideElement=document.getElementById("banner");
+    const supportHideElement=document.getElementById("supports");
+
+    // Store the current display property of the paymentHide div
+    const originalDisplayStyle = paymentHideElement.style.display;
+    const originalDisplayLogo = logoHideElement.style.display;
+    const originalDisplayBanner=bannerHideElement.style.display;
+    const originalDisplaySupports = supportHideElement.style.display;
+
+    // Hide the paymentHide div for printing
+    paymentHideElement.style.display = "none";
+    logoHideElement.style.display = "none";
+    bannerHideElement.style.display="none";
+    supportHideElement.style.display="none";
+
+    // Print the pdf-content
+    const element = document.getElementById("pdf-content");
+
+    const content = element.innerHTML;
+
+    const printWindow = window.open("", "_blank");
+    printWindow.document.write(content);
+    printWindow.document.close();
+    printWindow.print();
+    printWindow.close();
+
+    // Restore the original display property of the paymentHide div
+    paymentHideElement.style.display = originalDisplayStyle;
+    logoHideElement.style.display = originalDisplayLogo;
+    bannerHideElement.style.display=originalDisplayBanner;
+    supportHideElement.style.display = originalDisplaySupports;
+  };
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -362,6 +400,7 @@ const FlightOneTicket = () => {
                 }}
               >
                 <img
+                id="logo"
                   src={pdfLogo}
                   alt="logo"
                   style={{ width: "25%", marginTop: "-10px" }}
@@ -691,7 +730,7 @@ const FlightOneTicket = () => {
                             {item.Airline.FareClass}
                             Class
                             <br />
-                            Operating Carrier:{item.Airline.AirlineCode}
+                            Operating Carrier:{item.Airline.AirlineCode}<br />
                             <label>Cabin:Economy</label>
                           </div>
                           {/* ... */}
@@ -950,7 +989,7 @@ const FlightOneTicket = () => {
                   </div>
                 </div>
 
-                <div
+                <div id="supports"
                   style={{
                     marginTop: "5px",
 
@@ -1055,7 +1094,7 @@ const FlightOneTicket = () => {
                 </div>
 
 
-                <div  style={{ width: '100%', margin:'0px', padding:0}}>
+                <div  style={{ width: '100%', margin:'0px', padding:0}} id="banner">
             <img src="https://travvolt.s3.amazonaws.com/app_banner.png" alt="SkyTrails_banner" style={{width: '100%',
               marginTop: '15px',
               borderRadius: '15px'}} />
@@ -1069,7 +1108,6 @@ const FlightOneTicket = () => {
                 <div
                   style={{
                     marginTop: "5px",
-
                     paddingTop: "24px",
                     paddingBottom: "24px",
                     background: "white",
@@ -1077,18 +1115,20 @@ const FlightOneTicket = () => {
                     text: "center",
                     gap: "24px",
                     display: "flex",
+                    flexWrap: "wrap", // Allow flex items to wrap to the next line
+                    justifyContent: "center", // Center the buttons horizontally
                   }}
                 >
                  
-                  <button
+                  <button className="btnSize"
                     onClick={handlePrintTicketWithoutFare}
                     style={{
                       padding: "0.2rem",
                     }}
                   >
-                    Print E-Ticket Without Fare
+                    Print E-Ticket Without Fare & Logo
                   </button>
-                  <button
+                  <button className="btnSize"
                     onClick={handleEmailTicketWithAgentFare}
                     style={{
                       padding: "0.2rem",
@@ -1096,13 +1136,29 @@ const FlightOneTicket = () => {
                   >
                     Email Ticket With Agent Mark Fare
                   </button>
-                  <button
+                  <button className="btnSize"
                      onClick={handleEmailTicket}
                     style={{
                       padding: "0.2rem",
                     }}
                   >
                     Email Ticket
+                  </button>
+                  <button className="btnSize"
+                     onClick={handleEmailTicket}
+                    style={{
+                      padding: "0.2rem",
+                    }}
+                  >
+                    Email Ticket without Logo
+                  </button>
+                  <button className="btnSize"
+                     onClick={handlePrintTiketWithOutAds}
+                    style={{
+                      padding: "0.2rem",
+                    }}
+                  >
+                    Print Ticket without Logo
                   </button>
                 </div>
 

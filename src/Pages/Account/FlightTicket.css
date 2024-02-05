@@ -249,3 +249,8 @@ form label {
 .swal2-container{
   z-index: 99999999999; 
 }
+
+.btnSize{
+  font-size: 14px;
+  background-color: blue;
+}
