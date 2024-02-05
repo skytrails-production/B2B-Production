@@ -119,7 +119,7 @@ const MarkUpAmount = () => {
                     ) : (
                       <button
                         style={{
-                          backgroundColor: "blue",
+                          backgroundColor: "#21325D",
                           color: "white",
                           border: "none",
                           padding: "5px 10px",

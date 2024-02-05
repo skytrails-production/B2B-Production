@@ -1689,7 +1689,7 @@ export default function VerticalTabs() {
                 />
               </ListItemButton>
             </ListItem>
-            <ListItem
+            {/* <ListItem
               disablePadding
               sx={{ display: "block" }}
               onClick={() => handleMenuItemClick("Forex")}
@@ -1718,7 +1718,7 @@ export default function VerticalTabs() {
                   sx={{ opacity: open ? 1 : 0, color: "white" }}
                 />
               </ListItemButton>
-            </ListItem>
+            </ListItem> */}
             <ListItem disablePadding sx={{ display: "block" }}>
               <ListItemButton
                 sx={{
@@ -1958,7 +1958,7 @@ export default function VerticalTabs() {
                 </ListItem>
               </Collapse>
             </ListItem>
-            <ListItem
+            {/* <ListItem
               disablePadding
               sx={{ display: "block" }}
               onClick={() => handleMenuItemClick("Visa Request")}
@@ -1987,7 +1987,7 @@ export default function VerticalTabs() {
                   sx={{ opacity: open ? 1 : 0, color: "white" }}
                 />
               </ListItemButton>
-            </ListItem>
+            </ListItem> */}
             <ListItem
               disablePadding
               sx={{ display: "block" }}

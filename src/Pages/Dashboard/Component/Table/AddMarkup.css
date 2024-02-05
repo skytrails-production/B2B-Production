@@ -155,9 +155,7 @@
   margin-right: 10px;
 }
 
-.form-label-subAdmin:hover {
-  color: #f0dddd;
-}
+
 
 .form-label-subAdmin:focus {
   background-color: lightblue;

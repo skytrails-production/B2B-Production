@@ -9,55 +9,56 @@ import { apiURL } from "../../../Constants/constant";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 
 const Visacategorytable = () => {
-  const [data, setData] = useState([]);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [data, setData] = useState([]); // Initializing state for data
+  const [page, setPage] = useState(1); // Initializing state for page number
+  const [totalPages, setTotalPages] = useState(1); // Initializing state for total pages
 
+  // Function to fetch data from the API
   const fetchData = async (pageNumber) => {
     try {
       const response = await axios.get(
         `${apiURL.baseURL}/skyTrails/api/visa/getAllVisaCountry?page=${pageNumber}`
       );
       const result = response.data.result;
-      setData(result);
-      setTotalPages(response.data.totalPages);
+      setData(result); // Updating state with fetched data
+      setTotalPages(response.data.totalPages); // Updating state with total pages
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
+  // useEffect hook to fetch data when the page state changes
   useEffect(() => {
     fetchData(page);
   }, [page]);
 
+  // Define columns for the data grid
   const columns = [
     { field: "countryName", headerName: "Country Name", flex: 5 },
     { field: "daysToProcess", headerName: "Days To Process", flex: 5 },
-
     { field: "status", headerName: "Status", flex: 5 },
     { field: "issuedType", headerName: "Issued Type", flex: 5 },
-    { field: "createdAt", headerName: "Created At", flex: 5 },
     {
       field: "requireDocumentId.visaType",
       headerName: "Visa Type",
       flex: 5,
       renderCell: (params) =>
-        params.row.requireDocumentId?.visaType || "N/A", // Use "N/A" or any default value if not present
+        params.row.requireDocumentId?.visaType || "N/A", // Render "N/A" if visaType is not present
     },
-
     {
       field: "requireDocumentId.requiredDocCategory",
       headerName: "Required Document Category",
       flex: 7,
-      renderCell: (params) => params.row.requireDocumentId?.requiredDocCategory?.join(", ") || "N/A",
+      renderCell: (params) => params.row.requireDocumentId?.requiredDocCategory?.join(", ") || "N/A", // Join categories with comma if present
     },
-
   ];
 
+  // Function to handle page change
   const handlePageChange = (event, value) => {
-    setPage(value);
+    setPage(value); // Update page state
   };
 
+  // JSX rendering
   return (
     <Paper
       className="subada-table-container"
@@ -86,38 +87,37 @@ const Visacategorytable = () => {
         </Typography>
       </div>
 
-      {data.length === 0 ? (
-        <Typography variant="body1" style={{ marginTop: 20, textAlign: "center" }}>
-          No data available
-        </Typography>
-      ) : (
-        <>
+      <>
+        {data && data.length > 0 ? (
           <DataGrid
             rows={data}
             columns={columns}
-            pageSize={5} // Number of items per page
-            // components={{
-            //   Toolbar: GridToolbar,
-            // }}
+            pageSize={5}
             pagination
             page={page}
             onPageChange={handlePageChange}
             rowsPerPageOptions={[]}
             getRowId={(row) => row._id}
           />
+        ) : (
+          <Typography variant="body1" style={{ marginTop: 20, textAlign: "center" }}>
+            No data available
+          </Typography>
+        )}
 
-          <Pagination
-            count={totalPages}
-            page={page}
-            onChange={handlePageChange}
-            color="primary"
-            style={{ marginTop: "10px", display: "flex", justifyContent: "center" }}
-          />
-        </>
-      )}
+
+
+        <Pagination
+          count={totalPages}
+          page={page}
+          onChange={handlePageChange}
+          color="primary"
+          style={{ marginTop: "10px", display: "flex", justifyContent: "center" }}
+        />
+      </>
+
     </Paper>
   );
-
 };
 
 export default Visacategorytable;

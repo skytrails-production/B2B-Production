@@ -39,6 +39,7 @@ function Visacountryselect() {
   const [additionalFields, setAdditionalFields] = useState({
     governmentFee: "",
     platFormFees: "",
+    daysToProcess: "",
   });
 
   const validationSchema = Yup.object({
@@ -55,6 +56,10 @@ function Visacountryselect() {
       is: (val) => val === 'WEEKLY VISA' || val === 'MONTHLY VISA',
       then: Yup.string().required('PlatForm Fees is required'),
     }),
+    daysToProcess: Yup.string().when('issuedType', {
+      is: (val) => val === 'WEEKLY VISA' || val === 'MONTHLY VISA',
+      then: Yup.string().required('DaysToProcess Fees is required'),
+    }),
   });
 
   useEffect(() => {
@@ -62,7 +67,7 @@ function Visacountryselect() {
       .get(`${apiURL.baseURL}/skyTrails/api/visa/getVisaCategory`)
       .then((response) => {
         const categories = response.data.result;
-        if(categories && categories.length > 0) {
+        if (categories && categories.length > 0) {
           setVisaCategories(categories);
           setFormData({
             ...formData,
@@ -74,7 +79,7 @@ function Visacountryselect() {
         console.error("Error fetching visa categories:", error);
       });
   }, []);
-  
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -83,6 +88,7 @@ function Visacountryselect() {
       setAdditionalFields({
         governmentFee: "",
         platFormFees: "",
+        daysToProcess: "",
       });
     } else {
       setAdditionalFields({});
@@ -114,7 +120,7 @@ function Visacountryselect() {
               countryName: '',
               issuedType: '',
               continent: '',
-              daysToProcess: '',
+
               visaCategoryName: '',
             });
           })
@@ -187,7 +193,7 @@ function Visacountryselect() {
                 <p style={{ color: "red" }}>{formErrors.continent}</p>
               )}
             </Box>
-            <Box mb={2}>
+            {/* <Box mb={2}>
               <TextField
                 label="Days To Process"
                 variant="outlined"
@@ -199,7 +205,7 @@ function Visacountryselect() {
                 error={formErrors.daysToProcess !== ""}
                 helperText={formErrors.daysToProcess}
               />
-            </Box>
+            </Box> */}
             <Box mb={2}>
               <TextField
                 label="Country Name"
@@ -262,6 +268,20 @@ function Visacountryselect() {
                 onChange={(e) => setAdditionalFields({ ...additionalFields, platFormFees: e.target.value })}
                 error={formErrors.platFormFees !== ""}
                 helperText={formErrors.platFormFees}
+                style={{ display: (formData.issuedType === "WEEKLY VISA" || formData.issuedType === "MONTHLY VISA") ? 'block' : 'none' }}
+              />
+            </Box>
+            <Box mb={2}>
+              <TextField
+                label="Days To Process"
+                variant="outlined"
+                fullWidth
+                multiline
+                name="daysToProcess"
+                value={additionalFields.daysToProcess}
+                onChange={(e) => setAdditionalFields({ ...additionalFields, daysToProcess: e.target.value })}
+                error={formErrors.daysToProcess !== ""}
+                helperText={formErrors.daysToProcess}
                 style={{ display: (formData.issuedType === "WEEKLY VISA" || formData.issuedType === "MONTHLY VISA") ? 'block' : 'none' }}
               />
             </Box>
