@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { TextField, InputAdornment, Paper,Typography ,Stack,Pagination } from '@mui/material';
+import { TextField, InputAdornment, Paper, Typography, Stack, Pagination } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { apiURL } from '../../../../../Constants/constant';
 import { DataGrid } from '@mui/x-data-grid';
-
+import "./BusBookings.css";
 const AllBusBooking = () => {
   const [busBookings, setBusBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -46,38 +46,45 @@ const AllBusBooking = () => {
   };
 
   const columns = [
-    { field: 'busId', headerName: 'Bus ID', flex: 1, valueGetter: (params) => params.row.busId || 'No Data' },
-    { field: 'userDetails.username', headerName: 'Name', flex: 1, valueGetter: (params) => params.row.userDetails?.username || 'No Data' },
-    { field: 'passenger[0].Email', headerName: 'Email', flex: 1, valueGetter: (params) => params.row.passenger[0]?.Email || 'No Data' },
-    { field: 'userDetails.phone.mobile_number', headerName: 'Phone', flex: 1, valueGetter: (params) => params.row.userDetails?.phone.mobile_number || 'No Data' },
-    { field: 'destination', headerName: 'Destination', flex: 1, valueGetter: (params) => params.row.destination || 'No Data' },
-    { field: 'origin', headerName: 'Origin', flex: 1, valueGetter: (params) => params.row.origin || 'No Data' },
-    { field: 'busName', headerName: 'Bus Name', flex: 1, valueGetter: (params) => params.row.busName || 'No Data' },
-    { field: 'busType', headerName: 'Bus Type', flex: 1, valueGetter: (params) => params.row.busType || 'No Data' },
-    { field: 'pnr', headerName: 'PNR', flex: 1, valueGetter: (params) => params.row.pnr || 'No Data' },
-    { field: 'dateOfJourney', headerName: 'Date Of Journey', flex: 1, valueGetter: (params) => new Date(params.row.dateOfJourney).toDateString() || 'No Data' },
-    { field: 'noOfSeats', headerName: 'No Of Seats', flex: 1, valueGetter: (params) => params.row.noOfSeats || 'No Data' },
+    { field: 'busId', minWidth:100, headerName: 'Bus ID',  valueGetter: (params) => params.row.busId || 'No Data' },
+    {
+      field: 'passenger[0].firstName',
+      headerName: 'Name',
+      
+      minWidth:100,
+      valueGetter: (params) => params.row.passenger[0]?.firstName || 'No Data'
+    },
+
+    { field: 'passenger[0].Email', minWidth:230, headerName: 'Email',cellClassName: 'cell-padding',valueGetter: (params) => params.row.passenger[0]?.Email || 'No Data' },
+    { field: 'passenger[0].Phone', headerName: 'Phone',minWidth:100, valueGetter: (params) => params.row.passenger[0].Phone || 'No Data' },
+    { field: 'destination', headerName: 'Destination', minWidth:100, valueGetter: (params) => params.row.destination || 'No Data' },
+    { field: 'origin', headerName: 'Origin', minWidth:120, valueGetter: (params) => params.row.origin || 'No Data' },
+    { field: 'travelName', headerName: 'Bus Name', minWidth:200, valueGetter: (params) => params.row.travelName || 'No Data' },
+    { field: 'busType', headerName: 'Bus Type',minWidth:350, valueGetter: (params) => params.row.busType || 'No Data' },
+    { field: 'pnr', headerName: 'PNR', minWidth:150, valueGetter: (params) => params.row.pnr || 'No Data' },
+    { field: 'departureTime', headerName: 'Date Of Journey', minWidth:150, valueGetter: (params) => new Date(params.row.departureTime).toDateString() || 'No Data' },
+    { field: 'noOfSeats', headerName: 'No Of Seats', minWidth:150, valueGetter: (params) => params.row.noOfSeats || 'No Data' },
   ];
 
   return (
-    <div className="subada-table-container" style={{ position: 'relative', width: "100%" }}>
-    <div className='adsearch-bar' style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold' }}>
-      <TextField
-        type='text'
-        value={searchTerm}
-        onChange={handleSearch}
-        placeholder='Search by name, ID, etc.'
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position='start'>
-              <SearchIcon />
-            </InputAdornment>
-          ),
-        }}
-      />
-      <Typography variant='h5' className='adtable-heading'>
-        Bus Booking
-      </Typography>
+    <div className="subada-table-container">
+      <div className='adsearch-bar' style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold' }}>
+        <TextField
+          type='text'
+          value={searchTerm}
+          onChange={handleSearch}
+          placeholder='Search by name, ID, etc.'
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position='start'>
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
+        <Typography variant='h5' className='adtable-heading'>
+          Bus Booking
+        </Typography>
       </div>
       {busBookings.length === 0 ? (
         <Paper>
@@ -86,16 +93,19 @@ const AllBusBooking = () => {
           </div>
         </Paper>
       ) : (
-        <Paper style={{width: '100%'}}>
-          <DataGrid
-            rows={busBookings}
-            columns={columns}
-            pageSize={pageSize}
-            rowsPerPageOptions={[pageSize]}
-            pagination
-            getRowId={(row) => row._id}
-          />
-        </Paper>
+        <div style={{ overflowX: "auto", maxWidth: "100%" }}>
+          <Paper >
+            <DataGrid
+              rows={busBookings}
+              columns={columns}
+              pageSize={pageSize}
+              rowsPerPageOptions={[pageSize]}
+              pagination
+              getRowId={(row) => row._id}
+              showToolbar={true}
+            />
+          </Paper>
+        </div>
       )}
 
       {/* Pagination */}

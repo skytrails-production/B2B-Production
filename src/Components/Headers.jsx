@@ -161,7 +161,7 @@ const isValidMobileNumber = (mobileNumber) => {
       } else {
         console.error("API call failed with status:", response.status);
         const errorData = await response.json();
-        console.error("Error details:", errorData);
+        // console.error("Error details:", errorData);
       }
     } catch (error) {
       // Handle network errors or exceptions
@@ -180,9 +180,11 @@ const isValidMobileNumber = (mobileNumber) => {
         // console.log(response, "response");
         if (response.status === "success") {
           try {
+            // console.log(response, "response", response.easepayid);
+            const easepayid=response.easepayid;
             // Make API call if payment status is 'success'
             const verifyResponse = await axios.post(`
-              ${apiURL.baseURL}/skyTrails/successVerifyApi?merchantTransactionId=${response.txnid}`
+              ${apiURL.baseURL}/skyTrails/successVerifyApi?merchantTransactionId=${response.txnid}`, {easepayid: easepayid}
             );
 
           setTimeout(()=>{

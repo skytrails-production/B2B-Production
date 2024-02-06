@@ -56,3 +56,6 @@ button.active {
   background-color: #f3f4f4;
 }
 
+.cell-padding {
+  padding: 10px; /* Adjust padding as per your requirement */
+}
