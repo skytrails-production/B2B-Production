@@ -1828,7 +1828,7 @@ const HotelTicket = () => {
                         margin: "0",
                       }}
                     >
-                      +91 8917972301
+                      +91 9209793097
                     </p>
                   </div>
                   <div
@@ -1876,7 +1876,7 @@ const HotelTicket = () => {
                         wordwrap: "break-word",
                       }}
                     >
-                      support@theskytrails.com
+                      Info@theskytrails.com
                     </div>
                   </div>
                 </div>

@@ -28,28 +28,24 @@ function Visadoccategory() {
   }, []);
 
   const columns = [
-    { field: "categoryName", headerName: "Category Name", flex: 1 },
-    { field: "description", headerName: "Description", flex: 1 },
+    { field: "categoryName", headerName: "Category Name", width: 220 },
+    { field: "description", headerName: "Description", width: 220 },
     {
       field: "documentTypesId",
       headerName: "Document Name",
-      flex: 1,
+      width: 220,
       valueGetter: (params) =>
-        params.row.documentTypesId && params?.row?.documentTypesId?.length
-          ? params?.row?.documentTypesId[0]?.documentName
-          : "NA",
+        params.row.documentTypesId ? params.row.documentTypesId.documentName : "NA",
     },
     {
       field: "documentDescription",
       headerName: "Document Description",
-      flex: 1,
+      width: 220,
       valueGetter: (params) =>
-        params.row.documentTypesId && params.row.documentTypesId.length
-          ? params.row.documentTypesId[0].description
-          : "NA",
+        params.row.documentTypesId ? params.row.documentTypesId.description : "NA",
     },
-    { field: "createdAt", headerName: "Created At", flex: 1 },
   ];
+
 
 
 
@@ -84,9 +80,13 @@ function Visadoccategory() {
         rows={data}
         columns={columns}
         pageSize={5} // Number of items per page
-        // components={{
-        //   Toolbar: GridToolbar,
-        // }}
+        components={{
+          Toolbar: () => (
+            <div style={{ marginTop: '10px' }}>
+              <GridToolbar />
+            </div>
+          ),
+        }}
         getRowId={(row) => row._id}
       />
     </Paper>

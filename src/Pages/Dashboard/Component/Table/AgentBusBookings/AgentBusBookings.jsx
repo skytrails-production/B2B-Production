@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { apiURL } from '../../../../../Constants/constant';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 
 const AllBusBooking = () => {
   const [busBookings, setBusBookings] = useState([]);
@@ -57,26 +57,44 @@ const AllBusBooking = () => {
   };
 
   const columns = [
-    { field: 'busId', headerName: 'Bus ID', flex: 1, valueGetter: (params) => params.row.busId || 'No Data' },
-    { field: 'userDetails.agency_details.agency_name', headerName: 'Agency Name', flex: 1, valueGetter: (params) => params.row.userDetails?.agency_details?.agency_name || 'No Data' },
-    { field: 'userDetails.personal_details.first_name', headerName: 'Name', flex: 1, valueGetter: (params) => `${params.row.userDetails?.personal_details?.first_name} ${params.row.userDetails?.personal_details?.last_name}` || 'No Data' },
-    { field: 'userDetails.personal_details.email', headerName: 'Email', flex: 1, valueGetter: (params) => params.row.userDetails?.personal_details?.email || 'No Data' },
+    { field: 'busId', headerName: 'Bus ID', width: 220, valueGetter: (params) => params.row.busId || 'No Data' },
+    {
+      field: 'passenger[0]?.firstName',
+      headerName: 'Passenger Name',
+      width: 220,
+      valueGetter: (params) => {
+        const firstName = params.row.passenger[0]?.firstName || 'No Data';
+        const lastName = params.row.passenger[0]?.lastName || 'No Data';
+        return `${firstName} ${lastName}`;
+      }
+    },
+    // {
+    //   field: 'passenger[1]?.firstName',
+    //   headerName: 'Passenger Name',
+    //   width: 220,
+    //   valueGetter: (params) => {
+    //     const firstName = params.row.passenger[1]?.firstName || 'No Data';
+    //     const lastName = params.row.passenger[1]?.lastName || 'No Data';
+    //     return `${firstName} ${lastName}`;
+    //   }
+    // },
+
+    { field: 'userDetails.personal_details.email', headerName: 'Email', width: 300, valueGetter: (params) => params.row.passenger[0]?.Email || 'No Data' },
     {
       field: 'userDetails.personal_details.mobile',
       headerName: 'Phone',
-      flex: 1,
+      width: 220,
       valueGetter: (params) =>
-        params.row.userDetails?.personal_details?.mobile
-          ? `${params.row.userDetails.personal_details.mobile.country_code}${params.row.userDetails.personal_details.mobile.mobile_number}`
-          : 'No Data',
+        params.row.passenger[0]?.Phone
+
     },
-    { field: 'destination', headerName: 'Destination', flex: 1, valueGetter: (params) => params.row.destination || 'No Data' },
-    { field: 'origin', headerName: 'Origin', flex: 1, valueGetter: (params) => params.row.origin || 'No Data' },
-    { field: 'amountv', headerName: 'Amount', flex: 1, valueGetter: (params) => params.row.amountv || 'No Data' },
-    { field: 'busType', headerName: 'Bus Type', flex: 1, valueGetter: (params) => params.row.busType || 'No Data' },
-    { field: 'pnr', headerName: 'PNR', flex: 1, valueGetter: (params) => params.row.pnr || 'No Data' },
-    { field: 'dateOfJourney', headerName: 'Date Of Journey', flex: 1, valueGetter: (params) => new Date(params.row.dateOfJourney).toDateString() || 'No Data' },
-    { field: 'noOfSeats', headerName: 'No Of Seats', flex: 1, valueGetter: (params) => params.row.noOfSeats || 'No Data' },
+    { field: 'destination', headerName: 'Destination', width: 220, valueGetter: (params) => params.row.destination || 'No Data' },
+    { field: 'origin', headerName: 'Origin', width: 220, valueGetter: (params) => params.row.origin || 'No Data' },
+    { field: 'amountv', headerName: 'Amount', width: 220, valueGetter: (params) => params.row.passenger[0]?.Price || 'No Data' },
+    { field: 'busType', headerName: 'Bus Type', width: 300, valueGetter: (params) => params.row.busType || 'No Data' },
+    { field: 'pnr', headerName: 'PNR', width: 220, valueGetter: (params) => params.row.pnr || 'No Data' },
+    { field: 'dateOfJourney', headerName: 'Date Of Journey', width: 220, valueGetter: (params) => new Date(params.row.departureTime).toDateString() || 'No Data' },
+    { field: 'noOfSeats', headerName: 'No Of Seats', width: 220, valueGetter: (params) => params.row.noOfSeats || 'No Data' },
   ];
 
   return (
@@ -106,7 +124,7 @@ const AllBusBooking = () => {
           </div>
         </Paper>
       ) : (
-        <Paper style={{width: '100%' }}>
+        <Paper style={{ width: '100%' }}>
           <DataGrid
             rows={busBookings}
             columns={columns}
@@ -114,7 +132,16 @@ const AllBusBooking = () => {
             rowsPerPageOptions={[pageSize]}
             pagination
             getRowId={(row) => row._id}
+            components={{
+              Toolbar: () => (
+                <div style={{ marginTop: '10px' }}>
+                  <GridToolbar />
+                </div>
+              ),
+            }}
+             
           />
+
         </Paper>
       )}
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import {
   TextField,
   InputAdornment,
@@ -19,7 +19,7 @@ import ApprovalIcon from "@mui/icons-material/CheckCircleOutline";
 import axios from "axios";
 import { apiURL } from "../../../../../Constants/constant";
 import "./AgentRequest.css";
-
+import { Alert } from "@mui/material";
 const AllAdvertisementTable = () => {
   const [advertisement, setAdvertisement] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -31,7 +31,6 @@ const AllAdvertisementTable = () => {
   const [sortOrder, setSortOrder] = useState({ field: "", order: "asc" });
   const [selectedUserStatusMap, setSelectedUserStatusMap] = useState({}); // Map to store status for each user
 
-  
   useEffect(() => {
     async function fetchAdvertisementData() {
       try {
@@ -88,9 +87,7 @@ const AllAdvertisementTable = () => {
     setFilteredData(filtered);
   };
 
- 
-  const handleStatusChange = async (userId,status) => {
-    
+  const handleStatusChange = async (userId, status) => {
     try {
       const response = await axios.put(
         `${apiURL.baseURL}/skytrails/api/admin/approveAgent`,
@@ -104,7 +101,6 @@ const AllAdvertisementTable = () => {
       // console.log(response);
 
       // Refetch the user data after updating the status
-      
     } catch (error) {
       console.error("Error updating status:", error);
     }
@@ -117,48 +113,54 @@ const AllAdvertisementTable = () => {
   };
 
   const columns = [
-    { 
-      field: "agentName", 
-      headerName: "Agent Name", 
-      width: 200, 
-      sortable: false, 
-      valueGetter: (params) => `${params.row.personal_details?.first_name || ""} ${params.row.personal_details?.last_name || ""}` 
+    {
+      field: "agentName",
+      headerName: "Agent Name",
+      width: 200,
+      sortable: false,
+      valueGetter: (params) =>
+        `${params.row.personal_details?.first_name || ""} ${params.row.personal_details?.last_name || ""
+        }`,
     },
-    { 
-      field: "contact", 
-      headerName: "Contact", 
-      width: 150, 
-      sortable: false, 
-      valueGetter: (params) => params.row.personal_details?.mobile?.mobile_number || "No Data" 
+    {
+      field: "contact",
+      headerName: "Contact",
+      width: 150,
+      sortable: false,
+      valueGetter: (params) =>
+        params.row.personal_details?.mobile?.mobile_number || "No Data",
     },
-    { 
-      field: "email", 
-      headerName: "Email", 
-      width: 200, 
-      sortable: false, 
-      valueGetter: (params) => params.row.personal_details?.email || "No Data" 
+    {
+      field: "email",
+      headerName: "Email",
+      width: 200,
+      sortable: false,
+      valueGetter: (params) =>
+        params.row.personal_details?.email || "No Data",
     },
-    { 
-      field: "agencyLocation", 
-      headerName: "Agency Location", 
-      width: 200, 
-      sortable: false, 
-      valueGetter: (params) => params.row.agency_details?.address || "No Data" 
+    {
+      field: "agencyLocation",
+      headerName: "Agency Location",
+      width: 200,
+      sortable: false,
+      valueGetter: (params) =>
+        params.row.agency_details?.address || "No Data",
     },
-    { 
-      field: "panNumber", 
-      headerName: "Pan Number", 
-      width: 150, 
-      sortable: false, 
-      valueGetter: (params) => params.row.agency_details?.pan_number || "No Data" 
+    {
+      field: "panNumber",
+      headerName: "Pan Number",
+      width: 150,
+      sortable: false,
+      valueGetter: (params) => params.row.agency_details?.pan_number || "No Data",
     },
-    { 
+    {
       field: "Approve",
       headerName: "Approve",
-      width: 200, 
+      width: 200,
       renderCell: (params) => {
-        const selectedValue = selectedUserStatusMap[params.id] || params.row.status;
-  
+        const selectedValue =
+          selectedUserStatusMap[params.id] || params.row.status;
+
         return (
           <select
             value={selectedValue}
@@ -177,7 +179,7 @@ const AllAdvertisementTable = () => {
     {
       field: "status",
       headerName: "Status",
-      width: 200, 
+      width: 200,
       sortable: false,
       valueGetter: (params) => {
         if (params.row.approveStatus === "PENDING") {
@@ -188,13 +190,10 @@ const AllAdvertisementTable = () => {
       },
     },
   ];
-  
-
-
 
   return (
-    <div className="subada-table-container" style={{ position: 'relative', width: "100%" }}>
-      <div className="adsearch-bar" style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold' }}>
+    <div className="subada-table-container" style={{ position: "relative", width: "100%" }}>
+      <div className="adsearch-bar" style={{ position: "absolute", top: 10, zIndex: 1, fontWeight: "bold" }}>
         <TextField
           type="text"
           value={searchTerm}
@@ -213,15 +212,34 @@ const AllAdvertisementTable = () => {
         </Typography>
       </div>
       <div style={{ width: "100%", backgroundColor: "#fff" }}>
-        <DataGrid
-          rows={filteredData}
-          columns={columns}
-          pageSize={pageSize}
-          rowsPerPageOptions={[]}
-          page={currentPage - 1}
-          onPageChange={(params) => handlePageChange(params.page + 1)}
-          getRowId={(row) => row._id}
-        />
+        {loading ? (
+          <div className="loading-message">Loading...</div>
+        ) : filteredData.length === 0 ? (
+
+
+          <div style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", height: "100px" }}>
+            <Alert severity="info" variant="outlined">
+              Data is not available
+            </Alert>
+          </div>
+        ) : (
+          <DataGrid
+            rows={filteredData}
+            columns={columns}
+            pageSize={pageSize}
+            rowsPerPageOptions={[]}
+            page={currentPage - 1}
+            onPageChange={(params) => handlePageChange(params.page + 1)}
+            getRowId={(row) => row._id}
+            components={{
+              Toolbar: () => (
+                <div style={{ marginTop: '10px' }}>
+                  <GridToolbar />
+                </div>
+              ),
+            }}
+          />
+        )}
       </div>
       <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
         <Pagination

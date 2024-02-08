@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid,GridToolbar } from '@mui/x-data-grid';
 import {
   TextField,
   InputAdornment,
@@ -65,7 +65,7 @@ const AllHotelCancelTickets = () => {
       headerName: 'Name',
       width: 150,
       valueGetter: (params) =>
-        `${params.row.userDetails?.personal_details.first_name} ${params.row.userDetails?.personal_details.last_name}` ||
+        params?.row?.hotelDetails?.name ||
         'No Data',
     },
     {
@@ -73,22 +73,41 @@ const AllHotelCancelTickets = () => {
       headerName: 'Phone',
       width: 130,
       valueGetter: (params) =>
-        params.row.userDetails?.personal_details.mobile.mobile_number || 'No Data',
+        params.row?.hotelDetails?.phone || 'No Data',
     },
     {
       field: 'email',
       headerName: 'Email',
-      width: 150,
+      width: 250,
       valueGetter: (params) =>
-        params.row.userDetails?.personal_details.email || 'No Data',
+        params.row?.hotelDetails?.email || 'No Data',
     },
     { field: 'reason', headerName: 'Reason', width: 150 },
-    { field: 'hotelId', headerName: 'Hotel ID', width: 120 ,  valueGetter: (params) =>
-    params.row.hotelDetails?.hotelId || 'No Data',},
-    { field: 'amount', headerName: 'Amount', width: 120,valueGetter: (params) =>
-    params.row.hotelDetails?.amount || 'No Data', },
-    { field: 'CheckInDate', headerName: 'Check In Date', width: 180,valueGetter: (params) =>
-    params.row.hotelDetails?.CheckInDate || 'No Data', },
+    {
+      field: 'hotelId', headerName: 'Hotel ID', width: 120, valueGetter: (params) =>
+        params.row.hotelDetails?.hotelId || 'No Data',
+    },
+    {
+      field: 'amount', headerName: 'Amount', width: 120, valueGetter: (params) =>
+        params.row.hotelDetails?.amount || 'No Data',
+    },
+    {
+      field: 'CheckInDate',
+      headerName: 'Check In Date',
+      width: 180,
+      valueGetter: (params) => {
+        const checkInDate = params.row.hotelDetails?.CheckInDate;
+        if (checkInDate) {
+          const date = new Date(checkInDate);
+          // Format the date as needed, for example: DD/MM/YYYY
+          const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+          return formattedDate;
+        } else {
+          return 'No Data';
+        }
+      }
+    },
+
     {
       field: 'destination',
       headerName: 'Destination',
@@ -146,7 +165,7 @@ const AllHotelCancelTickets = () => {
         </Typography>
       </div>
 
-      <div style={{width: '100%',backgroundColor:"white" }}>
+      <div style={{ width: '100%', backgroundColor: "white" }}>
         <DataGrid
           rows={filteredData}
           columns={columns}
@@ -154,6 +173,13 @@ const AllHotelCancelTickets = () => {
           autoHeight
           disableSelectionOnClick
           getRowId={(row) => row._id}
+          components={{
+            Toolbar: () => (
+              <div style={{ marginTop: '10px' }}>
+                <GridToolbar />
+              </div>
+            ),
+          }}
         />
       </div>
 

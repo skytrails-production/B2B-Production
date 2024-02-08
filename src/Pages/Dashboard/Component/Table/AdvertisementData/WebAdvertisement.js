@@ -56,17 +56,31 @@ const AllWebAdvertisement = () => {
   };
 
   const columns = [
-    { field: "title", headerName: "Title", flex: 1 },
-    { field: "startDate", headerName: "Start Date", flex: 1 },
-    { field: "endDate", headerName: "End Date", flex: 1 },
-    { field: "remainingDays", headerName: "Remaining Days", flex: 1 },
-    { field: "status", headerName: "Status", flex: 1 },
-    { field: "addType", headerName: "AddType", flex: 1 },
-    { field: "approvalStatus", headerName: "Approval Status", flex: 1 },
+    { field: "title", headerName: "Title", width:220,},
+    { 
+      field: "startDate", 
+      headerName: "Start Date", 
+      width:220,
+      renderCell: (params) => (
+        <span>{new Date(params.value).toLocaleString()}</span>
+      ),
+    },
+    { 
+      field: "endDate", 
+      headerName: "End Date", 
+      width:220,
+      renderCell: (params) => (
+        <span>{new Date(params.value).toLocaleString()}</span>
+      ),
+    },
+    { field: "remainingDays", headerName: "Remaining Days", width:220,},
+    { field: "status", headerName: "Status", width:220,},
+    { field: "addType", headerName: "AddType", width:220,},
+    { field: "approvalStatus", headerName: "Approval Status", width:220,},
     {
       field: "image",
       headerName: "Image",
-      flex: 1,
+      width:150,
       renderCell: (params) => (
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
           <div style={{ width: "50px", height: "50px", borderRadius: "50%", overflow: "hidden" }}>
@@ -112,6 +126,13 @@ const AllWebAdvertisement = () => {
           onPageChange={handlePageChange}
           rowsPerPageOptions={[pageSize]}
           getRowId={(row) => row._id}
+          components={{
+            Toolbar: () => (
+              <div style={{ marginTop: '10px' }}>
+                <GridToolbar />
+              </div>
+            ),
+          }}
 
         />
       </div>

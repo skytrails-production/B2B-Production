@@ -71,9 +71,13 @@ function Visadoctype() {
         page={currentPage}
         onPageChange={handlePageChange}
         rowsPerPageOptions={[]}
-        // components={{
-        //   Toolbar: GridToolbar,
-        // }}
+        components={{
+          Toolbar: () => (
+            <div style={{ marginTop: '10px' }}>
+              <GridToolbar />
+            </div>
+          ),
+        }}
         getRowId={(row) => row._id}
       />
 

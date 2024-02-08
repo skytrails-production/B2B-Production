@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid ,GridToolbarColumnsButton,GridToolbar} from '@mui/x-data-grid';
 import {
   TextField,
   InputAdornment,
@@ -13,7 +13,7 @@ import Stack from '@mui/material/Stack';
 import ApprovalIcon from '@mui/icons-material/CheckCircleOutline';
 import { apiURL } from '../../../../../Constants/constant';
 import './style.css'; // Import your custom styles if needed
-
+import { Alert } from "@mui/material";
 const AllFlightCancelTickets = () => {
   const [flightBookings, setFlightBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -118,8 +118,8 @@ const AllFlightCancelTickets = () => {
   ];
 
   return (
-    <div className="subada-table-container"style={{ position: 'relative', width: "100%" }}>
-      <div className="adsearch-bar"  style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold' }}>
+    <div className="subada-table-container" style={{ position: 'relative', width: "100%" }}>
+      <div className="adsearch-bar" style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold' }}>
         <TextField
           type="text"
           value={searchTerm}
@@ -137,15 +137,34 @@ const AllFlightCancelTickets = () => {
           Agent Flight Cancel Ticket Request
         </Typography>
       </div>
-      <div style={{width: '100%',backgroundColor:"#fff" }}>
-        <DataGrid
-          rows={filteredData}
-          columns={columns}
-          pageSize={5}
-          autoHeight
-          disableSelectionOnClick
-          getRowId={(row) => row._id}
-        />
+      <div style={{ width: '100%', backgroundColor: "#fff" }}>
+        {loading ? (
+          <div className="loading-message">Loading...</div>
+        ) : filteredData.length === 0 ? (
+
+
+          <div style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", height: "100px" }}>
+            <Alert severity="info" variant="outlined">
+              Data is not available
+            </Alert>
+          </div>
+        ) : (
+          <DataGrid
+            rows={filteredData}
+            columns={columns}
+            pageSize={5}
+            autoHeight
+            disableSelectionOnClick
+            getRowId={(row) => row._id}
+            components={{
+              Toolbar: () => (
+                <div style={{ marginTop: '10px' }}>
+                  <GridToolbar />
+                </div>
+              ),
+            }}
+          />
+        )}
       </div>
       <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
         <Pagination
@@ -157,6 +176,7 @@ const AllFlightCancelTickets = () => {
       </Stack>
     </div>
   );
+
 };
 
 export default AllFlightCancelTickets;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid,GridToolbar } from "@mui/x-data-grid";
 import axios from "axios";
 import { apiURL } from "../../../Constants/constant";
 import { Pagination, Paper, Typography } from "@mui/material";
@@ -28,10 +28,20 @@ function RequireDocument() {
   }, []);
 
   const columns = [
-    { field: "requiredDocCategory", headerName: "Required Document Category", flex: 1 },
-    { field: "visaType", headerName: "Visa Type", flex: 1 },
-    { field: "visaCountry", headerName: "Visa Country", flex: 1, valueGetter: (params) => params.row.visaCountry?.countryName || "" },
-    { field: "visaCategory", headerName: "Visa Category", flex: 1, valueGetter: (params) => params.row.visaCategory?.categoryName || "" },
+    {
+      field: "requiredDocCategory",
+      headerName: "Required Document Category",
+      width: 220,
+      valueGetter: (params) => params.row.requiredDocCategory || "No Data",
+    },
+    {
+      field: "visaType", headerName: "Visa Type", width: 220,
+      valueGetter: (params) =>
+        params.row.visaType ? params.row.visaType : "No Data"
+
+    },
+    { field: "visaCountry", headerName: "Visa Country", width: 220, valueGetter: (params) => params.row.visaCountry?.countryName || "No Data" },
+    { field: "visaCategory", headerName: "Visa Category", width: 220, valueGetter: (params) => params.row.visaCategory?.categoryName || "No Data" },
   ];
 
   return (
@@ -83,6 +93,13 @@ function RequireDocument() {
           rowsPerPageOptions={[5, 10, 20]}
           pagination
           getRowId={(row) => row._id}
+          components={{
+            Toolbar: () => (
+              <div style={{ marginTop: '10px' }}>
+                <GridToolbar />
+              </div>
+            ),
+          }}
         />
 
 

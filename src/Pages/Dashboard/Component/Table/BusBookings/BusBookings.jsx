@@ -3,7 +3,7 @@ import axios from 'axios';
 import { TextField, InputAdornment, Paper, Typography, Stack, Pagination } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { apiURL } from '../../../../../Constants/constant';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid,GridToolbar } from '@mui/x-data-grid';
 import "./BusBookings.css";
 const AllBusBooking = () => {
   const [busBookings, setBusBookings] = useState([]);
@@ -46,24 +46,28 @@ const AllBusBooking = () => {
   };
 
   const columns = [
-    { field: 'busId', minWidth:100, headerName: 'Bus ID',  valueGetter: (params) => params.row.busId || 'No Data' },
+
+    { field: 'busId', minWidth: 100, headerName: 'Bus ID', valueGetter: (params) => params.row.busId || 'No Data' },
     {
       field: 'passenger[0].firstName',
       headerName: 'Name',
-      
-      minWidth:100,
+
+      minWidth: 100,
       valueGetter: (params) => params.row.passenger[0]?.firstName || 'No Data'
     },
 
-    { field: 'passenger[0].Email', minWidth:230, headerName: 'Email',cellClassName: 'cell-padding',valueGetter: (params) => params.row.passenger[0]?.Email || 'No Data' },
-    { field: 'passenger[0].Phone', headerName: 'Phone',minWidth:100, valueGetter: (params) => params.row.passenger[0].Phone || 'No Data' },
-    { field: 'destination', headerName: 'Destination', minWidth:100, valueGetter: (params) => params.row.destination || 'No Data' },
-    { field: 'origin', headerName: 'Origin', minWidth:120, valueGetter: (params) => params.row.origin || 'No Data' },
-    { field: 'travelName', headerName: 'Bus Name', minWidth:200, valueGetter: (params) => params.row.travelName || 'No Data' },
-    { field: 'busType', headerName: 'Bus Type',minWidth:350, valueGetter: (params) => params.row.busType || 'No Data' },
-    { field: 'pnr', headerName: 'PNR', minWidth:150, valueGetter: (params) => params.row.pnr || 'No Data' },
-    { field: 'departureTime', headerName: 'Date Of Journey', minWidth:150, valueGetter: (params) => new Date(params.row.departureTime).toDateString() || 'No Data' },
-    { field: 'noOfSeats', headerName: 'No Of Seats', minWidth:150, valueGetter: (params) => params.row.noOfSeats || 'No Data' },
+    { field: 'passenger[0].Email', minWidth: 230, headerName: 'Email', cellClassName: 'cell-padding', valueGetter: (params) => params.row.passenger[0]?.Email || 'No Data' },
+    { field: 'passenger[0].Phone', headerName: 'Phone', minWidth: 100, valueGetter: (params) => params.row.passenger[0].Phone || 'No Data' },
+    { field: 'destination', headerName: 'Destination', minWidth: 100, valueGetter: (params) => params.row.destination || 'No Data' },
+    { field: 'origin', headerName: 'Origin', minWidth: 120, valueGetter: (params) => params.row.origin || 'No Data' },
+    { field: 'travelName', headerName: 'Bus Name', minWidth: 200, valueGetter: (params) => params.row.travelName || 'No Data' },
+    { field: 'busType', headerName: 'Bus Type', minWidth: 350, valueGetter: (params) => params.row.busType || 'No Data' },
+    { field: 'pnr', headerName: 'PNR', minWidth: 150, valueGetter: (params) => params.row.pnr || 'No Data' },
+    { field: 'departureTime', headerName: 'Date Of Journey', minWidth: 150, valueGetter: (params) => new Date(params.row.departureTime).toDateString() || 'No Data' },
+    { field: 'noOfSeats', headerName: 'No Of Seats', minWidth: 150, valueGetter: (params) => params.row.noOfSeats || 'No Data' },
+    { field: 'amount', headerName: 'Amount', minWidth: 150, valueGetter: (params) => params.row.amount || 'No Data' },
+    { field: 'bookingStatus', headerName: 'Booking Status', minWidth: 150, valueGetter: (params) => params.row.bookingStatus || 'No Data' },
+   
   ];
 
   return (
@@ -83,7 +87,9 @@ const AllBusBooking = () => {
           }}
         />
         <Typography variant='h5' className='adtable-heading'>
-          Bus Booking
+
+         User Bus Booking
+
         </Typography>
       </div>
       {busBookings.length === 0 ? (
@@ -102,7 +108,15 @@ const AllBusBooking = () => {
               rowsPerPageOptions={[pageSize]}
               pagination
               getRowId={(row) => row._id}
-              showToolbar={true}
+              components={{
+                Toolbar: () => (
+                  <div style={{ marginTop: '10px' }}>
+                    <GridToolbar />
+                  </div>
+                ),
+              }}
+             
+
             />
           </Paper>
         </div>

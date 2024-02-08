@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid,GridToolbar } from '@mui/x-data-grid';
 import {
   TextField,
   InputAdornment,
@@ -126,6 +126,13 @@ const AllHotelCancelTickets = () => {
           autoHeight
           disableSelectionOnClick
           getRowId={(row) => row._id}
+          components={{
+            Toolbar: () => (
+              <div style={{ marginTop: '10px' }}>
+                <GridToolbar />
+              </div>
+            ),
+          }}
         />
       </div>
 

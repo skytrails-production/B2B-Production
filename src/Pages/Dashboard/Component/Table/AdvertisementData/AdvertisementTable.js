@@ -12,7 +12,7 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { apiURL } from "../../../../../Constants/constant";
-
+import { Alert } from "@mui/material";
 const AllAdvertisementTable = () => {
   const [advertisement, setAdvertisement] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -112,20 +112,26 @@ const AllAdvertisementTable = () => {
         </Typography>
       </div>
       <div style={{ width: "100%" }}>
-        <DataGrid
-          rows={advertisement}
-          columns={columns}
-          pageSize={pageSize}
-          pagination
-          page={currentPage}
-          onPageChange={handlePageChange}
-          rowsPerPageOptions={[pageSize]}
-          getRowId={(row) => row._id}
-        // components={{
-        //   Toolbar: GridToolbar,
-        // }}
-        />
+        {advertisement && advertisement.length > 0 ? (
+          <DataGrid
+            rows={advertisement}
+            columns={columns}
+            pageSize={pageSize}
+            pagination
+            page={currentPage}
+            onPageChange={handlePageChange}
+            rowsPerPageOptions={[pageSize]}
+            getRowId={(row) => row._id}
+          />
+        ) : (
+          <div style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", height: "100px" }}>
+            <Alert severity="info" variant="outlined">
+              Data is not available
+            </Alert>
+          </div>
+        )}
       </div>
+
       <Stack spacing={2} direction="row" justifyContent="center" alignItems="center">
         <Pagination color="primary" count={totalPages} page={currentPage} onChange={(event, page) => handlePageChange(page)} />
       </Stack>

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { TextField, InputAdornment, Paper, Typography ,Stack,Pagination} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { apiURL } from '../../../../../Constants/constant';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid,GridToolbar } from '@mui/x-data-grid';
 
 const AllFlightBooking = () => {
   const [flightBookings, setFlightBookings] = useState([]);
@@ -46,24 +46,29 @@ const AllFlightBooking = () => {
   };
 
   const columns = [
-    { field: 'bookingId', headerName: 'Booking ID', flex: 1, valueGetter: (params) => params.row.bookingId || 'No Data' },
-    { field: 'pnr', headerName: 'PNR', flex: 1, valueGetter: (params) => params.row.pnr || 'No Data' },
-    { field: 'UserDetails.username', headerName: 'User Name', flex: 1, valueGetter: (params) => params.row.UserDetails?.username || 'No Data' },
+    { field: 'bookingId', headerName: 'Booking ID', width:220, valueGetter: (params) => params.row.bookingId || 'No Data' },
+    { field: 'pnr', headerName: 'PNR', width:220, valueGetter: (params) => params.row.pnr || 'No Data' },
     {
       field: 'passengerDetails',
       headerName: 'Passenger Name',
-      flex: 1,
+      width:220,
       valueGetter: (params) => {
         const firstName = params.row.passengerDetails[0]?.firstName || '';
         const lastName = params.row.passengerDetails[0]?.lastName || '';
         return `${firstName} ${lastName}` || 'No Data';
       },
     },
-    { field: 'passengerDetails[0].email', headerName: 'Email', flex: 1, valueGetter: (params) => params.row.passengerDetails[0]?.email || 'No Data' },
-    { field: 'passengerDetails[0].ContactNo', headerName: 'Phone Number', flex: 1, valueGetter: (params) => params.row.passengerDetails[0]?.ContactNo || 'No Data' },
-    { field: 'airlineDetails[0].Airline.AirlineName', headerName: 'Flight Name', flex: 1, valueGetter: (params) => params.row.airlineDetails[0]?.Airline?.AirlineName || 'No Data' },
-    { field: 'origin', headerName: 'Origin', flex: 1, valueGetter: (params) => params.row.origin || 'No Data' },
-    { field: 'destination', headerName: 'Destination', flex: 1, valueGetter: (params) => params.row.destination || 'No Data' },
+    { field: 'totalAmount', headerName: 'Amount', width:220, valueGetter: (params) => params.row.totalAmount || 'No Data' },
+
+    { field: 'passengerDetails[0].email', headerName: 'Email', width:220, valueGetter: (params) => params.row.passengerDetails[0]?.email || 'No Data' },
+    { field: 'passengerDetails[0].ContactNo', headerName: 'Phone Number', width:220, valueGetter: (params) => params.row.passengerDetails[0]?.ContactNo || 'No Data' },
+  
+    { field: 'airlineDetails[0].Airline.AirlineName', headerName: 'Flight Name', width:220, valueGetter: (params) => params.row.airlineDetails[0]?.Airline?.AirlineName || 'No Data' },
+    { field: 'airlineDetails[0].Airline.FlightNumber', headerName: 'Flight Number', width:220, valueGetter: (params) => params.row.airlineDetails[0]?.Airline?.FlightNumber || 'No Data' },
+
+    // FlightNumber
+    { field: 'origin', headerName: 'Origin', width:220, valueGetter: (params) => params.row.origin || 'No Data' },
+    { field: 'destination', headerName: 'Destination', width:220, valueGetter: (params) => params.row.destination || 'No Data' },
   ];
 
   return (
@@ -83,7 +88,7 @@ const AllFlightBooking = () => {
           }}
         />
         <Typography variant='h5' className='adtable-heading'>
-          Flight Booking
+        User  Flight Booking
         </Typography>
       </div>
       {flightBookings.length === 0 ? (
@@ -101,6 +106,13 @@ const AllFlightBooking = () => {
             rowsPerPageOptions={[pageSize]}
             pagination
             getRowId={(row) => row._id}
+            components={{
+              Toolbar: () => (
+                <div style={{ marginTop: '10px' }}>
+                  <GridToolbar />
+                </div>
+              ),
+            }}
           />
         </Paper>
       )}

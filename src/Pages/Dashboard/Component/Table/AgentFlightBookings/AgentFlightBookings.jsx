@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { apiURL } from '../../../../../Constants/constant';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid,GridToolbar } from '@mui/x-data-grid';
 
 const AllFlightBooking = () => {
   const [flightBookings, setFlightBookings] = useState([]);
@@ -52,40 +52,53 @@ const AllFlightBooking = () => {
   };
 
   const columns = [
-    { field: 'bookingId', headerName: 'Booking Id', flex: 1 },
-    { field: 'pnr', headerName: 'PNR', flex: 1, valueGetter: (params) => params.row.pnr || 'No Data' },
-    { field: 'UserDetails[0]?.agency_details?.agency_name', headerName: 'Agency Name', flex: 1, valueGetter: (params) => params.row.UserDetails[0]?.agency_details?.agency_name || 'No Data' },
-    { field: 'passengerDetails[0]?.firstName', headerName: 'Passenger First Name', flex: 1, valueGetter: (params) => params.row.passengerDetails[0]?.firstName || 'No Data' },
-    { field: 'passengerDetails[0]?.lastName', headerName: 'Passenger Last Name', flex: 1, valueGetter: (params) => params.row.passengerDetails[0]?.lastName || 'No Data' },
-    { field: 'passengerDetails[0]?.email', headerName: 'Passenger Email', flex: 1, valueGetter: (params) => params.row.passengerDetails[0]?.email || 'No Data' },
-    { field: 'UserDetails[0]?.personal_details.mobile.mobile_number', headerName: 'Phone Number', flex: 1, valueGetter: (params) => params.row.UserDetails[0]?.personal_details.mobile?.mobile_number || 'No Data' },
-    { field: 'airlineDetails[0]?.Airline.AirlineName', headerName: 'Flight Name', flex: 1, valueGetter: (params) => params.row.airlineDetails[0]?.Airline?.AirlineName || 'No Data' },
-    { field: 'airlineDetails[0]?.Origin?.DepTime', headerName: 'Departure Time', flex: 1, valueGetter: (params) => params.row.airlineDetails[0]?.Origin?.DepTime || 'No Data' },
-    { field: 'origin', headerName: 'Origin', flex: 1, valueGetter: (params) => params.row.origin || 'No Data' },
-    { field: 'destination', headerName: 'Destination', flex: 1, valueGetter: (params) => params.row.destination || 'No Data' },
-    { field: 'totalAmount', headerName: 'Amount', flex: 1, valueGetter: (params) => params.row.totalAmount || 'No Data' },
+    { field: 'bookingId', headerName: 'Booking Id', width: 120 },
+    { field: 'pnr', headerName: 'PNR', width: 220, valueGetter: (params) => params.row.pnr || 'No Data' },
+    { field: 'passengerDetails[0]?.firstName', headerName: 'Passenger First Name', width: 220, valueGetter: (params) => params.row.passengerDetails[0]?.firstName || 'No Data' },
+    { field: 'passengerDetails[0]?.lastName', headerName: 'Passenger Last Name', width: 220, valueGetter: (params) => params.row.passengerDetails[0]?.lastName || 'No Data' },
+    { field: 'passengerDetails[0]?.email', headerName: 'Passenger Email', width: 220, valueGetter: (params) => params.row.passengerDetails[0]?.email || 'No Data' },
+    { field: 'UserDetails[0]?.personal_details.mobile.mobile_number', headerName: 'Phone Number', width: 220, valueGetter: (params) => params.row.UserDetails[0]?.personal_details.mobile?.mobile_number || 'No Data' },
+    { field: 'airlineDetails[0]?.Airline.AirlineName', headerName: 'Flight Name', width: 220, valueGetter: (params) => params.row.airlineDetails[0]?.Airline?.AirlineName || 'No Data' },
+    {
+      field: 'airlineDetails[0]?.Origin?.DepTime',
+      headerName: 'Departure Time',
+      width: 220,
+      valueGetter: (params) => {
+        const depTime = params.row.airlineDetails[0]?.Origin?.DepTime;
+        if (depTime) {
+          const date = new Date(depTime);
+          return date.toLocaleString(); // Adjust the format as needed
+        } else {
+          return 'No Data';
+        }
+      }
+    },
+
+    { field: 'origin', headerName: 'Origin', width: 220, valueGetter: (params) => params.row.origin || 'No Data' },
+    { field: 'destination', headerName: 'Destination', width: 220, valueGetter: (params) => params.row.destination || 'No Data' },
+    { field: 'totalAmount', headerName: 'Amount', width: 220, valueGetter: (params) => params.row.totalAmount || 'No Data' },
   ];
 
   return (
     <div className="subada-table-container" style={{ position: 'relative', width: "100%" }}>
-    <div className='adsearch-bar' style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold' }}>
-      <TextField
-        type='text'
-        value={searchTerm}
-        onChange={handleSearch}
-        placeholder='Search by name, ID, etc.'
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position='start'>
-              <SearchIcon />
-            </InputAdornment>
-          ),
-        }}
-      />
-      <Typography variant='h5' className='adtable-heading' style={{ fontWeight: 'bold' }}>
-        Agent Flight Booking
-      </Typography>
-    </div>
+      <div className='adsearch-bar' style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold' }}>
+        <TextField
+          type='text'
+          value={searchTerm}
+          onChange={handleSearch}
+          placeholder='Search by name, ID, etc.'
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position='start'>
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
+        <Typography variant='h5' className='adtable-heading' style={{ fontWeight: 'bold' }}>
+          Agent Flight Booking
+        </Typography>
+      </div>
       {flightBookings.length === 0 ? (
         <Paper>
           <div style={{ padding: '20px', textAlign: 'center' }}>
@@ -93,7 +106,7 @@ const AllFlightBooking = () => {
           </div>
         </Paper>
       ) : (
-        <Paper style={{  width: '100%' }}>
+        <Paper style={{ width: '100%' }}>
           <DataGrid
             rows={flightBookings}
             columns={columns}
@@ -101,6 +114,13 @@ const AllFlightBooking = () => {
             rowsPerPageOptions={[pageSize]}
             pagination
             getRowId={(row) => row._id}
+            components={{
+              Toolbar: () => (
+                <div style={{ marginTop: '10px' }}>
+                  <GridToolbar />
+                </div>
+              ),
+            }}
           />
         </Paper>
       )}

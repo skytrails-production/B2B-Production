@@ -48,7 +48,7 @@ function Package() {
 
   const handleShowAlert = (params) => {
     const rowDetails = params.row;
-  
+
     Swal.fire({
       title: '<span style="background-color: #21325D; color: #fff; padding: 8px; border-radius: 10px 0px 10px 0px;">View All Details</span>',
       html: `
@@ -74,7 +74,7 @@ function Package() {
       }
     });
   };
-  
+
 
 
 
@@ -82,14 +82,14 @@ function Package() {
     {
       field: "viewDetails",
       headerName: "View All Details",
-      flex: 3,
+      width: 220,
       width: 130,
       renderCell: (params) => {
         return (
           <Button
-            className="add_vendor_btn"
-            variant="contained"
-            color="primary"
+            style={{ backgroundColor: "#21325D",color:"#fff" }}
+           
+
             onClick={() => handleShowAlert(params)}
           >
             View
@@ -97,28 +97,28 @@ function Package() {
         );
       }
     },
-    { field: "fullName", headerName: "Full Name", flex: 3, width: 130 },
+    { field: "fullName", headerName: "Full Name", width: 220, width: 130 },
 
     {
       field: "contactNumber.phone",
       headerName: "Contact Number",
-      flex: 2,
+      width: 220,
       valueGetter: (params) => params.row.contactNumber?.phone || 'N/A',
     },
-    { field: "email", headerName: "Email", flex: 2 },
-    { field: "departureCity", headerName: "Departure City", flex: 3 },
-    { field: "adults", headerName: "Adults", flex: 2 },
-    { field: "child", headerName: "Child", flex: 2 },
-    { field: "packageType", headerName: "Package Type", flex: 3 },
-    { field: "departureDate", headerName: "Departure Date", flex: 3 },
+    { field: "email", headerName: "Email", width: 270 },
+    { field: "departureCity", headerName: "Departure City", width: 220, },
+    { field: "adults", headerName: "Adults", width: 220, },
+    { field: "child", headerName: "Child", width: 220, },
+    { field: "packageType", headerName: "Package Type", width: 220, },
+    { field: "departureDate", headerName: "Departure Date", width: 220, },
     {
       field: "connected",
       headerName: "Connected",
-      flex: 3,
+      width: 220,
       valueGetter: (params) => (params.row.connected ? "Yes" : "No"),
     },
-    { field: "noOfPeople", headerName: "No Of People", flex: 3 },
-    { field: "status", headerName: "Status", flex: 4 },
+    { field: "noOfPeople", headerName: "No Of People", width: 220, },
+    { field: "status", headerName: "Status", width: 220, },
   ];
 
   return (
@@ -170,9 +170,13 @@ function Package() {
           page={currentPage}
           onPageChange={handlePageChange}
           rowsPerPageOptions={[]}
-          // components={{
-          //   Toolbar: GridToolbar,
-          // }}
+          components={{
+            Toolbar: () => (
+              <div style={{ marginTop: '10px' }}>
+                <GridToolbar />
+              </div>
+            ),
+          }}
           getRowId={(row) => row._id}
         />
       </div>

@@ -1,0 +1,41 @@
+
+  
+  .swal-title {
+    background-color: #21325D;
+    color: #fff;
+    padding: 8px;
+   
+    font-size: 18px;
+  }
+  
+  .swal-html-container {
+    text-align:center;
+  }
+  
+  .passenger-details-container {
+    padding: 20px;
+  }
+  
+  .passenger-count {
+    margin-bottom: 20px;
+  }
+  
+  .passenger-details {
+    margin-bottom: 20px;
+  }
+  
+  .passenger-details div {
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .passenger-details div strong {
+    margin-right: 10px;
+    font-weight: bold;
+    min-width: 150px; /* Ensure consistent width for labels */
+  }
+  strong{
+    font-size: 14px;
+    text-align: left;
+  }

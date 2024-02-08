@@ -9,7 +9,7 @@ import {
   Pagination,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid,GridToolbar } from "@mui/x-data-grid";
 import { apiURL } from "../../Constants/constant";
 const AllEventsTable = () => {
   const [data, setData] = useState([]);
@@ -18,7 +18,7 @@ const AllEventsTable = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
- const [locationNames, setLocationNames] = useState({});
+  const [locationNames, setLocationNames] = useState({});
   useEffect(() => {
     async function fetchData() {
       try {
@@ -54,16 +54,58 @@ const AllEventsTable = () => {
   };
 
   const columns = [
-    { field: "title", headerName: "Title", flex: 1 },
-    { field: "content", headerName: "Content", flex: 1 },
-    { field: "startDate", headerName: "Start Date", flex: 1 },
-    { field: "endDate", headerName: "End Date", flex: 1 },
+    {
+      field: "title",
+      headerName: "Title",
+      width: 400,
+      renderCell: (params) => (
+        <div style={{ whiteSpace: 'pre-line' }}>{params.row.title}</div>
+      ),
+    },
+    { 
+      field: "content", 
+      headerName: "Content", 
+      width: 220,
+      renderCell: (params) => (
+        // <div style={{ padding: '8px' }}>
+          <textarea
+            style={{
+              width: '100%',
+              height: '100%',
+              border: '1px solid #ccc',
+              borderRadius: '4px',
+              padding: '4px',
+              resize: 'none',
+              boxSizing: 'border-box',
+            }}
+            readOnly
+            value={params.row.content}
+          />
+        // </div>
+      ),
+    },
+    { 
+      field: "startDate", 
+      headerName: "Start Date", 
+      width: 220,
+      renderCell: (params) => (
+        <div>{new Date(params.value).toLocaleDateString()}</div>
+      ),
+    },
+    { 
+      field: "endDate", 
+      headerName: "End Date", 
+      width: 220,
+      renderCell: (params) => (
+        <div>{new Date(params.value).toLocaleDateString()}</div>
+      ),
+    },
     {
       field: "location",
       headerName: "Location",
-      flex: 2,
+      width: 220,
       renderCell: (params) => (
-        <div style={{alignItems: "center" }}>
+        <div style={{ alignItems: "center" }}>
           <div style={{ marginRight: "10px" }}>
             <strong>Latitude:</strong> {params.row.location.coordinates[1]}
           </div>
@@ -73,10 +115,10 @@ const AllEventsTable = () => {
         </div>
       ),
     },
-    { 
-      field: "slot", 
-      headerName: "Slot", 
-      flex: 1, 
+    {
+      field: "slot",
+      headerName: "Slot",
+      width: 220,
       renderCell: (params) => (
         <div>
           {params.row.slot.filter((s) => s.isAvailable).length} Available
@@ -84,7 +126,7 @@ const AllEventsTable = () => {
       ),
     },
   ];
-  
+
 
   return (
     <Paper
@@ -135,6 +177,13 @@ const AllEventsTable = () => {
           page={page}
           onPageChange={(newPage) => handlePageChange(newPage)}
           getRowId={(row) => row._id}
+          components={{
+            Toolbar: () => (
+              <div style={{ marginTop: '10px' }}>
+                <GridToolbar />
+              </div>
+            ),
+          }}
         />
       </div>
       <Stack spacing={2} direction="row" justifyContent="center" mt={2}>

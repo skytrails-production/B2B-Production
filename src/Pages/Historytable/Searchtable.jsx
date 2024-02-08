@@ -53,13 +53,19 @@ function Searchtable() {
     fetchData(page);
   }, [page, searchTerm]);
   const columns = [
-    { field: "userId", headerName: "User Id", flex: 1 },
-    { field: "origin", headerName: "Origin", flex: 1 },
-    { field: "destination", headerName: "Destination", flex: 1 },
-    { field: "journeyDate", headerName: "Journey Date", flex: 1 },
-    { field: "journeyType", headerName: "Journey Type", flex: 1 },
-    { field: "status", headerName: "Status", flex: 1 },
-    { field: "searchType", headerName: "Search Type", flex: 1 },
+
+    { field: "origin", headerName: "Origin", width: 220, },
+    { field: "destination", headerName: "Destination", width: 220, },
+    {
+      field: "journeyDate",
+      headerName: "Journey Date",
+      width: 220,
+      renderCell: (params) => (
+        <div>{new Date(params.value).toLocaleDateString()}</div>
+      ),
+    },
+    { field: "status", headerName: "Status", width: 220, },
+    { field: "searchType", headerName: "Search Type", width: 220, },
   ];
 
   return (
@@ -111,21 +117,18 @@ function Searchtable() {
           page={page}
           onPageChange={handlePageChange}
           rowsPerPageOptions={[]}
-          // components={{
-          //   Toolbar: GridToolbar,
-          // }}
+          
           getRowId={(row) => row._id}
+          components={{
+            Toolbar: () => (
+              <div style={{ marginTop: '10px' }}>
+                <GridToolbar />
+              </div>
+            ),
+          }}
         />
       </div>
-      <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
-        <Pagination
-          count={totalPages}
-          page={page}
-          onChange={handlePageChange}
-          color="primary"
-        />
 
-      </Stack>
 
     </Paper >
   );

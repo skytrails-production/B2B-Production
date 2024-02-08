@@ -96,17 +96,17 @@ const FixedDepartureControl = () => {
   );
 
   const columns = [
-    { field: "loginName", headerName: "Login Name", flex: 1 },
-    { field: "numberOfSeats", headerName: "Number Of Seat", flex: 1 },
-    { field: "phoneNo", headerName: "Phone Number", flex: 1 },
-    { field: "soldTo", headerName: "Sold To", flex: 1 },
-    { field: "emailId", headerName: "Email", flex: 1 },
-    { field: "status", headerName: "Status", flex: 1 },
-    { field: "finalSalePrice", headerName: "Final Sale Price", flex: 1 },
+    { field: "loginName", headerName: "Login Name", width: 220, },
+    { field: "numberOfSeats", headerName: "Number Of Seat", width: 220, },
+    { field: "phoneNo", headerName: "Phone Number", width: 220, },
+    { field: "soldTo", headerName: "Sold To", width: 220, },
+    { field: "emailId", headerName: "Email", width: 220, },
+    { field: "status", headerName: "Status", width: 220, },
+    { field: "finalSalePrice", headerName: "Final Sale Price", width: 220, },
     {
       field: "names",
       headerName: "Passenger",
-      flex: 1,
+      width: 220,
       renderCell: (params) => (
         <ul>
           {params.row.names.map((itemName, index) => (
@@ -120,7 +120,7 @@ const FixedDepartureControl = () => {
     {
       field: "update",
       headerName: "Update Seat",
-      flex: 1,
+      width: 220,
       renderCell: (params) => (
         <Button
           variant="contained"
@@ -153,37 +153,35 @@ const FixedDepartureControl = () => {
           Fixed Departure Control
         </Typography>
       </div>
-      <div style={{ width: "100%"}}>
-      <DataGrid
-          rows={filteredData}
-          columns={columns}
-          pageSize={pageSize}
-          pagination
-          page={currentPage}
-          onPageChange={handlePageChange}
-          rowsPerPageOptions={[5, 10, 20]}
-          onPageSizeChange={handlePageSizeChange}
-          // components={{
-          //   Toolbar: () => (
-          //     <div className={classes.toolbar} style={{marginTop:"10px"}}>
-          //       <GridToolbar />
-          //       <Button
-          //         variant="contained"
-          //         color="secondary"
-          //         className={classes.toolbarButton}
-          //         startIcon={<SearchIcon />}
-          //       >
-          //         Advanced Search
-          //       </Button>
-          //     </div>
-          //   ),
-          // }}
-          disableSelectionOnClick
-          getRowId={(row) => row._id}
-        />
+      <div style={{ width: "100%" }}>
+        {filteredData.length === 0 ? (
+          <Typography>No data available</Typography>
+        ) : (
+          <DataGrid
+            rows={filteredData}
+            columns={columns}
+            pageSize={pageSize}
+            pagination
+            page={currentPage}
+            onPageChange={handlePageChange}
+            rowsPerPageOptions={[5, 10, 20]}
+            onPageSizeChange={handlePageSizeChange}
+            disableSelectionOnClick
+            getRowId={(row) => row._id}
+            components={{
+              Toolbar: () => (
+                <div style={{ marginTop: '10px' }}>
+                  <GridToolbar />
+                </div>
+              ),
+            }}
+          />
+        )}
       </div>
     </Paper>
   );
+
+
 };
 
 export default FixedDepartureControl;

@@ -40,26 +40,18 @@ function Requireddocument() {
   useEffect(() => {
     axios
       .get(`${apiURL.baseURL}/skyTrails/api/visa/getAllVisaCountry`)
-      .then((response) => {setVisaCountries(response.data.result);})
-      
+      .then((response) => setVisaCountries(response.data.result))
       .catch((error) => console.error("Error fetching visa countries:", error));
 
     axios
       .get(`${apiURL.baseURL}/skyTrails/api/visa/getVisaCategory`)
-      .then((response) => {
-        {setVisaCategories(response.data.result);};
-      })
-      .catch((error) =>
-        console.error("Error fetching visa categories:", error)
-      );
+      .then((response) => setVisaCategories(response.data.result))
+      .catch((error) => console.error("Error fetching visa categories:", error));
 
     axios
       .get(`${apiURL.baseURL}/skyTrails/api/visa/document/getDocumnetCategory`)
-      .then((response) => {setDocumentCategories(response.data.result);})
-      
-      .catch((error) =>
-        console.error("Error fetching document categories:", error)
-      )
+      .then((response) => setDocumentCategories(response.data.result))
+      .catch((error) => console.error("Error fetching document categories:", error))
       .finally(() => setLoading(false));
   }, []);
 
@@ -89,27 +81,21 @@ function Requireddocument() {
   };
 
   const handleSubmit = async (e) => {
-    console.log(formData,"formData");
     e.preventDefault();
 
     try {
-        await validationSchema.validate(formData, { abortEarly: false });
+      await validationSchema.validate(formData, { abortEarly: false });
       const response = await axios.post(
         `${apiURL.baseURL}/skyTrails/api/visa/document/createRequireDocument`,
         {...formData}
       );
-      console.log(formData,"formData");
-      console.log("Visa Country:", formData.visaCountry);
-console.log("Required Document Categories:", formData.requiredDocCategory);
-
-
       console.log("API Response:", response.data);
     } catch (errors) {
-        const newFormErrors = {};
-        errors.inner.forEach((error) => {
-          newFormErrors[error.path] = error.message;
-        });
-        setFormErrors(newFormErrors);
+      const newFormErrors = {};
+      errors.inner.forEach((error) => {
+        newFormErrors[error.path] = error.message;
+      });
+      setFormErrors(newFormErrors);
     }
   };
 
@@ -164,7 +150,7 @@ console.log("Required Document Categories:", formData.requiredDocCategory);
                 onChange={handleInputChange}
                 error={formErrors.visaCountry !== ""}
               >
-                {visaCountries.map((country) => (
+                {visaCountries && visaCountries.map((country) => (
                   <MenuItem key={country._id} value={country.countryName}>
                     {country.countryName}
                   </MenuItem>
@@ -182,7 +168,7 @@ console.log("Required Document Categories:", formData.requiredDocCategory);
                 onChange={handleInputChange}
                 error={formErrors.visaCategory !== ""}
               >
-                {visaCategories?.map((category) => (
+                {visaCategories && visaCategories.map((category) => (
                   <MenuItem key={category._id} value={category.categoryName}>
                     {category.categoryName}
                   </MenuItem>
@@ -196,7 +182,7 @@ console.log("Required Document Categories:", formData.requiredDocCategory);
 
             <FormControl fullWidth sx={{ mt: 2 }}>
               <FormGroup>
-                {documentCategories.map((category) => (
+                {documentCategories && documentCategories.map((category) => (
                   <FormControlLabel
                     key={category._id}
                     control={

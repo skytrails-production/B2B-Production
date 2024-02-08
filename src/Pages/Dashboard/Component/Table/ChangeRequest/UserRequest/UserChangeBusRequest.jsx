@@ -17,7 +17,7 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import ApprovalIcon from '@mui/icons-material/CheckCircleOutline';
 import { apiURL } from '../../../../../../Constants/constant';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid,GridToolbar } from '@mui/x-data-grid';
 const AllBusChangeTickets = () => {
   const [filteredData, setFilteredData] = useState([]);
 
@@ -68,68 +68,68 @@ const AllBusChangeTickets = () => {
   
 
   const columns = [
-    { field: 'busDetails.busId', headerName: 'Bus ID', flex: 5, valueGetter: (params) => params.row.busDetails.busId || 'No Data', },
+    { field: 'busDetails.busId', headerName: 'Bus ID', width:150, valueGetter: (params) => params.row.busDetails.busId || 'No Data', },
     {
       field: 'userDetails?.personal_details.first_name',
       headerName: 'First Name',
       width: 200,
-      flex: 5,
-      valueGetter: (params) => params.row.userDetails?.personal_details.first_name || 'No Data',
+      minWidth:120,
+      valueGetter: (params) => params.row.busDetails?.passenger[0].firstName || 'No Data',
     },
     {
       field: 'userDetails?.personal_details.last_name',
       headerName: 'Last Name',
-      flex: 5,
-      valueGetter: (params) => params.row.userDetails?.personal_details.last_name || 'No Data',
+      minWidth:120,
+      valueGetter: (params) => params.row.busDetails?.passenger[0].lastName || 'No Data',
     },
     {
       field: 'userDetails?.personal_details.mobile.mobile_number',
       headerName: 'Phone',
-      flex: 5,
-      width: 500,
-      valueGetter: (params) => params.row.userDetails?.personal_details.mobile.mobile_number || 'No Data',
+      minWidth:120,
+     
+      valueGetter: (params) => params.row.busDetails?.passenger[0].Phone || 'No Data',
     },
-    { field: 'userDetails?.personal_details.email', headerName: 'Email', flex: 5, valueGetter: (params) => params.row.userDetails?.personal_details.email || 'No Data' },
+    { field: 'userDetails?.personal_details.email', headerName: 'Email', minWidth:200, valueGetter: (params) => params.row.busDetails?.passenger[0].Email || 'No Data' },
     {
       field: 'busDetails.pnr',
       headerName: 'PNR',
-      flex: 5,
+      minWidth:120,
       valueGetter: (params) => params.row.busDetails?.pnr || 'No Data',
     },
     {
       field: 'busDetails.amount',
       headerName: 'Amount',
-      flex: 5,
+      minWidth:120,
       valueGetter: (params) => params.row.busDetails?.amount || 'No Data',
     },
     {
       field: 'busDetails.origin',
       headerName: 'Origin',
-      flex: 5,
+      minWidth:120,
       valueGetter: (params) => params.row.busDetails?.origin || 'No Data',
     },
     {
       field: 'busDetails.destination',
       headerName: 'Destination',
-      flex: 5,
+      minWidth:120,
       valueGetter: (params) => params.row.busDetails?.destination || 'No Data',
     },
     {
       field: 'busDetails.departureTime',
       headerName: 'DateOfJourney',
-      flex: 5,
+      minWidth:200,
       valueGetter: (params) => params.row.busDetails?.departureTime || 'No Data',
     },
     {
       field: 'busDetails.busType',
       headerName: 'BusType',
-      flex: 5,
+      minWidth:200,
       valueGetter: (params) => params.row.busDetails?.busType || 'No Data',
     },
     {
       field: 'approve',
       headerName: 'Approve',
-      flex: 5,
+      minWidth:120,
       renderCell: (params) => (
         <IconButton size="small" style={{ backgroundColor: '#21325D', color: '#FFFFFF' }}>
           <ApprovalIcon />
@@ -155,7 +155,7 @@ const AllBusChangeTickets = () => {
           }}
         />
         <Typography variant='h5' className='adtable-heading' style={{ fontWeight: 'bold' }}>
-          Agent Bus Ticket Change Request
+          User Bus Ticket Change Request
         </Typography>
       </div>
       {filteredData.length === 0 ? (
@@ -178,6 +178,13 @@ const AllBusChangeTickets = () => {
             pagination
             getRowId={(row) => row.busDetails.busId}
             style={{ width: '100%' }}
+            components={{
+              Toolbar: () => (
+                <div style={{ marginTop: '10px' }}>
+                  <GridToolbar />
+                </div>
+              ),
+            }}
           />
 
         </Paper>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid,GridToolbar } from '@mui/x-data-grid';
 import {
   TextField,
   InputAdornment,
@@ -68,15 +68,44 @@ const AllBusCancelTickets = () => {
 
   const columns = [
     { field: 'busId', headerName: 'Bus ID', width: 120 },
-    { field: 'name', headerName: 'Name', width: 150, valueGetter: (params) => params.row.userDetails?.username || 'No Data' },
-    { field: 'phone', headerName: 'Phone', width: 130, valueGetter: (params) => params.row.userDetails?.phone?.mobile_number || 'No Data' },
+    {
+      field: 'passengerDetails.firstName',
+      headerName: 'Name',
+
+      minWidth: 200,
+      valueGetter: (params) => {
+        const passenger = params.row?.busDetails?.passenger[0];
+        if (passenger) {
+          return `${passenger.title} ${passenger.firstName} ${passenger.lastName}` || 'No Data';
+        }
+        return 'No Data';
+      },
+    },
+    {
+      field: 'passengerDetails.ContactNo',
+      headerName: 'Phone',
+      minWidth: 120,
+      valueGetter: (params) => params.row?.busDetails?.passenger[0]?.Phone || 'No Data',
+    },
     { field: 'reason', headerName: 'Reason', width: 150 },
     { field: 'pnr', headerName: 'PNR', width: 120, valueGetter: (params) => params.row.busDetails?.pnr || 'No Data' },
     { field: 'amount', headerName: 'Amount', width: 120, valueGetter: (params) => params.row.busDetails?.amount || 'No Data' },
     { field: 'origin', headerName: 'Origin', width: 150, valueGetter: (params) => params.row.busDetails?.origin || 'No Data' },
     { field: 'destination', headerName: 'Destination', width: 150, valueGetter: (params) => params.row.busDetails?.destination || 'No Data' },
-    { field: 'dateOfJourney', headerName: 'Date Of Journey', width: 180, valueGetter: (params) => params.row.busDetails?.dateOfJourney || 'No Data' },
-    { field: 'busType', headerName: 'Bus Type', width: 150, valueGetter: (params) => params.row.busDetails?.busType || 'No Data' },
+    {
+      field: 'dateOfJourney',
+      headerName: 'Date Of Journey',
+      width: 180,
+      valueGetter: (params) => {
+        const departureTime = params.row.busDetails?.departureTime;
+        if (departureTime) {
+          const date = new Date(departureTime);
+          return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        }
+        return 'No Data';
+      }
+    },
+    { field: 'busType', headerName: 'Bus Type', width: 200, valueGetter: (params) => params.row.busDetails?.busType || 'No Data' },
     { field: 'noOfSeats', headerName: 'No of Seats', width: 150, valueGetter: (params) => params.row.busDetails?.noOfSeats || 'No Data' },
     {
       field: 'approve',
@@ -123,7 +152,7 @@ const AllBusCancelTickets = () => {
           User Bus Ticket Cancel Request
         </Typography>
       </div>
-      <div style={{ width: '100%',backgroundColor:"#fff" }}>
+      <div style={{ width: '100%', backgroundColor: "#fff" }}>
         <DataGrid
           rows={filteredData}
           columns={columns}
@@ -131,6 +160,13 @@ const AllBusCancelTickets = () => {
           autoHeight
           disableSelectionOnClick
           getRowId={(row) => row._id}
+          components={{
+            Toolbar: () => (
+              <div style={{ marginTop: '10px' }}>
+                <GridToolbar />
+              </div>
+            ),
+          }}
         />
       </div>
       <Stack spacing={2} direction="row" justifyContent="center" mt={2}>

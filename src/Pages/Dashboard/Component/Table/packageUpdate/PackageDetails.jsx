@@ -8,7 +8,7 @@ import {
     Button,
 } from "@mui/material";
 import "./packageUpdate.css";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid,GridToolbar } from "@mui/x-data-grid";
 import axios from "axios";
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -230,7 +230,7 @@ function PackageDetails() {
         {
             field: "pakage_title",
             headerName: "Package Title",
-            flex: 1,
+            width:350,
             headerClassName: 'custom-header',
             valueGetter: (params) => params.row.pakage_title || 'N/A'
         },
@@ -239,17 +239,17 @@ function PackageDetails() {
             field: "pakage_amount.amount",
             headerName: "Package Amount",
             headerClassName: 'custom-header',
-            flex: 1,
+            width:150,
             valueGetter: (params) => params.row.pakage_amount?.amount || 'N/A'
         },
 
-        { field: "edit", headerName: "Edit", headerClassName: 'custom-header', flex: 1, renderCell: (params) => <Button style={{ color: "#21325D" }} onClick={() => handleOpenEdit(params.row)}>Edit</Button> },
-        { field: "delete", headerName: "Delete", headerClassName: 'custom-header', flex: 1, renderCell: (params) => <Button style={{ color: "#21325D" }} onClick={() => handleOpen(params.row)}>Delete</Button> },
+        { field: "edit", headerName: "Edit", headerClassName: 'custom-header',  width:150, renderCell: (params) => <Button style={{ color: "#21325D" }} onClick={() => handleOpenEdit(params.row)}>Edit</Button> },
+        { field: "delete", headerName: "Delete", headerClassName: 'custom-header',  width:150, renderCell: (params) => <Button style={{ color: "#21325D" }} onClick={() => handleOpen(params.row)}>Delete</Button> },
         {
             field: "status",
             headerName: "Status",
             headerClassName: 'custom-header',
-            flex: 1,
+            width:150,
             renderCell: (params) => (
                 params.row.is_active === 1 ? (
                     <span style={{ color: 'green' }}>Approved</span>
@@ -258,7 +258,7 @@ function PackageDetails() {
                 )
             )
         },
-        { field: "view", headerName: "View", headerClassName: 'custom-header', flex: 1, renderCell: (params) => <Button style={{ color: "#21325D" }} onClick={() => handleOpenView(params.row)}>View</Button> },
+        { field: "view", headerName: "View", headerClassName: 'custom-header',  width:150, renderCell: (params) => <Button style={{ color: "#21325D" }} onClick={() => handleOpenView(params.row)}>View</Button> },
     ];
 
     return (
@@ -277,6 +277,13 @@ function PackageDetails() {
                     pageSize={5}
                     checkboxSelection
                     getRowId={(row) => row._id}
+                    components={{
+                        Toolbar: () => (
+                          <div style={{ marginTop: '10px' }}>
+                            <GridToolbar />
+                          </div>
+                        ),
+                      }}
                 />
 
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
- Stack,
+  Stack,
   Pagination,
 
 } from '@mui/material';
@@ -11,11 +11,10 @@ import {
   Typography,
   IconButton,
 } from '@mui/material';
-import { DataGrid, GridToolbarExport,  GridToolbarContainer,
-  GridToolbarColumnsButton,
-  GridToolbarFilterButton,
-  GridToolbarDensitySelector,
- } from '@mui/x-data-grid';
+import {
+  DataGrid, 
+  GridToolbar
+} from '@mui/x-data-grid';
 import SearchIcon from '@mui/icons-material/Search';
 import ApprovalIcon from '@mui/icons-material/CheckCircleOutline';
 import { apiURL } from '../../../../../Constants/constant';
@@ -68,9 +67,9 @@ const AllHotelCancelTickets = () => {
   };
   const handleStatusChange = (id, selectedValue) => {
     setSelectedStatusMap(new Map(selectedStatusMap.set(id, selectedValue)));
-    
+
     console.log(`Status changed to ${selectedValue} for row with id ${id}`);
-    
+
   };
   const calculateStayDuration = (checkInDate, checkOutDate) => {
     const startDate = new Date(checkInDate);
@@ -81,33 +80,73 @@ const AllHotelCancelTickets = () => {
   };
 
   const columns = [
-    { field: 'bookingId', headerName: 'Booking ID', flex: 1 },
-    { field: 'userDetails.username', headerName: 'Name', flex: 1 },
-    { field: 'userDetails.phone.mobile_number', headerName: 'Phone', flex: 1 },
-    { field: 'reason', headerName: 'Reason', flex: 1 },
-    { field: 'hotelDetails.hotelId', headerName: 'Hotel ID', flex: 1 },
-    { field: 'hotelDetails.amount', headerName: 'Amount', flex: 1 },
-    { 
-      field: 'hotelDetails.CheckInDate', 
-      headerName: 'Check In Date', 
-      flex: 1,
+    {
+      field: 'bookingId',
+      headerName: 'Booking ID',
+      minWidth:150,
+      valueGetter: (params) => params.row.bookingId || 'No Data',
+    },
+    {
+      field: 'userDetails.username',
+      headerName: 'Name',
+      minWidth:150,
+      valueGetter: (params) => params.row.userDetails?.username || 'No Data',
+    },
+    {
+      field: 'userDetails.phone.mobile_number',
+      headerName: 'Phone',
+      minWidth:150,
+      valueGetter: (params) => params.row.userDetails?.phone?.mobile_number || 'No Data',
+    },
+    {
+      field: 'reason',
+      headerName: 'Reason',
+      minWidth:150,
+      valueGetter: (params) => params.row.reason || 'No Data',
+    },
+    {
+      field: 'hotelDetails.hotelId',
+      headerName: 'Hotel ID',
+      minWidth:150,
+      valueGetter: (params) => params.row.hotelDetails?.hotelId || 'No Data',
+    },
+    {
+      field: 'hotelDetails.amount',
+      headerName: 'Amount',
+      minWidth:150,
+      valueGetter: (params) => params.row.hotelDetails?.amount || 'No Data',
+    },
+    {
+      field: 'hotelDetails.CheckInDate',
+      headerName: 'Check In Date',
+      minWidth:150,
       valueGetter: (params) => params.row.hotelDetails?.CheckInDate
         ? new Date(params.row.hotelDetails.CheckInDate).toLocaleDateString()
-        : 'N/A',
+        : 'No Data',
     },
-    { 
-      field: 'stayDuration', 
-      headerName: 'Stay Duration (Days)', 
-      flex: 1,
+    {
+      field: 'stayDuration',
+      headerName: 'Stay Duration (Days)',
+      minWidth:150,
       valueGetter: (params) => params.row.hotelDetails?.CheckInDate && params.row.hotelDetails?.CheckOutDate
         ? calculateStayDuration(
-            params.row.hotelDetails.CheckInDate,
-            params.row.hotelDetails.CheckOutDate
-          )
-        : 'N/A',
+          params.row.hotelDetails.CheckInDate,
+          params.row.hotelDetails.CheckOutDate
+        )
+        : 'No Data',
     },
-    { field: 'hotelDetails.cityName', headerName: 'Destination', flex: 1 },
-    { field: 'hotelDetails.hotelName', headerName: 'Hotel Name', flex: 1 },
+    {
+      field: 'hotelDetails.cityName',
+      headerName: 'Destination',
+      minWidth:150,
+      valueGetter: (params) => params.row.hotelDetails?.cityName || 'No Data',
+    },
+    {
+      field: 'hotelDetails.hotelName',
+      headerName: 'Hotel Name',
+       minWidth:150,
+      valueGetter: (params) => params.row.hotelDetails?.hotelName || 'No Data',
+    },
     {
       field: 'approve',
       headerName: 'APPROVE',
@@ -132,8 +171,8 @@ const AllHotelCancelTickets = () => {
       ),
     },
   ];
-  
-  
+
+
 
   return (
     <div className="subada-table-container" style={{ position: 'relative', width: "100%" }}>
@@ -156,18 +195,30 @@ const AllHotelCancelTickets = () => {
         </Typography>
       </div>
 
-      <div style={{ width: '100%',backgroundColor: "#fff" }}>
-        <DataGrid
-          rows={filteredData}
-          columns={columns}
-          loading={loading}
-          pageSize={pageSize}
-          page={currentPage - 1}
-          onPageChange={(params) => handlePageChange(params.page + 1)}
-          pagination
-          
-          getRowId={(row) => row._id}
-        />
+      <div style={{ width: '100%', backgroundColor: "#fff" }}>
+        {loading ? (
+          <div className="loading-message">Loading...</div>
+        ) : filteredData.length === 0 ? (
+          <div className="no-data-message">No data available</div>
+        ) : (
+          <DataGrid
+            rows={filteredData}
+            columns={columns}
+            loading={loading}
+            pageSize={pageSize}
+            page={currentPage - 1}
+            onPageChange={(params) => handlePageChange(params.page + 1)}
+            pagination
+            getRowId={(row) => row._id}
+            components={{
+              Toolbar: () => (
+                <div style={{ marginTop: '10px' }}>
+                  <GridToolbar />
+                </div>
+              ),
+            }}
+          />
+        )}
       </div>
 
       {/* Pagination */}

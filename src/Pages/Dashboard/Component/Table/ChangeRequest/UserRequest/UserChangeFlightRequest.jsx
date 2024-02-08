@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import ApprovalIcon from '@mui/icons-material/CheckCircleOutline';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid,GridToolbar } from '@mui/x-data-grid';
 import { apiURL } from '../../../../../../Constants/constant';
 
 const AllFlightChangeTickets = () => {
@@ -63,40 +63,56 @@ const AllFlightChangeTickets = () => {
   };
 
   const columns = [
-    { field: 'bookingId', headerName: 'Booking ID', flex: 1 },
+    { field: 'bookingId', headerName: 'Booking ID', minWidth: 150 },
     {
       field: 'name',
       headerName: 'Name',
-      flex: 1,
+      minWidth: 150,
       valueGetter: (params) =>
-        `${params.row.userDetails?.personal_details.first_name} ${params.row.userDetails?.personal_details.last_name}` ||
+        `${params.row.flightDetails?.passengerDetails[0]?.firstName} ${params.row.flightDetails?.passengerDetails[0]?.lastName}` ||
         'No Data',
     },
     {
       field: 'phone',
       headerName: 'Phone',
-      flex: 1,
+      minWidth: 200,
       valueGetter: (params) =>
-        params.row.userDetails?.personal_details.mobile.mobile_number || 'No Data',
+        params.row.flightDetails?.passengerDetails[0]?.ContactNo || 'No Data',
     },
     {
       field: 'email',
       headerName: 'Email',
-      flex: 1,
+      minWidth: 250,
       valueGetter: (params) =>
-        params.row.userDetails?.personal_details.email || 'No Data',
+        params.row.flightDetails?.passengerDetails[0]?.email || 'No Data',
     },
-    { field: 'reason', headerName: 'Reason', flex: 1 },
-    { field: 'pnr', headerName: 'PNR', flex: 1, valueGetter: (params) => params.row.flightDetails?.pnr || 'No Data' },
-    { field: 'amount', headerName: 'Amount', flex: 1, valueGetter: (params) => params.row.flightDetails?.totalAmount || 'No Data' },
-    { field: 'origin', headerName: 'Origin', flex: 1, valueGetter: (params) => params.row.flightDetails?.origin || 'No Data' },
-    { field: 'destination', headerName: 'Destination', flex: 1, valueGetter: (params) => params.row.flightDetails?.destination || 'No Data' },
-    { field: 'dateOfJourney', headerName: 'DateOfJourney', flex: 1, valueGetter: (params) => params.row.flightDetails?.airlineDetails[0].Origin.DepTime || 'No Data' },
-    { field: 'airlineName', headerName: 'AirlineName', flex: 1, valueGetter: (params) => params.row.flightDetails?.airlineDetails[0].Airline.AirlineName || 'No Data' },
+    { field: 'reason', headerName: 'Reason', minWidth: 200, },
+    { field: 'pnr', headerName: 'PNR', minWidth: 200, valueGetter: (params) => params.row.flightDetails?.pnr || 'No Data' },
+    { field: 'amount', headerName: 'Amount', minWidth: 200, valueGetter: (params) => params.row.flightDetails?.totalAmount || 'No Data' },
+    { field: 'origin', headerName: 'Origin', minWidth: 200, valueGetter: (params) => params.row.flightDetails?.origin || 'No Data' },
+    { field: 'destination', headerName: 'Destination', minWidth: 200, valueGetter: (params) => params.row.flightDetails?.destination || 'No Data' },
+    {
+      field: 'dateOfJourney',
+      headerName: 'Date Of Journey',
+      minWidth: 200,
+      valueGetter: (params) => {
+        const depTime = params.row.flightDetails?.airlineDetails[0]?.Origin?.DepTime;
+        if (depTime) {
+          const date = new Date(depTime);
+          // Format the date as needed, for example: DD/MM/YYYY HH:MM AM/PM
+          const formattedDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+          return formattedDate;
+        } else {
+          return 'No Data';
+        }
+      }
+    },
+
+    { field: 'airlineName', headerName: 'AirlineName', minWidth: 200, valueGetter: (params) => params.row.flightDetails?.airlineDetails[0].Airline.AirlineName || 'No Data' },
     {
       field: 'approve',
       headerName: 'Approve',
-      flex: 1,
+      minWidth: 200,
       renderCell: (params) => (
         <IconButton size="small" style={{ backgroundColor: '#21325D', color: '#FFFFFF' }}>
           <ApprovalIcon />
@@ -134,6 +150,13 @@ const AllFlightChangeTickets = () => {
           rowsPerPageOptions={[pageSize]}
           pagination
           getRowId={(row) => row._id}
+          components={{
+            Toolbar: () => (
+              <div style={{ marginTop: '10px' }}>
+                <GridToolbar />
+              </div>
+            ),
+          }}
           style={{ width: "100%" }}
         />
       </TableContainer>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid,GridToolbar } from '@mui/x-data-grid';
 import {
   TextField,
   InputAdornment,
@@ -67,22 +67,19 @@ const AllBusCancelTickets = () => {
   };
   const columns = [
     { field: 'busId', headerName: 'Bus ID', width: 120 },
-    { field: 'agencyName', headerName: 'Agency Name', width: 200, valueGetter: (params) => params.row.userDetails?.agency_details.agency_name || 'NA' },
-    { field: 'name', headerName: 'Name', width: 150, valueGetter: (params) => `${params.row.userDetails?.personal_details.first_name || 'NA'} ${params.row.userDetails?.personal_details.last_name || 'NA'}` },
-    { field: 'phone', headerName: 'Phone', width: 130, valueGetter: (params) => params.row.userDetails?.personal_details.mobile.mobile_number || 'NA' },
-    { field: 'email', headerName: 'Email', width: 200, valueGetter: (params) => params.row.userDetails?.personal_details.email || 'NA' },
+
+    { field: 'name', headerName: 'Name', width: 150, valueGetter: (params) => `${params.row.bustDetails?.passenger[0]?.firstName || 'NA'} ${params.row.bustDetails?.passenger[0]?.lastName || 'NA'}` },
+    { field: 'phone', headerName: 'Phone', width: 130, valueGetter: (params) => params.row.bustDetails?.passenger[0]?.Phone || 'NA' },
+    { field: 'email', headerName: 'Email', width: 200, valueGetter: (params) => params.row.bustDetails?.passenger[0]?.Email || 'NA' },
     { field: 'reason', headerName: 'Reason', width: 150, valueGetter: (params) => params.row.reason || 'NA' },
-    { field: 'pnr', headerName: 'PNR', width: 120, valueGetter: (params) => params.row.bustDetails.pnr || 'NA' },
-    { field: 'amount', headerName: 'Amount', width: 120, valueGetter: (params) => params.row.bustDetails.amount || 'NA' },
-    { field: 'origin', headerName: 'Origin', width: 150, valueGetter: (params) => params.row.bustDetails.origin || 'NA' },
-    { field: 'destination', headerName: 'Destination', width: 150, valueGetter: (params) => params.row.bustDetails.destination || 'NA' },
-    { field: 'dateOfJourney', headerName: 'Date Of Journey', width: 180, valueGetter: (params) => params.row.bustDetails.departureTime || 'NA' },
-    { field: 'busType', headerName: 'Bus Type', width: 150, valueGetter: (params) => params.row.bustDetails.busType || 'NA' },
+    { field: 'pnr', headerName: 'PNR', width: 120, valueGetter: (params) => params.row.bustDetails?.pnr || 'NA' },
+    { field: 'amount', headerName: 'Amount', width: 120, valueGetter: (params) => params.row.bustDetails?.amount || 'NA' },
+    { field: 'origin', headerName: 'Origin', width: 150, valueGetter: (params) => params.row.bustDetails?.origin || 'NA' },
+    { field: 'destination', headerName: 'Destination', width: 150, valueGetter: (params) => params.row.bustDetails?.destination || 'NA' },
+    { field: 'dateOfJourney', headerName: 'Date Of Journey', width: 180, valueGetter: (params) => new Date(params.row.bustDetails?.departureTime).toLocaleString() || 'NA' },
+    { field: 'busType', headerName: 'Bus Type', width: 200, valueGetter: (params) => params.row.bustDetails?.busType || 'NA' },
     {
-      field: 'approve',
-      headerName: 'APPROVE',
-      width: 120,
-      renderCell: (params) => (
+      field: 'approve', headerName: 'APPROVE', width: 120, renderCell: (params) => (
         <div>
           <select
             value={selectedStatusMap.get(params.row._id) || params.row.status || ''}
@@ -99,9 +96,10 @@ const AllBusCancelTickets = () => {
             <option value="NOT ACTIVE">Not Active</option>
           </select>
         </div>
-      ),
+      )
     },
   ];
+
 
   return (
     <div className="subada-table-container" style={{ position: 'relative', width: "100%" }}>
@@ -123,7 +121,7 @@ const AllBusCancelTickets = () => {
           AGENT BUS TICKET CANCEL REQUEST
         </Typography>
       </div>
-      <div style={{ width: "100%",backgroundColor:"#fff" }}>
+      <div style={{ width: "100%", backgroundColor: "#fff" }}>
         <DataGrid
           rows={filteredData}
           columns={columns}
@@ -131,6 +129,13 @@ const AllBusCancelTickets = () => {
           autoHeight
           disableSelectionOnClick
           getRowId={(row) => row._id}
+          components={{
+            Toolbar: () => (
+              <div style={{ marginTop: '10px' }}>
+                <GridToolbar />
+              </div>
+            ),
+          }}
         />
       </div>
       <Stack spacing={2} direction="row" justifyContent="center" mt={2}>

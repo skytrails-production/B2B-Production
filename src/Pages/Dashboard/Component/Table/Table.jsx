@@ -285,7 +285,6 @@ export default function Tables() {
   const [amount, setAmount] = React.useState("");
 
   const adminCheck = reducerState?.adminAuth?.adminData?.data?.id;
-  console.log("adminCheck", adminCheck);
 
   const updateVendorAmount = (id) => {
     // Check if id is undefined
@@ -469,7 +468,7 @@ export default function Tables() {
                             </Button>
                           </StyledTableCell>
                           <StyledTableCell scope="row">
-                            {ele.personal_details?.first_name || "NA"}
+                            {ele.personal_details?.first_name || "No Data"}
                           </StyledTableCell>
                           <StyledTableCell
                             align="right"
@@ -478,49 +477,49 @@ export default function Tables() {
                             {ele.agency_details.agency_name &&
                               ele.agency_details.agency_name
                               ? ele.agency_details.agency_name
-                              : "NA"}
+                              : "No Data"}
                           </StyledTableCell>
                           <StyledTableCell
                             align="right"
 
                           >
                             {ele.agency_gst_details?.agency_classification ||
-                              "NA"}
+                              "No Data"}
                           </StyledTableCell>
 
                           <StyledTableCell
                             align="right"
 
                           >
-                            {ele.agency_details?.address || "NA"}
+                            {ele.agency_details?.address || "No Data"}
                           </StyledTableCell>
 
                           <StyledTableCell
                             align="right"
 
                           >
-                            {ele.agency_gst_details?.email || "NA"}
+                            {ele.agency_gst_details?.email || "No Data"}
                           </StyledTableCell>
 
                           <StyledTableCell
                             align="right"
 
                           >
-                            {ele.agency_gst_details?.agency_name || "NA"}
+                            {ele.agency_gst_details?.agency_name || "No Data"}
                           </StyledTableCell>
 
                           <StyledTableCell
                             align="right"
 
                           >
-                            {ele.agency_gst_details?.provisional_GSTIN || "NA"}
+                            {ele.agency_gst_details?.provisional_GSTIN || "No Data"}
                           </StyledTableCell>
 
                           <StyledTableCell
                             align="right"
 
                           >
-                            {ele.personal_details?.mobile?.mobile_number || "NA"}
+                            {ele.personal_details?.mobile?.mobile_number || "No Data"}
                           </StyledTableCell>
 
 

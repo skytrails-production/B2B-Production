@@ -1,6 +1,6 @@
 /* AddCoupons.css */
 .addCoupon-heading {
-    background-color: #08121b;
+    background-color: #21325D;
     color: #fff;
     padding: 15px;
     border-radius: 8px;
@@ -31,7 +31,7 @@
   .Coupon-form-label {
     font-size: 16px;
     font-weight: bold;
-    margin-bottom: 5px;
+   
   }
   
   .Coupon-form-input-ads,
@@ -42,15 +42,23 @@
     border-radius: 5px;
     height: 50px;
   }
-  
-  .form-label-image {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+  .form-input-image-ads-coupon{
+    width: 130%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 50px;
   }
-  
+ 
+  .Coupon-form-input-ads-select{
+    width:145%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 50px;
+  }
   button {
-    background-color: #007bff;
+    background-color: #21325D;
     color: #fff;
     padding: 12px;
     border: none;
@@ -99,4 +107,7 @@
   .swal2-actions button {
     font-size: 16px;
   }
-  
+  .input-row{
+    gap:12px;
+    display: flex;
+  }

@@ -8,7 +8,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import "./subAdmin.css";
 import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid,GridToolbar } from "@mui/x-data-grid";
 import {
   TextField,
   InputAdornment,
@@ -117,14 +117,14 @@ const SubAdminTable = () => {
     }
   };
   const columns = [
-    { field: "userName", headerName: "User Name", flex: 1 },
-    { field: "email", headerName: "Email", flex: 1 },
-    { field: "contactNumber", headerName: "Contact Number", flex: 1 },
-    { field: "authType", headerName: "Auth Type", flex: 1 },
+    { field: "userName", headerName: "User Name", minWidth: 150, },
+    { field: "email", headerName: "Email", minWidth: 250, },
+    { field: "contactNumber", headerName: "Contact Number",minWidth: 150,},
+    { field: "authType", headerName: "Auth Type", minWidth: 180, },
     {
       field: "status",
       headerName: "Status",
-      flex: 1,
+      minWidth: 150,
       renderCell: (params) => {
         const selectedValue = selectedUserStatusMap[params.id] || params.row.status;
   
@@ -182,6 +182,13 @@ const SubAdminTable = () => {
           onPageChange={(params) => handlePageChange(params.page + 1)}
           pagination
           getRowId={(row) => row._id}
+          components={{
+            Toolbar: () => (
+              <div style={{ marginTop: '10px' }}>
+                <GridToolbar />
+              </div>
+            ),
+          }}
         />
       </div>
       <Stack spacing={2} direction="row" justifyContent="center" mt={2}>

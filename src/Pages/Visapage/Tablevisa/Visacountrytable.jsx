@@ -98,6 +98,13 @@ const Visacategorytable = () => {
             onPageChange={handlePageChange}
             rowsPerPageOptions={[]}
             getRowId={(row) => row._id}
+            components={{
+              Toolbar: () => (
+                <div style={{ marginTop: '10px' }}>
+                  <GridToolbar />
+                </div>
+              ),
+            }}
           />
         ) : (
           <Typography variant="body1" style={{ marginTop: 20, textAlign: "center" }}>

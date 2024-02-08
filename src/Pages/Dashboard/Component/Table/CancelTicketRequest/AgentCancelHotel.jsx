@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid,GridToolbar } from '@mui/x-data-grid';
 import {
   TextField,
   InputAdornment,
@@ -80,14 +80,31 @@ const AllHotelCancelTickets = () => {
 
   const columns = [
     { field: 'bookingId', headerName: 'Booking ID', width: 120 },
-    { field: 'agencyName', headerName: 'Agency Name', width: 200, valueGetter: (params) => params.row.userDetails?.agency_details?.agency_name },
-    { field: 'name', headerName: 'Name', width: 150, valueGetter: (params) => `${params?.row.userDetails?.personal_details?.first_name} ${params?.row?.userDetails?.personal_details.last_name}` },
-    { field: 'phone', headerName: 'Phone', width: 130, valueGetter: (params) => params.row?.userDetails?.personal_details?.mobile.mobile_number },
-    { field: 'email', headerName: 'Email', width: 200, valueGetter: (params) => params?.row?.userDetails?.personal_details.email },
+    // { field: 'agencyName', headerName: 'Agency Name', width: 200, valueGetter: (params) => params.row.userDetails?.agency_details?.agency_name },
+    { field: 'name', headerName: 'Name', width: 150, valueGetter: (params) => `${params?.row?.hotelDetails?.name}` },
+    { field: 'phone', headerName: 'Phone', width: 130, valueGetter: (params) => params.row?.hotelDetails?.phone },
+    { field: 'email', headerName: 'Email', width: 200, valueGetter: (params) => params?.row?.hotelDetails?.email },
     { field: 'reason', headerName: 'Reason', width: 150 },
     { field: 'hotelId', headerName: 'Hotel ID', width: 120, valueGetter: (params) => params?.row?.hotelDetails?.hotelId },
     { field: 'amount', headerName: 'Amount', width: 120, valueGetter: (params) => params?.row?.hotelDetails?.amount },
-    { field: 'checkInDate', headerName: 'CheckIn Date', width: 150, valueGetter: (params) => params?.row?.hotelDetails?.CheckInDate },
+     { 
+        field: 'checkInDate', 
+        headerName: 'CheckIn Date', 
+        width: 200, 
+        valueGetter: (params) => {
+            const checkInDate = new Date(params?.row?.hotelDetails?.CheckInDate);
+            return checkInDate.toLocaleString();
+        } 
+    },
+    { 
+        field: 'checkOutDate', 
+        headerName: 'CheckOut Date', 
+        width: 200, 
+        valueGetter: (params) => {
+            const checkOutDate = new Date(params?.row?.hotelDetails?.CheckOutDate);
+            return checkOutDate.toLocaleString();
+        } 
+    },
     { field: 'destination', headerName: 'Destination', width: 150, valueGetter: (params) => params?.row?.hotelDetails?.destination },
     { field: 'rooms', headerName: 'Rooms', width: 120, valueGetter: (params) => params?.row?.hotelDetails?.room },
     { field: 'hotelName', headerName: 'Hotel Name', width: 150, valueGetter: (params) => params.row.hotelDetails.hotelName },
@@ -145,6 +162,13 @@ const AllHotelCancelTickets = () => {
           autoHeight
           disableSelectionOnClick
           getRowId={(row) => row._id}
+          components={{
+            Toolbar: () => (
+              <div style={{ marginTop: '10px'}}>
+                <GridToolbar />
+              </div>
+            ),
+          }}
         />
       </div>
       <Stack spacing={2} direction="row" justifyContent="center" mt={2}>

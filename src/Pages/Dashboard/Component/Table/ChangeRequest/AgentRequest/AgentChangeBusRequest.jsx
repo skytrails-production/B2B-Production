@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid,GridToolbar} from '@mui/x-data-grid';
 import {
   TextField,
   InputAdornment,
@@ -60,17 +60,25 @@ const AllBusChangeTickets = () => {
 
   const columns = [
     { field: 'busId', headerName: 'Bus ID', width: 120 },
-    { field: 'agencyName', headerName: 'Agency Name', width: 150, valueGetter: (params) => params?.row?.userDetails?.agency_details?.agency_name || 'No Data' },
-    { field: 'name', headerName: 'Name', width: 150, valueGetter: (params) => `${params.row.userDetails?.personal_details.first_name} ${params.row.userDetails?.personal_details.last_name}` || 'No Data' },
-    { field: 'phone', headerName: 'Phone', width: 130, valueGetter: (params) => params?.row.userDetails?.personal_details.mobile.mobile_number || 'No Data' },
-    { field: 'email', headerName: 'Email', width: 150, valueGetter: (params) => params.row.userDetails?.personal_details.email || 'No Data' },
+    { field: 'name', headerName: 'Name', width: 150, valueGetter: (params) => `${params.row?.busDetails?.passenger[0]?.firstName} ${params.row?.busDetails?.passenger[0]?.lastName}` || 'No Data' },
+    { field: 'phone', headerName: 'Phone', width: 130, valueGetter: (params) => params.row?.busDetails?.passenger[0]?.Phone || 'No Data' },
+    { field: 'email', headerName: 'Email', width: 200, valueGetter: (params) => params.row?.busDetails?.passenger[0]?.Email || 'No Data' },
     { field: 'reason', headerName: 'Reason', width: 150 },
-    { field: 'pnr', headerName: 'PNR', width: 120, valueGetter: (params) => params.row.busDetails.pnr || 'No Data' },
-    { field: 'amount', headerName: 'Amount', width: 120, valueGetter: (params) => params.row.busDetails.amount || 'No Data' },
-    { field: 'origin', headerName: 'Origin', width: 120, valueGetter: (params) => params.row.busDetails.origin || 'No Data' },
-    { field: 'destination', headerName: 'Destination', width: 150, valueGetter: (params) => params.row.busDetails.destination || 'No Data' },
-    { field: 'dateOfJourney', headerName: 'Date Of Journey', width: 180, valueGetter: (params) => params.row.busDetails.dateOfJourney || 'No Data' },
-    { field: 'busType', headerName: 'Bus Type', width: 120, valueGetter: (params) => params.row.busDetails.busType || 'No Data' },
+    { field: 'pnr', headerName: 'PNR', width: 120, valueGetter: (params) => params.row?.busDetails?.pnr || 'No Data' },
+    { field: 'amount', headerName: 'Amount', width: 120, valueGetter: (params) => params.row?.busDetails?.amount || 'No Data' },
+    { field: 'origin', headerName: 'Origin', width: 120, valueGetter: (params) => params.row?.busDetails?.origin || 'No Data' },
+    { field: 'destination', headerName: 'Destination', width: 150, valueGetter: (params) => params.row?.busDetails?.destination || 'No Data' },
+    { field: 'dateOfJourney', headerName: 'Date Of Journey', width: 180, valueGetter: (params) => {
+        const departureTime = params.row?.busDetails?.departureTime;
+        if (departureTime) {
+          const date = new Date(departureTime);
+          return date.toLocaleDateString(); // Adjust the format as needed
+        } else {
+          return 'No Data';
+        }
+      }
+    },
+    { field: 'busType', headerName: 'Bus Type', width: 200, valueGetter: (params) => params.row?.busDetails?.busType || 'No Data' },
     {
       field: 'approve',
       headerName: 'Approve',
@@ -85,6 +93,7 @@ const AllBusChangeTickets = () => {
       ),
     },
   ];
+  
 
   return (
     <div className='subada-table-container' style={{ position: 'relative', width: "100%" }}>
@@ -115,6 +124,13 @@ const AllBusChangeTickets = () => {
           autoHeight
           disableSelectionOnClick
           getRowId={(row) => row._id}
+          components={{
+            Toolbar: () => (
+              <div style={{ marginTop: '10px' }}>
+                <GridToolbar />
+              </div>
+            ),
+          }}
         />
       </div>
 

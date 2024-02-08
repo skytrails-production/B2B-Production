@@ -10,7 +10,7 @@ import {
   Stack,
   Pagination,
 } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid,GridToolbar} from '@mui/x-data-grid';
 import ApprovalIcon from '@mui/icons-material/CheckCircleOutline';
 import SearchIcon from '@mui/icons-material/Search';
 import { apiURL } from '../../../../../Constants/constant';
@@ -70,84 +70,81 @@ const AllFlightCancelTicketsUser = () => {
   };
 
   const columns = [
-    { field: 'bookingId', headerName: 'Booking ID', flex: 1 },
+    { field: 'bookingId', headerName: 'Booking ID', minWidth:120,},
     { 
-      field: 'userDetails.username', 
+      field: 'passengerDetails.firstName', 
       headerName: 'Name', 
-      flex: 1,
-      valueGetter: (params) => params.row.userDetails?.username || 'No Data',
+
+     minWidth:150,
+      valueGetter: (params) => {
+          const passenger = params.row?.flightDetails?.passengerDetails[0];
+          if (passenger) {
+              return `${passenger.title} ${passenger.firstName} ${passenger.lastName}` || 'No Data';
+          }
+          return 'No Data';
+      },
+  },
+    { 
+        field: 'passengerDetails.ContactNo', 
+        headerName: 'Phone', 
+       minWidth:120,
+        valueGetter: (params) => params.row?.flightDetails?.passengerDetails[0]?.ContactNo || 'No Data',
     },
     { 
-      field: 'userDetails.phone.mobile_number', 
-      headerName: 'Phone', 
-      flex: 1,
-      valueGetter: (params) => params.row.userDetails?.phone?.mobile_number || 'No Data',
+        field: 'reason', 
+        headerName: 'Reason', 
+       minWidth:120,
     },
     { 
-      field: 'reason', 
-      headerName: 'Reason', 
-      flex: 1,
+        field: 'flightDetails.pnr', 
+        headerName: 'PNR', 
+       minWidth:120,
+        valueGetter: (params) => params.row?.pnr || 'No Data',
     },
     { 
-      field: 'flightDetails.pnr', 
-      headerName: 'PNR', 
-      flex: 1,
-      valueGetter: (params) => params.row.flightDetails?.pnr || 'No Data',
+        field: 'amount', 
+        headerName: 'Amount', 
+       minWidth:120,
+        valueGetter: (params) => params.row?.amount || 'No Data',
     },
     { 
-      field: 'flightDetails.totalAmount', 
-      headerName: 'Amount', 
-      flex: 1,
-      valueGetter: (params) => params.row.flightDetails?.totalAmount || 'No Data',
+        field: 'flightDetails.origin', 
+        headerName: 'Origin', 
+       minWidth:150,
+        valueGetter: (params) => params.row?.flightDetails?.origin || 'No Data',
     },
     { 
-      field: 'flightDetails.origin', 
-      headerName: 'Origin', 
-      flex: 1,
-      valueGetter: (params) => params.row.flightDetails?.origin || 'No Data',
-    },
-    { 
-      field: 'flightDetails.destination', 
-      headerName: 'Destination', 
-      flex: 1,
-      valueGetter: (params) => params.row.flightDetails?.destination || 'No Data',
+        field: 'flightDetails.destination', 
+        headerName: 'Destination', 
+       minWidth:120,
+        valueGetter: (params) => params.row?.flightDetails?.destination || 'No Data',
     },
     { 
       field: 'flightDetails.airlineDetails[0].Origin.DepTime', 
       headerName: 'Date Of Journey', 
-      flex: 1,
-      valueGetter: (params) => params.row.flightDetails?.airlineDetails[0]?.Origin?.DepTime || 'No Data',
-    },
+      minWidth: 150,
+      valueGetter: (params) => {
+          const depTime = params.row?.flightDetails?.airlineDetails[0]?.Origin?.DepTime;
+          if (depTime) {
+              const date = new Date(depTime);
+              return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+          }
+          return 'No Data';
+      },
+  },
     { 
-      field: 'flightDetails.airlineDetails[0].Airline.AirlineName', 
-      headerName: 'Airline Name', 
-      flex: 1,
-      valueGetter: (params) => params.row.flightDetails?.airlineDetails[0]?.Airline?.AirlineName || 'No Data',
+        field: 'flightDetails.airlineDetails[0].Airline.AirlineName', 
+        headerName: 'Airline Name', 
+       minWidth:120,
+        valueGetter: (params) => params.row?.flightDetails?.airlineDetails[0]?.Airline?.AirlineName || 'No Data',
     },
     {
-      field: 'approve',
-      headerName: 'APPROVE',
-      width: 120,
-      renderCell: (params) => (
-        <div>
-          <select
-            value={selectedStatusMap.get(params.row._id) || params.row.status || ''}
-            onChange={(e) => handleStatusChange(params.row._id, e.target.value)}
-            style={{
-              backgroundColor: selectedStatusMap.get(params.row._id) === 'ACTIVE' ? '#008000' : '#FF0000',
-              color: '#FFFFFF',
-              padding: '5px',
-              borderRadius: '5px',
-            }}
-          >
-            <option value="">{params.row.status}</option>
-            <option value="ACTIVE">Active</option>
-            <option value="NOT ACTIVE">Not Active</option>
-          </select>
-        </div>
-      ),
+        field: 'status',
+        headerName: 'Status',
+       minWidth:120,
     },
-  ];
+];
+
   
   
 
@@ -183,6 +180,13 @@ const AllFlightCancelTicketsUser = () => {
           onPageChange={(params) => handlePageChange(params.page + 1)}
           pagination
           getRowId={(row) => row._id}
+          components={{
+            Toolbar: () => (
+              <div style={{ marginTop: '10px' }}>
+                <GridToolbar />
+              </div>
+            ),
+          }}
         />
       </div>
 

@@ -9,7 +9,7 @@ import {
   Pagination,
   Paper,
 } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid,GridToolbar } from '@mui/x-data-grid';
 import SearchIcon from '@mui/icons-material/Search';
 import { apiURL } from '../../../../../Constants/constant';
 import './HotelBookings.css';
@@ -57,15 +57,15 @@ const AllHotelBooking = () => {
   };
 
   const columns = [
-    { field: 'hotelId', headerName: 'Booking ID', flex: 1, valueGetter: (params) => params.row.hotelId || 'No Data' },
-    { field: 'userDetails.username', headerName: 'User Name', flex: 1, valueGetter: (params) => params.row.userDetails?.username || 'No Data' },
-    { field: 'name', headerName: 'Name', flex: 1, valueGetter: (params) => params.row.name || 'No Data' },
-    { field: 'phone', headerName: 'Phone', flex: 1, valueGetter: (params) => params.row.phone || 'No Data' },
-    { field: 'email', headerName: 'Email', flex: 1, valueGetter: (params) => params.row.email || 'No Data' },
-    { field: 'CheckInDate', headerName: 'CheckInDate', flex: 1, valueGetter: (params) => new Date(params.row.CheckInDate).toDateString() || 'No Data' },
-    { field: 'CheckOutDate', headerName: 'CheckOutDate', flex: 1, valueGetter: (params) => new Date(params.row.CheckOutDate).toDateString() || 'No Data' },
-    { field: 'hotelName', headerName: 'Hotel Name', flex: 1, valueGetter: (params) => params.row.hotelName || 'No Data' },
-    { field: 'cityName', headerName: 'City Name', flex: 1, valueGetter: (params) => params.row.cityName || 'No Data' },
+    { field: 'hotelId', headerName: 'Booking ID', width:220, valueGetter: (params) => params.row.hotelId || 'No Data' },
+    { field: 'userDetails.username', headerName: 'User Name', width:220, valueGetter: (params) => params.row.userDetails?.username || 'No Data' },
+    { field: 'name', headerName: 'Name', width:220, valueGetter: (params) => params.row.name || 'No Data' },
+    { field: 'phone', headerName: 'Phone', width:220, valueGetter: (params) => params.row.phone || 'No Data' },
+    { field: 'email', headerName: 'Email', width:220, valueGetter: (params) => params.row.email || 'No Data' },
+    { field: 'CheckInDate', headerName: 'CheckInDate', width:220, valueGetter: (params) => new Date(params.row.CheckInDate).toDateString() || 'No Data' },
+    { field: 'CheckOutDate', headerName: 'CheckOutDate', width:220, valueGetter: (params) => new Date(params.row.CheckOutDate).toDateString() || 'No Data' },
+    { field: 'hotelName', headerName: 'Hotel Name', width:220, valueGetter: (params) => params.row.hotelName || 'No Data' },
+    { field: 'cityName', headerName: 'City Name', width:220, valueGetter: (params) => params.row.cityName || 'No Data' },
     // Add more columns based on your data
   ];
   
@@ -87,7 +87,7 @@ const AllHotelBooking = () => {
           }}
         />
         <Typography variant='h5' className='adtable-heading'>
-          Hotel Booking
+           User Hotel Booking
         </Typography>
       </div>
 
@@ -100,6 +100,13 @@ const AllHotelBooking = () => {
           pagination
           getRowId={(row) => row._id} // Use _id as the unique identifier
           style={{ width: '100%' }}
+          components={{
+            Toolbar: () => (
+              <div style={{ marginTop: '10px' }}>
+                <GridToolbar />
+              </div>
+            ),
+          }}
         />
 
       </Paper>

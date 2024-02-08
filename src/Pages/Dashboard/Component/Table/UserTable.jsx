@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
- 
+
   TextField,
   InputAdornment,
   Typography,
@@ -11,7 +11,7 @@ import { apiURL } from "../../../../Constants/constant";
 import "./UserTable.css";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 const Usertables = () => {
   const [userData, setUserData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -55,9 +55,24 @@ const Usertables = () => {
   };
 
   const columns = [
-    { field: "username", headerName: "UserName", flex: 1 },
-    { field: "email", headerName: "Email", flex: 1 },
-    { field: "dob", headerName: "DOB", flex: 1 },
+    {
+      field: "username",
+      headerName: "UserName",
+      minWidth: 150,
+      valueGetter: (params) => params.row.username || "No Data"
+    },
+    {
+      field: "email",
+      headerName: "Email",
+      minWidth: 240,
+      valueGetter: (params) => params.row.email || "No Data"
+    },
+    {
+      field: "dob",
+      headerName: "DOB",
+      flex: 1,
+      valueGetter: (params) => params.row.dob || "No Data"
+    },
     {
       field: "phone.mobile_number",
       headerName: "Phone Number",
@@ -68,6 +83,7 @@ const Usertables = () => {
       field: "profilePic",
       headerName: "ProfilePic",
       flex: 1,
+      valueGetter: (params) => params.row.profilePic || "No Data",
       renderCell: (params) => (
         <div style={{ borderRadius: "50%", overflow: "hidden", width: 50, height: 50 }}>
           <img
@@ -79,8 +95,10 @@ const Usertables = () => {
         </div>
       ),
     },
+    // Add more columns here if needed
   ];
-  
+
+
 
   return (
     <div className="user-table-container" style={{ position: 'relative', width: "100%" }}>
@@ -102,18 +120,25 @@ const Usertables = () => {
           User Table
         </Typography>
       </div>
-      <div style={{ width: "100%",backgroundColor:"#fff" }}>
+      <div style={{ width: "100%", backgroundColor: "#fff" }}>
         <DataGrid
           rows={userData}
           columns={columns}
           pageSize={pageSize}
-          page={currentPage - 1}
-          pagination
-          rowCount={totalPages * pageSize}
-          onPageChange={(params) => handlePageChange(params.page + 1)}
-          loading={loading}
+          checkboxSelection
+       
+
           getRowId={(row) => row._id}
+          components={{
+            Toolbar: () => (
+              <div style={{ marginTop: "10px" }}>
+                <GridToolbar />
+              </div>
+            ),
+          }}
         />
+
+
       </div>
       <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
         <Pagination

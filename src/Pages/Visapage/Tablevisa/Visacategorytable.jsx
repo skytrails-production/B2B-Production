@@ -90,9 +90,13 @@ const Visacategorytable = () => {
         page={page}
         onPageChange={handlePageChange}
         rowsPerPageOptions={[]}
-        // components={{
-        //   Toolbar: GridToolbar,
-        // }}
+        components={{
+          Toolbar: () => (
+            <div style={{ marginTop: '10px' }}>
+              <GridToolbar />
+            </div>
+          ),
+        }}
         getRowId={(row) => row._id}
       />
       </div>

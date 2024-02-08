@@ -452,7 +452,7 @@ const BusTicket = () => {
           Boarding Address
         </div>
         <div style={{ width: '50%', marginRight: '0' }}>
-          RedBus Support No: 080-30916657
+          Bus Support No: 080-30916657
         </div>
       </div>
       <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-start', gap: '20%', padding: '5px 0 0px 5px' }}>
@@ -473,7 +473,7 @@ const BusTicket = () => {
           </div>
         </div>
         <div>
-          <div>RedBus Help Line Numbers</div>
+          <div>Bus Help Line Numbers</div>
           <div style={{ display: 'flex', gap: '10px' }}>
             <div>
               <p style={{margin: '0 4px 0 0'}}><strong>Ahmedabad</strong></p>
@@ -592,7 +592,7 @@ const BusTicket = () => {
                           margin: "0",
                         }}
                       >
-                        +91 8917972301
+                        +91 9209793097
                       </p>
                     </div>
                     <div
@@ -640,7 +640,7 @@ const BusTicket = () => {
                           wordwrap: "break-word",
                         }}
                       >
-                        support@theskytrails.com
+                        Info@theskytrails.com
                       </div>
                     </div>
                   </div>
