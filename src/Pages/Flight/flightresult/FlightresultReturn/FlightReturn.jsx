@@ -19,7 +19,7 @@ const FlightresultOne = ({ sendDataToParent }) => {
   const [filter, setFilter] = useState(1);
   const setToSearchResults =
     reducerState?.return?.returnData?.data?.data?.Response?.Results;
-  // console.log("+++++++++++++", setToSearchResults[1]);
+  console.log("+++++++++++++", setToSearchResults[1]);
   useEffect(() => {
     if (setToSearchResults !== undefined) {
       // navigate("/")

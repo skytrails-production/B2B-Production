@@ -172,8 +172,8 @@ const FixedDeparture = () => {
         reset();
         setNumberOfSeats(0);
     };
-    console.warn("Fetching results", toSearchResult);
-    console.log(item, "item");
+    // console.warn("Fetching results", toSearchResult);
+    // console.log(item, "item");
     return (
         <>
             <div className="container-fluid margin-pecenatage">

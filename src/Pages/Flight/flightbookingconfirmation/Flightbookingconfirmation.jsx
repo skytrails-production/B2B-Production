@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserDataAction } from "../../../Redux/Auth/UserDataById/actionUserData";
 import userApi from "../../../Redux/API/api";
 import Swal from "sweetalert2";
+import {swalModal} from "../../../utils/swal"
 import FlightLoader from "../FlightLoader/FlightLoader";
 const FlightReviewbooking = () => {
   const dispatch = useDispatch();
@@ -327,27 +328,28 @@ const FlightReviewbooking = () => {
 
   if (TicketDetails == undefined) {
     navigate("/flights");
-    Swal.fire({
-      title: "Hii Encountered an error",
-      text: "Redirecting to home page...",
-      // text:TicketDetails,
-      icon: "question",
-      timer: 5000,
-      showClass: {
-        popup: `
-          animate__animated
-          animate__fadeInUp
-          animate__faster
-        `,
-      },
-      hideClass: {
-        popup: `
-          animate__animated
-          animate__fadeOutDown
-          animate__faster
-        `,
-      },
-    });
+    swalModal("flight",'Encountered an error',false)
+    // Swal.fire({
+    //   title: "Hii Encountered an error",
+    //   text: "Redirecting to home page...",
+    //   // text:TicketDetails,
+    //   icon: "question",
+    //   timer: 5000,
+    //   showClass: {
+    //     popup: `
+    //       animate__animated
+    //       animate__fadeInUp
+    //       animate__faster
+    //     `,
+    //   },
+    //   hideClass: {
+    //     popup: `
+    //       animate__animated
+    //       animate__fadeOutDown
+    //       animate__faster
+    //     `,
+    //   },
+    // });
     return (
       <>
         <FlightLoader />

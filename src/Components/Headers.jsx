@@ -7,6 +7,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
 import Swal from "sweetalert2";
+import {swalModal} from "../utils/swal.js"
 import { Box, Button, Typography, Paper, makeStyles } from "@mui/material";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector, useReducer } from "react-redux";

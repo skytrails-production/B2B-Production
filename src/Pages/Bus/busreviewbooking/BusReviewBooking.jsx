@@ -18,6 +18,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { apiURL } from "../../../Constants/constant";
 import { motion } from "framer-motion";
+import {swalModal} from "../../../utils/swal"
 
 const variants = {
   initial: {
@@ -132,9 +133,10 @@ const BusReviewBooking = () => {
         //   // dispatch(balanceSubtractRequest(balancePayload));
         // }
       } else {
+        // swalModal("py","Balance is insufficient for this transaction.",true);
         Swal.fire({
-          icon: "error",
-          title: "Oops...",
+          // icon: "error",
+          // title: "Oops...",
           text: "Balance is insufficient for this transaction.",
           footer: "Please recharge",
           showCancelButton: false,
@@ -168,6 +170,7 @@ const BusReviewBooking = () => {
         };
 
         dispatch(balanceSubtractRequest(balancePayload));
+
         Swal.fire({
           icon: "success",
           timer: 3000,
@@ -189,12 +192,14 @@ const BusReviewBooking = () => {
       reducerState?.getBusResult?.busBook?.data?.data?.BookResult?.Error
         ?.ErrorCode !== undefined
     ) {
-      Swal.fire({
-        icon: "error",
-        title: "Booking Failed",
-        text: reducerState?.getBusResult?.busBook?.data?.data?.BookResult?.Error
-          ?.ErrorMessage,
-      });
+      // swalModal("py",reducerState?.getBusResult?.busBook?.data?.data?.BookResult?.Error?.ErrorMessage,true)
+      swalModal("py","Your bus reservation couldn't be processed. Double-check your details and attempt booking again.",true)
+      // Swal.fire({
+      //   icon: "error",
+      //   title: "Booking Failed",
+      //   text: reducerState?.getBusResult?.busBook?.data?.data?.BookResult?.Error
+      //     ?.ErrorMessage,
+      // });
       dispatch(clearBusSearchReducer());
       navigate("/");
 

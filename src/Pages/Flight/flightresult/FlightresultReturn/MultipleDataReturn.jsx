@@ -6,14 +6,16 @@ import Nonrefundable from "../Nonrefundable";
 import { useDispatch, useSelector, useReducer } from "react-redux";
 import Luggage from "../Luggage";
 import flightdir from "../../../../Images/flgihtdir.png";
+import { useEffect } from "react";
 
 const MultipleDataReturn = (props) => {
   const navigate = useNavigate();
   const reducerState = useSelector((state) => state);
+
   const flight = props.flight;
+  // console.log(flight, "flightnjfnvjf")
   const wholeFlight = props.wholeFlight
   const IsLCC = props.IsLCC;
-  // console.log("flight multiple", flight);
   const indexKey = props.index;
   const fare =
     reducerState?.logIn?.loginData.length > 0
@@ -22,6 +24,10 @@ const MultipleDataReturn = (props) => {
         Number(reducerState?.logIn?.loginData?.data?.data?.markup?.flight)
       )}`
       : Math.round(Number(props.fare));
+      useEffect(()=>{
+    // console.log("flight multiple", fare);
+
+  },[fare])
   // const fare = `${Math.round(
   //   props.fare + reducerState?.logIn?.loginData?.data?.data?.markup?.flight
   // )}`;

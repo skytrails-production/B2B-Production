@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { DataGrid,GridToolbar } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import {
   TextField,
   InputAdornment,
   Typography,
   IconButton,
+  Button
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import Pagination from '@mui/material/Pagination';
@@ -13,7 +14,7 @@ import Stack from '@mui/material/Stack';
 import { apiURL } from '../../../../../Constants/constant';
 import './style.css';
 import ApprovalIcon from '@mui/icons-material/CheckCircleOutline';
-
+import Swal from 'sweetalert2';
 const AllBusCancelTickets = () => {
   const [busBookings, setBusBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -65,7 +66,59 @@ const AllBusCancelTickets = () => {
     console.log(`Status changed to ${selectedValue} for row with id ${id}`);
     // Add additional logic as needed
   };
+
+  const handleViewDetails = (booking) => {
+    handleShowAlert(booking);
+  };
+
+  const handleShowAlert = (booking) => {
+    const row = booking;
+    const passengerCount = row.bustDetails?.passenger.length;
+    const passengerDetailsHtml = row.bustDetails?.passenger.map(passenger => `
+      <div class="passenger-details">
+        <div><strong>Title:</strong> ${passenger.title}</div>
+        <div><strong>First Name:</strong> ${passenger.firstName}</div>
+        <div><strong>Last Name:</strong> ${passenger.lastName}</div>
+        <div><strong>Email:</strong> ${passenger.Email || 'No Data'}</div>
+        <div><strong>Phone:</strong> ${passenger.Phone || 'No Data'}</div>
+        <div><strong>Address:</strong> ${passenger.Address || 'No Data'}</div>
+        <div><strong>SeatNumber:</strong> ${passenger.seatNumber || 'No Data'}</div>
+        <div><strong>Price:</strong> ${passenger.Price || 'No Data'}</div>
+       
+      </div>
+    `).join('');
+
+    Swal.fire({
+      title: '<span class="swal-title">View All Details</span>',
+      html: `
+        <div class="passenger-details-container">
+          <div class="passenger-count">Total Passengers: ${passengerCount}</div>
+          ${passengerDetailsHtml}
+        </div>
+      `,
+      showConfirmButton: false,
+      customClass: {
+        container: 'swal-container',
+        title: 'swal-title',
+        htmlContainer: 'swal-html-container'
+      }
+    });
+  };
   const columns = [
+    {
+      field: 'view',
+      headerName: 'View',
+      width: 100,
+      renderCell: (params) => (
+        <Button
+          style={{ backgroundColor: "#21325D", color: "#fff" }}
+          onClick={() => handleViewDetails(params.row)}
+        >
+          View
+        </Button>
+
+      ),
+    },
     { field: 'busId', headerName: 'Bus ID', width: 120 },
 
     { field: 'name', headerName: 'Name', width: 150, valueGetter: (params) => `${params.row.bustDetails?.passenger[0]?.firstName || 'NA'} ${params.row.bustDetails?.passenger[0]?.lastName || 'NA'}` },

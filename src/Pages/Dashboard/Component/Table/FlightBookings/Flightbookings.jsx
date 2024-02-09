@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { TextField, InputAdornment, Paper, Typography ,Stack,Pagination} from '@mui/material';
+import { TextField, InputAdornment, Paper, Typography ,Stack,Pagination,Button} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { apiURL } from '../../../../../Constants/constant';
 import { DataGrid,GridToolbar } from '@mui/x-data-grid';
-
+import Swal from 'sweetalert2';
 const AllFlightBooking = () => {
   const [flightBookings, setFlightBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -44,8 +44,61 @@ const AllFlightBooking = () => {
     setSearchTerm(event.target.value);
     setCurrentPage(1); // Reset to the first page when performing a new search
   };
+  const handleViewDetails = (booking) => {
+    handleShowAlert(booking);
+  };
+
+  const handleShowAlert = (booking) => {
+    const rowDetails = booking;
+    const passengerCount = rowDetails.passengerDetails.length;
+    const passengerDetailsHtml = rowDetails?.passengerDetails.map(passenger => `
+      <div class="passenger-details" style="font-size: 14px">
+        <div><strong>Title:</strong> ${passenger.title}</div>
+        <div><strong>First Name:</strong> ${passenger.firstName}</div>
+        <div><strong>Last Name:</strong> ${passenger.lastName}</div>
+        
+        <div><strong>Contact No:</strong> ${passenger.ContactNo || 'No Data'}</div>
+       
+        <div><strong>Email:</strong> ${passenger.email || 'No Data'}</div>
+        <div><strong>Address Line 1:</strong> ${passenger.addressLine1 || 'No Data'}</div>
+       
+        <div><strong>seatNumber:</strong> ${passenger.TicketNumber || 'No Data'}</div>
+        <div><strong>Amount:</strong> ${passenger.amount || 'No Data'}</div>
+      </div>
+    `).join('');
+
+    Swal.fire({
+      title: '<span class="swal-title">View All Details</span>',
+      html: `
+        <div class="passenger-details-container">
+          <div class="passenger-count">Total Passengers: ${passengerCount}</div>
+          ${passengerDetailsHtml}
+        </div>
+      `,
+      showConfirmButton: false,
+      customClass: {
+        container: 'swal-container',
+        title: 'swal-title',
+        htmlContainer: 'swal-html-container'
+      }
+    });
+  };
 
   const columns = [
+    {
+      field: 'view',
+      headerName: 'View All Passenger',
+      width: 200,
+      renderCell: (params) => (
+        <Button
+          style={{ backgroundColor: "#21325D", color: "#fff" }}
+          onClick={() => handleViewDetails(params.row)}
+        >
+          View
+        </Button>
+
+      ),
+    },
     { field: 'bookingId', headerName: 'Booking ID', width:220, valueGetter: (params) => params.row.bookingId || 'No Data' },
     { field: 'pnr', headerName: 'PNR', width:220, valueGetter: (params) => params.row.pnr || 'No Data' },
     {
@@ -88,7 +141,7 @@ const AllFlightBooking = () => {
           }}
         />
         <Typography variant='h5' className='adtable-heading'>
-        User  Flight Booking
+        User Flight Booking
         </Typography>
       </div>
       {flightBookings.length === 0 ? (

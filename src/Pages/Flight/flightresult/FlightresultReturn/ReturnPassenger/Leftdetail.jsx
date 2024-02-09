@@ -20,6 +20,7 @@ import {
 import FlightLoader from "../../../FlightLoader/FlightLoader";
 import { setLoading } from "../../../../../Redux/FlightFareQuoteRule/actionFlightQuote";
 import Alert from '@mui/material/Alert';
+import { isValidPassportNumber } from "../../../../../../src/utils/validation"
 const Leftdetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,21 +35,29 @@ const Leftdetail = () => {
   const [sub, setSub] = useState(false);
   const [showAleart, setShowAleart] = useState(false);
   const fareValue = reducerState?.flightFare?.flightQuoteData?.Results;
+  const isPassportRequired =
+    reducerState?.flightFare?.flightQuoteData?.Results
+      ?.IsPassportRequiredAtTicket;
   const fareValueReturn =
-    reducerState?.flightFare?.flightQuoteDataReturn?.Results;
+    isPassportRequired ? reducerState?.flightFare?.flightQuoteData?.Results :
+      reducerState?.flightFare?.flightQuoteDataReturn?.Results;
   // console.log("fareValue", fareValue);
-  const fareRule = reducerState?.flightFare?.flightRuleData?.FareRules;
+  const fareRule = isPassportRequired ?
+    reducerState?.flightFare?.flightRuleData?.FareRules
+    : reducerState?.flightFare?.flightRuleDataReturn?.FareRules;
   const fareRuleReturn =
     reducerState?.flightFare?.flightRuleDataReturn?.FareRules;
   // console.log(fareValueReturn, fareRuleReturn, "vivekk");
   const data = reducerState?.oneWay?.oneWayData?.data?.data?.Response;
-  const isPassportRequired =
-    reducerState?.flightFare?.flightQuoteData?.Results
-      ?.IsPassportRequiredAtTicket;
+
 
   // const img = flight?.Airline?.AirlineCode;
+  const result = reducerState?.flightFare?.flightQuoteData?.Results
+  // console.warn(result?.Segments[1][result?.Segments[1]?.length - 1]
+  //   ,"result.....")
+
   const flightDeparture = reducerState?.flightFare?.flightQuoteData?.Results?.Segments[0]?.[0];
-  const flightReturn = reducerState?.flightFare?.flightQuoteDataReturn?.Results?.Segments[0]?.[0];
+  const flightReturn = isPassportRequired ? reducerState?.flightFare?.flightQuoteData?.Results?.Segments[1]?.[0] : reducerState?.flightFare?.flightQuoteDataReturn?.Results?.Segments[0]?.[0];
   useEffect(() => {
     if (adults === undefined || adults === null || childs === undefined || childs === null || infants === undefined || infants === null) {
       navigate("/FlightresultReturn")
@@ -70,6 +79,7 @@ const Leftdetail = () => {
     AddressLine1: "gaya",
     AddressLine2: "",
     Fare: farePrice[0],
+    // Fare: 1,
     City: "Gurgaon",
     CountryCode: "IN",
     CellCountryCode: "+91-",
@@ -238,7 +248,7 @@ const Leftdetail = () => {
     return emailRegex.test(email);
   }
 
-  function isValidEmail(email, phoneNumber) {
+  function isValidEmail(email, phoneNumber, passport) {
     // Regular expression for a simple email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     var phonePattern = /^\d{10}$/;
@@ -249,11 +259,24 @@ const Leftdetail = () => {
 
     // Test the email against the regular expression
     const result1 = validateEmail1(email);
-    const result = result1 && result2;
+    const result3 = isPassportRequired ? isValidPassportNumber(passport) : true;
+    const result = result1 && result2 && result3;
     console.warn(result, "Please fill all the details/////");
     return result
   }
+  function convertDateFormat(inputDate) {
+    // Split the input date string into year, month, and day
+    const [year, month, day] = inputDate.split("-");
 
+    // Create a new Date object using the components
+    const newDate = new Date(year, month - 1, day);
+
+    // Format the output date string as "yyyy-mm-ddTHH:mm:ss"
+    const outputDate = newDate.toISOString().slice(0, 19).replace("T", "T00:00:00");
+    console.log(outputDate, "outputdate")
+
+    return outputDate;
+  }
   const formatDate = (date) => {
     const year = date.getFullYear();
     const month = ('0' + (date.getMonth() + 1)).slice(-2);
@@ -301,7 +324,7 @@ const Leftdetail = () => {
 
       // console.warn(passengerList[0].Email, "***********************************************nooooooooooooooooooooooooooooo")
 
-      !isValidEmail(item.Email, item.ContactNo)
+      !isValidEmail(item.Email, item.ContactNo, item.PassportNo)
 
 
     )
@@ -321,16 +344,19 @@ const Leftdetail = () => {
       if (item?.PaxType == 1) {
         return {
           ...item,
+          PassportExpiry: isPassportRequired ? convertDateFormat(item.PassportExpiry) : "",
           Fare: farePriceReturn[0],
         };
       } else if (item?.PaxType == 2) {
         return {
           ...item,
+          PassportExpiry: isPassportRequired ? convertDateFormat(item.PassportExpiry) : "",
           Fare: farePriceReturn[1],
         };
       } else {
         return {
           ...item,
+          PassportExpiry: isPassportRequired ? convertDateFormat(item.PassportExpiry) : "",
           Fare: farePriceReturn[2],
         };
       }
@@ -440,8 +466,8 @@ const Leftdetail = () => {
   const [Loading, setLoading] = useState(true);
 
 
-  console.log(flightDeparture, "flight departure")
-  console.log(flightReturn, "flight return ")
+  // console.log(flightDeparture, "flight departure")
+  // console.log(flightReturn, "flight return ")
   useEffect(() => {
     if (flightDeparture?.Airline?.AirlineCode === undefined) {
       setLoading(true)
@@ -494,7 +520,7 @@ const Leftdetail = () => {
                 <div><img src={flightdir} /></div>
               </div>
               <div className="returnBoxFour">
-                <span>{flightDeparture?.Destination?.Airport?.CityName}</span>
+                <span>{isPassportRequired ? result?.Segments[0][result?.Segments[0]?.length - 1]?.Destination?.Airport?.CityName : flightDeparture?.Destination?.Airport?.CityName}</span>
                 <p>{desiredFormat1.slice(0, 12)}</p>
                 <p>{desiredFormat1.slice(13)}</p>
               </div>
@@ -518,7 +544,7 @@ const Leftdetail = () => {
                 <div><img src={flightdir} /></div>
               </div>
               <div className="returnBoxFour">
-                <span>{flightReturn?.Destination?.Airport?.CityName}</span>
+                <span>{isPassportRequired ? result?.Segments[1][result?.Segments[1]?.length - 1]?.Destination?.Airport?.CityName : flightReturn?.Destination?.Airport?.CityName}</span>
                 <p>{desiredFormat4.slice(0, 12)}</p>
                 <p>{desiredFormat4.slice(13)}</p>
               </div>
@@ -647,6 +673,47 @@ const Leftdetail = () => {
                             </div>
                           </Box>
                         </div>
+                        {
+                          isPassportRequired &&
+
+                          <div className="col-lg-4 col-md-6 col-sm-6">
+                            <Box>
+                              <div className="form_input">
+                                <label hotel_form_input className="form_lable">
+                                  Passport Number
+                                </label>
+                                <input
+                                  type="text"
+                                  name="PassportNo"
+                                  placeholder="Enter Passport No"
+                                  onChange={(e) => handleServiceChange(e, i)}
+                                />
+                                {!isValidPassportNumber(passengerData[i].PassportNo) && sub && <span id="error1">Enter Contact</span>}
+                              </div>
+                            </Box>
+                          </div>
+                        }
+                        {
+                          isPassportRequired &&
+
+                          <div className="col-lg-4 col-md-6 col-sm-6">
+                            <Box>
+                              <div className="form_input">
+                                <label hotel_form_input className="form_lable">
+                                  Passport Expiry
+                                </label>
+                                <input
+                                  type="date"
+                                  name="PassportExpiry"
+                                  // placeholder=""
+                                  onChange={(e) => handleServiceChange(e, i)}
+                                // onChange={(e) => convertDateFormat(e.target.value)}
+                                />
+                                {/* {!validatePhoneNumber(passengerData[i].ContactNo) == true && sub && <span id="error1">Enter Contact</span>} */}
+                              </div>
+                            </Box>
+                          </div>
+                        }
                       </div>
                     </div>
                   </div>
@@ -687,7 +754,7 @@ const Leftdetail = () => {
                           <div className="col-lg-4 col-md-6 col-sm-6" >
                             <div className="form_input">
                               <label hotel_form_input className="form_lable">
-                                Last name*
+                                Last name
                               </label>
                               <input
                                 name="LastName"
@@ -733,6 +800,40 @@ const Leftdetail = () => {
                                 }
                               />
                               {passengerData[Number(adults) + i].DateOfBirth == "" && sub && <span id="error1">Enter DOB</span>}
+                            </div>
+                          </div>
+                          <div className="col-lg-4 col-md-6 col-sm-6" >
+                            <div className="form_input">
+                              <label hotel_form_input className="form_lable">
+                                Passport Number
+                              </label>
+                              <input
+                                type="text"
+                                name="PassportNo"
+                                // max={maxDateChild}
+                                // min={minDateChild}
+                                onChange={(e) =>
+                                  handleServiceChange(e, i + Number(adults))
+                                }
+                              />
+                              {!isValidPassportNumber(passengerData[Number(adults) + i].PassportNo) && sub && <span id="error1">Enter a valid passport</span>}
+                            </div>
+                          </div>
+                          <div className="col-lg-4 col-md-6 col-sm-6" >
+                            <div className="form_input">
+                              <label hotel_form_input className="form_lable">
+                                Passport Expiry
+                              </label>
+                              <input
+                                type="date"
+                                name="PassportExpiry"
+                                // max={maxDateChild}
+                                // min={minDateChild}
+                                onChange={(e) =>
+                                  handleServiceChange(e, i + Number(adults))
+                                }
+                              />
+                              {/* {!isValidPassportNumber(passengerData[Number(adults) + i].DateOfBirth) && sub && <span id="error1">Enter a valid passport</span>} */}
                             </div>
                           </div>
                         </div>
@@ -834,6 +935,60 @@ const Leftdetail = () => {
                               {passengerData[i + Number(adults) + Number(childs)].DateOfBirth == "" && sub && <span id="error1">Enter DOB</span>}
                             </div>
                           </div>
+                          {
+                            isPassportRequired &&
+
+                            <div className="col-lg-4 col-md-6 col-sm-6" >
+
+                              <div className="form_input">
+                                <label hotel_form_input className="form_lable">
+                                  Passport Number
+                                </label>
+                                <input
+                                  type="text"
+                                  name="PassportNo"
+                                  className="deaprture_input form_input_select"
+                                  // required
+                                  // min={minDateInfer}
+                                  // max={currentDate}
+                                  onChange={(e) =>
+                                    handleServiceChange(
+                                      e,
+                                      i + Number(adults) + Number(childs)
+                                    )
+                                  }
+                                />
+                                {!isValidPassportNumber(passengerData[i + Number(adults) + Number(childs)].PassportNo) && sub && <span id="error1">Enter a valid Passport Number</span>}
+                              </div>
+                            </div>
+                          }
+                          {
+                            isPassportRequired &&
+
+                            <div className="col-lg-4 col-md-6 col-sm-6" >
+
+                              <div className="form_input">
+                                <label hotel_form_input className="form_lable">
+                                  Passport Expiry
+                                </label>
+                                <input
+                                  type="date"
+                                  name="PassportExpiry"
+                                  className="deaprture_input form_input_select"
+                                  // required
+                                  // min={minDateInfer}
+                                  // max={currentDate}
+                                  onChange={(e) =>
+                                    handleServiceChange(
+                                      e,
+                                      i + Number(adults) + Number(childs)
+                                    )
+                                  }
+                                />
+
+                              </div>
+                            </div>
+                          }
                         </div>
                       </div>
                     </div>

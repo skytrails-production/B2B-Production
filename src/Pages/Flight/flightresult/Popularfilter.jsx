@@ -19,6 +19,7 @@ import Flightdetail from "./Flightdetail";
 import "./flightresult.css";
 import { Spacer } from "@chakra-ui/react";
 import Swal from "sweetalert2";
+import {swalModal} from "../../../utils/swal"
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 

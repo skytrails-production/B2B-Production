@@ -197,6 +197,7 @@ import Swal from "sweetalert2";
 import { apiURL } from "../../../../Constants/constant";
 import { useNavigate } from "react-router-dom";
 import "./AddCoupons.css";
+import {swalModal} from "../../../../utils/swal"
 
 const CreateCouponForm = () => {
   const data = JSON.parse(sessionStorage.getItem("persist:root"));
@@ -256,17 +257,19 @@ const CreateCouponForm = () => {
           title: "Coupon created successfully!",
         }).then(() => navigate("/admin/dashboard"));
       } else {
-        Swal.fire({
-          icon: "error",
-          title: "Failed to create Coupon!",
-        });
+        // Swal.fire({
+        //   icon: "error",
+        //   title: "Failed to create Coupon!",
+        // });
+        swalModal('flight','Failed to create Coupon!',false);
       }
     } catch (error) {
       console.error("API Error:", error.response.data);
-      Swal.fire({
-        icon: "error",
-        title: "OOP's! Something went wrong..!*~*",
-      });
+      // Swal.fire({
+      //   icon: "error",
+      //   title: "OOP's! Something went wrong..!*~*",
+      // });
+      swalModal('flight','Failed to create Coupon!',false);
     }
   };
 

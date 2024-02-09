@@ -288,6 +288,9 @@ export default function VerticalTabs() {
     // Navigate to the desired route when the button is clicked
     navigate("/admin/addCoupons");
   };
+  const createNotification=()=>{
+    navigate("/admin/addnotification")
+  }
   // /adminprofile
   // const AdminProfile = () => {
   //   // Navigate to the desired route when the button is clicked
@@ -651,6 +654,12 @@ export default function VerticalTabs() {
                     <PersonAdd fontSize="small" />
                   </ListItemIcon>
                   Add Coupon
+                </MenuItem>
+                <MenuItem onClick={() => { handleClose(); createNotification(); }}>
+                  <ListItemIcon>
+                    <PersonAdd fontSize="small" />
+                  </ListItemIcon>
+                  Add Notification
                 </MenuItem>
 
                 {/* <MenuItem

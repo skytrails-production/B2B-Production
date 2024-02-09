@@ -105,6 +105,7 @@ import FlightOpen from "../Pages/Account/FlightOpen";
 import CreateAgentPage from "../Pages/Dashboard/Component/Table/AddAgent";
 import CreateEventForm from "../Pages/Dashboard/Component/Table/AddEvent";
 import CreateCouponForm from "../Pages/Dashboard/Component/Table/AddCoupons"
+import AddNotification from "../Pages/Dashboard/Component/Table/AddNotification";
 import Download from "./Download";
 
 import AboutUs from "../Layout/AboutUs";
@@ -113,7 +114,7 @@ import PrivacyPolicy from "../Layout/PrivacyPolicy";
 import RefundPolicy from "../Layout/RefundPolicy";
 import TermandCondition from "../Layout/TermandCondition";
 import AdminProfile from "../Pages/Dashboard/Component/Table/AdminProfile";
-import {} from "../utils/validation"
+import { } from "../utils/validation"
 
 const MainPage = () => {
   const dispatch = useDispatch();
@@ -135,7 +136,7 @@ const MainPage = () => {
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth > 750);
   const [scrollY, setScrollY] = useState(0);
-  
+
 
   // if wesbite width will go below 750px
 
@@ -157,7 +158,7 @@ const MainPage = () => {
     };
   }, []);
 
-  useEffect(() => {}, [scrollY, windowWidth]);
+  useEffect(() => { }, [scrollY, windowWidth]);
 
   useEffect(() => {
     if (
@@ -226,43 +227,44 @@ const MainPage = () => {
       {/* <Headers/> */}
 
       {location.pathname === "/Login" ||
-      location.pathname === "/aboutus" ||
-      location.pathname === "/contactus" ||
-      location.pathname === "/privacypolicy" ||
-      location.pathname === "/termAndCondition" ||
-      location.pathname === "/refundPolicy" ||
-      location.pathname === "/Registration" ||
-      location.pathname === "/addMarkup" ||
-      location.pathname === "/addEvents" ||
-      location.pathname === "/adminprofile" ||
+        location.pathname === "/aboutus" ||
+        location.pathname === "/contactus" ||
+        location.pathname === "/privacypolicy" ||
+        location.pathname === "/termAndCondition" ||
+        location.pathname === "/refundPolicy" ||
+        location.pathname === "/Registration" ||
+        location.pathname === "/addMarkup" ||
+        location.pathname === "/addEvents" ||
+        location.pathname === "/adminprofile" ||
 
-      location.pathname === "/admin/addCoupons"||
+        location.pathname === "/admin/addCoupons" ||
 
-      location.pathname==="/adminlogin" ||
-
-      isFlightEticketPage ||
-      isBusEticketPage ||
-      isHotelEticketPage ? null : (
+        location.pathname === "/adminlogin" ||
+        location.pathname === "/admin/addnotification" ||
+        isFlightEticketPage ||
+        isBusEticketPage ||
+        isHotelEticketPage ? null : (
         <Headers />
       )}
       {location.pathname === "/" ||
-      location.pathname === "/aboutus" ||
-      location.pathname === "/contactus" ||
-      location.pathname === "/privacypolicy" ||
-      location.pathname === "/termAndCondition" ||
-      location.pathname === "/refundPolicy" ||
-      location.pathname === "/Login" ||
-      location.pathname === "/Registration" ||
-      location.pathname === "/addMarkup" ||
-      location.pathname === "/addEvents" ||
-      location.pathname === "/adminprofile" ||
-      location.pathname === "/admin/addCoupons"||
+        location.pathname === "/aboutus" ||
+        location.pathname === "/contactus" ||
+        location.pathname === "/privacypolicy" ||
+        location.pathname === "/termAndCondition" ||
+        location.pathname === "/refundPolicy" ||
+        location.pathname === "/Login" ||
+        location.pathname === "/Registration" ||
+        location.pathname === "/addMarkup" ||
+        location.pathname === "/addEvents" ||
+        location.pathname === "/adminprofile" ||
+        location.pathname === "/admin/addCoupons" ||
+        location.pathname === "/admin/addnotification" ||
 
-      location.pathname==="/adminlogin" ||
+        location.pathname === "/adminlogin" ||
 
-      isFlightEticketPage ||
-      isBusEticketPage ||
-      isHotelEticketPage ? null : (
+        isFlightEticketPage ||
+        isBusEticketPage ||
+        isHotelEticketPage ? null : (
         <InnerNavbar />
       )}
 
@@ -523,7 +525,9 @@ const MainPage = () => {
                 {/* <Route exact path="/adminprofile" element={<AdminProfile />} /> */}
                 {/* location.pathname === "/adminprofile" || */}
                 <Route exact path="/addEvents" element={<CreateEventForm />} />
-                <Route  exact path="/admin/addCoupons" element={<CreateCouponForm />}/>
+                <Route exact path="/admin/addCoupons" element={<CreateCouponForm />} />
+                <Route exact path="/admin/addnotification" element={<AddNotification />} />
+                
                 <Route
                   exact
                   path="/AdminUserForm"
@@ -556,13 +560,13 @@ const MainPage = () => {
                 ></Route>
                 <Route exact path="/Queue" element={<Queue />}></Route>
 
-                
+
                 <Route exact path="/holidayPackages" element={<HolidayPackages />}></Route>
                 <Route exact path="/FlightConfirmBooking/:id" element={<FlightOpen />} />
                 <Route exact path="/FlightEticket/:id" element={<FlightOneTicket />} />
                 <Route exact path="/BusEticket/:id" element={<BusOneTicket />} />
                 <Route exact path="/HotelEticket/:id" element={<HotelOneTicket />} />
-                  
+
 
                 <Route path="/aboutus" element={<AboutUs />}></Route>
                 <Route path="/contactus" element={<ContactUs />}></Route>

@@ -436,6 +436,7 @@ const OneWay = () => {
                   ref={inputRef}
                   className="deaprture_input"
                   dateFormat="dd MMMyy"
+                  minDate={startDate}
                 // Use defaultValue to set the initial value
 
                 />

@@ -3,18 +3,19 @@
 } */
 
 .flight_price {
-  color: '#071C2C';
-  font-size: '16px';
+  color:#21325d;
+  font-size: 16px;
   font-family: 'Montserrat';
-  font-weight: '600';
-  word-wrap: 'break-word'
+  font-weight: 600;
+  word-wrap: break-word
 }
 
 .flight_price_total {
   font: normal normal bold 20px/1px Quicksand !important;
   letter-spacing: 0px !important;
-  color: #341883 !important;
+  color: #21325df1 !important;
   opacity: 1 !important;
+ 
 }
 
 

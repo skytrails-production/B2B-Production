@@ -3,7 +3,7 @@ import FlightLoader from "./FlightLoader/FlightLoader";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import StyledTabs from "./FlightFormContainer";
-
+import { swalModal } from "../../utils/swal"
 import Swal from "sweetalert2";
 import "./Flight.css";
 import { ClearAllActionReturn } from "../../Redux/FlightFareQuoteRule/actionFlightQuote";
@@ -18,15 +18,16 @@ const Flight = () => {
   const [loader, setLoader] = useState(false);
   const dispatch = useDispatch()
 
-  // console.log("reducerState", reducerState);
-  async function AllFlightCLEAR_Function() {
-    await dispatch(ClearAllActionReturn())
-    await dispatch(flightReducerClear())
+  console.log("reducerState", reducerState);
+   function AllFlightCLEAR_Function() {
+     dispatch(ClearAllActionReturn())
+     
+     dispatch(flightReducerClear())
 
 
-    await dispatch(clearOneWayReducer())
+     dispatch(clearOneWayReducer())
     // await dispatch(clearOneWayEMTReducer())
-    await dispatch(clearPassengersReducer())
+     dispatch(clearPassengersReducer())
     sessionStorage.removeItem("infants")
     sessionStorage.removeItem("ResultIndex")
     sessionStorage.removeItem("childs")
@@ -45,7 +46,7 @@ const Flight = () => {
 
     //   showSuccessMessage: false,
     // })
-    sessionStorage.getItem('oneWay')
+    // sessionStorage.getItem('oneWay')
     // sessionStorage.getItem('oneWay', {
     //   oneWayData: [],
 
@@ -55,7 +56,7 @@ const Flight = () => {
 
     //   showSuccessMessage: false,
     // })
-    sessionStorage.getItem('oneWayEMT')
+    // sessionStorage.getItem('oneWayEMT')
     //   oneWayEMTData: [],
 
     //   isLoading: false,
@@ -64,7 +65,7 @@ const Flight = () => {
 
     //   showSuccessMessage: false,
     // })
-    sessionStorage.getItem('flightBook')
+    // sessionStorage.getItem('flightBook')
     //   flightBookData: {},
     //   flightBookDataGDS: {},
     //   flightTicketDataGDS: {},
@@ -75,7 +76,7 @@ const Flight = () => {
     //   isLoading: false,
     //   isError: false,
     // });
-    sessionStorage.getItem('flightFare')
+    // sessionStorage.getItem('flightFare')
     //   flightRuleData: {},
     //   flightQuoteData: {},
     //   flightRuleDataReturn: {},
@@ -90,7 +91,7 @@ const Flight = () => {
 
   }
   useEffect(() => {
-    navigate("/flights")
+    // navigate("/flights")
     AllFlightCLEAR_Function()
     // console.warn("reducerState::::::::::::::::::::::::::::::::: Clear ALll Actionn", reducerState)
   }, [])
@@ -114,10 +115,12 @@ const Flight = () => {
       reducerState?.oneWay?.oneWayData?.data?.data?.Response?.Results;
     const returnResults =
       reducerState?.return?.returnData?.data?.data?.Response?.Results;
+      console.log(returnResults,'result return')
 
     if (oneWayResults) {
       navigate("/Flightresult");
-    } else if (returnResults) {
+    }
+     else if (returnResults) {
       // navigate("/FlightresultReturn");
       if (returnResults[1] !== undefined) {
         navigate("/FlightresultReturn");
@@ -136,31 +139,41 @@ const Flight = () => {
   const error =
     reducerState?.oneWay?.isError;
   useEffect(() => {
-    console.log(reducerState?.oneWay?.oneWayData?.data?.data?.Response?.Error?.ErrorCode, "reducerState?.oneWay?.oneWayData?.data?.data?.Response")
+    // console.log(reducerState?.oneWay?.oneWayData?.data?.data?.Response?.Error?.ErrorCode, reducerState, "reducerState?.oneWay?.oneWayData?.data?.data?.Response")
     if (reducerState?.oneWay?.oneWayData?.data?.data?.Response?.Error?.ErrorCode !== 0 && reducerState?.oneWay?.oneWayData?.data?.data?.Response?.Error?.ErrorCode !== undefined) {
       setLoader(false);
-      Swal.fire({
-        title: "Hii Encountered Error Flight",
-        text: `${reducerState?.oneWay?.oneWayData?.data?.data?.Response?.Error?.ErrorMessage}`,
-        icon: "question",
-        timer: 5000,
-        showClass: {
-          popup: `
-            animate__animated
-            animate__fadeInUp
-            animate__faster
-          `
-        },
-        hideClass: {
-          popup: `
-            animate__animated
-            animate__fadeOutDown
-            animate__faster
-          `
-        }
-      });
+      swalModal('flight', reducerState?.oneWay?.oneWayData?.data?.data?.Response?.Error?.ErrorMessage, false)
+      // Swal.fire({
+      //   title: "Hii Encountered Error Flight",
+      //   text: `${reducerState?.oneWay?.oneWayData?.data?.data?.Response?.Error?.ErrorMessage}`,
+      //   icon: "question",
+      //   timer: 5000,
+      //   showClass: {
+      //     popup: `
+      //       animate__animated
+      //       animate__fadeInUp
+      //       animate__faster
+      //     `
+      //   },
+      //   hideClass: {
+      //     popup: `
+      //       animate__animated
+      //       animate__fadeOutDown
+      //       animate__faster
+      //     `
+      //   }
+      // });
+      return
     }
-  }, [reducerState?.oneWay?.oneWayData?.data?.data?.Response]);
+    else if (reducerState?.return?.returnData?.data?.data?.Response?.
+      Error?.ErrorCode !== undefined && reducerState?.return?.returnData?.data?.data?.Response?.
+        Error?.ErrorCode !== 0) {
+      swalModal('flight', reducerState?.return?.returnData?.data?.data?.Response?.
+        Error?.ErrorMessage, false)
+      navigate('/')
+      return
+    }
+  }, [reducerState?.oneWay?.oneWayData?.data?.data?.Response,reducerState?.return?.returnData?.data?.data?.Response]);
 
   if (loader) {
     return <FlightLoader />;

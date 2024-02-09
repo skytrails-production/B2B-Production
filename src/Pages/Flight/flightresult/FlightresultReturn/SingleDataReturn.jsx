@@ -22,7 +22,8 @@ function SingleDataReturn(props) {
   const IsLCC = props.IsLCC;
 
 
-  // console.log("flight single", flight);
+  console.log("flight single", props);
+  
 
   const results =
     reducerState?.return?.returnData?.data?.data?.Response?.Results;

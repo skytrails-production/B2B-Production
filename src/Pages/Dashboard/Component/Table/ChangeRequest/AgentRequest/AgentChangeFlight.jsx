@@ -110,8 +110,8 @@ const AllFlightChangeTickets = () => {
   const columns = [
     {
       field: 'view',
-      headerName: 'View',
-      width: 100,
+      headerName: 'View All Passenger',
+      width: 200,
       renderCell: (params) => (
         <Button 
   style={{ backgroundColor: "#21325D", color: "#fff" }}

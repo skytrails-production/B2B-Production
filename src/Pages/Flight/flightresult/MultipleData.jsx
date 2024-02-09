@@ -16,6 +16,7 @@ import {
 } from "../../../Redux/FlightFareQuoteRule/actionFlightQuote";
 import FlightLoader from "../FlightLoader/FlightLoader";
 import Swal from "sweetalert2";
+import {swalModal} from "../../../utils/swal"
 
 const MultipleData = (props) => {
   const navigate = useNavigate();
@@ -77,26 +78,28 @@ const MultipleData = (props) => {
         reducerState?.flightFare?.flightQuoteData?.Error?.ErrorCode !== 0 &&
         reducerState?.flightFare?.flightRuleData?.Error?.ErrorCode !== 0
       ) {
-        Swal.fire({
-          title: "Hii Encountered an Error",
-          text: `${reducerState?.flightFare?.flightQuoteData?.Error?.ErrorMessage}`,
-          icon: "question",
-          timer: 5000,
-          showClass: {
-            popup: `
-              animate__animated
-              animate__fadeInUp
-              animate__faster
-            `
-          },
-          hideClass: {
-            popup: `
-              animate__animated
-              animate__fadeOutDown
-              animate__faster
-            `
-          }
-        });
+        // swalModal('flight',reducerState?.flightFare?.flightQuoteData?.Error?.ErrorMessage,false);
+        swalModal('flight','Something went wrong with your flight booking. ',false);
+        // Swal.fire({
+        //   title: "Hii Encountered an Error",
+        //   text: `${reducerState?.flightFare?.flightQuoteData?.Error?.ErrorMessage}`,
+        //   icon: "question",
+        //   timer: 5000,
+        //   showClass: {
+        //     popup: `
+        //       animate__animated
+        //       animate__fadeInUp
+        //       animate__faster
+        //     `
+        //   },
+        //   hideClass: {
+        //     popup: `
+        //       animate__animated
+        //       animate__fadeOutDown
+        //       animate__faster
+        //     `
+        //   }
+        // });
         console.log("insideSweet");
       }
     }

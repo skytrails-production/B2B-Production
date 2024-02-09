@@ -1,5 +1,5 @@
 import Divider from "@mui/material/Divider";
-import { Typography, Box, Grid, Button } from "@mui/material";
+import { Typography, Box, Grid, Button, FormControlLabel, Switch } from "@mui/material";
 import Modal from "@mui/material/Modal";
 import CircularProgress from "@mui/material/CircularProgress";
 import React, { useEffect, useState } from "react";
@@ -26,6 +26,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Swal from "sweetalert2";
+import {swalModal} from "../../../utils/swal"
 import { balanceSubtractRequest } from "../../../Redux/Auth/balaceSubtract/actionBalnceSubtract";
 import { clearPassengersReducer } from "../../../Redux/Passengers/passenger";
 import { clearOneWayReducer } from "../../../Redux/FlightSearch/OneWay/oneWay";
@@ -228,28 +229,30 @@ const Flightbookingdetail = () => {
       reducerState?.flightBook?.flightBookData?.Error?.ErrorCode !== undefined
     ) {
       setLoading(true);
+      // swalModal("flight",reducerState?.flightBook?.flightBookData?.Error?.ErrorMessage,true);
+      swalModal("flight",'Something went wrong with your flight booking. Please check your details and try again.',true);
 
-      Swal.fire({
-        title: "Hii Encounter An Error",
-        text: `${reducerState?.flightBook?.flightBookData?.Error?.ErrorMessage}`,
-        icon: "question",
-        timer: 5000,
+      // Swal.fire({
+      //   title: "Hii Encounter An Error",
+      //   text: `${reducerState?.flightBook?.flightBookData?.Error?.ErrorMessage}`,
+      //   icon: "question",
+      //   timer: 5000,
 
-        showClass: {
-          popup: `
-              animate__animated
-              animate__fadeInUp
-              animate__faster
-            `,
-        },
-        hideClass: {
-          popup: `
-              animate__animated
-              animate__fadeOutDown
-              animate__faster
-            `,
-        },
-      });
+      //   showClass: {
+      //     popup: `
+      //         animate__animated
+      //         animate__fadeInUp
+      //         animate__faster
+      //       `,
+      //   },
+      //   hideClass: {
+      //     popup: `
+      //         animate__animated
+      //         animate__fadeOutDown
+      //         animate__faster
+      //       `,
+      //   },
+      // });
 
       dispatch(flightReducerClear());
       dispatch(ClearAllActionReturn());
@@ -407,26 +410,27 @@ const Flightbookingdetail = () => {
         }
       } else {
         // alert("Insufficeint balance!! Please Recharge your Wallet");
-        Swal.fire({
-          title: "An Error Occured",
-          text: "Insufficeint balance!! Please Recharge your Wallet",
-          icon: "error",
-          timer: 5000,
-          showClass: {
-            popup: `
-              animate__animated
-              animate__fadeInUp
-              animate__faster
-            `,
-          },
-          hideClass: {
-            popup: `
-              animate__animated
-              animate__fadeOutDown
-              animate__faster
-            `,
-          },
-        });
+        swalModal("py","Insufficeint balance!! Please Recharge your Wallet",true)
+        // Swal.fire({
+        //   title: "An Error Occured",
+        //   text: "Insufficeint balance!! Please Recharge your Wallet",
+        //   icon: "error",
+        //   timer: 5000,
+        //   showClass: {
+        //     popup: `
+        //       animate__animated
+        //       animate__fadeInUp
+        //       animate__faster
+        //     `,
+        //   },
+        //   hideClass: {
+        //     popup: `
+        //       animate__animated
+        //       animate__fadeOutDown
+        //       animate__faster
+        //     `,
+        //   },
+        // });
         navigate("/");
       }
     } else {
@@ -465,26 +469,27 @@ const Flightbookingdetail = () => {
           setLoading(true);
         }
       } else {
-        Swal.fire({
-          title: "An Error Occured",
-          text: "Insufficeint balance!! Please Recharge your Wallet",
-          icon: "error",
-          timer: 5000,
-          showClass: {
-            popup: `
-              animate__animated
-              animate__fadeInUp
-              animate__faster
-            `,
-          },
-          hideClass: {
-            popup: `
-              animate__animated
-              animate__fadeOutDown
-              animate__faster
-            `,
-          },
-        });
+        swalModal("py","Insufficeint balance!! Please Recharge your Wallet",true);
+        // Swal.fire({
+        //   title: "An Error Occured",
+        //   text: "Insufficeint balance!! Please Recharge your Wallet",
+        //   icon: "error",
+        //   timer: 5000,
+        //   showClass: {
+        //     popup: `
+        //       animate__animated
+        //       animate__fadeInUp
+        //       animate__faster
+        //     `,
+        //   },
+        //   hideClass: {
+        //     popup: `
+        //       animate__animated
+        //       animate__fadeOutDown
+        //       animate__faster
+        //     `,
+        //   },
+        // });
         // alert("Insufficeint balance!! Please Recharge your Wallet");
         navigate("/");
       }

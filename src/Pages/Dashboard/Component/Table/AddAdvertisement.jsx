@@ -93,27 +93,27 @@ const CreateAdvertisementForm = () => {
         </div>
       </header>
       <form onSubmit={handleSubmit} className="advertisement-form">
-        <label className="form-label">
+        <label className="form-label-add">
           Title:
           <input type="text" name="title" value={formValues.title} onChange={handleInputChange} className="form-input-ads" />
         </label>
 
-        <label className="form-label">
+        <label className="form-label-add">
           Content:
           <textarea type="text" name="content" value={formValues.content} onChange={handleInputChange} className="form-textarea" />
         </label>
 
-        <label className="form-label">
+        <label className="form-label-add">
           Start Date:
           <input type="date" name="startDate" value={formValues.startDate} onChange={handleInputChange} className="form-input-ads" />
         </label>
 
-        <label className="form-label">
+        <label className="form-label-add">
           End Date:
           <input type="date" name="endDate" value={formValues.endDate} onChange={handleInputChange} className="form-input-ads" />
         </label>
 
-        <label className="form-label">
+        <label className="form-label-add">
           Remaining Days:
           <input
             type="number" // Change to number input
@@ -125,7 +125,7 @@ const CreateAdvertisementForm = () => {
           />
         </label>
 
-        <label className="form-label-image">
+        <label className="form-label-add-image">
           Image:
           <input type="file" accept="image/*" onChange={handleFileChange} className="form-input-image-ads" />
         </label>

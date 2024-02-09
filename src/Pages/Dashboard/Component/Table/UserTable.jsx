@@ -58,7 +58,7 @@ const Usertables = () => {
     {
       field: "username",
       headerName: "UserName",
-      minWidth: 150,
+      minWidth: 200,
       valueGetter: (params) => params.row.username || "No Data"
     },
     {
@@ -83,17 +83,28 @@ const Usertables = () => {
       field: "profilePic",
       headerName: "ProfilePic",
       flex: 1,
-      valueGetter: (params) => params.row.profilePic || "No Data",
+      //valueGetter: (params) => params.row.profilePic || "No Data",
       renderCell: (params) => (
         <div style={{ borderRadius: "50%", overflow: "hidden", width: 50, height: 50 }}>
-          <img
-            src={params.value}
-            alt="profilepic"
-            className="profile-image"
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          />
+          {params.value ? (
+            <img
+              src={params.value}
+              alt="profilepic"
+              className="profile-image"
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            />
+          ) : (
+            <img
+              src="https://www.sarojhospital.com/images/testimonials/dummy-profile.png" // Replace "/path_to_dummy_image.png" with the path to your dummy image
+              alt="dummy"
+              className="profile-image"
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            />
+          )}
         </div>
       ),
+
+
     },
     // Add more columns here if needed
   ];
@@ -126,7 +137,7 @@ const Usertables = () => {
           columns={columns}
           pageSize={pageSize}
           checkboxSelection
-       
+
 
           getRowId={(row) => row._id}
           components={{

@@ -12,9 +12,11 @@ import {
 import StarIcon from "@mui/icons-material/Star";
 import { apiURL } from "../../../Constants/constant";
 import Swal from "sweetalert2";
+
 import { getUserDataAction } from "../../../Redux/Auth/UserDataById/actionUserData";
 import { balanceSubtractRequest } from "../../../Redux/Auth/balaceSubtract/actionBalnceSubtract";
 import userApi from "../../../Redux/API/api";
+import { swalModal } from "../../../utils/swal";
 
 const Hoteldescription = () => {
   const dispatch = useDispatch();
@@ -89,27 +91,29 @@ const Hoteldescription = () => {
       reducerState?.hotelSearchResult?.bookRoom?.BookResult?.Error
         ?.ErrorCode !== undefined
     ) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: reducerState?.hotelSearchResult?.bookRoom?.BookResult?.Error
-          ?.ErrorMessage,
-        timer: 3000,
-        showClass: {
-          popup: `
-              animate__animated
-              animate__fadeInUp
-              animate__faster
-            `,
-        },
-        hideClass: {
-          popup: `
-              animate__animated
-              animate__fadeOutDown
-              animate__faster
-            `,
-        },
-      });
+      // swalModal("hotel",reducerState?.hotelSearchResult?.bookRoom?.BookResult?.Error?.ErrorMessage,false)
+      swalModal("hotel","'We're sorry, but there was an issue with your hotel booking",false)
+      // Swal.fire({
+      //   icon: "error",
+      //   title: "Oops...",
+      //   text: reducerState?.hotelSearchResult?.bookRoom?.BookResult?.Error
+      //     ?.ErrorMessage,
+      //   timer: 3000,
+      //   showClass: {
+      //     popup: `
+      //         animate__animated
+      //         animate__fadeInUp
+      //         animate__faster
+      //       `,
+      //   },
+      //   hideClass: {
+      //     popup: `
+      //         animate__animated
+      //         animate__fadeOutDown
+      //         animate__faster
+      //       `,
+      //   },
+      // });
       navigate("/");
     }
   }, [reducerState?.hotelSearchResult?.bookRoom?.BookResult]);
@@ -200,30 +204,31 @@ const Hoteldescription = () => {
     } else {
       // alert("Insufficent balance!! Please Recharge your Wallet");
       // navigate("/hotel");
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Insufficient balance!! Please Recharge your Wallet!",
-        timer: 3000,
-        showClass: {
-          popup: `
-            animate__animated
-            animate__fadeInUp
-            animate__faster
-          `,
-        },
-        hideClass: {
-          popup: `
-            animate__animated
-            animate__fadeOutDown
-            animate__faster
-          `,
-        },
-      }).then(() => {
-        // dispatch(clearHotelReducer());
-        // navigate("/");
-        // Navigate to "/hotel" after the Swal dialog is closed
-      });
+      swalModal('py',"Insufficient balance!! Please Recharge your Wallet!",true)
+      // Swal.fire({
+      //   icon: "error",
+      //   title: "Oops...",
+      //   text: "Insufficient balance!! Please Recharge your Wallet!",
+      //   timer: 3000,
+      //   showClass: {
+      //     popup: `
+      //       animate__animated
+      //       animate__fadeInUp
+      //       animate__faster
+      //     `,
+      //   },
+      //   hideClass: {
+      //     popup: `
+      //       animate__animated
+      //       animate__fadeOutDown
+      //       animate__faster
+      //     `,
+      //   },
+      // }).then(() => {
+      //   // dispatch(clearHotelReducer());
+      //   // navigate("/");
+      //   // Navigate to "/hotel" after the Swal dialog is closed
+      // });
     }
   };
 

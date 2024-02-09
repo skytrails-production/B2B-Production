@@ -33,6 +33,7 @@ import {
 } from "../../../Redux/Hotel/hotel";
 import HotelLoading from "../hotelLoading/HotelLoading";
 import Swal from "sweetalert2";
+import {swalModal} from "../../../utils/swal"
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -49,27 +50,29 @@ const HotelBooknow = () => {
     if (reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult
       ?.Error?.ErrorCode !== 0 && reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult
         ?.Error?.ErrorCode !== undefined) {
-      Swal.fire({
-        title: "Failed!",
-        text: reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult
-          .Error?.ErrorMessage,
-        icon: "question",
-        timer: 3000,
-        showClass: {
-          popup: `
-            animate__animated
-            animate__fadeInUp
-            animate__faster
-          `
-        },
-        hideClass: {
-          popup: `
-            animate__animated
-            animate__fadeOutDown
-            animate__faster
-          `
-        }
-      })
+          // swalModal("py",reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult.Error?.ErrorMessage,true)
+          swalModal("py","'We're sorry, but there was an issue with your hotel booking",true)
+      // Swal.fire({
+      //   title: "Failed!",
+      //   text: reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult
+      //     .Error?.ErrorMessage,
+      //   icon: "question",
+      //   timer: 3000,
+      //   showClass: {
+      //     popup: `
+      //       animate__animated
+      //       animate__fadeInUp
+      //       animate__faster
+      //     `
+      //   },
+      //   hideClass: {
+      //     popup: `
+      //       animate__animated
+      //       animate__fadeOutDown
+      //       animate__faster
+      //     `
+      //   }
+      // })
       sessionStorage.removeItem("HotelCode")
       sessionStorage.removeItem("ResultIndex")
       navigate("/")

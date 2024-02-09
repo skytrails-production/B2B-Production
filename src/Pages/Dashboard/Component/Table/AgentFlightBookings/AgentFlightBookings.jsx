@@ -6,12 +6,13 @@ import {
   Paper,
   Stack,
   Pagination,
-  Typography
+  Typography,
+  Button
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { apiURL } from '../../../../../Constants/constant';
 import { DataGrid,GridToolbar } from '@mui/x-data-grid';
-
+import Swal from 'sweetalert2';
 const AllFlightBooking = () => {
   const [flightBookings, setFlightBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -50,8 +51,58 @@ const AllFlightBooking = () => {
     setSearchTerm(event.target.value);
     setCurrentPage(1); // Reset to the first page when performing a new search
   };
+  const handleViewDetails = (booking) => {
+    handleShowAlert(booking);
+  };
 
+  const handleShowAlert = (booking) => {
+    const row = booking;
+    const passengerCount = row.passengerDetails.length;
+    const passengerDetailsHtml = row.passengerDetails.map(passenger => `
+      <div class="passenger-details">
+        <div><strong>Title:</strong> ${passenger.title}</div>
+        <div><strong>First Name:</strong> ${passenger.firstName}</div>
+        <div><strong>Last Name:</strong> ${passenger.lastName}</div>
+        <div><strong>Email:</strong> ${passenger.email || 'No Data'}</div>
+        <div><strong>Phone:</strong> ${passenger.ContactNo || 'No Data'}</div>
+        <div><strong>Address:</strong> ${passenger.city || 'No Data'}</div>
+        <div><strong>SeatNumber:</strong> ${passenger.TicketNumber || 'No Data'}</div>
+        <div><strong>Price:</strong> ${passenger.amount || 'No Data'}</div>
+       
+      </div>
+    `).join('');
+
+    Swal.fire({
+      title: '<span class="swal-title">View All Details</span>',
+      html: `
+        <div class="passenger-details-container">
+          <div class="passenger-count">Total Passengers: ${passengerCount}</div>
+          ${passengerDetailsHtml}
+        </div>
+      `,
+      showConfirmButton: false,
+      customClass: {
+        container: 'swal-container',
+        title: 'swal-title',
+        htmlContainer: 'swal-html-container'
+      }
+    });
+  };
   const columns = [
+    {
+      field: 'view',
+      headerName: 'View All Passenger',
+      width: 200,
+      renderCell: (params) => (
+        <Button
+          style={{ backgroundColor: "#21325D", color: "#fff" }}
+          onClick={() => handleViewDetails(params.row)}
+        >
+          View
+        </Button>
+
+      ),
+    },
     { field: 'bookingId', headerName: 'Booking Id', width: 120 },
     { field: 'pnr', headerName: 'PNR', width: 220, valueGetter: (params) => params.row.pnr || 'No Data' },
     { field: 'passengerDetails[0]?.firstName', headerName: 'Passenger First Name', width: 220, valueGetter: (params) => params.row.passengerDetails[0]?.firstName || 'No Data' },

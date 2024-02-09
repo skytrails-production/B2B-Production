@@ -32,6 +32,7 @@ import busArrow from '../../../Images/busArrow.png'
 import { motion } from "framer-motion";
 import Divider from "@mui/material/Divider";
 import Swal from "sweetalert2";
+import {swalModal} from "../../../utils/swal"
 
 
 const variants = {
@@ -88,27 +89,29 @@ const Busdetail = () => {
   }, [])
   useEffect(() => {
     if (seatLayoutData?.data?.GetBusSeatLayOutResult?.Error?.ErrorCode !== 0 && seatLayoutData?.data?.GetBusSeatLayOutResult?.Error?.ErrorCode !== undefined) {
-      Swal.fire({
-        title: seatLayoutData?.data?.GetBusSeatLayOutResult?.Error?.ErrorMessage,
-        text: "Redirecting to home page...",
-        // text:TicketDetails,
-        icon: "question",
-        timer: 3000,
-        showClass: {
-          popup: `
-            animate__animated
-            animate__fadeInUp
-            animate__faster
-          `,
-        },
-        hideClass: {
-          popup: `
-            animate__animated
-            animate__fadeOutDown
-            animate__faster
-          `,
-        },
-      });
+      // swalModal("bus",seatLayoutData?.data?.GetBusSeatLayOutResult?.Error?.ErrorMessage,false)
+      swalModal("bus","Your bus reservation couldn't be processed. Double-check your details and attempt booking again.",false)
+      // Swal.fire({
+      //   title: seatLayoutData?.data?.GetBusSeatLayOutResult?.Error?.ErrorMessage,
+      //   text: "Redirecting to home page...",
+      //   // text:TicketDetails,
+      //   icon: "question",
+      //   timer: 3000,
+      //   showClass: {
+      //     popup: `
+      //       animate__animated
+      //       animate__fadeInUp
+      //       animate__faster
+      //     `,
+      //   },
+      //   hideClass: {
+      //     popup: `
+      //       animate__animated
+      //       animate__fadeOutDown
+      //       animate__faster
+      //     `,
+      //   },
+      // });
       navigate("/")
     }
 

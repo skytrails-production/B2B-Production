@@ -22,6 +22,7 @@ import { PiBusDuotone } from "react-icons/pi";
 import { GiIndiaGate } from "react-icons/gi";
 import { BsBusFront } from "react-icons/bs";
 import { IoLocationOutline } from "react-icons/io5";
+import {swalModal} from '../../../utils/swal.js'
 
 
 
@@ -288,27 +289,28 @@ const BusForm = () => {
       navigate("/BusResult");
     }
     else if (reducerState?.getBusResult?.busResult?.data?.data?.BusSearchResult?.Error?.ErrorCode !== 0 && reducerState?.getBusResult?.busResult?.data?.data?.BusSearchResult?.Error?.ErrorCode !== undefined) {
-      Swal.fire({
-        title: "Something went wrong",
-        text: reducerState?.getBusResult?.busResult?.data?.data?.BusSearchResult?.Error?.ErrorMessage,
-        // text:TicketDetails,
-        icon: "question",
-        timer: 3000,
-        showClass: {
-          popup: `
-            animate__animated
-            animate__fadeInUp
-            animate__faster
-          `,
-        },
-        hideClass: {
-          popup: `
-            animate__animated
-            animate__fadeOutDown
-            animate__faster
-          `,
-        },
-      });
+      swalModal("bus",reducerState?.getBusResult?.busResult?.data?.data?.BusSearchResult?.Error?.ErrorMessage,false)
+      // Swal.fire({
+      //   title: "Something went wrong",
+      //   text: reducerState?.getBusResult?.busResult?.data?.data?.BusSearchResult?.Error?.ErrorMessage,
+      //   // text:TicketDetails,
+      //   icon: "question",
+      //   timer: 3000,
+      //   showClass: {
+      //     popup: `
+      //       animate__animated
+      //       animate__fadeInUp
+      //       animate__faster
+      //     `,
+      //   },
+      //   hideClass: {
+      //     popup: `
+      //       animate__animated
+      //       animate__fadeOutDown
+      //       animate__faster
+      //     `,
+      //   },
+      // });
       setLoader(false)
     }
     console.warn(reducerState?.getBusResult?.busResult?.data?.data?.BusSearchResult?.Error?.ErrorCode

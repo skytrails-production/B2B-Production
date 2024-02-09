@@ -13,11 +13,13 @@ import {
   TableBody,
   TableRow,
   TableCell,
+  Button
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import ApprovalIcon from '@mui/icons-material/CheckCircleOutline';
 import { apiURL } from '../../../../../../Constants/constant';
 import { DataGrid,GridToolbar } from '@mui/x-data-grid';
+import Swal from 'sweetalert2';
 const AllBusChangeTickets = () => {
   const [filteredData, setFilteredData] = useState([]);
 
@@ -65,9 +67,62 @@ const AllBusChangeTickets = () => {
     setCurrentPage(1);
   };
 
-  
+  const handleViewDetails = (booking) => {
+    handleShowAlert(booking);
+  };
+
+  const handleShowAlert = (booking) => {
+    const rowDetails = booking;
+    const passengerCount = rowDetails.busDetails?.passenger.length;
+    const passengerDetailsHtml = rowDetails?.busDetails?.passenger.map(passenger => `
+      <div class="passenger-details">
+        <div><strong>Title:</strong> ${passenger.title}</div>
+        <div><strong>First Name:</strong> ${passenger.firstName}</div>
+        <div><strong>Last Name:</strong> ${passenger.lastName}</div>
+        
+        <div><strong>Contact No:</strong> ${passenger.Phone || 'No Data'}</div>
+       
+        <div><strong>Email:</strong> ${passenger.Email || 'No Data'}</div>
+        <div><strong>Address Line 1:</strong> ${passenger.Address || 'No Data'}</div>
+       
+        <div><strong>seatNumber:</strong> ${passenger.seatNumber || 'No Data'}</div>
+        <div><strong>Amount:</strong> ${passenger.Price || 'No Data'}</div>
+      </div>
+    `).join('');
+
+    Swal.fire({
+      title: '<span class="swal-title">View All Details</span>',
+      html: `
+        <div class="passenger-details-container">
+          <div class="passenger-count">Total Passengers: ${passengerCount}</div>
+          ${passengerDetailsHtml}
+        </div>
+      `,
+      showConfirmButton: false,
+      customClass: {
+        container: 'swal-container',
+        title: 'swal-title',
+        htmlContainer: 'swal-html-container'
+      }
+    });
+  };
+
 
   const columns = [
+    {
+      field: 'view',
+      headerName: 'View All Passenger',
+      width: 200,
+      renderCell: (params) => (
+        <Button
+          style={{ backgroundColor: "#21325D", color: "#fff" }}
+          onClick={() => handleViewDetails(params.row)}
+        >
+          View
+        </Button>
+
+      ),
+    },
     { field: 'busDetails.busId', headerName: 'Bus ID', width:150, valueGetter: (params) => params.row.busDetails.busId || 'No Data', },
     {
       field: 'userDetails?.personal_details.first_name',

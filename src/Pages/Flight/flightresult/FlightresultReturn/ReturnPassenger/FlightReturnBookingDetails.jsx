@@ -23,6 +23,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Swal from "sweetalert2";
+import { swalModal } from "../../../../../utils/swal";
 import { balanceSubtractRequest } from "../../../../../Redux/Auth/balaceSubtract/actionBalnceSubtract";
 import { clearPassengersReducer } from "../../../../../Redux/Passengers/passenger";
 import { clearOneWayReducer } from "../../../../../Redux/FlightSearch/OneWay/oneWay";
@@ -44,13 +45,26 @@ const FlightReturnBookingDetails = () => {
   const [passengerAgreement, setPassengerAgreement] = useState(false);
   const [loading, setLoading] = useState(false);
   const [paymentOption, setPaymentOption] = useState(false);
+  function convertDateFormat(inputDate) {
+    // Split the input date string into year, month, and day
+    const [year, month, day] = inputDate.split("-");
+
+    // Create a new Date object using the components
+    const newDate = new Date(year, month - 1, day);
+
+    // Format the output date string as "yyyy-mm-ddTHH:mm:ss"
+    const outputDate = newDate.toISOString().slice(0, 19).replace("T", "T00:00:00");
+    console.log(outputDate, "outputdate")
+
+    return outputDate;
+  }
 
   const reducerState = useSelector((state) => state);
-  console.warn(
-    "reducer state..........................",
-    reducerState,
-    sessionStorage?.getItem("flightDetailsONGo")
-  );
+  // console.warn(
+  //   "reducer state..........................",
+  //   reducerState,
+  //   sessionStorage?.getItem("flightDetailsONGo")
+  // );
   const markUpamount =
     reducerState?.userData?.userData?.data?.data?.markup?.flight;
 
@@ -178,7 +192,10 @@ const FlightReturnBookingDetails = () => {
       getTicketForNonLCC();
     } else if (reducerState?.flightBook?.flightBookDataGDS?.Error) {
       setLoading(false);
-      alert(reducerState?.flightBook?.flightBookDataGDS?.Error?.ErrorMessage);
+      // alert(reducerState?.flightBook?.flightBookDataGDS?.Error?.ErrorMessage);
+      // swalModal('py', reducerState?.flightBook?.flightBookDataGDS?.Error?.ErrorMessage, true)
+      swalModal('py', 'Something went wrong with your flight booking. Please check your details and try again.', true)
+      navigate('/')
     }
   }, [reducerState?.flightBook?.flightBookDataGDS]);
   useEffect(() => {
@@ -186,11 +203,13 @@ const FlightReturnBookingDetails = () => {
       reducerState?.flightBook?.flightBookData?.Error?.ErrorCode !== 0 &&
       reducerState?.flightBook?.flightBookData?.Error?.ErrorCode !== undefined
     ) {
-      Swal.fire({
-        title: "Booking Failed",
-        text: reducerState?.flightBook?.flightBookData?.Error?.ErrorMessage,
-        icon: "error",
-      });
+      // swalModal("py", reducerState?.flightBook?.flightBookData?.Error?.ErrorMessage, true)
+      swalModal("py", 'Something went wrong with your flight booking. Please check your details and try again.', true)
+      // Swal.fire({
+      //   title: "Booking Failed",
+      //   text: reducerState?.flightBook?.flightBookData?.Error?.ErrorMessage,
+      //   icon: "error",
+      // });
       bookingConfirmed();
     }
   }, [reducerState?.flightBook?.flightBookData?.Error?.ErrorCode]);
@@ -217,7 +236,18 @@ const FlightReturnBookingDetails = () => {
         navigate("/Flightreturnbookingconfirmation");
       }
     }
+
   }, [reducerState?.flightBook?.flightTicketDataGDS]);
+  useEffect(() => {
+    console.warn(reducerState?.flightBook?.flightTicketDataGDS, "reducerState?.flightBook?.flightTicketDataGDS?.Error?.ErrorMessage");
+    if (reducerState?.flightBook?.flightTicketDataGDS?.Error
+      ?.ErrorCode !== 0 && reducerState?.flightBook?.flightTicketDataGDS?.Error
+        ?.ErrorCode !== undefined) {
+      // swalModal('flight', reducerState?.flightBook?.flightTicketDataGDS?.Error?.ErrorMessage, true)
+      swalModal('flight', 'Something went wrong with your flight booking. Please check your details and try again.', true)
+    }
+  }, [reducerState?.flightBook?.flightTicketDataGDS?.Error
+    ?.ErrorCode])
 
   useEffect(() => {
     if (
@@ -249,7 +279,8 @@ const FlightReturnBookingDetails = () => {
       setLoading(false);
       let error =
         reducerState?.flightBook?.flightBookDataGDSReturn?.Error?.ErrorMessage;
-      alert(error);
+        swalModal('py',"Something went wrong with your flight booking. Please check your details and try again.",true)
+      // alert(error);
     } else {
     }
   }, [reducerState?.flightBook?.flightBookDataGDSReturn]);
@@ -286,6 +317,7 @@ const FlightReturnBookingDetails = () => {
               ...item,
               Email: apiURL.flightEmail,
               ContactNo: apiURL.phoneNo,
+              PassportExpiry: isPassportRequired ? convertDateFormat(item.PassportExpiry) : "",
             };
           }),
         };
@@ -356,6 +388,8 @@ const FlightReturnBookingDetails = () => {
               ...item,
               Email: apiURL.flightEmail,
               ContactNo: apiURL.phoneNo,
+              PassportExpiry: isPassportRequired ? convertDateFormat(item.PassportExpiry) : "",
+
             };
           }),
         };
@@ -368,13 +402,13 @@ const FlightReturnBookingDetails = () => {
     if (fareValue && fareValueReturn) {
       if (
         fareValue?.Fare?.BaseFare +
-          fareValue?.Fare?.Tax +
-          fareValue?.Fare?.OtherCharges +
-          markUpamount +
-          fareValueReturn?.Fare?.BaseFare +
-          fareValueReturn?.Fare?.Tax +
-          fareValueReturn?.Fare?.OtherCharges +
-          markUpamount <=
+        fareValue?.Fare?.Tax +
+        fareValue?.Fare?.OtherCharges +
+        markUpamount +
+        fareValueReturn?.Fare?.BaseFare +
+        fareValueReturn?.Fare?.Tax +
+        fareValueReturn?.Fare?.OtherCharges +
+        markUpamount <=
         currentBalance
       ) {
         e.preventDefault();
@@ -390,6 +424,7 @@ const FlightReturnBookingDetails = () => {
               ...item,
               Email: apiURL.flightEmail,
               ContactNo: apiURL.phoneNo,
+              PassportExpiry: isPassportRequired ? convertDateFormat(item.PassportExpiry) : "",
             };
           }),
         };
@@ -407,34 +442,35 @@ const FlightReturnBookingDetails = () => {
       } else {
         // alert("Insufficeint balance!! Please Recharge your Wallet");
         // navigate("/flights");
-        Swal.fire({
-          title: "Insufficeint balance!! Please Recharge your Wallet",
-          icon: "error",
-          timer: 5000,
-          showClass: {
-            popup: `
-                          animate__animated
-                          animate__fadeInUp
-                          animate__faster
-                        `,
-          },
-          hideClass: {
-            popup: `
-                          animate__animated
-                          animate__fadeOutDown
-                          animate__faster
-                        `,
-          },
-        });
+        swalModal('flight', "Insufficeint balance!! Please Recharge your Wallet", true)
+        // Swal.fire({
+        //   title: "Insufficeint balance!! Please Recharge your Wallet",
+        //   icon: "error",
+        //   timer: 5000,
+        //   showClass: {
+        //     popup: `
+        //                   animate__animated
+        //                   animate__fadeInUp
+        //                   animate__faster
+        //                 `,
+        //   },
+        //   hideClass: {
+        //     popup: `
+        //                   animate__animated
+        //                   animate__fadeOutDown
+        //                   animate__faster
+        //                 `,
+        //   },
+        // });
         bookingConfirmed();
         navigate("/");
       }
     } else {
       if (
         fareValue?.Fare?.BaseFare +
-          fareValue?.Fare?.Tax +
-          fareValue?.Fare?.OtherCharges +
-          markUpamount <=
+        fareValue?.Fare?.Tax +
+        fareValue?.Fare?.OtherCharges +
+        markUpamount <=
         currentBalance
       ) {
         e.preventDefault();
@@ -450,6 +486,7 @@ const FlightReturnBookingDetails = () => {
               ...item,
               Email: apiURL.flightEmail,
               ContactNo: apiURL.phoneNo,
+              PassportExpiry: isPassportRequired ? convertDateFormat(item.PassportExpiry) : "",
             };
           }),
         };
@@ -465,25 +502,26 @@ const FlightReturnBookingDetails = () => {
         }
       } else {
         // alert("Insufficeint balance!! Please Recharge your Wallet");
-        Swal.fire({
-          title: "Insufficeint balance!! Please Recharge your Wallet",
-          icon: "error",
-          timer: 5000,
-          showClass: {
-            popup: `
-                          animate__animated
-                          animate__fadeInUp
-                          animate__faster
-                        `,
-          },
-          hideClass: {
-            popup: `
-                          animate__animated
-                          animate__fadeOutDown
-                          animate__faster
-                        `,
-          },
-        });
+        swalModal("py", "Insufficeint balance!! Please Recharge your Wallet", true);
+        // Swal.fire({
+        //   title: "Insufficeint balance!! Please Recharge your Wallet",
+        //   icon: "error",
+        //   timer: 5000,
+        //   showClass: {
+        //     popup: `
+        //                   animate__animated
+        //                   animate__fadeInUp
+        //                   animate__faster
+        //                 `,
+        //   },
+        //   hideClass: {
+        //     popup: `
+        //                   animate__animated
+        //                   animate__fadeOutDown
+        //                   animate__faster
+        //                 `,
+        //   },
+        // });
         bookingConfirmed();
         navigate("/");
       }
@@ -511,6 +549,7 @@ const FlightReturnBookingDetails = () => {
           ...item,
           Email: apiURL.flightEmail,
           ContactNo: apiURL.phoneNo,
+          PassportExpiry: isPassportRequired ? convertDateFormat(item.PassportExpiry) : "",
         };
       }),
     };
@@ -541,6 +580,7 @@ const FlightReturnBookingDetails = () => {
           ...item,
           Email: apiURL.flightEmail,
           ContactNo: apiURL.phoneNo,
+          PassportExpiry: isPassportRequired ? convertDateFormat(item.PassportExpiry) : "",
         };
       }),
     };
@@ -564,6 +604,7 @@ const FlightReturnBookingDetails = () => {
           ...item,
           Email: apiURL.flightEmail,
           ContactNo: apiURL.phoneNo,
+          PassportExpiry: isPassportRequired ? convertDateFormat(item.PassportExpiry) : "",
         };
       }),
     };
@@ -638,18 +679,19 @@ const FlightReturnBookingDetails = () => {
   const infants = sessionStorage.getItem("infants");
 
   //departure flight data in passenger page
-
+  const isPasswordsRequired = reducerState?.flightFare?.flightQuoteData?.Results?.
+    IsPassportRequiredAtTicket;
   const flightDeparture =
     reducerState?.flightFare?.flightQuoteData?.Results?.Segments[0]?.[0];
-  const flightReturn =
+  const flightReturn = isPassportRequired ? reducerState?.flightFare?.flightQuoteData?.Results?.Segments[1]?.[0] :
     reducerState?.flightFare?.flightQuoteDataReturn?.Results?.Segments[0]?.[0];
+  // console.warn(isPassportRequired, "ispasswordrequird", flightReturn, "flightReturn")
 
   // console.log(flightDeparture, "flight departure");
   // console.log(flightReturn, "flight return ");
 
-  const duration1 = `${Math.floor(flightDeparture?.Duration / 60)}hr ${
-    flightDeparture?.Duration % 60
-  }min`;
+  const duration1 = `${Math.floor(flightDeparture?.Duration / 60)}hr ${flightDeparture?.Duration % 60
+    }min`;
   const dateString = flightDeparture?.Origin?.DepTime;
   const date1 = new Date(dateString);
   const options = {
@@ -680,9 +722,8 @@ const FlightReturnBookingDetails = () => {
   // console.log(desiredFormat1, "desired format");
   // console.log(desiredFormat, "desired format");
 
-  const duration3 = `${Math.floor(flightReturn?.Duration / 60)}hr ${
-    flightReturn?.Duration % 60
-  }min`;
+  const duration3 = `${Math.floor(flightReturn?.Duration / 60)}hr ${flightReturn?.Duration % 60
+    }min`;
   const dateString3 = flightReturn?.Origin?.DepTime;
   const date3 = new Date(dateString3);
   const options3 = {
@@ -824,8 +865,8 @@ const FlightReturnBookingDetails = () => {
                     {passenger.PaxType === 1
                       ? "Adult"
                       : passenger.PaxType === 2
-                      ? "Child"
-                      : "Infant"}
+                        ? "Child"
+                        : "Infant"}
                     )
                   </span>
                 </p>
@@ -848,8 +889,8 @@ const FlightReturnBookingDetails = () => {
                     {passenger.Gender === 1
                       ? "Male"
                       : passenger.Gender === 2
-                      ? "Female"
-                      : "Transgender"}
+                        ? "Female"
+                        : "Transgender"}
                   </span>
                   <span>{passenger.Email}</span>
                   {/* {passenger.AddressLine1 && (
@@ -999,8 +1040,8 @@ const FlightReturnBookingDetails = () => {
                 !passengerAgreement || !paymentOption
                   ? true
                   : loading
-                  ? true
-                  : false
+                    ? true
+                    : false
               }
             >
               {" "}

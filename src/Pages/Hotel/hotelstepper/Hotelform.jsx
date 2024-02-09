@@ -14,6 +14,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { FaTrash } from "react-icons/fa";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
+import {swalModal} from "../../../utils/swal"
 import { clearPassengersReducer } from "../../../Redux/Passengers/passenger";
 
 
@@ -137,27 +138,29 @@ const HotelForm = () => {
       && reducerState?.hotelSearchResult?.ticketData?.data?.data?.HotelSearchResult
         ?.Error?.ErrorCode !== undefined
     ) {
-      Swal.fire({
-        title: "Failed!",
-        text: reducerState?.hotelSearchResult?.ticketData?.data?.data?.HotelSearchResult
-          ?.Error?.ErrorMessage,
-        icon: "question",
-        timer: 5000,
-        showClass: {
-          popup: `
-            animate__animated
-            animate__fadeInUp
-            animate__faster
-          `
-        },
-        hideClass: {
-          popup: `
-            animate__animated
-            animate__fadeOutDown
-            animate__faster
-          `
-        }
-      })
+      swalModal('package', reducerState?.hotelSearchResult?.ticketData?.data?.data?.HotelSearchResult
+      ?.Error?.ErrorMessage,false)
+      // Swal.fire({
+      //   title: "Failed!",
+      //   text: reducerState?.hotelSearchResult?.ticketData?.data?.data?.HotelSearchResult
+      //     ?.Error?.ErrorMessage,
+      //   icon: "question",
+      //   timer: 5000,
+      //   showClass: {
+      //     popup: `
+      //       animate__animated
+      //       animate__fadeInUp
+      //       animate__faster
+      //     `
+      //   },
+      //   hideClass: {
+      //     popup: `
+      //       animate__animated
+      //       animate__fadeOutDown
+      //       animate__faster
+      //     `
+      //   }
+      // })
       setLoader(false);
       All_Hotel_Reducer_Clear()
       navigate("/");

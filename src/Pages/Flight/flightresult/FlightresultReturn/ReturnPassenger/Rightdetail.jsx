@@ -72,11 +72,16 @@ export default function Popularfilter() {
   const fareQuote = reducerState?.flightFare?.flightQuoteData?.Error?.ErrorCode;
   const fareRule = reducerState?.flightFare?.flightRuleData?.FareRules;
   const fareValue = reducerState?.flightFare?.flightQuoteData?.Results;
+  const isPasswordsRequiredBaseFair = reducerState?.flightFare?.flightQuoteData?.Results?.Fare?.PublishedFare
+
 
   const fareofall = reducerState?.flightFare;
-
+  const isPasswordsRequired = reducerState?.flightFare?.flightQuoteData?.Results?.
+    IsPassportRequiredAtTicket
   const markUpamount =
     reducerState?.userData?.userData?.data?.data?.markup?.flight;
+  console.log(isPasswordsRequiredBaseFair, "isPasswordsRequired", markUpamount, "markupamount")
+
   // console.log("fareValue 🤞", fareofall);
 
 
@@ -87,7 +92,7 @@ export default function Popularfilter() {
 
   const fareValueDepart = reducerState?.flightFare?.flightQuoteData?.Results;
 
-  const departDate = fareValueDepart?.Segments?.[0]?.[0]?.Origin?.DepTime;
+  const departDate =  fareValueDepart?.Segments?.[0]?.[0]?.Origin?.DepTime;
   const dateDepart = new Date(departDate);
   const departDay = dateDepart.getDate();
   const departMonth = dateDepart.toLocaleString("default", {
@@ -99,8 +104,8 @@ export default function Popularfilter() {
 
   // class and flight number 
 
-  const departFlightNumber = fareValueDepart?.Segments?.[0]?.[0]?.Airline?.FlightNumber;
-  const departFlightClass = fareValueDepart?.Segments?.[0]?.[0]?.Airline?.FareClass;
+  const departFlightNumber =isPasswordsRequired?fareValueDepart?.Segments?.[1]?.[0]?.Airline?.FlightNumber : fareValueDepart?.Segments?.[0]?.[0]?.Airline?.FlightNumber;
+  const departFlightClass =isPasswordsRequired?fareValueDepart?.Segments?.[1]?.[0]?.Airline?.FareClass : fareValueDepart?.Segments?.[0]?.[0]?.Airline?.FareClass;
 
 
   // depart depart and arrival city 
@@ -119,10 +124,10 @@ export default function Popularfilter() {
 
   // flight return 
 
-  const fareValueReturn = reducerState?.flightFare?.flightQuoteDataReturn?.Results;
+  const fareValueReturn =isPasswordsRequired?reducerState?.flightFare?.flightQuoteData?.Results: reducerState?.flightFare?.flightQuoteDataReturn?.Results;
 
-
-  const ReturnDate = fareValueReturn?.Segments?.[0]?.[0]?.Origin?.DepTime;
+  // isPasswordsRequired?fareValueReturn?.Segments?.[0]?.[1]?.Origin?.DepTime : fareValueReturn?.Segments?.[0]?.[0]?.Origin?.DepTime
+  const ReturnDate =isPasswordsRequired?fareValueReturn?.Segments?.[1]?.[0]?.Origin?.DepTime :fareValueReturn?.Segments?.[0]?.[0]?.Origin?.DepTime;
   const dateReturn = new Date(ReturnDate);
   const ReturnDay = dateReturn.getDate();
   const ReturnMonth = dateReturn.toLocaleString("default", {
@@ -145,7 +150,7 @@ export default function Popularfilter() {
 
 
 
-  const totalFare = (
+  const totalFare = (isPasswordsRequired ? isPasswordsRequiredBaseFair :
     fareValueDepart?.Fare?.PublishedFare +
     markUpamount +
     fareValueReturn?.Fare?.PublishedFare +
@@ -251,36 +256,39 @@ export default function Popularfilter() {
             <p className="text-bold">{ReturnDestinationCity}</p>
           </div>
         </div>
-        <div className="totCOmm">
-          {fareValueReturn?.FareBreakdown?.map((data) => {
-            return (
-              <div className="">
-                {data?.PassengerType === 1 && (
-                  <>
-                    <span>Adult x {data?.PassengerCount}</span>
-                    <p>{'₹'}{data?.BaseFare + data?.Tax}</p>
+        {
+          !isPasswordsRequired && <div className="totCOmm">
+            {fareValueReturn?.FareBreakdown?.map((data) => {
+              return (
+                <div className="">
+                  {data?.PassengerType === 1 && (
+                    <>
+                      <span>Adult x {data?.PassengerCount}</span>
+                      <p>{'₹'}{data?.BaseFare + data?.Tax}</p>
 
-                  </>
-                )}
-                {data?.PassengerType === 2 && (
-                  <>
-                    <span>Child x {data?.PassengerCount}</span>
-                    <p>{'₹'}{data?.BaseFare + data?.Tax}</p>
-                  </>
-                )}
-                {data?.PassengerType === 3 && (
-                  <>
-                    <span>Infant x {data?.PassengerCount}</span>
-                    <p>{'₹'}{data?.BaseFare + data?.Tax}</p>
-                  </>
-                )}
+                    </>
+                  )}
+                  {data?.PassengerType === 2 && (
+                    <>
+                      <span>Child x {data?.PassengerCount}</span>
+                      <p>{'₹'}{data?.BaseFare + data?.Tax}</p>
+                    </>
+                  )}
+                  {data?.PassengerType === 3 && (
+                    <>
+                      <span>Infant x {data?.PassengerCount}</span>
+                      <p>{'₹'}{data?.BaseFare + data?.Tax}</p>
+                    </>
+                  )}
 
 
-              </div>
-            );
-          })}
+                </div>
+              );
+            })}
 
-        </div>
+          </div>
+        }
+
 
         <div className="TotGst">
           <div>

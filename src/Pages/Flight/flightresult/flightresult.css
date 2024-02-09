@@ -1,135 +1,121 @@
 .timer {
-    text-align: right !important;
-    font: normal normal bold 16px/15px Quicksand !important;
-    letter-spacing: 0px !important;
-    color: #252525 !important;
-    opacity: 1 !important;
+  text-align: right !important;
+  font: normal normal bold 16px/15px Quicksand !important;
+  letter-spacing: 0px !important;
+  color: #252525 !important;
+  opacity: 1 !important;
 }
 
 .city {
-    font-size: 12px !important;
-    color: #707070 !important;
-    text-align: right !important;
-    letter-spacing: 0px !important;
-    line-height: 15px !important;
-    opacity: 1 !important;
+  font-size: 12px !important;
+  color: #707070 !important;
+  text-align: right !important;
+  letter-spacing: 0px !important;
+  line-height: 15px !important;
+  opacity: 1 !important;
 }
 
 .timer2 {
-    text-align: left !important;
-    font: normal normal bold 16px/15px Quicksand !important;
-    letter-spacing: 0px !important;
-    color: #252525 !important;
-    opacity: 1 !important;
+  text-align: left !important;
+  font: normal normal bold 16px/15px Quicksand !important;
+  letter-spacing: 0px !important;
+  color: #252525 !important;
+  opacity: 1 !important;
 }
 
 .city2 {
-    font-size: 12px !important;
-    color: #707070 !important;
-    text-align: left !important;
-    letter-spacing: 0px !important;
-    line-height: 15px !important;
-    opacity: 1 !important;
+  font-size: 12px !important;
+  color: #707070 !important;
+  text-align: left !important;
+  letter-spacing: 0px !important;
+  line-height: 15px !important;
+  opacity: 1 !important;
 }
 
 .duration {
-    font-size: 9px !important;
-    color: #707070 !important;
-    text-align: center !important;
-    letter-spacing: 0px !important;
-    line-height: 15px !important;
-    opacity: 1 !important;
+  font-size: 9px !important;
+  color: #707070 !important;
+  text-align: center !important;
+  letter-spacing: 0px !important;
+  line-height: 15px !important;
+  opacity: 1 !important;
 }
 
 .flightup {
-    color: #00BDC4;
+  color: #00bdc4;
 }
 
 .next {
-    text-align: right !important;
+  text-align: right !important;
 }
 
-
-
-
-
-
-
-
-
-
-
 .flightContainer {
-    padding: 20px;
-    width: 80%;
-    height: 100%;
+  padding: 20px;
+  width: 80%;
+  height: 100%;
 
-    background: white;
-
+  background: white;
 }
 
 .flightNavBar {
-    width: 100%;
+  width: 100%;
 
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .flightNavBarContainer {
-    width: 80%;
-    height: auto;
-    margin: 20px;
+  width: 80%;
+  height: auto;
+  margin: 20px;
 }
-
-
-
-
 
 /* popularfilter */
 
 .space {
-    height: 20px;
+  height: 20px;
 }
 
 .price_content {
-    box-shadow: 2px 2px 2px rgb(184, 182, 182);
-    border: 1px solid rgb(220, 218, 218);
-
+  box-shadow: 2px 2px 2px rgb(184, 182, 182);
+  border: 1px solid rgb(220, 218, 218);
 }
 
 .Bton_filter:hover {
-    background-color: #4260D8 !important;
-    color: white;
-
+  background-color: #4260d8 !important;
+  color: white;
 }
 
 .flight_name {
-    margin-left: 20px;
-    font: normal normal bold 13px/20px Quicksand !important;
-    letter-spacing: 0px !important;
-    color: #252525 !important;
-    opacity: 1;
+  margin-left: 20px;
+  font: normal normal bold 13px/20px Quicksand !important;
+  letter-spacing: 0px !important;
+  color: #252525 !important;
+  opacity: 1;
 }
-
 
 .flight_class {
-    font: normal normal 10px/10px Quicksand !important;
-    color: #707070 !important;
+  font: normal normal 10px/10px Quicksand !important;
+  color: #707070 !important;
 }
 
-
 .flight_price {
-    font: normal normal bold 20px/1px Quicksand !important;
-    letter-spacing: 0px !important;
-    color: #FF8900 !important;
-    opacity: 1 !important;
+  font: normal normal bold 20px/1px Quicksand !important;
+  letter-spacing: 0px !important;
+  color: #21325d !important;
+  opacity: 1 !important;
+  color:#21325d;
+  font-size: 16px !important;
+  font-family: 'Montserrat';
+  font-weight: 600;
+  word-wrap: break-word
 }
 
 .btn_booknow {
-    width: 100% !important;
-    background: #4260D8 0% 0% no-repeat padding-box !important;
-    border-radius: 10px !important;
-    opacity: 1 !important;
-    color: 'white' !important
+  width: 100% !important;
+  background: #4260d8 0% 0% no-repeat padding-box !important;
+  border-radius: 10px !important;
+  opacity: 1 !important;
+  color: "white" !important;
 }
 
 /* end */
@@ -137,279 +123,271 @@
 /* flight detail */
 
 .seat_left {
-    color: #FF0000 !important;
-    font: normal normal bold 10px Quicksand !important;
-    margin-bottom: 10px;
+  color: #ff0000 !important;
+  font: normal normal bold 10px Quicksand !important;
+  margin-bottom: 10px;
 }
-
-
 
 .margin-pecentage {
-    margin: 0px 10%;
-    background-color: white;
-    padding: 10px 15px !important;
-    border-radius: 8px;
+  margin: 0px 10%;
+  background-color: white;
+  padding: 10px 15px !important;
+  border-radius: 8px;
 }
 
-
 .flgihtdetailsTabBox {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
 }
 
 .flightdetailsTabs {
-    box-shadow: none !important;
-    margin: 12px 0px !important;
-    padding: 10px 50px !important;
-    margin: 0px 0px 12px 0px !important;
-    color: #21325D !important;
-    font-weight: 600 !important;
-    background: #FFFBFB !important;
-    border-width: 3px 3px 3px 3px !important;
-    border-style: solid !important;
-    border-color: #21325D !important;
-    width: 100%;
-    text-align: center;
+  box-shadow: none !important;
+  margin: 12px 0px !important;
+  padding: 10px 50px !important;
+  margin: 0px 0px 12px 0px !important;
+  color: #21325d !important;
+  font-weight: 600 !important;
+  background: #fffbfb !important;
+  border-width: 3px 3px 3px 3px !important;
+  border-style: solid !important;
+  border-color: #21325d !important;
+  width: 100%;
+  text-align: center;
 }
 
 .flightdetailsTabs:nth-child(1) {
-    border-radius: 8px 0px 0px 8px;
+  border-radius: 8px 0px 0px 8px;
 }
 
 .flightdetailsTabs:nth-child(3) {
-    border-radius: 0px 8px 8px 0px;
+  border-radius: 0px 8px 8px 0px;
 }
 
 .flightdetailsTabs:nth-child(2) {
-    border-width: 3px 1px 3px 1px !important;
+  border-width: 3px 1px 3px 1px !important;
 }
 
 .flightdetailsTabsActive {
-    background: #21325D !important;
-    border: 3px solid #21325D !important;
-    color: #fff !important;
+  background: #21325d !important;
+  border: 3px solid #21325d !important;
+  color: #fff !important;
 }
 
-
-
 .fareFilter {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .fareFilter p {
-    color: black;
-    font-size: 14px;
-    font-family: 'Montserrat';
-    font-weight: 600;
-    margin-bottom: 10px !important;
+  color: black;
+  font-size: 14px;
+  font-family: "Montserrat";
+  font-weight: 600;
+  margin-bottom: 10px !important;
 }
 
-.fareFilter>div {
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
+.fareFilter > div {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
 }
 
 .fareFilter label {
-    color: black;
-    font-size: 14px;
-    font-family: 'Montserrat';
-    font-weight: 500;
+  color: black;
+  font-size: 14px;
+  font-family: "Montserrat";
+  font-weight: 500;
 }
 
-
-
-
-
-
 .airlinesFilter {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .airlinesFilter p {
-    color: black;
-    font-size: 14px;
-    font-family: 'Montserrat';
-    font-weight: 600;
-    margin-bottom: 10px !important;
+  color: black;
+  font-size: 14px;
+  font-family: "Montserrat";
+  font-weight: 600;
+  margin-bottom: 10px !important;
 }
 
-.airlinesFilter>div {
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
+.airlinesFilter > div {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
 }
 
 .airlinesFilter label {
-    color: black;
-    font-size: 14px;
-    font-family: 'Montserrat';
-    font-weight: 500;
+  color: black;
+  font-size: 14px;
+  font-family: "Montserrat";
+  font-weight: 500;
 }
 
-
-
-
 .cheapestFilter {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .cheapestFilter p {
-    color: black;
-    font-size: 14px;
-    font-family: 'Montserrat';
-    font-weight: 600;
-    margin-bottom: 10px !important;
+  color: black;
+  font-size: 14px;
+  font-family: "Montserrat";
+  font-weight: 600;
+  margin-bottom: 10px !important;
 }
 
-.cheapestFilter>div {
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
+.cheapestFilter > div {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
 }
 
 .cheapestFilter label {
-    color: black;
-    font-size: 14px;
-    font-family: 'Montserrat';
-    font-weight: 500;
+  color: black;
+  font-size: 14px;
+  font-family: "Montserrat";
+  font-weight: 500;
 }
 
-
-
 .outboundFilter {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .outboundFilter p {
-    color: black;
-    font-size: 14px;
-    font-family: 'Montserrat';
-    font-weight: 600;
-    margin-bottom: 10px !important;
+  color: black;
+  font-size: 14px;
+  font-family: "Montserrat";
+  font-weight: 600;
+  margin-bottom: 10px !important;
 }
 
-.outboundFilter>div {
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
+.outboundFilter > div {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
 }
 
 .outboundFilter label {
-    color: black;
-    font-size: 14px;
-    font-family: 'Montserrat';
-    font-weight: 500;
+  color: black;
+  font-size: 14px;
+  font-family: "Montserrat";
+  font-weight: 500;
 }
 
-
-
-
-
 .flightFilterBox {
-    background-color: white;
-    border: 1px solid lightgray;
-    border-radius: 5px;
-    padding: 10px;
+  background-color: white;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  padding: 10px;
 }
 
 .flightFilterBox .filterTitle {
-    background-color: white;
-    border: 1px solid lightgray;
-    border-radius: 5px;
-    color: #071C2C;
-    text-align: center;
-    padding: 12px 0px;
-    font-family: 'Montserrat';
-    font-size: 21px;
-    font-style: normal;
-    font-weight: 600;
-    margin-bottom: 16px;
-    line-height: normal;
+  background-color: white;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  color: #071c2c;
+  text-align: center;
+  padding: 12px 0px;
+  font-family: "Montserrat";
+  font-size: 21px;
+  font-style: normal;
+  font-weight: 600;
+  margin-bottom: 16px;
+  line-height: normal;
 }
 
-
-.innerFilter>p {
-    color: #B03737;
-    font-family: 'Montserrat';
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    margin: 8px 0px !important;
-    line-height: normal;
+.innerFilter > p {
+  color: #b03737;
+  font-family: "Montserrat";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  margin: 8px 0px !important;
+  line-height: normal;
 }
-
-
 
 .sidebar-title {
-    font-weight: normal;
-    margin-bottom: 20px;
-    color: #E73C33;
-    font-family: 'Montserrat';
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
+  font-weight: normal;
+  margin-bottom: 20px;
+  color: #e73c33;
+  font-family: "Montserrat";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
 
 .sidebar-items {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .sidebar-label-container {
-    display: block;
-    position: relative;
-    padding-left: 35px;
-    margin-bottom: 12px;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .sidebar-label-container input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
 }
 
 .checkmark {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    height: 20px !important;
-    width: 20px !important;
-    background-color: #eee !important;
-    border-radius: 50% !important;
-    border: 2px solid rgb(165, 164, 164) !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  height: 20px !important;
+  width: 20px !important;
+  background-color: #eee !important;
+  border-radius: 50% !important;
+  border: 2px solid rgb(165, 164, 164) !important;
 }
 
-.checkmark .sidebar-label-container:hover input~.checkmark {
-    background-color: #ccc;
-
+.checkmark .sidebar-label-container:hover input ~ .checkmark {
+  background-color: #ccc;
 }
 
-.sidebar-label-container input:checked~.checkmark {
-    background-color: #E73C33 !important;
+.sidebar-label-container input:checked ~ .checkmark {
+  background-color: #e73c33 !important;
 }
 
 .checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
+  content: "";
+  position: absolute;
+  display: none;
 }
 
-.sidebar-label-container input:checked~.checkmark:after {
-    display: block;
+.sidebar-label-container input:checked ~ .checkmark:after {
+  display: block;
 }
 
 .sidebar-label-container .checkmark:after {
-    top: 4.4px;
-    left: 4.4px;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: white;
+  top: 4.4px;
+  left: 4.4px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: white;
+}
+.flightBoolkInternationalButton {
+  width: 100px;
+  border-radius: 10px;
+  /* // border: "10px solid red", */
+  height: 40px;
+  font-size: 11px;
+  margin-top: 10px;
+
+  font-family: "Montserrat";
+
+  background-color: #21325d;
+
+  border: 2px solid #21325d;
+  color: #fff;
 }

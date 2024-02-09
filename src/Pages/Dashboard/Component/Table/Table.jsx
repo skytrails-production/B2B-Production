@@ -337,7 +337,7 @@ export default function Tables() {
   const [showImg, setImgShow] = useState(false);
   const [documentImgUrl, setDocumentImgUrl] = useState("");
 
-  const handleImgClose = () => setImgShow(false);
+
 
   const handleImgShow = (img) => {
     console.log("imgUrl", img);
@@ -421,52 +421,28 @@ export default function Tables() {
                         <StyledTableRow key={index}>
                           {/* <img src={ele.agency_details.document_details.pan_card_document}  alt={index} /> */}
                           <StyledTableCell align="right">
-                            <Modal show={showImg} onHide={handleImgClose}>
-                              <Modal.Header closeButton>
-                                <Modal.Title>Document Image</Modal.Title>
-                              </Modal.Header>
-                              <Modal.Body>
-                                <Box
-                                  sx={{
-                                    width: 400,
-                                    maxWidth: "100%",
-                                    textAlign: "left",
-                                    padding: "20px",
-                                  }}
-                                >
-                                  <img
-                                    style={{
-                                      width: "100%",
-                                      height: "165px",
-                                    }}
-                                    src={documentImgUrl}
-                                    alt={index}
-                                  />
-                                </Box>
-                              </Modal.Body>
-                            </Modal>
-
-                            <Button
-                              onClick={(e) =>
-                                handleImgShow(
-                                  ele?.agency_details?.document_details
-                                    ?.pan_card_document
-                                )
-                              }
-                            >
+                            {ele?.agency_details?.document_details?.pan_card_document ? (
                               <img
                                 style={{
-                                  width: "112px",
-                                  height: "65px",
+                                  width: "100%",
+                                  height: "100%",
+                                  objectFit: "cover",
+                                  borderRadius: "10%",
                                 }}
-                                // src={
-                                //   ele.agency_details.document_details
-                                //     .pan_card_document
-                                // }
-                                alt={index}
+                                src={ele.agency_details.document_details.pan_card_document}
+                                alt="PAN Card Document"
                               />
-                            </Button>
+                            ) : (
+                              <img
+                                src="https://www.sarojhospital.com/images/testimonials/dummy-profile.png"
+                                alt="Dummy"
+                                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                              />
+                            )}
                           </StyledTableCell>
+
+
+
                           <StyledTableCell scope="row">
                             {ele.personal_details?.first_name || "No Data"}
                           </StyledTableCell>

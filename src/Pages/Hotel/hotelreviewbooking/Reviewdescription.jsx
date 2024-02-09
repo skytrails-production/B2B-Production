@@ -28,6 +28,7 @@ import Custombutton from "../../../Custombuttom/Button";
 import HotelLoading from "../hotelLoading/HotelLoading";
 import Swal from "sweetalert2";
 import { validatePhoneNumber, validateEmail, validateName, validatePAN } from "../../../utils/validation"
+import {swalModal} from "../../../../src/utils/swal"
 const styleLoader = {
   position: "absolute",
   top: "50%",
@@ -62,27 +63,28 @@ const Flightdetail = () => {
   // console.log("State Data", reducerState);
   useEffect(() => {
     if (reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult?.Error?.ErrorCode !== 0) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops! Something went wrong",
-        text: reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult?.Error?.ErrorMessage,
+      swalModal('flight',"Something went wrong with your flight booking. Please check your details and try again.",false)
+      // Swal.fire({
+      //   icon: "error",
+      //   title: "Oops! Something went wrong",
+      //   text: reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult?.Error?.ErrorMessage,
 
-        timer: 3000,
-        showClass: {
-          popup: `
-            animate__animated
-            animate__fadeInUp
-            animate__faster
-          `,
-        },
-        hideClass: {
-          popup: `
-            animate__animated
-            animate__fadeOutDown
-            animate__faster
-          `,
-        },
-      });
+      //   timer: 3000,
+      //   showClass: {
+      //     popup: `
+      //       animate__animated
+      //       animate__fadeInUp
+      //       animate__faster
+      //     `,
+      //   },
+      //   hideClass: {
+      //     popup: `
+      //       animate__animated
+      //       animate__fadeOutDown
+      //       animate__faster
+      //     `,
+      //   },
+      // });
       navigate("/");
     }
   }, [])
