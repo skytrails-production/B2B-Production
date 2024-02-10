@@ -73,9 +73,10 @@ const FlightReturnInternational = () => {
     }
   };
   const handleFareRuleAndQuote = (item, i) => {
-    sessionStorage.setItem("flightDetailsONGo", JSON.stringify(result[i][0]));
-    sessionStorage.setItem("flightDetailsIncome", JSON.stringify(result[i][1]));
-    sessionStorage.setItem("flightDetailsIncome", JSON.stringify(result[i][1]));
+    console.warn(item,"item?.ResultIndex",result)
+    sessionStorage.setItem("flightDetailsONGo", JSON.stringify(result[0][i]));
+    sessionStorage.setItem("flightDetailsIncome", JSON.stringify(result[0][i]));
+    // sessionStorage.setItem("flightDetailsIncome", JSON.stringify(result[i][1]));
 
 
     const payload = {

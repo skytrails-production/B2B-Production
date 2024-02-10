@@ -444,17 +444,13 @@ export default function Tables() {
 
 
                           <StyledTableCell scope="row">
-                            {ele.personal_details?.first_name || "No Data"}
+                            {ele.personal_details?.first_name ? ele.personal_details.first_name : "No Data"}
                           </StyledTableCell>
-                          <StyledTableCell
-                            align="right"
 
-                          >
-                            {ele.agency_details.agency_name &&
-                              ele.agency_details.agency_name
-                              ? ele.agency_details.agency_name
-                              : "No Data"}
+                          <StyledTableCell align="right">
+                            {ele.agency_details?.agency_name || "No Data"}
                           </StyledTableCell>
+
                           <StyledTableCell
                             align="right"
 
@@ -474,7 +470,10 @@ export default function Tables() {
                             align="right"
 
                           >
-                            {ele.agency_gst_details?.email || "No Data"}
+                            <StyledTableCell align="right">
+                              {ele.agency_gst_details?.email ? ele.agency_gst_details.email : "No Data"}
+                            </StyledTableCell>
+
                           </StyledTableCell>
 
                           <StyledTableCell

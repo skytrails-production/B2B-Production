@@ -1,8 +1,8 @@
 import swal from "sweetalert2"
 import FLIGHT from "../Images/FlightImages/flightnoresult.svg"
-import BUS from "../Images/FlightImages/flightnoresult.svg"
-import HOTEL from "../Images/FlightImages/flightnoresult.svg"
-import PACKAGE from "../Images/FlightImages/flightnoresult.svg"
+import BUS from "../Images/bus-not-found.png"
+import HOTEL from "../Images/hotel-not-found.png"
+import PACKAGE from "../Images/no-content.png"
 import PY from "../Images/FlightImages/Cancelled event-pana (1).svg"
 // import { Flight } from "@mui/icons-material"
 export const swalModal = (type, message, payment) => {

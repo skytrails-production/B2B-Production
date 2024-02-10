@@ -8,7 +8,7 @@ import {
     Button,
 } from "@mui/material";
 import "./packageUpdate.css";
-import { DataGrid,GridToolbar } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import axios from "axios";
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -230,7 +230,7 @@ function PackageDetails() {
         {
             field: "pakage_title",
             headerName: "Package Title",
-            width:350,
+            width: 350,
             headerClassName: 'custom-header',
             valueGetter: (params) => params.row.pakage_title || 'N/A'
         },
@@ -239,17 +239,39 @@ function PackageDetails() {
             field: "pakage_amount.amount",
             headerName: "Package Amount",
             headerClassName: 'custom-header',
-            width:150,
+            width: 150,
             valueGetter: (params) => params.row.pakage_amount?.amount || 'N/A'
         },
 
-        { field: "edit", headerName: "Edit", headerClassName: 'custom-header',  width:150, renderCell: (params) => <Button style={{ color: "#21325D" }} onClick={() => handleOpenEdit(params.row)}>Edit</Button> },
-        { field: "delete", headerName: "Delete", headerClassName: 'custom-header',  width:150, renderCell: (params) => <Button style={{ color: "#21325D" }} onClick={() => handleOpen(params.row)}>Delete</Button> },
+        { field: "edit", headerName: "Edit", headerClassName: 'custom-header', width: 150, renderCell: (params) => <Button style={{ color: "#21325D" }} onClick={() => handleOpenEdit(params.row)}>Edit</Button> },
+        // { field: "delete", headerName: "Delete", headerClassName: 'custom-header',  width:150, renderCell: (params) => <Button style={{ color: "#21325D" }} onClick={() => handleOpen(params.row)}>Delete</Button> },
+        {
+            field: "delete",
+            headerName: "Delete",
+            headerClassName: 'custom-header',
+            width: 150,
+            renderCell: (params) => {
+                // Check if the package is approved (is_active === 1)
+                const isApproved = params.row.is_active === 1;
+
+                // If approved, disable the delete button, otherwise, enable it
+                return (
+                    <Button
+                        style={{ color: "#21325D" }}
+                        onClick={() => handleOpen(params.row)}
+                        disabled={isApproved}
+                    >
+                        Delete
+                    </Button>
+                );
+            }
+        },
+
         {
             field: "status",
             headerName: "Status",
             headerClassName: 'custom-header',
-            width:150,
+            width: 150,
             renderCell: (params) => (
                 params.row.is_active === 1 ? (
                     <span style={{ color: 'green' }}>Approved</span>
@@ -258,7 +280,7 @@ function PackageDetails() {
                 )
             )
         },
-        { field: "view", headerName: "View", headerClassName: 'custom-header',  width:150, renderCell: (params) => <Button style={{ color: "#21325D" }} onClick={() => handleOpenView(params.row)}>View</Button> },
+        { field: "view", headerName: "View", headerClassName: 'custom-header', width: 150, renderCell: (params) => <Button style={{ color: "#21325D" }} onClick={() => handleOpenView(params.row)}>View</Button> },
     ];
 
     return (
@@ -279,11 +301,11 @@ function PackageDetails() {
                     getRowId={(row) => row._id}
                     components={{
                         Toolbar: () => (
-                          <div style={{ marginTop: '10px' }}>
-                            <GridToolbar />
-                          </div>
+                            <div style={{ marginTop: '10px' }}>
+                                <GridToolbar />
+                            </div>
                         ),
-                      }}
+                    }}
                 />
 
 

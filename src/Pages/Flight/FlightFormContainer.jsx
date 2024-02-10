@@ -101,10 +101,10 @@ export default function StyledTabsExample() {
         aria-label="styled tabs example"
         style={{ width: "100%", margin: "auto", marginTop: "-7px" }}
       >
-        <StyledTab label="One Way" {...a11yProps(0)} className="btn" />
-        <StyledTab label="Return" {...a11yProps(1)} className="btn" />
-        <StyledTab label="Fixed Departure" {...a11yProps(2)} className="btn" />
-        <StyledTab label="Dummy Pnr" {...a11yProps(3)} className="btn" />
+        <StyledTab style={{flex:1}} label="One Way" {...a11yProps(0)} className="btn" />
+        <StyledTab style={{flex:1}} label="Return" {...a11yProps(1)} className="btn" />
+        <StyledTab style={{flex:1}} label="Fixed Departure" {...a11yProps(2)} className="btn" />
+        <StyledTab style={{flex:1}} label="Dummy Pnr" {...a11yProps(3)} className="btn" />
         {/* <StyledTab label="Calendar Fare" {...a11yProps(4)} />
         <StyledTab label="Advance Search" {...a11yProps(5)} /> */}
       </StyledTabs>

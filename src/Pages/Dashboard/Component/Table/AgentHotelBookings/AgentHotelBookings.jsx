@@ -97,7 +97,7 @@ const AllBusBooking = () => {
             rows={busBookings}
             columns={columns}
             pageSize={pageSize}
-            rowsPerPageOptions={[pageSize]}
+            rowsPerPageOptions={[10,25,100]}
             pagination
             getRowId={(row) => row._id}
             components={{

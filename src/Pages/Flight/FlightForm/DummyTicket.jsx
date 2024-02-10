@@ -149,11 +149,28 @@ const DummyTicketBooking = () => {
   }, [toQuery]);
 
   // Get the current date in the format "YYYY-MM-DD"
+  function addDaysToDate(daysToAdd) {
+    // Get the current date
+    var currentDate = new Date();
+
+    // Add specified number of days to the current date
+    currentDate.setDate(currentDate.getDate() + daysToAdd);
+
+    // Extract year, month, and day components
+    var year = currentDate.getFullYear();
+    var month = ('0' + (currentDate.getMonth() + 1)).slice(-2); // Adding 1 because January is 0
+    var day = ('0' + currentDate.getDate()).slice(-2);
+
+    // Construct the date string in "yyyy-mm-dd" format
+    var dateString = year + '-' + month + '-' + day;
+
+    return dateString;
+}
   useEffect(() => {
-    const currentDate = new Date().toISOString().split("T")[0];
-    const today = new Date().toISOString().split("T")[0];
-    inputRef.current.value = today;
-    inputRef.current.min = currentDate;
+    // const currentDate = new Date().toISOString().split("T")[0];
+    // const today = new Date().toISOString().split("T")[0];
+    inputRef.current.value = addDaysToDate(3);
+    inputRef.current.min = addDaysToDate(3);
   }, []);
 
   useEffect(() => {

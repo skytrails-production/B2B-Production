@@ -11,7 +11,7 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { apiURL } from "../../../../../Constants/constant";
-
+import { Alert } from "@mui/material";
 const AllWebAdvertisement = () => {
   const [advertisement, setAdvertisement] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -56,31 +56,31 @@ const AllWebAdvertisement = () => {
   };
 
   const columns = [
-    { field: "title", headerName: "Title", width:220,},
-    { 
-      field: "startDate", 
-      headerName: "Start Date", 
-      width:220,
+    { field: "title", headerName: "Title", width: 220, },
+    {
+      field: "startDate",
+      headerName: "Start Date",
+      width: 220,
       renderCell: (params) => (
         <span>{new Date(params.value).toLocaleString()}</span>
       ),
     },
-    { 
-      field: "endDate", 
-      headerName: "End Date", 
-      width:220,
+    {
+      field: "endDate",
+      headerName: "End Date",
+      width: 220,
       renderCell: (params) => (
         <span>{new Date(params.value).toLocaleString()}</span>
       ),
     },
-    { field: "remainingDays", headerName: "Remaining Days", width:220,},
-    { field: "status", headerName: "Status", width:220,},
-    { field: "addType", headerName: "AddType", width:220,},
-    { field: "approvalStatus", headerName: "Approval Status", width:220,},
+    { field: "remainingDays", headerName: "Remaining Days", width: 220, },
+    { field: "status", headerName: "Status", width: 220, },
+    { field: "addType", headerName: "AddType", width: 220, },
+    { field: "approvalStatus", headerName: "Approval Status", width: 220, },
     {
       field: "image",
       headerName: "Image",
-      width:150,
+      width: 150,
       renderCell: (params) => (
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
           <div style={{ width: "50px", height: "50px", borderRadius: "50%", overflow: "hidden" }}>
@@ -93,7 +93,7 @@ const AllWebAdvertisement = () => {
         </div>
       ),
     },
-    
+
   ];
 
   return (
@@ -117,27 +117,37 @@ const AllWebAdvertisement = () => {
         </Typography>
       </div>
       <div style={{ width: "100%" }}>
-        <DataGrid
-          rows={advertisement}
-          columns={columns}
-          pageSize={pageSize}
-          pagination
-          page={currentPage}
-          onPageChange={handlePageChange}
-          rowsPerPageOptions={[pageSize]}
-          getRowId={(row) => row._id}
-          components={{
-            Toolbar: () => (
-              <div style={{ marginTop: '10px' }}>
-                <GridToolbar />
-              </div>
-            ),
-          }}
+        <div style={{ width: "100%" }}>
+          {advertisement.length === 0 ? (
+            <div style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", height: "100px" }}>
+            <Alert severity="info" variant="outlined">
+              Data is not available
+            </Alert>
+          </div>
+          ) : (
+            <DataGrid
+              rows={advertisement}
+              columns={columns}
+              pageSize={pageSize}
+              pagination
+              page={currentPage}
+              onPageChange={handlePageChange}
+              rowsPerPageOptions={[pageSize]}
+              getRowId={(row) => row._id}
+              components={{
+                Toolbar: () => (
+                  <div style={{ marginTop: '10px' }}>
+                    <GridToolbar />
+                  </div>
+                ),
+              }}
+            />
+          )}
+        </div>
 
-        />
       </div>
       <Stack spacing={2} direction="row" justifyContent="center" alignItems="center">
-        <Pagination    color="primary" count={totalPages} page={currentPage} onChange={(event, page) => handlePageChange(page)} />
+        <Pagination color="primary" count={totalPages} page={currentPage} onChange={(event, page) => handlePageChange(page)} />
       </Stack>
     </Paper>
   );
