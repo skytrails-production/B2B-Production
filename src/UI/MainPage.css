@@ -39,7 +39,7 @@
 
 .mainBox::before {
   content: "";
-  /* background-image: url("../Images/mainImage.png"); */
+
   /* background-repeat: no-repeat; */
   /* background-size: cover; */
   /* opacity: 0.8; */

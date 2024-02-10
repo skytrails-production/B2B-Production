@@ -16,7 +16,6 @@ import unitednations from "../../../Images/unitednations.png";
 import addgroup from "../../../Images/addgroup.png";
 import review from "../../../Images/review.png";
 import Rating from "./Rating";
-import mainImage from "../../../Images/mainImage.png";
 import starsvg from "../../../Images/star.svg"
 import starBlank from "../../../Images/starBlank.svg"
 import Link from "@mui/material/Link";

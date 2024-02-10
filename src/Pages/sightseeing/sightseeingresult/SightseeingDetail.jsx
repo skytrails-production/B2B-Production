@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, Box, Typography, Button, Link } from "@mui/material";
-import mainImage from "../../../Images/mainImage.png";
+
 import FlightIcon from "@mui/icons-material/Flight";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 import RowingIcon from "@mui/icons-material/Rowing";
@@ -22,7 +22,7 @@ const SightseeingDetail = () => {
           <Grid md={7} sm={6}>
             <Box display="flex" alignItems="center">
               <Box sx={{ width: "20%", height: "30%" }}>
-                <img src={mainImage} className="flight_img" />
+                <img src="hhh" className="flight_img" />
               </Box>
               <Box px={1}>
                 <Typography className="hotel_name">
@@ -76,7 +76,7 @@ const SightseeingDetail = () => {
           <Grid md={7} sm={6}>
             <Box display="flex" alignItems="center">
               <Box sx={{ width: "20%", height: "30%" }}>
-                <img src={mainImage} className="flight_img" />
+                <img src="" className="flight_img" />
               </Box>
               <Box px={1}>
                 <Typography className="hotel_name">

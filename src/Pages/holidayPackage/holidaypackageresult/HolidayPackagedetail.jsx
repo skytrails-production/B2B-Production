@@ -1,6 +1,6 @@
 // import React from "react";
 // import { Grid, Box, Typography, Button } from "@mui/material";
-// import mainImage from "../../../Images/mainImage.png";
+
 // import FlightIcon from "@mui/icons-material/Flight";
 // import LocationCityIcon from '@mui/icons-material/LocationCity';
 // import RowingIcon from '@mui/icons-material/Rowing';

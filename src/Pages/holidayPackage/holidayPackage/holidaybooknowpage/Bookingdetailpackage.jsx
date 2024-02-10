@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Typography, Button, Grid } from "@mui/material";
-import mainImage from "../../../Images/mainImage.png";
 import FlightIcon from "@mui/icons-material/Flight";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 import RowingIcon from "@mui/icons-material/Rowing";
@@ -23,7 +22,7 @@ const Bookingdetailpackage = () => {
           <Grid md={7} sm={6}>
             <Box display="flex" alignItems="center">
               <Box sx={{ width: "20%", height: "30%" }}>
-                <img src={mainImage} className="flight_img" />
+                <img src="skyTrails" alt="skyTrails" className="flight_img" />
               </Box>
               <Box px={1}>
                 <Typography className="hotel_name">
@@ -179,7 +178,7 @@ const Bookingdetailpackage = () => {
             <Grid md={6}>
               <Box display="flex" ml={2}>
                 <Box sx={{ width: "20%", height: "30%" }}>
-                  <img src={mainImage} className="flight_img" />
+                  <img src="skyTrails" alt="skyTrails" className="flight_img" />
                 </Box>
                 <Box px={2}>
                   <Typography color="#252525" fontSize="12px" fontWeight="bold">
@@ -244,7 +243,7 @@ const Bookingdetailpackage = () => {
             <Grid md={6}>
               <Box display="flex" ml={2}>
                 <Box sx={{ width: "20%", height: "30%" }}>
-                  <img src={mainImage} className="flight_img" />
+                  <img src="skyTrails" alt="skyTrails" className="flight_img" />
                 </Box>
                 <Box px={2}>
                   <Typography color="#252525" fontSize="12px" fontWeight="bold">
@@ -368,7 +367,7 @@ const Bookingdetailpackage = () => {
             <Grid md={6}>
               <Box display="flex" ml={2}>
                 <Box sx={{ width: "20%", height: "30%" }}>
-                  <img src={mainImage} className="flight_img" />
+                  <img src="skyTrails" alt="skyTrails" className="flight_img" />
                 </Box>
                 <Box px={2}>
                   <Typography color="#252525" fontSize="12px" fontWeight="bold">

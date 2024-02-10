@@ -6,7 +6,6 @@ import Input from "@mui/material/Input";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import FlightLandIcon from "@mui/icons-material/FlightLand";
 import EngineeringIcon from "@mui/icons-material/Engineering";
-import mainImage from "../../../Images/mainImage.png";
 import HolidayRating from "../holidaypackageresult/HolidayRating";
 import FileDownloadDoneIcon from "@mui/icons-material/FileDownloadDone";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
@@ -346,7 +345,7 @@ const HolidayconfirmationDetail = () => {
               <Grid item lg={6}>
                 <Box display="flex" ml={2}>
                   <Box sx={{ width: "20%", height: "30%" }}>
-                    <img src={mainImage} className="flight_img" />
+                    <img src="skyTrails" alt="skyTrails" className="flight_img" />
                   </Box>
                   <Box px={2}>
                     <Typography

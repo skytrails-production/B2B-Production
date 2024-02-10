@@ -21,7 +21,6 @@ import NativeSelect from "@mui/material/NativeSelect";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import FlightLandIcon from "@mui/icons-material/FlightLand";
 import EngineeringIcon from "@mui/icons-material/Engineering";
-import mainImage from "../../../Images/mainImage.png";
 import HolidayRating from "../holidaypackageresult/HolidayRating";
 import FileDownloadDoneIcon from "@mui/icons-material/FileDownloadDone";
 import FastfoodIcon from "@mui/icons-material/Fastfood";

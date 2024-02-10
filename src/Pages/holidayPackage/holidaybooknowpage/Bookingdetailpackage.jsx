@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Box, Typography, Button, Grid } from "@mui/material";
-import mainImage from "../../../Images/mainImage.png";
 import goa from "../../../Images/goa.jpg"
 import FlightIcon from "@mui/icons-material/Flight";
 import LocationCityIcon from "@mui/icons-material/LocationCity";

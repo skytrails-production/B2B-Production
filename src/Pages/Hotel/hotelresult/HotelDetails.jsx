@@ -1,7 +1,6 @@
 import React from "react";
 import { Grid, Box, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import mainImage from "../../../Images/mainImage.png";
 import Link from "@mui/material/Link";
 import Rating from "./Rating";
 // import Fairrule from './Fairrule';
@@ -24,7 +23,7 @@ const Hoteldetail = () => {
         <Grid md={7} sm={6}>
           <Box display="flex">
             <Box sx={{ width: "20%", height: "30%" }}>
-              <img src={mainImage} className="flight_img" />
+              <img src="" className="flight_img" />
             </Box>
             <Box px={1}>
               <Typography className="hotel_name">
