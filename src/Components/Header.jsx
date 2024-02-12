@@ -1,35 +1,25 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import "./Header.css";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
-import { Box, Button, Typography, Paper, makeStyles } from "@mui/material";
+import { Box, Button, Typography, Paper } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import STLOGO from "../Images/ST-Main-Logo.png";
-import { useDispatch, useSelector, useReducer } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logoutAction } from "../Redux/Auth/logIn/actionLogin";
 import Modal from "@mui/material/Modal";
 import CloseIcon from "@mui/icons-material/Close";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import axios from "axios";
-import logout from "../Images/FlightImages/logout.jpeg";
-import login from "../Images/login.png";
-import { motion } from "framer-motion";
 import color from "../../src/color/color.js";
 import {
   FormControl,
-  FormLabel,
-  Input,
-  FormErrorMessage,
-  FormHelperText,
+  FormLabel
 } from "@chakra-ui/react";
 import { apiURL } from "../Constants/constant.js";
-import { clearUserReducer } from "../Redux/Auth/UserDataById/actionUserData.js";
-import { CLEAR_BUS_SEARCH_REDUCER } from "../Redux/busSearch/actionType.js";
 const style = {
   position: "absolute",
   top: "50%",
@@ -52,13 +42,9 @@ const Header = () => {
   const handleCloseModal = () => setOpenModal(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const openLoginpage = () => {
-    navigate("/Registration");
-  };
+ 
 
-  const openRegistration = () => {
-    navigate("/Login");
-  };
+  
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -73,10 +59,7 @@ const Header = () => {
     navigate("/Login");
     
   };
-  // Edit package
-  const editPackage = () => {
-    navigate("/EditHolidayPackage");
-  };
+ 
 
   useEffect(() => {
     const updateSrollYPosition = () => {
@@ -647,9 +630,9 @@ const Header = () => {
                     Cancel
                   </Button>
                 </Box>
-                <span style={{ color: "red" }}>
+                {/* <span style={{ color: "red" }}>
                   {reducerState?.logIn?.loginData?.data?.data?.id}
-                </span>
+                </span> */}
               </form>
             </Paper>
           </Typography>

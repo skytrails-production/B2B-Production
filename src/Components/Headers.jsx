@@ -1,51 +1,37 @@
 import STLOGO from "../Images/ST-Main-Logo.png";
 import * as React from "react";
 import { useState, useEffect } from "react";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import "./Header.css";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
 import Swal from "sweetalert2";
-import {swalModal} from "../utils/swal.js"
-import { Box, Button, Typography, Paper, makeStyles } from "@mui/material";
+import { Box, Button, Typography, Paper } from "@mui/material";
 import { useNavigate, Link } from "react-router-dom";
-import { useDispatch, useSelector, useReducer } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logoutAction } from "../Redux/Auth/logIn/actionLogin";
 import Modal from "@mui/material/Modal";
 import CloseIcon from "@mui/icons-material/Close";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import axios from "axios";
-import logout from "../Images/FlightImages/logout.jpeg";
-import login from "../Images/login.png";
-import { motion } from "framer-motion";
 import color from "../../src/color/color.js";
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 import {
-  clearUserReducer,
+  
   getUserDataAction,
 } from "../Redux/Auth/UserDataById/actionUserData";
 import {
   FormControl,
   FormLabel,
-  Input,
-  FormErrorMessage,
-  FormHelperText,
+  
 } from "@chakra-ui/react";
 import { useLocation } from 'react-router-dom';
-import { balanceSubtractRequest } from "../Redux/Auth/balaceSubtract/actionBalnceSubtract.js";
 import "./Headers.css"
 import { apiURL } from "../Constants/constant.js";
-import { CLEAR_BUS_SEARCH_REDUCER } from "../Redux/busSearch/actionType.js";
-const style = {
-  // border: "10px solid #000",
-  // boxShadow: 24,
-  p: 4,
-};
+
 function Headers() {
   const [scrollYvalue, setScrollYValue] = useState(0);
   const reducerState = useSelector((state) => state);
@@ -57,14 +43,9 @@ function Headers() {
   const handleCloseModal = () => setOpenModal(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const openLoginpage = () => {
-    navigate("/Registration");
-  };
+ 
 
-  const openRegistration = () => {
-    navigate("/Login");
-  };
-
+ 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -77,15 +58,7 @@ function Headers() {
     dispatch(logoutAction());
     navigate("/Login");
   };
-  // Edit package
-  const editPackage = () => {
-    navigate("/EditHolidayPackage");
-  };
-  // const isAdminPath = pathname==="/admin/addSubAdmin";
-
-  // if (isAdminPath) {
-  //   return null;
-  // }
+  
 
 
   useEffect(() => {
@@ -657,9 +630,9 @@ const isValidMobileNumber = (mobileNumber) => {
                     Cancel
                   </Button>
                 </Box>
-                <span style={{ color: "red" }}>
+                {/* <span style={{ color: "red" }}>
                   {reducerState?.logIn?.loginData?.data?.data?.id}
-                </span>
+                </span> */}
               </form>
             </Paper>
             </Box>
