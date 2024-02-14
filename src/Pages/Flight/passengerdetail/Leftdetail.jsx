@@ -519,7 +519,7 @@ const Leftdetail = () => {
 
 
 
-console.log(fareQuoteData?.Segments[0],'length')
+// console.log(fareQuoteData?.Segments[0],'length')
 
   // const time = `${Math.floor(fareQuoteData?.Segments?.[0]?.[0]?.Duration / 60)}hr ${fareQuoteData?.Segments?.[0]?.[0]?.Duration % 60
   //   }min`;

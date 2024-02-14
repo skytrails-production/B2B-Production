@@ -217,7 +217,7 @@ const Flightdetail = () => {
   const cancellationFormattedEndingDate = moment(cancellationEndingDate).format(
     "MMMM DD, YYYY"
   );
-  console.log("Hotel information", reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult?.HotelDetails?.HotelPolicy);
+  // console.log("Hotel information", reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult?.HotelDetails?.HotelPolicy);
   const cancellationCharge =
     hotelCancellationPolicies?.CancellationPolicies[0]?.Charge;
 

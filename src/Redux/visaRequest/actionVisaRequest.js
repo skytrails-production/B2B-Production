@@ -8,7 +8,7 @@ export const createVisaRequest = (user) => {
 };
 
 export const createVisaAction = (user) => {
-  console.log("data of",user);
+  // console.log("data of",user);
   if (user) {
     return {
       type: types.VISA_REQUEST,

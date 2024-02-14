@@ -677,8 +677,8 @@ const EditHolidayPackage = () => {
   }, []);
 
   const storedData = selectedPackage?.insclusions;
-  console.log(selectedPackage?.insclusions, "storedData")
-  console.log(checkedItem, "checked item")
+  // console.log(selectedPackage?.insclusions, "storedData")
+  // console.log(checkedItem, "checked item")
 
   const handleChange = (event) => {
     const { name, checked } = event.target;
@@ -908,7 +908,7 @@ const EditHolidayPackage = () => {
         });
 
         // Handle the response
-        console.log(res.data);
+        // console.log(res.data);
       } catch (error) {
         console.error('Error editing package', error);
       }

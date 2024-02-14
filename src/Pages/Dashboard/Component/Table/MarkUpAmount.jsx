@@ -46,7 +46,7 @@ const MarkUpAmount = () => {
         dataToUpdate
       );
 
-      console.log("Update successful:", response.data);
+      // console.log("Update successful:", response.data);
 
       setEditMode(false);
       setEditedMarkup({});

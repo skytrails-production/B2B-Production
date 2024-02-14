@@ -39,7 +39,7 @@ const FlightReviewbooking = () => {
   const bookingDataNonLccReturn =
     reducerState?.flightBook?.flightBookDataGDSReturn?.data?.data?.Response
       ?.Response;
-  console.log(bookingDataNonLcc, "bookingDataNonLcc");
+  // console.log(bookingDataNonLcc, "bookingDataNonLcc");
   const addBookingDetailsReturn = () => {
     if (bookingDataLccReturn) {
       // console.log("lccCheck");

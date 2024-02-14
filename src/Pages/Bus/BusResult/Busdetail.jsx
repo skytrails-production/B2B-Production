@@ -73,7 +73,7 @@ const Busdetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const reducerState = useSelector((state) => state);
-  console.log(reducerState)
+  // console.log(reducerState)
   const busFullData =
     reducerState?.getBusResult?.busResult?.data?.data?.BusSearchResult;
   // console.log(busFullData);

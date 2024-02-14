@@ -29,7 +29,7 @@ function* bookRequest(action) {
 }
 function* bookRequestReturn(action) {
   try {
-    console.log("flightReturnBookCheck")
+    // console.log("flightReturnBookCheck");
     const user = yield call(userApi.flightGetTicketLccReturn, action.payload);
     yield put(fetchBookReturn(user));
   } catch (error) {

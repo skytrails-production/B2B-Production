@@ -22,7 +22,7 @@ function SingleDataReturn(props) {
   const IsLCC = props.IsLCC;
 
 
-  console.log("flight single", props);
+  // console.log("flight single", props);
   
 
   const results =

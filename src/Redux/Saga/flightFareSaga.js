@@ -16,7 +16,7 @@ import {
 
 function* ruleRequest(action) {
   try {
-    console.log("Inside Rule Saga");
+    // console.log("Inside Rule Saga");
     const user = yield call(userApi.flightRuleSearch, action.payload);
     yield put(fetchRule(user));
   } catch (error) {

@@ -40,7 +40,7 @@ function PackageDetails() {
                 const response = await axios.get(
                     `${apiURL.baseURL}/skyTrails/international/getAllAdminPackage`
                 );
-                console.log(response.data, "----------------------");
+                // console.log(response.data, "----------------------");
                 setHolidayPackage(response.data.data.pakage);
             } catch (error) {
                 console.error("Error fetching holiday packages:", error);

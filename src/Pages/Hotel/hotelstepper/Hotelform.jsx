@@ -308,7 +308,7 @@ const HotelForm = () => {
       // Update the checkOutDeparture
       console.warn(values.checkOutDeparture - date, "values.checkOutDeparture<values.departure")
     }
-    console.log(values, "values")
+    // console.log(values, "values");
   };
 
   const handleEndDateChange = (date) => {

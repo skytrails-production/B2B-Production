@@ -28,7 +28,7 @@ const MyPackages = () => {
 
       if (response?.data) {
         setData(response?.data.data);
-        console.log("Data fetched:", response.data.data);
+        // console.log("Data fetched:", response.data.data);
       } else {
         console.error("No data received.");
       }
@@ -49,7 +49,7 @@ const MyPackages = () => {
 
       if (response?.data) {
         setLeadsData(response?.data.data);
-        console.log("Leads Data fetched:", response.data.data);
+        // console.log("Leads Data fetched:", response.data.data);
       } else {
         console.error("No data received.");
       }

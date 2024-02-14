@@ -34,7 +34,7 @@ const AllWebAdvertisement = () => {
           }
         );
         setAdvertisement(response.data.result.docs);
-        console.log(response.data.result.docs);
+        // console.log(response.data.result.docs);
         setTotalPages(response.data.result.totalPages);
         setLoading(false);
       } catch (error) {

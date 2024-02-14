@@ -158,7 +158,7 @@ const BusPassengerDetail = () => {
   const selectedBus = busFullData?.BusResults?.find((bus) => bus?.ResultIndex === resultIndex);
   
   const cancellationPolicy = selectedBus?.CancellationPolicies;
-  console.log(selectedBus, "selectedBus")
+  // console.log(selectedBus, "selectedBus")
 
   const departureDate = dayjs(selectedBus?.DepartureTime);
   const arrivalDate = dayjs(selectedBus?.ArrivalTime);

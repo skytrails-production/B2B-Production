@@ -67,7 +67,7 @@ const ViewPackage = () => {
     const viewDataSession = sessionStorage.getItem("selectedPackage");
     const viewData = JSON.parse(viewDataSession)
 
-    console.log(viewData, "view data session");
+    // console.log(viewData, "view data session");
     return (
         <>
             <div className="col-lg-12">
