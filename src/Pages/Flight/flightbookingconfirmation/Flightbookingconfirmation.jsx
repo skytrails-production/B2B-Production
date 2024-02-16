@@ -52,7 +52,7 @@ const FlightReviewbooking = () => {
         destination: bookingDataLcc?.FlightItinerary?.Destination,
         paymentStatus: "success",
         totalAmount:
-          bookingDataLcc?.FlightItinerary?.InvoiceAmount + markUpamount,
+          bookingDataLcc?.FlightItinerary?.Fare?.PublishedFare?.toFixed() + markUpamount,
         airlineDetails: bookingDataLcc?.FlightItinerary?.Segments.map(
           (item, index) => {
             return {
@@ -116,7 +116,7 @@ const FlightReviewbooking = () => {
         destination: bookingDataNonLcc?.FlightItinerary?.Destination,
         paymentStatus: "success",
         totalAmount:
-          bookingDataNonLcc?.FlightItinerary?.InvoiceAmount + markUpamount,
+          bookingDataNonLcc?.FlightItinerary?.Fare?.PublishedFare?.toFixed() + markUpamount,
         airlineDetails: bookingDataNonLcc?.FlightItinerary?.Segments.map(
           (item, index) => {
             return {
@@ -184,7 +184,7 @@ const FlightReviewbooking = () => {
         destination: bookingDataLcc?.FlightItinerary?.Destination,
         paymentStatus: "success",
         totalAmount:
-          bookingDataLcc?.FlightItinerary?.InvoiceAmount + markUpamount,
+          bookingDataLcc?.FlightItinerary?.Fare?.PublishedFare?.toFixed() + markUpamount,
         airlineDetails: bookingDataLcc?.FlightItinerary?.Segments.map(
           (item, index) => {
             return {

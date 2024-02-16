@@ -48,7 +48,7 @@ const FlightReturnBookingConfirmation = () => {
          destination: bookingDataLccReturn?.FlightItinerary?.Destination,
          paymentStatus: "success",
          totalAmount:
-           bookingDataLccReturn?.FlightItinerary?.InvoiceAmount + markUpamount,
+           bookingDataLccReturn?.FlightItinerary?.Fare?.PublishedFare?.toFixed() + markUpamount,
          airlineDetails: bookingDataLccReturn?.FlightItinerary?.Segments.map(
            (item, index) => {
              return {
@@ -113,7 +113,7 @@ const FlightReturnBookingConfirmation = () => {
          destination: bookingDataNonLccReturn?.FlightItinerary?.Destination,
          paymentStatus: "success",
          totalAmount:
-           bookingDataNonLccReturn?.FlightItinerary?.InvoiceAmount +
+           bookingDataNonLccReturn?.FlightItinerary?.Fare?.PublishedFare?.toFixed() +
            markUpamount,
          airlineDetails: bookingDataNonLccReturn?.FlightItinerary?.Segments.map(
            (item, index) => {
@@ -183,7 +183,7 @@ const FlightReturnBookingConfirmation = () => {
            destination: bookingDataLcc?.FlightItinerary?.Destination,
            paymentStatus: "success",
            totalAmount:
-             bookingDataLcc?.FlightItinerary?.InvoiceAmount + markUpamount,
+             bookingDataLcc?.FlightItinerary?.Fare?.PublishedFare?.toFixed() + markUpamount,
            airlineDetails: bookingDataLcc?.FlightItinerary?.Segments.map(
              (item, index) => {
                return {
@@ -247,7 +247,7 @@ const FlightReturnBookingConfirmation = () => {
            destination: bookingDataNonLcc?.FlightItinerary?.Destination,
            paymentStatus: "success",
            totalAmount:
-             bookingDataNonLcc?.FlightItinerary?.InvoiceAmount + markUpamount,
+             bookingDataNonLcc?.FlightItinerary?.Fare?.PublishedFare?.toFixed() + markUpamount,
            airlineDetails: bookingDataNonLcc?.FlightItinerary?.Segments.map(
              (item, index) => {
                return {
