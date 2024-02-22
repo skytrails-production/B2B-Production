@@ -5,6 +5,7 @@ import { Grid, Box, Typography, Button } from "@mui/material";
 import { useDispatch, useSelector, useReducer } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import FlightLoader from "../../FlightLoader/FlightLoader";
+// import FlightLoader from "../../FlightLoader/FlightLoader";
 
 const FlightresultOne = ({ sendDataToParent }) => {
   const reducerState = useSelector((state) => state);
@@ -19,7 +20,7 @@ const FlightresultOne = ({ sendDataToParent }) => {
   const [filter, setFilter] = useState(1);
   const setToSearchResults =
     reducerState?.return?.returnData?.data?.data?.Response?.Results;
-  // console.log("+++++++++++++", setToSearchResults[1]);
+  // console.log("---------", setToSearchResults[1]);
   useEffect(() => {
     if (setToSearchResults !== undefined) {
       // navigate("/")

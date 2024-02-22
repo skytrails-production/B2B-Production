@@ -41,7 +41,7 @@ const HotelBooknow = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const reducerState = useSelector((state) => state);
-  // console.log("State Data ????????????????????", reducerState);
+  console.log("State Data ????????????????????", reducerState);
   const [loader, setLoader] = useState(false);
 
   const ResultIndex = sessionStorage.getItem("ResultIndex");

@@ -14,7 +14,7 @@ const CreateMarkup = ({ formId }) => {
   });
   const [error, setError] = useState('');
 
-// console.log("formI=============",formId)
+console.log("formI=============",formId)
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -43,7 +43,7 @@ const CreateMarkup = ({ formId }) => {
 
       if (response.ok) {
         const data = await response.json();
-        // console.log('Markup created successfully:', data);
+        console.log('Markup created successfully:', data);
         alert('Markup created successfully!');
         navigate('/admin/dashboard');
       } else {

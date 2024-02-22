@@ -42,7 +42,7 @@ const FixedDepartureControl = () => {
           `${apiURL.baseURL}/skytrails/api/admin/getAllFixDepartureBooking`
         );
         setData(response.data?.result?.docs || []);
-        // console.log(response.data.result.docs);
+        console.log(response.data.result.docs);
         setTotalPages(response.data?.result?.totalPages || 0);
         setLoading(false);
       } catch (error) {

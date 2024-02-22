@@ -55,27 +55,33 @@ const AllAdvertisementTable = () => {
     setCurrentPage(1); // Reset to the first page when performing a new search
   };
 
-  const renderImageCell = (params) => (
-    <div style={{ display: "flex", alignItems: "center" }}>
-      <img
-        src={params.value}
-        alt={params.row.title}
-        style={{ maxWidth: "70px", maxHeight: "70px", borderRadius: "50%" }}
-      />
-    </div>
-  );
+
 
   const columns = [
-    { field: "title", headerName: "Title", flex: 1 },
-    { field: "content", headerName: "Content", flex: 1 },
-    { field: "startDate", headerName: "Start Date", flex: 1 },
-    { field: "endDate", headerName: "End Date", flex: 1 },
-    { field: "remainingDays", headerName: "Remaining Days", flex: 1 },
+    { field: "title", headerName: "Title", width: 200, },
+    { field: "content", headerName: "Content", width: 200 },
+    {
+      field: "startDate",
+      headerName: "Start Date",
+      width: 200,
+      renderCell: (params) => (
+        <span>{new Date(params.value).toLocaleString()}</span>
+      ),
+    },
+    {
+      field: "endDate",
+      headerName: "End Date",
+      width: 200,
+      renderCell: (params) => (
+        <span>{new Date(params.value).toLocaleString()}</span>
+      ),
+    },
+    { field: "remainingDays", headerName: "Remaining Days", width: 150, },
 
     {
       field: "image",
       headerName: "Image",
-      flex: 1,
+      width: 200,
       renderCell: (params) => (
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
           <div style={{ width: "50px", height: "50px", borderRadius: "50%", overflow: "hidden" }}>
@@ -122,6 +128,7 @@ const AllAdvertisementTable = () => {
             onPageChange={handlePageChange}
             rowsPerPageOptions={[pageSize]}
             getRowId={(row) => row._id}
+            onPointerMove={(event) => console.log('Pointer moved!', event)}
           />
         ) : (
           <div style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", height: "100px" }}>

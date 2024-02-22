@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { apiURL } from '../../../../Constants/constant';
 import { useNavigate } from 'react-router-dom';
-import profilePicUrl from '../../../../Images/logo.jpeg';
 import "./AddAdvertisement.css";
 const CreateWebAdvertisementForm = () => {
   const [formValues, setFormValues] = useState({

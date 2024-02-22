@@ -68,7 +68,7 @@ const AllHotelCancelTickets = () => {
   const handleStatusChange = (id, selectedValue) => {
     setSelectedStatusMap(new Map(selectedStatusMap.set(id, selectedValue)));
 
-    // console.log(`Status changed to ${selectedValue} for row with id ${id}`);
+    console.log(`Status changed to ${selectedValue} for row with id ${id}`);
 
   };
   const calculateStayDuration = (checkInDate, checkOutDate) => {

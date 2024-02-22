@@ -1,0 +1,89 @@
+.img-container {
+    width: 100px; /* Set the width of the image */
+    height: auto; /* Maintain aspect ratio */
+  }
+  
+  .img-container img {
+    max-width: 100%; /* Ensure the image doesn't exceed container width */
+    max-height: 100%; /* Ensure the image doesn't exceed container height */
+    border-radius: 2px;
+  }
+  .pagination-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-self: center;
+    padding:10px;
+  }
+  .page{
+    margin:0;
+    padding-top: 20px;
+  }
+  table{
+    margin-top: 5px;;
+  }
+  button:disabled {
+    color: #ffffff; 
+    background-color: #9797e5; 
+    cursor: not-allowed;
+  }
+  .dropdown {
+    position: relative;
+  }
+  
+  .dropdown option {
+    background-color: #fff;
+    color: #333;
+  }
+  
+  .dropdown option[value="active"] {
+    background-color: #4CAF50;
+    color: #fff;
+  }
+  
+  .dropdown option[value="deactive"] {
+    background-color: #f44336;
+    color: #fff;
+  }
+  
+  .dropdown option[value="update"] {
+    background-color: #008CBA;
+    color: #fff;
+  }
+  
+  .dropdown::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    color: #666;
+    pointer-events: none;
+  }
+  
+  /* .dropdown option:checked {
+    display: none;
+  } */
+  
+  .dropdown:focus {
+    outline: none;
+  }
+  select {
+    padding: 0px !important;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  select option {
+    background-color: #fff;
+    color: #000;
+  }
+  
+  select:hover {
+    cursor: pointer;
+  }
+  
+  option {
+    font-weight: normal;
+  }
+    
+  

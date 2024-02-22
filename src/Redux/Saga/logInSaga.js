@@ -11,7 +11,7 @@ function* userLoginRequest(action) {
   try {
     const user = yield call(userApi.userB2BLogin, action.payload);
     yield put(fetchLogIn(user));
-    // console.log("hshshsh", fetchLogIn(user))
+    console.log("hshshsh", fetchLogIn(user))
   } catch (error) {
     yield put(fetchLogIn({error:true,errormessage:error}));
   }

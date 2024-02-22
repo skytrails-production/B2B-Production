@@ -3,11 +3,11 @@
 } */
 
 .flight_price {
-  color:#21325d;
+  color: #21325d;
   font-size: 16px;
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-weight: 600;
-  word-wrap: break-word
+  word-wrap: break-word;
 }
 
 .flight_price_total {
@@ -15,12 +15,17 @@
   letter-spacing: 0px !important;
   color: #21325df1 !important;
   opacity: 1 !important;
- 
 }
+.clearFilterDivBTN {
 
-
-
-
+  text-align: center;
+  width: 100%;
+  color: #21325d;
+  transition: all .2s;
+}
+.clearFilterDivBTN:hover{
+  font-weight: 900;
+}
 
 .returnheadicons {
   display: flex;
@@ -28,21 +33,46 @@
   align-items: center;
   gap: 16px;
   border-radius: 4px;
-  border: 1px solid #BBB;
-  background: #FFFBFB;
+  border: 1px solid #bbb;
+  background: #fffbfb;
   justify-content: space-between;
 }
+.returnheadicons1 {
+  display: flex;
+  padding: 8px 24px;
+  /* align-items: center; */
+  gap: 16px;
+  border-radius: 4px;
+  border: 1px solid #bbb;
+  background: #fffbfb;
+  margin-top: 15px;
+  padding: 10px 20px;
+  /* justify-content: space-between; */
+}
+.returnheadicons1 .filterNoResultImgDev{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-.returnheadicons>div {
+.returnheadicons > div {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
 }
-
+.filter_noresult_inner_dev {
+  display: flex;
+  flex-direction: column !important;
+  justify-content: start !important;
+  align-items: start !important;
+}
+.filter_noresult_inner_dev1 {
+  font-weight: 700;
+}
 .returnheadicons p {
-  color: #21325D;
-  font-family: 'Montserrat';
+  color: #21325d;
+  font-family: "Montserrat";
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
@@ -50,35 +80,16 @@
 }
 
 .returnheadicons span {
-  color: #21325D;
-  font-family: 'Montserrat';
+  color: #21325d;
+  font-family: "Montserrat";
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* last */
-.hero>div:nth-child(1)>div>:nth-child(2) {
+.hero > div:nth-child(1) > div > :nth-child(2) {
   background-color: rgb(125, 81, 247) !important;
 
   /* height: 200px;
@@ -118,7 +129,7 @@
   
   
   }  */
-#hero>div:nth-child(1)>div>div>div> :nth-child(1) {
+#hero > div:nth-child(1) > div > div > div > :nth-child(1) {
   display: none;
 }
 

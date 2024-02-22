@@ -54,7 +54,7 @@ const FlightReturnBookingDetails = () => {
 
     // Format the output date string as "yyyy-mm-ddTHH:mm:ss"
     const outputDate = newDate.toISOString().slice(0, 19).replace("T", "T00:00:00");
-    // console.log(outputDate, "outputdate")
+    console.log(outputDate, "outputdate")
 
     return outputDate;
   }

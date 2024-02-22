@@ -61,7 +61,7 @@ const FlightOneTicket = () => {
   if (!data || !Array.isArray(data.data) || data.data.length === 0) {
     return <div>No data available.</div>;
   }
-  // console.log(data, "data");
+  console.log(data, "data");
 
   const currentDate = new Date(data?.data[0]?.createdAt);
   const options = {

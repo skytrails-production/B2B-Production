@@ -52,7 +52,7 @@ function VisaCountry() {
             });
 
             // const createdDocument = response.data.result;
-            // console.log('Document Type created successfully!');
+            console.log('Document Type created successfully!');
           })
           .catch(error => {
             console.error('Error submitting form:', error);

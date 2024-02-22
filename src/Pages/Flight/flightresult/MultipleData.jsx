@@ -16,7 +16,7 @@ import {
 } from "../../../Redux/FlightFareQuoteRule/actionFlightQuote";
 import FlightLoader from "../FlightLoader/FlightLoader";
 import Swal from "sweetalert2";
-import {swalModal} from "../../../utils/swal"
+import { swalModal } from "../../../utils/swal"
 
 const MultipleData = (props) => {
   const navigate = useNavigate();
@@ -79,7 +79,7 @@ const MultipleData = (props) => {
         reducerState?.flightFare?.flightRuleData?.Error?.ErrorCode !== 0
       ) {
         // swalModal('flight',reducerState?.flightFare?.flightQuoteData?.Error?.ErrorMessage,false);
-        swalModal('flight','Something went wrong with your flight booking. ',false);
+        swalModal('flight', 'Something went wrong with your flight booking. ', false);
         // Swal.fire({
         //   title: "Hii Encountered an Error",
         //   text: `${reducerState?.flightFare?.flightQuoteData?.Error?.ErrorMessage}`,
@@ -108,11 +108,11 @@ const MultipleData = (props) => {
   const time = `${Math.floor(flight[0]?.Duration / 60)}hr ${flight[0].Duration % 60
     }min`;
 
-    const time3 = `${Math.floor(flight[1]?.Duration / 60)}hr ${flight[1].Duration % 60
+  const time3 = `${Math.floor(flight[1]?.Duration / 60)}hr ${flight[1].Duration % 60
     }min`;
 
 
-    console.log("flightData", flight)
+  // console.log("flightData", flight)
 
 
   const dateString = flight[0]?.Origin?.DepTime;
@@ -176,13 +176,13 @@ const MultipleData = (props) => {
       <div className="singleFlightBoxThree">
         <h4>{time}{" - "}{time3}</h4>
         <div><img src={flightdir} /></div>
-        <p>{`${flight.length-1} stop via ${flight[0]?.Destination?.Airport?.CityName}`}</p>
+        <p>{`${flight.length - 1} stop via ${flight[0]?.Destination?.Airport?.CityName}`}</p>
         {/* <span>{flight?.NoOfSeatAvailable} Seats Left</span> */}
       </div>
       <div className="singleFlightBoxFour">
-        <span>{flight[flight.length-1]?.Destination?.Airport?.CityName}</span>
-        <p>{dayjs(flight[flight.length-1]?.Destination?.ArrTime).format("DD MMM, YY")}</p>
-        <p style={{ fontSize: "14px" }}>{dayjs(flight[flight.length-1]?.Destination?.ArrTime).format("h:mm A")}</p>
+        <span>{flight[flight.length - 1]?.Destination?.Airport?.CityName}</span>
+        <p>{dayjs(flight[flight.length - 1]?.Destination?.ArrTime).format("DD MMM, YY")}</p>
+        <p style={{ fontSize: "14px" }}>{dayjs(flight[flight.length - 1]?.Destination?.ArrTime).format("h:mm A")}</p>
       </div>
       <div className="singleFlightBoxFive">
         <span>₹{fare}</span>

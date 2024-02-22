@@ -462,7 +462,7 @@ const BusForm = () => {
                         handleFromInputChange(event);
                         handleFromSearch(event.target.value);
                         // setSubfrom(true)
-                        // console.log(subFrom)
+                        console.log(subFrom)
 
                       }}
                       onClick={() => setSubfrom(true)}

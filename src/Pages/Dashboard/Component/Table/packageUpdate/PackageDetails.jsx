@@ -6,6 +6,8 @@ import { apiURL } from "../../../../../Constants/constant";
 import {
     Box,
     Button,
+    MenuItem,
+    Select
 } from "@mui/material";
 import "./packageUpdate.css";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
@@ -18,6 +20,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 function PackageDetails() {
 
@@ -33,22 +36,23 @@ function PackageDetails() {
     //     dispatch(searchPackageAction(payload));
     // }, []);
     const [holidayPackage, setHolidayPackage] = useState([]);
+    const [loading, setLoading] = useState(false);
+    // const fetchHolidayPackages = async () => {
+    //     try {
+    //         const response = await axios.get(
+    //             ` ${apiURL.baseURL}/skyTrails/international/getAllAdminPackage`
+    //         );
+    //         console.log(response.data, "----------------------");
+    //         setHolidayPackage(response.data.data.pakage);
+    //     } catch (error) {
+    //         console.error("Error fetching holiday packages:", error);
+    //     }
+    // };
 
-    useEffect(() => {
-        const fetchHolidayPackages = async () => {
-            try {
-                const response = await axios.get(
-                    `${apiURL.baseURL}/skyTrails/international/getAllAdminPackage`
-                );
-                // console.log(response.data, "----------------------");
-                setHolidayPackage(response.data.data.pakage);
-            } catch (error) {
-                console.error("Error fetching holiday packages:", error);
-            }
-        };
+    // useEffect(() => {
 
-        fetchHolidayPackages();
-    }, []);
+    //     fetchHolidayPackages();
+    // }, []);
 
 
 
@@ -97,9 +101,24 @@ function PackageDetails() {
     const [open, setOpen] = React.useState(false);
     const [openApprove, setOpenApprove] = React.useState(false);
     const [openEdit, setOpenEdit] = React.useState(false);
+    const [editPackageData, setEditPackageData] = useState(null);
     const [selectedPackageApprove, setSelectedPackageApprove] = useState("");
     const [selectedPackageDelete, setSelectedPackageDelete] = useState("");
 
+
+
+
+    const fetchHolidayPackages = async () => {
+        try {
+            const response = await axios.get(
+                `${apiURL.baseURL}/skyTrails/international/getAllAdminPackage`
+            );
+            // console.log(response.data, "----------------------");
+            setHolidayPackage(response.data.data.pakage);
+        } catch (error) {
+            console.error("Error fetching holiday packages:", error);
+        }
+    };
     // view modal
     const [openView, setOpenView] = useState(false);
 
@@ -124,8 +143,9 @@ function PackageDetails() {
 
 
 
-    const handleApprove = async () => {
-        const packageId = selectedPackageApprove?._id;
+    const handleApprove = async (event, row) => {
+        const packageId = row._id;
+        const activeStatus = event.target.value;
         try {
             const res = await axios({
                 method: "post",
@@ -133,7 +153,7 @@ function PackageDetails() {
                 data: {
                     "pakageId": packageId,
                     "isAdmin": isAdmin,
-                    "activeStatus": 1
+                    "activeStatus": activeStatus
                 },
                 headers: {
                     "Content-Type": "application/json",
@@ -141,7 +161,7 @@ function PackageDetails() {
             })
             if (res.status === 200) {
                 handleCloseApprove();
-
+                fetchHolidayPackages();
                 toast.success('Package approved successfully!', {
                     position: 'top-right',
                     autoClose: 3000,
@@ -185,7 +205,7 @@ function PackageDetails() {
 
     const handleDelete = async () => {
         const packageId = selectedPackageDelete?._id;
-
+        setLoading(true);
 
         try {
             const res = await axios({
@@ -200,6 +220,8 @@ function PackageDetails() {
             });
 
             if (res.status === 200) {
+                fetchHolidayPackages();
+                setLoading(false);
                 handleClose();
                 // Show success notification
                 toast.success('Package deleted successfully!', {
@@ -226,6 +248,15 @@ function PackageDetails() {
     }
 
 
+
+
+
+    useEffect(() => {
+
+
+        fetchHolidayPackages();
+    }, [handleClose, handleDelete]);
+
     const columns = [
         {
             field: "pakage_title",
@@ -243,7 +274,7 @@ function PackageDetails() {
             valueGetter: (params) => params.row.pakage_amount?.amount || 'N/A'
         },
 
-        { field: "edit", headerName: "Edit", headerClassName: 'custom-header', width: 150, renderCell: (params) => <Button style={{ color: "#21325D" }} onClick={() => handleOpenEdit(params.row)}>Edit</Button> },
+        { field: "edit", headerName: "Edit", headerClassName: 'custom-header', width: 150, renderCell: (params) => <Button style={{ color: "#21325D", border: "1px solid #21325D" }} onClick={() => handleOpenEdit(params.row)}>Edit</Button> },
         // { field: "delete", headerName: "Delete", headerClassName: 'custom-header',  width:150, renderCell: (params) => <Button style={{ color: "#21325D" }} onClick={() => handleOpen(params.row)}>Delete</Button> },
         {
             field: "delete",
@@ -254,14 +285,39 @@ function PackageDetails() {
                 // Check if the package is approved (is_active === 1)
                 const isApproved = params.row.is_active === 1;
 
-                // If approved, disable the delete button, otherwise, enable it
+                // Define the button content based on approval status
+                const buttonContent = isApproved ? (
+                    <>
+                        <DeleteOutlineIcon style={{ marginRight: '4px', color: 'gray' }} />
+                        <span style={{ color: 'gray' }}>Delete</span>
+                    </>
+                ) : (
+                    <>
+                        <DeleteOutlineIcon style={{ marginRight: '4px' }} />
+                        <span>Delete</span>
+                    </>
+                );
+
+                // Define the button style based on approval status
+                const buttonStyle = isApproved ? {
+                    color: 'gray',
+                    backgroundColor: '#f5f5f5', // Add background color here
+                    border: '1px solid #FF392F',
+                    cursor: 'not-allowed',
+                    // Disable pointer events when button is disabled
+                } : {
+                    color: 'black',
+                    border: '1px solid #FF392F',
+                    cursor: "pointer"
+                };
+
                 return (
                     <Button
-                        style={{ color: "#21325D" }}
+                        style={buttonStyle}
                         onClick={() => handleOpen(params.row)}
                         disabled={isApproved}
                     >
-                        Delete
+                        {buttonContent}
                     </Button>
                 );
             }
@@ -271,20 +327,33 @@ function PackageDetails() {
             field: "status",
             headerName: "Status",
             headerClassName: 'custom-header',
-            width: 150,
+            width: 200,
             renderCell: (params) => (
-                params.row.is_active === 1 ? (
-                    <span style={{ color: 'green' }}>Approved</span>
-                ) : (
-                    <span style={{ color: "#21325D" }} onClick={() => handleOpenApprove(params.row)}> Not approve</span>
-                )
+                <Select
+                    value={params.row.is_active}
+                    onChange={(event) => handleApprove(event, params.row)}
+                    style={{ border: "none", width: "145px" }}
+                >
+                    <MenuItem value={1}>
+                        <span style={{ color: "green" }}>Approved</span>
+                    </MenuItem>
+                    <MenuItem value={0}>
+                        <span style={{ color: "#21325D" }}>Not-approved</span>
+                    </MenuItem>
+                    <MenuItem value={2}>
+                        <span style={{ color: "#FFA500" }}>Archive</span>
+                    </MenuItem>
+                </Select>
             )
         },
+
+
+
         { field: "view", headerName: "View", headerClassName: 'custom-header', width: 150, renderCell: (params) => <Button style={{ color: "#21325D" }} onClick={() => handleOpenView(params.row)}>View</Button> },
     ];
 
     return (
-        <div className="subad-table-container" style={{ position: 'relative', width: "100%" }}>
+        <div className="subad-table-container" style={{ position: 'relative', width: "130%" }}>
             <div className="adsearch-bar" style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold' }}>
                 <Typography variant="h5" className="adtable-heading">
                     Edit Holiday Package
@@ -321,12 +390,26 @@ function PackageDetails() {
                         Are you sure you want to delete this package?
                     </Typography>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
-                        <Button variant="outlined" onClick={handleDelete} style={{ padding: '10px 20px', color: '#333', fontWeight: 'bold' }}>
-                            Yes
-                        </Button>
-                        <Button variant="contained" onClick={handleClose} style={{ padding: '10px 20px', backgroundColor: '#ff0000', color: '#fff', fontWeight: 'bold' }}>
-                            No
-                        </Button>
+                        {loading ? (
+                            "Loading..." // Render loading text or spinner while loading is true
+                        ) : (
+                            <>
+                                <Button
+                                    variant="outlined"
+                                    onClick={handleDelete}
+                                    style={{ padding: '10px 20px', color: '#333', fontWeight: 'bold' }}
+                                >
+                                    Yes
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    onClick={handleClose}
+                                    style={{ padding: '10px 20px', backgroundColor: '#ff0000', color: '#fff', fontWeight: 'bold' }}
+                                >
+                                    No
+                                </Button>
+                            </>
+                        )}
                     </Box>
                 </Box>
             </Modal>
@@ -354,16 +437,16 @@ function PackageDetails() {
                     }}
                 >
                     <Box>
-                        <EditHolidayPackage />
+                        <EditHolidayPackage onClose={handleCloseEdit} packageData={editPackageData} />
                     </Box>
-                    <Box
+                    {/* <Box
                         sx={{
                             display: "flex",
                             justifyContent: 'center'
                         }}
                     >
                         <button onClick={handleCloseEdit}>Close</button>
-                    </Box>
+                    </Box> */}
                 </Box>
             </Modal>
 
@@ -378,14 +461,7 @@ function PackageDetails() {
                     <Typography variant="h6" component="h2">
                         Are you sure you want to approve this package?
                     </Typography>
-                    {/* <Box sx={styles.buttonContainer}>
-                        <button style={styles.button} onClick={handleCloseApprove}>
-                            No
-                        </button>
-                        <button style={styles.button} onClick={handleApprove}>
-                            Yes
-                        </button>
-                    </Box> */}
+
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
                         <Button variant="outlined" onClick={handleApprove} style={{ padding: '10px 20px', color: '#333', fontWeight: 'bold' }}>
                             Yes

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import {
     TextField,
@@ -11,6 +10,7 @@ import {
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import { apiURL } from '../../../../Constants/constant';
+
 const AddNotification = () => {
     const [title, setTitle] = useState('');
     const [message, setMessage] = useState('');
@@ -27,26 +27,40 @@ const AddNotification = () => {
             const response = await fetch(`${apiURL.baseURL}/skyTrails/api/admin/pushNotification`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json' // Specify the content type of the request body
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
                     messageTitle: title,
                     messageBody: message,
-                    notificationType: 'type' // Provide the appropriate notification type here
+                    notificationType: 'type'
                 })
             });
 
-            // Handle success response
-            // console.log('Notification sent successfully:', response.data);
+            console.log('Notification sent successfully:', response.data);
             toast.success('Notification sent successfully!');
         } catch (error) {
-            // Handle error
             console.error('Error sending notification:', error);
             toast.error('Failed to send notification. Please try again later.');
         }
 
         setTitle('');
         setMessage('');
+    };
+
+    const handleSpecialNotification = async () => {
+        try {
+            const response = await axios.post(`${apiURL.baseURL}/skyTrails/api/admin/pushNotification`, {
+                messageTitle: title,
+                messageBody: message,
+                notificationType: 'PEFA2024'
+            });
+
+           
+            toast.success('PEFA2024 Notification sent successfully!');
+        } catch (error) {
+            console.error('Error sending special notification:', error);
+            toast.error('Failed to send special notification. Please try again later.');
+        }
     };
 
     return (
@@ -106,14 +120,30 @@ const AddNotification = () => {
                                 variant="contained"
                                 sx={{
                                     mt: 2,
-                                    backgroundColor: '#4B587B',
+                                    backgroundColor: '#21325D',
                                     color: '#fff',
                                     '&:hover': {
                                         backgroundColor: '#405269',
+                                        color:'#fff'
                                     },
                                 }}
                             >
                                 Send Notification
+                            </Button>
+                            <Button
+                                variant="contained"
+                                sx={{
+                                    mt: 2,
+                                    backgroundColor: '#21325D', // Orange color
+                                    color: '#fff',
+                                    '&:hover': {
+                                        backgroundColor: '#21325F',
+                                        color:'#fff' // Darker orange color
+                                    },
+                                }}
+                                onClick={handleSpecialNotification}
+                            >
+                                Send Special Notification (PEFA2024)
                             </Button>
                         </Stack>
                     </form>

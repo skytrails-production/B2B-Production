@@ -18,6 +18,7 @@ function SingleDataReturn(props) {
 
   const reducerState = useSelector((state) => state);
   const flight = props.flight;
+  // console.log(flight,"flight props")
   const wholeFlight = props.wholeFlight
   const IsLCC = props.IsLCC;
 

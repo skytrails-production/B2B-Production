@@ -74,7 +74,7 @@ const SubAdminLoginForm = () => {
       </form>
       </section> */}
 
-      <div class="containersubadmin">
+      <div class="containersubadmin" style={{marginTop:"50px"}}>
 
         <div class="screensub">
 

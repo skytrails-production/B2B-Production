@@ -273,7 +273,7 @@ const Leftdetail = () => {
 
     // Format the output date string as "yyyy-mm-ddTHH:mm:ss"
     const outputDate = newDate.toISOString().slice(0, 19).replace("T", "T00:00:00");
-    // console.log(outputDate, "outputdate")
+    console.log(outputDate, "outputdate")
 
     return outputDate;
   }
@@ -378,8 +378,8 @@ const Leftdetail = () => {
   // const flightDeparture = reducerState?.flightFare?.flightQuoteData?.Results?.Segments[0]?.[0];
   // const flightReturn = reducerState?.flightFare?.flightQuoteDataReturn?.Results?.Segments[0]?.[0];
 
-  // console.log(flightDeparture, "flight departure")
-  // console.log(flightReturn, "flight return ")
+  console.log(flightDeparture, "flight departure")
+  console.log(flightReturn, "flight return ")
 
 
 
@@ -416,8 +416,8 @@ const Leftdetail = () => {
   const [month1, day1, year1, time1, ampm1] =
     formattedDate1.split(" ");
   const desiredFormat1 = `${day1}${month1}-${year1} ${time1} ${ampm1}`;
-  // console.log(desiredFormat1, 'desired format')
-  // console.log(desiredFormat, 'desired format')
+  console.log(desiredFormat1, 'desired format')
+  console.log(desiredFormat, 'desired format')
 
 
 
@@ -453,8 +453,8 @@ const Leftdetail = () => {
   const [month4, day4, year4, time4, ampm4] =
     formattedDate4.split(" ");
   const desiredFormat4 = `${day4}${month4}-${year4} ${time4} ${ampm4}`;
-  // console.log(desiredFormat4, 'desired format')
-  // console.log(desiredFormat3, 'desired format')
+  console.log(desiredFormat4, 'desired format')
+  console.log(desiredFormat3, 'desired format')
 
 
 

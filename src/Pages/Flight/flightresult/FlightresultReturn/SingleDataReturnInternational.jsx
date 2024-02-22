@@ -1,21 +1,36 @@
-import { Grid, Box, Typography, Radio } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Grid, Box, Typography, Checkbox, Radio } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
-import "../MultiData.css";
+import "../SingleData.css";
 import Nonrefundable from "../Nonrefundable";
 import { useDispatch, useSelector, useReducer } from "react-redux";
 import Luggage from "../Luggage";
+import { PropagateLoader } from "react-spinners";
+// import flightdir from "../../../Images/flgihtdir.png"
 import flightdir from "../../../../Images/flgihtdir.png";
-import { useEffect } from "react";
 
-const MultipleDataReturn = (props) => {
+
+
+function SingleDataReturnInternational(props) {
+  // console.log("Props", props);
+  // console.log("Single data international", props);
   const navigate = useNavigate();
-  const reducerState = useSelector((state) => state);
+  const dispatch = useDispatch();
 
+  const reducerState = useSelector((state) => state);
   const flight = props.flight;
-  // console.log(flight, "flightnjfnvjf")
+  // console.log(flight,"flight props")
   const wholeFlight = props.wholeFlight
   const IsLCC = props.IsLCC;
+
+
+  // console.log("flight single", props);
+  
+
+  const results =
+    reducerState?.return?.returnData?.data?.data?.Response?.Results;
+  // console.log("Redux State", results);
+
   const indexKey = props.index;
   const fare =
     reducerState?.logIn?.loginData.length > 0
@@ -24,50 +39,55 @@ const MultipleDataReturn = (props) => {
         Number(reducerState?.logIn?.loginData?.data?.data?.markup?.flight)
       )}`
       : Math.round(Number(props.fare));
-  // useEffect(() => {
-  //   // console.log("flight multiple", fare);
 
-  // }, [fare])
-  // const fare = `${Math.round(
-  //   props.fare + reducerState?.logIn?.loginData?.data?.data?.markup?.flight
-  // )}`;
-  const img = flight[0]?.Airline?.AirlineCode;
-  const stop = props.stop;
-  const results =
-    reducerState?.return?.returnData?.data?.data?.Response?.Results;
+  // console.log(fare);
+  const img = flight?.Airline?.AirlineCode;
 
-
-  const time = `${Math.floor(flight[0]?.Duration / 60)}hr ${flight[0].Duration % 60
+  const time = `${Math.floor(flight?.Duration / 60)}hr ${flight.Duration % 60
     }min`;
+  // console.log(
+  //   flight?.Duration,
+  //   "Hours:",
+  //   Math.floor(flight?.Duration / 60),
+  //   "Minutes:",
+  //   flight.Duration % 60,
+  //   "Index Key",
+  //   indexKey
+  // );
 
-  const dateString = flight[0]?.Origin?.DepTime;
+  const dateString = flight?.Origin?.DepTime;
   const date1 = new Date(dateString);
-  const time1 = date1.toLocaleTimeString();
+  const time1 = date1.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
-  const day1 = date1.getDate();
-  const month1 = date1.toLocaleString("default", {
+  const day = date1.getDate();
+  const month = date1.toLocaleString("default", {
     month: "short",
   });
-  const year1 = date1.getFullYear();
+  const year = date1.getFullYear();
+  const formattedDate = `${day} ${month} ${year}`;
+
+  const dateString1 = flight?.Destination?.ArrTime;
+  const date2 = new Date(dateString1);
+  const time2 = date2.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  const day1 = date2.getDate();
+  const month1 = date2.toLocaleString("default", {
+    month: "short",
+  });
+  const year1 = date2.getFullYear();
   const formattedDate1 = `${day1} ${month1} ${year1}`;
 
-  const dateString1 = flight[1]?.Destination?.ArrTime;
-  const date2 = new Date(dateString1);
-  const time2 = date2.toLocaleTimeString();
-
-  const day2 = date2.getDate();
-  const month2 = date2.toLocaleString("default", {
-    month: "short",
-  });
-  const year2 = date2.getFullYear();
-  const formattedDate2 = `${day2} ${month2} ${year2}`;
-  // console.log("flightDetails: ", data);
-  // console.log("Results", results);
   const handleClick = (allDetails, ResultIndex) => {
     const slicedResultIndex = ResultIndex.slice(0, 2);
-    // console.log("Handel Click Index Key", slicedResultIndex);
-    // console.log("hghfdsjgdsjsfd", props.flight);
+    // console.warn("Handel Click Index Key", slicedResultIndex,allDetails,ResultIndex);
 
+    // console.log("hghfdsjgdsjsfd", props.flight);
 
     if (slicedResultIndex == "OB") {
       sessionStorage.setItem("flightDetailsONGo", JSON.stringify(allDetails));
@@ -76,42 +96,61 @@ const MultipleDataReturn = (props) => {
       sessionStorage.setItem("flightDetailsIncome", JSON.stringify(allDetails));
     }
   };
+  function convertTimeToAMPM(timeString) {
+    // console.log(timeString, "timeString...........");
+    // Create a new Date object from the provided time string
+    const dateTime = new Date(timeString);
+
+    // Extract hours and minutes
+    const hours = dateTime.getHours();
+    const minutes = dateTime.getMinutes();
+
+    // Convert hours to 12-hour format and determine AM or PM
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
+
+    // Add leading zero to minutes if necessary
+    const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+
+    // Construct the final formatted time string
+    const formattedTime = `${formattedHours}:${formattedMinutes} ${ampm}`;
+
+    return formattedTime;
+  }
+
+
   return (
     <div
-      style={{}}
-
-
-
       onClick={() => {
         props.onSelect(props.index);
         handleClick(props.wholeFlight, props.index);
-      }}>
-
+      }}
+    >
       <div className="singleDataReturnBox">
         <div className="returnBoxOne">
           <div><img src={`${process.env.PUBLIC_URL}/FlightImages/${img}.png`} /> </div>
-          <span>{flight[0]?.Airline?.AirlineName}</span>
-          <p>{flight[0]?.Airline?.FlightNumber}{" "}{flight[0]?.Airline?.FlightNumber}</p>
+          <span>{flight?.Airline?.AirlineName}</span>
+          <p>{flight?.Airline?.AirlineCode}{" "}{flight?.Airline?.FlightNumber}</p>
         </div>
         <div className="returnBoxTwo">
-          <span>{flight[0]?.Origin?.Airport?.CityName}</span>
-          <p>{time1.substr(0, 5)}</p>
+          <span>{flight?.Origin?.Airport?.CityName}</span>
+          <p>{convertTimeToAMPM(dateString)}</p>
         </div>
         <div className="returnBoxThree">
           <h4>{time}</h4>
           <div><img src={flightdir} /></div>
-          <p>{`${flight.length} stop via ${flight[0]?.Destination?.Airport?.CityName}`}</p>
-          <span>{flight?.NoOfSeatAvailable} Seats Left</span>
+          <p>Direct Flight</p>
         </div>
         <div className="returnBoxFour">
-          <span>{flight[1]?.Destination?.Airport?.CityName}</span>
-          <p>{time2.substr(0, 5)}</p>
+          <span>{flight?.Destination?.Airport?.CityName}</span>
+          <p>{convertTimeToAMPM(dateString1)}</p>
         </div>
         <div className="returnBoxFive">
-          <span>₹{fare}</span>
-          <p>Publish</p>
+          {/* <span>₹{fare}</span>
+          <p>Publish</p> */}
         </div>
         <div className="singlereturnBoxSix">
+          {/* <button onClick={() => { handleClick(indexKey) }}>Book</button> */}
           {props.showRadio && (<Radio
             checked={props.isSelected}
             onClick={props.onSelect}
@@ -121,21 +160,20 @@ const MultipleDataReturn = (props) => {
         </div>
       </div>
 
-
       {/* <Box
         display="flex"
         flexDirection="column"
-        width="410px"
+        width="418px"
         height="86px"
         alignItems="space-between"
         justifyContent="space-between"
-        padding="5px"
 
       >
         <Box
           sx={{
             width: "auto",
             display: "flex",
+            // backgroundColor: 'blue',
             alignItems: 'center',
             height: "30px",
             gap: '7px'
@@ -149,15 +187,16 @@ const MultipleDataReturn = (props) => {
             style={{
               width: "60px",
               height: "30px",
+              backgroundColor: "white",
             }}
           />
           <Box>
 
             <Typography style={{ color: '#071C2C', fontSize: '16px', fontFamily: 'Montserrat', fontWeight: '600', wordWrap: 'break-word' }}>
-              {flight[0]?.Airline?.AirlineName}
+              {flight?.Airline?.AirlineName}
             </Typography>
             <Typography style={{ color: '#BBBBBB', fontSize: '12px', fontFamily: 'Montserrat', fontWeight: '600', wordWrap: 'break-word' }}>
-              {flight[0]?.Airline?.FlightNumber}
+              {flight?.Airline?.FlightNumber}
             </Typography>
           </Box>
         </Box>
@@ -165,6 +204,7 @@ const MultipleDataReturn = (props) => {
           container
           style={{
             display: "flex",
+            // backgroundColor: "yellow",
             height: "32px",
             justifyContent: "space-between",
           }}
@@ -179,31 +219,20 @@ const MultipleDataReturn = (props) => {
                 {time1.substring(0, 5)}
               </Typography>
               <Typography style={{ color: '#BBBBBB', fontSize: '12px', fontFamily: 'Montserrat', fontWeight: '600', wordWrap: 'break-word' }}>
-                {flight[0]?.Origin?.Airport?.CityName}
+                {flight?.Origin?.Airport?.CityName}
               </Typography>
             </Box>
           </Grid>
           <Grid >
             <Box display="flex" justifyContent="center">
-              <Box display="flex" flexDirection='column' alignItems="center" justifyContent='center'>
+              <Box>
                 <Box px={1} textAlign="center">
                   <Typography style={{ color: '#BBBBBB', fontSize: '12px', fontFamily: 'Montserrat', fontWeight: '700' }}>{time}</Typography>
                 </Box>
-                <Box backgroundColor="#DFD049" display="flex" justifyContent='center' alignItems='center' width="77px" height='2px'>
-                  <Box display="flex" justifyContent='center' alignItems='center' style={{
-                    width: '8px',
-                    height: "8px",
-                    borderRadius: "100%"
-                  }}>
-                    <Box backgroundColor='#5E5B5B' width="4px"
-                      height="4px" borderRadius="8px" />
-                  </Box>
-                </Box>
-
-
+                <Box style={{ width: 76, height: 0, border: '2px #49DF4F solid' }} />
                 <Box px={1} textAlign="center">
                   <Typography style={{ color: '#BBBBBB', fontSize: '12px', fontFamily: 'Montserrat', fontWeight: '700' }}>
-                    {`1 stop via ${flight[0]?.Destination?.Airport?.CityName}`}
+                    Direct Flight
                   </Typography>
                 </Box>
               </Box>
@@ -218,7 +247,7 @@ const MultipleDataReturn = (props) => {
                 {time2.substring(0, 5)}
               </Typography>
               <Typography style={{ color: '#BBBBBB', fontSize: '12px', fontFamily: 'Montserrat', fontWeight: '600', wordWrap: 'break-word' }}>
-                {flight[1]?.Destination?.Airport?.CityName}
+                {flight?.Destination?.Airport?.CityName}
               </Typography>
             </Box>
           </Grid>
@@ -247,9 +276,9 @@ const MultipleDataReturn = (props) => {
 
 
       </Box> */}
-    </div >
+
+    </div>
   );
-};
+}
 
-
-export default MultipleDataReturn;
+export default SingleDataReturnInternational;

@@ -12,7 +12,7 @@ function* getHolidayBooking(action) {
   try {
     const user = yield call(userApi.bookingHoliday, action.payload);
     yield put(getPackageBooking(user));
-    // console.log("Check Response", user);
+    console.log("Check Response", user);
     if (user.status === 200) {
       alert(user.status)
       yield put(openSuccessModal());

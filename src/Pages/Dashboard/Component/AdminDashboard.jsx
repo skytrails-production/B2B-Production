@@ -19,7 +19,10 @@ import {
   DirectionsBus as BusIcon,
   Hotel as HotelIcon,
   CollectionsBookmark as TotalBookingsIcon,
+  EmojiEvents as EmojiEventsIcon,
+  
 } from "@mui/icons-material";
+
 import { apiURL } from "../../../Constants/constant";
 import "./AdminDashboard.css";
 import AddMarkup from "./Table/AddMarkup";
@@ -45,10 +48,13 @@ const AdminDashboardData = () => {
     BusIcon,
     TotalBookingsIcon,
     AdminIcon,
-    ChangeRequestIcon,
+    AdminIcon,
+    
     Groups3Icon,
     CancelledIcon,
-    AdminIcon,
+    ChangeRequestIcon,
+    EmojiEventsIcon,
+    
   ];
   const headingsArray = [
     "Hotel",
@@ -56,10 +62,11 @@ const AdminDashboardData = () => {
     "Bus",
     "TotalBookings",
     "Subadmin",
-    "Change Request",
+    "User",
     "Agent",
     "Cancelled",
-    "User",
+    "Change Request",
+    "Event Booking"
   ];
 
   useEffect(() => {

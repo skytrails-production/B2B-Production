@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Route, Routes } from "react-router-dom";
 import Header from "../Components/Header";
 import Footer from "../Layout/Footer";
@@ -114,6 +114,7 @@ import PrivacyPolicy from "../Layout/PrivacyPolicy";
 import RefundPolicy from "../Layout/RefundPolicy";
 import TermandCondition from "../Layout/TermandCondition";
 import AdminProfile from "../Pages/Dashboard/Component/Table/AdminProfile";
+import { debounce } from 'lodash';
 import { } from "../utils/validation"
 
 const MainPage = () => {
@@ -134,31 +135,44 @@ const MainPage = () => {
   const isBusEticketPage = location.pathname.startsWith("/BusEticket");
   const isHotelEticketPage = location.pathname.startsWith("/HotelEticket");
 
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth > 750);
   const [scrollY, setScrollY] = useState(0);
 
 
   // if wesbite width will go below 750px
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth > 750);
+
+  const updateDimensions = useCallback(
+    debounce(() => {
+      setWindowWidth(window.innerWidth > 750);
+    }, 200),
+    []
+  );
 
   useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth > 750);
+    const handleResizeScroll = () => {
+      updateDimensions();
     };
 
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
-    window.addEventListener("resize", handleResize);
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('resize', handleResizeScroll);
+    window.addEventListener('scroll', handleResizeScroll, { passive: true });
 
     return () => {
-      window.removeEventListener("resize", handleResize);
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('resize', handleResizeScroll);
+      window.removeEventListener('scroll', handleResizeScroll);
     };
-  }, []);
+  }, [updateDimensions]);
 
-  useEffect(() => { }, [scrollY, windowWidth]);
+  useEffect(() => {
+    if (!windowWidth) {
+      return (
+        <Download />
+      )
+    }
+  }, [windowWidth]);
+
+
+
+
 
   useEffect(() => {
     if (
@@ -209,13 +223,13 @@ const MainPage = () => {
     return <LoadingSpinner />;
   }
 
-  if (!windowWidth) {
-    return (
-      <>
-        <Download />
-      </>
-    );
-  }
+  // if (!windowWidth) {
+  //   return (
+  //     <>
+  //       <Download />
+  //     </>
+  //   );
+  // }
 
   return (
     <>
@@ -238,7 +252,7 @@ const MainPage = () => {
         location.pathname === "/adminprofile" ||
 
         location.pathname === "/admin/addCoupons" ||
-
+        location.pathname === "/subAdmin/dashboard/Agenttable" ||
         location.pathname === "/adminlogin" ||
         location.pathname === "/admin/addnotification" ||
         isFlightEticketPage ||
@@ -259,7 +273,7 @@ const MainPage = () => {
         location.pathname === "/adminprofile" ||
         location.pathname === "/admin/addCoupons" ||
         location.pathname === "/admin/addnotification" ||
-
+        location.pathname === "/subAdmin/dashboard/Agenttable" ||
         location.pathname === "/adminlogin" ||
 
         isFlightEticketPage ||
@@ -527,7 +541,7 @@ const MainPage = () => {
                 <Route exact path="/addEvents" element={<CreateEventForm />} />
                 <Route exact path="/admin/addCoupons" element={<CreateCouponForm />} />
                 <Route exact path="/admin/addnotification" element={<AddNotification />} />
-                
+
                 <Route
                   exact
                   path="/AdminUserForm"

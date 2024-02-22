@@ -67,7 +67,7 @@ const AllFlightCancelTicketsUser = () => {
   const handleStatusChange = (id, selectedValue) => {
     setSelectedStatusMap(new Map(selectedStatusMap.set(id, selectedValue)));
     // Add logic to update the status in your data or trigger an API call
-    // console.log(`Status changed to ${selectedValue} for row with id ${id}`);
+    console.log(`Status changed to ${selectedValue} for row with id ${id}`);
     // Add additional logic as needed
   };
   const handleViewDetails = (booking) => {
