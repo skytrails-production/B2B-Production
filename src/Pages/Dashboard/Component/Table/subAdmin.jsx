@@ -188,6 +188,7 @@ const SubAdminTable = () => {
                 <GridToolbar />
               </div>
             ),
+            Pagination:()=>null,
           }}
         />
       </div>

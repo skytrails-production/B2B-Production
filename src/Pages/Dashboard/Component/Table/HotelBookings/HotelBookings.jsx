@@ -106,6 +106,7 @@ const AllHotelBooking = () => {
                 <GridToolbar />
               </div>
             ),
+            Pagination:()=>null,
           }}
         />
 

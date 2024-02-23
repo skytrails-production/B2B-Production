@@ -65,7 +65,7 @@ const HotelForm = () => {
   ]);
 
   const reducerState = useSelector((state) => state);
-  console.warn("State Data", reducerState);
+  // console.warn("State Data", reducerState);
 
   const errorCode =
     reducerState?.hotelSearchResult?.ticketData?.data?.data?.HotelSearchResult

@@ -112,6 +112,13 @@ import ImageIcon from '@mui/icons-material/Image'; // Import the Image icon
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import ChangeCircleOutlinedIcon from '@mui/icons-material/ChangeCircleOutlined';
 import AdminProfile from "./Table/AdminProfile";
+import { apiURL } from "../../../Constants/constant";
+import EventList from "./Table/EventList";
+import HotelIcon from '@mui/icons-material/Hotel';
+import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
+import LanguageIcon from '@mui/icons-material/Language';
+import ArticleIcon from '@mui/icons-material/Article';
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -255,6 +262,8 @@ export default function VerticalTabs() {
     navigate("/adminLogin");
   };
 
+  
+
   const createSubAdmin = () => {
     navigate("/addSubAdmin");
   };
@@ -288,7 +297,7 @@ export default function VerticalTabs() {
     // Navigate to the desired route when the button is clicked
     navigate("/admin/addCoupons");
   };
-  const createNotification=()=>{
+  const createNotification = () => {
     navigate("/admin/addnotification")
   }
   // /adminprofile
@@ -370,7 +379,7 @@ export default function VerticalTabs() {
     setOpenCollapseEight(!openCollapseEight);
   };
 
-  const [selectedValue, setSelectedValue] = useState("");
+  const [selectedValue, setSelectedValue] = useState('option1');
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
@@ -469,9 +478,9 @@ export default function VerticalTabs() {
                 />
               </div>
             </div> */}
-           
 
-            <div
+
+<div
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -979,7 +988,7 @@ export default function VerticalTabs() {
                 />
               </ListItemButton>
             </ListItem> */}
-           
+
             <ListItem
               disablePadding
               sx={{ display: "block" }}
@@ -1302,7 +1311,7 @@ export default function VerticalTabs() {
                             justifyContent: "center",
                           }}
                         >
-                          <AccountBoxIcon sx={{ color: "white" }} />
+                          <HotelIcon sx={{ color: "white" }} />
                         </ListItemIcon>
                         <ListItemText
                           primary="Hotel Cancel Tickets"
@@ -1334,7 +1343,7 @@ export default function VerticalTabs() {
                             justifyContent: "center",
                           }}
                         >
-                          <AccountBoxIcon sx={{ color: "white" }} />
+                          <AirplaneTicketIcon sx={{ color: "white" }} />
                         </ListItemIcon>
                         <ListItemText
                           primary="Flight Cancel Tickets"
@@ -1364,7 +1373,7 @@ export default function VerticalTabs() {
                             justifyContent: "center",
                           }}
                         >
-                          <AccountBoxIcon sx={{ color: "white" }} />
+                          <DirectionsBusIcon sx={{ color: "white" }} />
                         </ListItemIcon>
                         <ListItemText
                           primary="Bus Cancel Tickets"
@@ -1422,7 +1431,7 @@ export default function VerticalTabs() {
                     >
                       <AccountBoxIcon sx={{ color: "white" }} />
                     </ListItemIcon>
-                    <ListItemText primary="Agent" sx={{ color: "white" }} />
+                    <ListItemText primary="Agent" sx={{ color: "white", marginLeft: "20px" }} />
                   </ListItemButton>
                   <Collapse in={openCollapseSeven} timeout="auto" unmountOnExit>
                     <ListItem
@@ -1538,7 +1547,7 @@ export default function VerticalTabs() {
                     >
                       <AccountBoxIcon sx={{ color: "white" }} />
                     </ListItemIcon>
-                    <ListItemText primary="USER" sx={{ color: "white" }} />
+                    <ListItemText primary="User" sx={{ color: "white" ,marginLeft: "20px"}} />
                   </ListItemButton>
                   <Collapse in={openCollapseEight} timeout="auto" unmountOnExit>
                     <ListItem
@@ -1563,7 +1572,7 @@ export default function VerticalTabs() {
                             justifyContent: "center",
                           }}
                         >
-                          <AccountBoxIcon sx={{ color: "white" }} />
+                          <HotelIcon sx={{ color: "white" }} />
                         </ListItemIcon>
                         <ListItemText
                           primary="Hotel ChangeTickets"
@@ -1596,7 +1605,7 @@ export default function VerticalTabs() {
                             justifyContent: "center",
                           }}
                         >
-                          <AccountBoxIcon sx={{ color: "white" }} />
+                          <AirplanemodeActiveIcon  sx={{ color: "white" }} />
                         </ListItemIcon>
                         <ListItemText
                           primary="Flight ChangeTickets"
@@ -1626,7 +1635,7 @@ export default function VerticalTabs() {
                             justifyContent: "center",
                           }}
                         >
-                          <AccountBoxIcon sx={{ color: "white" }} />
+                          <DirectionsBusIcon sx={{ color: "white" }} />
                         </ListItemIcon>
                         <ListItemText
                           primary="Bus ChangeTickets"
@@ -1750,14 +1759,14 @@ export default function VerticalTabs() {
                   <AccountBoxIcon sx={{ color: "white" }} />
                 </ListItemIcon>
                 <ListItemText
-                  primary="AGENT Bookings"
-                  sx={{ opacity: open ? 1 : 0, color: "white", marginLeft: "20px" }}
+                  primary="Agent Bookings"
+                  sx={{ opacity: open ? 1 : 0, color: "white",marginLeft: "20px" }}
                 />
               </ListItemButton>
               <Collapse in={openCollapseFour} timeout="auto" unmountOnExit>
                 <ListItem
                   disablePadding
-                  sx={{ display: "block" }}
+                  sx={{ display: "block" , marginLeft: "20px" }}
                   onClick={() => handleMenuItemClick("Hotel Bookings")}
                 >
                   <ListItemButton
@@ -1777,7 +1786,7 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      <AccountBoxIcon sx={{ color: "white" }} />
+                        <HotelIcon sx={{ color: "white" }} />
                     </ListItemIcon>
                     <ListItemText
                       primary="Hotel Bookings"
@@ -1788,7 +1797,7 @@ export default function VerticalTabs() {
 
                 <ListItem
                   disablePadding
-                  sx={{ display: "block" }}
+                  sx={{ display: "block" , marginLeft: "20px" }}
                   onClick={() => handleMenuItemClick("Flight Bookings")}
                 >
                   <ListItemButton
@@ -1808,7 +1817,7 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      <AccountBoxIcon sx={{ color: "white" }} />
+                      <AirplaneTicketIcon sx={{ color: "white" }} />
                     </ListItemIcon>
                     <ListItemText
                       primary="Flight Bookings"
@@ -1818,7 +1827,7 @@ export default function VerticalTabs() {
                 </ListItem>
                 <ListItem
                   disablePadding
-                  sx={{ display: "block" }}
+                  sx={{ display: "block" ,  marginLeft: "20px" }}
                   onClick={() => handleMenuItemClick("Bus Bookings")}
                 >
                   <ListItemButton
@@ -1838,7 +1847,7 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      <AccountBoxIcon sx={{ color: "white" }} />
+                      <DirectionsBusIcon sx={{ color: "white" }} />
                     </ListItemIcon>
                     <ListItemText
                       primary="Bus Bookings"
@@ -1877,7 +1886,7 @@ export default function VerticalTabs() {
               <Collapse in={openCollapseFive} timeout="auto" unmountOnExit>
                 <ListItem
                   disablePadding
-                  sx={{ display: "block" }}
+                  sx={{ display: "block" , marginLeft: "20px" }}
                   onClick={() => handleMenuItemClick("Hotel Booking")}
                 >
                   <ListItemButton
@@ -1897,7 +1906,7 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      <AccountBoxIcon sx={{ color: "white" }} />
+                      <HotelIcon sx={{ color: "white" }} />
                     </ListItemIcon>
                     <ListItemText
                       primary="Hotel Booking"
@@ -1907,7 +1916,7 @@ export default function VerticalTabs() {
                 </ListItem>
                 <ListItem
                   disablePadding
-                  sx={{ display: "block" }}
+                  sx={{ display: "block", marginLeft: "20px"  }}
                   onClick={() => handleMenuItemClick("Flight Booking")}
                 >
                   <ListItemButton
@@ -1927,7 +1936,7 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      <AccountBoxIcon sx={{ color: "white" }} />
+                     <AirplaneTicketIcon sx={{ color: "white" }} />
                     </ListItemIcon>
                     <ListItemText
                       primary="Flight Booking"
@@ -1937,7 +1946,7 @@ export default function VerticalTabs() {
                 </ListItem>
                 <ListItem
                   disablePadding
-                  sx={{ display: "block" }}
+                  sx={{ display: "block", marginLeft: "20px"  }}
                   onClick={() => handleMenuItemClick("Bus Booking")}
                 >
                   <ListItemButton
@@ -1957,7 +1966,7 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      <AccountBoxIcon sx={{ color: "white" }} />
+                      <DirectionsBusIcon sx={{ color: "white" }} />
                     </ListItemIcon>
                     <ListItemText
                       primary="Bus Booking"
@@ -2019,7 +2028,7 @@ export default function VerticalTabs() {
                     justifyContent: "center",
                   }}
                 >
-                  <PeopleOutlinedIcon sx={{ color: "white" }} />
+                  <LocalOfferIcon sx={{ color: "white" }} />
                 </ListItemIcon>
                 <ListItemText
                   primary="OfferList"
@@ -2149,7 +2158,7 @@ export default function VerticalTabs() {
                     justifyContent: "center",
                   }}
                 >
-                  <HomeOutlinedIcon sx={{ color: "white" }} />
+                  <LanguageIcon sx={{ color: "white" }} />
                 </ListItemIcon>
                 <ListItemText
                   primary="Web Advertisment"
@@ -2287,11 +2296,11 @@ export default function VerticalTabs() {
                     justifyContent: "center",
                   }}
                 >
-                  <AccountBoxIcon sx={{ color: "white" }} />
+                  < ArticleIcon sx={{ color: "white" }} />
                 </ListItemIcon>
                 <ListItemText
-                  primary="VISA BOOKING"
-                  sx={{ opacity: open ? 1 : 0, color: "white", marginLeft: "20px" }}
+                  primary="Visa Booking"
+                  sx={{ opacity: open ? 1 : 0, color: "white",marginLeft: "20px" }}
                 />
               </ListItemButton>
               <Collapse in={openCollapsetwenty} timeout="auto" unmountOnExit>
@@ -2317,11 +2326,11 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      <AccountBoxIcon sx={{ color: "white" }} />
+                      < ArticleIcon sx={{ color: "white" ,marginLeft: "20px" }} />
                     </ListItemIcon>
                     <ListItemText
                       primary="Visa Category"
-                      sx={{ opacity: open ? 1 : 0, color: "white" }}
+                      sx={{ opacity: open ? 1 : 0, color: "white"}}
                     />
                   </ListItemButton>
                 </ListItem>
@@ -2348,7 +2357,7 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      <AccountBoxIcon sx={{ color: "white" }} />
+                      < ArticleIcon sx={{ color: "white",marginLeft: "20px" }} />
                     </ListItemIcon>
                     <ListItemText
                       primary="Visa Country"
@@ -2379,7 +2388,7 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      <AccountBoxIcon sx={{ color: "white" }} />
+                      < ArticleIcon sx={{ color: "white",marginLeft: "20px" }} />
                     </ListItemIcon>
                     <ListItemText
                       primary="Visa Document Type"
@@ -2410,7 +2419,7 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      <AccountBoxIcon sx={{ color: "white" }} />
+                      < ArticleIcon sx={{ color: "white",marginLeft: "20px" }} />
                     </ListItemIcon>
                     <ListItemText
                       primary="Visa Document Category"
@@ -2441,11 +2450,11 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      <AccountBoxIcon sx={{ color: "white" }} />
+                      <ArticleIcon sx={{ color: "white" ,marginLeft: "20px"}} />
                     </ListItemIcon>
                     <ListItemText
                       primary="Require Document"
-                      sx={{ opacity: open ? 1 : 0, color: "white" }}
+                      sx={{ opacity: open ? 1 : 0, color: "white" ,}}
                     />
                   </ListItemButton>
                 </ListItem>
@@ -2453,6 +2462,40 @@ export default function VerticalTabs() {
             </ListItem>
 
             {/* //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
+            
+            <ListItem
+         disablePadding
+       sx={{ display: "block" }}
+       onClick={() => handleMenuItemClick("EventList")}
+        >
+     <ListItemButton
+      sx={{
+      minHeight: 48,
+      justifyContent: open ? "initial" : "center",
+      px: 2.5,
+      ...((menuData === "EventList"
+        ? activeMenuItemClass
+        : inactiveMenuItemClass) || {}),
+    }}
+  >
+    <ListItemIcon
+      sx={{
+        minWidth: 0,
+        mr: open ? 3 : "auto",
+        justifyContent: "center",
+      }}
+    >
+      <ArticleIcon sx={{ color: "white" }} />
+    </ListItemIcon>
+    <ListItemText
+      primary="Event List"
+      sx={{ opacity: open ? 1 : 0, color: "white"}}
+    />
+  </ListItemButton>
+</ListItem>
+
+            
+
           </List>
           <Divider />
         </Drawer>
@@ -2482,9 +2525,9 @@ export default function VerticalTabs() {
               {menuData === "profile" && (
                 <AdminProfile />
               )}
-{menuData === "profile" && (
-  <AdminProfile />
-)}
+              {menuData === "profile" && (
+                <AdminProfile />
+              )}
 
               {menuData === "Packageenquiry" && <Package />}
               {menuData === "Getallevent" && <Getevent />}
@@ -2502,6 +2545,7 @@ export default function VerticalTabs() {
               {menuData === "Home" && <AdminDashboard />}
               {menuData === "Agent Table" && <Tables />}
               {menuData === "User Table" && <Usertables />}
+              {menuData === "EventList" && <EventList/>}
               {menuData === "SubAdmin Table" && <SubAdminTable />}
               {menuData === "AgentRequest" && <AgentRequest />}
               {menuData === "Hotel CancelTicket" && <AgentCancelHotel />}

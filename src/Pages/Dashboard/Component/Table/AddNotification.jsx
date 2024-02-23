@@ -14,6 +14,7 @@ import { apiURL } from '../../../../Constants/constant';
 const AddNotification = () => {
     const [title, setTitle] = useState('');
     const [message, setMessage] = useState('');
+    const [imageUrl, setImageUrl] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -45,6 +46,7 @@ const AddNotification = () => {
 
         setTitle('');
         setMessage('');
+        setImageUrl('');
     };
 
     const handleSpecialNotification = async () => {
@@ -101,6 +103,27 @@ const AddNotification = () => {
                                 fullWidth
                                 multiline
                                 minRows={3}
+                                required
+                                InputProps={{
+                                    sx: {
+
+                                        backgroundColor: '#f9f9f9',
+                                    },
+                                }}
+                                InputLabelProps={{
+                                    shrink: true,
+                                    sx: {
+                                        color: '#4B587B',
+                                    },
+                                }}
+                            />
+                             <TextField
+                                label="Image_Url"
+                                value={imageUrl}
+                                onChange={(e) => setImageUrl(e.target.value)}
+                                fullWidth
+                                // multiline
+                                // minRows={3}
                                 required
                                 InputProps={{
                                     sx: {

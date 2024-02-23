@@ -106,6 +106,7 @@ const AllBusBooking = () => {
                   <GridToolbar />
                 </div>
               ),
+              Pagination:()=>null,
             }}
           />
         </Paper>

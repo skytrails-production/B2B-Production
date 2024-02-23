@@ -250,11 +250,25 @@ const MainPage = () => {
         location.pathname === "/addMarkup" ||
         location.pathname === "/addEvents" ||
         location.pathname === "/adminprofile" ||
-
-        location.pathname === "/admin/addCoupons" ||
+        location.pathname === "/subAdmin/dashboard/userflightchange" ||
+        location.pathname === "/subAdmin/dashboard/userhotelchange" ||
+        location.pathname === "/subAdmin/dashboard/userbuschange" ||
         location.pathname === "/subAdmin/dashboard/Agenttable" ||
+        location.pathname === "/subAdmin/dashboard/Usertable" ||
+        location.pathname === "/subAdmin/dashboard/AgentrequestTable" ||
+        location.pathname === "/admin/addCoupons" ||
         location.pathname === "/adminlogin" ||
         location.pathname === "/admin/addnotification" ||
+        location.pathname === "/subAdmin/dashboard/Agentflightcancel" ||
+        location.pathname === "/subAdmin/dashboard/Agenthotelcancel" ||
+        location.pathname === "/subAdmin/dashboard/Agentbuscancel"
+        ||
+        location.pathname === "/subAdmin/dashboard/Userflightcancel" ||
+        location.pathname === "/subAdmin/dashboard/Userbuscancel" ||
+        location.pathname === "/subAdmin/dashboard/Userhotelcancel" ||
+        location.pathname === "/subAdmin/dashboard/agentflightchange" ||
+        location.pathname === "/subAdmin/dashboard/agenthotelchange" ||
+        location.pathname === "/subAdmin/dashboard/agentbuschange" ||
         isFlightEticketPage ||
         isBusEticketPage ||
         isHotelEticketPage ? null : (
@@ -265,8 +279,13 @@ const MainPage = () => {
         location.pathname === "/contactus" ||
         location.pathname === "/privacypolicy" ||
         location.pathname === "/termAndCondition" ||
+        location.pathname === "/subAdmin/dashboard/Usertable" ||
+        location.pathname === "/subAdmin/dashboard/AgentrequestTable" ||
         location.pathname === "/refundPolicy" ||
         location.pathname === "/Login" ||
+        location.pathname === "/subAdmin/dashboard/userflightchange" ||
+        location.pathname === "/subAdmin/dashboard/userhotelchange" ||
+        location.pathname === "/subAdmin/dashboard/userbuschange" ||
         location.pathname === "/Registration" ||
         location.pathname === "/addMarkup" ||
         location.pathname === "/addEvents" ||
@@ -275,7 +294,15 @@ const MainPage = () => {
         location.pathname === "/admin/addnotification" ||
         location.pathname === "/subAdmin/dashboard/Agenttable" ||
         location.pathname === "/adminlogin" ||
-
+        location.pathname === "/subAdmin/dashboard/Agentflightcancel" ||
+        location.pathname === "/subAdmin/dashboard/Agenthotelcancel" ||
+        location.pathname === "/subAdmin/dashboard/Agentbuscancel" ||
+        location.pathname === "/subAdmin/dashboard/Userflightcancel" ||
+        location.pathname === "/subAdmin/dashboard/Userhotelcancel" ||
+        location.pathname === "/subAdmin/dashboard/Userbuscancel" ||
+        location.pathname === "/subAdmin/dashboard/agentflightchange" ||
+        location.pathname === "/subAdmin/dashboard/agenthotelchange" ||
+        location.pathname === "/subAdmin/dashboard/agentbuschange" ||
         isFlightEticketPage ||
         isBusEticketPage ||
         isHotelEticketPage ? null : (

@@ -7,12 +7,12 @@ import {
   Typography,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { apiURL } from "../../../../Constants/constant";
-import "./UserTable.css";
+import { apiURL } from "../../../Constants/constant";
+import "./Usertable.css";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-const Usertables = () => {
+const Usertable = () => {
   const [userData, setUserData] = useState([]);
   const [loading, setLoading] = useState(true);
   const pageSize = 10;
@@ -112,8 +112,8 @@ const Usertables = () => {
 
 
   return (
-    <div className="user-table-container" style={{ position: 'relative', width: "100%",marginTop:"100px" }}>
-      <div className="adsearch-bar" style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold' }}>
+    <div className="user-table-container" style={{ position: 'relative', width: "100%" }}>
+      <div className="adsearch-bar" style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold',backgroundColor:"#E73C33" }}>
         <TextField
           type="text"
           value={searchTerm}
@@ -142,11 +142,10 @@ const Usertables = () => {
           getRowId={(row) => row._id}
           components={{
             Toolbar: () => (
-              <div style={{ marginTop: "10px" }}>
+              <div style={{ marginTop: "10px"}}>
                 <GridToolbar />
               </div>
             ),
-            Pagination:()=>null,
           }}
         />
 
@@ -164,4 +163,4 @@ const Usertables = () => {
   );
 };
 
-export default Usertables;
+export default Usertable;
