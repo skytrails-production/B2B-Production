@@ -99,6 +99,7 @@ function RequireDocument() {
                 <GridToolbar />
               </div>
             ),
+            Pagination:()=>null,
           }}
         />
 

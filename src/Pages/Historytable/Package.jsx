@@ -176,6 +176,7 @@ function Package() {
                 <GridToolbar />
               </div>
             ),
+            Pagination:()=>null,
           }}
           getRowId={(row) => row._id}
         />

@@ -125,6 +125,7 @@ function Searchtable() {
                 <GridToolbar />
               </div>
             ),
+            Pagination:()=>null,
           }}
         />
       </div>

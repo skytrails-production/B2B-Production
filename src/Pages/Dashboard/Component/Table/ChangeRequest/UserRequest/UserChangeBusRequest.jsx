@@ -239,6 +239,7 @@ const AllBusChangeTickets = () => {
                   <GridToolbar />
                 </div>
               ),
+              Pagination:()=>null,
             }}
           />
 

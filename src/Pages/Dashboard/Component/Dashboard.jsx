@@ -1184,7 +1184,7 @@ export default function VerticalTabs() {
                             justifyContent: "center",
                           }}
                         >
-                          <AccountBoxIcon sx={{ color: "white" }} />
+                          <HotelIcon sx={{ color: "white" }} />
                         </ListItemIcon>
 
                         <ListItemText
@@ -1217,7 +1217,7 @@ export default function VerticalTabs() {
                             justifyContent: "center",
                           }}
                         >
-                          <AccountBoxIcon sx={{ color: "white" }} />
+                          <AirplaneTicketIcon sx={{ color: "white" }} />
                         </ListItemIcon>
 
                         <ListItemText
@@ -1250,7 +1250,7 @@ export default function VerticalTabs() {
                             justifyContent: "center",
                           }}
                         >
-                          <AccountBoxIcon sx={{ color: "white" }} />
+                          <DirectionsBusIcon  sx={{ color: "white" }} />
                         </ListItemIcon>
 
                         <ListItemText
@@ -1879,7 +1879,7 @@ export default function VerticalTabs() {
                   <AccountBoxIcon sx={{ color: "white" }} />
                 </ListItemIcon>
                 <ListItemText
-                  primary="USER Bookings"
+                  primary="User Bookings"
                   sx={{ opacity: open ? 1 : 0, color: "white", marginLeft: "20px" }}
                 />
               </ListItemButton>
@@ -2058,7 +2058,7 @@ export default function VerticalTabs() {
                     justifyContent: "center",
                   }}
                 >
-                  <AirplaneTicketIcon sx={{ color: "white" }} />
+                  <AirplanemodeActiveIcon sx={{ color: "white" }} />
                 </ListItemIcon>
                 <ListItemText
                   primary="fixedDeparture"

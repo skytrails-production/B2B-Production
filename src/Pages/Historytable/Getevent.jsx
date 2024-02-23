@@ -183,6 +183,7 @@ const AllEventsTable = () => {
                 <GridToolbar />
               </div>
             ),
+            Pagination:()=>null,
           }}
         />
       </div>

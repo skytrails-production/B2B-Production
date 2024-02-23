@@ -216,6 +216,7 @@ const UserHotelCancel = () => {
                   <GridToolbar />
                 </div>
               ),
+              Pagination:()=>null,
             }}
           />
         )}

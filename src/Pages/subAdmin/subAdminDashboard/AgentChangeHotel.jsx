@@ -132,6 +132,7 @@ const AgentChangeHotel = () => {
                 <GridToolbar />
               </div>
             ),
+            Pagination:()=>null,
           }}
         />
       </div>

@@ -179,6 +179,7 @@ const AllHotelCancelTickets = () => {
                 <GridToolbar />
               </div>
             ),
+            Pagination:()=>null,
           }}
         />
       </div>

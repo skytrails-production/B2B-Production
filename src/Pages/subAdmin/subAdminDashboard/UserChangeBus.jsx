@@ -239,6 +239,7 @@ const UserChangeBus = () => {
                   <GridToolbar />
                 </div>
               ),
+              Pagination:()=>null,
             }}
           />
 

@@ -140,6 +140,7 @@ const AllWebAdvertisement = () => {
                     <GridToolbar />
                   </div>
                 ),
+                Pagination:()=>null,
               }}
             />
           )}

@@ -238,6 +238,7 @@ const AllFlightCancelTicketsUser = () => {
                 <GridToolbar />
               </div>
             ),
+            Pagination:()=>null,
           }}
         />
       </div>

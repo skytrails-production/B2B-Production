@@ -188,6 +188,7 @@ const AllBusCancelTickets = () => {
                 <GridToolbar />
               </div>
             ),
+            Pagination:()=>null,
           }}
         />
       </div>

@@ -237,6 +237,7 @@ const AllAdvertisementTable = () => {
                   <GridToolbar />
                 </div>
               ),
+              Pagination:()=>null,
             }}
           />
         )}

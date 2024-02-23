@@ -156,6 +156,7 @@ const UserChangeFlight = () => {
                 <GridToolbar />
               </div>
             ),
+            Pagination:()=>null,
           }}
           style={{ width: "100%" }}
         />

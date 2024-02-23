@@ -238,6 +238,7 @@ const UserFlightCancel = () => {
                 <GridToolbar />
               </div>
             ),
+            Pagination:()=>null,
           }}
         />
       </div>

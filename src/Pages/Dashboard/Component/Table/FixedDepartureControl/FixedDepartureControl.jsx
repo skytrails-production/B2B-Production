@@ -174,6 +174,7 @@ const FixedDepartureControl = () => {
                   <GridToolbar />
                 </div>
               ),
+              Pagination:()=>null,
             }}
           />
         )}

@@ -178,6 +178,7 @@ const  UserChangeHotel = () => {
                 <GridToolbar />
               </div>
             ),
+            Pagination:()=>null,
           }}
         />
       </div>

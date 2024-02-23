@@ -242,6 +242,7 @@ const AllFlightChangeTickets = () => {
                 <GridToolbar />
               </div>
             ),
+            Pagination:()=>null,
           }}
         />
       </div>

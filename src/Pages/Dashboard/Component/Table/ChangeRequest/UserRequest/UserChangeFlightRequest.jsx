@@ -156,6 +156,7 @@ const AllFlightChangeTickets = () => {
                 <GridToolbar />
               </div>
             ),
+            Pagination:()=>null,
           }}
           style={{ width: "100%" }}
         />
