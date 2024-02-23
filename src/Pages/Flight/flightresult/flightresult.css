@@ -186,7 +186,7 @@
   margin-bottom: 10px !important;
 }
 
-.fareFilter>div {
+.fareFilter > div {
   display: flex;
   flex-direction: row;
   gap: 15px;
@@ -211,7 +211,7 @@
   margin-bottom: 10px !important;
 }
 
-.airlinesFilter>div {
+.airlinesFilter > div {
   display: flex;
   flex-direction: row;
   gap: 15px;
@@ -236,7 +236,7 @@
   margin-bottom: 10px !important;
 }
 
-.cheapestFilter>div {
+.cheapestFilter > div {
   display: flex;
   flex-direction: row;
   gap: 15px;
@@ -261,7 +261,7 @@
   margin-bottom: 10px !important;
 }
 
-.outboundFilter>div {
+.outboundFilter > div {
   display: flex;
   flex-direction: row;
   gap: 15px;
@@ -306,7 +306,7 @@
   width: 100%;
 }
 
-.innerFilter>p {
+.innerFilter > p {
   color: #b03737;
   font-family: "Montserrat";
   font-size: 16px;
@@ -366,11 +366,11 @@
   font-size: normal !important;
 }
 
-.checkmark .sidebar-label-container:hover input~.checkmark {
+.checkmark .sidebar-label-container:hover input ~ .checkmark {
   background-color: #ccc;
 }
 
-.sidebar-label-container input:checked~.checkmark {
+.sidebar-label-container input:checked ~ .checkmark {
   background-color: #e73c33 !important;
 }
 
@@ -380,7 +380,7 @@
   display: none;
 }
 
-.sidebar-label-container input:checked~.checkmark:after {
+.sidebar-label-container input:checked ~ .checkmark:after {
   display: block;
 }
 
@@ -608,7 +608,7 @@ Aesthetics
   color: #e73c33;
 }
 
-.AirelinesFilter>div {
+.AirelinesFilter > div {
   padding-right: 5px;
   border-radius: 4px;
   color: rgb(0 0 0/0.85);
@@ -647,8 +647,6 @@ Aesthetics
   cursor: pointer;
 } */
 
-
-
 .checkedSVG svg {
   fill: gray;
   transition: all 0.1s;
@@ -662,7 +660,19 @@ Aesthetics
   margin-bottom: 10px;
 }
 
-.busDepartureMain>div {
+.searchBarPackageFOrm {
+  margin-bottom: 15px;
+}
+
+.PackageDepartureMain {
+  /* display: flex; */
+  padding: 14px 8px;
+  background: #eee;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.busDepartureMain > div {
   display: grid;
   grid-template-columns: auto auto;
   gap: 10px;
@@ -677,7 +687,7 @@ Aesthetics
   padding: 6px;
 }
 
-.svgBOx>div {
+.svgBOx > div {
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -689,15 +699,13 @@ Aesthetics
   border: 1px solid #d90429 !important;
 }
 
-.sidebar-label-container:has(input:checked)>div .checkedSVG svg {
+.sidebar-label-container:has(input:checked) > div .checkedSVG svg {
   fill: #d90429;
 }
 
-.sidebar-label-container:has(input:checked)>div span {
+.sidebar-label-container:has(input:checked) > div span {
   color: #d90429;
 }
-
-
 
 .svgBOx span {
   font-size: 13px;
@@ -721,7 +729,12 @@ Aesthetics
   padding-right: 0 !important;
 }
 
-
 .busDepartureMain .sidebar-label-container {
   margin-bottom: 0 !important;
+}
+
+.exceptionalFlex {
+  display: flex !important;
+  flex-direction: row-reverse !important;
+  justify-content: space-between !important;
 }
