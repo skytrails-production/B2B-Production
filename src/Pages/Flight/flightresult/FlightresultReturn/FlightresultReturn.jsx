@@ -17,6 +17,9 @@ import FlightLoader from "../../FlightLoader/FlightLoader";
 
 import "./FlightresultReturn.css";
 import Flightnavbar from "../../Flightnavbar";
+
+
+
 const FlightresultReturn = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -29,7 +32,7 @@ const FlightresultReturn = () => {
       navigate("/")
     }
   }, [result])
-  
+
   // console.log(result, "resultCheck", reducerState)
   let initialGoFlight;
   let initialReturnFlight;
@@ -57,10 +60,10 @@ const FlightresultReturn = () => {
     setOngoFlight(initialGoFlight);
     setIncomeFlight(initialReturnFlight);
   }, [initialGoFlight, initialReturnFlight]);
-  useEffect(()=>{
+  useEffect(() => {
     sessionStorage.setItem("flightDetailsONGo", JSON.stringify(initialGoFlight));
     sessionStorage.setItem("flightDetailsIncome", JSON.stringify(initialReturnFlight));
-  },[])
+  }, [])
 
 
 
@@ -257,196 +260,6 @@ const FlightresultReturn = () => {
           </div>
         </div>
       </div>
-      {/* </div> */}
-      {/* </div> */}
-
-
-
-
-      {/* <Box
-        display={"flex"}
-        gap={"10px"}
-        justifyContent={"center"}
-        className="bokesh"
-      >
-        <Box
-          backgroundColor="#BBBBBB"
-          paddingX="8px"
-          paddingY="8px"
-          borderRadius="10px"
-          width="-webkit-autofill"
-          marginTop="10px"
-          marginBottom="10px"
-        >
-          <Box
-            backgroundColor="#FFFFFF"
-            height="104px"
-            padding="24px"
-            display="flex"
-            width="442px"
-            justifyContent="center"
-            alignItems="center"
-            flexDirection="column"
-            mt="5px"
-            borderRadius="8px"
-          >
-            <Box>
-              <Typography
-                className="flight_price_total"
-                variant="h1"
-                component="h2"
-              >
-                {origin} <ArrowRightAltIcon /> {destination} {onGoingTime}
-              </Typography>
-            </Box>
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              width="400px"
-              alignItems="center"
-              fontSize="10px"
-              mt="8px"
-              color="#071C2C"
-            >
-              <Box
-                border="1px solid #071C2C"
-                flex={1}
-                style={{
-                  fontWeight: "500",
-                  fontSize: "12px",
-                }}
-                textAlign="center"
-              >
-                Duration
-              </Box>
-              <Box
-                border="1px solid #071C2C"
-                flex={1}
-                style={{
-                  fontWeight: "500",
-                  fontSize: "12px",
-                }}
-                textAlign="center"
-              >
-                Arrival
-              </Box>
-              <Box
-                border="1px solid #071C2C"
-                flex={1}
-                style={{
-                  fontWeight: "500",
-                  fontSize: "12px",
-                }}
-                textAlign="center"
-              >
-                Price
-              </Box>
-              <Box
-                border="1px solid #071C2C"
-                flex={1}
-                textAlign="center"
-                style={{
-                  fontWeight: "500",
-                  fontSize: "12px",
-                }}
-              >
-                Departure
-              </Box>
-            </Box>
-          </Box>
-
-
-
-          <FlightresultOne sendDataToParent={receiveChildData} />
-        </Box>
-        <Box
-          backgroundColor="#BBBBBB"
-          paddingX="8px"
-          paddingY="8px"
-          marginTop="10px"
-          marginBottom="10px"
-          borderRadius="10px"
-        >
-          <Box
-            backgroundColor="#FFFFFF"
-            height="104px"
-            padding="24px"
-            display="flex"
-            width="100%"
-            justifyContent="center"
-            alignItems="center"
-            flexDirection="column"
-            mt="5px"
-            borderRadius="8px"
-          >
-            <Box>
-              <Typography
-                className="flight_price_total"
-                variant="h1"
-                component="h2"
-              >
-                {destination} <ArrowRightAltIcon /> {origin} {onComingTime}
-              </Typography>
-            </Box>
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              flex={1}
-              width="100%"
-              alignItems="center"
-              fontSize="10px"
-              mt="8px"
-              color="#071C2C"
-            >
-              <Box
-                border="1px solid #071C2C"
-                flex={1}
-                style={{
-                  fontWeight: "500",
-                  fontSize: "12px",
-                }}
-                textAlign="center"
-              >
-                Duration
-              </Box>
-              <Box
-                border="1px solid #071C2C"
-                flex={1}
-                style={{
-                  fontWeight: "500",
-                  fontSize: "12px",
-                }}
-                textAlign="center"
-              >
-                Arrival
-              </Box>
-              <Box
-                border="1px solid #071C2C"
-                flex={1}
-                style={{
-                  fontWeight: "500",
-                  fontSize: "12px",
-                }}
-                textAlign="center"
-              >
-                Price
-              </Box>
-              <Box
-                border="1px solid #071C2C"
-                flex={1}
-                textAlign="center"
-                style={{
-                  fontWeight: "500",
-                  fontSize: "12px",
-                }}
-              >
-                Departure
-              </Box>
-            </Box>
-          </Box>
-          <FlightReturn sendDataToParent={receiveChildData} />
-        </Box>
-      </Box> */}
 
 
       {/* fixed bottom  */}
