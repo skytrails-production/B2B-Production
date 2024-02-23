@@ -351,7 +351,7 @@ export default function Tables() {
   };
   return (
     <>
-      <div className="user-table-container" style={{marginTop:"100px"}}>
+      <div className="user-table-container">
         <div className="adminseacrch">
           <TextField
             type="text"

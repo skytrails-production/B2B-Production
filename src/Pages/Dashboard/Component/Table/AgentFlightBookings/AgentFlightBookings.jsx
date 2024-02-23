@@ -171,7 +171,6 @@ const AllFlightBooking = () => {
                   <GridToolbar />
                 </div>
               ),
-              Pagination:()=>null,
             }}
           />
         </Paper>

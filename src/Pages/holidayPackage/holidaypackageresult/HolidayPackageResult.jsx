@@ -119,177 +119,61 @@ const HolidayPackageResult = () => {
 
   const [selectedCategory, setSelectedCategory] = useState([]);
 
-  const [searchInput, setSearchInput] = useState('');
-
-
-  const maxPrice = filteredPackage?.reduce((max, hotel) => {
-    return Math.max(max, hotel?.pakage_amount?.amount || 0);
-  }, 0);
-  const minPrice = filteredPackage?.reduce((min, hotel) => {
-    return Math.min(min, hotel?.pakage_amount?.amount || Infinity);
-  }, Infinity);
-
-  // console.log(maxPrice, "max pric")
-  const [priceRangeValue, setPriceRangeValue] = useState(maxPrice + 5001)
-
-  const handlePriceRangeChange = (event) => {
-    setPriceRangeValue(event.target.value);
-  };
-
-
-  useEffect(() => {
-    setPriceRangeValue(maxPrice + 5001);
-  }, [maxPrice])
-
-
-
-  const handleSearchChange = (event) => {
-    setSearchInput(event.target.value);
-  };
-
   const handleRadioChange = (event) => {
-    setSearchInput('');
     const selectedValue = event.target.value;
-    const radioGroupName = event.target.name;
-
     if (selectedValue === "All") {
       setSelectedCategory([]);
-      document.querySelectorAll('input[type="checkbox"]').forEach((radio) => {
-        radio.checked = false;
+      document.querySelectorAll('input[name="test"]').forEach((checkbox) => {
+        checkbox.checked = false;
       });
-      return
+    } else {
+      // If other checkbox is selected, update selectedCategory as before
+      setSelectedCategory((prevSelectedCategory) => {
+        if (prevSelectedCategory.includes(selectedValue)) {
+          return prevSelectedCategory.filter((value) => value !== selectedValue);
+        } else {
+          return [...prevSelectedCategory, selectedValue];
+        }
+      });
     }
-
-    setSelectedCategory((prevSelectedCategory) => {
-      let updatedCategory = [...prevSelectedCategory];
-      const isValueSelected = updatedCategory.some(
-        (category) => category === `${radioGroupName}:${selectedValue}`
-      );
-      updatedCategory = isValueSelected
-        ? updatedCategory.filter(
-          (category) => category !== `${radioGroupName}:${selectedValue}`
-        )
-        : [
-          ...updatedCategory.filter(
-            (category) => !category.startsWith(`${radioGroupName}:`)
-          ),
-          `${radioGroupName}:${selectedValue}`,
-        ];
-
-      return updatedCategory;
-    });
   };
-
-  // const handleRadioChange = (event) => {
-  //   const selectedValue = event.target.value;
-  //   if (selectedValue === "All") {
-  //     setSelectedCategory([]);
-  //     document.querySelectorAll('input[name="test"]').forEach((checkbox) => {
-  //       checkbox.checked = false;
-  //     });
-  //   } else {
-  //     // If other checkbox is selected, update selectedCategory as before
-  //     setSelectedCategory((prevSelectedCategory) => {
-  //       if (prevSelectedCategory.includes(selectedValue)) {
-  //         return prevSelectedCategory.filter((value) => value !== selectedValue);
-  //       } else {
-  //         return [...prevSelectedCategory, selectedValue];
-  //       }
-  //     });
-  //   }
-  // };
 
 
 
   // console.log(filteredPackage, "filtered package");
-  // const sortedAndFilteredResults = filteredPackage?.filter((item) => {
-  //   const publishedPrice = item?.pakage_amount.amount;
-  //   const noOfDays = item?.days;
-  //   const starRating = item?.StarRating;
-  //   const categoryFilters = selectedCategory?.map((category) => {
-  //     switch (category) {
-
-  //       case "0-3Days":
-  //         return noOfDays >= 0 && noOfDays <= 3;
-  //       case "4-7Days":
-  //         return noOfDays >= 4 && noOfDays <= 7;
-  //       case "7-12Days":
-  //         return noOfDays >= 7 && noOfDays <= 12;
-  //       case "12-20Days":
-  //         return noOfDays >= 12 && noOfDays <= 20;
-  //       case "20-30Days":
-  //         return noOfDays >= 20 && noOfDays <= 30;
-  //       case "5000":
-  //         return publishedPrice <= 5000;
-  //       case "5001":
-  //         return publishedPrice > 5000 && publishedPrice <= 10000;
-  //       case "10001":
-  //         return publishedPrice > 10000 && publishedPrice <= 15000;
-  //       case "15001":
-  //         return publishedPrice > 15000 && publishedPrice <= 20000;
-  //       case "20000":
-  //         return publishedPrice > 20000;
-  //       default:
-  //         return false;
-  //     }
-  //   });
-
-  //   return categoryFilters?.every((filter) => filter);
-  // })?.sort((a, b) =>
-  //   sortOption === "lowToHigh"
-  //     ? a?.pakage_amount.amount - b?.pakage_amount.amount
-  //     : b?.pakage_amount.amount - a?.pakage_amount.amount
-  // );
-
   const sortedAndFilteredResults = filteredPackage?.filter((item) => {
-    const packageName = item?.pakage_title?.toLowerCase();
-    const filteredDestinations = item?.destination?.map(destinationItem =>
-      destinationItem?.addMore.toLowerCase()
-    );
-
-    // const publishedPrice = item?.pakage_amount?.amount;
+    const publishedPrice = item?.pakage_amount.amount;
     const noOfDays = item?.days;
-    // const starRating = item?.StarRating;
+    const starRating = item?.StarRating;
     const categoryFilters = selectedCategory?.map((category) => {
-      const [groupName, value] = category.split(':');
-      switch (groupName) {
-        case "days":
-          switch (value) {
-            case "0-3Days":
-              return noOfDays >= 0 && noOfDays <= 3;
-            case "4-7Days":
-              return noOfDays >= 4 && noOfDays <= 7;
-            case "7-12Days":
-              return noOfDays >= 7 && noOfDays <= 12;
-            case "12-20Days":
-              return noOfDays >= 12 && noOfDays <= 20;
-            case "20-30Days":
-              return noOfDays >= 20 && noOfDays <= 30;
-          }
-        // case "price":
-        //   switch (value) {
-        //     case "25000":
-        //       return publishedPrice <= 25000;
-        //     case "25001":
-        //       return publishedPrice > 25001 && publishedPrice <= 50000;
-        //     case "50001":
-        //       return publishedPrice > 50001 && publishedPrice <= 75000;
-        //     case "75001":
-        //       return publishedPrice > 75001 && publishedPrice <= 100000;
-        //     case "100000":
-        //       return publishedPrice > 100000;
-        //   }
+      switch (category) {
 
+        case "0-3Days":
+          return noOfDays >= 0 && noOfDays <= 3;
+        case "4-7Days":
+          return noOfDays >= 4 && noOfDays <= 7;
+        case "7-12Days":
+          return noOfDays >= 7 && noOfDays <= 12;
+        case "12-20Days":
+          return noOfDays >= 12 && noOfDays <= 20;
+        case "20-30Days":
+          return noOfDays >= 20 && noOfDays <= 30;
+        case "5000":
+          return publishedPrice <= 5000;
+        case "5001":
+          return publishedPrice > 5000 && publishedPrice <= 10000;
+        case "10001":
+          return publishedPrice > 10000 && publishedPrice <= 15000;
+        case "15001":
+          return publishedPrice > 15000 && publishedPrice <= 20000;
+        case "20000":
+          return publishedPrice > 20000;
         default:
           return false;
       }
     });
 
-    const searchInputLower = searchInput?.toLowerCase();
-    const packageNameMatch = packageName?.includes(searchInputLower);
-    const destinationMatch = filteredDestinations?.some(dest => dest.includes(searchInputLower));
-    const priceInRange = item?.pakage_amount?.amount <= priceRangeValue;
-    return categoryFilters?.every((filter) => filter) && (packageNameMatch || destinationMatch) && priceInRange;
+    return categoryFilters?.every((filter) => filter);
   })?.sort((a, b) =>
     sortOption === "lowToHigh"
       ? a?.pakage_amount.amount - b?.pakage_amount.amount
@@ -297,12 +181,6 @@ const HolidayPackageResult = () => {
   );
 
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [sortedAndFilteredResults])
-
-
-// console.log("sortedAndFilteredResults",sortedAndFilteredResults);
 
 
 
@@ -334,7 +212,7 @@ const HolidayPackageResult = () => {
                     textAlign: 'center'
 
                   }} ><FilterAltIcon style={{ fontWeight: "600", fontFamily: "Montserrat", fontSize: '14px' }} /> Filter</Typography>
-                  {/* <Typography style={{ color: '#0048FF', textDecoration: 'underline' }}>clear all</Typography> */}
+                  <Typography style={{ color: '#0048FF', textDecoration: 'underline' }}>clear all</Typography>
                 </div>
               </AccordionSummary>
               <AccordionDetails>
@@ -342,7 +220,7 @@ const HolidayPackageResult = () => {
                   <div className="filterTitle">
                     <p>Select Filters</p>
                   </div>
-                  {/* <div className="innerFilter">
+                  <div className="innerFilter">
 
 
                     <div>
@@ -420,160 +298,7 @@ const HolidayPackageResult = () => {
 
 
 
-                  </div> */}
-
-
-
-                  <div className="innerFilter">
-
-                <div>
-                  <label className="sidebar-label-container ps-0" style={{paddingLeft:"35px"}}>
-                    <input
-                      type="checkbox"
-                      onChange={handleRadioChange}
-                      value="All"
-                      name="test"
-                      checked={selectedCategory.includes("test:All")}
-                    />
-                    {/* <span className="checkmark"></span> */}
-                    <span style={{ color: selectedCategory.length > 0 ? "red" : "gray" }}>Clear Filter</span>
-                  </label>
-
-                </div>
-
-                <div className="searchBarPackageFOrm">
-                  <input
-                    type="text"
-                    placeholder="Search by Name or Destination"
-                    className="inputSearch searchBarPackageFOrm"
-                    value={searchInput}
-                    style={{width:"100%"}}
-                    onChange={handleSearchChange}
-                  />
-                </div>
-
-                {/* <div>
-                  <h2 className="sidebar-title">Sort By</h2>
-                  <select className="highSelect"
-                    value={sortOption}
-                    onChange={handleSortChange}>
-                    <option value="lowToHigh">Low to High</option>
-                    <option value="highToLow">High to Low</option>
-                  </select>
-                </div> */}
-
-                <div className="busDepartureMain">
-                  <h2 className="sidebar-title">Sort By</h2>
-                  <select
-                    className="highSelect"
-                    style={{width:"100%"}}
-                    value={sortOption}
-                    onChange={handleSortChange}
-                  >
-                    <option value="lowToHigh">Low to High</option>
-                    <option value="highToLow">High to Low</option>
-                  </select>
-                </div>
-
-
-                <div className="PackageDepartureMain">
-                  <h2 className="sidebar-title">By Price</h2>
-                  <div>
-                    <input
-                      type="range"
-                      min={minPrice + 1}
-                      max={maxPrice + 5001}
-                      step="5000"
-                      value={priceRangeValue}
-                      onChange={handlePriceRangeChange}
-                    />
-                    <span>Max price ₹{""}{priceRangeValue}</span>
                   </div>
-                  <Divider sx={{ marginBottom: "15px", backgroundColor: "gray" }} />
-                </div>
-
-                <div>
-                  <h2 className="sidebar-title">By Days</h2>
-                  <div>
-                    {[
-                      { value: "0-3Days", label: "0-3 Days" },
-                      { value: "4-7Days", label: "4-7 Days" },
-                      { value: "7-12Days", label: "7-12 Days" },
-                      { value: "12-20Days", label: "12-20 Days" },
-                      { value: "20-30Days", label: "20-30 Days" }
-                    ].map((duration, index) => {
-                      const itemCount = filteredPackage?.filter(item => {
-                        const noOfDays = item?.days;
-                        switch (duration.value) {
-                          case "0-3Days":
-                            return noOfDays >= 0 && noOfDays <= 3;
-                          case "4-7Days":
-                            return noOfDays >= 4 && noOfDays <= 7;
-                          case "7-12Days":
-                            return noOfDays >= 7 && noOfDays <= 12;
-                          case "12-20Days":
-                            return noOfDays >= 12 && noOfDays <= 20;
-                          case "20-30Days":
-                            return noOfDays >= 20 && noOfDays <= 30;
-                          default:
-                            return false;
-                        }
-                      }).length;
-
-                      return (
-                        <label className="sidebar-label-container exceptionalFlex" key={index} style={{paddingLeft:"35px"}}>
-                          <input
-                            type="checkbox"
-                            onChange={handleRadioChange}
-                            value={duration.value}
-                            name="days"
-                            checked={selectedCategory.includes(`days:${duration.value}`)}
-                          />
-                          <span>({itemCount})</span>
-                          <span className="checkmark"></span>{duration.label}
-                        </label>
-                      );
-                    })}
-                  </div>
-                  <Divider sx={{ marginBottom: "15px", backgroundColor: "gray" }} />
-                </div>
-
-                {/* <div>
-                  <h2 className="sidebar-title">By Price</h2>
-                  <div>
-                    {[
-                      { value: "25000", min: 0, max: 25000, label: "₹ 0-25,000" },
-                      { value: "25001", min: 25000, max: 50000, label: "₹25,000-50,000" },
-                      { value: "50001", min: 50000, max: 75000, label: "₹50,000-75,000" },
-                      { value: "75001", min: 75000, max: 100000, label: "₹75,000-1,00,000" },
-                      { value: "100000", min: 100000, max: Infinity, label: "₹1,00,000 and Above" }
-                    ].map((priceRange, index) => {
-                      const itemCount = filteredPackage?.filter(item =>
-                        item?.pakage_amount.amount >= priceRange.min && item?.pakage_amount.amount <= priceRange.max
-                      ).length;
-
-                      return (
-                        <label className="sidebar-label-container exceptionalFlex" key={index}>
-                          <input
-                            type="checkbox"
-                            onChange={handleRadioChange}
-                            value={priceRange.value}
-                            name="price"
-                            checked={selectedCategory.includes(`price:${priceRange.value}`)}
-                          />
-                          <span>({itemCount})</span>
-                          <span className="checkmark"></span>{priceRange.label}
-                        </label>
-                      );
-                    })}
-                  </div>
-                  <Divider sx={{ marginBottom: "15px", backgroundColor: "gray" }} />
-                </div> */}
-              </div>
-
-
-
-
                 </div>
               </AccordionDetails>
             </Accordion>

@@ -114,7 +114,6 @@ const AllBusBooking = () => {
                     <GridToolbar />
                   </div>
                 ),
-                Pagination:()=>null,
               }}
              
 

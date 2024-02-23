@@ -112,7 +112,7 @@ const Usertables = () => {
 
 
   return (
-    <div className="user-table-container" style={{ position: 'relative', width: "100%",marginTop:"100px" }}>
+    <div className="user-table-container" style={{ position: 'relative', width: "100%" }}>
       <div className="adsearch-bar" style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold' }}>
         <TextField
           type="text"
@@ -146,7 +146,6 @@ const Usertables = () => {
                 <GridToolbar />
               </div>
             ),
-            Pagination:()=>null,
           }}
         />
 
