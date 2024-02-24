@@ -1,0 +1,160 @@
+/* Define variables */
+
+  /* Apply styles */
+ 
+  
+  .containernotification {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: var(--green);
+  }
+  
+  p {
+    margin: 0;
+    font-weight: 500;
+    text-align: center;
+    line-height: var(--height);
+    font-size: 18px;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.2s ease-out, visibility 0.2s ease-out;
+    position: relative;
+    z-index: 99;
+  }
+  
+  p#incomplete-label {
+    cursor: pointer;
+  }
+  
+  form {
+    background-color: var(--white);
+    height: var(--height);
+    border-radius: calc(var(--height) / 2);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    color: var(--green);
+    cursor: pointer;
+    width: 300px;
+    transition: width 0.3s ease-in-out;
+    box-shadow: 1px 1px 3px 2px rgba(50, 50, 50, 0.3);
+  }
+  
+  form.closed {
+    width: 150px;
+  }
+  
+  form.closed input {
+    opacity: 0;
+    visibility: hidden;
+  }
+  
+  form.open p {
+    opacity: 0;
+    visibility: hidden;
+    z-index: -1;
+  }
+  
+  form.open input {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  input[type="email"] {
+    position: absolute;
+    top: 3px;
+    left: 10px;
+    height: calc(var(--height) - 10px);
+    border-radius: calc((var(--height) - 10px) / 2);
+    font-size: 18px;
+    border: 0;
+    width: calc(100% - 80px);
+    color: var(--green);
+    font-weight: 500;
+    transition: opacity 0.2s ease-in-out 0.3s, visibility 0.2s ease-in-out 0.3s;
+  }
+  
+  input[type="email"]:focus {
+    outline: 0;
+  }
+  
+  input[type="submit"] {
+    appearance: none;
+    border: 0;
+    background-color: var(--green);
+    position: absolute;
+    right: 0;
+    color: rgba(255, 255, 255, 0.1);
+    top: 5px;
+    height: calc(var(--height) - 10px);
+    border-radius: calc((var(--height) - 10px) / 2);
+    right: 5px;
+    padding: 10px 15px;
+    font-weight: 500;
+    transition: opacity 0.1s ease-in-out 0.4s, visibility 0.1s ease-in-out 0.4s, background-color 0.2s ease-in-out;
+    cursor: default;
+  }
+  
+  input[type="submit"]:focus {
+    outline: 0;
+  }
+  
+  form.valid input[type="submit"] {
+    color: var(--white);
+    cursor: pointer;
+  }
+  
+  form.complete {
+    width: 150px;
+    transition: width 0.3s ease-in-out 0.4s;
+  }
+  
+  form.complete #complete-label {
+    visibility: visible;
+    opacity: 1;
+    top: 0;
+    cursor: default;
+    z-index: 1;
+    transition: opacity 0.2s ease-in-out 0.8s, visibility 0.2s ease-in-out 0.8s;
+    position: absolute;
+    margin: 0 auto;
+    text-align: center;
+    left: 0;
+    right: 0;
+  }
+  
+  form.complete input {
+    visibility: hidden;
+    opacity: 0;
+  }
+  
+  form.complete input[type="text"] {
+    transition: visibility 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  }
+  
+  form.complete input[type="submit"] {
+    transition: visibility 0.2s ease-in-out 0.1s, opacity 0.2s ease-in-out 0.1s;
+  }
+  
+  h1 {
+    color: var(--white);
+    margin-top: 0;
+    padding-top: 25px;
+    text-align: center;
+    margin-bottom: 0;
+  }
+  
+  p.subtitle {
+    color: var(--white);
+    margin-top: 5px;
+    font-weight: 400;
+  }
+  
+  p.subtitle a {
+    color: var(--white);
+  }
+  

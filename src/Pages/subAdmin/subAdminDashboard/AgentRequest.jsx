@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { DataGrid,GridToolbarColumnsButton,GridToolbarExport } from '@mui/x-data-grid';
 import {
   TextField,
   InputAdornment,
@@ -213,7 +213,13 @@ const AllAdvertisementTable = () => {
       </div>
       <div style={{ width: "100%", backgroundColor: "#fff" }}>
         {loading ? (
-          <div className="loading-message">Loading...</div>
+          <div className="loading-message" style={{
+            fontSize: '18px',
+            color: '#555',
+            textAlign: 'center',
+            marginTop: '20px',
+
+          }}>Loading...</div>
         ) : filteredData.length === 0 ? (
 
 
@@ -234,9 +240,11 @@ const AllAdvertisementTable = () => {
             components={{
               Toolbar: () => (
                 <div style={{ marginTop: '10px' }}>
-                  <GridToolbar />
-                </div>
+                <GridToolbarColumnsButton />
+                <GridToolbarExport/>
+              </div>
               ),
+              Pagination: () => null,
             }}
           />
         )}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { DataGrid,GridToolbar } from '@mui/x-data-grid';
+import { DataGrid,GridToolbarColumnsButton,GridToolbarExport } from '@mui/x-data-grid';
 import {
   TextField,
   InputAdornment,
@@ -12,6 +12,7 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import ApprovalIcon from '@mui/icons-material/CheckCircleOutline';
 import { apiURL } from '../../../Constants/constant';
+
 const  UserChangeHotel = () => {
   const [hotelBookings, setHotelBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -144,7 +145,7 @@ const  UserChangeHotel = () => {
   ];
 
   return (
-    <div className="subada-table-container" style={{ position: 'relative', width: "100%" }}>
+    <div className="subada-table-container" style={{ position: 'relative', width: "100%",marginTop:"-15px" }}>
       <div className="adsearch-bar" style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold',backgroundColor:"#E73C33" }}>
         <TextField
           type="text"
@@ -175,10 +176,13 @@ const  UserChangeHotel = () => {
           components={{
             Toolbar: () => (
               <div style={{ marginTop: '10px' }}>
-                <GridToolbar />
+                <GridToolbarColumnsButton />
+                <GridToolbarExport/>
               </div>
             ),
-            Pagination:()=>null,
+
+            Pagination: () => null,
+
           }}
         />
       </div>

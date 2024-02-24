@@ -11,11 +11,11 @@ import {
   Pagination,
   Button
 } from '@mui/material';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid,GridToolbarColumnsButton,GridToolbarExport } from '@mui/x-data-grid';
 import ApprovalIcon from '@mui/icons-material/CheckCircleOutline';
 import SearchIcon from '@mui/icons-material/Search';
 import { apiURL } from '../../../Constants/constant';
- // Import your flight bookings CSS if needed
+// Import your flight bookings CSS if needed
 import Swal from 'sweetalert2';
 import './Agenttable.css';
 const UserFlightCancel = () => {
@@ -76,20 +76,23 @@ const UserFlightCancel = () => {
 
   const handleShowAlert = (booking) => {
     const row = booking;
-    const passengerCount = row.flightDetails?.passengerDetails.length;
-    const passengerDetailsHtml = row.flightDetails?.passengerDetails.map(passenger => `
+    const passengerCount = row.flightDetails?.passengerDetails?.length || 0;
+    const passengerDetailsHtml = row.flightDetails?.passengerDetails?.length > 0 ?
+      row.flightDetails.passengerDetails.map(passenger => `
     <div class="passenger-details" style="font-size: 14px;">
-    <div><strong>Title:</strong> ${passenger.title}</div>
-    <div><strong>First Name:</strong> ${passenger.firstName}</div>
-    <div><strong>Last Name:</strong> ${passenger.lastName}</div>
-    <div><strong>Email:</strong> ${passenger.email || 'No Data'}</div>
-    <div><strong>Phone:</strong> ${passenger.ContactNo || 'No Data'}</div>
-    <div><strong>Address:</strong> ${passenger.city || 'No Data'}</div>
-    <div><strong>TicketNumber:</strong> ${passenger.TicketNumber || 'No Data'}</div>
-    <div><strong>Amount:</strong> ${passenger.amount || 'No Data'}</div>
-</div>
+      <div><strong>Title:</strong> ${passenger.title || 'No Data'}</div>
+      <div><strong>First Name:</strong> ${passenger.firstName || 'No Data'}</div>
+      <div><strong>Last Name:</strong> ${passenger.lastName || 'No Data'}</div>
+      <div><strong>Email:</strong> ${passenger.email || 'No Data'}</div>
+      <div><strong>Phone:</strong> ${passenger.ContactNo || 'No Data'}</div>
+      <div><strong>Address:</strong> ${passenger.city || 'No Data'}</div>
+      <div><strong>TicketNumber:</strong> ${passenger.TicketNumber || 'No Data'}</div>
+      <div><strong>Amount:</strong> ${passenger.amount || 'No Data'}</div>
+    </div>
+  `).join('')
+      :
+      '<div>No passenger details available</div>';
 
-    `).join('');
 
     Swal.fire({
       title: '<span class="swal-title">View All Details</span>',
@@ -107,6 +110,7 @@ const UserFlightCancel = () => {
       }
     });
   };
+
   const columns = [
     {
       field: 'view',
@@ -201,8 +205,8 @@ const UserFlightCancel = () => {
 
 
   return (
-    <div className="subada-table-container" style={{ position: 'relative', width: "100%" }}>
-      <div className="adsearch-bar" style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold',backgroundColor:"#E73C33" }}>
+    <div className="subada-table-container" style={{ position: 'relative', width: "100%", marginTop: "-15px" }}>
+      <div className="adsearch-bar" style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold', backgroundColor: "#E73C33" }}>
         <TextField
           type="text"
           value={searchTerm}
@@ -235,10 +239,13 @@ const UserFlightCancel = () => {
           components={{
             Toolbar: () => (
               <div style={{ marginTop: '10px' }}>
-                <GridToolbar />
+                <GridToolbarColumnsButton />
+                <GridToolbarExport/>
               </div>
             ),
-            Pagination:()=>null,
+
+            Pagination: () => null,
+
           }}
         />
       </div>

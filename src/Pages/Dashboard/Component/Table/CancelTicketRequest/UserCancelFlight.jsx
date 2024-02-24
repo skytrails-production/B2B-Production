@@ -76,20 +76,33 @@ const AllFlightCancelTicketsUser = () => {
 
   const handleShowAlert = (booking) => {
     const row = booking;
-    const passengerCount = row.flightDetails?.passengerDetails.length;
-    const passengerDetailsHtml = row.flightDetails?.passengerDetails.map(passenger => `
-    <div class="passenger-details" style="font-size: 14px;">
-    <div><strong>Title:</strong> ${passenger.title}</div>
-    <div><strong>First Name:</strong> ${passenger.firstName}</div>
-    <div><strong>Last Name:</strong> ${passenger.lastName}</div>
-    <div><strong>Email:</strong> ${passenger.email || 'No Data'}</div>
-    <div><strong>Phone:</strong> ${passenger.ContactNo || 'No Data'}</div>
-    <div><strong>Address:</strong> ${passenger.city || 'No Data'}</div>
-    <div><strong>TicketNumber:</strong> ${passenger.TicketNumber || 'No Data'}</div>
-    <div><strong>Amount:</strong> ${passenger.amount || 'No Data'}</div>
+    const passengerCount = row.flightDetails?.passengerDetails.length || 0;
+//     const passengerDetailsHtml = row.flightDetails?.passengerDetails.map(passenger => `
+//     <div class="passenger-details" style="font-size: 14px;">
+//     <div><strong>Title:</strong> ${passenger.title}</div>
+//     <div><strong>First Name:</strong> ${passenger.firstName}</div>
+//     <div><strong>Last Name:</strong> ${passenger.lastName}</div>
+//     <div><strong>Email:</strong> ${passenger.email || 'No Data'}</div>
+//     <div><strong>Phone:</strong> ${passenger.ContactNo || 'No Data'}</div>
+//     <div><strong>Address:</strong> ${passenger.city || 'No Data'}</div>
+//     <div><strong>TicketNumber:</strong> ${passenger.TicketNumber || 'No Data'}</div>
+//     <div><strong>Amount:</strong> ${passenger.amount || 'No Data'}</div>
+// </div>
+const passengerDetailsHtml = row.flightDetails?.passengerDetails?.length > 0 ?
+row.flightDetails.passengerDetails.map(passenger => `
+<div class="passenger-details" style="font-size: 14px;">
+<div><strong>Title:</strong> ${passenger.title || 'No Data'}</div>
+<div><strong>First Name:</strong> ${passenger.firstName || 'No Data'}</div>
+<div><strong>Last Name:</strong> ${passenger.lastName || 'No Data'}</div>
+<div><strong>Email:</strong> ${passenger.email || 'No Data'}</div>
+<div><strong>Phone:</strong> ${passenger.ContactNo || 'No Data'}</div>
+<div><strong>Address:</strong> ${passenger.city || 'No Data'}</div>
+<div><strong>TicketNumber:</strong> ${passenger.TicketNumber || 'No Data'}</div>
+<div><strong>Amount:</strong> ${passenger.amount || 'No Data'}</div>
 </div>
-
-    `).join('');
+`).join('')
+:
+'<div>No passenger details available</div>';
 
     Swal.fire({
       title: '<span class="swal-title">View All Details</span>',

@@ -11,7 +11,7 @@ import { apiURL } from "../../../Constants/constant";
 import "./Usertable.css";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid,GridToolbarColumnsButton,GridToolbarExport } from '@mui/x-data-grid';
 const Usertable = () => {
   const [userData, setUserData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -142,10 +142,12 @@ const Usertable = () => {
           getRowId={(row) => row._id}
           components={{
             Toolbar: () => (
-              <div style={{ marginTop: "10px"}}>
-                <GridToolbar />
+              <div style={{ marginTop: '10px' }}>
+                <GridToolbarColumnsButton />
+                <GridToolbarExport/>
               </div>
             ),
+            Pagination: () => null,
           }}
         />
 

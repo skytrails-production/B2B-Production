@@ -11,10 +11,7 @@ import {
   Typography,
   IconButton,
 } from '@mui/material';
-import {
-  DataGrid, 
-  GridToolbar
-} from '@mui/x-data-grid';
+import { DataGrid,GridToolbarColumnsButton,GridToolbarExport } from '@mui/x-data-grid';
 import SearchIcon from '@mui/icons-material/Search';
 import ApprovalIcon from '@mui/icons-material/CheckCircleOutline';
 import { apiURL } from '../../../Constants/constant';
@@ -175,7 +172,7 @@ const UserHotelCancel = () => {
 
 
   return (
-    <div className="subada-table-container" style={{ position: 'relative', width: "100%" }}>
+    <div className="subada-table-container" style={{ position: 'relative', width: "100%",marginTop:"-15px" }}>
       <div className="adsearch-bar" style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold',backgroundColor:"#E73C33" }}>
         <TextField
           type="text"
@@ -197,7 +194,13 @@ const UserHotelCancel = () => {
 
       <div style={{ width: '100%', backgroundColor: "#fff" }}>
         {loading ? (
-          <div className="loading-message">Loading...</div>
+          <div className="loading-message" style={{
+            fontSize: '18px',
+            color: '#555',
+            textAlign: 'center',
+            marginTop: '20px',
+
+          }}>Loading...</div>
         ) : filteredData.length === 0 ? (
           <div className="no-data-message">No data available</div>
         ) : (
@@ -213,10 +216,13 @@ const UserHotelCancel = () => {
             components={{
               Toolbar: () => (
                 <div style={{ marginTop: '10px' }}>
-                  <GridToolbar />
-                </div>
+                <GridToolbarColumnsButton />
+                <GridToolbarExport/>
+              </div>
               ),
-              Pagination:()=>null,
+
+              Pagination: () => null,
+
             }}
           />
         )}

@@ -211,13 +211,13 @@ const AllAdvertisementTable = () => {
           Agent Request Table
         </Typography>
       </div>
-      <div style={{ width: "100%", backgroundColor: "#fff" }}>
+      <div style={{ marginTop:"25px", width: "100%", backgroundColor: "#fff" }}>
         {loading ? (
-          <div className="loading-message">Loading...</div>
+          <div  className="loading-message" style={{marginTop:"25px", display:"flex",justifyContent:"center",alignItems:"center"}}>Loading...</div>
         ) : filteredData.length === 0 ? (
 
 
-          <div style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", height: "100px" }}>
+          <div style={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center", height: "100px" }}>
             <Alert severity="info" variant="outlined">
               Data is not available
             </Alert>

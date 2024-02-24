@@ -125,20 +125,7 @@ const Default = () => {
               <Divider />
               <MuiCardContent style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <MuiTypography variant="body1" gutterBottom>{data.value}</MuiTypography>
-                <div style={{ width: 300, height: 200 }}>
-                  <LineChart
-                    width={300}
-                    height={200}
-                    data={[data]}
-                    margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Line type="monotone" dataKey="value" stroke="#8884d8" strokeWidth={2} dot={{ fill: '#8884d8' }} />
-                  </LineChart>
-                </div>
+               
               </MuiCardContent>
             </MuiCard>
           </MuiGridItem>

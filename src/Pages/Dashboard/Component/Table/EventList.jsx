@@ -12,7 +12,7 @@ function EventList() {
             const response = await fetch(`${apiURL.baseURL}/skyTrails/api/admin/getAllEventBookings`);
             
                 const data = await response.json();
-               //  console.log(data); 
+              //  console.log(data); 
                 setEvent(data.result.docs);
         } catch (error) {
             // Handle error
@@ -24,7 +24,7 @@ function EventList() {
         handleEventList();
     }, []);
 
-    // Logic for pagination
+    // Logic for pagination 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     

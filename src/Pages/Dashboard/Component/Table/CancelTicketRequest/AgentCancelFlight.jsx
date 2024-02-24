@@ -139,7 +139,7 @@ const AllFlightCancelTickets = () => {
       </div>
       <div style={{ width: '100%', backgroundColor: "#fff" }}>
         {loading ? (
-          <div className="loading-message">Loading...</div>
+          <div className="loading-message" style={{marginTop:"25px",display:"flex",justifyContent:"center"}}>Loading...</div>
         ) : filteredData.length === 0 ? (
 
 

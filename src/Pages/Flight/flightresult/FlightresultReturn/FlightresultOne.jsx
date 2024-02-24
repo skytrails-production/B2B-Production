@@ -15,7 +15,7 @@ const FlightresultOne = ({ sendDataToParent }) => {
   // console.log("+++++++++++++", setToSearchResults[0]);
 
   const [selectedFlightIndex, setSelectedFlightIndex] = useState(null);
-  console.warn("+++++++++++++", setToSearchResults)
+  // console.warn("+++++++++++++", setToSearchResults)
   const sendData = (e) => {
     const data = e.target;
     // console.log("dataaaaaaaaaaa",data)

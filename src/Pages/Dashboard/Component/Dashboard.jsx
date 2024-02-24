@@ -1134,7 +1134,7 @@ export default function VerticalTabs() {
                 </ListItemIcon>
                 <ListItemText
                   primary="Cancel Ticket"
-                  sx={{ opacity: open ? 1 : 0, color: "white", marginLeft: "20px" }}
+                  sx={{ opacity: open ? 1 : 0, color: "white" ,marginLeft:"20px"}}
                 />
               </ListItemButton>
               <Collapse in={openCollapse} timeout="auto" unmountOnExit>
@@ -1154,11 +1154,11 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      <AccountBoxIcon sx={{ color: "white" }} />
+                      <AccountBoxIcon sx={{ color: "white",marginLeft:"20px" }} />
                     </ListItemIcon>
                     <ListItemText
-                      primary="Agent Cancel Bookings"
-                      sx={{ color: "white" }}
+                      primary="Agent  Bookings"
+                      sx={{ color: "white" , marginLeft:"10px"}}
                     />
                   </ListItemButton>
                   <Collapse in={openCollapseTwo} timeout="auto" unmountOnExit>
@@ -1281,11 +1281,11 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      <AccountBoxIcon sx={{ color: "white" }} />
+                      <AccountBoxIcon sx={{ color: "white" ,marginLeft:"15px"}} />
                     </ListItemIcon>
                     <ListItemText
-                      primary="User Cancel Bookings"
-                      sx={{ color: "white" }}
+                      primary="User Bookings"
+                      sx={{ color: "white" ,marginLeft:"10px"}}
                     />
                   </ListItemButton>
                   <Collapse in={openCollapseThree} timeout="auto" unmountOnExit>
@@ -1429,7 +1429,7 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      <AccountBoxIcon sx={{ color: "white" }} />
+                      <AccountBoxIcon sx={{ color: "white" ,marginLeft:"15px"}} />
                     </ListItemIcon>
                     <ListItemText primary="Agent" sx={{ color: "white", marginLeft: "20px" }} />
                   </ListItemButton>
@@ -1456,7 +1456,7 @@ export default function VerticalTabs() {
                             justifyContent: "center",
                           }}
                         >
-                          <AccountBoxIcon sx={{ color: "white" }} />
+                          <HotelIcon  sx={{ color: "white" ,marginLeft:"10px"}} />
                         </ListItemIcon>
                         <ListItemText
                           primary="Hotel Change Ticket"
@@ -1487,7 +1487,7 @@ export default function VerticalTabs() {
                             justifyContent: "center",
                           }}
                         >
-                          <AccountBoxIcon sx={{ color: "white" }} />
+                          <AirplaneTicketIcon sx={{ color: "white",marginLeft:"10px" }} />
                         </ListItemIcon>
                         <ListItemText
                           primary="Flight Change Ticket"
@@ -1518,7 +1518,7 @@ export default function VerticalTabs() {
                             justifyContent: "center",
                           }}
                         >
-                          <AccountBoxIcon sx={{ color: "white" }} />
+                          <DirectionsBusIcon sx={{ color: "white" ,marginLeft:"10px" }} />
                         </ListItemIcon>
                         <ListItemText
                           primary="Bus ChangeTicket"
@@ -1545,7 +1545,7 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      <AccountBoxIcon sx={{ color: "white" }} />
+                      <AccountBoxIcon sx={{ color: "white",marginLeft:"15px" }} />
                     </ListItemIcon>
                     <ListItemText primary="User" sx={{ color: "white" ,marginLeft: "20px"}} />
                   </ListItemButton>
@@ -1572,7 +1572,7 @@ export default function VerticalTabs() {
                             justifyContent: "center",
                           }}
                         >
-                          <HotelIcon sx={{ color: "white" }} />
+                          <HotelIcon sx={{ color: "white",marginLeft:"10px" }} />
                         </ListItemIcon>
                         <ListItemText
                           primary="Hotel ChangeTickets"
@@ -1605,7 +1605,7 @@ export default function VerticalTabs() {
                             justifyContent: "center",
                           }}
                         >
-                          <AirplanemodeActiveIcon  sx={{ color: "white" }} />
+                          <AirplanemodeActiveIcon  sx={{ color: "white" ,marginLeft:"10px"}} />
                         </ListItemIcon>
                         <ListItemText
                           primary="Flight ChangeTickets"
@@ -1635,7 +1635,7 @@ export default function VerticalTabs() {
                             justifyContent: "center",
                           }}
                         >
-                          <DirectionsBusIcon sx={{ color: "white" }} />
+                          <DirectionsBusIcon sx={{ color: "white",marginLeft:"10px" }} />
                         </ListItemIcon>
                         <ListItemText
                           primary="Bus ChangeTickets"
@@ -1760,7 +1760,7 @@ export default function VerticalTabs() {
                 </ListItemIcon>
                 <ListItemText
                   primary="Agent Bookings"
-                  sx={{ opacity: open ? 1 : 0, color: "white",marginLeft: "20px" }}
+                  sx={{ opacity: open ? 1 : 0, color: "white" ,marginLeft:"20px"}}
                 />
               </ListItemButton>
               <Collapse in={openCollapseFour} timeout="auto" unmountOnExit>

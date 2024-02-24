@@ -195,9 +195,9 @@ const AllHotelCancelTickets = () => {
         </Typography>
       </div>
 
-      <div style={{ width: '100%', backgroundColor: "#fff" }}>
+      <div style={{ marginTop:"25px" ,width: '100%', backgroundColor: "#fff" }}>
         {loading ? (
-          <div className="loading-message">Loading...</div>
+          <div className="loading-message" style={{display:"flex",marginTop:"25px",justifyContent:"center"}}>Loading...</div>
         ) : filteredData.length === 0 ? (
           <div className="no-data-message">No data available</div>
         ) : (
