@@ -6,6 +6,9 @@
   overflow-x: scroll;
   position: relative;
 }
+#adssearch{
+  box-sizing: content-box!important;
+}
 
 /* Entire table styling */
 table {

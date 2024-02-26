@@ -125,11 +125,18 @@ function Searchtable() {
                 <GridToolbar />
               </div>
             ),
-            Pagination:()=>null,
+            // Pagination:()=>null,
           }}
         />
       </div>
-
+      <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
+        <Pagination
+          count={totalPages}
+          page={page}
+          onChange={(event, newPage) => handlePageChange(newPage)}
+          color="primary"
+        />
+      </Stack>
 
     </Paper >
   );

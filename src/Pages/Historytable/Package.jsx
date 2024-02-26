@@ -26,12 +26,23 @@ function Package() {
         `${apiURL.baseURL}/skyTrails/api/admin/getAllPackageEnquiry?page=${pageNumber}`
       );
       const result = response.data.result.docs;
+      console.log(result);
       setData(result);
       setTotalPages(response.data.result.totalPages);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
+
+  
+    // const toolbarSlotProps = {
+    //   Toolbar: {
+    //     csvOptions: {
+    //       allColumns: true,
+    //       allRows: true
+    //     }
+    //   }
+    // };
 
   const handlePageChange = (event, newPage) => {
     setCurrentPage(newPage);
@@ -44,7 +55,7 @@ function Package() {
 
   useEffect(() => {
     fetchData(currentPage);
-  }, [currentPage]);
+  },[currentPage]);
 
   const handleShowAlert = (params) => {
     const rowDetails = params.row;
@@ -54,6 +65,10 @@ function Package() {
       html: `
         <div style="text-align: left;">
           <ol style="list-style-type:disc; padding-left: 20px;">
+          <li><strong style="color: #21325D;">Country:</strong> ${rowDetails.packageId.country}</li>
+          <li><strong style="color: #21325D;">Package Title:</strong> ${rowDetails.packageId.pakage_title}</li> 
+          <li><strong style="color: #21325D;">Package Amount:</strong> ${rowDetails.packageId.pakage_amount.amount} ${rowDetails.packageId.pakage_amount.currency}</li>
+  
             <li><strong style="color: #21325D;">Full Name:</strong> ${rowDetails.fullName}</li>
             <li><strong style="color: #21325D;">Contact Number:</strong> ${rowDetails.contactNumber.phone}</li>
             <li><strong style="color: #21325D;">Email:</strong> ${rowDetails.email}</li>
@@ -97,8 +112,26 @@ function Package() {
         );
       }
     },
-    { field: "fullName", headerName: "Full Name", width: 220, width: 130 },
+    
 
+    { field: "packageId.country" , headerName: "Country", width: 130,
+     valueGetter: (params) =>params.row.packageId?.country || 'N/A',
+  },
+    { field: "packageId.pakage_title" , headerName:"Package Title", width:220,
+    valueGetter: (params) =>params.row.packageId?.pakage_title || 'N/A',
+  },
+  {
+    field: "packageId.pakage_amount",
+    headerName: "Package Amount",
+    width: 220,
+    valueGetter: (params) =>
+      `${params.row.packageId?.pakage_amount.amount} ${
+        params.row.packageId.pakage_amount.currency
+      }`,
+  },
+  
+
+    { field: "fullName", headerName: "Name", width: 270 },
     {
       field: "contactNumber.phone",
       headerName: "Contact Number",
@@ -158,11 +191,12 @@ function Package() {
           }}
         />
         <Typography variant="h5" className="adtable-heading" style={{ marginLeft: "20px" }}>
-          All Package Enquiry
+          All Package Enquiry 
         </Typography>
       </div>
       <div style={{ width: "100%" }}>
-        <DataGrid
+      <DataGrid  
+        // {...toolbarSlotProps}
           rows={data}
           columns={columns}
           pageSize={10}
@@ -179,6 +213,14 @@ function Package() {
             Pagination:()=>null,
           }}
           getRowId={(row) => row._id}
+          // slotProps={{
+          //   Toolbar: {
+          //     csvOptions: {
+          //       allColumns:true,
+          //       allRows: true
+          //     }
+          //   }
+          // }}
         />
       </div>
       <Stack spacing={2} direction="row" justifyContent="center" mt={2}>

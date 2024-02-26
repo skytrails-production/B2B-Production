@@ -193,7 +193,7 @@ const AllAdvertisementTable = () => {
 
   return (
     <div className="subada-table-container" style={{ position: "relative", width: "100%" }}>
-      <div className="adsearch-bar" style={{ position: "absolute", top: 10, zIndex: 1, fontWeight: "bold" }}>
+      <div className="adsearch-bar" id="adssearch"style={{ position: "absolute", top: 10, zIndex: 1, fontWeight: "bold"}}>
         <TextField
           type="text"
           value={searchTerm}
@@ -211,7 +211,7 @@ const AllAdvertisementTable = () => {
           Agent Request Table
         </Typography>
       </div>
-      <div style={{ marginTop:"25px", width: "100%", backgroundColor: "#fff" }}>
+      <div style={{ marginTop:"0px", width: "100%", backgroundColor: "#fff" }}>
         {loading ? (
           <div  className="loading-message" style={{marginTop:"25px", display:"flex",justifyContent:"center",alignItems:"center"}}>Loading...</div>
         ) : filteredData.length === 0 ? (

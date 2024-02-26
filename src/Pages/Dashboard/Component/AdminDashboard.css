@@ -14,6 +14,9 @@
   animation: gradientAnimation 10sinfinite alternate;
   -webkit-animation: gradientAnimation 10sinfinite alternate;
 }
+.notification_Icon_Admin :hover{
+
+}
 
 @keyframes gradientAnimation {
   0% {

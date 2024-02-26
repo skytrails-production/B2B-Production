@@ -7,15 +7,21 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./AdminLogin.css";
 import bg from "../../Images/bg-cover.jpeg";
 
+
 const AdminLogin = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [formError, setFormError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [formError, setFormError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const reducerState = useSelector((state) => state);
   const dispatch = useDispatch();
+  console.log(reducerState,"reducerState")
 
   let adminData = reducerState?.adminAuth?.adminData?.data?.roles[0];
+  const error = useSelector(state => state.adminAuth.adminData.error);
+  const errorMessage = useSelector(state => state.adminAuth.adminData.errormessage);
 
   useEffect(() => {
     if (adminData === "ADMIN") {
@@ -23,28 +29,59 @@ const AdminLogin = () => {
     }
   }, [adminData, navigate]);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  useEffect(() => {
+    if (error) {
+      setFormError(errorMessage?.response?.data?.message);
+      setLoading(false);
+    }
+    
+  }, [error, errorMessage]);
+ 
 
-    if (!email || !password) {
+  const handleSubmit =async(event) => {
+    event.preventDefault();    
+    if (!email.trim() || !password.trim()) {
       setFormError("Please fill in all fields.");
       return;
     }
-
+    setLoading(true);
     const payload = {
       username: email,
       password: password,
     };
 
-    dispatch(adminAuthAction(payload));
-  };
+    
+      // Dispatch the action and wait for the response
+        
 
-  const [showPassword, setShowPassword] = useState(false);
+    try {
+      await dispatch(adminAuthAction(payload));
+      setFormError(""); // Clear any previous errors on success
+    } catch (error) {
+      console.error("Error occurred while authenticating:", error);
+      // Error handling is done in the useEffect
+    } finally {
+      // Set loading back to false regardless of success or failure
+      setLoading(false);
+    }
+           
+  };
+  
+ 
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
+  const handleEmailChange = (event) => {
+  setEmail(event.target.value);
+  setFormError(""); 
+};
+
+const handlePasswordChange = (event) => {
+  setPassword(event.target.value);
+  setFormError(""); 
+}; 
   return (
     <div>
       <div
@@ -82,7 +119,7 @@ const AdminLogin = () => {
                 placeholder="Enter your Email Address"
                 value={email}
                 className="admininput"
-                onChange={(event) => setEmail(event.target.value)}
+                onChange={handleEmailChange}
               />
             </div>
             <div className="password-container">
@@ -94,13 +131,14 @@ const AdminLogin = () => {
                 name="password"
                 placeholder="Enter Your Password"
                 value={password}
-                onChange={(event) => setPassword(event.target.value)}
+                onChange={handlePasswordChange}
                 className="admininput"
               />
             </div>
-            <button className="btnadmin">Sign In</button>
+            <button className="btnadmin" disabled={loading}> {loading?"Loading...":"Sign In"}</button>
           </form>
         </section>
+        {formError && <p style={{color:"red", padding:"0px 0px 5px 50px"}}>{formError}</p>}
       </div>
     </div>
   );

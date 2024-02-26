@@ -385,7 +385,7 @@ function PackageDetails() {
                   <GridToolbar />
                 </div>
               ),
-              Pagination: () => null,
+            //  Pagination: () => null,
             }}
           />
         )}

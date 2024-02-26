@@ -36,6 +36,16 @@ const AllFlightBooking = () => {
     fetchFlightBookings();
   }, [currentPage, searchTerm]);
 
+    
+  // const toolbarSlotProps = {
+  //   Toolbar: {
+  //     csvOptions: {
+  //       allColumns: true,
+  //       allRows: true
+  //     }
+  //   }
+  // };
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
@@ -153,12 +163,21 @@ const AllFlightBooking = () => {
       ) : (
         <Paper style={{width: '100%' }}>
           <DataGrid
+              //  {...toolbarSlotProps}
             rows={flightBookings}
             columns={columns}
             pageSize={pageSize}
             rowsPerPageOptions={[pageSize]}
             pagination
             getRowId={(row) => row._id}
+            // slotProps={{
+            //   Toolbar: {
+            //     csvOptions: {
+            //       allColumns:true,
+            //       allRows: true
+            //     }
+            //   }
+            // }}
             components={{
               Toolbar: () => (
                 <div style={{ marginTop: '10px' }}>

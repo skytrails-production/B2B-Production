@@ -164,9 +164,9 @@ const MainPage = () => {
 
   useEffect(() => {
     if (!windowWidth) {
-      return (
+      // return (
         <Download />
-      )
+      // )
     }
   }, [windowWidth]);
 
@@ -220,7 +220,8 @@ const MainPage = () => {
   }, []);
 
   if (isLoading) {
-    return <LoadingSpinner />;
+    // return 
+    <LoadingSpinner />;
   }
 
   // if (!windowWidth) {

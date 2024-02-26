@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -119,6 +119,26 @@ import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import LanguageIcon from '@mui/icons-material/Language';
 import ArticleIcon from '@mui/icons-material/Article';
+import { IoIosNotificationsOutline } from "react-icons/io";
+import { IoIosNotifications } from "react-icons/io";
+import {
+  // Groups3 as Groups3Icon,
+  // AccountBox as AccountBoxIcon,
+  GroupsTwo as Groups2Icon,
+  PeopleAlt as Diversity1Icon,
+  CollectionsBookmark as CollectionsBookmarkIcon,
+  Flight as FlightIcon,
+  DirectionsBus as BusIcon,
+  // Hotel as HotelIcon,
+  CollectionsBookmark as TotalBookingsIcon,
+  EmojiEvents as EmojiEventsIcon,
+
+} from "@mui/icons-material";
+import { Center } from "@chakra-ui/layout";
+import axios from "axios";
+import { PiBackpackThin } from "react-icons/pi";
+
+
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -189,6 +209,7 @@ const Drawer = styled(MuiDrawer, {
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
+
   return (
     <div
       role="tabpanel"
@@ -224,9 +245,13 @@ export default function VerticalTabs() {
   const [open, setOpen] = useState(true);
   const [menuData, setMenuData] = useState("Home");
   const [loading, setLoading] = useState(false);
+  const [showNotification, setSetShowNotification] = useState(false);
+  const [showNotificationIcon, setSetShowNotificationIcon] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const redirect = useNavigate();
+  const showNotificationRef = useRef(null);
+
   const handleDrawerClose = () => {
     setOpen(false);
   };
@@ -262,7 +287,7 @@ export default function VerticalTabs() {
     navigate("/adminLogin");
   };
 
-  
+
 
   const createSubAdmin = () => {
     navigate("/addSubAdmin");
@@ -318,6 +343,32 @@ export default function VerticalTabs() {
   // const handleTabChange = (tabName) => {
   //   setSelectedTab(tabName);
   // };
+  const [notificationData, setNotificationData] = useState([]);
+  useEffect(() => {
+    async function getNotefication() {
+
+      await axios.get(`${apiURL.baseURL}/skyTrails/api/admin/getAllNotification/656ae08849c268401f98246b`)
+        .then(function (response) {
+          // handle success
+          setNotificationData(response?.data?.result)
+          // console.log(response?.data?.result, "ressssssssssssssssssssssssssssssssssssssssssssssssss");
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error, "error");
+        })
+
+    }
+    getNotefication();
+  }, [])
+  // let notificationCount = 0;
+  // useEffect(() => {
+  //   notificationCount = notificationData?.map((item) => (
+  //     item?.isRead === true
+  //   ));
+  // }, [notificationData]);
+
+  // console.log(notificationCount)
 
   const [openCollapse, setOpenCollapse] = useState(false);
 
@@ -384,6 +435,71 @@ export default function VerticalTabs() {
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
   };
+  const loop = [1, 2, 3, 4, 5, 6];
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showNotificationRef?.current && !showNotificationRef?.current?.contains(event.target)) {
+        // Clicked outside the list, so close it
+        setSetShowNotification(false);
+      }
+    };
+
+    // Attach the event listener when the component mounts
+    document.addEventListener('mousedown', handleClickOutside);
+
+    // Detach the event listener when the component unmounts
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  // const handleNotificationClick=(id)=>{
+  //   axios.post(`/skyTrails/api/admin/getNotificationById/`)
+  // }
+  const handleNotificationClick = async (id) => {
+    console.log(apiURL.baseURL);
+
+    // await axios.post(`${apiURL.baseURL}/skyTrails/api/admin/getNotificationById/${id}`);
+    await axios.get(`${apiURL.baseURL}/skyTrails/api/admin/getNotificationById/${id}`)
+      .then(function (response) {
+        // handle success
+        setNotificationData(response?.data?.result)
+        // console.log(response?.data?.result, response?.data?.result?.length, "ressssssssssssssssssssssssssssssssssssssssssssssssss");
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error, "error");
+      })
+    handleMenuItemClick("Packageenquiry");
+    setSetShowNotification(false);
+
+
+  };
+  function timeAgo(uploadTime) {
+    const currentTime = new Date().getTime();
+    const uploadTimeMillis = new Date(uploadTime).getTime();
+    const timeDifference = currentTime - uploadTimeMillis;
+
+    // Convert milliseconds to seconds
+    const seconds = Math.floor(timeDifference / 1000);
+
+    if (seconds < 60) {
+      return `${seconds} second${seconds !== 1 ? 's' : ''} ago`;
+    } else if (seconds < 3600) {
+      const minutes = Math.floor(seconds / 60);
+      return `${minutes} minute${minutes !== 1 ? 's' : ''} ago`;
+    } else if (seconds < 86400) {
+      const hours = Math.floor(seconds / 3600);
+      return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
+    } else if (seconds < 604800) {
+      const days = Math.floor(seconds / 86400);
+      return `${days} day${days !== 1 ? 's' : ''} ago`;
+    } else {
+      const weeks = Math.floor(seconds / 604800);
+      return `${weeks} week${weeks !== 1 ? 's' : ''} ago`;
+    }
+  }
+
 
   return (
     <>
@@ -480,7 +596,7 @@ export default function VerticalTabs() {
             </div> */}
 
 
-<div
+            <div
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -702,7 +818,55 @@ export default function VerticalTabs() {
               </Menu>
             </div>
 
-            <div style={{ display: "flex", alignItems: "center" }}>
+            <div style={{ display: "flex", alignItems: "center", position: "relative" }}>
+              <div onClick={() => setSetShowNotification((pre) => !pre)} onMouseOver={() => setSetShowNotificationIcon(true)} onMouseLeave={() => setSetShowNotificationIcon(false)} >{showNotificationIcon ? <IoIosNotificationsOutline size='24px' color="white" /> : <IoIosNotifications size='24px' color="white" />}</div>
+              <div style={{
+                position: 'absolute',
+                color: '#f8f1f1fc',
+                background: "#21325d",
+                width: '17px',
+                height: '17px',
+                // fontWeight: 100;
+                fontSize: '12px',
+                textAlign: 'center',
+                borderRadius: '50%',
+                border: '1px solid white',
+                top: '-3px',
+                left: '10px'
+
+
+              }}>{notificationData?.length}</div>
+              {showNotification && <div ref={showNotificationRef} className="notification_Icon_Admin" style={{ position: "absolute", top: "25px", right: "0px", width: "300px", backgroundColor: '#ece6e6', padding: '5px', borderRadius: '4px', maxHeight: "500px", overflowY: "scroll" }} >
+                {notificationData?.length===0? <div>Stay in touch! You will find all the new updates here</div> : notificationData?.map((item) => (
+                  <div
+                    onClick={() => {
+                      handleNotificationClick(item._id)
+                    }}
+                    style={{
+                      display: "flex", backgroundColor: `${!item?.isRead ? "white" : "ffffff8c"}`, borderRadius: "4px", margin: '5px 7px', paddingBottom: "5px",
+                      // backgroundColor:"#ffffff8c"
+
+                    }}>
+                    <div >
+                      <div style={{ width: "30px", height: "30px", borderRadius: '2px', background: "#8080805e", display: "flex", justifyContent: "center", alignItems: "center", margin: '5px', marginTop: "20px" }}>
+                        <PiBackpackThin />
+                      </div>
+                    </div>
+                    <div style={{ paddingLeft: "3px" }}>
+                      <div style={{ fontSize: "12px", color: "#21325d96" }} >{timeAgo(item?.updatedAt)}</div>
+                      <div style={{ fontSize: "18px", color: "#21325d" }}>{item?.title}</div>
+                      <div style={{ fontSize: "13px", color: "#rgb(33 50 93 / 71%)" }}>{item?.description}</div>
+
+                    </div>
+                  </div>
+                ))}
+
+
+
+
+              </div>}
+
+
               {/*  */}
               {/* <InputLabel
                 id="dropdown-label"
@@ -1250,7 +1414,7 @@ export default function VerticalTabs() {
                             justifyContent: "center",
                           }}
                         >
-                          <DirectionsBusIcon  sx={{ color: "white" }} />
+                          <DirectionsBusIcon sx={{ color: "white" }} />
                         </ListItemIcon>
 
                         <ListItemText
@@ -1547,7 +1711,7 @@ export default function VerticalTabs() {
                     >
                       <AccountBoxIcon sx={{ color: "white",marginLeft:"15px" }} />
                     </ListItemIcon>
-                    <ListItemText primary="User" sx={{ color: "white" ,marginLeft: "20px"}} />
+                    <ListItemText primary="User" sx={{ color: "white", marginLeft: "20px" }} />
                   </ListItemButton>
                   <Collapse in={openCollapseEight} timeout="auto" unmountOnExit>
                     <ListItem
@@ -1605,7 +1769,9 @@ export default function VerticalTabs() {
                             justifyContent: "center",
                           }}
                         >
-                          <AirplanemodeActiveIcon  sx={{ color: "white" ,marginLeft:"10px"}} />
+
+                          <AirplanemodeActiveIcon sx={{ color: "white" }} />
+
                         </ListItemIcon>
                         <ListItemText
                           primary="Flight ChangeTickets"
@@ -1760,13 +1926,15 @@ export default function VerticalTabs() {
                 </ListItemIcon>
                 <ListItemText
                   primary="Agent Bookings"
-                  sx={{ opacity: open ? 1 : 0, color: "white" ,marginLeft:"20px"}}
+
+                  sx={{ opacity: open ? 1 : 0, color: "white", marginLeft: "20px" }}
+
                 />
               </ListItemButton>
               <Collapse in={openCollapseFour} timeout="auto" unmountOnExit>
                 <ListItem
                   disablePadding
-                  sx={{ display: "block" , marginLeft: "20px" }}
+                  sx={{ display: "block", marginLeft: "20px" }}
                   onClick={() => handleMenuItemClick("Hotel Bookings")}
                 >
                   <ListItemButton
@@ -1786,7 +1954,7 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                        <HotelIcon sx={{ color: "white" }} />
+                      <HotelIcon sx={{ color: "white" }} />
                     </ListItemIcon>
                     <ListItemText
                       primary="Hotel Bookings"
@@ -1797,7 +1965,7 @@ export default function VerticalTabs() {
 
                 <ListItem
                   disablePadding
-                  sx={{ display: "block" , marginLeft: "20px" }}
+                  sx={{ display: "block", marginLeft: "20px" }}
                   onClick={() => handleMenuItemClick("Flight Bookings")}
                 >
                   <ListItemButton
@@ -1827,7 +1995,7 @@ export default function VerticalTabs() {
                 </ListItem>
                 <ListItem
                   disablePadding
-                  sx={{ display: "block" ,  marginLeft: "20px" }}
+                  sx={{ display: "block", marginLeft: "20px" }}
                   onClick={() => handleMenuItemClick("Bus Bookings")}
                 >
                   <ListItemButton
@@ -1886,7 +2054,7 @@ export default function VerticalTabs() {
               <Collapse in={openCollapseFive} timeout="auto" unmountOnExit>
                 <ListItem
                   disablePadding
-                  sx={{ display: "block" , marginLeft: "20px" }}
+                  sx={{ display: "block", marginLeft: "20px" }}
                   onClick={() => handleMenuItemClick("Hotel Booking")}
                 >
                   <ListItemButton
@@ -1916,7 +2084,7 @@ export default function VerticalTabs() {
                 </ListItem>
                 <ListItem
                   disablePadding
-                  sx={{ display: "block", marginLeft: "20px"  }}
+                  sx={{ display: "block", marginLeft: "20px" }}
                   onClick={() => handleMenuItemClick("Flight Booking")}
                 >
                   <ListItemButton
@@ -1936,7 +2104,7 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                     <AirplaneTicketIcon sx={{ color: "white" }} />
+                      <AirplaneTicketIcon sx={{ color: "white" }} />
                     </ListItemIcon>
                     <ListItemText
                       primary="Flight Booking"
@@ -1946,7 +2114,7 @@ export default function VerticalTabs() {
                 </ListItem>
                 <ListItem
                   disablePadding
-                  sx={{ display: "block", marginLeft: "20px"  }}
+                  sx={{ display: "block", marginLeft: "20px" }}
                   onClick={() => handleMenuItemClick("Bus Booking")}
                 >
                   <ListItemButton
@@ -2300,7 +2468,7 @@ export default function VerticalTabs() {
                 </ListItemIcon>
                 <ListItemText
                   primary="Visa Booking"
-                  sx={{ opacity: open ? 1 : 0, color: "white",marginLeft: "20px" }}
+                  sx={{ opacity: open ? 1 : 0, color: "white", marginLeft: "20px" }}
                 />
               </ListItemButton>
               <Collapse in={openCollapsetwenty} timeout="auto" unmountOnExit>
@@ -2326,11 +2494,11 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      < ArticleIcon sx={{ color: "white" ,marginLeft: "20px" }} />
+                      < ArticleIcon sx={{ color: "white", marginLeft: "20px" }} />
                     </ListItemIcon>
                     <ListItemText
                       primary="Visa Category"
-                      sx={{ opacity: open ? 1 : 0, color: "white"}}
+                      sx={{ opacity: open ? 1 : 0, color: "white" }}
                     />
                   </ListItemButton>
                 </ListItem>
@@ -2357,7 +2525,7 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      < ArticleIcon sx={{ color: "white",marginLeft: "20px" }} />
+                      < ArticleIcon sx={{ color: "white", marginLeft: "20px" }} />
                     </ListItemIcon>
                     <ListItemText
                       primary="Visa Country"
@@ -2388,7 +2556,7 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      < ArticleIcon sx={{ color: "white",marginLeft: "20px" }} />
+                      < ArticleIcon sx={{ color: "white", marginLeft: "20px" }} />
                     </ListItemIcon>
                     <ListItemText
                       primary="Visa Document Type"
@@ -2419,7 +2587,7 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      < ArticleIcon sx={{ color: "white",marginLeft: "20px" }} />
+                      < ArticleIcon sx={{ color: "white", marginLeft: "20px" }} />
                     </ListItemIcon>
                     <ListItemText
                       primary="Visa Document Category"
@@ -2450,11 +2618,11 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      <ArticleIcon sx={{ color: "white" ,marginLeft: "20px"}} />
+                      <ArticleIcon sx={{ color: "white", marginLeft: "20px" }} />
                     </ListItemIcon>
                     <ListItemText
                       primary="Require Document"
-                      sx={{ opacity: open ? 1 : 0, color: "white" ,}}
+                      sx={{ opacity: open ? 1 : 0, color: "white", }}
                     />
                   </ListItemButton>
                 </ListItem>
@@ -2462,39 +2630,39 @@ export default function VerticalTabs() {
             </ListItem>
 
             {/* //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
-            
-            <ListItem
-         disablePadding
-       sx={{ display: "block" }}
-       onClick={() => handleMenuItemClick("EventList")}
-        >
-     <ListItemButton
-      sx={{
-      minHeight: 48,
-      justifyContent: open ? "initial" : "center",
-      px: 2.5,
-      ...((menuData === "EventList"
-        ? activeMenuItemClass
-        : inactiveMenuItemClass) || {}),
-    }}
-  >
-    <ListItemIcon
-      sx={{
-        minWidth: 0,
-        mr: open ? 3 : "auto",
-        justifyContent: "center",
-      }}
-    >
-      <ArticleIcon sx={{ color: "white" }} />
-    </ListItemIcon>
-    <ListItemText
-      primary="Event List"
-      sx={{ opacity: open ? 1 : 0, color: "white"}}
-    />
-  </ListItemButton>
-</ListItem>
 
-            
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => handleMenuItemClick("EventList")}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                  ...((menuData === "EventList"
+                    ? activeMenuItemClass
+                    : inactiveMenuItemClass) || {}),
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <ArticleIcon sx={{ color: "white" }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Event List"
+                  sx={{ opacity: open ? 1 : 0, color: "white" }}
+                />
+              </ListItemButton>
+            </ListItem>
+
+
 
           </List>
           <Divider />
@@ -2545,7 +2713,7 @@ export default function VerticalTabs() {
               {menuData === "Home" && <AdminDashboard />}
               {menuData === "Agent Table" && <Tables />}
               {menuData === "User Table" && <Usertables />}
-              {menuData === "EventList" && <EventList/>}
+              {menuData === "EventList" && <EventList />}
               {menuData === "SubAdmin Table" && <SubAdminTable />}
               {menuData === "AgentRequest" && <AgentRequest />}
               {menuData === "Hotel CancelTicket" && <AgentCancelHotel />}

@@ -8,7 +8,7 @@ function* getAdminAuth(action) {
     const user = yield call(userApi.adminAuth, action.payload);
     yield put(fetchAdminAuth(user));
   } catch (error) {
-    console.log(error);
+    yield put(fetchAdminAuth({error:true,errormessage:error}));
   }
 }
 export function* getAdminWatcher() {
