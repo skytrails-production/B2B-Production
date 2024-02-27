@@ -7,11 +7,11 @@ import { useNavigate } from "react-router-dom";
 import FlightLoader from "../../FlightLoader/FlightLoader";
 // import FlightLoader from "../../FlightLoader/FlightLoader";
 
-const FlightresultOne = ({ sendDataToParent }) => {
+const FlightresultOne = ({ sendDataToParent, filteredDeparture }) => {
   const reducerState = useSelector((state) => state);
   const [selectedFlightIndex, setSelectedFlightIndex] = useState(null);
-  const [loading, setLoading] = useState(true)
-  const navigate = useNavigate()
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   const sendData = (e) => {
     const data = e.target;
     // console.log("dataaaaaaaaaaa", data);
@@ -20,23 +20,28 @@ const FlightresultOne = ({ sendDataToParent }) => {
   const [filter, setFilter] = useState(1);
   const setToSearchResults =
     reducerState?.return?.returnData?.data?.data?.Response?.Results;
+
+  // console.log(filteredDeparture, ",,,,,,,,,,,");
+
   // console.log("---------", setToSearchResults[1]);
   useEffect(() => {
     if (setToSearchResults !== undefined) {
-      // navigate("/")
-      setLoading(false)
+      // navigate("/");
+      setLoading(false);
+    } else {
+      setLoading(true);
     }
-    else {
-      setLoading(true)
-    }
-  }, [setToSearchResults])
+  }, [setToSearchResults]);
   if (loading) {
-    return <><FlightLoader /></>
+    return (
+      <>
+        <FlightLoader />
+      </>
+    );
   }
 
   if (setToSearchResults !== undefined) {
-
-    return setToSearchResults[1]?.map((flight1) => {
+    return filteredDeparture?.map((flight1) => {
       // result = res.sort((a, b) => a.Segments[0][0].Duration - b.Fare.OfferedFare);
       return (
         <Box>
@@ -59,7 +64,9 @@ const FlightresultOne = ({ sendDataToParent }) => {
                     fare={flight1?.Fare?.PublishedFare}
                     IsLCC={flight1.IsLCC}
                     isSelected={flight1?.ResultIndex === selectedFlightIndex}
-                    onSelect={() => setSelectedFlightIndex(flight1?.ResultIndex)}
+                    onSelect={() =>
+                      setSelectedFlightIndex(flight1?.ResultIndex)
+                    }
                     showRadio={true}
                   />
                 </Box>
@@ -77,17 +84,18 @@ const FlightresultOne = ({ sendDataToParent }) => {
                     fare={flight1?.Fare?.PublishedFare}
                     IsLCC={flight1?.IsLCC}
                     isSelected={flight1?.ResultIndex === selectedFlightIndex}
-                    onSelect={() => setSelectedFlightIndex(flight1?.ResultIndex)}
+                    onSelect={() =>
+                      setSelectedFlightIndex(flight1?.ResultIndex)
+                    }
                     showRadio={true}
                   />
                 </Box>
-              )
+              );
             })}
           </div>
         </Box>
-      )
-    }
-    )
+      );
+    });
   }
 };
 

@@ -26,7 +26,6 @@ function Package() {
         `${apiURL.baseURL}/skyTrails/api/admin/getAllPackageEnquiry?page=${pageNumber}`
       );
       const result = response.data.result.docs;
-      console.log(result);
       setData(result);
       setTotalPages(response.data.result.totalPages);
     } catch (error) {
@@ -102,8 +101,8 @@ function Package() {
       renderCell: (params) => {
         return (
           <Button
-            style={{ backgroundColor: "#21325D",color:"#fff" }}
-           
+            style={{ backgroundColor: "#21325D", color: "#fff" }}
+
 
             onClick={() => handleShowAlert(params)}
           >
@@ -195,8 +194,12 @@ function Package() {
         </Typography>
       </div>
       <div style={{ width: "100%" }}>
+
+        {/* <DataGrid
+
       <DataGrid  
         // {...toolbarSlotProps}
+
           rows={data}
           columns={columns}
           pageSize={10}
@@ -213,6 +216,34 @@ function Package() {
             Pagination:()=>null,
           }}
           getRowId={(row) => row._id}
+
+        /> */}
+        <DataGrid
+          rows={data}
+          columns={columns}
+          pageSize={10}
+          pagination
+          page={currentPage}
+          onPageChange={handlePageChange}
+          rowsPerPageOptions={[]}
+          components={{
+            Toolbar: () => (
+              <div style={{ marginTop: '10px' }}>
+                <GridToolbar />
+              </div>
+            ),
+            Pagination: () => null,
+          }}
+          getRowId={(row) => row._id}
+          slotProps={{
+            toolbar: {
+              csvOptions: {
+              
+                rows: true, // Set to true to enable exporting rows
+              }
+            }
+          }}
+
           // slotProps={{
           //   Toolbar: {
           //     csvOptions: {
@@ -221,7 +252,9 @@ function Package() {
           //     }
           //   }
           // }}
+
         />
+
       </div>
       <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
         <Pagination

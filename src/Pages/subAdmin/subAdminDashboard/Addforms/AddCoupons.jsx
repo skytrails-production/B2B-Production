@@ -199,7 +199,7 @@ import { useNavigate } from "react-router-dom";
 import "./AddCoupons.css";
 import {swalModal} from "../../../../utils/swal"
 
-const CreateCouponForm = () => {
+const AddCoupons = () => {
   const data = JSON.parse(sessionStorage.getItem("persist:root"));
   const logdata = JSON.parse(data?.adminAuth);
   const agentID = logdata.adminData.data.id;
@@ -400,4 +400,4 @@ const CreateCouponForm = () => {
   );
 };
 
-export default CreateCouponForm;
+export default AddCoupons;

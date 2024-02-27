@@ -5,8 +5,7 @@ import { Grid, Box, Typography, Button } from "@mui/material";
 import { useDispatch, useSelector, useReducer } from "react-redux";
 import FlightLoader from "../../FlightLoader/FlightLoader";
 
-
-const FlightresultOne = ({ sendDataToParent }) => {
+const FlightresultOne = ({ sendDataToParent, filteredDeparture }) => {
   const reducerState = useSelector((state) => state);
   const [filter, setFilter] = useState(1);
   const [Loading, setLoading] = useState(true);
@@ -15,7 +14,9 @@ const FlightresultOne = ({ sendDataToParent }) => {
   // console.log("+++++++++++++", setToSearchResults[0]);
 
   const [selectedFlightIndex, setSelectedFlightIndex] = useState(null);
-  // console.warn("+++++++++++++", setToSearchResults)
+
+  // console.warn("+++++++++++++", setToSearchResults);
+
   const sendData = (e) => {
     const data = e.target;
     // console.log("dataaaaaaaaaaa",data)
@@ -23,17 +24,21 @@ const FlightresultOne = ({ sendDataToParent }) => {
   };
   useEffect(() => {
     if (setToSearchResults !== undefined) {
-      return (setLoading(false))
+      return setLoading(false);
     }
-  }, [setToSearchResults])
-  { Loading && <div><FlightLoader /></div> }
+  }, [setToSearchResults]);
+  {
+    Loading && (
+      <div>
+        <FlightLoader />
+      </div>
+    );
+  }
 
   if (!Loading) {
-
-    return setToSearchResults[0]?.map((flight1) => {
+    return filteredDeparture?.map((flight1) => {
       // result = res.sort((a, b) => a.Segments[0][0].Duration - b.Fare.OfferedFare);
       return (
-
         <div key={flight1?.ResultIndex}>
           {flight1?.Segments?.map((flight, Index) => {
             // console.log("flight", flight);
@@ -81,7 +86,7 @@ const FlightresultOne = ({ sendDataToParent }) => {
           })}
         </div>
       );
-    })
+    });
   }
 };
 

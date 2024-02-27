@@ -56,7 +56,7 @@ const CreateAgentPage = () => {
 
   return (
     <div className="form-containers">
-      <header className="sectionagent headersagent">
+      <header className="sectionagent headersagent" style={{backgroundColor:"#E73C33"}}>
         <div className="headead">
           {/* <img src={profilePicUrl} style={{ width: "80%" }} alt="Logo" /> */}
           <h2>Create Agent</h2>
@@ -136,7 +136,7 @@ const CreateAgentPage = () => {
         </div>
 
         <div className="form-group-agent">
-          <button type="submit" className="form-button-agents">
+          <button type="submit" className="form-button-agents" style={{backgroundColor:"#E73C33"}}>
             Create Agent
           </button>
         </div>

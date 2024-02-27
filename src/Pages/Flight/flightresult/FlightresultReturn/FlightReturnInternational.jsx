@@ -13,15 +13,15 @@ import {
   setLoading,
 } from "../../../../Redux/FlightFareQuoteRule/actionFlightQuote";
 import MultipleDataReturn from "./MultipleDataReturn";
-import { swalModal } from "../../../../utils/swal"
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import { swalModal } from "../../../../utils/swal";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
 // import FlightLoader from "../FlightLoader/FlightLoader";
 import Divider from "@mui/material/Divider";
-import filterImg from "../../../../Images/FlightImages/filter.png"
+import filterImg from "../../../../Images/FlightImages/filter.png";
 
 const FlightReturnInternational = () => {
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ const FlightReturnInternational = () => {
   const [filter, setFilter] = useState(1);
   const [takeOff, SetTakeOffetFilter] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState(["Price"]);
-  const [expanded, setExpanded] = React.useState('panel1');
+  const [expanded, setExpanded] = React.useState("panel1");
   // console.warn(result[0], "resultnvjdfnvjdfnv")
   let statusRule = reducerState?.flightFare?.isLoadingRuleDone || false;
   let statusQuote = reducerState?.flightFare?.isLoadingQuoteDone || false;
@@ -44,8 +44,12 @@ const FlightReturnInternational = () => {
   // console.warn(ongoFlight, "ongoFlight //////////////////")
   const [incomeGlight, setIncomeFlight] = useState(initialReturnFlight);
   const minPrice = result ? result[0][0]?.Fare?.PublishedFare : 0;
-  const maxPrice = result ? result[0][result[0]?.length - 1].Fare.PublishedFare : 100000;
-  const Published_Fare = result ? result[0][result[0].length - 1].Fare.PublishedFare : null;
+  const maxPrice = result
+    ? result[0][result[0]?.length - 1].Fare.PublishedFare
+    : 100000;
+  const Published_Fare = result
+    ? result[0][result[0].length - 1].Fare.PublishedFare
+    : null;
   const [priceRange, setPriceRange] = useState(Published_Fare);
   const [takeOffIndex, setTakeOffIndex] = useState(-1);
   const [landIndex, setLandIndex] = useState(-1);
@@ -55,26 +59,29 @@ const FlightReturnInternational = () => {
   const Airlines = [];
   const Airliness = [];
 
-  // console.warn(reducerState?.flightFare?.flightQuoteData
-
-
   // , "statusQuote ", statusRule, "statusRule ")
   // console.log(reducerState, "reducer state")
   // console.warn(incomeGlight, "incomingFlight //////////////////")
   // console.warn(incomeGlight?.Segments[1], "incomingFlight segments //////////////////")
   useEffect(() => {
-    if (reducerState?.flightFare?.flightQuoteData?.Error?.ErrorCode !== undefined && reducerState?.flightFare?.flightQuoteData?.Error?.ErrorCode !== 0) {
+    if (
+      reducerState?.flightFare?.flightQuoteData?.Error?.ErrorCode !==
+        undefined &&
+      reducerState?.flightFare?.flightQuoteData?.Error?.ErrorCode !== 0
+    ) {
       // swalModal("flight", reducerState?.flightFare?.flightQuoteData?.Error?.
       //   ErrorMessage
       //   , false)
-      swalModal("flight", "Something went wrong with your flight booking. Please check your details and try again."
-        , false)
-      navigate("/")
+      swalModal(
+        "flight",
+        "Something went wrong with your flight booking. Please check your details and try again.",
+        false
+      );
+      navigate("/");
+    } else if (!result) {
+      navigate("/flights");
     }
-    else if (!result) {
-      navigate('/flights')
-    }
-  })
+  });
   useEffect(() => {
     sessionStorage.setItem("flightDetailsONGo", JSON.stringify(ongoFlight));
     setOngoFlight(initialGoFlight);
@@ -105,7 +112,6 @@ const FlightReturnInternational = () => {
     sessionStorage.setItem("flightDetailsIncome", JSON.stringify(result[0][i]));
     // sessionStorage.setItem("flightDetailsIncome", JSON.stringify(result[i][1]));
 
-
     const payload = {
       EndUserIp: reducerState?.ip?.ipData,
       TokenId: reducerState?.ip?.tokenData,
@@ -118,6 +124,31 @@ const FlightReturnInternational = () => {
     // console.log("reducerrrState", reducerState);
   };
 
+
+  // useEffect(() => {
+  //   const uniqueData = result
+  //     ? result[0].filter((item, index, array) => {
+  //         const isUnique = !array.slice(0, index).some((prevItem) => {
+  //           console.log(
+  //             prevItem.Segments[0]?.[0]?.Origin
+  //               ?.DepTime,
+  //             "hii",
+  //             item.Segments[0][0]?.Origin?.DepTime,
+  //             "hello"
+  //           );
+  //           return (
+  //             prevItem.AirlineCode === item.AirlineCode &&
+  //             prevItem.Segments[0]?.[prevItem.Segments[0].length - 1]?.Origin
+  //               ?.DepTime === item.Segments[0][prevItem.Segments[0].length - 1]?.Origin?.DepTime
+  //           );
+  //         });
+  //         return isUnique;
+  //       })
+  //     : [];
+  //   // setFlightList(uniqueData);
+  //   console.log("uniqueData", uniqueData, result[0]);
+  // }, []);
+
   // result &&  result[0].map((item) => {
   //   console.log(item.Segments[0].length===1
   //     , "segment items")
@@ -127,19 +158,19 @@ const FlightReturnInternational = () => {
   // console.log("reducerrrState", reducerState);
   // const handleChange = (panel) => (event, newExpanded) => {
   //   setExpanded(newExpanded ? panel : false);
-  // }; 
+  // };
   const handleChange = () => () => {
     // setExpanded(newExpanded ? panel : false);
   };
   const clearFilter = () => {
     setSelectedCategory(["Price"]);
     setTakeOffIndex(-1);
-    setLandIndex(-1)
-    setAirlinesIndex(-1)
+    setLandIndex(-1);
+    setAirlinesIndex(-1);
     // document.querySelectorAll('input[name="test"]').forEach((checkbox) => {
     //   checkbox.checked = false;
     // });
-  }
+  };
   const handleRadioChange = (event) => {
     const selectedValue = event.target.value;
     if (selectedValue === "All") {
@@ -151,7 +182,9 @@ const FlightReturnInternational = () => {
       // If other checkbox is selected, update selectedCategory as before
       setSelectedCategory((prevSelectedCategory) => {
         if (prevSelectedCategory.includes(selectedValue)) {
-          return prevSelectedCategory.filter((value) => value !== selectedValue);
+          return prevSelectedCategory.filter(
+            (value) => value !== selectedValue
+          );
         } else {
           return [...prevSelectedCategory, selectedValue];
         }
@@ -163,109 +196,252 @@ const FlightReturnInternational = () => {
       if (window.innerWidth <= 991) {
         setExpanded(false);
       } else {
-        setExpanded('panel1');
+        setExpanded("panel1");
       }
     };
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
     handleResize();
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
-  const filteredData = result ? result[0]?.filter((item) => {
-    const segmentLength = item?.Segments[0].length;
-    const segmentLengthStart = item?.Segments[0]?.length;
-    const segmentLengthLand = item?.Segments[1]?.length;
-    const depTime = new Date(item?.Segments?.[0][0]?.Origin?.DepTime);
-    const depTimeStartTakeOff1 = new Date(item?.Segments?.[0][0]?.Origin?.DepTime);
-    const arrTimeStartLand1 = new Date(item?.Segments?.[0][item?.Segments[0]?.length - 1]?.Destination?.ArrTime);
-    const depTimeEndTakeOff1 = new Date(item?.Segments?.[1][0]?.Origin?.DepTime);
-    const arrTimeEndLand1 = new Date(item?.Segments?.[1][item?.Segments[1]?.length - 1]?.Destination?.ArrTime);
-    const hour = depTime.getHours();
-    const hourStart = depTime.getHours();
-    const hourLand = depTime.getHours();
-    const depTimeStartTakeOff = depTimeStartTakeOff1?.getHours();
-    const arrTimeStartLand = arrTimeStartLand1?.getHours();
-    const depTimeEndTakeOff = depTimeEndTakeOff1?.getHours();
-    const arrTimeEndLand = arrTimeEndLand1?.getHours();
-    const airlineName = item?.Segments?.[0][0]?.Airline?.AirlineName
-    const airlineName1 = item?.Segments?.[1][0]?.Airline?.AirlineName
-    if (!Airlines.includes(airlineName)) {
-      Airlines.push(airlineName)
-      Airliness.push({ AirlineName: airlineName, AirlineCode: item?.Segments?.[0][0]?.Airline?.AirlineCode })
-    }
-    if (!Airlines.includes(airlineName1)) {
-      Airlines.push(airlineName1);
-      Airliness.push({ AirlineName: airlineName, AirlineCode: item?.Segments?.[1][0]?.Airline?.AirlineCode })
-    }
-    // console.log(depTimeEndTakeOff, "result ........................")
-    const categoryFilters = selectedCategory.map((category) => {
-      switch (category) {
-        case "Price":
-          return minPrice <= item?.Fare?.PublishedFare && item?.Fare?.PublishedFare <= priceRange;
-        case "1":
-          return segmentLength === 1 && minPrice <= item?.Fare?.PublishedFare && item?.Fare?.PublishedFare <= priceRange;
-        case "2":
+  const filteredData = result
+    ? result[0]?.filter((item) => {
+        const segmentLength = item?.Segments[0].length;
+        const segmentLengthStart = item?.Segments[0]?.length;
+        const segmentLengthLand = item?.Segments[1]?.length;
+        const depTime = new Date(item?.Segments?.[0][0]?.Origin?.DepTime);
+        const depTimeStartTakeOff1 = new Date(
+          item?.Segments?.[0][0]?.Origin?.DepTime
+        );
+        const arrTimeStartLand1 = new Date(
+          item?.Segments?.[0][
+            item?.Segments[0]?.length - 1
+          ]?.Destination?.ArrTime
+        );
+        const depTimeEndTakeOff1 = new Date(
+          item?.Segments?.[1][0]?.Origin?.DepTime
+        );
+        const arrTimeEndLand1 = new Date(
+          item?.Segments?.[1][
+            item?.Segments[1]?.length - 1
+          ]?.Destination?.ArrTime
+        );
+        const hour = depTime.getHours();
+        const hourStart = depTime.getHours();
+        const hourLand = depTime.getHours();
+        const depTimeStartTakeOff = depTimeStartTakeOff1?.getHours();
+        const arrTimeStartLand = arrTimeStartLand1?.getHours();
+        const depTimeEndTakeOff = depTimeEndTakeOff1?.getHours();
+        const arrTimeEndLand = arrTimeEndLand1?.getHours();
+        const airlineName = item?.Segments?.[0][0]?.Airline?.AirlineName;
+        const airlineName1 = item?.Segments?.[1][0]?.Airline?.AirlineName;
+        if (!Airlines.includes(airlineName)) {
+          Airlines.push(airlineName);
+          Airliness.push({
+            AirlineName: airlineName,
+            AirlineCode: item?.Segments?.[0][0]?.Airline?.AirlineCode,
+          });
+        }
+        if (!Airlines.includes(airlineName1)) {
+          Airlines.push(airlineName1);
+          Airliness.push({
+            AirlineName: airlineName,
+            AirlineCode: item?.Segments?.[1][0]?.Airline?.AirlineCode,
+          });
+        }
+        // console.log(depTimeEndTakeOff, "result ........................")
+        const categoryFilters = selectedCategory.map((category) => {
+          switch (category) {
+            case "Price":
+              return (
+                minPrice <= item?.Fare?.PublishedFare &&
+                item?.Fare?.PublishedFare <= priceRange
+              );
+            case "1":
+              return (
+                segmentLength === 1 &&
+                minPrice <= item?.Fare?.PublishedFare &&
+                item?.Fare?.PublishedFare <= priceRange
+              );
+            case "2":
+              return (
+                segmentLength === 2 &&
+                minPrice <= item?.Fare?.PublishedFare &&
+                item?.Fare?.PublishedFare <= priceRange
+              );
+            case "before6AM":
+              return (
+                hour < 6 &&
+                minPrice <= item?.Fare?.PublishedFare &&
+                item?.Fare?.PublishedFare <= priceRange
+              );
+            case "6AMto12PM":
+              return (
+                hour >= 6 &&
+                hour < 12 &&
+                minPrice <= item?.Fare?.PublishedFare &&
+                item?.Fare?.PublishedFare <= priceRange
+              );
+            case "12PMto6PM":
+              return (
+                hour >= 12 &&
+                hour < 18 &&
+                minPrice <= item?.Fare?.PublishedFare &&
+                item?.Fare?.PublishedFare <= priceRange
+              );
+            case "after6PM":
+              return (
+                hour >= 18 &&
+                minPrice <= item?.Fare?.PublishedFare &&
+                item?.Fare?.PublishedFare <= priceRange
+              );
+            case "startTakeoffNon":
+              return (
+                segmentLengthStart === 1 &&
+                minPrice <= item?.Fare?.PublishedFare &&
+                item?.Fare?.PublishedFare <= priceRange
+              );
+            case "startTakeoffStop":
+              return (
+                segmentLengthStart === 2 &&
+                minPrice <= item?.Fare?.PublishedFare &&
+                item?.Fare?.PublishedFare <= priceRange
+              );
+            case "startTakeoffbefore6AM":
+              return (
+                depTimeStartTakeOff < 6 &&
+                minPrice <= item?.Fare?.PublishedFare &&
+                item?.Fare?.PublishedFare <= priceRange
+              );
+            case "startTakeoff6AMto12PM":
+              return (
+                depTimeStartTakeOff >= 6 &&
+                depTimeStartTakeOff < 12 &&
+                minPrice <= item?.Fare?.PublishedFare &&
+                item?.Fare?.PublishedFare <= priceRange
+              );
+            case "startTakeoff12PMto6PM":
+              return (
+                depTimeStartTakeOff >= 12 &&
+                depTimeStartTakeOff < 18 &&
+                minPrice <= item?.Fare?.PublishedFare &&
+                item?.Fare?.PublishedFare <= priceRange
+              );
+            case "startTakeoffafter6PM":
+              return (
+                depTimeStartTakeOff >= 18 &&
+                minPrice <= item?.Fare?.PublishedFare &&
+                item?.Fare?.PublishedFare <= priceRange
+              );
+            case "startLandNon":
+              return (
+                segmentLengthLand === 1 &&
+                minPrice <= item?.Fare?.PublishedFare &&
+                item?.Fare?.PublishedFare <= priceRange
+              );
+            case "startLandStop":
+              return (
+                segmentLengthLand === 2 &&
+                minPrice <= item?.Fare?.PublishedFare &&
+                item?.Fare?.PublishedFare <= priceRange
+              );
+            case "startLandbefore6AM":
+              return (
+                arrTimeStartLand < 6 &&
+                minPrice <= item?.Fare?.PublishedFare &&
+                item?.Fare?.PublishedFare <= priceRange
+              );
+            case "startLand6AMto12PM":
+              return (
+                arrTimeStartLand >= 6 &&
+                arrTimeStartLand < 12 &&
+                minPrice <= item?.Fare?.PublishedFare &&
+                item?.Fare?.PublishedFare <= priceRange
+              );
+            case "startLand12PMto6PM":
+              return (
+                arrTimeStartLand >= 12 &&
+                arrTimeStartLand < 18 &&
+                minPrice <= item?.Fare?.PublishedFare &&
+                item?.Fare?.PublishedFare <= priceRange
+              );
+            case "startLandafter6PM":
+              return (
+                arrTimeStartLand >= 18 &&
+                minPrice <= item?.Fare?.PublishedFare &&
+                item?.Fare?.PublishedFare <= priceRange
+              );
+            case "EndTakeoffbefore6AM":
+              return (
+                depTimeEndTakeOff < 6 &&
+                minPrice <= item?.Fare?.PublishedFare &&
+                item?.Fare?.PublishedFare <= priceRange
+              );
+            case "EndTakeoff6AMto12PM":
+              return (
+                depTimeEndTakeOff >= 6 &&
+                depTimeEndTakeOff < 12 &&
+                minPrice <= item?.Fare?.PublishedFare &&
+                item?.Fare?.PublishedFare <= priceRange
+              );
+            case "EndTakeoff12PMto6PM":
+              return (
+                depTimeEndTakeOff >= 12 &&
+                depTimeEndTakeOff < 18 &&
+                minPrice <= item?.Fare?.PublishedFare &&
+                item?.Fare?.PublishedFare <= priceRange
+              );
+            case "EndTakeoffafter6PM":
+              return (
+                depTimeEndTakeOff >= 18 &&
+                minPrice <= item?.Fare?.PublishedFare &&
+                item?.Fare?.PublishedFare <= priceRange
+              );
+            case "EndLandbefore6AM":
+              return (
+                arrTimeEndLand < 6 &&
+                minPrice <= item?.Fare?.PublishedFare &&
+                item?.Fare?.PublishedFare <= priceRange
+              );
+            case "EndLand6AMto12PM":
+              return (
+                arrTimeEndLand >= 6 &&
+                arrTimeEndLand < 12 &&
+                minPrice <= item?.Fare?.PublishedFare &&
+                item?.Fare?.PublishedFare <= priceRange
+              );
+            case "EndLand12PMto6PM":
+              return (
+                arrTimeEndLand >= 12 &&
+                arrTimeEndLand < 18 &&
+                minPrice <= item?.Fare?.PublishedFare &&
+                item?.Fare?.PublishedFare <= priceRange
+              );
+            case "EndLandafter6PM":
+              return (
+                arrTimeEndLand >= 18 &&
+                minPrice <= item?.Fare?.PublishedFare &&
+                item?.Fare?.PublishedFare <= priceRange
+              );
+            case "Airlines":
+              return (
+                (airlineName === Airlines[airlinesIndex] ||
+                  airlineName1 === Airliness[airlinesIndex]) &&
+                minPrice <= item?.Fare?.PublishedFare &&
+                item?.Fare?.PublishedFare <= priceRange
+              );
 
-          return segmentLength === 2 && minPrice <= item?.Fare?.PublishedFare && item?.Fare?.PublishedFare <= priceRange;
-        case "before6AM":
-          return hour < 6 && minPrice <= item?.Fare?.PublishedFare && item?.Fare?.PublishedFare <= priceRange;
-        case "6AMto12PM":
-          return hour >= 6 && hour < 12 && minPrice <= item?.Fare?.PublishedFare && item?.Fare?.PublishedFare <= priceRange;
-        case "12PMto6PM":
-          return hour >= 12 && hour < 18 && minPrice <= item?.Fare?.PublishedFare && item?.Fare?.PublishedFare <= priceRange;
-        case "after6PM":
-          return hour >= 18 && minPrice <= item?.Fare?.PublishedFare && item?.Fare?.PublishedFare <= priceRange;
-        case "startTakeoffNon":
-          return segmentLengthStart === 1 && minPrice <= item?.Fare?.PublishedFare && item?.Fare?.PublishedFare <= priceRange;
-        case "startTakeoffStop":
-          return segmentLengthStart === 2 && minPrice <= item?.Fare?.PublishedFare && item?.Fare?.PublishedFare <= priceRange;
-        case "startTakeoffbefore6AM":
-          return depTimeStartTakeOff < 6 && minPrice <= item?.Fare?.PublishedFare && item?.Fare?.PublishedFare <= priceRange;
-        case "startTakeoff6AMto12PM":
-          return depTimeStartTakeOff >= 6 && depTimeStartTakeOff < 12 && minPrice <= item?.Fare?.PublishedFare && item?.Fare?.PublishedFare <= priceRange;
-        case "startTakeoff12PMto6PM":
-          return depTimeStartTakeOff >= 12 && depTimeStartTakeOff < 18 && minPrice <= item?.Fare?.PublishedFare && item?.Fare?.PublishedFare <= priceRange;
-        case "startTakeoffafter6PM":
-          return depTimeStartTakeOff >= 18 && minPrice <= item?.Fare?.PublishedFare && item?.Fare?.PublishedFare <= priceRange;
-        case "startLandNon":
-          return segmentLengthLand === 1 && minPrice <= item?.Fare?.PublishedFare && item?.Fare?.PublishedFare <= priceRange;
-        case "startLandStop":
-          return segmentLengthLand === 2 && minPrice <= item?.Fare?.PublishedFare && item?.Fare?.PublishedFare <= priceRange;
-        case "startLandbefore6AM":
-          return arrTimeStartLand < 6 && minPrice <= item?.Fare?.PublishedFare && item?.Fare?.PublishedFare <= priceRange;
-        case "startLand6AMto12PM":
-          return arrTimeStartLand >= 6 && arrTimeStartLand < 12 && minPrice <= item?.Fare?.PublishedFare && item?.Fare?.PublishedFare <= priceRange;
-        case "startLand12PMto6PM":
-          return arrTimeStartLand >= 12 && arrTimeStartLand < 18 && minPrice <= item?.Fare?.PublishedFare && item?.Fare?.PublishedFare <= priceRange;
-        case "startLandafter6PM":
-          return arrTimeStartLand >= 18 && minPrice <= item?.Fare?.PublishedFare && item?.Fare?.PublishedFare <= priceRange;
-        case "EndTakeoffbefore6AM":
-          return depTimeEndTakeOff < 6 && minPrice <= item?.Fare?.PublishedFare && item?.Fare?.PublishedFare <= priceRange;
-        case "EndTakeoff6AMto12PM":
-          return depTimeEndTakeOff >= 6 && depTimeEndTakeOff < 12 && minPrice <= item?.Fare?.PublishedFare && item?.Fare?.PublishedFare <= priceRange;
-        case "EndTakeoff12PMto6PM":
-          return depTimeEndTakeOff >= 12 && depTimeEndTakeOff < 18 && minPrice <= item?.Fare?.PublishedFare && item?.Fare?.PublishedFare <= priceRange;
-        case "EndTakeoffafter6PM":
-          return depTimeEndTakeOff >= 18 && minPrice <= item?.Fare?.PublishedFare && item?.Fare?.PublishedFare <= priceRange;
-        case "EndLandbefore6AM":
-          return arrTimeEndLand < 6 && minPrice <= item?.Fare?.PublishedFare && item?.Fare?.PublishedFare <= priceRange;
-        case "EndLand6AMto12PM":
-          return arrTimeEndLand >= 6 && arrTimeEndLand < 12 && minPrice <= item?.Fare?.PublishedFare && item?.Fare?.PublishedFare <= priceRange;
-        case "EndLand12PMto6PM":
-          return arrTimeEndLand >= 12 && arrTimeEndLand < 18 && minPrice <= item?.Fare?.PublishedFare && item?.Fare?.PublishedFare <= priceRange;
-        case "EndLandafter6PM":
-          return arrTimeEndLand >= 18 && minPrice <= item?.Fare?.PublishedFare && item?.Fare?.PublishedFare <= priceRange;
-        case "Airlines":
-          return (airlineName === Airlines[airlinesIndex] || airlineName1 === Airliness[airlinesIndex]) && minPrice <= item?.Fare?.PublishedFare && item?.Fare?.PublishedFare <= priceRange;
-
-
-        default:
-          return minPrice <= item?.Fare?.PublishedFare && item?.Fare?.PublishedFare <= priceRange;
-      }
-    });
-    return categoryFilters.every((filter) => filter);
-  }) : [];
+            default:
+              return (
+                minPrice <= item?.Fare?.PublishedFare &&
+                item?.Fare?.PublishedFare <= priceRange
+              );
+          }
+        });
+        return categoryFilters.every((filter) => filter);
+      })
+    : [];
   // useEffect(() => {
   //   console.log(
   //     // result[0][0]?.Segments?.[1][0]
@@ -279,119 +455,197 @@ const FlightReturnInternational = () => {
 
   //     , 'filtered data')
   // }, [])
-  const startTakeOffChangeList = [['startTakeoffNon', 'startTakeoffStop'], ['startLandNon', 'startLandStop']]
-  const TakeOffChangeList = [['startTakeoffbefore6AM', 'startTakeoff6AMto12PM', 'startTakeoff6AMto12PM', 'startTakeoffafter6PM'], ['EndTakeoffbefore6AM', 'EndTakeoff6AMto12PM', 'EndTakeoff12PMto6PM', 'EndTakeoffafter6PM']]
-  const LandChangeList = [['startLandbefore6AM', 'startLand6AMto12PM', 'startLand12PMto6PM', 'startLandafter6PM'], ['EndLandbefore6AM', 'EndLand6AMto12PM', 'EndLand12PMto6PM', 'EndLandafter6PM']]
+  const startTakeOffChangeList = [
+    ["startTakeoffNon", "startTakeoffStop"],
+    ["startLandNon", "startLandStop"],
+  ];
+  const TakeOffChangeList = [
+    [
+      "startTakeoffbefore6AM",
+      "startTakeoff6AMto12PM",
+      "startTakeoff6AMto12PM",
+      "startTakeoffafter6PM",
+    ],
+    [
+      "EndTakeoffbefore6AM",
+      "EndTakeoff6AMto12PM",
+      "EndTakeoff12PMto6PM",
+      "EndTakeoffafter6PM",
+    ],
+  ];
+  const LandChangeList = [
+    [
+      "startLandbefore6AM",
+      "startLand6AMto12PM",
+      "startLand12PMto6PM",
+      "startLandafter6PM",
+    ],
+    [
+      "EndLandbefore6AM",
+      "EndLand6AMto12PM",
+      "EndLand12PMto6PM",
+      "EndLandafter6PM",
+    ],
+  ];
   const handleTakeOffChange = (index) => {
     if (takeOffIndex === -1) {
-      setSelectedCategory(pre => [...pre, TakeOffChangeList[takeOff ? 0 : 1][index]]);
+      setSelectedCategory((pre) => [
+        ...pre,
+        TakeOffChangeList[takeOff ? 0 : 1][index],
+      ]);
       setTakeOffIndex(index);
-    }
-    else if (takeOffIndex === index) {
-      setSelectedCategory(pre => pre.filter(item => item !== TakeOffChangeList[takeOff ? 0 : 1][index]));
+    } else if (takeOffIndex === index) {
+      setSelectedCategory((pre) =>
+        pre.filter((item) => item !== TakeOffChangeList[takeOff ? 0 : 1][index])
+      );
       setTakeOffIndex(-1);
-    }
-    else {
-      setSelectedCategory(pre => pre.filter(item => item !== TakeOffChangeList[takeOff ? 0 : 1][takeOffIndex]));
-      setSelectedCategory(pre => [...pre, TakeOffChangeList[takeOff ? 0 : 1][index]]);
+    } else {
+      setSelectedCategory((pre) =>
+        pre.filter(
+          (item) => item !== TakeOffChangeList[takeOff ? 0 : 1][takeOffIndex]
+        )
+      );
+      setSelectedCategory((pre) => [
+        ...pre,
+        TakeOffChangeList[takeOff ? 0 : 1][index],
+      ]);
       setTakeOffIndex(index);
     }
-
-  }
+  };
   const handleLandChange = (index) => {
     if (landIndex === -1) {
-      setSelectedCategory(pre => [...pre, LandChangeList[takeOff ? 0 : 1][index]]);
+      setSelectedCategory((pre) => [
+        ...pre,
+        LandChangeList[takeOff ? 0 : 1][index],
+      ]);
       setLandIndex(index);
-    }
-    else if (landIndex === index) {
-      setSelectedCategory(pre => pre.filter(item => item !== LandChangeList[takeOff ? 0 : 1][index]));
+    } else if (landIndex === index) {
+      setSelectedCategory((pre) =>
+        pre.filter((item) => item !== LandChangeList[takeOff ? 0 : 1][index])
+      );
       setLandIndex(-1);
-    }
-    else {
-      setSelectedCategory(pre => pre.filter(item => item !== LandChangeList[takeOff ? 0 : 1][landIndex]));
-      setSelectedCategory(pre => [...pre, LandChangeList[takeOff ? 0 : 1][index]]);
+    } else {
+      setSelectedCategory((pre) =>
+        pre.filter(
+          (item) => item !== LandChangeList[takeOff ? 0 : 1][landIndex]
+        )
+      );
+      setSelectedCategory((pre) => [
+        ...pre,
+        LandChangeList[takeOff ? 0 : 1][index],
+      ]);
       setLandIndex(index);
     }
-
-  }
+  };
   const handleStartTakeOffChange = (index) => {
     if (startTakeOffIndex == -1) {
-      setSelectedCategory(pre => [...pre, startTakeOffChangeList[0][index]]);
+      setSelectedCategory((pre) => [...pre, startTakeOffChangeList[0][index]]);
       setStartTakeOffIndex(index);
-    }
-    else if (startTakeOffIndex == index) {
-      setSelectedCategory(pre => pre.filter(item => item !== startTakeOffChangeList[0][startTakeOffIndex]));
+    } else if (startTakeOffIndex == index) {
+      setSelectedCategory((pre) =>
+        pre.filter(
+          (item) => item !== startTakeOffChangeList[0][startTakeOffIndex]
+        )
+      );
       setStartTakeOffIndex(-1);
-    }
-    else {
-      setSelectedCategory(pre => pre.filter(item => item !== startTakeOffChangeList[0][startTakeOffIndex]));
-      setSelectedCategory(pre => [...pre, startTakeOffChangeList[0][index]]);
+    } else {
+      setSelectedCategory((pre) =>
+        pre.filter(
+          (item) => item !== startTakeOffChangeList[0][startTakeOffIndex]
+        )
+      );
+      setSelectedCategory((pre) => [...pre, startTakeOffChangeList[0][index]]);
       setStartTakeOffIndex(index);
     }
-  }
+  };
   const handleEndTakeOffChange = (index) => {
     if (endTakeOffIndex == -1) {
-      setSelectedCategory(pre => [...pre, startTakeOffChangeList[1][index]]);
+      setSelectedCategory((pre) => [...pre, startTakeOffChangeList[1][index]]);
       setEndTakeOffIndex(index);
-    }
-    else if (endTakeOffIndex == index) {
-      setSelectedCategory(pre => pre.filter(item => item !== startTakeOffChangeList[1][endTakeOffIndex]));
+    } else if (endTakeOffIndex == index) {
+      setSelectedCategory((pre) =>
+        pre.filter(
+          (item) => item !== startTakeOffChangeList[1][endTakeOffIndex]
+        )
+      );
       setEndTakeOffIndex(-1);
-    }
-    else {
-      setSelectedCategory(pre => pre.filter(item => item !== startTakeOffChangeList[0][endTakeOffIndex]));
-      setSelectedCategory(pre => [...pre, startTakeOffChangeList[0][index]]);
+    } else {
+      setSelectedCategory((pre) =>
+        pre.filter(
+          (item) => item !== startTakeOffChangeList[0][endTakeOffIndex]
+        )
+      );
+      setSelectedCategory((pre) => [...pre, startTakeOffChangeList[0][index]]);
       setEndTakeOffIndex(index);
     }
-  }
+  };
   const handleAirlinesChange = (index) => {
     if (airlinesIndex == -1) {
-      setSelectedCategory(pre => [...pre, "Airlines"]);
+      setSelectedCategory((pre) => [...pre, "Airlines"]);
       setAirlinesIndex(index);
-    }
-    else if (airlinesIndex == index) {
-      setSelectedCategory(pre => pre.filter(item => item !== "Airlines"));
+    } else if (airlinesIndex == index) {
+      setSelectedCategory((pre) => pre.filter((item) => item !== "Airlines"));
       setAirlinesIndex(-1);
-    }
-    else {
+    } else {
       // setSelectedCategory(pre => pre.filter(item => item !== startTakeOffChangeList[0][endTakeOffIndex]));
       // setSelectedCategory(pre => [...pre, startTakeOffChangeList[0][index]]);
       setAirlinesIndex(index);
     }
-  }
+  };
   if (!result) {
-    return (
-      <div>Loading...</div>
-    )
+    return <div>Loading...</div>;
   }
 
   return (
     <div className="container">
       <div className="row">
         <div className="col-lg-3">
-          <div className="packResFilterBox" >
-            <Accordion ref={accordionRef} expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+          <div className="packResFilterBox">
+            <Accordion
+              ref={accordionRef}
+              expanded={expanded === "panel1"}
+              onChange={handleChange("panel1")}
+            >
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
-                style={{ width: '100%', border: "none" }}
+                style={{ width: "100%", border: "none" }}
               >
-                <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
-
-                  <Typography style={{
-                    fontFamily: 'Montserrat',
-                    fontSize: '12px',
-                    fontWeight: '400',
-                    textAlign: 'center'
-
-                  }} ><FilterAltIcon style={{ fontWeight: "600", fontFamily: "Montserrat", fontSize: '14px' }} /> Filter</Typography>
-
+                <div
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Typography
+                    style={{
+                      fontFamily: "Montserrat",
+                      fontSize: "12px",
+                      fontWeight: "400",
+                      textAlign: "center",
+                    }}
+                  >
+                    <FilterAltIcon
+                      style={{
+                        fontWeight: "600",
+                        fontFamily: "Montserrat",
+                        fontSize: "14px",
+                      }}
+                    />{" "}
+                    Filter
+                  </Typography>
                 </div>
               </AccordionSummary>
-              <div style={{ color: '#0048FF', textDecoration: 'underline', textAlign: "right", paddingRight: "15px" }} >
-
-              </div>
+              <div
+                style={{
+                  color: "#0048FF",
+                  textDecoration: "underline",
+                  textAlign: "right",
+                  paddingRight: "15px",
+                }}
+              ></div>
               <AccordionDetails>
                 <div className="flightFilterBox">
                   {/* <div className="filterTitle">
@@ -405,8 +659,18 @@ const FlightReturnInternational = () => {
                     <div>
                       <h5>Price  range </h5>
                       <div class="wrapperRange">
+                        <div className="slider-value">
+                          <span>{priceRange}</span>
+                        </div>
                         <div class="Inputrange">
-                          <input type="range" min={minPrice} max={maxPrice} value={priceRange} onChange={(e) => setPriceRange(e.target.value)} id="rangeInputPrice" />
+                          <input
+                            type="range"
+                            min={minPrice}
+                            max={maxPrice}
+                            value={priceRange}
+                            onChange={(e) => setPriceRange(e.target.value)}
+                            id="rangeInputPrice"
+                          />
                         </div>
                         <div className="price_range">
                           <div>₹{minPrice}</div>
@@ -416,19 +680,54 @@ const FlightReturnInternational = () => {
                     </div>
                     {/* <div className="stops_filter">STOPS</div> */}
                     <div>
-                      <h2 className="sidebar-title">Stops from {takeOff ? result[0][0]?.Segments?.[0][0]?.Origin?.Airport?.CityName
-                        : result[0][0]?.Segments?.[1][0]?.Origin?.Airport?.CityName
-                      }</h2>
-                      <div style={{ width: "100%", display: 'flex' }}>
-                        <div className={`timeContainer ${startTakeOffIndex === 0 && 'timeContainerTimeActive'}`} onClick={() => handleStartTakeOffChange(0)}>
+                      <h2 className="sidebar-title">
+                        Stops from{" "}
+                        {takeOff
+                          ? result[0][0]?.Segments?.[0][0]?.Origin?.Airport
+                              ?.CityName
+                          : result[0][0]?.Segments?.[1][0]?.Origin?.Airport
+                              ?.CityName}
+                      </h2>
+                      <div style={{ width: "100%", display: "flex" }}>
+                        <div
+                          className={`timeContainer ${
+                            startTakeOffIndex === 0 && "timeContainerTimeActive"
+                          }`}
+                          onClick={() => handleStartTakeOffChange(0)}
+                        >
                           <span className="checkedSVG pe-2 redd">
-                            <svg id="fi_2089699" enable-background="new 0 0 515.556 515.556" height="19" viewBox="0 0 515.556 515.556" width="19" xmlns="http://www.w3.org/2000/svg"><path d="m257.778 0c-142.137 0-257.778 115.641-257.778 257.778s115.641 257.778 257.778 257.778 257.778-115.641 257.778-257.778-115.642-257.778-257.778-257.778zm-193.334 257.778c0-41.69 13.397-80.235 35.924-111.846l269.255 269.255c-31.611 22.526-70.156 35.924-111.846 35.924-106.609 0-193.333-86.723-193.333-193.333zm350.743 111.846-269.256-269.256c31.611-22.526 70.156-35.924 111.846-35.924 106.61 0 193.333 86.723 193.333 193.333 0 41.691-13.397 80.236-35.923 111.847z"></path></svg>
+                            <svg
+                              id="fi_2089699"
+                              enable-background="new 0 0 515.556 515.556"
+                              height="19"
+                              viewBox="0 0 515.556 515.556"
+                              width="19"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path d="m257.778 0c-142.137 0-257.778 115.641-257.778 257.778s115.641 257.778 257.778 257.778 257.778-115.641 257.778-257.778-115.642-257.778-257.778-257.778zm-193.334 257.778c0-41.69 13.397-80.235 35.924-111.846l269.255 269.255c-31.611 22.526-70.156 35.924-111.846 35.924-106.609 0-193.333-86.723-193.333-193.333zm350.743 111.846-269.256-269.256c31.611-22.526 70.156-35.924 111.846-35.924 106.61 0 193.333 86.723 193.333 193.333 0 41.691-13.397 80.236-35.923 111.847z"></path>
+                            </svg>
                           </span>
                           <span className="timeContainerTime">Non-Stop</span>
                         </div>
-                        <div className={`timeContainer ${startTakeOffIndex === 1 && 'timeContainerTimeActive'}`} onClick={() => handleStartTakeOffChange(1)}>
+                        <div
+                          className={`timeContainer ${
+                            startTakeOffIndex === 1 && "timeContainerTimeActive"
+                          }`}
+                          onClick={() => handleStartTakeOffChange(1)}
+                        >
                           <span className="checkedSVG pe-2">
-                            <svg height="19" viewBox="0 0 32 32" width="19" xmlns="http://www.w3.org/2000/svg" id="fi_4212317"><g id="_62-Stopwatch" data-name="62-Stopwatch"><path d="m25.15 10.26 1.56-1.55a1 1 0 1 0 -1.42-1.42l-1.55 1.56a11.9 11.9 0 0 0 -6.74-2.8v-2.05h2a1 1 0 0 0 0-2h-6a1 1 0 0 0 0 2h2v2.05a12 12 0 1 0 10.15 4.21zm-9.15 17.74a10 10 0 1 1 10-10 10 10 0 0 1 -10 10z"></path><path d="m16 10a8 8 0 1 0 8 8 8 8 0 0 0 -8-8zm3.71 11.71a1 1 0 0 1 -1.42 0l-3-3a1 1 0 0 1 -.29-.71v-5a1 1 0 0 1 2 0v4.59l2.71 2.7a1 1 0 0 1 0 1.42z"></path></g></svg>
+                            <svg
+                              height="19"
+                              viewBox="0 0 32 32"
+                              width="19"
+                              xmlns="http://www.w3.org/2000/svg"
+                              id="fi_4212317"
+                            >
+                              <g id="_62-Stopwatch" data-name="62-Stopwatch">
+                                <path d="m25.15 10.26 1.56-1.55a1 1 0 1 0 -1.42-1.42l-1.55 1.56a11.9 11.9 0 0 0 -6.74-2.8v-2.05h2a1 1 0 0 0 0-2h-6a1 1 0 0 0 0 2h2v2.05a12 12 0 1 0 10.15 4.21zm-9.15 17.74a10 10 0 1 1 10-10 10 10 0 0 1 -10 10z"></path>
+                                <path d="m16 10a8 8 0 1 0 8 8 8 8 0 0 0 -8-8zm3.71 11.71a1 1 0 0 1 -1.42 0l-3-3a1 1 0 0 1 -.29-.71v-5a1 1 0 0 1 2 0v4.59l2.71 2.7a1 1 0 0 1 0 1.42z"></path>
+                              </g>
+                            </svg>
                           </span>
                           <span className="timeContainerTime">One Stop </span>
                         </div>
@@ -462,22 +761,59 @@ const FlightReturnInternational = () => {
                         </label> */}
 
                       {/* </div> */}
-                      <Divider sx={{ marginBottom: "15px", backgroundColor: "gray" }} />
+                      <Divider
+                        sx={{ marginBottom: "15px", backgroundColor: "gray" }}
+                      />
                     </div>
                     <div className="filter_Box_X">
-                      <h2 className="sidebar-title">Stops from {!takeOff ? result[0][0]?.Segments?.[0][0]?.Origin?.Airport?.CityName
-                        : result[0][0]?.Segments?.[1][0]?.Origin?.Airport?.CityName
-                      }</h2>
-                      <div style={{ width: "100%", display: 'flex' }}>
-                        <div className={`timeContainer ${endTakeOffIndex === 0 && 'timeContainerTimeActive'}`} onClick={() => handleEndTakeOffChange(0)}>
+                      <h2 className="sidebar-title">
+                        Stops from{" "}
+                        {!takeOff
+                          ? result[0][0]?.Segments?.[0][0]?.Origin?.Airport
+                              ?.CityName
+                          : result[0][0]?.Segments?.[1][0]?.Origin?.Airport
+                              ?.CityName}
+                      </h2>
+                      <div style={{ width: "100%", display: "flex" }}>
+                        <div
+                          className={`timeContainer ${
+                            endTakeOffIndex === 0 && "timeContainerTimeActive"
+                          }`}
+                          onClick={() => handleEndTakeOffChange(0)}
+                        >
                           <span className="checkedSVG pe-2 redd">
-                            <svg id="fi_2089699" enable-background="new 0 0 515.556 515.556" height="19" viewBox="0 0 515.556 515.556" width="19" xmlns="http://www.w3.org/2000/svg"><path d="m257.778 0c-142.137 0-257.778 115.641-257.778 257.778s115.641 257.778 257.778 257.778 257.778-115.641 257.778-257.778-115.642-257.778-257.778-257.778zm-193.334 257.778c0-41.69 13.397-80.235 35.924-111.846l269.255 269.255c-31.611 22.526-70.156 35.924-111.846 35.924-106.609 0-193.333-86.723-193.333-193.333zm350.743 111.846-269.256-269.256c31.611-22.526 70.156-35.924 111.846-35.924 106.61 0 193.333 86.723 193.333 193.333 0 41.691-13.397 80.236-35.923 111.847z"></path></svg>
+                            <svg
+                              id="fi_2089699"
+                              enable-background="new 0 0 515.556 515.556"
+                              height="19"
+                              viewBox="0 0 515.556 515.556"
+                              width="19"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path d="m257.778 0c-142.137 0-257.778 115.641-257.778 257.778s115.641 257.778 257.778 257.778 257.778-115.641 257.778-257.778-115.642-257.778-257.778-257.778zm-193.334 257.778c0-41.69 13.397-80.235 35.924-111.846l269.255 269.255c-31.611 22.526-70.156 35.924-111.846 35.924-106.609 0-193.333-86.723-193.333-193.333zm350.743 111.846-269.256-269.256c31.611-22.526 70.156-35.924 111.846-35.924 106.61 0 193.333 86.723 193.333 193.333 0 41.691-13.397 80.236-35.923 111.847z"></path>
+                            </svg>
                           </span>
                           <span className="timeContainerTime">Non-Stop</span>
                         </div>
-                        <div className={`timeContainer ${endTakeOffIndex === 1 && 'timeContainerTimeActive'}`} onClick={() => handleEndTakeOffChange(1)}>
+                        <div
+                          className={`timeContainer ${
+                            endTakeOffIndex === 1 && "timeContainerTimeActive"
+                          }`}
+                          onClick={() => handleEndTakeOffChange(1)}
+                        >
                           <span className="checkedSVG pe-2">
-                            <svg height="19" viewBox="0 0 32 32" width="19" xmlns="http://www.w3.org/2000/svg" id="fi_4212317"><g id="_62-Stopwatch" data-name="62-Stopwatch"><path d="m25.15 10.26 1.56-1.55a1 1 0 1 0 -1.42-1.42l-1.55 1.56a11.9 11.9 0 0 0 -6.74-2.8v-2.05h2a1 1 0 0 0 0-2h-6a1 1 0 0 0 0 2h2v2.05a12 12 0 1 0 10.15 4.21zm-9.15 17.74a10 10 0 1 1 10-10 10 10 0 0 1 -10 10z"></path><path d="m16 10a8 8 0 1 0 8 8 8 8 0 0 0 -8-8zm3.71 11.71a1 1 0 0 1 -1.42 0l-3-3a1 1 0 0 1 -.29-.71v-5a1 1 0 0 1 2 0v4.59l2.71 2.7a1 1 0 0 1 0 1.42z"></path></g></svg>
+                            <svg
+                              height="19"
+                              viewBox="0 0 32 32"
+                              width="19"
+                              xmlns="http://www.w3.org/2000/svg"
+                              id="fi_4212317"
+                            >
+                              <g id="_62-Stopwatch" data-name="62-Stopwatch">
+                                <path d="m25.15 10.26 1.56-1.55a1 1 0 1 0 -1.42-1.42l-1.55 1.56a11.9 11.9 0 0 0 -6.74-2.8v-2.05h2a1 1 0 0 0 0-2h-6a1 1 0 0 0 0 2h2v2.05a12 12 0 1 0 10.15 4.21zm-9.15 17.74a10 10 0 1 1 10-10 10 10 0 0 1 -10 10z"></path>
+                                <path d="m16 10a8 8 0 1 0 8 8 8 8 0 0 0 -8-8zm3.71 11.71a1 1 0 0 1 -1.42 0l-3-3a1 1 0 0 1 -.29-.71v-5a1 1 0 0 1 2 0v4.59l2.71 2.7a1 1 0 0 1 0 1.42z"></path>
+                              </g>
+                            </svg>
                           </span>
                           <span className="timeContainerTime">One Stop </span>
                         </div>
@@ -511,31 +847,53 @@ const FlightReturnInternational = () => {
                         </label> */}
 
                       {/* </div> */}
-                      <Divider sx={{ marginBottom: "15px", backgroundColor: "gray" }} />
+                      <Divider
+                        sx={{ marginBottom: "15px", backgroundColor: "gray" }}
+                      />
                     </div>
                     <div className="FlightTimingContainer">
                       {/* <div>Flight Timing</div> */}
-                      <div className="FlightTimingToggle" >
-                        <div className={
-                          takeOff ? "FlightToggleActive" : "FlightToggleInActive"
-                        }
+                      <div className="FlightTimingToggle">
+                        <div
+                          className={
+                            takeOff
+                              ? "FlightToggleActive"
+                              : "FlightToggleInActive"
+                          }
                           onClick={() => {
                             SetTakeOffetFilter(true);
                             clearFilter();
-                          }}>Take Off</div>
-                        <div className={
-                          !takeOff ? "FlightToggleActive" : "FlightToggleInActive"
-                        } onClick={() => {
-                          SetTakeOffetFilter(false);
-                          clearFilter();
-                        }}>Landing</div>
+                          }}
+                        >
+                          {" "}
+                          Onward 
+                        </div>
+                        <div
+                          className={
+                            !takeOff
+                              ? "FlightToggleActive"
+                              : "FlightToggleInActive"
+                          }
+                          onClick={() => {
+                            SetTakeOffetFilter(false);
+                            clearFilter();
+                          }}
+                        >
+                          Return
+                        </div>
                       </div>
                     </div>
 
                     <div className="filter_Box_X">
-                      <h2 className="sidebar-title">Take-Off from {takeOff ? result[0][0]?.Segments?.[0][0]?.Origin?.Airport?.CityName
-                        : result[0][0]?.Segments?.[1][0]?.Origin?.Airport?.CityName
-                      }</h2>
+                      <h2 className="sidebar-title">
+                        {" "}
+                        take Off from 
+                        {takeOff
+                          ? result[0][0]?.Segments?.[0][0]?.Origin?.Airport
+                              ?.CityName
+                          : result[0][0]?.Segments?.[1][0]?.Origin?.Airport
+                              ?.CityName}
+                      </h2>
 
                       {/* <div className="sidebar-label-container-outer-div">
                         <label className="sidebar-label-container" >
@@ -575,9 +933,13 @@ const FlightReturnInternational = () => {
                         </label>
                       </div> */}
                       <div style={{ width: "100%" }}>
-
-                        <div style={{ width: "100%", display: 'flex' }}>
-                          <div className={`timeContainer ${takeOffIndex === 0 && 'timeContainerTimeActive'}`} onClick={() => handleTakeOffChange(0)}>
+                        <div style={{ width: "100%", display: "flex" }}>
+                          <div
+                            className={`timeContainer ${
+                              takeOffIndex === 0 && "timeContainerTimeActive"
+                            }`}
+                            onClick={() => handleTakeOffChange(0)}
+                          >
                             <span className="checkedSVG pe-2 redd">
                               <svg
                                 id="Capa_1"
@@ -599,9 +961,16 @@ const FlightReturnInternational = () => {
                                 <path d="m419.34 433.944-.357-.136c-21.791-8.301-54.72-20.847-83.983-20.847-16.094 0-30.715 5.586-44.854 10.988-12.13 4.635-23.588 9.012-34.146 9.012s-22.016-4.377-34.146-9.012c-14.139-5.402-28.759-10.988-44.854-10.988-25.122 0-41.314 5.75-68.142 15.276-4.805 1.706-10.02 3.558-15.771 5.552-7.827 2.713-11.973 11.258-9.259 19.085 2.149 6.201 7.958 10.091 14.172 10.091 1.629 0 3.288-.268 4.914-.832 5.829-2.021 11.114-3.897 15.983-5.626 26.195-9.301 38.15-13.546 58.104-13.546 10.559 0 22.016 4.377 34.146 9.012 14.139 5.402 28.759 10.988 44.854 10.988s30.715-5.586 44.854-10.988c12.13-4.635 23.588-9.012 34.146-9.012 23.742 0 53.567 11.362 73.303 18.881l.357.136c7.741 2.95 16.408-.936 19.357-8.677s-.936-16.408-8.678-19.357z" />
                               </svg>
                             </span>
-                            <span className="timeContainerTime">Before 6 AM</span>
+                            <span className="timeContainerTime">
+                              Before 6 AM
+                            </span>
                           </div>
-                          <div className={`timeContainer ${takeOffIndex === 1 && 'timeContainerTimeActive'}`} onClick={() => handleTakeOffChange(1)}>
+                          <div
+                            className={`timeContainer ${
+                              takeOffIndex === 1 && "timeContainerTimeActive"
+                            }`}
+                            onClick={() => handleTakeOffChange(1)}
+                          >
                             <span className="checkedSVG pe-2">
                               <svg
                                 height="19"
@@ -626,8 +995,13 @@ const FlightReturnInternational = () => {
                             <span className="timeContainerTime">6AM-12PM</span>
                           </div>
                         </div>
-                        <div style={{ width: "100%", display: 'flex' }}>
-                          <div className={`timeContainer ${takeOffIndex === 2 && 'timeContainerTimeActive'}`} onClick={() => handleTakeOffChange(2)}>
+                        <div style={{ width: "100%", display: "flex" }}>
+                          <div
+                            className={`timeContainer ${
+                              takeOffIndex === 2 && "timeContainerTimeActive"
+                            }`}
+                            onClick={() => handleTakeOffChange(2)}
+                          >
                             <span className="checkedSVG pe-2 redd">
                               <svg
                                 id="fi_3223045"
@@ -649,7 +1023,12 @@ const FlightReturnInternational = () => {
                             </span>
                             <span className="timeContainerTime">12PM-6PM</span>
                           </div>
-                          <div className={`timeContainer ${takeOffIndex === 3 && 'timeContainerTimeActive'}`} onClick={() => handleTakeOffChange(3)}>
+                          <div
+                            className={`timeContainer ${
+                              takeOffIndex === 3 && "timeContainerTimeActive"
+                            }`}
+                            onClick={() => handleTakeOffChange(3)}
+                          >
                             <span className="checkedSVG pe-2">
                               <svg
                                 height="19"
@@ -661,20 +1040,27 @@ const FlightReturnInternational = () => {
                                 <path d="m251.710938 297.488281c-2.390626 0-4.832032.140625-7.261719.398438l-14.554688 1.582031-1.941406-14.511719c-4.828125-36.25-36.105469-63.574219-72.742187-63.574219-40.46875 0-73.386719 32.925782-73.386719 73.394532 0 4.140625.351562 8.3125 1.042969 12.394531l3.71875 21.871094-21.683594-4.699219c-3.761719-.8125-7.601563-1.21875-11.402344-1.21875-29.503906 0-53.5 23.992188-53.5 53.5 0 29.503906 23.996094 53.507812 53.5 53.507812h198.210938c36.574218 0 66.320312-29.753906 66.320312-66.320312 0-36.570312-29.746094-66.324219-66.320312-66.324219zm0 0"></path>
                                 <path d="m481.632812 258.789062c-2.949218.171876-5.890624.25-8.808593.25-53.953125 0-103.222657-28.515624-130.066407-75.882812-28.296874-49.941406-25.816406-110.480469 6.480469-158l17.09375-25.15625-30.355469 1.742188c-27.644531 1.589843-53.941406 9.351562-78.15625 23.074218-41.75 23.664063-71.785156 62.152344-84.578124 108.398438-5.378907 19.453125-7.429688 39.277344-6.238282 58.84375 41.875 4.808594 76.921875 34.976562 87.976563 75.484375 50.609375 1.699219 91.457031 42.617187 93.007812 93.265625 30.1875-.21875 59.980469-8.121094 86.957031-23.421875 24.222657-13.722657 44.386719-32.289063 59.953126-55.191407l17.101562-25.144531zm0 0"></path>
                               </svg>
-
                             </span>
-                            <span className="timeContainerTime">After 6 PM</span>
+                            <span className="timeContainerTime">
+                              After 6 PM
+                            </span>
                           </div>
                         </div>
-
                       </div>
 
-                      <Divider sx={{ marginBottom: "15px", backgroundColor: "gray" }} />
+                      <Divider
+                        sx={{ marginBottom: "15px", backgroundColor: "gray" }}
+                      />
                     </div>
                     <div>
-                      <h2 className="sidebar-title">Landing at {!takeOff ? result[0][0]?.Segments?.[0][0]?.Origin?.Airport?.CityName
-                        : result[0][0]?.Segments?.[1][0]?.Origin?.Airport?.CityName
-                      }</h2>
+                      <h2 className="sidebar-title">
+                        Landing at{" "}
+                        {!takeOff
+                          ? result[0][0]?.Segments?.[0][0]?.Origin?.Airport
+                              ?.CityName
+                          : result[0][0]?.Segments?.[1][0]?.Origin?.Airport
+                              ?.CityName}
+                      </h2>
 
                       {/* <div>
                         <label className="sidebar-label-container" >
@@ -714,9 +1100,13 @@ const FlightReturnInternational = () => {
                         </label>
                       </div> */}
                       <div style={{ width: "100%" }}>
-
-                        <div style={{ width: "100%", display: 'flex' }}>
-                          <div className={`timeContainer ${landIndex === 0 && 'timeContainerTimeActive'}`} onClick={() => handleLandChange(0)}>
+                        <div style={{ width: "100%", display: "flex" }}>
+                          <div
+                            className={`timeContainer ${
+                              landIndex === 0 && "timeContainerTimeActive"
+                            }`}
+                            onClick={() => handleLandChange(0)}
+                          >
                             <span className="checkedSVG pe-2 redd">
                               <svg
                                 id="Capa_1"
@@ -738,9 +1128,16 @@ const FlightReturnInternational = () => {
                                 <path d="m419.34 433.944-.357-.136c-21.791-8.301-54.72-20.847-83.983-20.847-16.094 0-30.715 5.586-44.854 10.988-12.13 4.635-23.588 9.012-34.146 9.012s-22.016-4.377-34.146-9.012c-14.139-5.402-28.759-10.988-44.854-10.988-25.122 0-41.314 5.75-68.142 15.276-4.805 1.706-10.02 3.558-15.771 5.552-7.827 2.713-11.973 11.258-9.259 19.085 2.149 6.201 7.958 10.091 14.172 10.091 1.629 0 3.288-.268 4.914-.832 5.829-2.021 11.114-3.897 15.983-5.626 26.195-9.301 38.15-13.546 58.104-13.546 10.559 0 22.016 4.377 34.146 9.012 14.139 5.402 28.759 10.988 44.854 10.988s30.715-5.586 44.854-10.988c12.13-4.635 23.588-9.012 34.146-9.012 23.742 0 53.567 11.362 73.303 18.881l.357.136c7.741 2.95 16.408-.936 19.357-8.677s-.936-16.408-8.678-19.357z" />
                               </svg>
                             </span>
-                            <span className="timeContainerTime">Before 6 AM</span>
+                            <span className="timeContainerTime">
+                              Before 6 AM
+                            </span>
                           </div>
-                          <div className={`timeContainer ${landIndex === 1 && 'timeContainerTimeActive'}`} onClick={() => handleLandChange(1)}>
+                          <div
+                            className={`timeContainer ${
+                              landIndex === 1 && "timeContainerTimeActive"
+                            }`}
+                            onClick={() => handleLandChange(1)}
+                          >
                             <span className="checkedSVG pe-2">
                               <svg
                                 height="19"
@@ -765,8 +1162,13 @@ const FlightReturnInternational = () => {
                             <span className="timeContainerTime">6AM-12PM</span>
                           </div>
                         </div>
-                        <div style={{ width: "100%", display: 'flex' }}>
-                          <div className={`timeContainer ${landIndex === 2 && 'timeContainerTimeActive'}`} onClick={() => handleLandChange(2)}>
+                        <div style={{ width: "100%", display: "flex" }}>
+                          <div
+                            className={`timeContainer ${
+                              landIndex === 2 && "timeContainerTimeActive"
+                            }`}
+                            onClick={() => handleLandChange(2)}
+                          >
                             <span className="checkedSVG pe-2 redd">
                               <svg
                                 id="fi_3223045"
@@ -788,7 +1190,12 @@ const FlightReturnInternational = () => {
                             </span>
                             <span className="timeContainerTime">12PM-6PM</span>
                           </div>
-                          <div className={`timeContainer ${landIndex === 3 && 'timeContainerTimeActive'}`} onClick={() => handleLandChange(3)}>
+                          <div
+                            className={`timeContainer ${
+                              landIndex === 3 && "timeContainerTimeActive"
+                            }`}
+                            onClick={() => handleLandChange(3)}
+                          >
                             <span className="checkedSVG pe-2">
                               <svg
                                 height="19"
@@ -801,13 +1208,16 @@ const FlightReturnInternational = () => {
                                 <path d="m481.632812 258.789062c-2.949218.171876-5.890624.25-8.808593.25-53.953125 0-103.222657-28.515624-130.066407-75.882812-28.296874-49.941406-25.816406-110.480469 6.480469-158l17.09375-25.15625-30.355469 1.742188c-27.644531 1.589843-53.941406 9.351562-78.15625 23.074218-41.75 23.664063-71.785156 62.152344-84.578124 108.398438-5.378907 19.453125-7.429688 39.277344-6.238282 58.84375 41.875 4.808594 76.921875 34.976562 87.976563 75.484375 50.609375 1.699219 91.457031 42.617187 93.007812 93.265625 30.1875-.21875 59.980469-8.121094 86.957031-23.421875 24.222657-13.722657 44.386719-32.289063 59.953126-55.191407l17.101562-25.144531zm0 0"></path>
                               </svg>
                             </span>
-                            <span className="timeContainerTime">After 6 PM</span>
+                            <span className="timeContainerTime">
+                              After 6 PM
+                            </span>
                           </div>
                         </div>
-
                       </div>
 
-                      <Divider sx={{ marginBottom: "15px", backgroundColor: "gray" }} />
+                      <Divider
+                        sx={{ marginBottom: "15px", backgroundColor: "gray" }}
+                      />
                     </div>
 
                     <div>
@@ -833,23 +1243,35 @@ const FlightReturnInternational = () => {
                           <input type="checkbox" onChange={handleRadioChange} value="Vistara" name="test" />
                           <span className="checkmark"></span>Vistara
                         </label> */}
-                        {Airliness.map((item, index) => (<div onClick={() => handleAirlinesChange(index)} className={`AirelinesFilter ${airlinesIndex === index && "AirelineFliterActive"}`} >
-                          <div ><img style={{ width: "40px", height: "40px", objectFit: "contain" }} src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${item.AirlineCode}.png`} /> </div>
-                          <div>{item.AirlineName}</div>
-                        </div>))}
-
+                        {Airliness.map((item, index) => (
+                          <div
+                            onClick={() => handleAirlinesChange(index)}
+                            className={`AirelinesFilter ${
+                              airlinesIndex === index && "AirelineFliterActive"
+                            }`}
+                          >
+                            <div>
+                              <img
+                                style={{
+                                  width: "40px",
+                                  height: "40px",
+                                  objectFit: "contain",
+                                }}
+                                src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${item.AirlineCode}.png`}
+                              />{" "}
+                            </div>
+                            <div>{item.AirlineName}</div>
+                          </div>
+                        ))}
                       </div>
-                      <Divider sx={{ marginBottom: "15px", backgroundColor: "gray" }} />
+                      <Divider
+                        sx={{ marginBottom: "15px", backgroundColor: "gray" }}
+                      />
                     </div>
-
-
-
-
                   </div>
                 </div>
               </AccordionDetails>
             </Accordion>
-
           </div>
         </div>
         <div className="col-9">
@@ -858,55 +1280,145 @@ const FlightReturnInternational = () => {
               <div className="returnheadicons">
                 <div>
                   <p>Flight</p>
-                  <span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                    <path d="M6 9.5L3 6.5M6 9.5L9 6.5M6 9.5L6 2.5" stroke="#21325D" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg></span>
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                    >
+                      <path
+                        d="M6 9.5L3 6.5M6 9.5L9 6.5M6 9.5L6 2.5"
+                        stroke="#21325D"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </span>
                 </div>
                 <div>
                   <p>Departure</p>
-                  <span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                    <path d="M6 9.5L3 6.5M6 9.5L9 6.5M6 9.5L6 2.5" stroke="#21325D" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg></span>
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                    >
+                      <path
+                        d="M6 9.5L3 6.5M6 9.5L9 6.5M6 9.5L6 2.5"
+                        stroke="#21325D"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </span>
                 </div>
                 <div>
                   <p>Duration</p>
-                  <span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                    <path d="M6 9.5L3 6.5M6 9.5L9 6.5M6 9.5L6 2.5" stroke="#21325D" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg></span>
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                    >
+                      <path
+                        d="M6 9.5L3 6.5M6 9.5L9 6.5M6 9.5L6 2.5"
+                        stroke="#21325D"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </span>
                 </div>
                 <div>
                   <p>Arrival</p>
-                  <span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                    <path d="M6 9.5L3 6.5M6 9.5L9 6.5M6 9.5L6 2.5" stroke="#21325D" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg></span>
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                    >
+                      <path
+                        d="M6 9.5L3 6.5M6 9.5L9 6.5M6 9.5L6 2.5"
+                        stroke="#21325D"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </span>
                 </div>
                 <div>
                   <p>Offer Fare</p>
-                  <span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                    <path d="M6 9.5L3 6.5M6 9.5L9 6.5M6 9.5L6 2.5" stroke="#21325D" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg></span>
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                    >
+                      <path
+                        d="M6 9.5L3 6.5M6 9.5L9 6.5M6 9.5L6 2.5"
+                        stroke="#21325D"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </span>
                 </div>
                 <div>
                   <p>Select</p>
-                  <span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                    <path d="M6 9.5L3 6.5M6 9.5L9 6.5M6 9.5L6 2.5" stroke="#21325D" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg></span>
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                    >
+                      <path
+                        d="M6 9.5L3 6.5M6 9.5L9 6.5M6 9.5L6 2.5"
+                        stroke="#21325D"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </span>
                 </div>
               </div>
 
-              {filteredData.length === 0 ? <div className="returnheadicons1">
-                <div className="filterNoResultImgDev">
-                  <img src={filterImg} style={{ width: "50px", height: "50px" }} />
-                </div>
-                <div className="filter_noresult_inner_dev">
-                  <div className="filter_noresult_inner_dev1">
-                    Too many filters applied!
+              {filteredData.length === 0 ? (
+                <div className="returnheadicons1">
+                  <div className="filterNoResultImgDev">
+                    <img
+                      src={filterImg}
+                      style={{ width: "50px", height: "50px" }}
+                    />
                   </div>
-                  <div>We couldn't find any flights with all the filters you’ve selected. Try removing some filters</div>
-                  <div className="clearFilterDivBTN" onClick={() => clearFilter()}>Clear Filter</div>
+                  <div className="filter_noresult_inner_dev">
+                    <div className="filter_noresult_inner_dev1">
+                      Too many filters applied!
+                    </div>
+                    <div>
+                      We couldn't find any flights with all the filters you’ve
+                      selected. Try removing some filters
+                    </div>
+                    <div
+                      className="clearFilterDivBTN"
+                      onClick={() => clearFilter()}
+                    >
+                      Clear Filter
+                    </div>
+                  </div>
                 </div>
-
-              </div> :
+              ) : (
                 filteredData.map((item, i) => (
                   // console.log(item)
                   <Box
@@ -918,10 +1430,10 @@ const FlightReturnInternational = () => {
                       gap: "5px",
                       width: "100%",
                       margin: "auto",
-                      width: '100%',
-                      borderRadius: '5px',
-                      margin: '5px',
-                      boxShadow: '-1px 7px 14px 4px rgba(223,220,242,1)'
+                      width: "100%",
+                      borderRadius: "5px",
+                      margin: "5px",
+                      boxShadow: "-1px 7px 14px 4px rgba(223,220,242,1)",
                       // position: "fixed",
                       // left: 0,
                       // overflow: "hidden",
@@ -1024,38 +1536,26 @@ const FlightReturnInternational = () => {
                         >
                           Total Price
                         </Typography>
-                        <p
-                          className="flight_price"
-
-
-                        >
-                          {
-                            `₹${Number(item?.Fare?.PublishedFare).toFixed(0)}`
-                          }
+                        <p className="flight_price">
+                          {`₹${Number(item?.Fare?.PublishedFare).toFixed(0)}`}
                         </p>
                       </Box>
 
                       <button
                         className="flightBoolkInternationalButton"
                         onClick={() => handleFareRuleAndQuote(item, i)}
-
                       >
                         Book Now
                       </button>
                     </Box>
                   </Box>
                 ))
-              }
-
+              )}
             </div>
           </div>
         </div>
       </div>
-
-
     </div>
-
-
   );
 };
 

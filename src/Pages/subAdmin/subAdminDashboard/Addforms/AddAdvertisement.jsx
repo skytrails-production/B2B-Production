@@ -86,13 +86,13 @@ const CreateAdvertisementForm = () => {
 
   return (
     <div className="form-containers">
-      <header className="sectionagent headersagent">
+      <header className="sectionagent headersagent headersagentsub">
         <div className="headead">
           {/* <img src={profilePicUrl} style={{ width: "80%" }} alt="Logo" /> */}
           <h2>Create Addvertisement</h2>
         </div>
       </header>
-      <form onSubmit={handleSubmit} className="advertisement-form">
+      <form onSubmit={handleSubmit} className="advertisement-form subadminform subaddvertise">
         <label className="form-label-add">
           Title:
           <input type="text" name="title" value={formValues.title} onChange={handleInputChange} className="form-input-ads" />
@@ -129,7 +129,7 @@ const CreateAdvertisementForm = () => {
           Image:
           <input type="file" accept="image/*" onChange={handleFileChange} className="form-input-image-ads" />
         </label>
-        <button type="submit" className="form-button">Submit</button>
+        <button type="submit" className="form-button subadminbtn" style={{backgroundColor:"#E73C33"}}>Submit</button>
       </form>
     </div>
 

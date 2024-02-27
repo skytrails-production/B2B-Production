@@ -117,8 +117,8 @@ const CreateEventForm = () => {
   };
 
   return (
-    <div className="addEvent-div">
-      <header className="sectionagent headersagent">
+    <div className="addEvent-div" style={{width:"55%"}}>
+      <header className="sectionagent headersagent" style={{backgroundColor:"#E73C33"}}>
         <div className="headead">
           <h2>Create Event</h2>
         </div>
@@ -385,7 +385,7 @@ const CreateEventForm = () => {
 
                 />
 
-                <button type="submit" className="addEvent-button">
+                <button type="submit" className="addEvent-button" style={{backgroundColor:"#E73C33"}}>
                   <span className="addEvent-button-text">Submit</span>
                   <span className="addEvent-button-icon">&#10004;</span>
                 </button>

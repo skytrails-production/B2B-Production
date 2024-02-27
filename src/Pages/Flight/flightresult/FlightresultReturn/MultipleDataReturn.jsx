@@ -7,6 +7,7 @@ import { useDispatch, useSelector, useReducer } from "react-redux";
 import Luggage from "../Luggage";
 import flightdir from "../../../../Images/flgihtdir.png";
 import { useEffect } from "react";
+import { convertTimeToAMPM } from "../../../../utils/Constantfunction";
 
 const MultipleDataReturn = (props) => {
   const navigate = useNavigate();
@@ -14,15 +15,15 @@ const MultipleDataReturn = (props) => {
 
   const flight = props.flight;
   // console.log(flight, "flightnjfnvjf")
-  const wholeFlight = props.wholeFlight
+  const wholeFlight = props.wholeFlight;
   const IsLCC = props.IsLCC;
   const indexKey = props.index;
   const fare =
     reducerState?.logIn?.loginData.length > 0
       ? `${Math.round(
-        Number(props.fare) +
-        Number(reducerState?.logIn?.loginData?.data?.data?.markup?.flight)
-      )}`
+          Number(props.fare) +
+            Number(reducerState?.logIn?.loginData?.data?.data?.markup?.flight)
+        )}`
       : Math.round(Number(props.fare));
   // useEffect(() => {
   //   // console.log("flight multiple", fare);
@@ -36,9 +37,9 @@ const MultipleDataReturn = (props) => {
   const results =
     reducerState?.return?.returnData?.data?.data?.Response?.Results;
 
-
-  const time = `${Math.floor(flight[0]?.Duration / 60)}hr ${flight[0].Duration % 60
-    }min`;
+  const time = `${Math.floor(flight[0]?.Duration / 60)}hr ${
+    flight[0].Duration % 60
+  }min`;
 
   const dateString = flight[0]?.Origin?.DepTime;
   const date1 = new Date(dateString);
@@ -55,6 +56,7 @@ const MultipleDataReturn = (props) => {
   const date2 = new Date(dateString1);
   const time2 = date2.toLocaleTimeString();
 
+
   const day2 = date2.getDate();
   const month2 = date2.toLocaleString("default", {
     month: "short",
@@ -65,9 +67,7 @@ const MultipleDataReturn = (props) => {
   // console.log("Results", results);
   const handleClick = (allDetails, ResultIndex) => {
     const slicedResultIndex = ResultIndex.slice(0, 2);
-    // console.log("Handel Click Index Key", slicedResultIndex);
-    // console.log("hghfdsjgdsjsfd", props.flight);
-
+   
 
     if (slicedResultIndex == "OB") {
       sessionStorage.setItem("flightDetailsONGo", JSON.stringify(allDetails));
@@ -79,48 +79,52 @@ const MultipleDataReturn = (props) => {
   return (
     <div
       style={{}}
-
-
-
       onClick={() => {
         props.onSelect(props.index);
         handleClick(props.wholeFlight, props.index);
-      }}>
-
+      }}
+    >
       <div className="singleDataReturnBox">
         <div className="returnBoxOne">
-          <div><img src={`${process.env.PUBLIC_URL}/FlightImages/${img}.png`} /> </div>
+          <div>
+            <img src={`${process.env.PUBLIC_URL}/FlightImages/${img}.png`} />{" "}
+          </div>
           <span>{flight[0]?.Airline?.AirlineName}</span>
-          <p>{flight[0]?.Airline?.FlightNumber}{" "}{flight[0]?.Airline?.FlightNumber}</p>
+          <p>
+            {flight[0]?.Airline?.FlightNumber}{" "}
+            {flight[0]?.Airline?.FlightNumber}
+          </p>
         </div>
         <div className="returnBoxTwo">
           <span>{flight[0]?.Origin?.Airport?.CityName}</span>
-          <p>{time1.substr(0, 5)}</p>
+          <p>{convertTimeToAMPM(dateString)}</p>
         </div>
         <div className="returnBoxThree">
           <h4>{time}</h4>
-          <div><img src={flightdir} /></div>
+          <div>
+            <img src={flightdir} />
+          </div>
           <p>{`${flight.length} stop via ${flight[0]?.Destination?.Airport?.CityName}`}</p>
           <span>{flight?.NoOfSeatAvailable} Seats Left</span>
         </div>
         <div className="returnBoxFour">
           <span>{flight[1]?.Destination?.Airport?.CityName}</span>
-          <p>{time2.substr(0, 5)}</p>
+          <p>{convertTimeToAMPM(dateString1)}</p>
         </div>
         <div className="returnBoxFive">
           <span>₹{fare}</span>
           <p>Publish</p>
         </div>
         <div className="singlereturnBoxSix">
-          {props.showRadio && (<Radio
-            checked={props.isSelected}
-            onClick={props.onSelect}
-            color="primary"
-          />
+          {props.showRadio && (
+            <Radio
+              checked={props.isSelected}
+              onClick={props.onSelect}
+              color="primary"
+            />
           )}
         </div>
       </div>
-
 
       {/* <Box
         display="flex"
@@ -250,6 +254,5 @@ const MultipleDataReturn = (props) => {
     </div >
   );
 };
-
 
 export default MultipleDataReturn;

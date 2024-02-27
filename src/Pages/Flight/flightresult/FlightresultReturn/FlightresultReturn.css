@@ -151,3 +151,33 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+
+
+.slider-value{
+  position: relative;
+  width: 100%;
+}
+
+
+.slider-value span{
+  height: 45px;
+  width: 45px;
+  font-weight: bold;
+  top: -40px;
+  color: rgba(0, 0, 0, 0.842);
+  /* font: bold; */
+  line-height: 40px;
+  border-radius: 12px;
+  /* background: rgb(164, 164, 164); */
+  border: 1px solid black;
+  padding: 3px;
+  transform: translate(-50%);
+  z-index: 2;
+  border: 2px s;
+}
+
+
+
+
+

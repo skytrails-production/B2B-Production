@@ -74,13 +74,20 @@ const SubAdminLoginForm = () => {
       </form>
       </section> */}
 
-      <div class="containersubadmin" style={{marginTop:"50px"}}>
+      <div class="containersubadmin" style={{ marginTop: "50px" }}>
 
         <div class="screensub">
+          {/* <header className="sectionad headers" style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}>
+          <div className="headead">
+            <img src={newlogo} style={{ width: "80%" }} alt="Logo" />
+            <h2 style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}>Subadmin Login</h2>
+          </div>
+      </header> */}
 
           <div class="screen__contentsub">
 
             <form class="loginsubadmin" onSubmit={handleSubmit}>
+              {/* <h3 style={{  textAlign: "center" }}>Subadmin Login</h3> */}
               <div class="login__fieldsub">
                 <i className="login__iconsub"><FaUser /></i>
                 <input type="text"

@@ -193,7 +193,7 @@ const AllAdvertisementTable = () => {
 
   return (
     <div className="subada-table-container" style={{ position: "relative", width: "100%" }}>
-      <div className="adsearch-bar" style={{ position: "absolute", top: 10, zIndex: 1, fontWeight: "bold" }}>
+      <div className="adsearch-bar" style={{ position: "absolute", top: 10, zIndex: 1, fontWeight: "bold",backgroundColor:"#E73C33" }}>
         <TextField
           type="text"
           value={searchTerm}

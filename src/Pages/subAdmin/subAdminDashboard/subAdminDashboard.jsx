@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
@@ -69,11 +69,12 @@ import VisaCountry from "./VisaCountry";
 import VisaDocumentCategory from "./VisaDocumentCategory";
 import VisaDocumenttype from "./VisaDocumenttype";
 import VisaRequireDoc from "./VisaRequireDoc";
-
+import SubadminAll from "./SubadminAll";
 import { SupervisorAccount } from '@mui/icons-material'; // Import the SupervisorAccount icon
 import AddSubadmin from "./Addforms/AddSubadmin";
 import AddAgent from "./Addforms/AddAgent";
 import AddAdvertisement from "./Addforms/AddAdvertisement";
+import AddMarkup from "./Addforms/AddMarkup";
 import CategoryIcon from '@mui/icons-material/Category'; // Import the CategoryIcon component
 import PublicIcon from '@mui/icons-material/Public'; // Import the PublicIcon component
 import PersonPinIcon from '@mui/icons-material/PersonPin';
@@ -83,7 +84,24 @@ import AddWebAdvertisement from "./Addforms/AddWebAdvertisement";
 import DomainIcon from '@mui/icons-material/Domain';
 import DescriptionIcon from '@mui/icons-material/Description'; // Import the DescriptionIcon component
 
+import AddEvent from "./Addforms/AddEvent";
 import { FaPassport } from "react-icons/fa";
+import { FormControl, InputLabel, Select } from "@mui/material";
+import Visacountryselect from "./Visapagesub/Visacountryselect";
+import VisacountrysForm from "./Visapagesub/VisacountrysForm";
+import PackageDetails from "./packageUpdate/PackageDetails";
+import Visacategorys from "./Visapagesub/Visacategory";
+
+import RequireddocumentFrom from "./Visapagesub/Requireddocument";
+import Documentcategorys from "./Visapagesub/Documentcategorys";
+
+import { apiURL } from "../../../Constants/constant";
+
+import { PiBackpackThin } from "react-icons/pi";
+import { IoIosNotificationsOutline } from "react-icons/io";
+import { IoIosNotifications } from "react-icons/io";
+import axios from "axios";
+
 const drawerWidth = 240;
 function ResponsiveDrawer(props) {
 
@@ -93,6 +111,9 @@ function ResponsiveDrawer(props) {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [showAgentData, setShowAgentData] = React.useState(false);
+  const [showAgentRequest, setshowAgentRequest] = React.useState(false);
+  const [showSubadmin, setshowSubadmin] = React.useState(false);
+
   const [showHome, setShowHome] = React.useState(false);
   const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
   const navigate = useNavigate();
@@ -101,13 +122,30 @@ function ResponsiveDrawer(props) {
 
   const [fixedDeparturescontrol, setfixedDepartureControl] = React.useState(false);
   const [advertisements, setAdvertisement] = React.useState(false);
+   const [visaCountryforms,setvisaCountryform] =React.useState(false);
+   const [visaCountrysforms,setvisaCountrysform] =React.useState(false);
+   const [visaCategoryforms,setvisaCategoryforms] =React.useState(false);
+   const [visaDocumentsCategorys,setvisaDocumentsCategorys] =React.useState(false);
+   const [DocumentsCategorys,setDocumentsCategorys] =React.useState(false);
+
+
+   const [requireDocuments,setrequireDocuments] =React.useState(false);
+
 
   const [webadvertisements, setwebadvertisement] = React.useState(false);
   const [addsubadmin, setaddSubadmins] = useState(false);
   const [addAgents, setaddAgents] = useState(false);
   const [addwebAdvertisement, setwebaddAdvertisement] = useState(false);
+  const [addCoupons, setaddCoupons] = React.useState(false);
+  const [addNotifications, setaddNotification] = React.useState(false);
+  const [addMarkups, setaddMarkups] = React.useState(false);
+  const [addEvents, setaddEvents] = React.useState(false);
+  const [holidayPackages, setHolidayPackage] = React.useState(false);
   const homeView = location.pathname === "/subAdmin/dashboard";
   const agentTableView = location.pathname === "/subAdmin/dashboard/Agenttable";
+  const subadminTableView = location.pathname === "/subAdmin/dashboard/Subadmintable";
+  const holidayPackage = location.pathname === "/subAdmin/dashboard/holidaypackage";
+
   const agentUserView = location.pathname === "/subAdmin/dashboard/Usertable";
   const agentRequestView = location.pathname === "/subAdmin/dashboard/AgentrequestTable";
   const agentflightCancel = location.pathname === "/subAdmin/dashboard/Agentflightcancel";
@@ -141,7 +179,10 @@ function ResponsiveDrawer(props) {
   const addAgent = location.pathname === "/subAdmin/dashboard/addagent";
   const addAdvertisements = location.pathname === "/subAdmin/dashboard/addAdvertisements";
   const addwebAdvertisements = location.pathname === "/subAdmin/dashboard/addwebAdvertisements";
-
+  const addCouponscode = location.pathname === "/subAdmin/dashboard/addcouponscode";
+  const addNotification = location.pathname === "/subAdmin/dashboard/addnotification";
+  const addMarkup = location.pathname === "/subAdmin/dashboard/addmarkups";
+  const addEvent = location.pathname === "/subAdmin/dashboard/addEvents";
   const fixedDeparturecontrol = location.pathname === "/subAdmin/dashboard/fixedDeparturecontrol";
 
   const advertisement = location.pathname === "/subAdmin/dashboard/advertisement";
@@ -149,14 +190,33 @@ function ResponsiveDrawer(props) {
 
   const getevent = location.pathname === "/subAdmin/dashboard/getevent";
   const searchdata = location.pathname === "/subAdmin/dashboard/searchdata";
-
+  const visaCountryform = location.pathname === "/subAdmin/dashboard/visacountryform";
+  const visaCountrysform = location.pathname === "/subAdmin/dashboard/visacountrysform";
+  const visaCategorysform = location.pathname === "/subAdmin/dashboard/visacategorysform";
+  const visadocumentsCategorys = location.pathname === "/subAdmin/dashboard/visadocumentcategorysform";
+  const requiredocuments = location.pathname === "/subAdmin/dashboard/requiredocuments";
+  // setrequireDocuments
   const packageEnquary = location.pathname === "/subAdmin/dashboard/packageEnquary";
   const visacategory = location.pathname === "/subAdmin/dashboard/visacategory";
   const visacountry = location.pathname === "/subAdmin/dashboard/visacountry";
   const visadocumenttype = location.pathname === "/subAdmin/dashboard/visadocumenttype";
   const visadocumentcategory = location.pathname === "/subAdmin/dashboard/visadocumentcategory";
   const visarequiredocument = location.pathname === "/subAdmin/dashboard/visarequiredocument";
+  const [menuData, setMenuData] = useState("Home");
+  const [loading, setLoading] = useState(false);
+  const [selectedValue, setSelectedValue] = useState('option1');
+  const handleMenuItemClick = (menuItem) => {
+    // console.log(menuItem,menuData)
+    setLoading(true);
+    setMenuData(menuItem);
 
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
+  };
+  const handleChange = (event) => {
+    setSelectedValue(event.target.value);
+  };
 
   // handleVisaCategory
 
@@ -169,6 +229,12 @@ function ResponsiveDrawer(props) {
     navigate('./Agenttable');
 
   }
+
+  const handleSubadminTable = () => {
+    setshowSubadmin(true)
+    navigate('./Subadmintable');
+  }
+
 
   const handleMarkUpAmount = () => {
     setShowMarkupData(true);
@@ -187,6 +253,36 @@ function ResponsiveDrawer(props) {
     navigate('/subAdmin/dashboard/addsubadmins')
   }
 
+  const handleVisaCountryForm = () => {
+    setvisaCountryform(true);
+    navigate('/subAdmin/dashboard/visacountryform')
+  }
+
+  const handleVisaCountrysForm = () => {
+    setvisaCountrysform(true);
+    navigate('/subAdmin/dashboard/visacountrysform')
+  }
+
+  const handleVisaCategoryForm = () => {
+    setvisaCategoryforms(true);
+    navigate('/subAdmin/dashboard/visacategorysform')
+  }
+
+
+  const handleVisadocumentsCategory = () => {
+    setDocumentsCategorys(true);
+    navigate('/subAdmin/dashboard/visadocumentcategorysform')
+  }
+
+  const handleRequireDocuemts = () => {
+    setrequireDocuments(true);
+    navigate('/subAdmin/dashboard/requiredocuments')
+  }
+
+
+
+
+
   const handleAddAdvertisment = () => {
     setAdvertisement(true);
     navigate('/subAdmin/dashboard/addAdvertisements')
@@ -197,10 +293,29 @@ function ResponsiveDrawer(props) {
     navigate('/subAdmin/dashboard/addwebAdvertisements')
   }
 
+  const handleCoupons = () => {
+    setaddCoupons(true);
+    navigate('/subAdmin/dashboard/addcouponscode')
+  }
+  const handleNotification = () => {
+    setaddNotification(true);
+    navigate('/subAdmin/dashboard/addnotification')
+  }
 
+
+
+  const handleMarkup = () => {
+    setaddMarkups(true);
+    navigate('/subAdmin/dashboard/addmarkups')
+  }
   const handleAddAdgent = () => {
     setaddAgents(true);
     navigate('/subAdmin/dashboard/addagent')
+  }
+
+  const handleAddEvents = () => {
+    setaddEvents(true);
+    navigate('/subAdmin/dashboard/addEvents');
   }
   const handleFixedDepartureControl = () => {
     setfixedDepartureControl(true);
@@ -214,6 +329,13 @@ function ResponsiveDrawer(props) {
     navigate('./Usertable');
 
   }
+
+  const handleAgentRequest = () => {
+    setshowAgentRequest(true);
+    navigate('./AgentrequestTable')
+  }
+
+
   const handleAgentFlightCancel = () => {
     setShowAgentData(true);
     navigate('./Agentflightcancel');
@@ -335,6 +457,16 @@ function ResponsiveDrawer(props) {
     navigate('./getevent');
 
   }
+
+  const handleHolidayPackage = () => {
+    setHolidayPackage(true);
+    navigate('./holidaypackage');
+
+  }
+
+
+
+
   const handleSearchData = () => {
     setShowAgentData(true);
     navigate('./searchdata');
@@ -399,7 +531,87 @@ function ResponsiveDrawer(props) {
   const [anchorElUserBooking, setAnchorElUserBooking] = useState(null);
   const [anchorElAgentBooking, setAnchorElAgentBooking] = useState(null);
   const [visaBooking, setVisaBooking] = useState(null);
+  const [notificationData, setNotificationData] = useState([]);
+  const [showNotification, setSetShowNotification] = useState(false);
+  const [showNotificationIcon, setSetShowNotificationIcon] = useState(false);
+  const showNotificationRef = useRef(null);
+  function timeAgo(uploadTime) {
+    const currentTime = new Date().getTime();
+    const uploadTimeMillis = new Date(uploadTime).getTime();
+    const timeDifference = currentTime - uploadTimeMillis;
 
+    // Convert milliseconds to seconds
+    const seconds = Math.floor(timeDifference / 1000);
+
+    if (seconds < 60) {
+      return `${seconds} second${seconds !== 1 ? 's' : ''} ago`;
+    } else if (seconds < 3600) {
+      const minutes = Math.floor(seconds / 60);
+      return `${minutes} minute${minutes !== 1 ? 's' : ''} ago`;
+    } else if (seconds < 86400) {
+      const hours = Math.floor(seconds / 3600);
+      return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
+    } else if (seconds < 604800) {
+      const days = Math.floor(seconds / 86400);
+      return `${days} day${days !== 1 ? 's' : ''} ago`;
+    } else {
+      const weeks = Math.floor(seconds / 604800);
+      return `${weeks} week${weeks !== 1 ? 's' : ''} ago`;
+    }
+  }
+  const handleNotificationClick = async (id) => {
+    console.log(apiURL.baseURL);
+
+    // await axios.post(`${apiURL.baseURL}/skyTrails/api/admin/getNotificationById/${id}`);
+    await axios.get(`${apiURL.baseURL}/skyTrails/api/admin/getNotificationById/${id}`)
+      .then(function (response) {
+        // handle success
+        setNotificationData(response?.data?.result)
+        // console.log(response?.data?.result, response?.data?.result?.length, "ressssssssssssssssssssssssssssssssssssssssssssssssss");
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error, "error");
+      })
+    // handleMenuItemClick("Packageenquiry");
+    handlePackage();
+    setSetShowNotification(false);
+
+
+  };
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showNotificationRef?.current && !showNotificationRef?.current?.contains(event.target)) {
+        // Clicked outside the list, so close it
+        setSetShowNotification(false);
+      }
+    };
+
+    // Attach the event listener when the component mounts
+    document.addEventListener('mousedown', handleClickOutside);
+
+    // Detach the event listener when the component unmounts
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+  useEffect(() => {
+    async function getNotefication() {
+
+      await axios.get(`${apiURL.baseURL}/skyTrails/api/admin/getAllNotification/656ae08849c268401f98246b`)
+        .then(function (response) {
+          // handle success
+          setNotificationData(response?.data?.result)
+          // console.log(response?.data?.result, "ressssssssssssssssssssssssssssssssssssssssssssssssss");
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error, "error");
+        })
+
+    }
+    getNotefication();
+  }, [])
 
   const handleUserBooking = (event) => {
     setAnchorElUserBooking(event.currentTarget);
@@ -471,6 +683,28 @@ function ResponsiveDrawer(props) {
 
           </ListItemButton>
         </ListItem>
+
+        <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
+          <ListItemButton onClick={handleAgentRequest}>
+
+            <GroupIcon style={{ color: "white" }} />
+            <ListItemText style={{ color: "white", marginLeft: "5px" }}>Agent Request Table</ListItemText>
+
+
+          </ListItemButton>
+        </ListItem>
+
+        <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
+          <ListItemButton onClick={handleSubadminTable}>
+
+            <GroupIcon style={{ color: "white" }} />
+            <ListItemText style={{ color: "white", marginLeft: "5px" }}>SubAdmin Table</ListItemText>
+
+
+          </ListItemButton>
+        </ListItem>
+
+
 
 
         <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
@@ -673,6 +907,14 @@ function ResponsiveDrawer(props) {
           </ListItemButton>
         </ListItem>
 
+
+        <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
+          <ListItemButton onClick={handleHolidayPackage}>
+            <WebIcon sx={{ color: "white", fontSize: "15px" }} />
+            <ListItemText style={{ color: "white", marginLeft: "5px" }}>Edit Holiday Package</ListItemText>
+          </ListItemButton>
+        </ListItem>
+
         <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
           <ListItemButton onClick={handleSearchData}>
             <PersonSearchIcon sx={{ color: "white", fontSize: "15px" }} />
@@ -682,7 +924,7 @@ function ResponsiveDrawer(props) {
 
         <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
           <ListItemButton onClick={handlePackage}>
-            
+
             <InventoryIcon sx={{ color: "white", fontSize: "15px" }} />
             <ListItemText style={{ color: "white", marginLeft: "5px" }}>Package Enquiry</ListItemText>
           </ListItemButton>
@@ -691,7 +933,7 @@ function ResponsiveDrawer(props) {
         <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
           <ListItemButton onClick={handleVisaBooking}>
 
-            <FaPassport  style={{ color: "white", fontSize: "15px" }} />
+            <FaPassport style={{ color: "white", fontSize: "15px" }} />
             <ListItemText style={{ color: "white", marginLeft: "5px" }}>Visa Booking</ListItemText>
           </ListItemButton>
         </ListItem>
@@ -751,7 +993,7 @@ function ResponsiveDrawer(props) {
         }}
         style={{ backgroundColor: '#E73C33' }}
       >
-        <Toolbar>
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -781,17 +1023,100 @@ function ResponsiveDrawer(props) {
                 zIndex: '999', // Ensure the box appears above other elements
               }}
             >
-              <Typography sx={{ color: "black" }} onClick={handleAddSubadmin}> Add subadmin </Typography>
-              <Typography sx={{ color: "black" }} onClick={handleAddAdgent}> Add Agent </Typography>
-              <Typography sx={{ color: "black" }} onClick={handleAddAdvertisment}> Add Advertisement</Typography>
-              <Typography sx={{ color: "black" }} onClick={handleWebAdvertisment}> Add WebAdvertisement </Typography>
-              <Typography sx={{ color: "black" }} onClick={handleAddAdvertisment}> Add Events </Typography>
-              <Typography sx={{ color: "black" }} onClick={handleAddAdvertisment}> Add Markup </Typography>
-              <Typography sx={{ color: "black" }} onClick={handleAddAdvertisment}> Add Coupon </Typography>
-              <Typography sx={{ color: "black" }} onClick={handleAddAdvertisment}> Add Notification </Typography>
-              <button onClick={() => setIsBoxOpen(false)}>Close</button>
+              <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleAddSubadmin}> Add subadmin </Typography>
+              <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleAddAdgent}> Add Agent </Typography>
+              <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleAddAdvertisment}> Add Advertisement</Typography>
+              <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleWebAdvertisment}> Add WebAdvertisement </Typography>
+              <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleAddEvents}> Add Events </Typography>
+              <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleMarkup}> Add Markup </Typography>
+              {/* <Typography sx={{ color: "black" }} onClick={handleCoupons}> Add Coupon </Typography> */}
+              <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleNotification}> Add Notification </Typography>
+              <button
+                onClick={() => setIsBoxOpen(false)}
+                style={{
+                  border: "1px solid #E73C33",
+                  borderRadius: "4px",
+                  backgroundColor: "#E73C33",
+                  color: "#fff",
+                  padding: "4px 10px",
+                  cursor: "pointer",
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  outline: "none",
+                  transition: "background-color 0.3s, color 0.3s",
+                }}
+              >
+                Close
+              </button>
+
             </div>
           )}
+
+
+
+
+          <InputLabel
+            id="dropdown-label"
+            style={{ padding: "2px", color: "white", fontSize: "18px", marginLeft: "20px" }}
+          >
+            Visa:
+          </InputLabel>
+          <FormControl>
+            <Select
+              style={{ width: "200px", height: "40px", color: "white", border: "1px solid white" }}
+              labelId="dropdown-label"
+              id="dropdown"
+              value={selectedValue}
+              onChange={handleChange}
+              MenuProps={{ // Use MenuProps to customize the menu
+                anchorOrigin: {
+                  vertical: "bottom",
+                  horizontal: "left"
+                },
+                transformOrigin: {
+                  vertical: "top",
+                  horizontal: "left"
+                },
+                getContentAnchorEl: null // This prevents the menu from being positioned incorrectly
+              }}
+              IconComponent={() => (
+                <div style={{ color: "white", padding: "5px", borderRadius: "0 4px 4px 0" }}>
+                  &#9660; {/* Unicode character for down arrow */}
+                </div>
+              )}
+            >
+              <MenuItem
+                value="option1"
+                onClick={handleVisaCountryForm}
+              >
+                Visa Country
+              </MenuItem>
+              <MenuItem
+                value="option2"
+                onClick={handleVisaCategoryForm}
+              >
+                Visa Category
+              </MenuItem>
+              <MenuItem
+                value="option3"
+                onClick={handleVisaCountrysForm}
+              >
+                Document Type
+              </MenuItem>
+              <MenuItem
+                value="option4"
+                onClick={handleVisadocumentsCategory}
+              >
+                Document Category
+              </MenuItem>
+              <MenuItem
+                value="option5"
+                onClick={handleRequireDocuemts}
+              >
+                Required Documents
+              </MenuItem>
+            </Select>
+          </FormControl>
           <IconButton
             color="inherit"
             aria-label="logout"
@@ -801,6 +1126,65 @@ function ResponsiveDrawer(props) {
           >
             <ExitToAppIcon />
           </IconButton>
+
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "60px" }}>
+
+            <div style={{ display: "flex", alignItems: "center", position: "relative" }}>
+              <div onClick={() => setSetShowNotification((pre) => !pre)} onMouseOver={() => setSetShowNotificationIcon(true)} onMouseLeave={() => setSetShowNotificationIcon(false)} >{showNotificationIcon ? <IoIosNotificationsOutline size='24px' color="white" /> : <IoIosNotifications size='24px' color="white" />}</div>
+              <div style={{
+                position: 'absolute',
+                color: '#f8f1f1fc',
+                background: "#E73C33",
+                width: '17px',
+                height: '17px',
+                // fontWeight: 100;
+                fontSize: '12px',
+                textAlign: 'center',
+                borderRadius: '50%',
+                border: '1px solid white',
+                top: '-3px',
+                left: '10px'
+
+
+              }}>{notificationData?.length}</div>
+              {showNotification && <div ref={showNotificationRef} className="notification_Icon_Admin" style={{ position: "absolute", top: "25px", right: "0px", width: "300px", backgroundColor: '#ece6e6', padding: '5px', borderRadius: '4px', maxHeight: "500px", overflowY: "scroll" }} >
+                {notificationData?.length === 0 ? <div style={{ color: "#E73C33" }}>Stay in touch! You will find all the new updates here</div> : notificationData?.map((item) => (
+                  <div
+                    onClick={() => {
+                      handleNotificationClick(item._id)
+                    }}
+                    className="SubAdminNotificationContainer_innerDev"
+                    style={{
+                      display: "flex", backgroundColor: `${!item?.isRead ? "bbbbbb1f" : "ffffff8c"}`, borderRadius: "4px", margin: '5px 7px', paddingBottom: "5px",
+                      // backgroundColor:"#ffffff8c"
+
+                    }}>
+                    <div >
+                      <div style={{ width: "30px", height: "30px", borderRadius: '2px', background: "#e73c33ad", display: "flex", justifyContent: "center", alignItems: "center", margin: '5px', marginTop: "20px" }}>
+                        <PiBackpackThin />
+                      </div>
+                    </div>
+                    <div style={{ paddingLeft: "3px" }}>
+                      <div style={{ fontSize: "12px", color: "#e73c33ad" }} >{timeAgo(item?.updatedAt)}</div>
+                      <div style={{ fontSize: "18px", color: "#E73C33" }}>{item?.title}</div>
+                      <div style={{ fontSize: "13px", color: "#e73c33ad" }}>{item?.description}</div>
+
+                    </div>
+                  </div>
+                ))}
+              </div>}
+            </div>
+            <IconButton
+              color="inherit"
+              aria-label="logout"
+              edge="end"
+              sx={{ ml: 'auto' }}
+              onClick={() => setLogoutDialogOpen(true)}
+            >
+              <ExitToAppIcon />
+            </IconButton>
+          </div>
+
         </Toolbar>
       </AppBar>
 
@@ -869,6 +1253,9 @@ function ResponsiveDrawer(props) {
         </Typography>
         <Typography paragraph>
           {agentTableView && <Agenttable />}
+        </Typography>
+        <Typography paragraph>
+          {subadminTableView && <SubadminAll />}
         </Typography>
         <Typography paragraph>
           {markupAmount && <MarkupAmount />}
@@ -993,19 +1380,67 @@ function ResponsiveDrawer(props) {
         <Typography paragraph>
           {visacountry && <VisaCountry />}
         </Typography>
+        <Typography paragraph>
+          {visaCategorysform  && <Visacategorys />}
+        </Typography>
+
+        <Typography paragraph>
+          {requiredocuments  && <RequireddocumentFrom />}
+        </Typography>
+
+       
+        <Typography paragraph>
+          {visaCountryform && <Visacountryselect />}
+        </Typography>
+        <Typography paragraph>
+          {visaCountrysform && <VisacountrysForm />}
+        </Typography>
 
         <Typography paragraph>
           {visadocumenttype && <VisaDocumenttype />}
         </Typography>
 
         <Typography paragraph>
-          {visadocumentcategory && <VisaDocumentCategory />}
+          {visadocumentcategory && <VisaDocumentCategory/>}
         </Typography>
 
         <Typography paragraph>
           {visarequiredocument && <VisaRequireDoc />}
         </Typography>
 
+        <Typography paragraph>
+          {addCouponscode && <AddCoupons />}
+        </Typography>
+        <Typography paragraph>
+          {addNotification && <AddNotification />}
+        </Typography>
+
+        <Typography paragraph>
+          {addMarkup && <AddMarkup />}
+        </Typography>
+        <Typography paragraph>
+          {addEvent && <AddEvent />}
+        </Typography>
+
+        <Typography paragraph>
+          {visadocumentsCategorys && <Documentcategorys />}
+        </Typography>
+
+
+
+
+
+        <Typography paragraph>
+          {holidayPackage && <PackageDetails />}
+        </Typography>
+        <Typography paragraph>
+          {/* {visacountry && <VisaCountryform />} */}
+          {menuData === "Documenttype" && <Visacountryselect />}
+        </Typography>
+        
+
+
+       
 
 
 
@@ -1014,27 +1449,32 @@ function ResponsiveDrawer(props) {
 
 
 
+      <div>
 
 
-      <Dialog
-        open={logoutDialogOpen}
-        onClose={() => setLogoutDialogOpen(false)}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{'Logout'}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Are you sure you want to log out?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setLogoutDialogOpen(false)}>Cancel</Button>
-          <Button onClick={handleLogoutConfirm} autoFocus>
-            Logout
-          </Button>
-        </DialogActions>
-      </Dialog>
+
+
+
+        <Dialog
+          open={logoutDialogOpen}
+          onClose={() => setLogoutDialogOpen(false)}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{'Logout'}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Are you sure you want to log out?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setLogoutDialogOpen(false)}>Cancel</Button>
+            <Button onClick={handleLogoutConfirm} autoFocus>
+              Logout
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
     </Box>
   );
 }

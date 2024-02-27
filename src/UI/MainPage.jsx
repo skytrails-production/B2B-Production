@@ -280,6 +280,12 @@ const MainPage = () => {
         location.pathname === "/subAdmin/dashboard/AgenthotelBooking" ||
         location.pathname === "/subAdmin/dashboard/AgentbusBooking" ||
 
+        location.pathname === "/subAdmin/dashboard/visacountryform" ||
+        location.pathname === "/subAdmin/dashboard/visacountrysform" ||
+        location.pathname === "/subAdmin/dashboard/visacategorysform" ||
+        location.pathname === "/subAdmin/dashboard/visadocumentcategorysform" ||
+        location.pathname === "/subAdmin/dashboard/requiredocuments" ||
+
 
         location.pathname === "/subAdmin/dashboard/userflightBooking" ||
         location.pathname === "/subAdmin/dashboard/userhotelBooking" ||
@@ -287,8 +293,8 @@ const MainPage = () => {
 
         location.pathname === "/subAdmin/dashboard/markupamount" ||
         location.pathname === "/subAdmin/dashboard/fixedDeparture" ||
-        location.pathname==="/subAdmin/dashboard/addwebAdvertisements" ||
-
+        location.pathname === "/subAdmin/dashboard/addwebAdvertisements" ||
+        location.pathname === "/subAdmin/dashboard/Subadmintable" ||
         location.pathname === "/subAdmin/dashboard/fixedDeparturecontrol" ||
         location.pathname === "/subAdmin/dashboard/advertisement" ||
         location.pathname === "/subAdmin/dashboard/webadvertisement" ||
@@ -298,7 +304,13 @@ const MainPage = () => {
         location.pathname === "/subAdmin/dashboard/addsubadmins" ||
         location.pathname === "/subAdmin/dashboard/addagent" ||
         location.pathname === "/subAdmin/dashboard/addAdvertisements" ||
+        location.pathname === "/subAdmin/dashboard/addcouponscode" ||
+        location.pathname === "/subAdmin/dashboard/addnotification" ||
+        location.pathname === "/subAdmin/dashboard/addEvents" ||
+        location.pathname === "/subAdmin/dashboard/holidaypackage" ||
 
+        location.pathname === "/subAdmin/dashboard/addmarkups" ||
+        // /subAdmin/dashboard/addmarkups"
         isFlightEticketPage ||
         isBusEticketPage ||
         isHotelEticketPage ? null : (
@@ -319,13 +331,34 @@ const MainPage = () => {
         location.pathname === "/Registration" ||
         location.pathname === "/addMarkup" ||
         location.pathname === "/addEvents" ||
+        location.pathname === "/subAdmin/dashboard/holidaypackage" ||
+
+        location.pathname === "/subAdmin/dashboard/visacountryform" ||
+        location.pathname === "/subAdmin/dashboard/visacountrysform" ||
+        location.pathname === "/subAdmin/dashboard/visacategorysform" ||
+        location.pathname === "/subAdmin/dashboard/visadocumentcategorysform" ||
+        location.pathname === "/subAdmin/dashboard/requiredocuments" ||
+
+
+
+
+
+
+
+
+
+
+
         location.pathname === "/adminprofile" ||
+        location.pathname === "/subAdmin/dashboard/addEvents" ||
+        location.pathname === "/subAdmin/dashboard/Subadmintable" ||
         location.pathname === "/subAdmin/dashboard/visacategory" ||
         location.pathname === "/subAdmin/dashboard/visacountry" ||
         location.pathname === "/subAdmin/dashboard/visadocumenttype" ||
         location.pathname === "/subAdmin/dashboard/visadocumentcategory" ||
         location.pathname === "/subAdmin/dashboard/visarequiredocument" ||
-location.pathname==="/subAdmin/dashboard/addwebAdvertisements" ||
+        location.pathname === "/subAdmin/dashboard/addwebAdvertisements" ||
+        location.pathname === "/subAdmin/dashboard/addcouponscode" ||
 
         location.pathname === "/admin/addCoupons" ||
         location.pathname === "/admin/addnotification" ||
@@ -344,7 +377,8 @@ location.pathname==="/subAdmin/dashboard/addwebAdvertisements" ||
         location.pathname === "/subAdmin/dashboard/AgenthotelBooking" ||
         location.pathname === "/subAdmin/dashboard/AgentbusBooking" ||
         location.pathname === "/subAdmin/dashboard/webadvertisement" ||
-
+        location.pathname === "/subAdmin/dashboard/addnotification" ||
+        location.pathname === "/subAdmin/dashboard/addmarkups" ||
         location.pathname === "/subAdmin/dashboard/userflightBooking" ||
         location.pathname === "/subAdmin/dashboard/userhotelBooking" ||
         location.pathname === "/subAdmin/dashboard/userbusBooking" ||
@@ -357,7 +391,7 @@ location.pathname==="/subAdmin/dashboard/addwebAdvertisements" ||
         location.pathname === "/subAdmin/dashboard/getevent" ||
         location.pathname === "/subAdmin/dashboard/searchdata" ||
         location.pathname === "/subAdmin/dashboard/packageEnquary" ||
-  
+
 
         location.pathname === "/subAdmin/dashboard/addsubadmins" ||
         location.pathname === "/subAdmin/dashboard/addagent" ||

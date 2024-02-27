@@ -1,90 +1,102 @@
-
-import { useState, useEffect } from 'react'; // Importing necessary modules from React
-import axios from 'axios'; // Importing Axios for making HTTP requests
-import { TextField, InputAdornment } from '@mui/material'; // Importing TextField and InputAdornment components from MUI
-import SearchIcon from '@mui/icons-material/Search'; // Importing SearchIcon from MUI
-import './OfferList.css'; // Importing CSS file
-import { apiURL } from '../../../../../Constants/constant'; // Importing API URL from constants
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { TextField, InputAdornment, Typography, Stack, Pagination } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 import { Alert } from "@mui/material";
-const AllOfferList = () => { // Functional component definition
-    const [offerList, setOfferList] = useState([]); // State for storing offer list data
-    const [loading, setLoading] = useState(true); // State for loading indicator
-    const pageSize = 5; // Number of items per page
-    const [currentPage, setCurrentPage] = useState(1); // State for current page
-    const [totalPages, setTotalPages] = useState(0); // State for total pages
-    const [searchTerm, setSearchTerm] = useState(''); // State for search term
-    const [dataAvailable, setDataAvailable] = useState(true); // State for tracking data availability
+import { apiURL } from "../../../../../Constants/constant";
+import "./OfferList.css";
 
-    useEffect(() => { // Effect hook for fetching data
-        async function fetchAgentRequestData() { // Async function for fetching data
-            setLoading(true); // Set loading state to true
-            try {
-                const response = await axios.get(`${apiURL.baseURL}/skyTrails/offers/getAllOffer`, { // Fetching data from API
-                    params: {
-                        page: currentPage, // Current page number
-                        size: pageSize, // Number of items per page
-                        search: searchTerm, // Search term
-                    }
-                });
-                setTotalPages(response.data.result.totalPages); // Set total pages from response
-                setOfferList(response.data.result.offerList); // Set offer list from response
-                setDataAvailable(true); // Set data availability to true
-            } catch (error) { // Catch any errors
-                console.error('Error fetching Agent request List:', error); // Log error to console
-                setDataAvailable(false); // Set data availability to false
-            }
-            setLoading(false); // Set loading state to false after fetching data
-        }
-        fetchAgentRequestData(); // Invoke function to fetch data
-    }, [currentPage, searchTerm]); // Dependencies for effect hook
+const AllOfferList = () => {
+  const [offerList, setOfferList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const pageSize = 5;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [dataAvailable, setDataAvailable] = useState(true);
 
-    const handlePageChange = (page) => { // Function to handle page change
-        setCurrentPage(page); // Set current page to selected page
-    };
+  useEffect(() => {
+    async function fetchOfferData() {
+      try {
+        setLoading(true);
+        const response = await axios.get(`${apiURL.baseURL}/skyTrails/offers/getAllOffer`, {
+          params: {
+            page: currentPage,
+            size: pageSize,
+            search: searchTerm,
+          }
+        });
+        setTotalPages(response.data.result.totalPages);
+        setOfferList(response.data.result.offerList);
+        setDataAvailable(true);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching offer list:', error);
+        setDataAvailable(false);
+        setLoading(false);
+      }
+    }
+    fetchOfferData();
+  }, [currentPage, searchTerm]);
 
-    const handleSearch = (event) => { // Function to handle search input change
-        setSearchTerm(event.target.value); // Update search term state
-        setCurrentPage(1); // Reset current page to 1 when search term changes
-    };
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
-    return ( // JSX to render component
-        <div className="agent-container"> {/* Container div */}
-            <TextField // Search input field
-                type="text"
-                value={searchTerm} // Controlled component with search term state
-                onChange={handleSearch} // onChange event handler
-                placeholder="Search by name, ID, etc." // Placeholder text
-                InputProps={{ // Input properties
-                    startAdornment: ( // Start adornment for search icon
-                        <InputAdornment position="start"> {/* Adornment component */}
-                            <SearchIcon /> {/* Search icon */}
-                        </InputAdornment>
-                    ),
-                }}
-            />
-            {loading ? ( // Conditional rendering based on loading state
-                <p>Loading...</p> // Render loading indicator if loading is true
-            ) : dataAvailable ? ( // Conditional rendering based on data availability
-                <> {/* Fragment for multiple elements */}
-                    {/* Offer list rendering */}
-                    <div className="paginate"> {/* Pagination div */}
-                        {Array.from({ length: totalPages }, (_, i) => ( // Array mapping for pagination buttons
-                            <button className="agentButton" key={i + 1} onClick={() => handlePageChange(i + 1)}> {/* Pagination button */}
-                                <h5>{i + 1}</h5> {/* Button label */}
-                            </button>
-                        ))}
-                    </div>
-                </>
-            ) : (
-               // <p>Data is not available</p>
-               <div style={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center", height: "100px" }}>
-               <Alert severity="info" variant="outlined">
-                 Data is not available
-               </Alert>
-             </div>
-            )}
-        </div>
-    );
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+    setCurrentPage(1);
+  };
+
+  return (
+    <div className="subada-table-container" style={{ position: "relative", width: "100%" }}>
+      <div className="adsearch-bar" id="adssearch"style={{ position: "absolute", top: 10, zIndex: 1, fontWeight: "bold"}}>
+        <TextField
+          type="text"
+          value={searchTerm}
+          onChange={handleSearch}
+          placeholder="Search by name, ID, etc."
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
+        <Typography variant="h5" className="adtable-heading">
+          Offer List
+        </Typography>
+      </div>
+      <div style={{ marginTop:"0px", width: "100%", backgroundColor: "#fff" }}>
+        {loading ? (
+          <div  className="loading-message" style={{marginTop:"25px", display:"flex",justifyContent:"center",alignItems:"center"}}>Loading...</div>
+        ) : dataAvailable ? (
+          <div className="paginate">
+            {Array.from({ length: totalPages }, (_, i) => (
+              <button className="agentButton" key={i + 1} onClick={() => handlePageChange(i + 1)}>
+                <h5>{i + 1}</h5>
+              </button>
+            ))}
+          </div>
+        ) : (
+          <div style={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center", height: "100px" }}>
+            <Alert severity="info" variant="outlined">
+              Data is not available
+            </Alert>
+          </div>
+        )}
+      </div>
+      <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
+        <Pagination
+          count={totalPages}
+          page={currentPage}
+          onChange={(event, page) => handlePageChange(page)}
+          color="primary"
+        />
+      </Stack>
+    </div>
+  );
 };
 
-export default AllOfferList; // Exporting component
+export default AllOfferList;

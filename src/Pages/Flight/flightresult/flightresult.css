@@ -568,7 +568,7 @@ Aesthetics
 }
 
 .timeContainerTimeActive svg {
-  fill: white;
+  fill: white !important;
 }
 
 .stops_filter {

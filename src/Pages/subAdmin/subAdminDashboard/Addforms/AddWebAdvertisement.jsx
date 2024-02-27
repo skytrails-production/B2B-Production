@@ -90,7 +90,7 @@ const CreateWebAdvertisementForm = () => {
   
   return (
     <div className="form-containers">
-     <header className="sectionagent headersagent">
+     <header className="sectionagent headersagent" style={{backgroundColor:"#E73C33"}}>
         <div className="headead">
           {/* <img src={profilePicUrl} style={{ width: "80%" }} alt="Logo" /> */}
           <h2>Create WebAdvertisement</h2>
@@ -137,7 +137,7 @@ const CreateWebAdvertisementForm = () => {
         Image:
         <input type="file" accept="image/*" onChange={handleFileChange} className="form-input-image-ads" />
       </label>
-      <button type="submit" className="form-button">Submit</button>
+      <button type="submit" className="form-button" style={{backgroundColor:"#E73C33"}}>Submit</button>
     </form>
     </div>
     

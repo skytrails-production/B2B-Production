@@ -62,7 +62,7 @@ console.log("formI=============",formId)
 
   return (
     <div className="form-containers">
-       <header className="sectionagent headersagent">
+       <header className="sectionagent headersagent" style={{backgroundColor:"#E73C33"}}>
         <div className="headead">
           {/* <img src={profilePicUrl} style={{ width: "80%" }} alt="Logo" /> */}
           <h2>Add Markup</h2>
@@ -125,7 +125,7 @@ console.log("formI=============",formId)
           />
         </div>
         <div className="mark-form-group">
-          <button type="submit" className="mark-form-button">
+          <button type="submit" className="mark-form-button" style={{backgroundColor:"#E73C33"}}>
             Create Markup
           </button>
         </div>

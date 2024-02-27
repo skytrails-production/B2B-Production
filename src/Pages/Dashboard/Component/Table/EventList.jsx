@@ -110,3 +110,103 @@ function EventList() {
 
 export default EventList;
 
+// import React, { useState, useEffect } from 'react';
+// import { TextField, InputAdornment, Typography, Stack, Pagination } from '@mui/material';
+// import SearchIcon from '@mui/icons-material/Search';
+// import { Alert } from '@mui/material';
+// import { apiURL } from '../../../../Constants/constant';
+// import './EventList.css';
+
+// const EventList = () => {
+//     const [event, setEvent] = useState([]);
+//     const [currentPage, setCurrentPage] = useState(1);
+//     const [itemsPerPage] = useState(8);
+//     const [loading, setLoading] = useState(true);
+//     const [dataAvailable, setDataAvailable] = useState(true);
+
+//     useEffect(() => {
+//         async function fetchEventData() {
+//             try {
+//                 setLoading(true);
+//                 const response = await fetch(`${apiURL.baseURL}/skyTrails/api/admin/getAllEventBookings`);
+//                 const data = await response.json();
+//                 console.log(data);
+//                 setEvent(data.result.docs);
+//                 setLoading(false);
+//             } catch (error) {
+//                 console.error('Error fetching event data:', error);
+//                 setDataAvailable(false);
+//                 setLoading(false);
+//             }
+//         }
+//         fetchEventData();
+//     }, []);
+
+//     const indexOfLastItem = currentPage * itemsPerPage;
+//     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+//     const currentItems = event.slice(indexOfFirstItem, indexOfLastItem);
+
+//     const handlePageChange = (page) => {
+//         setCurrentPage(page);
+//     };
+
+//     const prevPage = () => {
+//         if (currentPage > 1) {
+//             setCurrentPage(currentPage - 1);
+//         }
+//     };
+
+//     const nextPage = () => {
+//         if (currentPage < Math.ceil(event.length / itemsPerPage)) {
+//             setCurrentPage(currentPage + 1);
+//         }
+//     };
+
+//     return (
+//         <div className="subada-table-container">
+//             <div className="adsearch-bar">
+//                 <TextField
+//                     type="text"
+//                     value={''}
+//                     onChange={() => {}}
+//                     placeholder="Search by name, ID, etc."
+//                     InputProps={{
+//                         startAdornment: (
+//                             <InputAdornment position="start">
+//                                 <SearchIcon />
+//                             </InputAdornment>
+//                         ),
+//                     }}
+//                 />
+//                 <Typography variant="h5" className="adtable-heading">
+//                     Event List
+//                 </Typography>
+//             </div>
+//             <div>
+//                 {loading ? (
+//                     <div className="loading-message">Loading...</div>
+//                 ) : dataAvailable ? (
+//                     <Stack direction="row" spacing={2} mt={2} justifyContent="center">
+//                         <Pagination
+//                             count={Math.ceil(event.length / itemsPerPage)}
+//                             page={currentPage}
+//                             onChange={(event, page) => handlePageChange(page)}
+//                             color="primary"
+//                         />
+//                     </Stack>
+//                 ) : (
+//                     <div className="data-unavailable">
+//                         <Alert severity="info" variant="outlined">
+//                             Data is not available
+//                         </Alert>
+//                     </div>
+//                 )}
+//             </div>
+//         </div>
+//     );
+// };
+
+// export default EventList;
+
+
+

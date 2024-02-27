@@ -64,20 +64,13 @@ const UserChangeFlight = () => {
 
   const columns = [
     { field: 'bookingId', headerName: 'Booking ID', minWidth: 150 },
-    {
-      field: 'name',
-      headerName: 'Name',
-      minWidth: 150,
-      valueGetter: (params) =>
-        `${params.row.flightDetails?.passengerDetails[0]?.firstName} ${params.row.flightDetails?.passengerDetails[0]?.lastName}` ||
-        'No Data',
-    },
+   
     {
       field: 'phone',
       headerName: 'Phone',
       minWidth: 200,
       valueGetter: (params) =>
-        params.row.flightDetails?.passengerDetails[0]?.ContactNo || 'No Data',
+        params.row?.contactNumber || 'No Data',
     },
     {
       field: 'email',

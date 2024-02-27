@@ -119,6 +119,10 @@ import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import LanguageIcon from '@mui/icons-material/Language';
 import ArticleIcon from '@mui/icons-material/Article';
+
+
+import Citypackage from "../../Historytable/Citypackage"
+
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { IoIosNotifications } from "react-icons/io";
 import {
@@ -1873,6 +1877,37 @@ export default function VerticalTabs() {
                 />
               </ListItemButton>
             </ListItem>
+
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => handleMenuItemClick("Citypackage")}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                  ...((menuData === "Citypackage"
+                    ? activeMenuItemClass
+                    : inactiveMenuItemClass) || {}),
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <ReceiptOutlinedIcon sx={{ color: "white" }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Upload City Package"
+                  sx={{ opacity: open ? 1 : 0, color: "white" }}
+                />
+              </ListItemButton>
+            </ListItem>
             {/* <ListItem
               disablePadding
               sx={{ display: "block" }}
@@ -2698,6 +2733,7 @@ export default function VerticalTabs() {
               )}
 
               {menuData === "Packageenquiry" && <Package />}
+              {menuData==="Citypackage" && <Citypackage/>}
               {menuData === "Getallevent" && <Getevent />}
               {menuData === "Searchdata" && <Searchtable />}
               {menuData === "RequireDocument" && <RequireDocument />}

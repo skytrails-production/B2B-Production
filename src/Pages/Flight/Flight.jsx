@@ -18,7 +18,7 @@ const Flight = () => {
   const [loader, setLoader] = useState(false);
   const dispatch = useDispatch()
 
-  console.log("reducerState", reducerState);
+  // console.log("reducerState", reducerState);
    function AllFlightCLEAR_Function() {
      dispatch(ClearAllActionReturn())
      
@@ -115,7 +115,7 @@ const Flight = () => {
       reducerState?.oneWay?.oneWayData?.data?.data?.Response?.Results;
     const returnResults =
       reducerState?.return?.returnData?.data?.data?.Response?.Results;
-      console.log(returnResults,'result return')
+      // console.log(returnResults,'result return')
 
     if (oneWayResults) {
       navigate("/Flightresult");

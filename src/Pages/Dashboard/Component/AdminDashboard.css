@@ -17,6 +17,13 @@
 .notification_Icon_Admin :hover{
 
 }
+.SubAdminNotificationContainer_innerDev{
+  transition: all 2s ease-in-out;
+  
+}
+.SubAdminNotificationContainer_innerDev :hover{
+  background-color: white !important;
+}
 
 @keyframes gradientAnimation {
   0% {

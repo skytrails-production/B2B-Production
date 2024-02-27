@@ -85,7 +85,7 @@ const CreateSubAdminPage = () => {
 
   return (
     <div className="form-containers">
-      <header className="sectionagent headersagent">
+      <header className="sectionagent headersagent" style={{backgroundColor:"#E73C33"}}>
         <div className="headead">
           <h2>Create Subadmin</h2>
         </div>
@@ -184,7 +184,7 @@ const CreateSubAdminPage = () => {
         </div>
 
         <div className="form-group-sub">
-          <button type="submit" className="form-button-sub">
+          <button type="submit" className="form-button-sub" style={{backgroundColor:"#E73C33"}}>
             Create Subadmin
           </button>
         </div>

@@ -70,92 +70,92 @@ const Header = () => {
     return () => window.removeEventListener("scroll", updateSrollYPosition);
   });
 
-  const handlePayment = (e) => {
-    e.preventDefault();
-    const data = {
-      _id: reducerState?.logIn?.loginData?.data?.data?.id,
-      amount: amount,
-    };
+   const handlePayment = (e) => {
+     e.preventDefault();
+  //   const data = {
+  //     _id: reducerState?.logIn?.loginData?.data?.data?.id,
+  //     amount: amount,
+  //   };
 
-    // axios
-      // .post(`${apiURL.baseURL}/updateBalance`, data)
-    //   .then((res) => {
-    //     console.log(res.data);
-    //     handleRazorpay(res.data.data);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-    handleRazorpay(data);
+  //   // axios
+  //     // .post(`${apiURL.baseURL}/updateBalance`, data)
+  //   //   .then((res) => {
+  //   //     console.log(res.data);
+  //   //     handleRazorpay(res.data.data);
+  //   //   })
+  //   //   .catch((err) => {
+  //   //     console.log(err);
+  //   //   });
+  //   handleRazorpay(data);
 
-    // alert(amount);
-    setAmount("");
-    handleCloseModal();
-  };
+  //   // alert(amount);
+  //   setAmount("");
+  //   handleCloseModal();
+   };
 
-  const handleRazorpay = (data) => {
-    // console.log("handleRazorpay called");
-    const options = {
-      key: "rzp_test_rSxJ8wZCLzTJck",
-      amount: amount * 100,
-      currency: "INR",
-      name: "The SkyTrails",
-      description: "Test Transaction",
-      image: STLOGO,
-      order_id: data.id,
-      handler: function (response) {
-        // console.log(response);
-        // Check if the Razorpay payment is successful
-        if (response.razorpay_payment_id) {
-          // Payment was successful, now update the user's balance
-          const paymentData = {
-            _id: reducerState?.logIn?.loginData?.data?.data?.id,
-            amount: amount,
-          };
+  // const handleRazorpay = (data) => {
+  //   // console.log("handleRazorpay called");
+  //   const options = {
+  //     key: "rzp_test_rSxJ8wZCLzTJck",
+  //     amount: amount * 100,
+  //     currency: "INR",
+  //     name: "The SkyTrails",
+  //     description: "Test Transaction",
+  //     image: STLOGO,
+  //     order_id: data.id,
+  //     handler: function (response) {
+  //       // console.log(response);
+  //       // Check if the Razorpay payment is successful
+  //       if (response.razorpay_payment_id) {
+  //         // Payment was successful, now update the user's balance
+  //         const paymentData = {
+  //           _id: reducerState?.logIn?.loginData?.data?.data?.id,
+  //           amount: amount,
+  //         };
 
-          axios
-            .post(`${apiURL.baseURL}/updateBalance`, paymentData)
-            .then((balanceUpdateResponse) => {
-              // console.log("new data response", balanceUpdateResponse);
+  //         axios
+  //           .post(`${apiURL.baseURL}/updateBalance`, paymentData)
+  //           .then((balanceUpdateResponse) => {
+  //             // console.log("new data response", balanceUpdateResponse);
 
-              // Handle any further actions after a successful payment and database update
-            })
-            .catch((balanceUpdateError) => {
-              console.error("Error updating user balance:", balanceUpdateError);
-              // Handle the error from the database update, if needed.
-            });
-          // console.log(response)
-          const paymentVerifyData = {
-            razorpay_order_id: response.data.id,
-            razorpay_payment_id: response.razorpay_payment_id,
-            razorpay_signature: data.razorpay_signature,
-          };
+  //             // Handle any further actions after a successful payment and database update
+  //           })
+  //           .catch((balanceUpdateError) => {
+  //             console.error("Error updating user balance:", balanceUpdateError);
+  //             // Handle the error from the database update, if needed.
+  //           });
+  //         // console.log(response)
+  //         const paymentVerifyData = {
+  //           razorpay_order_id: response.data.id,
+  //           razorpay_payment_id: response.razorpay_payment_id,
+  //           razorpay_signature: data.razorpay_signature,
+  //         };
 
-          // console.log("paymentVeriy", paymentVerifyData);
+  //         // console.log("paymentVeriy", paymentVerifyData);
 
-          axios
-            .post(`${apiURL.baseURL}/payVerify`, paymentVerifyData)
-            .then((verificationResponse) => {
-              // console.log(verificationResponse.data);
+  //         axios
+  //           .post(`${apiURL.baseURL}/payVerify`, paymentVerifyData)
+  //           .then((verificationResponse) => {
+  //             // console.log(verificationResponse.data);
 
-              // Handle any further actions after a successful payment verification
-              // You can update the user's balance here if the payment was successful
-            })
-            .catch((verificationError) => {
-              console.error("Error verifying payment:", verificationError);
-              // Handle the error from the payment verification, if needed.
-            });
-        } else {
-          // Payment was not successful, handle it as needed
-          // console.log("Razorpay payment was not successful");
-          // Handle the unsuccessful payment scenario, e.g., display an error message.
-        }
-      },
-    };
-    // console.log("option data", options)
-    const rzp = new window.Razorpay(options);
-    rzp.open();
-  };
+  //             // Handle any further actions after a successful payment verification
+  //             // You can update the user's balance here if the payment was successful
+  //           })
+  //           .catch((verificationError) => {
+  //             console.error("Error verifying payment:", verificationError);
+  //             // Handle the error from the payment verification, if needed.
+  //           });
+  //       } else {
+  //         // Payment was not successful, handle it as needed
+  //         // console.log("Razorpay payment was not successful");
+  //         // Handle the unsuccessful payment scenario, e.g., display an error message.
+  //       }
+  //     },
+  //   };
+  //   // console.log("option data", options)
+  //   const rzp = new window.Razorpay(options);
+  //   rzp.open();
+  // };
 
   //get user detail for update balance
   const userId = reducerState?.logIn?.loginData?.data?.data?.id;

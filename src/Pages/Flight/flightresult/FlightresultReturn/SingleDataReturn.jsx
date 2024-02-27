@@ -8,8 +8,7 @@ import Luggage from "../Luggage";
 import { PropagateLoader } from "react-spinners";
 // import flightdir from "../../../Images/flgihtdir.png"
 import flightdir from "../../../../Images/flgihtdir.png";
-
-
+import { convertTimeToAMPM } from "../../../../utils/Constantfunction";
 
 function SingleDataReturn(props) {
   // console.log("Props", props);
@@ -19,12 +18,10 @@ function SingleDataReturn(props) {
   const reducerState = useSelector((state) => state);
   const flight = props.flight;
   // console.log(flight,"flight props")
-  const wholeFlight = props.wholeFlight
+  const wholeFlight = props.wholeFlight;
   const IsLCC = props.IsLCC;
 
-
   // console.log("flight single", props);
-  
 
   const results =
     reducerState?.return?.returnData?.data?.data?.Response?.Results;
@@ -34,16 +31,17 @@ function SingleDataReturn(props) {
   const fare =
     reducerState?.logIn?.loginData.length > 0
       ? `${Math.round(
-        Number(props.fare) +
-        Number(reducerState?.logIn?.loginData?.data?.data?.markup?.flight)
-      )}`
+          Number(props.fare) +
+            Number(reducerState?.logIn?.loginData?.data?.data?.markup?.flight)
+        )}`
       : Math.round(Number(props.fare));
 
   // console.log(fare);
   const img = flight?.Airline?.AirlineCode;
 
-  const time = `${Math.floor(flight?.Duration / 60)}hr ${flight.Duration % 60
-    }min`;
+  const time = `${Math.floor(flight?.Duration / 60)}hr ${
+    flight.Duration % 60
+  }min`;
   // console.log(
   //   flight?.Duration,
   //   "Hours:",
@@ -53,6 +51,7 @@ function SingleDataReturn(props) {
   //   "Index Key",
   //   indexKey
   // );
+  //  console.log("flight", flight);
 
   const dateString = flight?.Origin?.DepTime;
   const date1 = new Date(dateString);
@@ -84,7 +83,12 @@ function SingleDataReturn(props) {
 
   const handleClick = (allDetails, ResultIndex) => {
     const slicedResultIndex = ResultIndex.slice(0, 2);
-    console.warn("Handel Click Index Key", slicedResultIndex,allDetails,ResultIndex);
+    // console.warn(
+    //   "Handel Click Index Key",
+    //   slicedResultIndex,
+    //   allDetails,
+    //   ResultIndex
+    // );
 
     // console.log("hghfdsjgdsjsfd", props.flight);
 
@@ -96,8 +100,6 @@ function SingleDataReturn(props) {
     }
   };
 
-
-
   return (
     <div
       onClick={() => {
@@ -105,24 +107,33 @@ function SingleDataReturn(props) {
         handleClick(props.wholeFlight, props.index);
       }}
     >
-      <div className="singleDataReturnBox">
+      <div
+        className="singleDataReturnBox"
+        style={{ marginLeft: "3px", marginRight: "3px" }}
+      >
         <div className="returnBoxOne">
-          <div><img src={`${process.env.PUBLIC_URL}/FlightImages/${img}.png`} /> </div>
+          <div>
+            <img src={`${process.env.PUBLIC_URL}/FlightImages/${img}.png`} />{" "}
+          </div>
           <span>{flight?.Airline?.AirlineName}</span>
-          <p>{flight?.Airline?.AirlineCode}{" "}{flight?.Airline?.FlightNumber}</p>
+          <p>
+            {flight?.Airline?.AirlineCode} {flight?.Airline?.FlightNumber}
+          </p>
         </div>
         <div className="returnBoxTwo">
           <span>{flight?.Origin?.Airport?.CityName}</span>
-          <p>{time1.substr(0, 5)}</p>
+          <p>{convertTimeToAMPM(dateString)}</p>
         </div>
         <div className="returnBoxThree">
           <h4>{time}</h4>
-          <div><img src={flightdir} /></div>
+          <div>
+            <img src={flightdir} />
+          </div>
           <p>Direct Flight</p>
         </div>
         <div className="returnBoxFour">
           <span>{flight?.Destination?.Airport?.CityName}</span>
-          <p>{time2.substr(0, 5)}</p>
+          <p>{convertTimeToAMPM(dateString1)}</p>
         </div>
         <div className="returnBoxFive">
           <span>₹{fare}</span>
@@ -130,11 +141,12 @@ function SingleDataReturn(props) {
         </div>
         <div className="singlereturnBoxSix">
           {/* <button onClick={() => { handleClick(indexKey) }}>Book</button> */}
-          {props.showRadio && (<Radio
-            checked={props.isSelected}
-            onClick={props.onSelect}
-            color="primary"
-          />
+          {props.showRadio && (
+            <Radio
+              checked={props.isSelected}
+              onClick={props.onSelect}
+              color="primary"
+            />
           )}
         </div>
       </div>
@@ -255,7 +267,6 @@ function SingleDataReturn(props) {
 
 
       </Box> */}
-
     </div>
   );
 }

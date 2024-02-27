@@ -1,0 +1,12 @@
+.formacontainer2{
+    display:"flex";
+      margin-top:"100px"!important;
+       flex-direction:"column";
+       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       background-color: #fff;
+}
+/* .visaform{
+    padding-top:100px;
+   
+} */
+

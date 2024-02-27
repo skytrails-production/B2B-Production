@@ -68,7 +68,7 @@ const AddNotification = () => {
 
             <Grid item xs={12}>
                 <Paper sx={{ padding: 2, borderRadius: 8, boxShadow: 3, backgroundColor: '#fff' }}>
-                    <header className="sectionagent headersagent">
+                    <header className="sectionagent headersagent" style={{backgroundColor:"#E73C33"}}>
                         <div className="headead">
                             <h2>Notification</h2>
                         </div>
@@ -120,10 +120,11 @@ const AddNotification = () => {
                                 variant="contained"
                                 sx={{
                                     mt: 2,
-                                    backgroundColor: '#21325D',
+                                    
+                                    backgroundColor: '#E73C33',
                                     color: '#fff',
                                     '&:hover': {
-                                        backgroundColor: '#405269',
+                                        backgroundColor: '#E73C31',
                                         color:'#fff'
                                     },
                                 }}
@@ -134,10 +135,10 @@ const AddNotification = () => {
                                 variant="contained"
                                 sx={{
                                     mt: 2,
-                                    backgroundColor: '#21325D', // Orange color
+                                    backgroundColor: '#E73C33', // Orange color
                                     color: '#fff',
                                     '&:hover': {
-                                        backgroundColor: '#21325F',
+                                        backgroundColor: '#E73C31',
                                         color:'#fff' // Darker orange color
                                     },
                                 }}
