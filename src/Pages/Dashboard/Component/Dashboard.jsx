@@ -119,9 +119,8 @@ import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import LanguageIcon from '@mui/icons-material/Language';
 import ArticleIcon from '@mui/icons-material/Article';
-
-
-import Citypackage from "../../Historytable/Citypackage"
+import Citypackage from "../../Historytable/Citypackage";
+import Apppost from "../../Historytable/Apppost";
 
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { IoIosNotifications } from "react-icons/io";
@@ -2405,6 +2404,44 @@ export default function VerticalTabs() {
                 />
               </ListItemButton>
             </ListItem>
+            
+
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => handleMenuItemClick("apppost")}
+              className={
+                menuData === "apppost"
+                  ? "active-menu-item"
+                  : "inactive-menu-item"
+              }
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                  ...((menuData === "Apppost"
+                    ? activeMenuItemClass
+                    : inactiveMenuItemClass) || {}),
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <WebIcon sx={{ color: "white" }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="App Post"
+                  sx={{ opacity: open ? 1 : 0, color: "white" }}
+                />
+              </ListItemButton>
+            </ListItem>
+
 
             {/* /////// */}
             <ListItem
@@ -2733,6 +2770,7 @@ export default function VerticalTabs() {
               )}
 
               {menuData === "Packageenquiry" && <Package />}
+              {menuData === "apppost" && <Apppost/>}
               {menuData==="Citypackage" && <Citypackage/>}
               {menuData === "Getallevent" && <Getevent />}
               {menuData === "Searchdata" && <Searchtable />}

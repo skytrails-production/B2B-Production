@@ -887,7 +887,7 @@ const FlightReturnInternational = () => {
                     <div className="filter_Box_X">
                       <h2 className="sidebar-title">
                         {" "}
-                        take Off from 
+                        Take Off from {" "}
                         {takeOff
                           ? result[0][0]?.Segments?.[0][0]?.Origin?.Airport
                               ?.CityName

@@ -1117,7 +1117,7 @@ function ResponsiveDrawer(props) {
               </MenuItem>
             </Select>
           </FormControl>
-          <IconButton
+          {/* <IconButton
             color="inherit"
             aria-label="logout"
             edge="end"
@@ -1125,7 +1125,7 @@ function ResponsiveDrawer(props) {
             onClick={() => setLogoutDialogOpen(true)}
           >
             <ExitToAppIcon />
-          </IconButton>
+          </IconButton> */}
 
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "60px" }}>
 
@@ -1155,7 +1155,7 @@ function ResponsiveDrawer(props) {
                     }}
                     className="SubAdminNotificationContainer_innerDev"
                     style={{
-                      display: "flex", backgroundColor: `${!item?.isRead ? "bbbbbb1f" : "ffffff8c"}`, borderRadius: "4px", margin: '5px 7px', paddingBottom: "5px",
+                      display: "flex", backgroundColor: `${!item?.isRead ? "#fdfdfdcf" : "#fdfdfdcf"}`, borderRadius: "4px", margin: '5px 7px', paddingBottom: "5px",
                       // backgroundColor:"#ffffff8c"
 
                     }}>

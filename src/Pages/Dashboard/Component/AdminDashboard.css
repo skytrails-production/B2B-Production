@@ -18,10 +18,12 @@
 
 }
 .SubAdminNotificationContainer_innerDev{
-  transition: all 2s ease-in-out;
+  background-color: #fdfdfdcf;
+  transition: all .5s ease-in-out;
+
   
 }
-.SubAdminNotificationContainer_innerDev :hover{
+.SubAdminNotificationContainer_innerDev:hover{
   background-color: white !important;
 }
 

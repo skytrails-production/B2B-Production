@@ -431,7 +431,7 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
     setLoader(true);
     setSub(true);
 
-    const file1 = document.getElementById("user_card_document").files[0];
+    const file1 = document.getElementById("user_card_document").files;
 
     const formData = new FormData(event.target);
     if (
@@ -482,12 +482,18 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
       // const formData1 = new FormData();
       // formData1.append("images", file1);
       // formData1.append("data", JSON.stringify(payload));
+      const formData = new FormData();
+
+      // Append each selected file
+      for (let i = 0; i < file1.length; i++) {
+          formData.append("files", file1[i]);
+      }
 
       try {
         const res = await axios({
           method: "put",
           url: `${apiURL.baseURL}/skyTrails/international/editPackage`,
-          data: { ...payload, images: file1 },
+          formData,
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -577,7 +583,8 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
                     name="user_card_document"
                     id="user_card_document"
                     class="form-control input_file"
-                    placeholder="Enter Your Package Title"
+                    multiple
+                    placeholder="Select upto five Image"
                   // defaultValue={packageImage}
                   // onChange={handleImageChange}
                   />

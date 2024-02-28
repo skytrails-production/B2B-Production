@@ -348,7 +348,7 @@ const CreateHolidayPackage = () => {
     setLoader(true)
 
     setSub(true);
-    const file1 = document.getElementById("user_card_document").files[0];
+    const file1 = document.getElementById("user_card_document").files;
 
     const formData = new FormData(event.target);
     if (
@@ -458,7 +458,11 @@ const CreateHolidayPackage = () => {
 
 
       const formData1 = new FormData();
-      formData1.append("file", file1);
+
+      for (let i = 0; i < file1.length; i++) {
+        formData1.append("files", file1[i]);
+    }
+      // formData1.append("file", file1);
       formData1.append("data", JSON.stringify(payload));
       // console.log(payload, "payload")
 
@@ -469,10 +473,10 @@ const CreateHolidayPackage = () => {
   };
   function validation(event) {
     const formData = new FormData(event.target);
-    const file1 = document.getElementById("user_card_document").files[0];
+    const files = document.getElementById("user_card_document").files;
     if (
       formData.get("exclusion_note") === "" ||
-      file1.length === 0 ||
+      files.length === 0 ||
       chipData.length === 0 ||
       amount === 0 ||
       formData.get("term_Conditions") === "" ||
@@ -540,7 +544,8 @@ const CreateHolidayPackage = () => {
                     name="user_card_document"
                     id="user_card_document"
                     class="form-control input_file"
-                    placeholder="Enter Your Package Title"
+                    multiple
+                    placeholder="Select upto five Image"
                   />
                   {sub &&
                     document.getElementById("user_card_document").files
@@ -2451,11 +2456,11 @@ const CreateHolidayPackage = () => {
                 <div className="buttonBoxPackage">
                   {/* <button className="draft">Save As Draft</button> */}
                   <button type="submit" class="packageSubmit">
-                    {/* {loader ? (
+                     {loader ? (
                       <div id="packageloadingdetails"></div>
-                    ) : ( */}
-                    Submit Request
-                    {/* )}{" "} */}
+                    ) : 
+                    "Submit Request"
+                     } 
                   </button>
                 </div>
               </div>

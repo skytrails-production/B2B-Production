@@ -25,7 +25,6 @@ import FlightLoader from "../../FlightLoader/FlightLoader";
 import "./FlightresultReturn.css";
 import Flightnavbar from "../../Flightnavbar";
 
-
 const FlightresultReturn = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -42,11 +41,9 @@ const FlightresultReturn = () => {
     } else if (result) {
       setLoading(false);
     }
-
   }, [result]);
 
   // console.log(result, "resultCheck", reducerState);
-
 
   let initialGoFlight;
   let initialReturnFlight;
@@ -158,7 +155,6 @@ const FlightresultReturn = () => {
         })
       : [];
     setFlightList1(uniqueData1);
-    
   }, []);
 
   // ////////////////////////////departure//////////////////////////
@@ -373,7 +369,6 @@ const FlightresultReturn = () => {
       })
     : [];
 
-
   const startTakeOffChangeList = [
     ["startTakeoffNon", "startTakeoffStop"],
     ["startLandNon", "startLandStop"],
@@ -569,11 +564,15 @@ const FlightresultReturn = () => {
     setIncomeFlight(initialReturnFlight);
   }, [initialGoFlight, initialReturnFlight]);
   useEffect(() => {
-
-    sessionStorage.setItem("flightDetailsONGo", JSON.stringify(initialGoFlight));
-    sessionStorage.setItem("flightDetailsIncome", JSON.stringify(initialReturnFlight));
-  }, [])
-
+    sessionStorage.setItem(
+      "flightDetailsONGo",
+      JSON.stringify(initialGoFlight)
+    );
+    sessionStorage.setItem(
+      "flightDetailsIncome",
+      JSON.stringify(initialReturnFlight)
+    );
+  }, []);
 
   const receiveChildData = (data) => {
     // console.log("callbackData", data);
@@ -663,7 +662,6 @@ const FlightresultReturn = () => {
     );
   }
 
- 
   return (
     // <div>
 
@@ -724,7 +722,7 @@ const FlightresultReturn = () => {
                     <p>Select Filters</p>
                   </div> */}
                     <div onClick={() => clearFilter()} className="filterTitle">
-                      <p style={{cursor:"pointer"}}>Clear Filters</p>
+                      <p style={{ cursor: "pointer" }}>Clear Filters</p>
                     </div>
 
                     <div className="innerFilter">
@@ -789,7 +787,7 @@ const FlightresultReturn = () => {
                       {/* <div className="stops_filter">STOPS</div> */}
                       <div>
                         <h2 className="sidebar-title">
-                          Stops from{" "}
+                          Stops from {" "}
                           {
                             result[0][0]?.Segments[0][0]?.Origin?.Airport
                               ?.CityName
@@ -876,7 +874,7 @@ const FlightresultReturn = () => {
                       </div>
                       <div className="filter_Box_X">
                         <h2 className="sidebar-title">
-                          Stops from
+                          Stops from  {" "}
                           {
                             result[1][0]?.Segments?.[0][0]?.Origin?.Airport
                               ?.CityName
@@ -963,7 +961,7 @@ const FlightresultReturn = () => {
                         {/* <div>Flight Timing</div> */}
                         <div className="FlightTimingToggle">
                           <div
-                          style={{cursor:"pointer"}}
+                            style={{cursor:"pointer" }}
                             className={
                               takeOff
                                 ? "FlightToggleActive"
@@ -977,7 +975,7 @@ const FlightresultReturn = () => {
                             Onward Journey
                           </div>
                           <div
-                          style={{cursor:"pointer"}}
+                            style={{cursor:"pointer" }}
                             className={
                               !takeOff
                                 ? "FlightToggleActive"
@@ -1664,7 +1662,6 @@ const FlightresultReturn = () => {
           </div>
         </div>
       </div>
-
 
       {/* fixed bottom  */}
       <Box
