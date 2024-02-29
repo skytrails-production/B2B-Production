@@ -7,6 +7,8 @@ import profilePicUrl from '../../../../Images/whitelogo1.png';
 
 const CreateAgentPage = () => {
   const [formData, setFormData] = useState({
+    firstName:'',
+    lastName:'',
     email: '',
     password: '',
     mobile_number: '',
@@ -64,7 +66,32 @@ const CreateAgentPage = () => {
       </header>
       <form className="form-agent" onSubmit={handleSubmit}>
        
-       
+      <div className="form-group-agent">
+      <label htmlFor="mobile_number" className="form-label-subAdmin">
+        First Name:
+      </label>
+      <input
+        type="text"
+        id="firstName"
+        name="firstName"
+        value={formData.firstName}
+        onChange={handleChange}
+        className="form-input"
+      />
+    </div>
+    <div className="form-group-agent">
+          <label htmlFor="mobile_number" className="form-label-subAdmin">
+          Last Name:
+          </label>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            className="form-input"
+          />
+        </div>
 
         <div className="form-group">
           <label htmlFor="email" className="form-label-subAdmin">

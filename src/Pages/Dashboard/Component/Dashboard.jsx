@@ -140,8 +140,10 @@ import {
 import { Center } from "@chakra-ui/layout";
 import axios from "axios";
 import { PiBackpackThin } from "react-icons/pi";
-
-
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
+import Downloadcsv from "../../Historytable/Downloadcsv";
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -250,6 +252,8 @@ export default function VerticalTabs() {
   const [loading, setLoading] = useState(false);
   const [showNotification, setSetShowNotification] = useState(false);
   const [showNotificationIcon, setSetShowNotificationIcon] = useState(false);
+  const [passesBooked, setPassesBooked] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const redirect = useNavigate();
@@ -389,6 +393,34 @@ export default function VerticalTabs() {
   const handleButtonClickTwo = () => {
     setOpenCollapseTwo(!openCollapseTwo);
   };
+   const handleClickNinetyNine = () => {
+     // Make a PUT request to the API endpoint
+    fetch(`${apiURL.baseURL}/skyTrails/api/user/event/sendPassesUpdate`, {
+      method: 'PUT',
+      // Add any necessary headers or body data here
+    })
+    .then(response => {
+      if (response.ok) {
+        // If the request is successful, set passesBooked to true
+        setPassesBooked(true);
+        setSnackbarOpen(true); // Open the Snackbar
+      } else {
+        // Handle errors if needed
+        console.error('Error:', response.statusText);
+      }
+    })
+    .catch(error => {
+      // Handle network errors
+      console.error('Network error:', error);
+    });
+  };
+
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackbarOpen(false);
+  };  
 
   const [openCollapseThree, setOpenCollapseThree] = useState(false);
 
@@ -692,6 +724,33 @@ export default function VerticalTabs() {
                   <PersonIcon sx={{ width: 32, height: 32, color: "white" }} />
                 </IconButton>
               </Tooltip>
+
+{/* skyTrails/api/user/event/sendPassesUpdate */}
+              
+<Tooltip title="Pass Status">
+        <IconButton onClick={handleClickNinetyNine } size="small">
+          <ConfirmationNumberIcon sx={{ width: 32, height: 32, color: "white" }} />
+        </IconButton>
+      </Tooltip>
+      <Snackbar 
+        open={snackbarOpen} 
+        autoHideDuration={6000} 
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' ,display :'flex',justifyContent:'center',alignItems :'center', textAlign:'center'}}
+      >
+        <MuiAlert 
+          onClose={handleCloseSnackbar} 
+          severity="success" 
+          sx={{ width: '100%' ,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems :'center',
+          textAlign: 'center' 
+        }}
+        >
+          Congratulations!Pass Booked
+        </MuiAlert>
+      </Snackbar>
 
               {/* ... rest of the menu items ... */}
               <Menu
@@ -2734,6 +2793,37 @@ export default function VerticalTabs() {
               </ListItemButton>
             </ListItem>
 
+            {/* ////////////////////////////////////////////////////// */}
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => handleMenuItemClick("Downloadcsv")}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                  ...((menuData === "Downloadcsv"
+                    ? activeMenuItemClass
+                    : inactiveMenuItemClass) || {}),
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <ArticleIcon sx={{ color: "white" }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="SSDC Leads"
+                  sx={{ opacity: open ? 1 : 0, color: "white" }}
+                />
+              </ListItemButton>
+            </ListItem>
 
 
           </List>
@@ -2768,7 +2858,7 @@ export default function VerticalTabs() {
               {menuData === "profile" && (
                 <AdminProfile />
               )}
-
+              {menuData === "Downloadcsv" && <Downloadcsv/>}
               {menuData === "Packageenquiry" && <Package />}
               {menuData === "apppost" && <Apppost/>}
               {menuData==="Citypackage" && <Citypackage/>}
@@ -2832,3 +2922,4 @@ export default function VerticalTabs() {
     </>
   );
 }
+

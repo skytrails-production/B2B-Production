@@ -69,3 +69,69 @@
   font-size: 16px;
  
 }
+
+.dynamic-properties-input {
+  /* Your input styles */
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.dynamic-properties-add-button {
+  /* Your button styles */
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.dynamic-properties-add-button:hover {
+  background-color: #0056b3;
+}
+
+/* Additional styles for chip-container and remove-button if needed */
+.dynamic-properties-input {
+  /* Your input styles */
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.dynamic-properties-add-button {
+  /* Your button styles */
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.dynamic-properties-add-button:hover {
+  background-color: #0056b3;
+}
+
+/* Additional styles for chip-container and remove-button if needed */
+.chip-input-container{
+  display: flex;
+  gap:5px;
+}
+
+.add-button-sub{
+padding: 2px 2px;
+}
+.add-button-plus{
+ padding: 5px;
+}
+
+.chip{
+  display: flex;
+  gap:2px;
+}
+.chip-container{
+  display:flex;
+  flex-wrap: wrap;
+  gap:5px;
+}
