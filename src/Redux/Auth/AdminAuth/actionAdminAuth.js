@@ -14,4 +14,15 @@ export const adminAuthAction = (user) => {
       payload: user,
     };
   }
+  
+};
+
+export const adminAuthLogOutAction = () => {
+ 
+    return {
+      type: types.ADMIN_AUTH_LOG_OUT_REQUEST,
+      
+    };
+  
+  
 };

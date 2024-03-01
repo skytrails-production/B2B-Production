@@ -147,7 +147,7 @@ function ResponsiveDrawer(props) {
   const reducerState = useSelector((state) => state);
   const access = reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
   
-  console.log(access, "------------------");
+  // console.log(access, "------------------");
   const homeView = location.pathname === "/subAdmin/dashboard";
   const agentTableView = location.pathname === "/subAdmin/dashboard/Agenttable";
   const subadminTableView = location.pathname === "/subAdmin/dashboard/Subadmintable";
@@ -214,7 +214,7 @@ function ResponsiveDrawer(props) {
   const [selectedValue, setSelectedValue] = useState('option1');
   useEffect(()=>{
     if(reducerState?.subadminLogin?.subadminloginData?.statusCode!==200){
-      console.log(reducerState?.subadminLogin?.subadminloginData?.statusCode,reducerState,"statuscode  bchjfbfhfbhj")
+      // console.log(reducerState?.subadminLogin?.subadminloginData?.statusCode,reducerState,"statuscode  bchjfbfhfbhj")
       // dispatch(subAdminLogout());
       navigate("/subAdminLogin");
     }
@@ -576,7 +576,7 @@ function ResponsiveDrawer(props) {
     }
   }
   const handleNotificationClick = async (id) => {
-    console.log(apiURL.baseURL);
+    // console.log(apiURL.baseURL);
 
     // await axios.post(`${apiURL.baseURL}/skyTrails/api/admin/getNotificationById/${id}`);
     await axios.get(`${apiURL.baseURL}/skyTrails/api/admin/getNotificationById/${id}`)

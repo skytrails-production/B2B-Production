@@ -18,6 +18,7 @@ export const logInReducer = (state = initialState, action) => {
         token: payload,
         isLoading: false,
         isError: false,
+        isLogin: true,
       };
 
     case types.LOGIN_REQUEST:
@@ -28,10 +29,10 @@ export const logInReducer = (state = initialState, action) => {
       };
       case types.LOGIN_FAILURE:
         return {
-          ...state,
-          isLogin:false,
-          isLoading:false,
-          isError:true,
+          loginData: [],
+          isLogin: false,
+          isLoading: false,
+          isError: false,
         }
 
     default:

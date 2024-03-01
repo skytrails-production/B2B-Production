@@ -295,7 +295,7 @@ export default function Tables() {
 
     // Fetch adminCheck
     const adminCheck = reducerState?.adminAuth?.adminData?.data?.id;
-    console.log("adminCheck", adminCheck);
+    // console.log("adminCheck", adminCheck);
 
     // Check if adminCheck is undefined
     if (adminCheck === undefined) {
@@ -303,7 +303,7 @@ export default function Tables() {
       return;
     }
 
-    console.log("wallet id", id);
+    // console.log("wallet id", id);
 
     const payload = {
       data: {
@@ -327,7 +327,7 @@ export default function Tables() {
   const handleClose = () => setShow(false);
 
   const handleShow = (ele) => {
-    console.log("user Id", ele);
+    // console.log("user Id", ele);
     setUser_id(ele);
     // console.log(user_id);
     setShow(true);
@@ -340,7 +340,7 @@ export default function Tables() {
 
 
   const handleImgShow = (img) => {
-    console.log("imgUrl", img);
+    // console.log("imgUrl", img);
     setDocumentImgUrl(img);
     setImgShow(true);
   };

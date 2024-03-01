@@ -56,7 +56,7 @@ const Flightbookingdetail = () => {
   const markUpamount =
     reducerState?.userData?.userData?.data?.data?.markup?.flight;
   const dummyPnrCheck = JSON.parse(sessionStorage.getItem("6989_n578j_j848433"));
-  console.log(dummyPnrCheck,"hdhdhd")
+  // console.log(dummyPnrCheck,"hdhdhd")
   const isPassportRequired =
     reducerState?.flightFare?.flightQuoteData?.Results
       ?.IsPassportRequiredAtTicket;

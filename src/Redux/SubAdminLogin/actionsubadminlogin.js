@@ -2,7 +2,7 @@ import * as types from "./actionType";
 
 export const subAdminLogin = (subadmin) => {
   return {
-    type: types.LOGIN_SUCCESS,
+    type: types.SUBADMIN_LOGIN_SUCCESS,
     payload: subadmin,
   };
 };
@@ -10,7 +10,7 @@ export const subAdminLogin = (subadmin) => {
 export const subAdminLogout = () => {
  
     return {
-      type: types.LOGOUT_SUCCESS,
+      type: types.SUBADMIN_LOGOUT_SUCCESS,
      
     };
   
@@ -19,7 +19,7 @@ export const subAdminLogout = () => {
 export const subAdminRequest = () => {
  
     return {
-      type: types.LOGIN_REQUEST,
+      type: types.SUBADMIN_LOGIN_REQUEST,
      
     };
   
@@ -27,7 +27,7 @@ export const subAdminRequest = () => {
 export const subAdminFailure = () => {
  
     return {
-      type: types.LOGIN_FAILURE,
+      type: types.SUBADMIN_LOGIN_FAILURE,
      
     };
   

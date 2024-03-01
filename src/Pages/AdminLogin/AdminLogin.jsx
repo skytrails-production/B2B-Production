@@ -6,7 +6,8 @@ import newlogo from "../../Images/whitelogo1.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./AdminLogin.css";
 import bg from "../../Images/bg-cover.jpeg";
-
+import { adminReducer } from "../../Redux/AdminLogin/adminReducer";
+import SubAdminAccess from "../subAdmin/subAdminDashboard/subAdminaccess";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -17,7 +18,10 @@ const AdminLogin = () => {
   const [loading, setLoading] = useState(false);
   const reducerState = useSelector((state) => state);
   const dispatch = useDispatch();
-  console.log(reducerState,"reducerState")
+
+
+  // console.log(reducerState,"reducerState")
+
 
   let adminData = reducerState?.adminAuth?.adminData?.data?.roles[0];
   const error = useSelector(state => state.adminAuth.adminData.error);
@@ -34,12 +38,12 @@ const AdminLogin = () => {
       setFormError(errorMessage?.response?.data?.message);
       setLoading(false);
     }
-    
-  }, [error, errorMessage]);
- 
 
-  const handleSubmit =async(event) => {
-    event.preventDefault();    
+  }, [error, errorMessage]);
+
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     if (!email.trim() || !password.trim()) {
       setFormError("Please fill in all fields.");
       return;
@@ -50,9 +54,9 @@ const AdminLogin = () => {
       password: password,
     };
 
-    
-      // Dispatch the action and wait for the response
-        
+
+    // Dispatch the action and wait for the response
+
 
     try {
       await dispatch(adminAuthAction(payload));
@@ -64,83 +68,88 @@ const AdminLogin = () => {
       // Set loading back to false regardless of success or failure
       setLoading(false);
     }
-           
+
   };
-  
- 
+
+
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
   const handleEmailChange = (event) => {
-  setEmail(event.target.value);
-  setFormError(""); 
-};
+    setEmail(event.target.value);
+    setFormError("");
+  };
 
-const handlePasswordChange = (event) => {
-  setPassword(event.target.value);
-  setFormError(""); 
-}; 
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+    setFormError("");
+  };
+
+
   return (
-    <div>
-      <div
-        className="coverletter"
-        style={{
+    <>
+      {reducerState?.logIn?.isLogin || reducerState?.subadminLogin?.isLogin ? <div><SubAdminAccess /></div> :
+        <div>
+          <div
+            className="coverletter"
+            style={{
 
-          // borderRadius: "15px",
-          width: "100%",
-          margin: "auto",
-          height: "250px", // Adjusted height
-          overflow: "hidden", // Ensures the border radius is applied correctly
-        }}
-      >
-        <img
-          src={bg}
-          alt=""
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
-        />
-      </div>
-      <div className="Adminwrapper">
-        {/* Cover Layout */}
-        <header className="sectionad headers" style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}>
-          <div className="headead">
-            <img src={newlogo} style={{ width: "80%" }} alt="Logo" />
-            <h2 style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}>Admin Login</h2>
+              // borderRadius: "15px",
+              width: "100%",
+              margin: "auto",
+              height: "250px", // Adjusted height
+              overflow: "hidden", // Ensures the border radius is applied correctly
+            }}
+          >
+            <img
+              src={bg}
+              alt=""
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            />
           </div>
-        </header>
-
-        <section className="section sign-in">
-          <form onSubmit={handleSubmit} className="formadmin">
-            <div className="password-container">
-              <input
-                name="username"
-                type="text"
-                placeholder="Enter your Email Address"
-                value={email}
-                className="admininput"
-                onChange={handleEmailChange}
-              />
-            </div>
-            <div className="password-container">
-              <div className="eye-icon" onClick={togglePasswordVisibility}>
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
+          <div className="Adminwrapper">
+            {/* Cover Layout */}
+            <header className="sectionad headers" style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}>
+              <div className="headead">
+                <img src={newlogo} style={{ width: "80%" }} alt="Logo" />
+                <h2 style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}>Admin Login</h2>
               </div>
-              <input
-                type={showPassword ? "text" : "password"}
-                name="password"
-                placeholder="Enter Your Password"
-                value={password}
-                onChange={handlePasswordChange}
-                className="admininput"
-              />
-            </div>
-            <button className="btnadmin" disabled={loading}> {loading?"Loading...":"Sign In"}</button>
-          </form>
-        </section>
-        {formError && <p style={{color:"red", padding:"0px 0px 5px 50px"}}>{formError}</p>}
-      </div>
-    </div>
+            </header>
+
+            <section className="section sign-in">
+              <form onSubmit={handleSubmit} className="formadmin">
+                <div className="password-container">
+                  <input
+                    name="username"
+                    type="text"
+                    placeholder="Enter your Email Address"
+                    value={email}
+                    className="admininput"
+                    onChange={handleEmailChange}
+                  />
+                </div>
+                <div className="password-container">
+                  <div className="eye-icon" onClick={togglePasswordVisibility}>
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  </div>
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    placeholder="Enter Your Password"
+                    value={password}
+                    onChange={handlePasswordChange}
+                    className="admininput"
+                  />
+                </div>
+                <button className="btnadmin" disabled={loading}> {loading ? "Loading..." : "Sign In"}</button>
+              </form>
+            </section>
+            {formError && <p style={{ color: "red", padding: "0px 0px 5px 50px" }}>{formError}</p>}
+          </div>
+        </div>}
+    </>
   );
 };
 

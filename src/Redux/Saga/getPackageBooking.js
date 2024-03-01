@@ -5,7 +5,7 @@ import { PACKAGE_BOOKING_REQUEST } from "../getHolidayBooking/actionType";
 function* getHolidayBook() {
   try {
     const user = yield call(userApi.bookingHoliday,);
-    yield put(getPackageBooking(user));
+    // yield put(getPackageBooking(user));
   } catch (error) {
     console.log(error);
   }

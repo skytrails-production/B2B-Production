@@ -88,7 +88,7 @@ function Requireddocument() {
         `${apiURL.baseURL}/skyTrails/api/visa/document/createRequireDocument`,
         {...formData}
       );
-      console.log("API Response:", response.data);
+      // console.log("API Response:", response.data);
     } catch (errors) {
       const newFormErrors = {};
       errors.inner.forEach((error) => {

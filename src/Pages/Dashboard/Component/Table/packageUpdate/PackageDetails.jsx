@@ -156,7 +156,7 @@ function PackageDetails() {
         });
       }
     } catch (error) {
-      console.log("error while approving this package");
+      console.error("error while approving this package");
     }
   };
 
@@ -209,7 +209,7 @@ function PackageDetails() {
         });
       }
     } catch (error) {
-      console.log("Error while deleting this package");
+      console.error("Error while deleting this package");
       // Show error notification
       toast.error("Error deleting the package. Please try again.", {
         position: "top-right",

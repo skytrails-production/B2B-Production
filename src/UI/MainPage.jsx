@@ -165,7 +165,7 @@ const MainPage = () => {
   useEffect(() => {
     if (!windowWidth) {
       // return (
-        <Download />
+      <Download />
       // )
     }
   }, [windowWidth]);
@@ -175,19 +175,24 @@ const MainPage = () => {
 
 
   useEffect(() => {
+    const pathname = location?.pathname?.split('/');
+
+    console.warn(reducerState)
     if (
       !reducerState?.logIn?.loginData?.data &&
-      location.pathname !== "/Registration" &&
-      location.pathname !== "/adminLogin" &&
-      location.pathname !== "/subAdminLogin"
+      !location.pathname.includes("/Registration") &&
+      !location.pathname.includes("/adminLogin") &&
+      !location.pathname.includes("/subAdminLogin") &&
+      !location.pathname.includes("/subAdmin")
     ) {
       navigate("/Login");
+
     } else if (location.pathname === "/admin/dashboard") {
       if (!reducerState?.adminAuth?.adminData?.data) {
         navigate("/admin/dashboard");
       } else {
         navigate("/adminLogin");
-        navigate("/addMarkup");
+
       }
     } else if (location.pathname === "/subAdmin/dashboard") {
       if (!reducerState?.adminAuth?.adminData?.data) {
@@ -314,7 +319,9 @@ const MainPage = () => {
         isFlightEticketPage ||
         isBusEticketPage ||
         isHotelEticketPage ? null : (
-        <Headers />
+        <>
+          {reducerState?.logIn?.isLogin && <Headers />}
+        </>
       )}
       {location.pathname === "/" ||
         location.pathname === "/aboutus" ||
@@ -401,7 +408,10 @@ const MainPage = () => {
         isFlightEticketPage ||
         isBusEticketPage ||
         isHotelEticketPage ? null : (
-        <InnerNavbar />
+        <>
+          {reducerState?.logIn?.isLogin && <InnerNavbar />}
+        </>
+
       )}
 
       {!isLoginRoute &&

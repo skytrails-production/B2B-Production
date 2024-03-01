@@ -36,7 +36,7 @@ const AddNotification = () => {
                 })
             });
 
-            console.log('Notification sent successfully:', response.data);
+            // console.log('Notification sent successfully:', response.data);
             toast.success('Notification sent successfully!');
         } catch (error) {
             console.error('Error sending notification:', error);

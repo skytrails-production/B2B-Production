@@ -55,7 +55,7 @@ const MultipleData = (props) => {
     // navigate("passengerdetail");
     setLoader(true);
     sessionStorage.setItem("ResultIndex", ResultIndex);
-    console.warn("resultIndex", ResultIndex)
+    // console.warn("resultIndex", ResultIndex)
     const payload = {
       EndUserIp: reducerState?.ip?.ipData,
       TokenId: reducerState?.ip?.tokenData,
@@ -100,7 +100,7 @@ const MultipleData = (props) => {
         //     `
         //   }
         // });
-        console.log("insideSweet");
+        // console.log("insideSweet");
       }
     }
   }, [statusQuote, statusRule]);

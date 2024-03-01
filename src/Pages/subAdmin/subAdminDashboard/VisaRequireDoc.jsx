@@ -52,7 +52,7 @@ function VisaRequireDoc() {
 
     return (
         <>
-            {access !== "VISA_PROCESSING" ? <div><subAdminaccess /></div> : <Paper
+            {access !== "VISA_PROCESSING" ? <div style={{textAlign:"center"}}>INVALID PAGE</div> : <Paper
                 className="subada-table-container"
                 elevation={3}
                 style={{

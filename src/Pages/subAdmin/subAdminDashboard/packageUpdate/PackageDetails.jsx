@@ -213,7 +213,7 @@ function PackageDetails() {
         });
       }
     } catch (error) {
-      console.log("Error while deleting this package");
+      // console.log("Error while deleting this package");
       // Show error notification
       toast.error("Error deleting the package. Please try again.", {
         position: "top-right",

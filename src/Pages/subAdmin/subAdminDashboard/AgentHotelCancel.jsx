@@ -77,7 +77,7 @@ const AgentHotelCancel = () => {
   const handleStatusChange = (id, selectedValue) => {
     setSelectedStatusMap(new Map(selectedStatusMap.set(id, selectedValue)));
     // Add logic to update the status in your data or trigger an API call
-    console.log(`Status changed to ${selectedValue} for row with id ${id}`);
+    // console.log(`Status changed to ${selectedValue} for row with id ${id}`);
     // Add additional logic as needed
   };
 
@@ -139,7 +139,7 @@ const AgentHotelCancel = () => {
 
   return (
     <>
-     {access !== "REQUEST_HANDLER" ? <div><subAdminaccess /></div> : <div className="subada-table-container" style={{ position: 'relative', width: "100%",marginTop:"-15px" }}>
+     {access !== "REQUEST_HANDLER" ? <div style={{textAlign:"center"}}>INVALID PAGE</div> : <div className="subada-table-container" style={{ position: 'relative', width: "100%",marginTop:"-15px" }}>
       <div className="adsearch-bar" style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold',backgroundColor:"#E73C33" }}>
         <TextField
           type="text"

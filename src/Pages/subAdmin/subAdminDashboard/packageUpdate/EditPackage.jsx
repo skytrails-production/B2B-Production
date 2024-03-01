@@ -262,8 +262,8 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
   }, []);
 
   const storedData = selectedPackage?.insclusions;
-  console.log(selectedPackage?.insclusions, "storedData")
-  console.log(checkedItem, "checked item")
+  // console.log(selectedPackage?.insclusions, "storedData")
+  // console.log(checkedItem, "checked item")
 
   const handleChange = (event) => {
     const { name, checked } = event.target;
@@ -495,7 +495,7 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
         });
 
         // Handle the response
-        console.log(res.data);
+        // console.log(res.data);
         setLoader(false);
         onClose();
       } catch (error) {

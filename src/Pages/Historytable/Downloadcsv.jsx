@@ -12,7 +12,7 @@ function Downloadcsv() {
           `${apiURL.baseURL}/skyTrails/ssdc/leads`
         );
         const { data } = response.data;
-       console.log(data);
+      // console.log(data);
 
         if (Array.isArray(data)) {
           setLeadsData(data); // Store data in state

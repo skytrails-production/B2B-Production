@@ -8,33 +8,34 @@ const initialState = {
     isError: false,
 };
 
-export const subadminReducer = (state = initialState, action) => {
+export const adminReducer = (state = initialState, action) => {
     const { type, payload } = action;
 
     switch (type) {
-        case types.SUBADMIN_LOGIN_SUCCESS:
+        case types.ADMIN_LOGIN_SUCCESS:
             return {
                 subadminloginData:payload,
                 isLoading: false,
                 isError: false,
                 isLogin: true,
+
             };
 
-        case types.SUBADMIN_LOGOUT_SUCCESS:
+        case types.ADMIN_LOGOUT_SUCCESS:
             return {
                 subadminloginData: [],
                 isLoading: false,
                 isError: false,
                 isLogin: false,
             };
-        case types.SUBADMIN_LOGIN_REQUEST:
+        case types.ADMIN_LOGIN_REQUEST:
             return {
                 ...state,
 
                 isLoading: true,
                 isError: false,
             };
-        case types.SUBADMIN_LOGIN_FAILURE:
+        case types.ADMIN_LOGIN_FAILURE:
             return {
                 ...state,
 

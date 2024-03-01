@@ -203,11 +203,11 @@ const BusReviewBooking = () => {
       dispatch(clearBusSearchReducer());
       navigate("/");
 
-      console.warn(
-        reducerState?.getBusResult?.busBook?.data?.data?.BookResult?.Error
-          ?.ErrorMessage,
-        "bussssssssssssssssss"
-      );
+      // console.warn(
+      //   reducerState?.getBusResult?.busBook?.data?.data?.BookResult?.Error
+      //     ?.ErrorMessage,
+      //   "bussssssssssssssssss"
+      // );
     }
   }, [reducerState?.getBusResult?.busBook]);
 
@@ -246,7 +246,7 @@ const BusReviewBooking = () => {
   const cancelFromDateFormatted = cancelFromDate?.format("DD MMM, YY");
   const cancelToDateTimeFormatted = cancelToDateTime?.format("DD MMM, YY");
 
-  console.warn(reducerState, "reducer Statemkskjdnvd");
+  // console.warn(reducerState, "reducer Statemkskjdnvd");
   return (
     <>
       <div className="container-xxl margin-pecentage">

@@ -66,7 +66,7 @@ const Onbording = () => {
   const [pan, setPan] = useState("");
   const userData = reducerState?.userData?.userData?.data?.data
     ;
-  console.warn(userData._id, "reducerState");
+  // console.warn(userData._id, "reducerState");
   const panNumberRef = useRef(null);
   const panImageRef = useRef(null);
 
@@ -91,7 +91,7 @@ const Onbording = () => {
   //   },
   //   password: "",
   // });
-  console.warn("pan number", userData?.agency_details?.pan_number)
+  // console.warn("pan number", userData?.agency_details?.pan_number)
   const [agencyDetails, setAgencyDetails] = useState({
     agency_name: userData?.agency_details?.agency_name,
     pan_number: "",
@@ -150,7 +150,7 @@ const Onbording = () => {
   function handlePersonalDetail(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
-    console.warn(formData, "from");
+    // console.warn(formData, "from");
   }
   // console.log(reducerState.signUp,"reducer state");
 
@@ -158,7 +158,7 @@ const Onbording = () => {
     event.preventDefault();
     const formData1 = new FormData();
     formData1.append("file", pan);
-    console.warn("pan data", formData1)
+    // console.warn("pan data", formData1)
     if (!personalDetailValidations()) {
       setAgencyPage(1);
       setSub({ ...sub, personalDetailSub: true });
@@ -1837,7 +1837,7 @@ const Onbording = () => {
                         <div style={{}}>
                           <Button
                             onClick={() => {
-                              console.warn(pan, "agencyDetails$$$$$$$$$$$$$$$$$$$$$$s")
+                              // console.warn(pan, "agencyDetails$$$$$$$$$$$$$$$$$$$$$$s")
                               if (agencyDetailsValidations()) {
 
                                 setAgencyPage(3)

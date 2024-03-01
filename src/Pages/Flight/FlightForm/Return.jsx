@@ -298,7 +298,7 @@ const Return = () => {
     // }
     if (!validateDeparture(formData.get("from")) || formData.get("from") === "") {
       setFromError("Enter A Valid Destination City");
-      console.warn(validateDeparture(formData.get("from")), "Enter A Valid Destination City")
+      // console.warn(validateDeparture(formData.get("from")), "Enter A Valid Destination City")
       setTimeout(() => {
         setFromError("")
       }, 5000);
@@ -308,7 +308,7 @@ const Return = () => {
     }
     if (!validateArive(formData.get("to")) || formData.get("to") === "") {
       setToError("Enter A Valid Arival City");
-      console.warn(toError, validateDeparture(formData.get("to")), "Enter A Valid Arival City")
+      // console.warn(toError, validateDeparture(formData.get("to")), "Enter A Valid Arival City")
       setTimeout(() => {
         setToError("")
       }, 5000);

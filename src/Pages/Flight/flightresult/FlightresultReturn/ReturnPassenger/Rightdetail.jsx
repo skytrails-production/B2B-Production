@@ -80,7 +80,7 @@ export default function Popularfilter() {
     IsPassportRequiredAtTicket
   const markUpamount =
     reducerState?.userData?.userData?.data?.data?.markup?.flight;
-  console.log(isPasswordsRequiredBaseFair, "isPasswordsRequired", markUpamount, "markupamount")
+  // console.log(isPasswordsRequiredBaseFair, "isPasswordsRequired", markUpamount, "markupamount")
 
   // console.log("fareValue 🤞", fareofall);
 

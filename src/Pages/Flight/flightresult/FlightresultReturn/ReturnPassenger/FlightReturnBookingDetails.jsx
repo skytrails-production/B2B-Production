@@ -54,7 +54,7 @@ const FlightReturnBookingDetails = () => {
 
     // Format the output date string as "yyyy-mm-ddTHH:mm:ss"
     const outputDate = newDate.toISOString().slice(0, 19).replace("T", "T00:00:00");
-    console.log(outputDate, "outputdate")
+    // console.log(outputDate, "outputdate")
 
     return outputDate;
   }
@@ -239,7 +239,7 @@ const FlightReturnBookingDetails = () => {
 
   }, [reducerState?.flightBook?.flightTicketDataGDS]);
   useEffect(() => {
-    console.warn(reducerState?.flightBook?.flightTicketDataGDS, "reducerState?.flightBook?.flightTicketDataGDS?.Error?.ErrorMessage");
+    // console.warn(reducerState?.flightBook?.flightTicketDataGDS, "reducerState?.flightBook?.flightTicketDataGDS?.Error?.ErrorMessage");
     if (reducerState?.flightBook?.flightTicketDataGDS?.Error
       ?.ErrorCode !== 0 && reducerState?.flightBook?.flightTicketDataGDS?.Error
         ?.ErrorCode !== undefined) {

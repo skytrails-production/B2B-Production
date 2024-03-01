@@ -225,7 +225,7 @@ const Flightdetail = () => {
 
   const arrSegmentLength = results[0]?.[0]?.Segments?.[0]?.length;
 
-  console.log(selectedCategory, "result0")
+  // console.log(selectedCategory, "result0");
 
 
   return newFilteredData?.map((res) => {

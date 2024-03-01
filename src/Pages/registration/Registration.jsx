@@ -136,7 +136,7 @@ const Login = () => {
   function handlePersonalDetail(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
-    console.warn(formData, "from");
+    // console.warn(formData, "from");
 
   }
   // console.log(reducerState.signUp,"reducer state");
@@ -179,7 +179,7 @@ const Login = () => {
     const formData1 = new FormData();
     formData1.append("file", pan);
     formData1.append("data", JSON.stringify(payload));
-    console.warn(formData1, pan, "payload@@@@@@@@@@@@@@@@@@@@@@")
+    // console.warn(formData1, pan, "payload@@@@@@@@@@@@@@@@@@@@@@")
     dispatch(signUpAction({ file: pan, data: JSON.stringify(payload) }));
 
     setPersonalDetails({

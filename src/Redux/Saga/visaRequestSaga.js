@@ -8,7 +8,7 @@ function* getVisaRequest(action) {
     const user = yield call(userApi.visaRequest,action.payload);
     yield put( createVisaRequest(user));
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 export function* getVisaRequestWatcher() {

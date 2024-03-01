@@ -57,9 +57,9 @@ const Busbookingconfirmation = () => {
 
   useEffect(() => {
 
-    console.warn(
-      reducerState
-      , "testing Reducer state...");
+    // console.warn(
+    //   reducerState
+    //   , "testing Reducer state...");
     if (reducerState?.getBusResult?.isLoadingBook == true) setLoader(true);
 
   }, [reducerState?.getBusResult?.isLoadingBook]);

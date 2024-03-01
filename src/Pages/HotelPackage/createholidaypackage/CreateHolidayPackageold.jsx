@@ -249,8 +249,8 @@ const CreateHolidayPackage = () => {
     setDaysDetails(newValues);
     // setHtml(newValues);
   };
-  console.warn("days", html);
-  console.warn("daysDetailsValues", daysDetailsValues);
+  // console.warn("days", html);
+  // console.warn("daysDetailsValues", daysDetailsValues);
 
   // Form handle code
   const handleCreatePackage = (event) => {

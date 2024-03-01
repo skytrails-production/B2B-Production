@@ -118,7 +118,7 @@ const Usertable = () => {
   return (
 
     <>
-      {access !== "USER_MANAGER" ? <div><subAdminaccess /></div> :
+      {access !== "USER_MANAGER" ? <div style={{textAlign:"center"}}>INVALID PAGE</div> :
         <div className="user-table-container" style={{ position: 'relative', width: "100%" }}>
           <div className="adsearch-bar" style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold', backgroundColor: "#E73C33" }}>
             <TextField

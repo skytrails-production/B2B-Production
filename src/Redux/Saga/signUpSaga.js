@@ -14,7 +14,7 @@ function* userSignUpRequest(action) {
 function* onbordingRequest(action){
   try{
     const user=yield call(userApi.userB2BOnbording,action.payload)
-    console.warn("onbording",user)
+    // console.warn("onbording",user)
     yield put(fetchSignUp(user));
 
   }catch(error){

@@ -147,7 +147,7 @@ const BusForm = () => {
     date: "",
   });
   useEffect(() => {
-    console.warn(from, "from value")
+    console.warn("from value")
   }, [from])
 
   useEffect(() => {
@@ -313,8 +313,8 @@ const BusForm = () => {
       // });
       setLoader(false)
     }
-    console.warn(reducerState?.getBusResult?.busResult?.data?.data?.BusSearchResult?.Error?.ErrorCode
-      , "reducerState?.getBusResult?.data?.data?.BusSearchResult?.Error?.ErrorCode")
+    // console.warn(reducerState?.getBusResult?.busResult?.data?.data?.BusSearchResult?.Error?.ErrorCode
+    //   , "reducerState?.getBusResult?.data?.data?.BusSearchResult?.Error?.ErrorCode")
   }, [reducerState?.getBusResult])
 
   // form submit data
@@ -462,7 +462,7 @@ const BusForm = () => {
                         handleFromInputChange(event);
                         handleFromSearch(event.target.value);
                         // setSubfrom(true)
-                        console.log(subFrom)
+                        // console.log(subFrom)
 
                       }}
                       onClick={() => setSubfrom(true)}

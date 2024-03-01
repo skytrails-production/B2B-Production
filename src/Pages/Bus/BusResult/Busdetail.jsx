@@ -160,7 +160,7 @@ const Busdetail = () => {
         })
         .then((response) => {
           setSeatLayoutData(response.data);
-          console.warn(response.data.data, "response data");
+          // console.warn(response.data.data, "response data");
           setSub(false);
           setSubIndex(0);
 
@@ -331,11 +331,11 @@ const Busdetail = () => {
 
     // Save the combined state object to session storage
     await sessionStorage.setItem("seatData", JSON.stringify(dataToSave));
-    console.warn(
-      selectedOrigin,
-      selectedDropPoint,
-      "selectedOrigin,selectedDropPoint"
-    );
+    // console.warn(
+    //   selectedOrigin,
+    //   selectedDropPoint,
+    //   "selectedOrigin,selectedDropPoint"
+    // );
     navigate("/BusPassengerDetail");
   }
 

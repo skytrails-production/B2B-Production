@@ -49,7 +49,7 @@ const AllAdvertisementTable = () => {
             },
           }
         );
-        console.log("API Request URL:", response.config.url);
+        // console.log("API Request URL:", response.config.url);
         const initialStatusMap = {};
         response.data.result.docs.forEach((user) => {
           initialStatusMap[user._id] = ""; // Default status
@@ -198,7 +198,7 @@ const AllAdvertisementTable = () => {
 
   return (
     <>
-      {access !== "REQUEST_HANDLER" ? <div><subAdminaccess /></div> : <div className="subada-table-container" style={{ position: "relative", width: "100%" }}>
+      {access !== "REQUEST_HANDLER" ? <div style={{textAlign:"center"}}>INVALID PAGE</div> : <div className="subada-table-container" style={{ position: "relative", width: "100%" }}>
         <div className="adsearch-bar" style={{ position: "absolute", top: 10, zIndex: 1, fontWeight: "bold", backgroundColor: "#E73C33" }}>
           <TextField
             type="text"

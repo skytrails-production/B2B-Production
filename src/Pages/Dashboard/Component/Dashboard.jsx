@@ -492,7 +492,7 @@ export default function VerticalTabs() {
   //   axios.post(`/skyTrails/api/admin/getNotificationById/`)
   // }
   const handleNotificationClick = async (id) => {
-    console.log(apiURL.baseURL);
+    // console.log(apiURL.baseURL);
 
     // await axios.post(`${apiURL.baseURL}/skyTrails/api/admin/getNotificationById/${id}`);
     await axios.get(`${apiURL.baseURL}/skyTrails/api/admin/getNotificationById/${id}`)
@@ -736,17 +736,14 @@ export default function VerticalTabs() {
         open={snackbarOpen} 
         autoHideDuration={6000} 
         onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' ,display :'flex',justifyContent:'center',alignItems :'center', textAlign:'center'}}
+        anchorOrigin={{ vertical: 'bottom', horizontal:'center'}}
+        
+        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
       >
         <MuiAlert 
           onClose={handleCloseSnackbar} 
           severity="success" 
-          sx={{ width: '100%' ,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems :'center',
-          textAlign: 'center' 
-        }}
+          sx={{ width: '100%', textAlign: 'center' }}
         >
           Congratulations!Pass Booked
         </MuiAlert>

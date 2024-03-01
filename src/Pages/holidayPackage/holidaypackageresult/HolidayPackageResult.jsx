@@ -64,7 +64,7 @@ const HolidayPackageResult = () => {
   const filteredPackage =
     reducerState?.searchResult?.packageSearchResult?.data?.data?.pakage;
   useEffect(() => {
-    console.warn(reducerState?.searchResult?.packageSearchResult?.data?.data?.pakage, "reducerState?.searchResult?.packageSearchResult?.data?.data?.pakage")
+    // console.warn(reducerState?.searchResult?.packageSearchResult?.data?.data?.pakage, "reducerState?.searchResult?.packageSearchResult?.data?.data?.pakage")
     if (reducerState?.searchResult?.packageSearchResult?.data?.data?.pakage === undefined || reducerState?.searchResult?.packageSearchResult?.data?.data?.pakage.length === 0) {
       navigate("/holidayPackage")
       return;

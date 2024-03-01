@@ -64,7 +64,7 @@ const Bookingdetailpackage = () => {
   const reducerState = useSelector((state) => state);
   const onePackage =
     reducerState?.searchOneResult?.OneSearchPackageResult?.data?.data;
-  console.log("One Package", onePackage);
+  // console.log("One Package", onePackage);
   const [daysDetailsValues, setDaysDetails] = useState([]);
   const handleDaysDetail = (index, e) => {
     const newValues = [...daysDetailsValues];

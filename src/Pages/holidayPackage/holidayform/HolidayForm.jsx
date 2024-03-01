@@ -94,7 +94,7 @@ const HolidayForm = () => {
 
 
 
-  console.warn("reducer state ", reducerState)
+  // console.warn("reducer state ", reducerState)
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (listRef.current && !listRef.current.contains(event.target)) {
@@ -123,7 +123,7 @@ const HolidayForm = () => {
       const results = await axios.get(`${apiURL.baseURL}/skyTrails/packagecitylist?keyword=${Query}`);
       await setPopulearSearch(results?.data?.data);
       localStorage.setItem("holidayPopularSearch", JSON.stringify(results?.data?.data))
-      console.warn(results?.data?.data)
+      // console.warn(results?.data?.data)
     }
 
     return
@@ -142,7 +142,7 @@ const HolidayForm = () => {
     dispatch(packageBookingActionClear());
     dispatch(clearHolidayPackage());
     sessionStorage.removeItem("searchPackageData");
-    console.warn("reducer state useEffect", reducerState);
+    // console.warn("reducer state useEffect", reducerState);
     fetchSearchResultsPopular()
 
 
@@ -158,7 +158,7 @@ const HolidayForm = () => {
     return () => clearTimeout(getData);
   }, [Query]);
   useEffect(() => {
-    console.warn(result, "result........")
+    console.warn( "result........")
   }, [result])
 
   const navigate = useNavigate();
@@ -224,7 +224,7 @@ const HolidayForm = () => {
     setToQuery("");
     setResult([]);
     setSub(false)
-    console.warn(item, "item................")
+    // console.warn(item, "item................")
   }
 
   const handleDaysSearchChange = (e) => {

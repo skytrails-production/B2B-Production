@@ -132,12 +132,12 @@ const FixedDeparture = () => {
             `${apiURL.baseURL}/skyTrails/fixDeparturefilter?Sector=${toQuery}`
             // `${apiURL.baseURL}/skyTrails/fixDeparturefilter?Sector=DEL-DXB`
         );
-        console.warn(
-            results?.data?.data,
-            "result1 ................................................."
-        );
+        // console.warn(
+        //     results?.data?.data,
+        //     "result1 ................................................."
+        // );
         setToSearchResultsData(results?.data?.data);
-        console.warn("search result click", results?.data?.data);
+        // console.warn("search result click", results?.data?.data);
     };
 
     const handleSubmittest = (e) => {
@@ -155,7 +155,7 @@ const FixedDeparture = () => {
     };
     const onSubmit = (data) => {
         // 'data' contains all the form values
-        console.warn(data, "// 'data' contains all the form values");
+        // console.warn(data, "// 'data' contains all the form values");
         const payload = {
             userId: userData?.id,
             loginName: data?.loginName,

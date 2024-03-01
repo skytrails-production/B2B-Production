@@ -75,7 +75,7 @@ function* hotelBlockRoomRequest(action) {
 
 function* hotelBookRoomRequest(action) {
   try {
-    console.log("action:👍", action?.payload[1]);
+    // console.log("action:👍", action?.payload[1]);
     const data = yield call(userApi.hotelBookRoom, action?.payload[0]);
 
     console.error("check book response", data);
@@ -107,7 +107,7 @@ function* hotelBookRoomRequest(action) {
         },
       };
 
-      console.log("updatedGetDetails", updatedGetDetails);
+      // console.log("updatedGetDetails", updatedGetDetails);
 
       yield put(HotelDetails(updatedGetDetails));
     }

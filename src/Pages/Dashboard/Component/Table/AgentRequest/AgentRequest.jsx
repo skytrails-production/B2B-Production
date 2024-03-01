@@ -44,7 +44,7 @@ const AllAdvertisementTable = () => {
             },
           }
         );
-        console.log("API Request URL:", response.config.url);
+        // console.log("API Request URL:", response.config.url);
         const initialStatusMap = {};
         response.data.result.docs.forEach((user) => {
           initialStatusMap[user._id] = ""; // Default status

@@ -74,7 +74,7 @@ function SearchData() {
 
     return (
         <>
-         {access !== "USER_MANAGER" ? <div><subAdminaccess /></div> : <Paper
+         {access !== "USER_MANAGER" ? <div style={{textAlign:"center"}}>INVALID PAGE</div> : <Paper
             className="subada-table-container"
             elevation={3}
             style={{

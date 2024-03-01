@@ -306,9 +306,9 @@ const HotelForm = () => {
       increasedDate.setDate(increasedDate.getDate() + 1);
       setValues({ ...values, checkOutDeparture: increasedDate, departure: date });
       // Update the checkOutDeparture
-      console.warn(values.checkOutDeparture - date, "values.checkOutDeparture<values.departure")
+      // console.warn(values.checkOutDeparture - date, "values.checkOutDeparture<values.departure")
     }
-    console.log(values, "values")
+    // console.log(values, "values")
   };
 
   const handleEndDateChange = (date) => {

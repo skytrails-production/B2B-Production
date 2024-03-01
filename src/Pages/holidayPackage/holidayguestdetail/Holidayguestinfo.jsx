@@ -243,9 +243,9 @@ const Holidayguestinfo = ({ setadultCount, setchildCount }) => {
     // handleSuccessandNavigate();
   };
   // if()
-  console.warn("result", reducerState, "reducer state")
+  // console.warn("result", reducerState, "reducer state")
   useEffect(()=>{
-    console.warn("new resucerstate'''''''''''''''''''''''''''''''''''",reducerState)  
+    // console.warn("new resucerstate'''''''''''''''''''''''''''''''''''",reducerState)  
     if(reducerState?.packageBookingRequest?.isError==false && reducerState?.packageBookingRequest?.isLoading===false
       && reducerState?.packageBookingRequest?.showSuccessMessage) {
         if (userId) {

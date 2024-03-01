@@ -257,10 +257,10 @@ const DummyTicketBooking = () => {
       formData.get("from") === ""
     ) {
       setFromError("Enter A Valid Destination City");
-      console.warn(
-        validateDeparture(formData.get("from")),
-        "Enter A Valid Destination City"
-      );
+      // console.warn(
+      //   validateDeparture(formData.get("from")),
+      //   "Enter A Valid Destination City"
+      // );
 
       // alert("Enter A Valid Destination City")
       return;
@@ -365,7 +365,7 @@ const DummyTicketBooking = () => {
                   onChange={(event) => {
                     handleFromInputChange(event);
                     handleFromSearch(event.target.value);
-                    console.warn(fromSearchResults, "fromSearchResults");
+                    // console.warn(fromSearchResults, "fromSearchResults");
                   }}
                   autoComplete="off"
                 />

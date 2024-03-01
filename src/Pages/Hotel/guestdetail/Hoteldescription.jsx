@@ -25,7 +25,7 @@ const Hoteldescription = () => {
     navigate("booknow");
   };
   const reducerState = useSelector((state) => state);
-  console.warn(reducerState, "reducer State;;;;;;;;;;;;;;;;;;;;;;;;;;");
+  // console.warn(reducerState, "reducer State;;;;;;;;;;;;;;;;;;;;;;;;;;");
   const bookingId =
     reducerState?.hotelSearchResult?.bookRoom?.BookResult?.BookingId;
   let bookingStatus =
@@ -326,7 +326,7 @@ const Hoteldescription = () => {
     }
     return stars;
   };
-  console.warn(userBalance, grandTotal, "userBalance >= grandTotal");
+  // console.warn(userBalance, grandTotal, "userBalance >= grandTotal");
   useEffect(() => {
     if (reducerState?.hotelSearchResult?.bookRoom?.BookResult
 ?.Error?.ErrorCode === 0) {
@@ -395,7 +395,7 @@ const Hoteldescription = () => {
       // navigate("/");
     }
   },[reducerState?.hotelSearchResult?.bookRoom]);
-  console.warn("reducerState?.hotelSearchResult?.bookRoom?.Error?.ErrorCode",reducerState?.hotelSearchResult?.bookRoom?.Error?.ErrorCode)
+  // console.warn("reducerState?.hotelSearchResult?.bookRoom?.Error?.ErrorCode",reducerState?.hotelSearchResult?.bookRoom?.Error?.ErrorCode)
 
   if (
     resultIndex === undefined ||

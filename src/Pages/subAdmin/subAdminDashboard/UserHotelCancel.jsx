@@ -68,7 +68,7 @@ const UserHotelCancel = () => {
   const handleStatusChange = (id, selectedValue) => {
     setSelectedStatusMap(new Map(selectedStatusMap.set(id, selectedValue)));
 
-    console.log(`Status changed to ${selectedValue} for row with id ${id}`);
+    // console.log(`Status changed to ${selectedValue} for row with id ${id}`);
 
   };
   const calculateStayDuration = (checkInDate, checkOutDate) => {
@@ -176,7 +176,7 @@ const UserHotelCancel = () => {
 
   return (
 <>
-{access !== "REQUEST_HANDLER" ? <div><subAdminaccess /></div> : <div className="subada-table-container" style={{ position: 'relative', width: "100%",marginTop:"-15px" }}>
+{access !== "REQUEST_HANDLER" ? <div style={{textAlign:"center"}}>INVALID PAGE</div> : <div className="subada-table-container" style={{ position: 'relative', width: "100%",marginTop:"-15px" }}>
       <div className="adsearch-bar" style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold',backgroundColor:"#E73C33" }}>
         <TextField
           type="text"

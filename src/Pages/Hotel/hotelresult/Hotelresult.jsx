@@ -63,7 +63,7 @@ export default function Popularfilter() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const reducerState = useSelector((state) => state);
-  console.warn("State Data", reducerState?.hotelSearchResult);
+  // console.warn("State Data", reducerState?.hotelSearchResult);
 
   const result =
     reducerState?.hotelSearchResult?.ticketData?.data?.data?.HotelSearchResult;

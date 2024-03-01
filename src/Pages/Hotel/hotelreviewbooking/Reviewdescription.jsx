@@ -217,7 +217,7 @@ const Flightdetail = () => {
   const cancellationFormattedEndingDate = moment(cancellationEndingDate).format(
     "MMMM DD, YYYY"
   );
-  console.log("Hotel information", reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult?.HotelDetails?.HotelPolicy);
+  // console.log("Hotel information", reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult?.HotelDetails?.HotelPolicy);
   const cancellationCharge =
     hotelCancellationPolicies?.CancellationPolicies[0]?.Charge;
 
@@ -511,7 +511,7 @@ const Flightdetail = () => {
     );
     // console.warn("dataddddddddd", other);
     const result = em && con && other.length === 0;
-    console.warn(result, "result");
+    // console.warn(result, "result");
     return result;
   }
   // console.warn("passengerDataNew", emailRef,"sss");

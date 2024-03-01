@@ -39,7 +39,7 @@ const FlightReviewbooking = () => {
   const bookingDataNonLccReturn =
     reducerState?.flightBook?.flightBookDataGDSReturn?.data?.data?.Response
       ?.Response;
-  console.log(bookingDataNonLcc,bookingDataLcc, "bookingDataNonLcc");
+  // console.log(bookingDataNonLcc,bookingDataLcc, "bookingDataNonLcc");
   const addBookingDetailsReturn = () => {
     if (bookingDataLccReturn) {
       // console.log("lccCheck");
@@ -106,7 +106,7 @@ const FlightReviewbooking = () => {
       };
       userApi.flightBookingDataSave(payloadLCC);
     } else {
-      console.log("nonlccCheck",bookingDataNonLcc);
+      // console.log("nonlccCheck",bookingDataNonLcc);
       const payloadNonLcc = {
         userId: reducerState?.logIn?.loginData?.data?.data?.id,
         bookingId: `${bookingDataNonLcc?.BookingId}`,
@@ -174,7 +174,7 @@ const FlightReviewbooking = () => {
 
   const addBookingDetails = () => {
     if (bookingDataLcc) {
-      console.log("lccCheck",bookingDataLcc);
+      // console.log("lccCheck",bookingDataLcc);
       const payloadLCC = {
         userId: reducerState?.logIn?.loginData?.data?.data?.id,
         bookingId: `${bookingDataLcc?.BookingId}`,

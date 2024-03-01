@@ -28,7 +28,7 @@ const Holidaysalesummary = ({ childCount, adultCount }) => {
   const onePackage =
     reducerState?.searchOneResult?.OneSearchPackageResult?.data?.data;
   const reducerForm = reducerState?.form?.formEntries;
-  console.warn("reducerForm", reducerForm)
+  // console.warn("reducerForm", reducerForm)
   if (reducerForm === undefined) {
     return (<div></div>)
   }
