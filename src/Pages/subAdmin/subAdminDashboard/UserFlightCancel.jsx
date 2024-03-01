@@ -17,6 +17,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import { apiURL } from '../../../Constants/constant';
 // Import your flight bookings CSS if needed
 import Swal from 'sweetalert2';
+import { useDispatch, useSelector } from "react-redux";
+import subAdminaccess from './subAdminaccess';
 import './Agenttable.css';
 const UserFlightCancel = () => {
   const [flightBookings, setFlightBookings] = useState([]);
@@ -27,6 +29,8 @@ const UserFlightCancel = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState([]);
   const [selectedStatusMap, setSelectedStatusMap] = useState(new Map());
+  const reducerState = useSelector((state) => state);
+  const access = reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
 
   useEffect(() => {
     async function fetchFlightBookings() {
@@ -205,7 +209,8 @@ const UserFlightCancel = () => {
 
 
   return (
-    <div className="subada-table-container" style={{ position: 'relative', width: "100%", marginTop: "-15px" }}>
+    <>
+     {access !== "REQUEST_HANDLER" ? <div><subAdminaccess /></div> : <div className="subada-table-container" style={{ position: 'relative', width: "100%", marginTop: "-15px" }}>
       <div className="adsearch-bar" style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold', backgroundColor: "#E73C33" }}>
         <TextField
           type="text"
@@ -259,7 +264,9 @@ const UserFlightCancel = () => {
           color="primary"
         />
       </Stack>
-    </div>
+    </div>} 
+    </>
+   
   );
 };
 

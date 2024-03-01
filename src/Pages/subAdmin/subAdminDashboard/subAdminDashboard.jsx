@@ -101,6 +101,8 @@ import { PiBackpackThin } from "react-icons/pi";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { IoIosNotifications } from "react-icons/io";
 import axios from "axios";
+import { useSelector, useDispatch } from 'react-redux';
+import { subAdminLogout } from "../../../Redux/SubAdminLogin/actionsubadminlogin"
 
 const drawerWidth = 240;
 function ResponsiveDrawer(props) {
@@ -108,6 +110,7 @@ function ResponsiveDrawer(props) {
 
 
   const { window } = props;
+  const dispatch = useDispatch();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [showAgentData, setShowAgentData] = React.useState(false);
@@ -122,14 +125,14 @@ function ResponsiveDrawer(props) {
 
   const [fixedDeparturescontrol, setfixedDepartureControl] = React.useState(false);
   const [advertisements, setAdvertisement] = React.useState(false);
-   const [visaCountryforms,setvisaCountryform] =React.useState(false);
-   const [visaCountrysforms,setvisaCountrysform] =React.useState(false);
-   const [visaCategoryforms,setvisaCategoryforms] =React.useState(false);
-   const [visaDocumentsCategorys,setvisaDocumentsCategorys] =React.useState(false);
-   const [DocumentsCategorys,setDocumentsCategorys] =React.useState(false);
+  const [visaCountryforms, setvisaCountryform] = React.useState(false);
+  const [visaCountrysforms, setvisaCountrysform] = React.useState(false);
+  const [visaCategoryforms, setvisaCategoryforms] = React.useState(false);
+  const [visaDocumentsCategorys, setvisaDocumentsCategorys] = React.useState(false);
+  const [DocumentsCategorys, setDocumentsCategorys] = React.useState(false);
 
 
-   const [requireDocuments,setrequireDocuments] =React.useState(false);
+  const [requireDocuments, setrequireDocuments] = React.useState(false);
 
 
   const [webadvertisements, setwebadvertisement] = React.useState(false);
@@ -141,6 +144,10 @@ function ResponsiveDrawer(props) {
   const [addMarkups, setaddMarkups] = React.useState(false);
   const [addEvents, setaddEvents] = React.useState(false);
   const [holidayPackages, setHolidayPackage] = React.useState(false);
+  const reducerState = useSelector((state) => state);
+  const access = reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
+  
+  console.log(access, "------------------");
   const homeView = location.pathname === "/subAdmin/dashboard";
   const agentTableView = location.pathname === "/subAdmin/dashboard/Agenttable";
   const subadminTableView = location.pathname === "/subAdmin/dashboard/Subadmintable";
@@ -205,6 +212,13 @@ function ResponsiveDrawer(props) {
   const [menuData, setMenuData] = useState("Home");
   const [loading, setLoading] = useState(false);
   const [selectedValue, setSelectedValue] = useState('option1');
+  useEffect(()=>{
+    if(reducerState?.subadminLogin?.subadminloginData?.statusCode!==200){
+      console.log(reducerState?.subadminLogin?.subadminloginData?.statusCode,reducerState,"statuscode  bchjfbfhfbhj")
+      // dispatch(subAdminLogout());
+      navigate("/subAdminLogin");
+    }
+  },[reducerState?.subadminLogin?.subadminloginData?.statusCode])
   const handleMenuItemClick = (menuItem) => {
     // console.log(menuItem,menuData)
     setLoading(true);
@@ -516,7 +530,9 @@ function ResponsiveDrawer(props) {
   }
 
   const handleLogout = () => {
+    dispatch(subAdminLogout());
     navigate('/subAdminLogin');
+
   };
 
   const handleLogoutConfirm = () => {
@@ -649,7 +665,7 @@ function ResponsiveDrawer(props) {
 
 
   const drawer = (
-    <div style={{ backgroundColor: "#E73C33", height: "auto" }}>
+    <div style={{ backgroundColor: "#E73C33", height: "100vh", overflowY: "scroll" }}>
       <div className="logo-container">
         <img src={newlogo} alt="" style={{ width: '100%' }} />
       </div>
@@ -662,7 +678,7 @@ function ResponsiveDrawer(props) {
           </ListItemButton>
         </ListItem>
 
-        <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
+        {access === "AGENT_MANAGER" && <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
           <ListItemButton onClick={handleAgentTable}>
 
             <GroupIcon style={{ color: "white" }} />
@@ -670,11 +686,11 @@ function ResponsiveDrawer(props) {
 
 
           </ListItemButton>
-        </ListItem>
+        </ListItem>}
 
 
 
-        <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
+        {access === "USER_MANAGER" && <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
           <ListItemButton onClick={handleUserTable}>
 
             <GroupIcon style={{ color: "white" }} />
@@ -682,9 +698,9 @@ function ResponsiveDrawer(props) {
 
 
           </ListItemButton>
-        </ListItem>
+        </ListItem>}
 
-        <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
+        {access === "REQUEST_HANDLER" && <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
           <ListItemButton onClick={handleAgentRequest}>
 
             <GroupIcon style={{ color: "white" }} />
@@ -692,9 +708,9 @@ function ResponsiveDrawer(props) {
 
 
           </ListItemButton>
-        </ListItem>
+        </ListItem>}
 
-        <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
+        {/* <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
           <ListItemButton onClick={handleSubadminTable}>
 
             <GroupIcon style={{ color: "white" }} />
@@ -702,17 +718,17 @@ function ResponsiveDrawer(props) {
 
 
           </ListItemButton>
-        </ListItem>
+        </ListItem> */}
 
 
 
 
-        <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
+        {access === "REQUEST_HANDLER" && <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
           <ListItemButton onClick={handleAgentCancel}>
             <DomainIcon style={{ color: "white", fontSize: "10px", marginRight: "2px" }} />
             <ListItemText style={{ color: "white" }}>B2B Cancel Request</ListItemText>
           </ListItemButton>
-        </ListItem>
+        </ListItem>}
         <Menu
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
@@ -733,12 +749,12 @@ function ResponsiveDrawer(props) {
         </Menu>
 
 
-        <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
+        {access === "REQUEST_HANDLER" && <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
           <ListItemButton onClick={handleClickUserCancel}>
             <PersonPinIcon style={{ color: "white", fontSize: "40px" }} />
             <ListItemText style={{ color: "white" }}>B2C Cancel Request</ListItemText>
           </ListItemButton>
-        </ListItem>
+        </ListItem>}
         <Menu
           anchorEl={anchorElUserCancel}
           open={Boolean(anchorElUserCancel)}
@@ -762,12 +778,12 @@ function ResponsiveDrawer(props) {
 
 
 
-        <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", flexWrap: "wrap", paddingLeft: "0px" }}>
+        {access === "REQUEST_HANDLER" && <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", flexWrap: "wrap", paddingLeft: "0px" }}>
           <ListItemButton onClick={handleClickAgentChange}>
             <DomainIcon style={{ color: "white", fontSize: "10px" }} />
             <ListItemText style={{ color: "white", marginLeft: "1px", fontSize: "15px" }}>B2B Change Request</ListItemText>
           </ListItemButton>
-        </ListItem>
+        </ListItem>}
         <Menu
           anchorEl={anchorElAgentChange}
           open={Boolean(anchorElAgentChange)}
@@ -789,12 +805,12 @@ function ResponsiveDrawer(props) {
 
 
 
-        <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
+        {access === "REQUEST_HANDLER" && <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
           <ListItemButton onClick={handleClickUserChange}>
             <PersonPinIcon style={{ color: "white", fontSize: "10px" }} />
             <ListItemText style={{ color: "white", marginLeft: "1px", fontSize: "15px" }}>B2C Change Request</ListItemText>
           </ListItemButton>
-        </ListItem>
+        </ListItem>}
         <Menu
           anchorEl={anchorElUserChange}
           open={Boolean(anchorElUserChange)}
@@ -815,12 +831,12 @@ function ResponsiveDrawer(props) {
         </Menu>
 
 
-        <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
+        {access === "BOOKING_MANAGER" && <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
           <ListItemButton onClick={handleUserBooking}>
             <PersonPinIcon style={{ color: "white", fontSize: "30px" }} />
             <ListItemText style={{ color: "white", marginLeft: "5px" }}>B2C Booking</ListItemText>
           </ListItemButton>
-        </ListItem>
+        </ListItem>}
         <Menu
           anchorEl={anchorElUserBooking}
           open={Boolean(anchorElUserBooking)}
@@ -841,12 +857,12 @@ function ResponsiveDrawer(props) {
         </Menu>
 
 
-        <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
+        {access === "BOOKING_MANAGER" && <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
           <ListItemButton onClick={handleAgentBooking}>
             <DomainIcon style={{ color: "white", fontSize: "10px" }} />
             <ListItemText style={{ color: "white", marginLeft: "5px" }}>B2B Booking</ListItemText>
           </ListItemButton>
-        </ListItem>
+        </ListItem>}
         <Menu
           anchorEl={anchorElAgentBooking}
           open={Boolean(anchorElAgentBooking)}
@@ -866,13 +882,13 @@ function ResponsiveDrawer(props) {
           </MenuItem>
         </Menu>
 
-        <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
+        {/* <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
           <ListItemButton onClick={handleMarkUpAmount}>
-            <AttachMoneyIcon style={{ color: "white", fontSize: "30px" }} /> {/* Replace GroupIcon with AttachMoneyIcon */}
+            <AttachMoneyIcon style={{ color: "white", fontSize: "30px" }} /> 
             <ListItemText style={{ color: "white", marginLeft: "5px" }}>Markup Amount</ListItemText>
           </ListItemButton>
-        </ListItem>
-        <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
+        </ListItem> */}
+        {/* <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
           <ListItemButton onClick={handleFixedDeparture}>
             <AirplaneTicketIcon sx={{ color: "white", fontSize: "1.2rem" }} />
             <ListItemText style={{ color: "white", marginLeft: "5px" }}>FixedDeparture</ListItemText>
@@ -884,59 +900,60 @@ function ResponsiveDrawer(props) {
             <AirplanemodeActiveIcon sx={{ color: "white", fontSize: "12px" }} />
             <ListItemText style={{ color: "white", marginLeft: "5px" }}>FixedDeparture Control</ListItemText>
           </ListItemButton>
-        </ListItem>
+        </ListItem> */}
 
-        <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
+        {access === "ADS_HANDLER" && <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
           <ListItemButton onClick={handleAdvertisment}>
             <WebIcon sx={{ color: "white", fontSize: "1rem" }} />
             <ListItemText style={{ color: "white", marginLeft: "10" }}>Advertisement</ListItemText>
           </ListItemButton>
-        </ListItem>
-        <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
-          <ListItemButton onClick={handleWebadvertisement}>
-            <HomeOutlinedIcon sx={{ color: "white", fontSize: "1.2rem" }} />
-            <ListItemText style={{ color: "white", marginLeft: "5px" }}>Webadvertisement</ListItemText>
-          </ListItemButton>
-        </ListItem>
+        </ListItem>}
+        {access === "ADS_HANDLER" &&
+          <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
+            <ListItemButton onClick={handleWebadvertisement}>
+              <HomeOutlinedIcon sx={{ color: "white", fontSize: "1.2rem" }} />
+              <ListItemText style={{ color: "white", marginLeft: "5px" }}>Webadvertisement</ListItemText>
+            </ListItemButton>
+          </ListItem>}
 
+        {access === "EVENT_HANDLER" &&
+          <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
+            <ListItemButton onClick={handleEvents}>
+              <WebIcon sx={{ color: "white", fontSize: "15px" }} />
+              <ListItemText style={{ color: "white", marginLeft: "5px" }}>Events</ListItemText>
+            </ListItemButton>
+          </ListItem>}
 
-        <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
-          <ListItemButton onClick={handleEvents}>
-            <WebIcon sx={{ color: "white", fontSize: "15px" }} />
-            <ListItemText style={{ color: "white", marginLeft: "5px" }}>Events</ListItemText>
-          </ListItemButton>
-        </ListItem>
+        {access === "PACKAGE_HANDLER" &&
+          <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
+            <ListItemButton onClick={handleHolidayPackage}>
+              <WebIcon sx={{ color: "white", fontSize: "15px" }} />
+              <ListItemText style={{ color: "white", marginLeft: "5px" }}>Edit Holiday Package</ListItemText>
+            </ListItemButton>
+          </ListItem>}
+        {access === "USER_MANAGER" &&
+          <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
+            <ListItemButton onClick={handleSearchData}>
+              <PersonSearchIcon sx={{ color: "white", fontSize: "15px" }} />
+              <ListItemText style={{ color: "white", marginLeft: "5px" }}>SearchData</ListItemText>
+            </ListItemButton>
+          </ListItem>}
+        {access === "PACKAGE_HANDLER" &&
+          <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
+            <ListItemButton onClick={handlePackage}>
 
+              <InventoryIcon sx={{ color: "white", fontSize: "15px" }} />
+              <ListItemText style={{ color: "white", marginLeft: "5px" }}>Package Enquiry</ListItemText>
+            </ListItemButton>
+          </ListItem>}
+        {access === "VISA_PROCESSING" &&
+          <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
+            <ListItemButton onClick={handleVisaBooking}>
 
-        <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
-          <ListItemButton onClick={handleHolidayPackage}>
-            <WebIcon sx={{ color: "white", fontSize: "15px" }} />
-            <ListItemText style={{ color: "white", marginLeft: "5px" }}>Edit Holiday Package</ListItemText>
-          </ListItemButton>
-        </ListItem>
-
-        <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
-          <ListItemButton onClick={handleSearchData}>
-            <PersonSearchIcon sx={{ color: "white", fontSize: "15px" }} />
-            <ListItemText style={{ color: "white", marginLeft: "5px" }}>SearchData</ListItemText>
-          </ListItemButton>
-        </ListItem>
-
-        <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
-          <ListItemButton onClick={handlePackage}>
-
-            <InventoryIcon sx={{ color: "white", fontSize: "15px" }} />
-            <ListItemText style={{ color: "white", marginLeft: "5px" }}>Package Enquiry</ListItemText>
-          </ListItemButton>
-        </ListItem>
-
-        <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
-          <ListItemButton onClick={handleVisaBooking}>
-
-            <FaPassport style={{ color: "white", fontSize: "15px" }} />
-            <ListItemText style={{ color: "white", marginLeft: "5px" }}>Visa Booking</ListItemText>
-          </ListItemButton>
-        </ListItem>
+              <FaPassport style={{ color: "white", fontSize: "15px" }} />
+              <ListItemText style={{ color: "white", marginLeft: "5px" }}>Visa Booking</ListItemText>
+            </ListItemButton>
+          </ListItem>}
         <Menu
           anchorEl={visaBooking}
           open={Boolean(visaBooking)}
@@ -1023,14 +1040,14 @@ function ResponsiveDrawer(props) {
                 zIndex: '999', // Ensure the box appears above other elements
               }}
             >
-              <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleAddSubadmin}> Add subadmin </Typography>
-              <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleAddAdgent}> Add Agent </Typography>
-              <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleAddAdvertisment}> Add Advertisement</Typography>
-              <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleWebAdvertisment}> Add WebAdvertisement </Typography>
-              <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleAddEvents}> Add Events </Typography>
-              <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleMarkup}> Add Markup </Typography>
+              {/* <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleAddSubadmin}> Add subadmin </Typography> */}
+              {access === "REQUEST_HANDLER" && <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleAddAdgent}> Add Agent </Typography>}
+              {access === "ADS_HANDLER" && <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleAddAdvertisment}> Add Advertisement</Typography>}
+              {access === "ADS_HANDLER" && <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleWebAdvertisment}> Add WebAdvertisement </Typography>}
+              {access === "EVENT_HANDLER" && <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleAddEvents}> Add Events </Typography>}
+              {/* <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleMarkup}> Add Markup </Typography> */}
               {/* <Typography sx={{ color: "black" }} onClick={handleCoupons}> Add Coupon </Typography> */}
-              <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleNotification}> Add Notification </Typography>
+              {access === "ADS_HANDLER" && <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleNotification}> Add Notification </Typography>}
               <button
                 onClick={() => setIsBoxOpen(false)}
                 style={{
@@ -1054,70 +1071,74 @@ function ResponsiveDrawer(props) {
 
 
 
-
-          <InputLabel
-            id="dropdown-label"
-            style={{ padding: "2px", color: "white", fontSize: "18px", marginLeft: "20px" }}
-          >
-            Visa:
-          </InputLabel>
-          <FormControl>
-            <Select
-              style={{ width: "200px", height: "40px", color: "white", border: "1px solid white" }}
-              labelId="dropdown-label"
-              id="dropdown"
-              value={selectedValue}
-              onChange={handleChange}
-              MenuProps={{ // Use MenuProps to customize the menu
-                anchorOrigin: {
-                  vertical: "bottom",
-                  horizontal: "left"
-                },
-                transformOrigin: {
-                  vertical: "top",
-                  horizontal: "left"
-                },
-                getContentAnchorEl: null // This prevents the menu from being positioned incorrectly
-              }}
-              IconComponent={() => (
-                <div style={{ color: "white", padding: "5px", borderRadius: "0 4px 4px 0" }}>
-                  &#9660; {/* Unicode character for down arrow */}
-                </div>
-              )}
+          <div style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
+          }}>
+            {access === "VISA_PROCESSING" && <div> <InputLabel
+              id="dropdown-label"
+              style={{ padding: "2px", color: "white", fontSize: "18px", marginLeft: "20px" }}
             >
-              <MenuItem
-                value="option1"
-                onClick={handleVisaCountryForm}
-              >
-                Visa Country
-              </MenuItem>
-              <MenuItem
-                value="option2"
-                onClick={handleVisaCategoryForm}
-              >
-                Visa Category
-              </MenuItem>
-              <MenuItem
-                value="option3"
-                onClick={handleVisaCountrysForm}
-              >
-                Document Type
-              </MenuItem>
-              <MenuItem
-                value="option4"
-                onClick={handleVisadocumentsCategory}
-              >
-                Document Category
-              </MenuItem>
-              <MenuItem
-                value="option5"
-                onClick={handleRequireDocuemts}
-              >
-                Required Documents
-              </MenuItem>
-            </Select>
-          </FormControl>
-          {/* <IconButton
+              Visa:
+            </InputLabel>
+              <FormControl>
+                <Select
+                  style={{ width: "200px", height: "40px", color: "white", border: "1px solid white" }}
+                  labelId="dropdown-label"
+                  id="dropdown"
+                  value={selectedValue}
+                  onChange={handleChange}
+                  MenuProps={{ // Use MenuProps to customize the menu
+                    anchorOrigin: {
+                      vertical: "bottom",
+                      horizontal: "left"
+                    },
+                    transformOrigin: {
+                      vertical: "top",
+                      horizontal: "left"
+                    },
+                    getContentAnchorEl: null // This prevents the menu from being positioned incorrectly
+                  }}
+                  IconComponent={() => (
+                    <div style={{ color: "white", padding: "5px", borderRadius: "0 4px 4px 0" }}>
+                      &#9660; {/* Unicode character for down arrow */}
+                    </div>
+                  )}
+                >
+                  <MenuItem
+                    value="option1"
+                    onClick={handleVisaCountryForm}
+                  >
+                    Visa Country
+                  </MenuItem>
+                  <MenuItem
+                    value="option2"
+                    onClick={handleVisaCategoryForm}
+                  >
+                    Visa Category
+                  </MenuItem>
+                  <MenuItem
+                    value="option3"
+                    onClick={handleVisaCountrysForm}
+                  >
+                    Document Type
+                  </MenuItem>
+                  <MenuItem
+                    value="option4"
+                    onClick={handleVisadocumentsCategory}
+                  >
+                    Document Category
+                  </MenuItem>
+                  <MenuItem
+                    value="option5"
+                    onClick={handleRequireDocuemts}
+                  >
+                    Required Documents
+                  </MenuItem>
+                </Select>
+              </FormControl></div>}
+            {/* <IconButton
             color="inherit"
             aria-label="logout"
             edge="end"
@@ -1127,64 +1148,64 @@ function ResponsiveDrawer(props) {
             <ExitToAppIcon />
           </IconButton> */}
 
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "60px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "60px" }}>
 
-            <div style={{ display: "flex", alignItems: "center", position: "relative" }}>
-              <div onClick={() => setSetShowNotification((pre) => !pre)} onMouseOver={() => setSetShowNotificationIcon(true)} onMouseLeave={() => setSetShowNotificationIcon(false)} >{showNotificationIcon ? <IoIosNotificationsOutline size='24px' color="white" /> : <IoIosNotifications size='24px' color="white" />}</div>
-              <div style={{
-                position: 'absolute',
-                color: '#f8f1f1fc',
-                background: "#E73C33",
-                width: '17px',
-                height: '17px',
-                // fontWeight: 100;
-                fontSize: '12px',
-                textAlign: 'center',
-                borderRadius: '50%',
-                border: '1px solid white',
-                top: '-3px',
-                left: '10px'
+              <div style={{ display: "flex", alignItems: "center", position: "relative" }}>
+                <div onClick={() => setSetShowNotification((pre) => !pre)} onMouseOver={() => setSetShowNotificationIcon(true)} onMouseLeave={() => setSetShowNotificationIcon(false)} >{showNotificationIcon ? <IoIosNotificationsOutline size='24px' color="white" /> : <IoIosNotifications size='24px' color="white" />}</div>
+                <div style={{
+                  position: 'absolute',
+                  color: '#f8f1f1fc',
+                  background: "#E73C33",
+                  width: '17px',
+                  height: '17px',
+                  // fontWeight: 100;
+                  fontSize: '12px',
+                  textAlign: 'center',
+                  borderRadius: '50%',
+                  border: '1px solid white',
+                  top: '-3px',
+                  left: '10px'
 
 
-              }}>{notificationData?.length}</div>
-              {showNotification && <div ref={showNotificationRef} className="notification_Icon_Admin" style={{ position: "absolute", top: "25px", right: "0px", width: "300px", backgroundColor: '#ece6e6', padding: '5px', borderRadius: '4px', maxHeight: "500px", overflowY: "scroll" }} >
-                {notificationData?.length === 0 ? <div style={{ color: "#E73C33" }}>Stay in touch! You will find all the new updates here</div> : notificationData?.map((item) => (
-                  <div
-                    onClick={() => {
-                      handleNotificationClick(item._id)
-                    }}
-                    className="SubAdminNotificationContainer_innerDev"
-                    style={{
-                      display: "flex", backgroundColor: `${!item?.isRead ? "#fdfdfdcf" : "#fdfdfdcf"}`, borderRadius: "4px", margin: '5px 7px', paddingBottom: "5px",
-                      // backgroundColor:"#ffffff8c"
+                }}>{notificationData?.length}</div>
+                {showNotification && <div ref={showNotificationRef} className="notification_Icon_Admin" style={{ position: "absolute", top: "25px", right: "0px", width: "300px", backgroundColor: '#ece6e6', padding: '5px', borderRadius: '4px', maxHeight: "500px", overflowY: "scroll" }} >
+                  {notificationData?.length === 0 ? <div style={{ color: "#E73C33" }}>Stay in touch! You will find all the new updates here</div> : notificationData?.map((item) => (
+                    <div
+                      onClick={() => {
+                        handleNotificationClick(item._id)
+                      }}
+                      className="SubAdminNotificationContainer_innerDev"
+                      style={{
+                        display: "flex", backgroundColor: `${!item?.isRead ? "#fdfdfdcf" : "#fdfdfdcf"}`, borderRadius: "4px", margin: '5px 7px', paddingBottom: "5px",
+                        // backgroundColor:"#ffffff8c"
 
-                    }}>
-                    <div >
-                      <div style={{ width: "30px", height: "30px", borderRadius: '2px', background: "#e73c33ad", display: "flex", justifyContent: "center", alignItems: "center", margin: '5px', marginTop: "20px" }}>
-                        <PiBackpackThin />
+                      }}>
+                      <div >
+                        <div style={{ width: "30px", height: "30px", borderRadius: '2px', background: "#e73c33ad", display: "flex", justifyContent: "center", alignItems: "center", margin: '5px', marginTop: "20px" }}>
+                          <PiBackpackThin />
+                        </div>
+                      </div>
+                      <div style={{ paddingLeft: "3px" }}>
+                        <div style={{ fontSize: "12px", color: "#e73c33ad" }} >{timeAgo(item?.updatedAt)}</div>
+                        <div style={{ fontSize: "18px", color: "#E73C33" }}>{item?.title}</div>
+                        <div style={{ fontSize: "13px", color: "#e73c33ad" }}>{item?.description}</div>
+
                       </div>
                     </div>
-                    <div style={{ paddingLeft: "3px" }}>
-                      <div style={{ fontSize: "12px", color: "#e73c33ad" }} >{timeAgo(item?.updatedAt)}</div>
-                      <div style={{ fontSize: "18px", color: "#E73C33" }}>{item?.title}</div>
-                      <div style={{ fontSize: "13px", color: "#e73c33ad" }}>{item?.description}</div>
-
-                    </div>
-                  </div>
-                ))}
-              </div>}
+                  ))}
+                </div>}
+              </div>
+              <IconButton
+                color="inherit"
+                aria-label="logout"
+                edge="end"
+                sx={{ ml: 'auto' }}
+                onClick={() => setLogoutDialogOpen(true)}
+              >
+                <ExitToAppIcon />
+              </IconButton>
             </div>
-            <IconButton
-              color="inherit"
-              aria-label="logout"
-              edge="end"
-              sx={{ ml: 'auto' }}
-              onClick={() => setLogoutDialogOpen(true)}
-            >
-              <ExitToAppIcon />
-            </IconButton>
           </div>
-
         </Toolbar>
       </AppBar>
 
@@ -1381,14 +1402,14 @@ function ResponsiveDrawer(props) {
           {visacountry && <VisaCountry />}
         </Typography>
         <Typography paragraph>
-          {visaCategorysform  && <Visacategorys />}
+          {visaCategorysform && <Visacategorys />}
         </Typography>
 
         <Typography paragraph>
-          {requiredocuments  && <RequireddocumentFrom />}
+          {requiredocuments && <RequireddocumentFrom />}
         </Typography>
 
-       
+
         <Typography paragraph>
           {visaCountryform && <Visacountryselect />}
         </Typography>
@@ -1401,7 +1422,7 @@ function ResponsiveDrawer(props) {
         </Typography>
 
         <Typography paragraph>
-          {visadocumentcategory && <VisaDocumentCategory/>}
+          {visadocumentcategory && <VisaDocumentCategory />}
         </Typography>
 
         <Typography paragraph>
@@ -1437,10 +1458,10 @@ function ResponsiveDrawer(props) {
           {/* {visacountry && <VisaCountryform />} */}
           {menuData === "Documenttype" && <Visacountryselect />}
         </Typography>
-        
 
 
-       
+
+
 
 
 
@@ -1469,7 +1490,7 @@ function ResponsiveDrawer(props) {
           </DialogContent>
           <DialogActions>
             <Button onClick={() => setLogoutDialogOpen(false)}>Cancel</Button>
-            <Button onClick={handleLogoutConfirm} autoFocus>
+            <Button onClick={()=>handleLogoutConfirm()} autoFocus>
               Logout
             </Button>
           </DialogActions>

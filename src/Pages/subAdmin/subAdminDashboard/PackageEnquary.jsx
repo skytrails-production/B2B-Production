@@ -7,18 +7,22 @@ import {
   TextField,
   InputAdornment,
 } from "@mui/material";
-import { DataGrid,GridToolbarColumnsButton,GridToolbarExport } from '@mui/x-data-grid';
+import { DataGrid, GridToolbarColumnsButton, GridToolbarExport } from '@mui/x-data-grid';
 import axios from "axios";
 import SearchIcon from "@mui/icons-material/Search";
 import { apiURL } from "../../../Constants/constant";
 import Button from '@mui/material/Button'; // Assuming you're using Material-UI
 import Swal from 'sweetalert2'; // Import SweetAlert
+import { useSelector } from 'react-redux';
+
 
 function PackageEnquary() {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
+  const reducerState = useSelector((state) => state);
+  const access = reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
 
   const fetchData = async (pageNumber) => {
     try {
@@ -87,8 +91,8 @@ function PackageEnquary() {
       renderCell: (params) => {
         return (
           <Button
-            style={{ backgroundColor: "#21325D",color:"#fff" }}
-           
+            style={{ backgroundColor: "#21325D", color: "#fff" }}
+
 
             onClick={() => handleShowAlert(params)}
           >
@@ -131,69 +135,73 @@ function PackageEnquary() {
         backgroundColor: "white",
         padding: "20px",
         boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-        marginTop:"-15px"
+        marginTop: "-15px"
       }}
     >
-      <div
-        className="adsearch-bar"
-        style={{
-          position: "absolute",
-          top: 10,
-          zIndex: 1,
-          fontWeight: "bold",
-          display: "flex",
-          alignItems: "center",
-          backgroundColor:"#E73C33"
-        }}
-      >
-        <TextField
-          type="text"
-          value={searchTerm}
-          onChange={handleSearch}
-          placeholder="Search by name, ID, etc."
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
-        <Typography variant="h5" className="adtable-heading" style={{ marginLeft: "20px" }}>
-          All Package Enquiry
-        </Typography>
-      </div>
-      <div style={{ width: "100%" }}>
-        <DataGrid
-          rows={data}
-          columns={columns}
-          pageSize={10}
-          pagination
-          page={currentPage}
-          onPageChange={handlePageChange}
-          rowsPerPageOptions={[]}
-          components={{
-            Toolbar: () => (
-                <div style={{ marginTop: '10px' }}>
-                <GridToolbarColumnsButton />
-                <GridToolbarExport/>
-              </div>
-            ),
-            Pagination:()=>null,
-          }}
-         
-          getRowId={(row) => row._id}
-        />
-      </div>
-      <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
-        <Pagination
-          count={totalPages}
-          page={currentPage}
-          onChange={(event, newPage) => handlePageChange(event, newPage)}
-          color="primary"
-        />
+      {access !== "PACKAGE_HANDLER" ? <div>access not granted</div> :
+        <>
+          <div
+            className="adsearch-bar"
+            style={{
+              position: "absolute",
+              top: 10,
+              zIndex: 1,
+              fontWeight: "bold",
+              display: "flex",
+              alignItems: "center",
+              backgroundColor: "#E73C33"
+            }}
+          >
+            <TextField
+              type="text"
+              value={searchTerm}
+              onChange={handleSearch}
+              placeholder="Search by name, ID, etc."
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <Typography variant="h5" className="adtable-heading" style={{ marginLeft: "20px" }}>
+              All Package Enquiry
+            </Typography>
+          </div>
+          <div style={{ width: "100%" }}>
+            <DataGrid
+              rows={data}
+              columns={columns}
+              pageSize={10}
+              pagination
+              page={currentPage}
+              onPageChange={handlePageChange}
+              rowsPerPageOptions={[]}
+              components={{
+                Toolbar: () => (
+                  <div style={{ marginTop: '10px' }}>
+                    <GridToolbarColumnsButton />
+                    <GridToolbarExport />
+                  </div>
+                ),
+                Pagination: () => null,
+              }}
 
-      </Stack>
+              getRowId={(row) => row._id}
+            />
+          </div>
+          <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
+            <Pagination
+              count={totalPages}
+              page={currentPage}
+              onChange={(event, newPage) => handlePageChange(event, newPage)}
+              color="primary"
+            />
+
+          </Stack>
+        </>
+      }
     </Paper>
   );
 }

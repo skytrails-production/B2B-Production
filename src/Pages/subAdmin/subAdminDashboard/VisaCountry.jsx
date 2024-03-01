@@ -8,11 +8,14 @@ import axios from "axios";
 import { apiURL } from "../../../Constants/constant";
 import { DataGrid,GridToolbarColumnsButton,GridToolbarExport } from '@mui/x-data-grid';
 // import VisaCountry from "../../Visapage/Visacountry";
-
+import { useDispatch, useSelector } from "react-redux";
+import subAdminaccess from './subAdminaccess';
 const VisaCountry = () => {
   const [data, setData] = useState([]); // Initializing state for data
   const [page, setPage] = useState(1); // Initializing state for page number
   const [totalPages, setTotalPages] = useState(1); // Initializing state for total pages
+  const reducerState = useSelector((state) => state);
+  const access = reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
 
   // Function to fetch data from the API
   const fetchData = async (pageNumber) => {
@@ -61,7 +64,8 @@ const VisaCountry = () => {
 
   // JSX rendering
   return (
-    <Paper
+    <>
+     {access !== "VISA_PROCESSING" ? <div><subAdminaccess /></div> : <Paper
       className="subada-table-container"
       elevation={3}
       style={{
@@ -128,7 +132,9 @@ const VisaCountry = () => {
         />
       </>
 
-    </Paper>
+    </Paper>}
+    </>
+   
   );
 };
 

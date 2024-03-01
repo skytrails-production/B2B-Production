@@ -3,7 +3,9 @@ import axios from 'axios';
 import { TextField, InputAdornment, Paper, Typography, Stack, Pagination } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { apiURL } from '../../../Constants/constant';
-import { DataGrid,GridToolbarColumnsButton,GridToolbarExport } from '@mui/x-data-grid';
+import { useDispatch, useSelector } from "react-redux";
+import subAdminaccess from './subAdminaccess';
+import { DataGrid, GridToolbarColumnsButton, GridToolbarExport } from '@mui/x-data-grid';
 const UserBusBooking = () => {
   const [busBookings, setBusBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,6 +13,8 @@ const UserBusBooking = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
+  const reducerState = useSelector((state) => state);
+  const access = reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
 
   useEffect(() => {
     async function fetchBusBookings() {
@@ -66,75 +70,78 @@ const UserBusBooking = () => {
     { field: 'noOfSeats', headerName: 'No Of Seats', minWidth: 150, valueGetter: (params) => params.row.noOfSeats || 'No Data' },
     { field: 'amount', headerName: 'Amount', minWidth: 150, valueGetter: (params) => params.row.amount || 'No Data' },
     { field: 'bookingStatus', headerName: 'Booking Status', minWidth: 150, valueGetter: (params) => params.row.bookingStatus || 'No Data' },
-   
+
   ];
 
   return (
-    <div className="subada-table-container" style={{marginTop:"-15px"}}>
-      <div className='adsearch-bar' style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold',backgroundColor:"#E73C33" }}>
-        <TextField
-          type='text'
-          value={searchTerm}
-          onChange={handleSearch}
-          placeholder='Search by name, ID, etc.'
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position='start'>
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
-        <Typography variant='h5' className='adtable-heading'>
-
-         User Bus Booking
-
-        </Typography>
-      </div>
-      {busBookings.length === 0 ? (
-        <Paper>
-          <div style={{ padding: '20px', textAlign: 'center' }}>
-            <h3>No Data Available</h3>
-          </div>
-        </Paper>
-      ) : (
-        <div style={{ overflowX: "auto", maxWidth: "100%" }}>
-          <Paper >
-            <DataGrid
-              rows={busBookings}
-              columns={columns}
-              pageSize={pageSize}
-              rowsPerPageOptions={[pageSize]}
-              pagination
-              getRowId={(row) => row._id}
-              components={{
-                Toolbar: () => (
-                  <div style={{ marginTop: '10px' }}>
-                  <GridToolbarColumnsButton />
-                  <GridToolbarExport/>
-                </div>
+    <>
+      {access !== "BOOKING_MANAGER" ? <div><subAdminaccess /></div> :
+        <div className="subada-table-container" style={{ marginTop: "-15px" }}>
+          <div className='adsearch-bar' style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold', backgroundColor: "#E73C33" }}>
+            <TextField
+              type='text'
+              value={searchTerm}
+              onChange={handleSearch}
+              placeholder='Search by name, ID, etc.'
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position='start'>
+                    <SearchIcon />
+                  </InputAdornment>
                 ),
-                Pagination: () => null,
               }}
-             
-
             />
-          </Paper>
-        </div>
-      )}
+            <Typography variant='h5' className='adtable-heading'>
 
-      {/* Pagination */}
-      <div className='paginate'>
-        <Stack spacing={2} direction='row' justifyContent='center'>
-          <Pagination
-            count={totalPages}
-            page={currentPage}
-            onChange={(event, page) => handlePageChange(page)}
-            color='primary'
-          />
-        </Stack>
-      </div>
-    </div>
+              User Bus Booking
+
+            </Typography>
+          </div>
+          {busBookings.length === 0 ? (
+            <Paper>
+              <div style={{ padding: '20px', textAlign: 'center' }}>
+                <h3>No Data Available</h3>
+              </div>
+            </Paper>
+          ) : (
+            <div style={{ overflowX: "auto", maxWidth: "100%" }}>
+              <Paper >
+                <DataGrid
+                  rows={busBookings}
+                  columns={columns}
+                  pageSize={pageSize}
+                  rowsPerPageOptions={[pageSize]}
+                  pagination
+                  getRowId={(row) => row._id}
+                  components={{
+                    Toolbar: () => (
+                      <div style={{ marginTop: '10px' }}>
+                        <GridToolbarColumnsButton />
+                        <GridToolbarExport />
+                      </div>
+                    ),
+                    Pagination: () => null,
+                  }}
+
+
+                />
+              </Paper>
+            </div>
+          )}
+
+          {/* Pagination */}
+          <div className='paginate'>
+            <Stack spacing={2} direction='row' justifyContent='center'>
+              <Pagination
+                count={totalPages}
+                page={currentPage}
+                onChange={(event, page) => handlePageChange(page)}
+                color='primary'
+              />
+            </Stack>
+          </div>
+        </div>}
+    </>
   );
 };
 

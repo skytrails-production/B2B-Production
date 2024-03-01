@@ -32,7 +32,7 @@ import { updatePackageReducer } from "./Auth/updatePackage/packageUpdateReducer"
 import { getPackageBookingReducer } from "./getHolidayBooking/packageBookingReducer";
 import formReducer from "./HolidayPackageTravellerDetails/HolidayPackageTravellerDetailsReducer";
 import { UserDataReducer } from "./Auth/UserDataById/userDataReducer";
-
+import { subadminReducer } from "./SubAdminLogin/subadminReducer";
 const appReducer = combineReducers({
   logIn: logInReducer,
   signUp: signUpReducer,
@@ -64,6 +64,7 @@ const appReducer = combineReducers({
   getVisaData: visaDataReducer,
   form: formReducer,
   userData:UserDataReducer,
+  subadminLogin:subadminReducer,
 });
 
 const rootReducer = (state, action) => {

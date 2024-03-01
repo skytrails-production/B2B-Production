@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { DataGrid,GridToolbarColumnsButton,GridToolbarExport } from '@mui/x-data-grid';
+import { DataGrid, GridToolbarColumnsButton, GridToolbarExport } from '@mui/x-data-grid';
 import {
   TextField,
   InputAdornment,
@@ -20,6 +20,9 @@ import axios from "axios";
 import { apiURL } from "../../../Constants/constant";
 import "./Agentrequest.css";
 import { Alert } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import subAdminaccess from './subAdminaccess';
+
 const AllAdvertisementTable = () => {
   const [advertisement, setAdvertisement] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -30,6 +33,8 @@ const AllAdvertisementTable = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [sortOrder, setSortOrder] = useState({ field: "", order: "asc" });
   const [selectedUserStatusMap, setSelectedUserStatusMap] = useState({}); // Map to store status for each user
+  const reducerState = useSelector((state) => state);
+  const access = reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
 
   useEffect(() => {
     async function fetchAdvertisementData() {
@@ -192,72 +197,75 @@ const AllAdvertisementTable = () => {
   ];
 
   return (
-    <div className="subada-table-container" style={{ position: "relative", width: "100%" }}>
-      <div className="adsearch-bar" style={{ position: "absolute", top: 10, zIndex: 1, fontWeight: "bold",backgroundColor:"#E73C33" }}>
-        <TextField
-          type="text"
-          value={searchTerm}
-          onChange={handleSearch}
-          placeholder="Search by name etc."
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
-        <Typography variant="h5" className="adtable-heading">
-          Agent Request Table
-        </Typography>
-      </div>
-      <div style={{ width: "100%", backgroundColor: "#fff" }}>
-        {loading ? (
-          <div className="loading-message" style={{
-            fontSize: '18px',
-            color: '#555',
-            textAlign: 'center',
-            marginTop: '20px',
-
-          }}>Loading...</div>
-        ) : filteredData.length === 0 ? (
-
-
-          <div style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", height: "100px" }}>
-            <Alert severity="info" variant="outlined">
-              Data is not available
-            </Alert>
-          </div>
-        ) : (
-          <DataGrid
-            rows={filteredData}
-            columns={columns}
-            pageSize={pageSize}
-            rowsPerPageOptions={[]}
-            page={currentPage - 1}
-            onPageChange={(params) => handlePageChange(params.page + 1)}
-            getRowId={(row) => row._id}
-            components={{
-              Toolbar: () => (
-                <div style={{ marginTop: '10px' }}>
-                <GridToolbarColumnsButton />
-                <GridToolbarExport/>
-              </div>
+    <>
+      {access !== "REQUEST_HANDLER" ? <div><subAdminaccess /></div> : <div className="subada-table-container" style={{ position: "relative", width: "100%" }}>
+        <div className="adsearch-bar" style={{ position: "absolute", top: 10, zIndex: 1, fontWeight: "bold", backgroundColor: "#E73C33" }}>
+          <TextField
+            type="text"
+            value={searchTerm}
+            onChange={handleSearch}
+            placeholder="Search by name etc."
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
               ),
-              Pagination: () => null,
             }}
           />
-        )}
-      </div>
-      <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
-        <Pagination
-          count={totalPages}
-          page={currentPage}
-          onChange={(event, page) => handlePageChange(page)}
-          color="primary"
-        />
-      </Stack>
-    </div>
+          <Typography variant="h5" className="adtable-heading">
+            Agent Request Table
+          </Typography>
+        </div>
+        <div style={{ width: "100%", backgroundColor: "#fff" }}>
+          {loading ? (
+            <div className="loading-message" style={{
+              fontSize: '18px',
+              color: '#555',
+              textAlign: 'center',
+              marginTop: '20px',
+
+            }}>Loading...</div>
+          ) : filteredData.length === 0 ? (
+
+
+            <div style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", height: "100px" }}>
+              <Alert severity="info" variant="outlined">
+                Data is not available
+              </Alert>
+            </div>
+          ) : (
+            <DataGrid
+              rows={filteredData}
+              columns={columns}
+              pageSize={pageSize}
+              rowsPerPageOptions={[]}
+              page={currentPage - 1}
+              onPageChange={(params) => handlePageChange(params.page + 1)}
+              getRowId={(row) => row._id}
+              components={{
+                Toolbar: () => (
+                  <div style={{ marginTop: '10px' }}>
+                    <GridToolbarColumnsButton />
+                    <GridToolbarExport />
+                  </div>
+                ),
+                Pagination: () => null,
+              }}
+            />
+          )}
+        </div>
+        <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={(event, page) => handlePageChange(page)}
+            color="primary"
+          />
+        </Stack>
+      </div>}
+    </>
+
   );
 };
 

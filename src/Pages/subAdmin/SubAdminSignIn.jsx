@@ -1,19 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { apiURL } from '../../Constants/constant';
 import { useNavigate } from 'react-router-dom';
 import './SubAdminSignIn.css';
 import newlogo from "../../Images/whitelogo1.png";
 import { FaUser, FaLock, FaSignInAlt } from 'react-icons/fa';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { subAdminLogin, subAdminFailure, subAdminRequest, subAdminLogout } from '../../Redux/SubAdminLogin/actionsubadminlogin';
 const SubAdminLoginForm = () => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const dispatch = useDispatch();
+  const reducerState = useSelector((state) => state);
+  useEffect(() => {
+    console.log(reducerState, "reducerState subadminlogin")
+    dispatch(subAdminLogout())
+  }, [])
+  useEffect(() => {
+    if (reducerState?.subadminLogin?.subadminloginData?.statusCode === 200) {
 
+      navigate('/subAdmin/dashboard');
+    }
+  }, [reducerState?.subadminLogin?.subadminloginData])
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    // dispatch(subAdminRequest());
     try {
       const response = await fetch(`${apiURL.baseURL}/skytrails/api/subAdmin/subAdminLogin`, {
         method: 'POST',
@@ -23,13 +35,17 @@ const SubAdminLoginForm = () => {
         body: JSON.stringify({ userName, password }),
       });
 
-      if (response.ok) {
-        const data = await response.json();
+      const data = await response.json();
+      if (data?.statusCode === 200) {
         localStorage.setItem('token', data.token);
-        navigate('/subAdmin/dashboard');
+        // console.log(data);
+        dispatch(subAdminLogin(data));
+
+
       } else {
         const errorData = await response.json();
         setErrorMessage(errorData.message || 'Login failed');
+        dispatch(subAdminFailure(data?.errormessage?.response?.data));
       }
     } catch (error) {
       console.error('Error during login', error);
@@ -86,7 +102,7 @@ const SubAdminLoginForm = () => {
 
           <div class="screen__contentsub">
 
-            <form class="loginsubadmin" onSubmit={handleSubmit}>
+            <form class="loginsubadmin" onSubmit={(e) => handleSubmit(e)}>
               {/* <h3 style={{  textAlign: "center" }}>Subadmin Login</h3> */}
               <div class="login__fieldsub">
                 <i className="login__iconsub"><FaUser /></i>

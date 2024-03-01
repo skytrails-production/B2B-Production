@@ -6,8 +6,12 @@ import {
 import axios from "axios";
 import { apiURL } from "../../../Constants/constant";
 import { DataGrid,GridToolbarColumnsButton,GridToolbarExport } from '@mui/x-data-grid';
+import { useDispatch, useSelector } from "react-redux";
+import subAdminaccess from './subAdminaccess';
 function VisaDocumentCategory() {
   const [data, setData] = useState([]);
+  const reducerState = useSelector((state) => state);
+  const access = reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
 
   const fetchData = async () => {
     try {
@@ -50,7 +54,9 @@ function VisaDocumentCategory() {
 
 
   return (
-    <Paper className="subada-table-container"
+
+    <>
+     {access !== "VISA_PROCESSING" ? <div><subAdminaccess /></div> :<Paper className="subada-table-container"
       elevation={3}
       style={{
         position: "relative",
@@ -92,7 +98,9 @@ function VisaDocumentCategory() {
         }}
         getRowId={(row) => row._id}
       />
-    </Paper>
+    </Paper>}
+    </>
+    
   );
 }
 

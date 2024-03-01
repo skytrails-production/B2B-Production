@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { DataGrid,GridToolbarColumnsButton,GridToolbarExport } from '@mui/x-data-grid';
+import { DataGrid, GridToolbarColumnsButton, GridToolbarExport } from '@mui/x-data-grid';
 import {
   TextField,
   InputAdornment,
@@ -15,6 +15,8 @@ import { apiURL } from '../../../Constants/constant';
 import './Agenttable.css';
 import ApprovalIcon from '@mui/icons-material/CheckCircleOutline';
 import Swal from 'sweetalert2';
+import { useDispatch, useSelector } from "react-redux";
+import subAdminaccess from './subAdminaccess';
 const AgentBusCancel = () => {
   const [busBookings, setBusBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -24,6 +26,8 @@ const AgentBusCancel = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState([]);
   const [selectedStatusMap, setSelectedStatusMap] = useState(new Map());
+  const reducerState = useSelector((state) => state);
+  const access = reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
 
   useEffect(() => {
     async function fetchBusBookings() {
@@ -155,53 +159,57 @@ const AgentBusCancel = () => {
 
 
   return (
-    <div className="subuser-table-container" style={{ position: 'relative', width: "100%",marginTop:"-15px" }}>
-      <div className="adsearch-bar" style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold',backgroundColor:"#E73C33" }}>
-        <TextField
-          type="text"
-          value={searchTerm}
-          onChange={handleSearch}
-          placeholder="Search by name, ID, etc."
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
-        <Typography variant="h5" className="adtable-heading">
-          AGENT BUS TICKET CANCEL REQUEST
-        </Typography>
+    <>
+      {access !== "REQUEST_HANDLER" ? <div><subAdminaccess /></div> : <div className="subuser-table-container" style={{ position: 'relative', width: "100%", marginTop: "-15px" }}>
+        <div className="adsearch-bar" style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold', backgroundColor: "#E73C33" }}>
+          <TextField
+            type="text"
+            value={searchTerm}
+            onChange={handleSearch}
+            placeholder="Search by name, ID, etc."
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+          <Typography variant="h5" className="adtable-heading">
+            AGENT BUS TICKET CANCEL REQUEST
+          </Typography>
+        </div>
+        <div style={{ width: "100%", backgroundColor: "#fff" }}>
+          <DataGrid
+            rows={filteredData}
+            columns={columns}
+            pageSize={10}
+            autoHeight
+            disableSelectionOnClick
+            getRowId={(row) => row._id}
+            components={{
+              Toolbar: () => (
+                <div style={{ marginTop: '30px' }}>
+                  <GridToolbarColumnsButton />
+                  <GridToolbarExport />
+                </div>
+              ),
+              Pagination: () => null,
+            }}
+          />
+        </div>
+        <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={(event, page) => handlePageChange(page)}
+            color="primary"
+          />
+        </Stack>
       </div>
-      <div style={{ width: "100%", backgroundColor: "#fff" }}>
-        <DataGrid
-          rows={filteredData}
-          columns={columns}
-          pageSize={10}
-          autoHeight
-          disableSelectionOnClick
-          getRowId={(row) => row._id}
-          components={{
-            Toolbar: () => (
-              <div style={{ marginTop: '30px' }}>
-                <GridToolbarColumnsButton />
-                <GridToolbarExport/>
-              </div>
-            ),
-            Pagination: () => null,
-          }}
-        />
-      </div>
-      <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
-        <Pagination
-          count={totalPages}
-          page={currentPage}
-          onChange={(event, page) => handlePageChange(page)}
-          color="primary"
-        />
-      </Stack>
-    </div>
+      }
+    </>
+
   );
 };
 

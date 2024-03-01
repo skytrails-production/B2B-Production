@@ -11,6 +11,8 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import { apiURL } from '../../../Constants/constant';
 import { DataGrid,GridToolbarColumnsButton,GridToolbarExport } from '@mui/x-data-grid';
+import { useDispatch, useSelector } from "react-redux";
+import subAdminaccess from './subAdminaccess';
 const AgentHotelBooking = () => {
   const [busBookings, setBusBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,6 +20,8 @@ const AgentHotelBooking = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
+  const reducerState = useSelector((state) => state);
+  const access = reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
 
   useEffect(() => {
     async function fetchBusBookings() {
@@ -65,7 +69,9 @@ const AgentHotelBooking = () => {
   ];
 
   return (
-    <div className="subada-table-container" style={{ position: 'relative', width: "100%",marginTop:"-15px" }}>
+    <>
+     {access !== "BOOKING_MANAGER" ? <div><subAdminaccess /></div> :
+      <div className="subada-table-container" style={{ position: 'relative', width: "100%",marginTop:"-15px" }}>
       <div className='adsearch-bar' style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold',backgroundColor:"#E73C33" }}>
         <TextField
           type='text'
@@ -123,7 +129,8 @@ const AgentHotelBooking = () => {
           />
         </Stack>
       </div>
-    </div>
+    </div>}</>
+   
   );
 };
 

@@ -20,6 +20,8 @@ import ApprovalIcon from '@mui/icons-material/CheckCircleOutline';
 import { apiURL } from '../../../Constants/constant';
 import { DataGrid,GridToolbarColumnsButton,GridToolbarExport } from '@mui/x-data-grid';
 import Swal from 'sweetalert2';
+import { useDispatch, useSelector } from "react-redux";
+import subAdminaccess from './subAdminaccess';
 const UserChangeBus = () => {
   const [filteredData, setFilteredData] = useState([]);
 
@@ -29,6 +31,8 @@ const UserChangeBus = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
+  const reducerState = useSelector((state) => state);
+  const access = reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
 
   useEffect(() => {
     async function fetchHotelBookings() {
@@ -194,71 +198,73 @@ const UserChangeBus = () => {
 
 
   return (
-    <div className="subada-table-container" style={{ position: 'relative', width: "100%",marginTop:"-15px" }}>
-      <div className='adsearch-bar' style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold',backgroundColor:"#E73C33" }}>
-        <TextField
-          type='text'
-          value={searchTerm}
-          onChange={handleSearch}
-          placeholder='Search by name, ID, etc.'
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position='start'>
-                <SearchIcon />
-              </InputAdornment>
+    <> {access !== "REQUEST_HANDLER" ? <div><subAdminaccess /></div> :<div className="subada-table-container" style={{ position: 'relative', width: "100%",marginTop:"-15px" }}>
+    <div className='adsearch-bar' style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold',backgroundColor:"#E73C33" }}>
+      <TextField
+        type='text'
+        value={searchTerm}
+        onChange={handleSearch}
+        placeholder='Search by name, ID, etc.'
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position='start'>
+              <SearchIcon />
+            </InputAdornment>
+          ),
+        }}
+      />
+      <Typography variant='h5' className='adtable-heading' style={{ fontWeight: 'bold' }}>
+        User Bus Ticket Change Request
+      </Typography>
+    </div>
+    {filteredData.length === 0 ? (
+        <Table>
+          <TableBody>
+            <TableRow>
+              <TableCell colSpan={12} align="center" style={{ border: 'none' }}>
+                <Typography variant="h6">Not Available</Typography>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      ) : (
+      <Paper>
+        <DataGrid
+          rows={filteredData}
+          columns={columns}
+          pageSize={pageSize}
+          rowsPerPageOptions={[pageSize]}
+          pagination
+          getRowId={(row) => row.busDetails.busId}
+          style={{ width: '100%' }}
+          components={{
+            Toolbar: () => (
+              <div style={{ marginTop: '10px' }}>
+              <GridToolbarColumnsButton />
+              <GridToolbarExport/>
+            </div>
             ),
+
+            Pagination: () => null,
+
           }}
         />
-        <Typography variant='h5' className='adtable-heading' style={{ fontWeight: 'bold' }}>
-          User Bus Ticket Change Request
-        </Typography>
-      </div>
-      {filteredData.length === 0 ? (
-          <Table>
-            <TableBody>
-              <TableRow>
-                <TableCell colSpan={12} align="center" style={{ border: 'none' }}>
-                  <Typography variant="h6">Not Available</Typography>
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        ) : (
-        <Paper>
-          <DataGrid
-            rows={filteredData}
-            columns={columns}
-            pageSize={pageSize}
-            rowsPerPageOptions={[pageSize]}
-            pagination
-            getRowId={(row) => row.busDetails.busId}
-            style={{ width: '100%' }}
-            components={{
-              Toolbar: () => (
-                <div style={{ marginTop: '10px' }}>
-                <GridToolbarColumnsButton />
-                <GridToolbarExport/>
-              </div>
-              ),
 
-              Pagination: () => null,
-
-            }}
-          />
-
-        </Paper>
-      )}
-      <div className="paginate">
-        <Stack spacing={2} direction='row' justifyContent='center'>
-          <Pagination
-            count={totalPages}
-            page={currentPage}
-            onChange={(event, page) => handlePageChange(page)}
-            color='primary'
-          />
-        </Stack>
-      </div>
+      </Paper>
+    )}
+    <div className="paginate">
+      <Stack spacing={2} direction='row' justifyContent='center'>
+        <Pagination
+          count={totalPages}
+          page={currentPage}
+          onChange={(event, page) => handlePageChange(page)}
+          color='primary'
+        />
+      </Stack>
     </div>
+  </div>}
+  </>
+    
   );
 };
 

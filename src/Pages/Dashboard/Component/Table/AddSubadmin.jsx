@@ -185,7 +185,7 @@ const CreateSubAdminPage = () => {
         </div> */}
 
         <div className="form-group" style={{marginLeft:"-35px"}}>
-        <label htmlFor="mobile_number" className="form-label-subAdmin" style={{marginLeft:"60px"}}>
+        <label htmlFor="mobile_number" className="form-label-subAdmin" style={{marginLeft:"50px"}}>
             Properties:
           </label>
           <div className="dynamic-properties-container">

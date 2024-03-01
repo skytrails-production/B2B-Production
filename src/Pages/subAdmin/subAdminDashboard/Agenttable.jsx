@@ -25,6 +25,8 @@ import axios from "axios";
 import Loader from "../../Loader/Loader";
 import TablePreloader from "../../Loader/TablePreloader";
 import { apiURL } from "../../../Constants/constant";
+//import { useDispatch, useSelector } from "react-redux";
+import subAdminaccess from './subAdminaccess';
 const style = {
   position: "absolute",
   top: "50%",
@@ -77,6 +79,8 @@ export default function Agenttable() {
   const [searchTerm, setSearchTerm] = useState("");
 
   const reducerState = useSelector((state) => state);
+  const access = reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
+
   const activeData = reducerState?.userTableData?.userData?.data?.data?.map(
     (ele) => ele.is_active
   );
@@ -337,6 +341,7 @@ export default function Agenttable() {
   };
   return (
     <>
+     {access !== "AGENT_MANAGER" ? <div><subAdminaccess /></div> :
       <div className="user-table-container">
         <div className="adminseacrch" style={{backgroundColor:"#E73C33"}}>
           <TextField
@@ -727,7 +732,7 @@ export default function Agenttable() {
             color="primary"
           />
         </Box>
-      </div>
+      </div>}
     </>
   );
 }

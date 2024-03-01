@@ -16,7 +16,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import ApprovalIcon from '@mui/icons-material/CheckCircleOutline';
 import { apiURL } from '../../../Constants/constant';
 import './Agenttable.css';
-
+import { useDispatch, useSelector } from "react-redux";
+import subAdminaccess from './subAdminaccess';
 const UserHotelCancel = () => {
   const [hotelBookings, setHotelBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -26,6 +27,8 @@ const UserHotelCancel = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState([]);
   const [selectedStatusMap, setSelectedStatusMap] = useState(new Map());
+  const reducerState = useSelector((state) => state);
+  const access = reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
 
   useEffect(() => {
     async function fetchHotelBookings() {
@@ -172,7 +175,8 @@ const UserHotelCancel = () => {
 
 
   return (
-    <div className="subada-table-container" style={{ position: 'relative', width: "100%",marginTop:"-15px" }}>
+<>
+{access !== "REQUEST_HANDLER" ? <div><subAdminaccess /></div> : <div className="subada-table-container" style={{ position: 'relative', width: "100%",marginTop:"-15px" }}>
       <div className="adsearch-bar" style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold',backgroundColor:"#E73C33" }}>
         <TextField
           type="text"
@@ -237,7 +241,10 @@ const UserHotelCancel = () => {
           color="primary"
         />
       </Stack>
-    </div>
+    </div>}
+</>
+    
+   
   );
 };
 

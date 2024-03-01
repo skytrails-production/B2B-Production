@@ -3,10 +3,15 @@ import {Pagination, Paper, Typography } from "@mui/material";
 import axios from "axios";
 import { apiURL } from "../../../Constants/constant";
 import { DataGrid,GridToolbarColumnsButton,GridToolbarExport } from '@mui/x-data-grid';
+
+import { useDispatch, useSelector } from "react-redux";
+import subAdminaccess from './subAdminaccess';
 const Visacategory = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const reducerState = useSelector((state) => state);
+  const access = reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
 
   const fetchData = async (pageNumber) => {
     try {
@@ -42,7 +47,8 @@ const Visacategory = () => {
   ];
 
   return (
-    <Paper 
+    <>
+     {access !== "VISA_PROCESSING" ? <div><subAdminaccess /></div> : <Paper 
     className="subada-table-container"
     elevation={3}
     style={{
@@ -113,7 +119,9 @@ const Visacategory = () => {
         color="primary"
         style={{ margin: "20px", display: "flex", justifyContent: "center" }}
       />
-    </Paper>
+    </Paper>}
+    </>
+   
   );
 };
 

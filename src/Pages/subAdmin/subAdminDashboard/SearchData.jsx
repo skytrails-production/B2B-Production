@@ -4,12 +4,16 @@ import axios from "axios";
 import { apiURL } from "../../../Constants/constant";
 import { DataGrid,GridToolbarColumnsButton,GridToolbarExport } from '@mui/x-data-grid';
 import SearchIcon from "@mui/icons-material/Search";
-
+import { useDispatch, useSelector } from "react-redux";
+import subAdminaccess from './subAdminaccess';
 function SearchData() {
     const [data, setData] = useState([]);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [searchTerm, setSearchTerm] = useState("");
+    const reducerState = useSelector((state) => state);
+  const access = reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
+
 
     const fetchData = async (pageNumber) => {
         try {
@@ -69,7 +73,8 @@ function SearchData() {
     ];
 
     return (
-        <Paper
+        <>
+         {access !== "USER_MANAGER" ? <div><subAdminaccess /></div> : <Paper
             className="subada-table-container"
             elevation={3}
             style={{
@@ -134,7 +139,9 @@ function SearchData() {
             </div>
 
 
-        </Paper >
+        </Paper >}
+        </>
+       
     );
 }
 

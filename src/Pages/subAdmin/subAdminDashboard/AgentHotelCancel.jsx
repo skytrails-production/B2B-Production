@@ -12,7 +12,8 @@ import './Agenttable.css';
 import { apiURL } from '../../../Constants/constant';
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-
+import { useDispatch, useSelector } from "react-redux";
+import subAdminaccess from './subAdminaccess';
 const AgentHotelCancel = () => {
   const [hotelBookings, setHotelBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -22,6 +23,8 @@ const AgentHotelCancel = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState([]);
   const [selectedStatusMap, setSelectedStatusMap] = useState(new Map());
+  const reducerState = useSelector((state) => state);
+  const access = reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
 
   useEffect(() => {
     async function fetchHotelBookings() {
@@ -135,7 +138,8 @@ const AgentHotelCancel = () => {
   ];
 
   return (
-    <div className="subada-table-container" style={{ position: 'relative', width: "100%",marginTop:"-15px" }}>
+    <>
+     {access !== "REQUEST_HANDLER" ? <div><subAdminaccess /></div> : <div className="subada-table-container" style={{ position: 'relative', width: "100%",marginTop:"-15px" }}>
       <div className="adsearch-bar" style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold',backgroundColor:"#E73C33" }}>
         <TextField
           type="text"
@@ -181,7 +185,9 @@ const AgentHotelCancel = () => {
           color="primary"
         />
       </Stack>
-    </div>
+    </div>}
+    </>
+   
   );
 };
 

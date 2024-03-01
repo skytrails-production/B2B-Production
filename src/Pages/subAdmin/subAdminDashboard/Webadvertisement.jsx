@@ -12,6 +12,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import { DataGrid,GridToolbarColumnsButton,GridToolbarExport } from '@mui/x-data-grid';
 import { apiURL } from "../../../Constants/constant";
 import { Alert } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import subAdminaccess from './subAdminaccess';
 const Webadvertisement = () => {
   const [advertisement, setAdvertisement] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,6 +21,8 @@ const Webadvertisement = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+  const reducerState = useSelector((state) => state);
+  const access = reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
 
   useEffect(() => {
     async function fetchAdvertisementData() {
@@ -97,7 +101,8 @@ const Webadvertisement = () => {
   ];
 
   return (
-    <Paper className="subada-table-container" elevation={3} style={{marginTop:"-15px", position: "relative", width: "100%", backgroundColor: "white", padding: "20px", boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)" }}>
+    <>
+      {access !== "ADS_HANDLER" ? <div><subAdminaccess /></div> :<Paper className="subada-table-container" elevation={3} style={{marginTop:"-15px", position: "relative", width: "100%", backgroundColor: "white", padding: "20px", boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)" }}>
       <div className="adsearch-bar" style={{ position: "absolute", top: 10, zIndex: 1, fontWeight: "bold", display: "flex", alignItems: "center",backgroundColor: "#E73C33" }}>
         <TextField
           type="text"
@@ -151,7 +156,10 @@ const Webadvertisement = () => {
       <Stack spacing={2} direction="row" justifyContent="center" alignItems="center">
         <Pagination color="primary" count={totalPages} page={currentPage} onChange={(event, page) => handlePageChange(page)} />
       </Stack>
-    </Paper>
+    </Paper>}
+
+    </>
+    
   );
 };
 

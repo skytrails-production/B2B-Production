@@ -18,8 +18,11 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { Alert } from "@mui/material";
+
 function PackageDetails() {
   const reducerState = useSelector((state) => state);
+  const access = reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
+
   // const holidayPackage = reducerState?.searchResult?.packageSearchResult?.data?.data?.pakage;
 
   // useEffect(() => {
@@ -366,6 +369,7 @@ function PackageDetails() {
           Edit Holiday Package
         </Typography>
       </div>
+      {access !== "PACKAGE_HANDLER" ? <div>access not granted</div> :
       <div style={{ width: "100%", backgroundColor: "#fff" }}>
         {holidayPackage.length === 0 ? (
           <div style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", height: "100px" }}>
@@ -391,6 +395,7 @@ function PackageDetails() {
           />
         )}
       </div>
+}
       <Modal
         open={open}
         onClose={handleClose}

@@ -12,7 +12,8 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import ApprovalIcon from '@mui/icons-material/CheckCircleOutline';
 import { apiURL } from '../../../Constants/constant';
-
+import { useDispatch, useSelector } from "react-redux";
+import subAdminaccess from './subAdminaccess';
 const  UserChangeHotel = () => {
   const [hotelBookings, setHotelBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -21,6 +22,8 @@ const  UserChangeHotel = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState([]);
+  const reducerState = useSelector((state) => state);
+  const access = reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
 
   useEffect(() => {
     async function fetchHotelBookings() {
@@ -145,58 +148,64 @@ const  UserChangeHotel = () => {
   ];
 
   return (
-    <div className="subada-table-container" style={{ position: 'relative', width: "100%",marginTop:"-15px" }}>
-      <div className="adsearch-bar" style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold',backgroundColor:"#E73C33" }}>
-        <TextField
-          type="text"
-          value={searchTerm}
-          onChange={handleSearch}
-          placeholder="Search by name, ID, etc."
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
-        <Typography variant="h5" className="adtable-heading">
-          USER HOTEL TICKET CHANGE REQUEST
-        </Typography>
-      </div>
 
-      <div style={{ width: '100%', backgroundColor: "white" }}>
-        <DataGrid
-          rows={filteredData}
-          columns={columns}
-          pageSize={5}
-          autoHeight
-          disableSelectionOnClick
-          getRowId={(row) => row._id}
-          components={{
-            Toolbar: () => (
-              <div style={{ marginTop: '10px' }}>
-                <GridToolbarColumnsButton />
-                <GridToolbarExport/>
-              </div>
-            ),
+<>
+{access !== "REQUEST_HANDLER" ? <div><subAdminaccess /></div> :
+ <div className="subada-table-container" style={{ position: 'relative', width: "100%",marginTop:"-15px" }}>
+ <div className="adsearch-bar" style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold',backgroundColor:"#E73C33" }}>
+   <TextField
+     type="text"
+     value={searchTerm}
+     onChange={handleSearch}
+     placeholder="Search by name, ID, etc."
+     InputProps={{
+       startAdornment: (
+         <InputAdornment position="start">
+           <SearchIcon />
+         </InputAdornment>
+       ),
+     }}
+   />
+   <Typography variant="h5" className="adtable-heading">
+     USER HOTEL TICKET CHANGE REQUEST
+   </Typography>
+ </div>
 
-            Pagination: () => null,
+ <div style={{ width: '100%', backgroundColor: "white" }}>
+   <DataGrid
+     rows={filteredData}
+     columns={columns}
+     pageSize={5}
+     autoHeight
+     disableSelectionOnClick
+     getRowId={(row) => row._id}
+     components={{
+       Toolbar: () => (
+         <div style={{ marginTop: '10px' }}>
+           <GridToolbarColumnsButton />
+           <GridToolbarExport/>
+         </div>
+       ),
 
-          }}
-        />
-      </div>
+       Pagination: () => null,
 
-      {/* Pagination */}
-      <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
-        <Pagination
-          count={totalPages}
-          page={currentPage}
-          onChange={(event, page) => handlePageChange(page)}
-          color="primary"
-        />
-      </Stack>
-    </div>
+     }}
+   />
+ </div>
+
+ {/* Pagination */}
+ <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
+   <Pagination
+     count={totalPages}
+     page={currentPage}
+     onChange={(event, page) => handlePageChange(page)}
+     color="primary"
+   />
+ </Stack>
+</div>}
+</>
+
+   
   );
 };
 
