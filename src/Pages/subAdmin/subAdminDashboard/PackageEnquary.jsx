@@ -101,8 +101,26 @@ function PackageEnquary() {
         );
       }
     },
-    { field: "fullName", headerName: "Full Name", width: 220, width: 130 },
+    
 
+    { field: "packageId.country" , headerName: "Country", width: 130,
+     valueGetter: (params) =>params.row.packageId?.country || 'N/A',
+  },
+    { field: "packageId.pakage_title" , headerName:"Package Title", width:300,
+    valueGetter: (params) =>params.row.packageId?.pakage_title || 'N/A',
+  },
+  {
+    field: "packageId.pakage_amount",
+    headerName: "Package Amount",
+    width: 220,
+    valueGetter: (params) =>
+      `${params.row.packageId?.pakage_amount.amount} ${
+        params.row.packageId.pakage_amount.currency
+      }`,
+  },
+  
+
+    { field: "fullName", headerName: "Name", width: 270 },
     {
       field: "contactNumber.phone",
       headerName: "Contact Number",

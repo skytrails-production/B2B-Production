@@ -36,7 +36,7 @@ const CreateSubAdminPage = () => {
 
   const [input, setInput] = useState('');
   const [chipData, setChipData] = useState({});
-
+  const [message, setMessage] = useState("");
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -87,10 +87,16 @@ const CreateSubAdminPage = () => {
         },
         body: JSON.stringify(requestData),
       });
-
+      if (response.ok) {
+        setMessage(`Subadmin ${formData.username} created successfully!`);
+      } else {
+        setMessage("Failed to create subadmin.");
+      }
+  
       // Handle response
     } catch (error) {
       console.error('Error creating subadmin:', error.message);
+      setMessage("An error occurred while creating subadmin.");
     }
   };
 
@@ -98,6 +104,8 @@ const CreateSubAdminPage = () => {
 
   return (
     <div className="form-containers">
+ {message && <div style={{ backgroundColor: '#d4edda', color: '#155724', padding: '10px', marginBottom: '20px', borderRadius: '5px' }}>{message}</div>}
+
       <header className="sectionagent headersagent">
         <div className="headead">
           <h2>Create Subadmin</h2>

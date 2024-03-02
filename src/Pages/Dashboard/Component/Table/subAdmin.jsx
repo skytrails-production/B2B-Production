@@ -8,7 +8,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import "./subAdmin.css";
 import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
-import { DataGrid,GridToolbar } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import {
   TextField,
   InputAdornment,
@@ -68,8 +68,7 @@ const SubAdminTable = () => {
     setCurrentPage(1);
   };
 
-  const handleStatusChange = async (userId,status) => {
-    
+  const handleStatusChange = async (userId, status) => {
     try {
       const response = await axios.put(
         `${apiURL.baseURL}/skytrails/api/admin/updateSubAdminStatus`,
@@ -79,15 +78,18 @@ const SubAdminTable = () => {
         }
       );
 
-      // Log the response for debugging (you can remove this in production)
-      // console.log(response);
-
-      // Refetch the user data after updating the status
-      fetchUserData();
+      // If the status is DELETE, filter out the deleted user from the userData state
+      if (status === "DELETE") {
+        setUserData((prevUserData) => prevUserData.filter(user => user._id !== userId));
+      } else {
+        // If the status is not DELETE, simply refetch the user data after updating the status
+        fetchUserData();
+      }
     } catch (error) {
       console.error("Error updating status:", error);
     }
   };
+
 
   const handleStatusSelectChange = (userId, status) => {
     setSelectedUserStatusMap((prevStatusMap) => ({
@@ -119,7 +121,7 @@ const SubAdminTable = () => {
   const columns = [
     { field: "userName", headerName: "User Name", minWidth: 150, },
     { field: "email", headerName: "Email", minWidth: 250, },
-    { field: "contactNumber", headerName: "Contact Number",minWidth: 150,},
+    { field: "contactNumber", headerName: "Contact Number", minWidth: 150, },
     { field: "authType", headerName: "Auth Type", minWidth: 180, },
     {
       field: "status",
@@ -127,7 +129,7 @@ const SubAdminTable = () => {
       minWidth: 150,
       renderCell: (params) => {
         const selectedValue = selectedUserStatusMap[params.id] || params.row.status;
-  
+
         return (
           <select
             value={selectedValue}
@@ -135,8 +137,9 @@ const SubAdminTable = () => {
               handleStatusSelectChange(params.id, event.target.value);
               handleStatusChange(params.id, event.target.value);
             }}
-            style={{ color: getStatusColor(selectedValue),
-            
+            style={{
+              color: getStatusColor(selectedValue),
+
             }}
           >
             <option value="">{params.row.status}</option>
@@ -148,10 +151,10 @@ const SubAdminTable = () => {
       },
     },
   ];
-  
-  
-  
-  
+
+
+
+
 
   return (
     <div className="subad-table-container" style={{ position: 'relative', width: "100%" }}>
@@ -188,7 +191,7 @@ const SubAdminTable = () => {
                 <GridToolbar />
               </div>
             ),
-            Pagination:()=>null,
+            Pagination: () => null,
           }}
         />
       </div>

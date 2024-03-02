@@ -49,8 +49,8 @@ const AllOfferList = () => {
   };
 
   return (
-    <div className="subada-table-container" style={{ position: "relative", width: "100%" }}>
-      <div className="adsearch-bar" id="adssearch"style={{ position: "absolute", top: 10, zIndex: 1, fontWeight: "bold"}}>
+    <div className="subada-table-container" style={{ position: "relative", width: "92%" }}>
+      <div className="adsearch-bar" id="adssearch"style={{ position: "absolute", top: 10, zIndex: 1, fontWeight: "bold",width:'88%'}}>
         <TextField
           type="text"
           value={searchTerm}

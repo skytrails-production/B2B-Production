@@ -146,7 +146,7 @@ function ResponsiveDrawer(props) {
   const [holidayPackages, setHolidayPackage] = React.useState(false);
   const reducerState = useSelector((state) => state);
   const access = reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
-  
+
   // console.log(access, "------------------");
   const homeView = location.pathname === "/subAdmin/dashboard";
   const agentTableView = location.pathname === "/subAdmin/dashboard/Agenttable";
@@ -212,13 +212,13 @@ function ResponsiveDrawer(props) {
   const [menuData, setMenuData] = useState("Home");
   const [loading, setLoading] = useState(false);
   const [selectedValue, setSelectedValue] = useState('option1');
-  useEffect(()=>{
-    if(reducerState?.subadminLogin?.subadminloginData?.statusCode!==200){
+  useEffect(() => {
+    if (reducerState?.subadminLogin?.subadminloginData?.statusCode !== 200) {
       // console.log(reducerState?.subadminLogin?.subadminloginData?.statusCode,reducerState,"statuscode  bchjfbfhfbhj")
       // dispatch(subAdminLogout());
       navigate("/subAdminLogin");
     }
-  },[reducerState?.subadminLogin?.subadminloginData?.statusCode])
+  }, [reducerState?.subadminLogin?.subadminloginData?.statusCode])
   const handleMenuItemClick = (menuItem) => {
     // console.log(menuItem,menuData)
     setLoading(true);
@@ -1046,7 +1046,7 @@ function ResponsiveDrawer(props) {
               {access === "ADS_HANDLER" && <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleWebAdvertisment}> Add WebAdvertisement </Typography>}
               {access === "EVENT_HANDLER" && <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleAddEvents}> Add Events </Typography>}
               {/* <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleMarkup}> Add Markup </Typography> */}
-              {/* <Typography sx={{ color: "black" }} onClick={handleCoupons}> Add Coupon </Typography> */}
+              <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleCoupons}> Add Coupon </Typography>
               {access === "ADS_HANDLER" && <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleNotification}> Add Notification </Typography>}
               <button
                 onClick={() => setIsBoxOpen(false)}
@@ -1490,7 +1490,7 @@ function ResponsiveDrawer(props) {
           </DialogContent>
           <DialogActions>
             <Button onClick={() => setLogoutDialogOpen(false)}>Cancel</Button>
-            <Button onClick={()=>handleLogoutConfirm()} autoFocus>
+            <Button onClick={() => handleLogoutConfirm()} autoFocus>
               Logout
             </Button>
           </DialogActions>

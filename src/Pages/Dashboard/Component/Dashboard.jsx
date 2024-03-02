@@ -126,6 +126,7 @@ import { IoIosNotificationsOutline } from "react-icons/io";
 import { IoIosNotifications } from "react-icons/io";
 import {
   // Groups3 as Groups3Icon,
+
   // AccountBox as AccountBoxIcon,
   GroupsTwo as Groups2Icon,
   PeopleAlt as Diversity1Icon,
@@ -144,6 +145,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import Downloadcsv from "../../Historytable/Downloadcsv";
+import UploadFileIcon from '@mui/icons-material/UploadFile';
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -1955,7 +1957,7 @@ export default function VerticalTabs() {
                     justifyContent: "center",
                   }}
                 >
-                  <ReceiptOutlinedIcon sx={{ color: "white" }} />
+                  <UploadFileIcon sx={{ color: "white" }} />
                 </ListItemIcon>
                 <ListItemText
                   primary="Upload City Package"
