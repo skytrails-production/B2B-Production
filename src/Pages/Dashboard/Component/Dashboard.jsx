@@ -74,6 +74,7 @@ import {
   Divider,
   InputBase,
   Badge,
+  CircularProgress
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { FormControl, InputLabel, Select } from "@mui/material";
@@ -256,6 +257,7 @@ export default function VerticalTabs() {
   const [showNotificationIcon, setSetShowNotificationIcon] = useState(false);
   const [passesBooked, setPassesBooked] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [passload,setPassload]=useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const redirect = useNavigate();
@@ -397,6 +399,8 @@ export default function VerticalTabs() {
   };
    const handleClickNinetyNine = () => {
      // Make a PUT request to the API endpoint
+     setPassload(true);
+     
     fetch(`${apiURL.baseURL}/skyTrails/api/user/event/sendPassesUpdate`, {
       method: 'PUT',
       // Add any necessary headers or body data here
@@ -414,6 +418,10 @@ export default function VerticalTabs() {
     .catch(error => {
       // Handle network errors
       console.error('Network error:', error);
+    })
+    .finally(() => {
+      setPassload(false); 
+      
     });
   };
 
@@ -734,11 +742,17 @@ export default function VerticalTabs() {
           <ConfirmationNumberIcon sx={{ width: 32, height: 32, color: "white" }} />
         </IconButton>
       </Tooltip>
+      {passload && (
+         <div style={{position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 9999,textAlign:'center'}}>
+         passload && (
+           <p style={{color:'white'}}>Loading....Please wait </p>
+         </div> 
+      )}
       <Snackbar 
         open={snackbarOpen} 
-        autoHideDuration={6000} 
+        autoHideDuration={5000} 
         onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'bottom', horizontal:'center'}}
+        anchorOrigin={{ vertical: 'center', horizontal:'center'}}
         
         sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
       >
@@ -750,7 +764,7 @@ export default function VerticalTabs() {
           Congratulations!Pass Booked
         </MuiAlert>
       </Snackbar>
-
+   
               {/* ... rest of the menu items ... */}
               <Menu
                 anchorEl={anchorEl}
@@ -2291,7 +2305,7 @@ export default function VerticalTabs() {
                   <LocalOfferIcon sx={{ color: "white" }} />
                 </ListItemIcon>
                 <ListItemText
-                  primary="OfferList"
+                  primary="Offer List"
                   sx={{ opacity: open ? 1 : 0, color: "white" }}
                 />
               </ListItemButton>

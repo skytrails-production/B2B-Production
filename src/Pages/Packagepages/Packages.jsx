@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
-import imgage1 from "../../../src/Images/package/img1.png";
+import banner from "../../../src/Images/package/img1.png";
 import "./Packagepages.css";
-// import img1 from "../../../src/Images/package/singapore.webp";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import EditIcon from "@mui/icons-material/Edit";
-// import { FaFacebookF } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 import errorgif from "../../../src/Images/package/giphy.gif";
-import loadingimg404 from "../../../src/Images/package/404-page-illustration.jpg";
-// import logoimg from "../../../src/Images/package/1693213978_1692792290_musafir.png";
+import loadingimg from "../../../src/Images/package/404-page-illustration.jpg";
 import { apiURL } from "../../Constants/constant";
 import axios from "axios";
 
@@ -118,7 +115,7 @@ function Packagepage1() {
       <div className="pakagepage-container" style={{ marginTop: "-50px" }}>
         <div className="package-content">
           <div className="package-page-background ">
-            <img src={imgage1} alt="" />
+            <img src={banner} alt="" />
           </div>
 
           <div className="package-content-no">
@@ -283,7 +280,7 @@ function Packagepage1() {
                   }}
                 >
                   <img
-                    src={loadingimg404}
+                    src={loadingimg}
                     alt=""
                     style={{ borderRadius: "5px", height: "300px" }}
                   />

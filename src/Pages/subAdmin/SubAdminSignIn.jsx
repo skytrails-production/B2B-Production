@@ -9,6 +9,17 @@ import SubAdminAccess from './subAdminDashboard/subAdminaccess';
 import { subAdminLogin, subAdminFailure, subAdminRequest, subAdminLogout } from '../../Redux/SubAdminLogin/actionsubadminlogin';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { styled } from '@mui/material/styles';
+import { Grid, LinearProgress } from '@mui/material';
+
+const MuiGridItem = styled(Grid)(({ theme }) => ({
+  padding: theme.spacing(2),
+}));
+
+const CustomLinearProgress = styled(LinearProgress)(({ theme }) => ({
+  width: '100%',
+  borderRadius: theme.spacing(1),
+}));
 
 const SubAdminLoginForm = () => {
   const navigate = useNavigate();
@@ -16,7 +27,7 @@ const SubAdminLoginForm = () => {
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
   const reducerState = useSelector((state) => state);
-
+  const subAdminData = reducerState?.subadminLogin?.isLogin;
   useEffect(() => {
     if (reducerState?.subadminLogin?.subadminloginData?.statusCode === 200) {
       navigate('/subAdmin/dashboard');
@@ -49,6 +60,11 @@ const SubAdminLoginForm = () => {
     }
   };
 
+  if (subAdminData) {
+    return <div><MuiGridItem item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
+      <CustomLinearProgress />
+    </MuiGridItem></div>
+  }
   return (
     <>
       <ToastContainer position="top-center" autoClose={5000} />
@@ -59,8 +75,10 @@ const SubAdminLoginForm = () => {
 
             <div className="screensub">
               <div className="screen__contentsub">
-               
+
                 <form className="loginsubadmin" onSubmit={handleSubmit}>
+                  <h4 style={{marginTop:"-50px",fontStyle:"italic"}}>Subadmin Login</h4>
+
                   <div className="login__fieldsub">
                     <i className="login__iconsub"><FaUser /></i>
                     <input

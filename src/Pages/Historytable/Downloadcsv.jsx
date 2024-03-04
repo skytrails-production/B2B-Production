@@ -90,6 +90,7 @@ function Downloadcsv() {
           `${apiURL.baseURL}/skyTrails/ssdc/leads`
         );
         const { data } = response.data;
+        
 
         if (Array.isArray(data)) {
           setLeadsData(data); // Store data in state
@@ -151,7 +152,7 @@ function Downloadcsv() {
       <div style={{ marginBottom: "20px", textAlign: "center" }}>
         <button style={{backgroundColor:'green',color:'white',marginTop:'20px'}} onClick={handleDownloadCsv}>Download CSV</button>
       </div>
-      <div style={{ overflowX: "auto" }}>
+      <div style={{ overflowX: "auto", backgroundColor:'white'}}>
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
             <tr>

@@ -117,7 +117,7 @@ import AdminProfile from "../Pages/Dashboard/Component/Table/AdminProfile";
 import { debounce } from "lodash";
 import {} from "../utils/validation";
 
-import Packagepage1 from "../Pages/Packagepages/Packagepage1";
+import Packages from "../Pages/Packagepages/Packages";
 
 const MainPage = () => {
   const dispatch = useDispatch();
@@ -181,23 +181,33 @@ const MainPage = () => {
       !location.pathname.includes("/adminLogin") &&
       !location.pathname.includes("/subAdminLogin") &&
       !location.pathname.includes("/subAdmin") &&
-      !location.pathname.includes("/skyTrails/agent")
+      !location.pathname.includes("/skyTrails/agent")&&
+      !location.pathname.includes("/admin/dashboard")
     ) {
       navigate("/Login");
-    } else if (location.pathname === "/admin/dashboard") {
-      if (!reducerState?.adminAuth?.adminData?.data) {
-        navigate("/admin/dashboard");
-      } else {
+    } 
+    else if (location.pathname === "/admin/dashboard") {
+      if (!reducerState?.adminAuth?.isLogin) {
+        // navigate("/admin/dashboard");
         navigate("/adminLogin");
       }
+      //  else {
+      // }
     } else if (location.pathname === "/subAdmin/dashboard") {
-      if (!reducerState?.adminAuth?.adminData?.data) {
-        navigate("/subAdmin/dashboard");
-      } else {
+      if (!reducerState?.subadminLogin?.isLogin) {
+        // navigate("/subAdmin/dashboard");
         navigate("/subAdminLogin");
-      }
-    } else if (!location.pathname.includes("skyTrails/agent")) {
+      } 
+      // else {
+      // }
+    } else if (location.pathname.includes("skyTrails/agent")) {
       navigate(location.pathname);
+    }
+    else if(location.pathname === "adminLogin"){
+      if(reducerState?.adminAuth?.isLogin){
+        console.log(reducerState?.adminAuth?.isLogin,'/admin/dashboard')
+        navigate('/admin/dashboard')
+      }
     }
   }, []);
 
@@ -620,7 +630,7 @@ const MainPage = () => {
                 />
                 <Route
                   path="/skyTrails/agent/:first_name"
-                  element={<Packagepage1 />}
+                  element={<Packages />}
                 />
                 <Route exact path="/admin" element={<Admin />} />
                 <Route

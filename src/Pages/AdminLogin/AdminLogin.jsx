@@ -7,7 +7,18 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./AdminLogin.css";
 import bg from "../../Images/bg-cover.jpeg";
 import { adminReducer } from "../../Redux/AdminLogin/adminReducer";
+import { styled } from '@mui/material/styles';
+
 import SubAdminAccess from "../subAdmin/subAdminDashboard/subAdminaccess";
+import { Grid, Card, CardHeader, CardContent, Typography, Divider, LinearProgress } from '@mui/material';
+const MuiGridItem = styled(Grid)(({ theme }) => ({
+  padding: theme.spacing(2),
+}));
+
+const CustomLinearProgress = styled(LinearProgress)(({ theme }) => ({
+  width: '100%',
+  borderRadius: theme.spacing(1),
+}));
 
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -23,15 +34,17 @@ const AdminLogin = () => {
   // console.log(reducerState,"reducerState")
 
 
-  let adminData = reducerState?.adminAuth?.adminData?.data?.roles[0];
+  let adminData = reducerState?.adminAuth?.isLogin;
+
   const error = useSelector(state => state.adminAuth.adminData.error);
   const errorMessage = useSelector(state => state.adminAuth.adminData.errormessage);
 
   useEffect(() => {
-    if (adminData === "ADMIN") {
-      navigate("/admin/dashboard");
+    if (adminData) {
+      console.log(adminData,"adminData")
+      navigate("/admin/dashboard")
     }
-  }, [adminData, navigate]);
+  }, [adminData]);
 
   useEffect(() => {
     if (error) {
@@ -86,8 +99,13 @@ const AdminLogin = () => {
     setPassword(event.target.value);
     setFormError("");
   };
+ 
 
-
+if(adminData){
+  return <div><MuiGridItem item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
+  <CustomLinearProgress />
+</MuiGridItem></div>
+}
   return (
     <>
       {reducerState?.logIn?.isLogin || reducerState?.subadminLogin?.isLogin ? <div><SubAdminAccess /></div> :

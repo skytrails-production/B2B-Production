@@ -368,9 +368,9 @@ function PackageDetails() {
       <div style={{ width: "100%", backgroundColor: "#fff" }}>
         {holidayPackage.length === 0 ? (
            <div style={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center", height: "100px" }}>
-           <Alert severity="info" variant="outlined">
-             Data is not available
-           </Alert>
+           {/* <Alert severity="info" variant="outlined"> */}
+             Loading....
+           {/* </Alert> */}
          </div>
         ) : (
           <DataGrid
