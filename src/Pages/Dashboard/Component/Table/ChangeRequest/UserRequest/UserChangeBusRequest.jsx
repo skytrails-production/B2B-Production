@@ -217,8 +217,8 @@ const AllBusChangeTickets = () => {
           <Table>
             <TableBody>
               <TableRow>
-                <TableCell colSpan={12} align="center" style={{ border: 'none' }}>
-                  <Typography variant="h6">Not Available</Typography>
+                <TableCell colSpan={12} align="center" style={{ border: 'none',backgroundColor:'white' }}>
+                  <Typography variant="h6" style={{backgroundColor:'white'}}>Not Available</Typography>
                 </TableCell>
               </TableRow>
             </TableBody>

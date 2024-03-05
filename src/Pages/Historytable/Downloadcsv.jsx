@@ -153,7 +153,7 @@ function Downloadcsv() {
         <button style={{backgroundColor:'green',color:'white',marginTop:'20px'}} onClick={handleDownloadCsv}>Download CSV</button>
       </div>
       <div style={{ overflowX: "auto", backgroundColor:'white'}}>
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+        <table style={{ width: "100%", borderCollapse: "collapse",border:'none' }}>
           <thead>
             <tr>
               <th style={{ borderBottom: "1px solid black", padding: "8px" }}>Name</th>

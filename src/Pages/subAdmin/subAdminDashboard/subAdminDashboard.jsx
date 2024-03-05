@@ -1046,7 +1046,7 @@ function ResponsiveDrawer(props) {
               {access === "ADS_HANDLER" && <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleWebAdvertisment}> Add WebAdvertisement </Typography>}
               {access === "EVENT_HANDLER" && <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleAddEvents}> Add Events </Typography>}
               {/* <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleMarkup}> Add Markup </Typography> */}
-              <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleCoupons}> Add Coupon </Typography>
+              {access === "COUPON_CODE_HANDLER" && <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleCoupons}> Add Coupon </Typography>}
               {access === "ADS_HANDLER" && <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleNotification}> Add Notification </Typography>}
               <button
                 onClick={() => setIsBoxOpen(false)}

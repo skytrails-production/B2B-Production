@@ -743,10 +743,10 @@ export default function VerticalTabs() {
         </IconButton>
       </Tooltip>
       {passload && (
-         <div style={{position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 9999,textAlign:'center'}}>
-         passload && (
-           <p style={{color:'white'}}>Loading....Please wait </p>
-         </div> 
+         <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', marginTop: '100px', zIndex: 999, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+         <CircularProgress style={{color:'red'}}/>
+     </div>
+      
       )}
       <Snackbar 
         open={snackbarOpen} 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './userChangeFlightRequest.css';
 import {
   Table,
   TableBody,
@@ -153,7 +154,10 @@ const AllFlightChangeTickets = () => {
           components={{
             Toolbar: () => (
               <div style={{ marginTop: '10px' }}>
-                <GridToolbar />
+                 <GridToolbar/>
+
+
+
               </div>
             ),
             Pagination:()=>null,

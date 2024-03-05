@@ -10,6 +10,7 @@ const AddCoupons = () => {
   const data = JSON.parse(sessionStorage.getItem("persist:root"));
   const logdata = JSON.parse(data?.adminAuth);
   const agentID = logdata.adminData.data.id;
+  console.log(agentID,"---------------");
   const [couponImg, setCouponImg] = useState("");
 
   const [formValues, setFormValues] = useState({
