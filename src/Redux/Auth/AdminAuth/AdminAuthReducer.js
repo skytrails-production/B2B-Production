@@ -18,6 +18,7 @@ export const AdminAuthReducer = (state = initialState, action) => {
         isLoading: false,
         isError: false,
         isLogin: true,
+        
       };
 
     case types.ADMIN_AUTH_REQUEST:
@@ -29,6 +30,14 @@ export const AdminAuthReducer = (state = initialState, action) => {
     case types.ADMIN_AUTH_LOG_OUT_REQUEST:
       return {
         adminData: [],
+        isLogin: false,
+        isLoading: false,
+        isError: false,
+        isLogin: false,
+      };
+    case types.ADMIN_AUTH_FAIL:
+      return {
+        adminData: payload,
         isLogin: false,
         isLoading: false,
         isError: false,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { DataGrid, GridToolbarColumnsButton, GridToolbarExport } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar, GridToolbarExport } from "@mui/x-data-grid";
 import {
   TextField,
   InputAdornment,
@@ -21,7 +21,7 @@ import { apiURL } from "../../../Constants/constant";
 import "./Agentrequest.css";
 import { Alert } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import subAdminaccess from './subAdminaccess';
+import subAdminaccess from "./subAdminaccess";
 
 const AllAdvertisementTable = () => {
   const [advertisement, setAdvertisement] = useState([]);
@@ -34,7 +34,8 @@ const AllAdvertisementTable = () => {
   const [sortOrder, setSortOrder] = useState({ field: "", order: "asc" });
   const [selectedUserStatusMap, setSelectedUserStatusMap] = useState({}); // Map to store status for each user
   const reducerState = useSelector((state) => state);
-  const access = reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
+  const access =
+    reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
 
   useEffect(() => {
     async function fetchAdvertisementData() {
@@ -78,7 +79,8 @@ const AllAdvertisementTable = () => {
 
     const filtered = advertisement.filter((item) => {
       const usernameMatch =
-        item.personal_details?.first_name?.toLowerCase().includes(term) || false;
+        item.personal_details?.first_name?.toLowerCase().includes(term) ||
+        false;
       const dobMatch =
         item.personal_details?.email?.toLowerCase().includes(term) || false;
       const mobileNumberMatch =
@@ -124,7 +126,8 @@ const AllAdvertisementTable = () => {
       width: 200,
       sortable: false,
       valueGetter: (params) =>
-        `${params.row.personal_details?.first_name || ""} ${params.row.personal_details?.last_name || ""
+        `${params.row.personal_details?.first_name || ""} ${
+          params.row.personal_details?.last_name || ""
         }`,
     },
     {
@@ -140,23 +143,22 @@ const AllAdvertisementTable = () => {
       headerName: "Email",
       width: 200,
       sortable: false,
-      valueGetter: (params) =>
-        params.row.personal_details?.email || "No Data",
+      valueGetter: (params) => params.row.personal_details?.email || "No Data",
     },
     {
       field: "agencyLocation",
       headerName: "Agency Location",
       width: 200,
       sortable: false,
-      valueGetter: (params) =>
-        params.row.agency_details?.address || "No Data",
+      valueGetter: (params) => params.row.agency_details?.address || "No Data",
     },
     {
       field: "panNumber",
       headerName: "Pan Number",
       width: 150,
       sortable: false,
-      valueGetter: (params) => params.row.agency_details?.pan_number || "No Data",
+      valueGetter: (params) =>
+        params.row.agency_details?.pan_number || "No Data",
     },
     {
       field: "Approve",
@@ -198,74 +200,86 @@ const AllAdvertisementTable = () => {
 
   return (
     <>
-      {access !== "REQUEST_HANDLER" ? <div style={{textAlign:"center"}}>INVALID PAGE</div> : <div className="subada-table-container" style={{ position: "relative", width: "100%" }}>
-        <div className="adsearch-bar" style={{ position: "absolute", top: 10, zIndex: 1, fontWeight: "bold", backgroundColor: "#E73C33" }}>
-          <TextField
-            type="text"
-            value={searchTerm}
-            onChange={handleSearch}
-            placeholder="Search by name etc."
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
+      {access !== "REQUEST_HANDLER" ? (
+        <div style={{ textAlign: "center" }}>INVALID PAGE</div>
+      ) : (
+        <div
+          className="subada-table-container"
+          style={{ position: "relative", width: "100%" }}
+        >
+          <div
+            className="adsearch-bar"
+            style={{
+              position: "absolute",
+              top: 10,
+              zIndex: 1,
+              fontWeight: "bold",
+              backgroundColor: "#E73C33",
             }}
-          />
-          <Typography variant="h5" className="adtable-heading">
-            Agent Request Table
-          </Typography>
-        </div>
-        <div style={{ width: "100%", backgroundColor: "#fff" }}>
-          {loading ? (
-            <div className="loading-message" style={{
-              fontSize: '18px',
-              color: '#555',
-              textAlign: 'center',
-              marginTop: '20px',
-
-            }}>Loading...</div>
-          ) : filteredData.length === 0 ? (
-
-
-            <div style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", height: "100px" }}>
-              <Alert severity="info" variant="outlined">
-                Data is not available
-              </Alert>
-            </div>
-          ) : (
-            <DataGrid
-              rows={filteredData}
-              columns={columns}
-              pageSize={pageSize}
-              rowsPerPageOptions={[]}
-              page={currentPage - 1}
-              onPageChange={(params) => handlePageChange(params.page + 1)}
-              getRowId={(row) => row._id}
-              components={{
-                Toolbar: () => (
-                  <div style={{ marginTop: '10px' }}>
-                    <GridToolbarColumnsButton />
-                    <GridToolbarExport />
-                  </div>
-                ),
-                Pagination: () => null,
-              }}
+          >
+           
+            <Typography variant="h5" className="adtable-heading">
+              Agent Request Table
+            </Typography>
+          </div>
+          <div style={{ width: "100%", backgroundColor: "#fff" }}>
+            {loading ? (
+              <div
+                className="loading-message"
+                style={{
+                  fontSize: "18px",
+                  color: "#555",
+                  textAlign: "center",
+                  marginTop: "20px",
+                }}
+              >
+                Loading...
+              </div>
+            ) : filteredData.length === 0 ? (
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "100px",
+                }}
+              >
+                <Alert severity="info" variant="outlined">
+                  Data is not available
+                </Alert>
+              </div>
+            ) : (
+              <DataGrid
+                rows={filteredData}
+                columns={columns}
+                pageSize={pageSize}
+                rowsPerPageOptions={[]}
+                page={currentPage - 1}
+                onPageChange={(params) => handlePageChange(params.page + 1)}
+                getRowId={(row) => row._id}
+                components={{
+                  Toolbar: () => (
+                    <div style={{ marginTop: "10px" }}>
+                      <GridToolbar />
+                    </div>
+                  ),
+                  Pagination: () => null,
+                }}
+              />
+            )}
+          </div>
+          <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
+            <Pagination
+              count={totalPages}
+              page={currentPage}
+              onChange={(event, page) => handlePageChange(page)}
+              color="primary"
             />
-          )}
+          </Stack>
         </div>
-        <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
-          <Pagination
-            count={totalPages}
-            page={currentPage}
-            onChange={(event, page) => handlePageChange(page)}
-            color="primary"
-          />
-        </Stack>
-      </div>}
+      )}
     </>
-
   );
 };
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { DataGrid,GridToolbarColumnsButton,GridToolbarExport } from '@mui/x-data-grid';
+import { DataGrid,GridToolbar,GridToolbarExport } from '@mui/x-data-grid';
 import {
   TextField,
   InputAdornment,
@@ -182,8 +182,8 @@ const  UserChangeHotel = () => {
      components={{
        Toolbar: () => (
          <div style={{ marginTop: '10px' }}>
-           <GridToolbarColumnsButton />
-           <GridToolbarExport/>
+           <GridToolbar />
+        
          </div>
        ),
 

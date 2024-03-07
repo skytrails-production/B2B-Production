@@ -16,6 +16,15 @@ export const adminAuthAction = (user) => {
   }
   
 };
+export const adminAuthActionFail = (user) => {
+  if (user) {
+    return {
+      type: types.ADMIN_AUTH_FAIL,
+      payload: user,
+    };
+  }
+  
+};
 
 export const adminAuthLogOutAction = () => {
  

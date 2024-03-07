@@ -344,19 +344,7 @@ export default function Agenttable() {
      {access !== "AGENT_MANAGER" ? <div style={{textAlign:"center"}}>INVALID PAGE</div> :
       <div className="user-table-container">
         <div className="adminseacrch" style={{backgroundColor:"#E73C33"}}>
-          <TextField
-            type="text"
-            value={searchTerm}
-            onChange={handleSearch}
-            placeholder="Search by name, ID, etc."
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
+         
           <Typography variant="h5" className="adtable-heading">
             Agent Table
           </Typography>

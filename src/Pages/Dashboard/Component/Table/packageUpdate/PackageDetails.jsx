@@ -355,7 +355,7 @@ function PackageDetails() {
   return (
     <>
     {holidayPackage.length === 0 ? (
-      <div style={{position: 'absolute', top: '-20%', left: '0', right:'0' ,width: '100%', height: '100%', backdropFilter: 'blur(10px)', backgroundColor: 'rgba(255, 230, 220, 0.5)', zIndex: 1}}></div>
+      <div style={{position: 'absolute', top: '-20%', left: '0', right:'0' ,width: '100%', height: '190%', backdropFilter: 'blur(4.5px)', backgroundColor: '#d8d5e663', zIndex: 1}}></div>
   ) : null}
     <div
       className="subad-table-container"
@@ -376,7 +376,7 @@ function PackageDetails() {
         {holidayPackage.length === 0 ? (
            <div style={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center", height: "100px" }}>
            {/* <Alert severity="info" variant="outlined"> */}
-           <CircularProgress color="primary" size={50} thickness={3} style={{ position: 'absolute', top: '50%', left: '49.8%', transform: 'translate(-50%, -50%)',zIndex:2 }} />
+           <CircularProgress color="primary" size={69} thickness={4} style={{ position: 'absolute', top: '50%', left: '49.8%', transform: 'translate(-50%, -50%)',zIndex:2 }} />
            {/* </Alert> */}
          </div>
         ) : (

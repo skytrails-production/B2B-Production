@@ -9,7 +9,7 @@ import {
   Pagination,
   Paper,
 } from '@mui/material';
-import { DataGrid,GridToolbarColumnsButton,GridToolbarExport } from '@mui/x-data-grid';
+import { DataGrid,GridToolbar,GridToolbarExport } from '@mui/x-data-grid';
 import SearchIcon from '@mui/icons-material/Search';
 import { apiURL } from '../../../Constants/constant';
 import { useDispatch, useSelector } from "react-redux";
@@ -107,8 +107,8 @@ const UserHotelBooking = () => {
           components={{
             Toolbar: () => (
               <div style={{ marginTop: '10px' }}>
-                <GridToolbarColumnsButton />
-                <GridToolbarExport/>
+                <GridToolbar />
+              
               </div>
             ),
             Pagination: () => null,

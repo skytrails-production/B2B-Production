@@ -4,6 +4,7 @@ import { apiURL } from '../../../../Constants/constant';
 import { useNavigate } from 'react-router-dom';
 import profilePicUrl from '../../../../Images/logo.jpeg';
 import "./AddAdvertisement.css";
+import { CircularProgress } from '@mui/material';
 const CreateAdvertisementForm = () => {
   const [formValues, setFormValues] = useState({
     title: '',
@@ -13,7 +14,8 @@ const CreateAdvertisementForm = () => {
     remainingDays: '',
     images: '',
   });
-
+const [message,setMessage]=useState("");
+const[load,setLoad] =useState(false);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormValues({
@@ -47,7 +49,7 @@ const CreateAdvertisementForm = () => {
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
-
+     setLoad(true)
     try {
       const formData = new FormData();
       formData.append('title', formValues.title);
@@ -70,10 +72,14 @@ const CreateAdvertisementForm = () => {
 
       if (response.status >= 200 && response.status < 300) {
         // console.log('Advertisement created successfully:', response.data);
-        alert('Advertisement created successfully!');
-        navigate('/admin/dashboard'); // Redirect to admin dashboard
+        //alert('Advertisement created successfully!');
+        setMessage('Advertisement created successfully!');
+        setTimeout(()=>{
+          navigate('/admin/dashboard');
+        },5000) // Redirect to admin dashboard
       } else {
-        alert('Failed to create Advertisement!');
+        //alert('Failed to create Advertisement!');
+        setMessage('Failed to create Advertisement')
         console.error('Failed to create Advertisement:', response.statusText);
       }
       // console.log('API Response:', response.data);
@@ -82,14 +88,23 @@ const CreateAdvertisementForm = () => {
       console.error('API Error:', error.response.data);
       // Handle error or show error message
     }
+    finally{
+      setLoad(false);
+    }
   };
 
   return (
     <div className="form-containers">
+     {load && (
+                <div className="loader-overlay" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(255, 255, 255, 0.5))', zIndex: 9999 }}>
+                     <CircularProgress color="primary" size={50} thickness={3} style={{ position: 'absolute', top: '50%', left: '49.8%', transform: 'translate(-50%, -50%)' }} />
+                </div>
+            )}
+              {message && <div style={{ backgroundColor: '#d4edda', color: '#155724', padding: '10px', marginBottom: '30px', borderRadius: '5px' }}>{message}</div>}
       <header className="sectionagent headersagent">
         <div className="headead">
           {/* <img src={profilePicUrl} style={{ width: "80%" }} alt="Logo" /> */}
-          <h2>Create Addvertisement</h2>
+          <h2>Create Advertisement</h2>
         </div>
       </header>
       <form onSubmit={handleSubmit} className="advertisement-form">

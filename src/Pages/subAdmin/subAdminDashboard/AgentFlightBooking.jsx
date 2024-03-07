@@ -11,8 +11,8 @@ import {
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { apiURL } from '../../../Constants/constant';
-import { DataGrid, GridToolbarColumnsButton, GridToolbarExport } from '@mui/x-data-grid';
-import { useDispatch, useSelector } from "react-redux";
+import { DataGrid, GridToolbar, GridToolbarExport } from '@mui/x-data-grid';
+import { useSelector } from "react-redux";
 import subAdminaccess from './subAdminaccess';
 import Swal from 'sweetalert2';
 const AgentFlightBooking = () => {
@@ -139,19 +139,7 @@ const AgentFlightBooking = () => {
       {access !== "BOOKING_MANAGER" ? <div style={{textAlign:"center"}}>INVALID PAGE</div> :
         <div className="subada-table-container" style={{ position: 'relative', width: "100%", marginTop: "-15px" }}>
           <div className='adsearch-bar' style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold', backgroundColor: "#E73C33" }}>
-            <TextField
-              type='text'
-              value={searchTerm}
-              onChange={handleSearch}
-              placeholder='Search by name, ID, etc.'
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
+           
             <Typography variant='h5' className='adtable-heading' style={{ fontWeight: 'bold' }}>
               Agent Flight Booking
             </Typography>
@@ -174,8 +162,8 @@ const AgentFlightBooking = () => {
                 components={{
                   Toolbar: () => (
                     <div style={{ marginTop: '10px' }}>
-                      <GridToolbarColumnsButton />
-                      <GridToolbarExport />
+                      <GridToolbar />
+                     
                     </div>
                   ),
                   Pagination: () => null,

@@ -15,6 +15,14 @@ export const loginAction = (user) => {
     };
   }
 };
+export const loginFaliAction = (user) => {
+  if (user) {
+    return {
+      type: types.LOGIN_FAILURE,
+      payload: user,
+    };
+  }
+};
 
 export const logoutAction = () => {
   return {

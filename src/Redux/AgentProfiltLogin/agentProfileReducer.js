@@ -2,43 +2,43 @@
 import * as types from "./actionType";
 
 const initialState = {
-    subadminloginData: [],
+    agentProfileloginData: [],
     isLogin: false,
     isLoading: false,
     isError: false,
 };
 
-export const adminReducer = (state = initialState, action) => {
+export const agentProfileReducer = (state = initialState, action) => {
     const { type, payload } = action;
 
     switch (type) {
-        case types.ADMIN_LOGIN_SUCCESS:
+        case types.AGENT_PROFILE_LOGIN_SUCCESS:
             return {
-                subadminloginData:payload,
+                agentProfileloginData: payload,
                 isLoading: false,
                 isError: false,
                 isLogin: true,
 
             };
 
-        case types.ADMIN_LOGOUT_SUCCESS:
+        case types.AGENT_PROFILE_LOGOUT_SUCCESS:
             return {
-                subadminloginData: [],
+                agentProfileloginData: [],
                 isLoading: false,
                 isError: false,
                 isLogin: false,
             };
-        case types.ADMIN_LOGIN_REQUEST:
+        case types.AGENT_PROFILE_LOGIN_REQUEST:
             return {
                 ...state,
 
                 isLoading: true,
                 isError: false,
             };
-        case types.ADMIN_LOGIN_FAILURE:
+        case types.AGENT_PROFILE_LOGIN_FAILURE:
             return {
                 ...state,
-                isLogin:false,
+                isLogin: false,
                 isLoading: false,
                 isError: true,
             };

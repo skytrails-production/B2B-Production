@@ -7,7 +7,7 @@ import {
   TextField,
   InputAdornment,
 } from "@mui/material";
-import { DataGrid, GridToolbarColumnsButton, GridToolbarExport } from '@mui/x-data-grid';
+import { DataGrid, GridToolbarColumnsButton, GridToolbarExport,GridToolbar } from '@mui/x-data-grid';
 import axios from "axios";
 import SearchIcon from "@mui/icons-material/Search";
 import { apiURL } from "../../../Constants/constant";
@@ -170,19 +170,7 @@ function PackageEnquary() {
               backgroundColor: "#E73C33"
             }}
           >
-            <TextField
-              type="text"
-              value={searchTerm}
-              onChange={handleSearch}
-              placeholder="Search by name, ID, etc."
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
+            
             <Typography variant="h5" className="adtable-heading" style={{ marginLeft: "20px" }}>
               All Package Enquiry
             </Typography>
@@ -199,8 +187,8 @@ function PackageEnquary() {
               components={{
                 Toolbar: () => (
                   <div style={{ marginTop: '10px' }}>
-                    <GridToolbarColumnsButton />
-                    <GridToolbarExport />
+                   
+                   <GridToolbar/>
                   </div>
                 ),
                 Pagination: () => null,

@@ -15,6 +15,7 @@ function Searchtable() {
     try {
       const response = await axios.get(
         `${apiURL.baseURL}/skyTrails/api/admin/userSearchHistory?page=${pageNumber}`,
+        
         {
           params: {
             search: searchTerm,
@@ -22,8 +23,10 @@ function Searchtable() {
         }
       );
       const result = response.data.result.docs;
+      
       setData(result);
       setTotalPages(response.data.result.totalPages);
+      
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -125,7 +128,7 @@ function Searchtable() {
                 <GridToolbar />
               </div>
             ),
-            // Pagination:()=>null,
+            Pagination:()=>null,
           }}
         />
       </div>
@@ -133,7 +136,7 @@ function Searchtable() {
         <Pagination
           count={totalPages}
           page={page}
-          onChange={(event, newPage) => handlePageChange(newPage)}
+          onChange={(event, newPage) => handlePageChange(event,newPage)}
           color="primary"
         />
       </Stack>

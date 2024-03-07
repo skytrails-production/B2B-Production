@@ -52,6 +52,20 @@ function api() {
     });
   };
 
+  //agent Profile Login
+
+  const agentProfileLogin = (payload) => {
+    return axios({
+      method: "POST",
+      url: "/skyTrails/b2b/login",
+      baseURL: `${apiURL.baseURL}`,
+      data: payload,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
   const userB2BRegistration = (formData1) => {
     return axios({
       method: "POST",
@@ -627,6 +641,7 @@ function api() {
     returnSearch,
     oneWayEMTSearch,
     userB2BLogin,
+    agentProfileLogin,
     flightRuleSearch,
     flightQuoteSearch,
     flightBookGDS,

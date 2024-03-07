@@ -1,6 +1,7 @@
 import { all } from "redux-saga/effects";
 
 import { loginWatcher } from "./Saga/logInSaga";
+import { agentProfileWatcher } from "./Saga/agentLoginSaga";
 import { signUpWatcher,onbordingWatcher } from "./Saga/signUpSaga";
 import { ipWatcher } from "./Saga/ipSaga";
 import { oneWayWatcher } from "./Saga/oneWaySaga";
@@ -35,6 +36,7 @@ import { balanceSubtractWatcher } from "./Saga/balanceSubtractSaga";
 export function* rootSaga() {
   yield all([
     loginWatcher(),
+    agentProfileWatcher(),
     signUpWatcher(),
     ipWatcher(),
     oneWayWatcher(),

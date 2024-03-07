@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './AddSubadmin.css';
-import { Select, MenuItem } from '@mui/material';
+import { Select, MenuItem, CircularProgress } from '@mui/material';
 import { apiURL } from '../../../../Constants/constant';
 import { useNavigate } from 'react-router-dom';
 import { FaTimes, FaPlus } from 'react-icons/fa';
@@ -37,6 +37,7 @@ const CreateSubAdminPage = () => {
   const [input, setInput] = useState('');
   const [chipData, setChipData] = useState({});
   const [message, setMessage] = useState("");
+  const[display,setDisplay]=useState(false);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -63,14 +64,8 @@ const CreateSubAdminPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Convert dynamicProperties array to object
-
-
-    // Convert dynamicProperties object to string
-    // const dynamicPropertiesString = JSON.stringify(chipData);
-
-    // console.log(dynamicPropertiesString,"formattedDynamicProperties")
+   setDisplay(true);
+   
     const dynamicPropertiesString = JSON.stringify(chipData);
 
     const requestData = {
@@ -87,8 +82,12 @@ const CreateSubAdminPage = () => {
         },
         body: JSON.stringify(requestData),
       });
+      setDisplay(false);
       if (response.ok) {
         setMessage(`Subadmin ${formData.username} created successfully!`);
+        setTimeout(() => {
+          navigate('/admin/dashboard'); // Redirect to home after a delay
+        }, 5000);
       } else {
         setMessage("Failed to create subadmin.");
       }
@@ -104,8 +103,11 @@ const CreateSubAdminPage = () => {
 
   return (
     <div className="form-containers">
- {message && <div style={{ backgroundColor: '#d4edda', color: '#155724', padding: '10px', marginBottom: '20px', borderRadius: '5px' }}>{message}</div>}
+      {display &&  <div className="loader-overlay" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(255, 255, 255, 0.5))', zIndex: 9999 }}>
+                     <CircularProgress color="primary" size={50} thickness={3} style={{ position: 'absolute', top: '50%', left: '49.8%', transform: 'translate(-50%, -50%)' }} />
+                </div>}
 
+                {message && <div style={{ backgroundColor: '#d4edda', color: '#155724', padding: '10px', marginBottom: '30px', borderRadius: '5px' }}>{message}</div>}
       <header className="sectionagent headersagent">
         <div className="headead">
           <h2>Create Subadmin</h2>
@@ -167,31 +169,6 @@ const CreateSubAdminPage = () => {
             className="form-input"
           />
         </div>
-
-
-      
-
-        {/* <div className="form-group">
-          <label htmlFor="dynamicProperties" className="form-label-subAdmin">
-            Dynamic Properties:
-          </label>
-          <input
-            type="text"
-            id="dynamicProperties"
-            name="dynamicProperties"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            className="form-input"
-          />
-          <button type="button" onClick={handleAddChip}>Add</button>
-          {Object.entries(chipData).map(([key, value]) => (
-            <div key={key}>
-              <span>{value}</span>
-              <button onClick={() => handleRemoveChip(key)}>Remove</button>
-            </div>
-          ))}
-        </div> */}
-
         <div className="form-group" style={{marginLeft:"-35px"}}>
         <label htmlFor="mobile_number" className="form-label-subAdmin" style={{marginLeft:"50px"}}>
             Properties:
@@ -216,7 +193,7 @@ const CreateSubAdminPage = () => {
                 onChange={(e) => setInput(e.target.value)}
                 className="form-input"
                 placeholder="Add dynamic property..."
-                style={{width:"100%"}}
+                
               />
               <button type="button" onClick={handleAddChip} className="add-button-plus" >
                 <FaPlus />

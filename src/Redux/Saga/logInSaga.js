@@ -5,15 +5,17 @@ import {
   fetchLogIn,
   loginAction,
   userLogInAction,
+  loginFaliAction
 } from "../Auth/logIn/actionLogin";
 
 function* userLoginRequest(action) {
   try {
     const user = yield call(userApi.userB2BLogin, action.payload);
+    console.log(user);
     yield put(fetchLogIn(user));
-    // console.log("hshshsh", fetchLogIn(user))
+    console.log("hshshsh", user)
   } catch (error) {
-    yield put(fetchLogIn({error:true,errormessage:error}));
+    yield put(loginFaliAction({error:true,errormessage:error}));
   }
 }
 

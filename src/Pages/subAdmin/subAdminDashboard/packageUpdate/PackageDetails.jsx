@@ -18,6 +18,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { Alert } from "@mui/material";
+import LinearProgress from "@mui/material";
 
 function PackageDetails() {
   const reducerState = useSelector((state) => state);
@@ -32,6 +33,7 @@ function PackageDetails() {
   //     };
   //     dispatch(searchPackageAction(payload));
   // }, []);
+
   const [holidayPackage, setHolidayPackage] = useState([]);
   const [loading, setLoading] = useState(false);
   // const fetchHolidayPackages = async () => {
@@ -373,9 +375,9 @@ function PackageDetails() {
       <div style={{ width: "100%", backgroundColor: "#fff" }}>
         {holidayPackage.length === 0 ? (
           <div style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", height: "100px" }}>
-            <Alert severity="info" variant="outlined">
-              Data is not available
-            </Alert>
+            
+              Loading.....
+          
           </div>
         ) : (
           <DataGrid
@@ -384,14 +386,14 @@ function PackageDetails() {
             pageSize={5}
             checkboxSelection
             getRowId={(row) => row._id}
-            components={{
-              Toolbar: () => (
-                <div style={{ marginTop: "10px" }}>
-                  <GridToolbar />
-                </div>
-              ),
-              Pagination: () => null,
-            }}
+            // components={{
+            //   Toolbar: () => (
+            //     <div style={{ marginTop: "10px" }}>
+            //       <GridToolbar />
+            //     </div>
+            //   ),
+            //   Pagination: () => null,
+            // }}
           />
         )}
       </div>

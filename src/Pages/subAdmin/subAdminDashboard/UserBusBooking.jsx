@@ -5,7 +5,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { apiURL } from '../../../Constants/constant';
 import { useDispatch, useSelector } from "react-redux";
 import subAdminaccess from './subAdminaccess';
-import { DataGrid, GridToolbarColumnsButton, GridToolbarExport } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar, GridToolbarExport } from '@mui/x-data-grid';
 const UserBusBooking = () => {
   const [busBookings, setBusBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -116,8 +116,8 @@ const UserBusBooking = () => {
                   components={{
                     Toolbar: () => (
                       <div style={{ marginTop: '10px' }}>
-                        <GridToolbarColumnsButton />
-                        <GridToolbarExport />
+                        <GridToolbar />
+                      
                       </div>
                     ),
                     Pagination: () => null,

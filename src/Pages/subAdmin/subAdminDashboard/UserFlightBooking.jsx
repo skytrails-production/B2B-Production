@@ -3,7 +3,7 @@ import axios from 'axios';
 import { TextField, InputAdornment, Paper, Typography ,Stack,Pagination,Button} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { apiURL } from '../../../Constants/constant';
-import { DataGrid,GridToolbarColumnsButton,GridToolbarExport } from '@mui/x-data-grid';
+import { DataGrid,GridToolbar,GridToolbarExport } from '@mui/x-data-grid';
 import Swal from 'sweetalert2';
 import { useDispatch, useSelector } from "react-redux";
 import subAdminaccess from './subAdminaccess';
@@ -167,8 +167,8 @@ const UserFlightBooking = () => {
             components={{
               Toolbar: () => (
                 <div style={{ marginTop: '10px' }}>
-                <GridToolbarColumnsButton />
-                <GridToolbarExport/>
+                <GridToolbar />
+               
               </div>
               ),
               Pagination: () => null,

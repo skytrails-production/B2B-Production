@@ -36,19 +36,20 @@ const AdminLogin = () => {
 
   let adminData = reducerState?.adminAuth?.isLogin;
 
-  const error = useSelector(state => state.adminAuth.adminData.error);
-  const errorMessage = useSelector(state => state.adminAuth.adminData.errormessage);
+  const error = useSelector(state => state?.adminAuth?.adminData?.error);
+  const errorMessage = useSelector(state => state?.adminAuth?.adminData?.
+    errorMessage);
 
   useEffect(() => {
+    console.log(errorMessage,"adminData",error);
     if (adminData) {
-      console.log(adminData,"adminData")
       navigate("/admin/dashboard")
     }
-  }, [adminData]);
+  }, [reducerState?.adminAuth]);
 
   useEffect(() => {
     if (error) {
-      setFormError(errorMessage?.response?.data?.message);
+      setFormError(errorMessage);
       setLoading(false);
     }
 

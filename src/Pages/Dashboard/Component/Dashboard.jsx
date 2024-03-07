@@ -549,7 +549,7 @@ export default function VerticalTabs() {
   return (
     <>
     {passload?(
-      <div style={{ position: 'absolute', top: '-20%', left: '0', right: '0', width: '100%', height: '140%', backdropFilter: 'blur(10px)', backgroundColor: 'rgba(255, 230, 220, 0.5)', zIndex:999 }}></div>
+      <div style={{ position: 'absolute', top: '-20%', left: '0', right: '0', width: '100%', height: '200%', backdropFilter: 'blur(4.5px)', backgroundColor: '#d8d5e663', zIndex:999 }}></div>
     ):null}
       <Box sx={{ display: "flex", backgroundColor: "#f0f2f5" }}>
         <CssBaseline />
@@ -809,20 +809,20 @@ export default function VerticalTabs() {
                   <Avatar /> Profile
                 </MenuItem> */}
                 <MenuItem >
-                  <Avatar /> My account
+                  <Avatar /> My Account
                 </MenuItem>
                 <Divider />
-                <MenuItem >
+                {/* <MenuItem >
                   <ListItemIcon>
                     <PersonAdd fontSize="small" />
                   </ListItemIcon>
-                  Add another account
-                </MenuItem>
+                  Add Another Account
+                </MenuItem> */}
                 <MenuItem onClick={() => { handleClose(); createSubAdmin(); }}>
                   <ListItemIcon>
                     <PersonAdd fontSize="small" />
                   </ListItemIcon>
-                  Add SUBADMIN
+                  Add Subadmin
                 </MenuItem>
                 <MenuItem onClick={() => { handleClose(); createAgent(); }}>
                   <ListItemIcon>

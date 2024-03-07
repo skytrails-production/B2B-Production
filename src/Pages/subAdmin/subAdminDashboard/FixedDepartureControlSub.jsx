@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { DataGrid,GridToolbarColumnsButton,GridToolbarExport } from '@mui/x-data-grid';
+import { DataGrid,GridToolbar,GridToolbarExport } from '@mui/x-data-grid';
 import { apiURL } from "../../../Constants/constant";
 import axios from "axios";
 import {
@@ -136,19 +136,7 @@ const FixedDepartureControlSub = () => {
   return (
     <Paper className="subada-table-container" elevation={3} style={{ position: "relative", width: "100%", backgroundColor: "white", padding: "20px", boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",marginTop:"-20px"}}>
       <div className="adsearch-bar" style={{ position: "absolute", top: 10, zIndex: 1, fontWeight: "bold", display: "flex", alignItems: "center",backgroundColor:"#E73C33"  }}>
-        <TextField
-          type="text"
-          value={searchTerm}
-          onChange={(e) => handleSearch(e)}
-          placeholder="Search by name, ID, etc."
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
+       
         <Typography variant="h5" className="adtable-heading" style={{ marginLeft: "20px" }}>
           Fixed Departure Control
         </Typography>
@@ -171,8 +159,8 @@ const FixedDepartureControlSub = () => {
             components={{
               Toolbar: () => (
                 <div style={{ marginTop: '10px' }}>
-                <GridToolbarColumnsButton />
-                <GridToolbarExport/>
+                <GridToolbar />
+                
               </div>
               ),
               pagination:()=>null,

@@ -15,7 +15,9 @@ import SearchIcon from "@mui/icons-material/Search";
 import { apiURL } from "../../Constants/constant";
 import ConfirmationDialog from "./ConfirmationDialog";
 import appPost from "../../../src/Images/appPost.png";
-
+import {
+  RingLoader,
+} from "react-spinners";
 const PAGE_SIZE = 10;
 function Apppost() {
   const [posts, setPosts] = useState([]);
@@ -149,7 +151,7 @@ function Apppost() {
   return (
     <>
     {loading?(
-       <div style={{position: 'absolute', top: '-20%', left: '0', right:'0' ,width: '100%', height: '100%', backdropFilter: 'blur(10px)', backgroundColor: 'rgba(255, 230, 220, 0.5)', zIndex: 1}}></div>
+       <div style={{position: 'absolute', top: '-20%', left: '0', right:'0' ,width: '100%', height: '290%', backdropFilter: 'blur(4.5px)', backgroundColor: '#d8d5e663', zIndex: 1}}></div>
     ):null}
       <ConfirmationDialog
         open={confirmationOpen}
@@ -208,7 +210,7 @@ function Apppost() {
             height: "300px",
           }}
         >
-           <CircularProgress color="primary" size={50} thickness={3} style={{ position: 'absolute', top: '50%', left: '49.8%', transform: 'translate(-50%, -50%)',zIndex:2 }} />
+           <CircularProgress color="primary" size={69} thickness={4} style={{ position: 'absolute', top: '50%', left: '49.8%', transform: 'translate(-50%, -50%)',zIndex:2 }} />
         </div>
         ) : error ? (
           <Typography

@@ -11,7 +11,7 @@ import { apiURL } from "../../../Constants/constant";
 import "./Usertable.css";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import { DataGrid, GridToolbarColumnsButton, GridToolbarExport } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { useDispatch, useSelector } from "react-redux";
 import subAdminaccess from './subAdminaccess';
 const Usertable = () => {
@@ -150,8 +150,8 @@ const Usertable = () => {
               components={{
                 Toolbar: () => (
                   <div style={{ marginTop: '10px' }}>
-                    <GridToolbarColumnsButton />
-                    <GridToolbarExport />
+                    <GridToolbar />
+                    
                   </div>
                 ),
                 Pagination: () => null,

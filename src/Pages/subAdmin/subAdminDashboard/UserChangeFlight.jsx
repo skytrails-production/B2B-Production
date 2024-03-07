@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import ApprovalIcon from '@mui/icons-material/CheckCircleOutline';
-import { DataGrid, GridToolbarColumnsButton, GridToolbarExport } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar, GridToolbarExport } from '@mui/x-data-grid';
 import { apiURL } from '../../../Constants/constant';
 import { useDispatch, useSelector } from "react-redux";
 import subAdminaccess from './subAdminaccess';
@@ -153,8 +153,8 @@ const UserChangeFlight = () => {
           components={{
             Toolbar: () => (
               <div style={{ marginTop: '10px' }}>
-                <GridToolbarColumnsButton />
-                <GridToolbarExport />
+                <GridToolbar />
+               
               </div>
             ),
 

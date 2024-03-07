@@ -34,6 +34,7 @@ import formReducer from "./HolidayPackageTravellerDetails/HolidayPackageTravelle
 import { UserDataReducer } from "./Auth/UserDataById/userDataReducer";
 import { subadminReducer } from "./SubAdminLogin/subadminReducer";
 import { adminReducer } from "./AdminLogin/adminReducer";
+import { agentProfileReducer } from "./AgentProfiltLogin/agentProfileReducer";
 const appReducer = combineReducers({
   logIn: logInReducer,
   signUp: signUpReducer,
@@ -67,6 +68,7 @@ const appReducer = combineReducers({
   userData:UserDataReducer,
   subadminLogin:subadminReducer,
   adminLogin:adminReducer,
+  agentProfileReducer:agentProfileReducer
 });
 
 const rootReducer = (state, action) => {

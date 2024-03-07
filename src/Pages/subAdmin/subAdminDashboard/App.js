@@ -13,7 +13,7 @@ function App() {
   };
 
   return (
-    <Router> /* Wrap your entire app with the Router component */
+    <Router> 
       <div className='grid-container'>
         <Header OpenSidebar={OpenSidebar} />
         <Sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar} />

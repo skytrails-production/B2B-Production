@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { DataGrid,GridToolbarColumnsButton,GridToolbarExport } from '@mui/x-data-grid';
+import { DataGrid,GridToolbar} from '@mui/x-data-grid';
 import {
   TextField,
   InputAdornment,
@@ -158,19 +158,7 @@ const AgentChangeBus = () => {
     <>
       {access !== "REQUEST_HANDLER" ? <div style={{textAlign:"center"}}>INVALID PAGE</div> :  <div className='subada-table-container' style={{ position: 'relative', width: "100%",marginTop:"-15px" }}>
       <div className="adsearch-bar" style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold',backgroundColor:"#E73C33" }}>
-        <TextField
-          type="text"
-          value={searchTerm}
-          onChange={handleSearch}
-          placeholder="Search by name, ID, etc."
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
+       
         <Typography variant="h5" className="adtable-heading">
           AGENT BUS TICKET CHANGE REQUEST
         </Typography>
@@ -187,8 +175,8 @@ const AgentChangeBus = () => {
           components={{
             Toolbar: () => (
               <div style={{ marginTop: '10px' }}>
-                <GridToolbarColumnsButton />
-                <GridToolbarExport/>
+                <GridToolbar />
+                
               </div>
             ),
             Pagination: () => null,

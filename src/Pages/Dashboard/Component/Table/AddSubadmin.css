@@ -85,6 +85,7 @@
   border-radius: 4px;
   padding: 8px 12px;
   cursor: pointer;
+  
 }
 
 .dynamic-properties-add-button:hover {
@@ -134,4 +135,7 @@ padding: 2px 2px;
   display:flex;
   flex-wrap: wrap;
   gap:5px;
+}
+.dynamic-properties-container{
+  margin-right: 20px;
 }

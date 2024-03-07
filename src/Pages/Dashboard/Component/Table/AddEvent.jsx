@@ -4,7 +4,7 @@ import { apiURL } from "../../../../Constants/constant";
 import { useNavigate } from "react-router-dom";
 import profilePicUrl from "../../../../Images/logo.jpeg";
 import "./AddEvents.css";
-
+import { CircularProgress } from "@mui/material";
 const CreateEventForm = () => {
   const [page, setPage] = useState(1);
 
@@ -20,6 +20,8 @@ const CreateEventForm = () => {
     age: "",
     venue: "",
   });
+  const[load,setLoad]=useState(false);
+  const[message,setMessage]=useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -56,7 +58,7 @@ const CreateEventForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  setLoad(true);
     try {
       const formData = new FormData();
 
@@ -96,13 +98,21 @@ const CreateEventForm = () => {
       );
 
       if (response.status >= 200 && response.status < 300) {
-        alert("Event created successfully!");
+       // alert("Event created successfully!");
+       setMessage('Event created successfully!')
+       setTimeout(()=>{
         navigate("/admin/dashboard");
+       },5000);
+      
       } else {
-        alert("Failed to create Event!");
+        //alert("Failed to create Event!");
+        setMessage('Failed to create Event!')
       }
     } catch (error) {
       console.error("API Error:", error.response.data);
+    }
+    finally{
+      setLoad(false);
     }
   };
 
@@ -118,16 +128,22 @@ const CreateEventForm = () => {
 
   return (
     <div className="addEvent-div">
+                   {load && (
+                <div className="loader-overlay" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(255, 255, 255, 0.5))', zIndex: 9999 }}>
+                     <CircularProgress color="primary" size={50} thickness={3} style={{ position: 'absolute', top: '50%', left: '49.8%', transform: 'translate(-50%, -50%)' }} />
+                </div>
+            )}
+              {message && <div style={{ backgroundColor: '#d4edda', color: '#155724', padding: '10px', marginBottom: '30px', borderRadius: '5px' }}>{message}</div>}
       <header className="sectionagent headersagent">
         <div className="headead">
           <h2>Create Event</h2>
         </div>
       </header>
-      <form onSubmit={page === 2 ? handleSubmit : nextPage} className="addEvent-form">
+      <form onSubmit={handleSubmit} className="addEvent-form">
         <div className="addEvent-page">
 
 
-          <>
+          
             <div className="addEvent-form-group">
               <div className="addEvent-input-row">
                 <input
@@ -163,7 +179,7 @@ const CreateEventForm = () => {
 
 
                 <input
-                  type="number"
+                  type="string"
                   name="showType"
                   value={formValues.showType}
                   onChange={handleInputChange}
@@ -198,7 +214,7 @@ const CreateEventForm = () => {
 
 
                 <input
-                  type="text"
+                  type="string"
                   name="age"
                   value={formValues.age}
                   onChange={handleInputChange}
@@ -222,7 +238,7 @@ const CreateEventForm = () => {
 
 
                 <input
-                  type="text"
+                  type="number"
                   name="adultPrice"
                   value={formValues.adultPrice}
                   onChange={handleInputChange}
@@ -232,7 +248,7 @@ const CreateEventForm = () => {
 
 
                 <input
-                  type="text"
+                  type="number"
                   name="childPrice"
                   value={formValues.childPrice}
                   onChange={handleInputChange}
@@ -340,7 +356,7 @@ const CreateEventForm = () => {
 
 
                 <input
-                  type="text"
+                  type="number"
                   name="longitude"
                   value={formValues.longitude}
                   onChange={handleInputChange}
@@ -361,10 +377,10 @@ const CreateEventForm = () => {
                   value={formValues.noOfMember}
                   onChange={handleInputChange}
                   className="addEvent-input"
-                  placeholder="No of membar"
+                  placeholder="No of member"
                 />
                 <input
-                  type="text"
+                  type="number"
                   name="couplePrice"
                   value={formValues.couplePrice}
                   onChange={handleInputChange}
@@ -394,7 +410,7 @@ const CreateEventForm = () => {
             </div>
 
 
-          </>
+          
 
         </div>
         {/* Pagination buttons */}

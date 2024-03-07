@@ -18,7 +18,7 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import ApprovalIcon from '@mui/icons-material/CheckCircleOutline';
 import { apiURL } from '../../../Constants/constant';
-import { DataGrid,GridToolbarColumnsButton,GridToolbarExport } from '@mui/x-data-grid';
+import { DataGrid,GridToolbar,GridToolbarExport } from '@mui/x-data-grid';
 import Swal from 'sweetalert2';
 import { useDispatch, useSelector } from "react-redux";
 import subAdminaccess from './subAdminaccess';
@@ -240,8 +240,8 @@ const UserChangeBus = () => {
           components={{
             Toolbar: () => (
               <div style={{ marginTop: '10px' }}>
-              <GridToolbarColumnsButton />
-              <GridToolbarExport/>
+              <GridToolbar />
+              
             </div>
             ),
 

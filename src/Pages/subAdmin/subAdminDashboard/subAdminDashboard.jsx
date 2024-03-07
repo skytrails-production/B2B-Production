@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import CssBaseline from "@mui/material/CssBaseline";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
@@ -15,7 +15,7 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import GroupIcon from '@mui/icons-material/Group';
+import GroupIcon from "@mui/icons-material/Group";
 import Usertable from "./Usertable";
 import stlogo from "../../../Images/ST-Main-Logo.png";
 import AgentRequest from "./AgentRequest";
@@ -27,13 +27,20 @@ import Agenttable from "./Agenttable";
 import AgentBusCancel from "./AgentBusCancel";
 import AgentFlightCancel from "./AgentFlightCancel";
 import AgentHotelCancel from "./AgentHotelCancel";
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Button,
+} from "@mui/material";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import FlightIcon from '@mui/icons-material/Flight';
-import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
-import HotelIcon from '@mui/icons-material/Hotel';
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import FlightIcon from "@mui/icons-material/Flight";
+import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
+import HotelIcon from "@mui/icons-material/Hotel";
 import UserBusCancel from "./UserBusCancel";
 import UserFlightCancel from "./UserFlightCancel";
 import UserHotelCancel from "./UserHotelCancel";
@@ -70,19 +77,19 @@ import VisaDocumentCategory from "./VisaDocumentCategory";
 import VisaDocumenttype from "./VisaDocumenttype";
 import VisaRequireDoc from "./VisaRequireDoc";
 import SubadminAll from "./SubadminAll";
-import { SupervisorAccount } from '@mui/icons-material'; // Import the SupervisorAccount icon
+import { SupervisorAccount } from "@mui/icons-material"; // Import the SupervisorAccount icon
 import AddSubadmin from "./Addforms/AddSubadmin";
 import AddAgent from "./Addforms/AddAgent";
 import AddAdvertisement from "./Addforms/AddAdvertisement";
 import AddMarkup from "./Addforms/AddMarkup";
-import CategoryIcon from '@mui/icons-material/Category'; // Import the CategoryIcon component
-import PublicIcon from '@mui/icons-material/Public'; // Import the PublicIcon component
-import PersonPinIcon from '@mui/icons-material/PersonPin';
+import CategoryIcon from "@mui/icons-material/Category"; // Import the CategoryIcon component
+import PublicIcon from "@mui/icons-material/Public"; // Import the PublicIcon component
+import PersonPinIcon from "@mui/icons-material/PersonPin";
 import AddCoupons from "./Addforms/AddCoupons";
 import AddNotification from "./Addforms/AddNotification";
 import AddWebAdvertisement from "./Addforms/AddWebAdvertisement";
-import DomainIcon from '@mui/icons-material/Domain';
-import DescriptionIcon from '@mui/icons-material/Description'; // Import the DescriptionIcon component
+import DomainIcon from "@mui/icons-material/Domain";
+import DescriptionIcon from "@mui/icons-material/Description"; // Import the DescriptionIcon component
 
 import AddEvent from "./Addforms/AddEvent";
 import { FaPassport } from "react-icons/fa";
@@ -101,14 +108,11 @@ import { PiBackpackThin } from "react-icons/pi";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { IoIosNotifications } from "react-icons/io";
 import axios from "axios";
-import { useSelector, useDispatch } from 'react-redux';
-import { subAdminLogout } from "../../../Redux/SubAdminLogin/actionsubadminlogin"
+import { useSelector, useDispatch } from "react-redux";
+import { subAdminLogout } from "../../../Redux/SubAdminLogin/actionsubadminlogin";
 
 const drawerWidth = 240;
 function ResponsiveDrawer(props) {
-
-
-
   const { window } = props;
   const dispatch = useDispatch();
   const location = useLocation();
@@ -123,17 +127,17 @@ function ResponsiveDrawer(props) {
   const [markupData, setShowMarkupData] = React.useState(false);
   const [fixedDepartures, setfixedDeparture] = React.useState(false);
 
-  const [fixedDeparturescontrol, setfixedDepartureControl] = React.useState(false);
+  const [fixedDeparturescontrol, setfixedDepartureControl] =
+    React.useState(false);
   const [advertisements, setAdvertisement] = React.useState(false);
   const [visaCountryforms, setvisaCountryform] = React.useState(false);
   const [visaCountrysforms, setvisaCountrysform] = React.useState(false);
   const [visaCategoryforms, setvisaCategoryforms] = React.useState(false);
-  const [visaDocumentsCategorys, setvisaDocumentsCategorys] = React.useState(false);
+  const [visaDocumentsCategorys, setvisaDocumentsCategorys] =
+    React.useState(false);
   const [DocumentsCategorys, setDocumentsCategorys] = React.useState(false);
 
-
   const [requireDocuments, setrequireDocuments] = React.useState(false);
-
 
   const [webadvertisements, setwebadvertisement] = React.useState(false);
   const [addsubadmin, setaddSubadmins] = useState(false);
@@ -145,80 +149,118 @@ function ResponsiveDrawer(props) {
   const [addEvents, setaddEvents] = React.useState(false);
   const [holidayPackages, setHolidayPackage] = React.useState(false);
   const reducerState = useSelector((state) => state);
-  const access = reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
+  const access =
+    reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
 
   // console.log(access, "------------------");
   const homeView = location.pathname === "/subAdmin/dashboard";
   const agentTableView = location.pathname === "/subAdmin/dashboard/Agenttable";
-  const subadminTableView = location.pathname === "/subAdmin/dashboard/Subadmintable";
-  const holidayPackage = location.pathname === "/subAdmin/dashboard/holidaypackage";
+  const subadminTableView =
+    location.pathname === "/subAdmin/dashboard/Subadmintable";
+  const holidayPackage =
+    location.pathname === "/subAdmin/dashboard/holidaypackage";
 
   const agentUserView = location.pathname === "/subAdmin/dashboard/Usertable";
-  const agentRequestView = location.pathname === "/subAdmin/dashboard/AgentrequestTable";
-  const agentflightCancel = location.pathname === "/subAdmin/dashboard/Agentflightcancel";
-  const agenthotelCancel = location.pathname === "/subAdmin/dashboard/Agenthotelcancel";
-  const agentbusCancel = location.pathname === "/subAdmin/dashboard/Agentbuscancel";
+  const agentRequestView =
+    location.pathname === "/subAdmin/dashboard/AgentrequestTable";
+  const agentflightCancel =
+    location.pathname === "/subAdmin/dashboard/Agentflightcancel";
+  const agenthotelCancel =
+    location.pathname === "/subAdmin/dashboard/Agenthotelcancel";
+  const agentbusCancel =
+    location.pathname === "/subAdmin/dashboard/Agentbuscancel";
 
-  const userflightCancel = location.pathname === "/subAdmin/dashboard/Userflightcancel";
-  const userhotelCancel = location.pathname === "/subAdmin/dashboard/Userhotelcancel";
-  const userbusCancel = location.pathname === "/subAdmin/dashboard/Userbuscancel";
+  const userflightCancel =
+    location.pathname === "/subAdmin/dashboard/Userflightcancel";
+  const userhotelCancel =
+    location.pathname === "/subAdmin/dashboard/Userhotelcancel";
+  const userbusCancel =
+    location.pathname === "/subAdmin/dashboard/Userbuscancel";
 
-  const agentflightChange = location.pathname === "/subAdmin/dashboard/agentflightchange";
-  const agenthotelChange = location.pathname === "/subAdmin/dashboard/agenthotelchange";
-  const agentbusChange = location.pathname === "/subAdmin/dashboard/agentbuschange";
+  const agentflightChange =
+    location.pathname === "/subAdmin/dashboard/agentflightchange";
+  const agenthotelChange =
+    location.pathname === "/subAdmin/dashboard/agenthotelchange";
+  const agentbusChange =
+    location.pathname === "/subAdmin/dashboard/agentbuschange";
 
-  const userflightChange = location.pathname === "/subAdmin/dashboard/userflightchange";
-  const userhotelChange = location.pathname === "/subAdmin/dashboard/userhotelchange";
-  const userbusChange = location.pathname === "/subAdmin/dashboard/userbuschange";
+  const userflightChange =
+    location.pathname === "/subAdmin/dashboard/userflightchange";
+  const userhotelChange =
+    location.pathname === "/subAdmin/dashboard/userhotelchange";
+  const userbusChange =
+    location.pathname === "/subAdmin/dashboard/userbuschange";
 
+  const AgentflightBooking =
+    location.pathname === "/subAdmin/dashboard/AgentflightBooking";
+  const AgenthotelBooking =
+    location.pathname === "/subAdmin/dashboard/AgenthotelBooking";
+  const AgentbusBooking =
+    location.pathname === "/subAdmin/dashboard/AgentbusBooking";
 
-  const AgentflightBooking = location.pathname === "/subAdmin/dashboard/AgentflightBooking";
-  const AgenthotelBooking = location.pathname === "/subAdmin/dashboard/AgenthotelBooking";
-  const AgentbusBooking = location.pathname === "/subAdmin/dashboard/AgentbusBooking";
-
-  const userflightBooking = location.pathname === "/subAdmin/dashboard/userflightBooking";
-  const userhotelBooking = location.pathname === "/subAdmin/dashboard/userhotelBooking";
-  const userbusBooking = location.pathname === "/subAdmin/dashboard/userbusBooking";
+  const userflightBooking =
+    location.pathname === "/subAdmin/dashboard/userflightBooking";
+  const userhotelBooking =
+    location.pathname === "/subAdmin/dashboard/userhotelBooking";
+  const userbusBooking =
+    location.pathname === "/subAdmin/dashboard/userbusBooking";
 
   const markupAmount = location.pathname === "/subAdmin/dashboard/markupamount";
-  const fixedDeparture = location.pathname === "/subAdmin/dashboard/fixedDeparture";
+  const fixedDeparture =
+    location.pathname === "/subAdmin/dashboard/fixedDeparture";
   const addSubadmin = location.pathname === "/subAdmin/dashboard/addsubadmins";
   const addAgent = location.pathname === "/subAdmin/dashboard/addagent";
-  const addAdvertisements = location.pathname === "/subAdmin/dashboard/addAdvertisements";
-  const addwebAdvertisements = location.pathname === "/subAdmin/dashboard/addwebAdvertisements";
-  const addCouponscode = location.pathname === "/subAdmin/dashboard/addcouponscode";
-  const addNotification = location.pathname === "/subAdmin/dashboard/addnotification";
+  const addAdvertisements =
+    location.pathname === "/subAdmin/dashboard/addAdvertisements";
+  const addwebAdvertisements =
+    location.pathname === "/subAdmin/dashboard/addwebAdvertisements";
+  const addCouponscode =
+    location.pathname === "/subAdmin/dashboard/addcouponscode";
+  const addNotification =
+    location.pathname === "/subAdmin/dashboard/addnotification";
   const addMarkup = location.pathname === "/subAdmin/dashboard/addmarkups";
   const addEvent = location.pathname === "/subAdmin/dashboard/addEvents";
-  const fixedDeparturecontrol = location.pathname === "/subAdmin/dashboard/fixedDeparturecontrol";
+  const fixedDeparturecontrol =
+    location.pathname === "/subAdmin/dashboard/fixedDeparturecontrol";
 
-  const advertisement = location.pathname === "/subAdmin/dashboard/advertisement";
-  const webadvertisement = location.pathname === "/subAdmin/dashboard/webadvertisement";
+  const advertisement =
+    location.pathname === "/subAdmin/dashboard/advertisement";
+  const webadvertisement =
+    location.pathname === "/subAdmin/dashboard/webadvertisement";
 
   const getevent = location.pathname === "/subAdmin/dashboard/getevent";
   const searchdata = location.pathname === "/subAdmin/dashboard/searchdata";
-  const visaCountryform = location.pathname === "/subAdmin/dashboard/visacountryform";
-  const visaCountrysform = location.pathname === "/subAdmin/dashboard/visacountrysform";
-  const visaCategorysform = location.pathname === "/subAdmin/dashboard/visacategorysform";
-  const visadocumentsCategorys = location.pathname === "/subAdmin/dashboard/visadocumentcategorysform";
-  const requiredocuments = location.pathname === "/subAdmin/dashboard/requiredocuments";
+  const visaCountryform =
+    location.pathname === "/subAdmin/dashboard/visacountryform";
+  const visaCountrysform =
+    location.pathname === "/subAdmin/dashboard/visacountrysform";
+  const visaCategorysform =
+    location.pathname === "/subAdmin/dashboard/visacategorysform";
+  const visadocumentsCategorys =
+    location.pathname === "/subAdmin/dashboard/visadocumentcategorysform";
+  const requiredocuments =
+    location.pathname === "/subAdmin/dashboard/requiredocuments";
   // setrequireDocuments
-  const packageEnquary = location.pathname === "/subAdmin/dashboard/packageEnquary";
+  const packageEnquary =
+    location.pathname === "/subAdmin/dashboard/packageEnquary";
   const visacategory = location.pathname === "/subAdmin/dashboard/visacategory";
   const visacountry = location.pathname === "/subAdmin/dashboard/visacountry";
-  const visadocumenttype = location.pathname === "/subAdmin/dashboard/visadocumenttype";
-  const visadocumentcategory = location.pathname === "/subAdmin/dashboard/visadocumentcategory";
-  const visarequiredocument = location.pathname === "/subAdmin/dashboard/visarequiredocument";
+  const visadocumenttype =
+    location.pathname === "/subAdmin/dashboard/visadocumenttype";
+  const visadocumentcategory =
+    location.pathname === "/subAdmin/dashboard/visadocumentcategory";
+  const visarequiredocument =
+    location.pathname === "/subAdmin/dashboard/visarequiredocument";
   const [menuData, setMenuData] = useState("Home");
   const [loading, setLoading] = useState(false);
-  const [selectedValue, setSelectedValue] = useState('option1');
+  const [selectedValue, setSelectedValue] = useState("option1");
   useEffect(() => {
     if (reducerState?.subadminLogin?.subadminloginData?.statusCode !== 200) {
       // console.log(reducerState?.subadminLogin?.subadminloginData?.statusCode,reducerState,"statuscode  bchjfbfhfbhj")
       // dispatch(subAdminLogout());
       navigate("/subAdminLogin");
     }
-  }, [reducerState?.subadminLogin?.subadminloginData?.statusCode])
+  }, [reducerState?.subadminLogin?.subadminloginData?.statusCode]);
   const handleMenuItemClick = (menuItem) => {
     // console.log(menuItem,menuData)
     setLoading(true);
@@ -234,305 +276,241 @@ function ResponsiveDrawer(props) {
 
   // handleVisaCategory
 
-
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
   const handleAgentTable = () => {
     setShowAgentData(true);
-    navigate('./Agenttable');
-
-  }
+    navigate("./Agenttable");
+  };
 
   const handleSubadminTable = () => {
-    setshowSubadmin(true)
-    navigate('./Subadmintable');
-  }
-
+    setshowSubadmin(true);
+    navigate("./Subadmintable");
+  };
 
   const handleMarkUpAmount = () => {
     setShowMarkupData(true);
-    navigate('./markupamount');
-
-  }
+    navigate("./markupamount");
+  };
 
   const handleFixedDeparture = () => {
     setfixedDeparture(true);
-    navigate('./fixedDeparture');
-
-  }
+    navigate("./fixedDeparture");
+  };
 
   const handleAddSubadmin = () => {
     setaddSubadmins(true);
-    navigate('/subAdmin/dashboard/addsubadmins')
-  }
+    navigate("/subAdmin/dashboard/addsubadmins");
+  };
 
   const handleVisaCountryForm = () => {
     setvisaCountryform(true);
-    navigate('/subAdmin/dashboard/visacountryform')
-  }
+    navigate("/subAdmin/dashboard/visacountryform");
+  };
 
   const handleVisaCountrysForm = () => {
     setvisaCountrysform(true);
-    navigate('/subAdmin/dashboard/visacountrysform')
-  }
+    navigate("/subAdmin/dashboard/visacountrysform");
+  };
 
   const handleVisaCategoryForm = () => {
     setvisaCategoryforms(true);
-    navigate('/subAdmin/dashboard/visacategorysform')
-  }
-
+    navigate("/subAdmin/dashboard/visacategorysform");
+  };
 
   const handleVisadocumentsCategory = () => {
     setDocumentsCategorys(true);
-    navigate('/subAdmin/dashboard/visadocumentcategorysform')
-  }
+    navigate("/subAdmin/dashboard/visadocumentcategorysform");
+  };
 
   const handleRequireDocuemts = () => {
     setrequireDocuments(true);
-    navigate('/subAdmin/dashboard/requiredocuments')
-  }
-
-
-
-
+    navigate("/subAdmin/dashboard/requiredocuments");
+  };
 
   const handleAddAdvertisment = () => {
     setAdvertisement(true);
-    navigate('/subAdmin/dashboard/addAdvertisements')
-  }
+    navigate("/subAdmin/dashboard/addAdvertisements");
+  };
 
   const handleWebAdvertisment = () => {
     setwebaddAdvertisement(true);
-    navigate('/subAdmin/dashboard/addwebAdvertisements')
-  }
+    navigate("/subAdmin/dashboard/addwebAdvertisements");
+  };
 
   const handleCoupons = () => {
     setaddCoupons(true);
-    navigate('/subAdmin/dashboard/addcouponscode')
-  }
+    navigate("/subAdmin/dashboard/addcouponscode");
+  };
   const handleNotification = () => {
     setaddNotification(true);
-    navigate('/subAdmin/dashboard/addnotification')
-  }
-
-
+    navigate("/subAdmin/dashboard/addnotification");
+  };
 
   const handleMarkup = () => {
     setaddMarkups(true);
-    navigate('/subAdmin/dashboard/addmarkups')
-  }
+    navigate("/subAdmin/dashboard/addmarkups");
+  };
   const handleAddAdgent = () => {
     setaddAgents(true);
-    navigate('/subAdmin/dashboard/addagent')
-  }
+    navigate("/subAdmin/dashboard/addagent");
+  };
 
   const handleAddEvents = () => {
     setaddEvents(true);
-    navigate('/subAdmin/dashboard/addEvents');
-  }
+    navigate("/subAdmin/dashboard/addEvents");
+  };
   const handleFixedDepartureControl = () => {
     setfixedDepartureControl(true);
-    navigate('./fixedDeparturecontrol');
-
-  }
-
+    navigate("./fixedDeparturecontrol");
+  };
 
   const handleUserTable = () => {
     setShowAgentData(true);
-    navigate('./Usertable');
-
-  }
+    navigate("./Usertable");
+  };
 
   const handleAgentRequest = () => {
     setshowAgentRequest(true);
-    navigate('./AgentrequestTable')
-  }
-
+    navigate("./AgentrequestTable");
+  };
 
   const handleAgentFlightCancel = () => {
     setShowAgentData(true);
-    navigate('./Agentflightcancel');
-
-  }
+    navigate("./Agentflightcancel");
+  };
   const handleAgentBusCancel = () => {
     setShowAgentData(true);
-    navigate('./Agentbuscancel');
-
-  }
+    navigate("./Agentbuscancel");
+  };
   const handleAgentHotelCancel = () => {
     setShowAgentData(true);
-    navigate('./Agenthotelcancel');
-
-  }
-
-
-
+    navigate("./Agenthotelcancel");
+  };
 
   const handleUserFlightCancel = () => {
     setShowAgentData(true);
-    navigate('./Userflightcancel');
-
-  }
+    navigate("./Userflightcancel");
+  };
   const handleUserBusCancel = () => {
     setShowAgentData(true);
-    navigate('./Userbuscancel');
-
-  }
+    navigate("./Userbuscancel");
+  };
   const handleUserHotelCancel = () => {
     setShowAgentData(true);
-    navigate('./Userhotelcancel');
-
-  }
-
+    navigate("./Userhotelcancel");
+  };
 
   const handleAgentFlightChange = () => {
     setShowAgentData(true);
-    navigate('./agentflightchange');
-
-  }
+    navigate("./agentflightchange");
+  };
   const handleAgentBusChange = () => {
     setShowAgentData(true);
-    navigate('./agentbuschange');
-
-  }
+    navigate("./agentbuschange");
+  };
   const handleAgentHotelChange = () => {
     setShowAgentData(true);
-    navigate('./agenthotelchange');
-
-  }
-
+    navigate("./agenthotelchange");
+  };
 
   const handleUserHotelChange = () => {
     setShowAgentData(true);
-    navigate('./userhotelchange');
-
-  }
+    navigate("./userhotelchange");
+  };
   const handleUserFlightChange = () => {
     setShowAgentData(true);
-    navigate('./userflightchange');
-
-  }
+    navigate("./userflightchange");
+  };
   const handleUserBusChange = () => {
     setShowAgentData(true);
-    navigate('./userbuschange');
-
-  }
+    navigate("./userbuschange");
+  };
 
   const handleUserFlightBooking = () => {
     setShowAgentData(true);
-    navigate('./userflightBooking');
-
-  }
+    navigate("./userflightBooking");
+  };
 
   const handleUserHotelBooking = () => {
     setShowAgentData(true);
-    navigate('./userhotelBooking');
-
-  }
+    navigate("./userhotelBooking");
+  };
   const handleUserBusBooking = () => {
     setShowAgentData(true);
-    navigate('./userbusBooking');
-
-  }
-
+    navigate("./userbusBooking");
+  };
 
   const handleAgentFlightBooking = () => {
     setShowAgentData(true);
-    navigate('./AgentflightBooking');
-
-  }
+    navigate("./AgentflightBooking");
+  };
 
   const handleAgentHotelBooking = () => {
     setShowAgentData(true);
-    navigate('./AgenthotelBooking');
-
-  }
+    navigate("./AgenthotelBooking");
+  };
   const handleAgentBusBooking = () => {
     setShowAgentData(true);
-    navigate('./AgentbusBooking');
-
-  }
-
+    navigate("./AgentbusBooking");
+  };
 
   const handleAdvertisment = () => {
     setShowAgentData(true);
-    navigate('./advertisement');
-
-  }
+    navigate("./advertisement");
+  };
   const handleWebadvertisement = () => {
     setShowAgentData(true);
-    navigate('./webadvertisement');
-
-  }
+    navigate("./webadvertisement");
+  };
 
   const handleEvents = () => {
     setShowAgentData(true);
-    navigate('./getevent');
-
-  }
+    navigate("./getevent");
+  };
 
   const handleHolidayPackage = () => {
     setHolidayPackage(true);
-    navigate('./holidaypackage');
-
-  }
-
-
-
+    navigate("./holidaypackage");
+  };
 
   const handleSearchData = () => {
     setShowAgentData(true);
-    navigate('./searchdata');
-
-  }
+    navigate("./searchdata");
+  };
 
   const handleVisaCategory = () => {
-
-    navigate('./visacategory');
-
-  }
+    navigate("./visacategory");
+  };
 
   const handleVisaCountry = () => {
-
-    navigate('./visacountry');
-
-  }
+    navigate("./visacountry");
+  };
   const handleVisaDocumentCategory = () => {
-
-    navigate('./visadocumentcategory');
-
-  }
+    navigate("./visadocumentcategory");
+  };
   const handleReduireDocument = () => {
-
-    navigate('./visarequiredocument');
-
-  }
+    navigate("./visarequiredocument");
+  };
 
   const handleVisaDocumentType = () => {
-
-    navigate('./visadocumenttype');
-
-  }
-
-
-
+    navigate("./visadocumenttype");
+  };
 
   const handlePackage = () => {
     setShowAgentData(true);
-    navigate('./packageEnquary');
-
-  }
+    navigate("./packageEnquary");
+  };
 
   const handleHome = () => {
-    setShowHome(true)
-    navigate("/subAdmin/dashboard")
-  }
+    setShowHome(true);
+    navigate("/subAdmin/dashboard");
+  };
 
   const handleLogout = () => {
     dispatch(subAdminLogout());
-    navigate('/subAdminLogin');
-
+    navigate("/subAdminLogin");
   };
 
   const handleLogoutConfirm = () => {
@@ -560,74 +538,77 @@ function ResponsiveDrawer(props) {
     const seconds = Math.floor(timeDifference / 1000);
 
     if (seconds < 60) {
-      return `${seconds} second${seconds !== 1 ? 's' : ''} ago`;
+      return `${seconds} second${seconds !== 1 ? "s" : ""} ago`;
     } else if (seconds < 3600) {
       const minutes = Math.floor(seconds / 60);
-      return `${minutes} minute${minutes !== 1 ? 's' : ''} ago`;
+      return `${minutes} minute${minutes !== 1 ? "s" : ""} ago`;
     } else if (seconds < 86400) {
       const hours = Math.floor(seconds / 3600);
-      return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
+      return `${hours} hour${hours !== 1 ? "s" : ""} ago`;
     } else if (seconds < 604800) {
       const days = Math.floor(seconds / 86400);
-      return `${days} day${days !== 1 ? 's' : ''} ago`;
+      return `${days} day${days !== 1 ? "s" : ""} ago`;
     } else {
       const weeks = Math.floor(seconds / 604800);
-      return `${weeks} week${weeks !== 1 ? 's' : ''} ago`;
+      return `${weeks} week${weeks !== 1 ? "s" : ""} ago`;
     }
   }
   const handleNotificationClick = async (id) => {
     // console.log(apiURL.baseURL);
 
     // await axios.post(`${apiURL.baseURL}/skyTrails/api/admin/getNotificationById/${id}`);
-    await axios.get(`${apiURL.baseURL}/skyTrails/api/admin/getNotificationById/${id}`)
+    await axios
+      .get(`${apiURL.baseURL}/skyTrails/api/admin/getNotificationById/${id}`)
       .then(function (response) {
         // handle success
-        setNotificationData(response?.data?.result)
+        setNotificationData(response?.data?.result);
         // console.log(response?.data?.result, response?.data?.result?.length, "ressssssssssssssssssssssssssssssssssssssssssssssssss");
       })
       .catch(function (error) {
         // handle error
         console.log(error, "error");
-      })
+      });
     // handleMenuItemClick("Packageenquiry");
     handlePackage();
     setSetShowNotification(false);
-
-
   };
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (showNotificationRef?.current && !showNotificationRef?.current?.contains(event.target)) {
+      if (
+        showNotificationRef?.current &&
+        !showNotificationRef?.current?.contains(event.target)
+      ) {
         // Clicked outside the list, so close it
         setSetShowNotification(false);
       }
     };
 
     // Attach the event listener when the component mounts
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
     // Detach the event listener when the component unmounts
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
   useEffect(() => {
     async function getNotefication() {
-
-      await axios.get(`${apiURL.baseURL}/skyTrails/api/admin/getAllNotification/656ae08849c268401f98246b`)
+      await axios
+        .get(
+          `${apiURL.baseURL}/skyTrails/api/admin/getAllNotification/656ae08849c268401f98246b`
+        )
         .then(function (response) {
           // handle success
-          setNotificationData(response?.data?.result)
+          setNotificationData(response?.data?.result);
           // console.log(response?.data?.result, "ressssssssssssssssssssssssssssssssssssssssssssssssss");
         })
         .catch(function (error) {
           // handle error
           console.log(error, "error");
-        })
-
+        });
     }
     getNotefication();
-  }, [])
+  }, []);
 
   const handleUserBooking = (event) => {
     setAnchorElUserBooking(event.currentTarget);
@@ -663,52 +644,87 @@ function ResponsiveDrawer(props) {
     setVisaBooking(null);
   };
 
-
   const drawer = (
-    <div style={{ backgroundColor: "#E73C33", height: "100vh", overflowY: "scroll" }}>
+    <div
+      style={{
+        backgroundColor: "#E73C33",
+        height: "100vh",
+        overflowY: "scroll",
+      }}
+    >
       <div className="logo-container">
-        <img src={newlogo} alt="" style={{ width: '100%' }} />
+        <img src={newlogo} alt="" style={{ width: "100%" }} />
       </div>
       <List>
-
-        <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
+        <ListItem
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginTop: "-25px",
+            paddingLeft: "0px",
+          }}
+        >
           <ListItemButton onClick={handleHome}>
             <GroupIcon style={{ color: "white" }} />
-            <ListItemText style={{ color: "white", marginLeft: "5px" }}>Home</ListItemText>
+            <ListItemText style={{ color: "white", marginLeft: "5px" }}>
+              Home
+            </ListItemText>
           </ListItemButton>
         </ListItem>
 
-        {access === "AGENT_MANAGER" && <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
-          <ListItemButton onClick={handleAgentTable}>
+        {access === "AGENT_MANAGER" && (
+          <ListItem
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "-25px",
+              paddingLeft: "0px",
+            }}
+          >
+            <ListItemButton onClick={handleAgentTable}>
+              <GroupIcon style={{ color: "white" }} />
+              <ListItemText style={{ color: "white", marginLeft: "5px" }}>
+                Agent Table
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
+        )}
 
-            <GroupIcon style={{ color: "white" }} />
-            <ListItemText style={{ color: "white", marginLeft: "5px" }}>Agent Table</ListItemText>
+        {access === "USER_MANAGER" && (
+          <ListItem
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "-25px",
+              paddingLeft: "0px",
+            }}
+          >
+            <ListItemButton onClick={handleUserTable}>
+              <GroupIcon style={{ color: "white" }} />
+              <ListItemText style={{ color: "white", marginLeft: "5px" }}>
+                User Table
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
+        )}
 
-
-          </ListItemButton>
-        </ListItem>}
-
-
-
-        {access === "USER_MANAGER" && <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
-          <ListItemButton onClick={handleUserTable}>
-
-            <GroupIcon style={{ color: "white" }} />
-            <ListItemText style={{ color: "white", marginLeft: "5px" }}>User Table</ListItemText>
-
-
-          </ListItemButton>
-        </ListItem>}
-
-        {access === "REQUEST_HANDLER" && <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
-          <ListItemButton onClick={handleAgentRequest}>
-
-            <GroupIcon style={{ color: "white" }} />
-            <ListItemText style={{ color: "white", marginLeft: "5px" }}>Agent Request Table</ListItemText>
-
-
-          </ListItemButton>
-        </ListItem>}
+        {access === "REQUEST_HANDLER" && (
+          <ListItem
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "-25px",
+              paddingLeft: "0px",
+            }}
+          >
+            <ListItemButton onClick={handleAgentRequest}>
+              <GroupIcon style={{ color: "white" }} />
+              <ListItemText style={{ color: "white", marginLeft: "5px" }}>
+                Agent Request Table
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
+        )}
 
         {/* <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
           <ListItemButton onClick={handleSubadminTable}>
@@ -720,15 +736,25 @@ function ResponsiveDrawer(props) {
           </ListItemButton>
         </ListItem> */}
 
-
-
-
-        {access === "REQUEST_HANDLER" && <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
-          <ListItemButton onClick={handleAgentCancel}>
-            <DomainIcon style={{ color: "white", fontSize: "10px", marginRight: "2px" }} />
-            <ListItemText style={{ color: "white" }}>B2B Cancel Request</ListItemText>
-          </ListItemButton>
-        </ListItem>}
+        {access === "REQUEST_HANDLER" && (
+          <ListItem
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "-25px",
+              paddingLeft: "0px",
+            }}
+          >
+            <ListItemButton onClick={handleAgentCancel}>
+              <DomainIcon
+                style={{ color: "white", fontSize: "10px", marginRight: "2px" }}
+              />
+              <ListItemText style={{ color: "white" }}>
+                B2B Cancel Request
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
+        )}
         <Menu
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
@@ -748,13 +774,23 @@ function ResponsiveDrawer(props) {
           </MenuItem>
         </Menu>
 
-
-        {access === "REQUEST_HANDLER" && <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
-          <ListItemButton onClick={handleClickUserCancel}>
-            <PersonPinIcon style={{ color: "white", fontSize: "40px" }} />
-            <ListItemText style={{ color: "white" }}>B2C Cancel Request</ListItemText>
-          </ListItemButton>
-        </ListItem>}
+        {access === "REQUEST_HANDLER" && (
+          <ListItem
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "-25px",
+              paddingLeft: "0px",
+            }}
+          >
+            <ListItemButton onClick={handleClickUserCancel}>
+              <PersonPinIcon style={{ color: "white", fontSize: "40px" }} />
+              <ListItemText style={{ color: "white" }}>
+                B2C Cancel Request
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
+        )}
         <Menu
           anchorEl={anchorElUserCancel}
           open={Boolean(anchorElUserCancel)}
@@ -774,16 +810,26 @@ function ResponsiveDrawer(props) {
           </MenuItem>
         </Menu>
 
-
-
-
-
-        {access === "REQUEST_HANDLER" && <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", flexWrap: "wrap", paddingLeft: "0px" }}>
-          <ListItemButton onClick={handleClickAgentChange}>
-            <DomainIcon style={{ color: "white", fontSize: "10px" }} />
-            <ListItemText style={{ color: "white", marginLeft: "1px", fontSize: "15px" }}>B2B Change Request</ListItemText>
-          </ListItemButton>
-        </ListItem>}
+        {access === "REQUEST_HANDLER" && (
+          <ListItem
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "-25px",
+              flexWrap: "wrap",
+              paddingLeft: "0px",
+            }}
+          >
+            <ListItemButton onClick={handleClickAgentChange}>
+              <DomainIcon style={{ color: "white", fontSize: "10px" }} />
+              <ListItemText
+                style={{ color: "white", marginLeft: "1px", fontSize: "15px" }}
+              >
+                B2B Change Request
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
+        )}
         <Menu
           anchorEl={anchorElAgentChange}
           open={Boolean(anchorElAgentChange)}
@@ -803,14 +849,25 @@ function ResponsiveDrawer(props) {
           </MenuItem>
         </Menu>
 
-
-
-        {access === "REQUEST_HANDLER" && <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
-          <ListItemButton onClick={handleClickUserChange}>
-            <PersonPinIcon style={{ color: "white", fontSize: "10px" }} />
-            <ListItemText style={{ color: "white", marginLeft: "1px", fontSize: "15px" }}>B2C Change Request</ListItemText>
-          </ListItemButton>
-        </ListItem>}
+        {access === "REQUEST_HANDLER" && (
+          <ListItem
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "-25px",
+              paddingLeft: "0px",
+            }}
+          >
+            <ListItemButton onClick={handleClickUserChange}>
+              <PersonPinIcon style={{ color: "white", fontSize: "10px" }} />
+              <ListItemText
+                style={{ color: "white", marginLeft: "1px", fontSize: "15px" }}
+              >
+                B2C Change Request
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
+        )}
         <Menu
           anchorEl={anchorElUserChange}
           open={Boolean(anchorElUserChange)}
@@ -830,13 +887,23 @@ function ResponsiveDrawer(props) {
           </MenuItem>
         </Menu>
 
-
-        {access === "BOOKING_MANAGER" && <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
-          <ListItemButton onClick={handleUserBooking}>
-            <PersonPinIcon style={{ color: "white", fontSize: "30px" }} />
-            <ListItemText style={{ color: "white", marginLeft: "5px" }}>B2C Booking</ListItemText>
-          </ListItemButton>
-        </ListItem>}
+        {access === "BOOKING_MANAGER" && (
+          <ListItem
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "-25px",
+              paddingLeft: "0px",
+            }}
+          >
+            <ListItemButton onClick={handleUserBooking}>
+              <PersonPinIcon style={{ color: "white", fontSize: "30px" }} />
+              <ListItemText style={{ color: "white", marginLeft: "5px" }}>
+                B2C Booking
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
+        )}
         <Menu
           anchorEl={anchorElUserBooking}
           open={Boolean(anchorElUserBooking)}
@@ -856,13 +923,23 @@ function ResponsiveDrawer(props) {
           </MenuItem>
         </Menu>
 
-
-        {access === "BOOKING_MANAGER" && <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
-          <ListItemButton onClick={handleAgentBooking}>
-            <DomainIcon style={{ color: "white", fontSize: "10px" }} />
-            <ListItemText style={{ color: "white", marginLeft: "5px" }}>B2B Booking</ListItemText>
-          </ListItemButton>
-        </ListItem>}
+        {access === "BOOKING_MANAGER" && (
+          <ListItem
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "-25px",
+              paddingLeft: "0px",
+            }}
+          >
+            <ListItemButton onClick={handleAgentBooking}>
+              <DomainIcon style={{ color: "white", fontSize: "10px" }} />
+              <ListItemText style={{ color: "white", marginLeft: "5px" }}>
+                B2B Booking
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
+        )}
         <Menu
           anchorEl={anchorElAgentBooking}
           open={Boolean(anchorElAgentBooking)}
@@ -902,58 +979,127 @@ function ResponsiveDrawer(props) {
           </ListItemButton>
         </ListItem> */}
 
-        {access === "ADS_HANDLER" && <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
-          <ListItemButton onClick={handleAdvertisment}>
-            <WebIcon sx={{ color: "white", fontSize: "1rem" }} />
-            <ListItemText style={{ color: "white", marginLeft: "10" }}>Advertisement</ListItemText>
-          </ListItemButton>
-        </ListItem>}
-        {access === "ADS_HANDLER" &&
-          <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
+        {access === "ADS_HANDLER" && (
+          <ListItem
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "-25px",
+              paddingLeft: "0px",
+            }}
+          >
+            <ListItemButton onClick={handleAdvertisment}>
+              <WebIcon sx={{ color: "white", fontSize: "1rem" }} />
+              <ListItemText style={{ color: "white", marginLeft: "10" }}>
+                Advertisement
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
+        )}
+        {access === "ADS_HANDLER" && (
+          <ListItem
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "-25px",
+              paddingLeft: "0px",
+            }}
+          >
             <ListItemButton onClick={handleWebadvertisement}>
               <HomeOutlinedIcon sx={{ color: "white", fontSize: "1.2rem" }} />
-              <ListItemText style={{ color: "white", marginLeft: "5px" }}>Webadvertisement</ListItemText>
+              <ListItemText style={{ color: "white", marginLeft: "5px" }}>
+                Webadvertisement
+              </ListItemText>
             </ListItemButton>
-          </ListItem>}
+          </ListItem>
+        )}
 
-        {access === "EVENT_HANDLER" &&
-          <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
+        {access === "EVENT_HANDLER" && (
+          <ListItem
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "-25px",
+              paddingLeft: "0px",
+            }}
+          >
             <ListItemButton onClick={handleEvents}>
               <WebIcon sx={{ color: "white", fontSize: "15px" }} />
-              <ListItemText style={{ color: "white", marginLeft: "5px" }}>Events</ListItemText>
+              <ListItemText style={{ color: "white", marginLeft: "5px" }}>
+                Events
+              </ListItemText>
             </ListItemButton>
-          </ListItem>}
+          </ListItem>
+        )}
 
-        {access === "PACKAGE_HANDLER" &&
-          <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
+        {access === "PACKAGE_HANDLER" && (
+          <ListItem
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "-25px",
+              paddingLeft: "0px",
+            }}
+          >
             <ListItemButton onClick={handleHolidayPackage}>
               <WebIcon sx={{ color: "white", fontSize: "15px" }} />
-              <ListItemText style={{ color: "white", marginLeft: "5px" }}>Edit Holiday Package</ListItemText>
+              <ListItemText style={{ color: "white", marginLeft: "5px" }}>
+                Edit Holiday Package
+              </ListItemText>
             </ListItemButton>
-          </ListItem>}
-        {access === "USER_MANAGER" &&
-          <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
+          </ListItem>
+        )}
+        {access === "USER_MANAGER" && (
+          <ListItem
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "-25px",
+              paddingLeft: "0px",
+            }}
+          >
             <ListItemButton onClick={handleSearchData}>
               <PersonSearchIcon sx={{ color: "white", fontSize: "15px" }} />
-              <ListItemText style={{ color: "white", marginLeft: "5px" }}>SearchData</ListItemText>
+              <ListItemText style={{ color: "white", marginLeft: "5px" }}>
+                SearchData
+              </ListItemText>
             </ListItemButton>
-          </ListItem>}
-        {access === "PACKAGE_HANDLER" &&
-          <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
+          </ListItem>
+        )}
+        {access === "PACKAGE_HANDLER" && (
+          <ListItem
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "-25px",
+              paddingLeft: "0px",
+            }}
+          >
             <ListItemButton onClick={handlePackage}>
-
               <InventoryIcon sx={{ color: "white", fontSize: "15px" }} />
-              <ListItemText style={{ color: "white", marginLeft: "5px" }}>Package Enquiry</ListItemText>
+              <ListItemText style={{ color: "white", marginLeft: "5px" }}>
+                Package Enquiry
+              </ListItemText>
             </ListItemButton>
-          </ListItem>}
-        {access === "VISA_PROCESSING" &&
-          <ListItem style={{ display: "flex", alignItems: "center", marginTop: "-25px", paddingLeft: "0px" }}>
+          </ListItem>
+        )}
+        {access === "VISA_PROCESSING" && (
+          <ListItem
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "-25px",
+              paddingLeft: "0px",
+            }}
+          >
             <ListItemButton onClick={handleVisaBooking}>
-
               <FaPassport style={{ color: "white", fontSize: "15px" }} />
-              <ListItemText style={{ color: "white", marginLeft: "5px" }}>Visa Booking</ListItemText>
+              <ListItemText style={{ color: "white", marginLeft: "5px" }}>
+                Visa Booking
+              </ListItemText>
             </ListItemButton>
-          </ListItem>}
+          </ListItem>
+        )}
         <Menu
           anchorEl={visaBooking}
           open={Boolean(visaBooking)}
@@ -982,23 +1128,20 @@ function ResponsiveDrawer(props) {
         </Menu>
 
         {/* handleUserBooking */}
-
       </List>
-
     </div>
   );
 
-
-  const container = window !== undefined ? () => window().document.body : undefined;
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
   const [isBoxOpen, setIsBoxOpen] = useState(false);
 
   const handleIconClick = () => {
     setIsBoxOpen(true);
   };
 
-
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: "flex" }}>
       <CssBaseline />
       {/* topnavbar */}
 
@@ -1008,7 +1151,7 @@ function ResponsiveDrawer(props) {
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
         }}
-        style={{ backgroundColor: '#E73C33' }}
+        style={{ backgroundColor: "#E73C33" }}
       >
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           <IconButton
@@ -1016,7 +1159,7 @@ function ResponsiveDrawer(props) {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
+            sx={{ mr: 2, display: { sm: "none" } }}
           >
             <MenuIcon />
           </IconButton>
@@ -1024,30 +1167,77 @@ function ResponsiveDrawer(props) {
             color="inherit"
             aria-label="user"
             onClick={handleIconClick}
-
           >
             <SupervisorAccount />
           </IconButton>
           {isBoxOpen && (
             <div
               style={{
-                position: 'absolute',
-                top: '40px', // Adjust as needed to position the box below the icon
-                left: '0',
-                backgroundColor: '#fff',
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
-                padding: '20px',
-                zIndex: '999', // Ensure the box appears above other elements
+                position: "absolute",
+                top: "40px", // Adjust as needed to position the box below the icon
+                left: "0",
+                backgroundColor: "#fff",
+                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+                padding: "20px",
+                zIndex: "999", // Ensure the box appears above other elements
               }}
             >
               {/* <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleAddSubadmin}> Add subadmin </Typography> */}
-              {access === "REQUEST_HANDLER" && <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleAddAdgent}> Add Agent </Typography>}
-              {access === "ADS_HANDLER" && <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleAddAdvertisment}> Add Advertisement</Typography>}
-              {access === "ADS_HANDLER" && <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleWebAdvertisment}> Add WebAdvertisement </Typography>}
-              {access === "EVENT_HANDLER" && <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleAddEvents}> Add Events </Typography>}
+              {access === "REQUEST_HANDLER" && (
+                <Typography
+                  sx={{ color: "black", cursor: "pointer" }}
+                  onClick={handleAddAdgent}
+                >
+                  {" "}
+                  Add Agent{" "}
+                </Typography>
+              )}
+              {access === "ADS_HANDLER" && (
+                <Typography
+                  sx={{ color: "black", cursor: "pointer" }}
+                  onClick={handleAddAdvertisment}
+                >
+                  {" "}
+                  Add Advertisement
+                </Typography>
+              )}
+              {access === "ADS_HANDLER" && (
+                <Typography
+                  sx={{ color: "black", cursor: "pointer" }}
+                  onClick={handleWebAdvertisment}
+                >
+                  {" "}
+                  Add WebAdvertisement{" "}
+                </Typography>
+              )}
+              {access === "EVENT_HANDLER" && (
+                <Typography
+                  sx={{ color: "black", cursor: "pointer" }}
+                  onClick={handleAddEvents}
+                >
+                  {" "}
+                  Add Events{" "}
+                </Typography>
+              )}
               {/* <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleMarkup}> Add Markup </Typography> */}
-              {access === "COUPON_CODE_HANDLER" && <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleCoupons}> Add Coupon </Typography>}
-              {access === "ADS_HANDLER" && <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleNotification}> Add Notification </Typography>}
+              {access === "COUPON_CODE_HANDLER" && (
+                <Typography
+                  sx={{ color: "black", cursor: "pointer" }}
+                  onClick={handleCoupons}
+                >
+                  {" "}
+                  Add Coupon{" "}
+                </Typography>
+              )}
+              {access === "ADS_HANDLER" && (
+                <Typography
+                  sx={{ color: "black", cursor: "pointer" }}
+                  onClick={handleNotification}
+                >
+                  {" "}
+                  Add Notification{" "}
+                </Typography>
+              )}
               <button
                 onClick={() => setIsBoxOpen(false)}
                 style={{
@@ -1065,79 +1255,89 @@ function ResponsiveDrawer(props) {
               >
                 Close
               </button>
-
             </div>
           )}
 
-
-
-          <div style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center"
-          }}>
-            {access === "VISA_PROCESSING" && <div> <InputLabel
-              id="dropdown-label"
-              style={{ padding: "2px", color: "white", fontSize: "18px", marginLeft: "20px" }}
-            >
-              Visa:
-            </InputLabel>
-              <FormControl>
-                <Select
-                  style={{ width: "200px", height: "40px", color: "white", border: "1px solid white" }}
-                  labelId="dropdown-label"
-                  id="dropdown"
-                  value={selectedValue}
-                  onChange={handleChange}
-                  MenuProps={{ // Use MenuProps to customize the menu
-                    anchorOrigin: {
-                      vertical: "bottom",
-                      horizontal: "left"
-                    },
-                    transformOrigin: {
-                      vertical: "top",
-                      horizontal: "left"
-                    },
-                    getContentAnchorEl: null // This prevents the menu from being positioned incorrectly
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {access === "VISA_PROCESSING" && (
+              <div style={{display:"flex"}}>
+                {" "}
+                <InputLabel
+                  id="dropdown-label"
+                  style={{
+                    padding: "2px",
+                    color: "white",
+                    fontSize: "18px",
+                    marginLeft: "20px",
+                    display: "flex",
                   }}
-                  IconComponent={() => (
-                    <div style={{ color: "white", padding: "5px", borderRadius: "0 4px 4px 0" }}>
-                      &#9660; {/* Unicode character for down arrow */}
-                    </div>
-                  )}
                 >
-                  <MenuItem
-                    value="option1"
-                    onClick={handleVisaCountryForm}
+                  Visa:
+                </InputLabel>
+                <FormControl>
+                  <Select
+                    style={{
+                      width: "200px",
+                      height: "40px",
+                      color: "white",
+                      border: "1px solid white",
+                    }}
+                    labelId="dropdown-label"
+                    id="dropdown"
+                    value={selectedValue}
+                    onChange={handleChange}
+                    MenuProps={{
+                      // Use MenuProps to customize the menu
+                      anchorOrigin: {
+                        vertical: "bottom",
+                        horizontal: "left",
+                      },
+                      transformOrigin: {
+                        vertical: "top",
+                        horizontal: "left",
+                      },
+                      getContentAnchorEl: null, // This prevents the menu from being positioned incorrectly
+                    }}
+                    IconComponent={() => (
+                      <div
+                        style={{
+                          color: "white",
+                          padding: "5px",
+                          borderRadius: "0 4px 4px 0",
+                        }}
+                      >
+                        &#9660; {/* Unicode character for down arrow */}
+                      </div>
+                    )}
                   >
-                    Visa Country
-                  </MenuItem>
-                  <MenuItem
-                    value="option2"
-                    onClick={handleVisaCategoryForm}
-                  >
-                    Visa Category
-                  </MenuItem>
-                  <MenuItem
-                    value="option3"
-                    onClick={handleVisaCountrysForm}
-                  >
-                    Document Type
-                  </MenuItem>
-                  <MenuItem
-                    value="option4"
-                    onClick={handleVisadocumentsCategory}
-                  >
-                    Document Category
-                  </MenuItem>
-                  <MenuItem
-                    value="option5"
-                    onClick={handleRequireDocuemts}
-                  >
-                    Required Documents
-                  </MenuItem>
-                </Select>
-              </FormControl></div>}
+                    <MenuItem value="option1" onClick={handleVisaCountryForm}>
+                      Visa Country
+                    </MenuItem>
+                    <MenuItem value="option2" onClick={handleVisaCategoryForm}>
+                      Visa Category
+                    </MenuItem>
+                    <MenuItem value="option3" onClick={handleVisaCountrysForm}>
+                      Document Type
+                    </MenuItem>
+                    <MenuItem
+                      value="option4"
+                      onClick={handleVisadocumentsCategory}
+                    >
+                      Document Category
+                    </MenuItem>
+                    <MenuItem value="option5" onClick={handleRequireDocuemts}>
+                      Required Documents
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+            )}
             {/* <IconButton
             color="inherit"
             aria-label="logout"
@@ -1148,58 +1348,131 @@ function ResponsiveDrawer(props) {
             <ExitToAppIcon />
           </IconButton> */}
 
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "60px" }}>
-
-              <div style={{ display: "flex", alignItems: "center", position: "relative" }}>
-                <div onClick={() => setSetShowNotification((pre) => !pre)} onMouseOver={() => setSetShowNotificationIcon(true)} onMouseLeave={() => setSetShowNotificationIcon(false)} >{showNotificationIcon ? <IoIosNotificationsOutline size='24px' color="white" /> : <IoIosNotifications size='24px' color="white" />}</div>
-                <div style={{
-                  position: 'absolute',
-                  color: '#f8f1f1fc',
-                  background: "#E73C33",
-                  width: '17px',
-                  height: '17px',
-                  // fontWeight: 100;
-                  fontSize: '12px',
-                  textAlign: 'center',
-                  borderRadius: '50%',
-                  border: '1px solid white',
-                  top: '-3px',
-                  left: '10px'
-
-
-                }}>{notificationData?.length}</div>
-                {showNotification && <div ref={showNotificationRef} className="notification_Icon_Admin" style={{ position: "absolute", top: "25px", right: "0px", width: "300px", backgroundColor: '#ece6e6', padding: '5px', borderRadius: '4px', maxHeight: "500px", overflowY: "scroll" }} >
-                  {notificationData?.length === 0 ? <div style={{ color: "#E73C33" }}>Stay in touch! You will find all the new updates here</div> : notificationData?.map((item) => (
-                    <div
-                      onClick={() => {
-                        handleNotificationClick(item._id)
-                      }}
-                      className="SubAdminNotificationContainer_innerDev"
-                      style={{
-                        display: "flex", backgroundColor: `${!item?.isRead ? "#fdfdfdcf" : "#fdfdfdcf"}`, borderRadius: "4px", margin: '5px 7px', paddingBottom: "5px",
-                        // backgroundColor:"#ffffff8c"
-
-                      }}>
-                      <div >
-                        <div style={{ width: "30px", height: "30px", borderRadius: '2px', background: "#e73c33ad", display: "flex", justifyContent: "center", alignItems: "center", margin: '5px', marginTop: "20px" }}>
-                          <PiBackpackThin />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                width: "60px",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  position: "relative",
+                }}
+              >
+                <div
+                  onClick={() => setSetShowNotification((pre) => !pre)}
+                  onMouseOver={() => setSetShowNotificationIcon(true)}
+                  onMouseLeave={() => setSetShowNotificationIcon(false)}
+                >
+                  {showNotificationIcon ? (
+                    <IoIosNotificationsOutline size="24px" color="white" />
+                  ) : (
+                    <IoIosNotifications size="24px" color="white" />
+                  )}
+                </div>
+                <div
+                  style={{
+                    position: "absolute",
+                    color: "#f8f1f1fc",
+                    background: "#E73C33",
+                    width: "17px",
+                    height: "17px",
+                    // fontWeight: 100;
+                    fontSize: "12px",
+                    textAlign: "center",
+                    borderRadius: "50%",
+                    border: "1px solid white",
+                    top: "-3px",
+                    left: "10px",
+                  }}
+                >
+                  {notificationData?.length}
+                </div>
+                {showNotification && (
+                  <div
+                    ref={showNotificationRef}
+                    className="notification_Icon_Admin"
+                    style={{
+                      position: "absolute",
+                      top: "25px",
+                      right: "0px",
+                      width: "300px",
+                      backgroundColor: "#ece6e6",
+                      padding: "5px",
+                      borderRadius: "4px",
+                      maxHeight: "500px",
+                      overflowY: "scroll",
+                    }}
+                  >
+                    {notificationData?.length === 0 ? (
+                      <div style={{ color: "#E73C33" }}>
+                        Stay in touch! You will find all the new updates here
+                      </div>
+                    ) : (
+                      notificationData?.map((item) => (
+                        <div
+                          onClick={() => {
+                            handleNotificationClick(item._id);
+                          }}
+                          className="SubAdminNotificationContainer_innerDev"
+                          style={{
+                            display: "flex",
+                            backgroundColor: `${
+                              !item?.isRead ? "#fdfdfdcf" : "#fdfdfdcf"
+                            }`,
+                            borderRadius: "4px",
+                            margin: "5px 7px",
+                            paddingBottom: "5px",
+                            // backgroundColor:"#ffffff8c"
+                          }}
+                        >
+                          <div>
+                            <div
+                              style={{
+                                width: "30px",
+                                height: "30px",
+                                borderRadius: "2px",
+                                background: "#e73c33ad",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                margin: "5px",
+                                marginTop: "20px",
+                              }}
+                            >
+                              <PiBackpackThin />
+                            </div>
+                          </div>
+                          <div style={{ paddingLeft: "3px" }}>
+                            <div
+                              style={{ fontSize: "12px", color: "#e73c33ad" }}
+                            >
+                              {timeAgo(item?.updatedAt)}
+                            </div>
+                            <div style={{ fontSize: "18px", color: "#E73C33" }}>
+                              {item?.title}
+                            </div>
+                            <div
+                              style={{ fontSize: "13px", color: "#e73c33ad" }}
+                            >
+                              {item?.description}
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                      <div style={{ paddingLeft: "3px" }}>
-                        <div style={{ fontSize: "12px", color: "#e73c33ad" }} >{timeAgo(item?.updatedAt)}</div>
-                        <div style={{ fontSize: "18px", color: "#E73C33" }}>{item?.title}</div>
-                        <div style={{ fontSize: "13px", color: "#e73c33ad" }}>{item?.description}</div>
-
-                      </div>
-                    </div>
-                  ))}
-                </div>}
+                      ))
+                    )}
+                  </div>
+                )}
               </div>
               <IconButton
                 color="inherit"
                 aria-label="logout"
                 edge="end"
-                sx={{ ml: 'auto' }}
+                sx={{ ml: "auto" }}
                 onClick={() => setLogoutDialogOpen(true)}
               >
                 <ExitToAppIcon />
@@ -1218,8 +1491,6 @@ function ResponsiveDrawer(props) {
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
         aria-label="mailbox folders"
       >
-
-
         <Drawer
           container={container}
           variant="temporary"
@@ -1229,9 +1500,9 @@ function ResponsiveDrawer(props) {
             keepMounted: true,
           }}
           sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': {
-              boxSizing: 'border-box',
+            display: { xs: "block", sm: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
               width: drawerWidth,
             },
           }}
@@ -1241,9 +1512,9 @@ function ResponsiveDrawer(props) {
         <Drawer
           variant="permanent"
           sx={{
-            display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': {
-              boxSizing: 'border-box',
+            display: { xs: "none", sm: "block" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
               width: drawerWidth,
             },
           }}
@@ -1251,13 +1522,9 @@ function ResponsiveDrawer(props) {
         >
           {drawer}
         </Drawer>
-
-
-
       </Box>
 
       {/* sidebar */}
-
 
       <Box
         component="main"
@@ -1268,22 +1535,13 @@ function ResponsiveDrawer(props) {
         }}
       >
         <Toolbar />
-        <Typography paragraph>
-          {homeView && <Home />}
-
-        </Typography>
-        <Typography paragraph>
-          {agentTableView && <Agenttable />}
-        </Typography>
+        <Typography paragraph>{homeView && <Home />}</Typography>
+        <Typography paragraph>{agentTableView && <Agenttable />}</Typography>
         <Typography paragraph>
           {subadminTableView && <SubadminAll />}
         </Typography>
-        <Typography paragraph>
-          {markupAmount && <MarkupAmount />}
-        </Typography>
-        <Typography paragraph>
-          {agentUserView && <Usertable />}
-        </Typography>
+        <Typography paragraph>{markupAmount && <MarkupAmount />}</Typography>
+        <Typography paragraph>{agentUserView && <Usertable />}</Typography>
         <Typography paragraph>
           {agentRequestView && <AgentRequest />}
         </Typography>
@@ -1302,9 +1560,7 @@ function ResponsiveDrawer(props) {
         <Typography paragraph>
           {userhotelCancel && <UserHotelCancel />}
         </Typography>
-        <Typography paragraph>
-          {userbusCancel && <UserBusCancel />}
-        </Typography>
+        <Typography paragraph>{userbusCancel && <UserBusCancel />}</Typography>
 
         <Typography paragraph>
           {agentflightChange && <AgentChangeFlight />}
@@ -1321,10 +1577,7 @@ function ResponsiveDrawer(props) {
         <Typography paragraph>
           {userhotelChange && <UserChangeHotel />}
         </Typography>
-        <Typography paragraph>
-          {userbusChange && <UserChangeBus />}
-        </Typography>
-
+        <Typography paragraph>{userbusChange && <UserChangeBus />}</Typography>
 
         <Typography paragraph>
           {AgentflightBooking && <AgentFlightBooking />}
@@ -1337,7 +1590,6 @@ function ResponsiveDrawer(props) {
         <Typography paragraph>
           {AgentbusBooking && <AgentBusBooking />}
         </Typography>
-
 
         <Typography paragraph>
           {userflightBooking && <UserFlightBooking />}
@@ -1353,13 +1605,9 @@ function ResponsiveDrawer(props) {
         <Typography paragraph>
           {fixedDeparture && <FixedDeparture />}
         </Typography>
-        <Typography paragraph>
-          {addSubadmin && <AddSubadmin />}
-        </Typography>
+        <Typography paragraph>{addSubadmin && <AddSubadmin />}</Typography>
 
-        <Typography paragraph>
-          {addAgent && <AddAgent />}
-        </Typography>
+        <Typography paragraph>{addAgent && <AddAgent />}</Typography>
         <Typography paragraph>
           {addAdvertisements && <AddAdvertisement />}
         </Typography>
@@ -1368,39 +1616,26 @@ function ResponsiveDrawer(props) {
           {addwebAdvertisements && <AddWebAdvertisement />}
         </Typography>
 
-
-
         {/* addsubadmin */}
         <Typography paragraph>
           {fixedDeparturecontrol && <FixedDepartureControlSub />}
         </Typography>
 
-
-        <Typography paragraph>
-          {advertisement && <Advertisement />}
-        </Typography>
+        <Typography paragraph>{advertisement && <Advertisement />}</Typography>
 
         <Typography paragraph>
           {webadvertisement && <Webadvertisement />}
         </Typography>
 
-        <Typography paragraph>
-          {getevent && <EventGet />}
-        </Typography>
+        <Typography paragraph>{getevent && <EventGet />}</Typography>
 
-        <Typography paragraph>
-          {searchdata && <SearchData />}
-        </Typography>
+        <Typography paragraph>{searchdata && <SearchData />}</Typography>
         <Typography paragraph>
           {packageEnquary && <PackageEnquary />}
         </Typography>
-        <Typography paragraph>
-          {visacategory && <Visacategory />}
-        </Typography>
+        <Typography paragraph>{visacategory && <Visacategory />}</Typography>
 
-        <Typography paragraph>
-          {visacountry && <VisaCountry />}
-        </Typography>
+        <Typography paragraph>{visacountry && <VisaCountry />}</Typography>
         <Typography paragraph>
           {visaCategorysform && <Visacategorys />}
         </Typography>
@@ -1408,7 +1643,6 @@ function ResponsiveDrawer(props) {
         <Typography paragraph>
           {requiredocuments && <RequireddocumentFrom />}
         </Typography>
-
 
         <Typography paragraph>
           {visaCountryform && <Visacountryselect />}
@@ -1429,27 +1663,17 @@ function ResponsiveDrawer(props) {
           {visarequiredocument && <VisaRequireDoc />}
         </Typography>
 
-        <Typography paragraph>
-          {addCouponscode && <AddCoupons />}
-        </Typography>
+        <Typography paragraph>{addCouponscode && <AddCoupons />}</Typography>
         <Typography paragraph>
           {addNotification && <AddNotification />}
         </Typography>
 
-        <Typography paragraph>
-          {addMarkup && <AddMarkup />}
-        </Typography>
-        <Typography paragraph>
-          {addEvent && <AddEvent />}
-        </Typography>
+        <Typography paragraph>{addMarkup && <AddMarkup />}</Typography>
+        <Typography paragraph>{addEvent && <AddEvent />}</Typography>
 
         <Typography paragraph>
           {visadocumentsCategorys && <Documentcategorys />}
         </Typography>
-
-
-
-
 
         <Typography paragraph>
           {holidayPackage && <PackageDetails />}
@@ -1458,31 +1682,16 @@ function ResponsiveDrawer(props) {
           {/* {visacountry && <VisaCountryform />} */}
           {menuData === "Documenttype" && <Visacountryselect />}
         </Typography>
-
-
-
-
-
-
-
       </Box>
 
-
-
-
       <div>
-
-
-
-
-
         <Dialog
           open={logoutDialogOpen}
           onClose={() => setLogoutDialogOpen(false)}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">{'Logout'}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">{"Logout"}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
               Are you sure you want to log out?
@@ -1504,7 +1713,3 @@ ResponsiveDrawer.propTypes = {
   window: PropTypes.func,
 };
 export default ResponsiveDrawer;
-
-
-
-
