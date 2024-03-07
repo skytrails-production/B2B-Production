@@ -506,7 +506,7 @@ const Leftdetail = () => {
           <div className="col-lg-6">
             <div className="singleDataReturnBox">
               <div className="returnBoxOne">
-                <div><img src={`${process.env.PUBLIC_URL}/FlightImages/${flightDeparture?.Airline?.AirlineCode}.png`} /> </div>
+                <div><img src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${flightDeparture?.Airline?.AirlineCode}.png`} alt="flightImg"/> </div>
                 <span>{flightDeparture?.Airline?.AirlineName}</span>
                 <p>{flightDeparture?.Airline?.AirlineCode}{" "}{flightDeparture?.Airline?.FlightNumber}</p>
               </div>
@@ -530,7 +530,7 @@ const Leftdetail = () => {
           <div className="col-lg-6">
             <div className="singleDataReturnBox">
               <div className="returnBoxOne">
-                <div><img src={`${process.env.PUBLIC_URL}/FlightImages/${flightReturn?.Airline?.AirlineCode}.png`} /> </div>
+                <div><img src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${flightReturn?.Airline?.AirlineCode}.png`} alt="flightImg"/> </div>
                 <span>{flightReturn?.Airline?.AirlineName}</span>
                 <p>{flightReturn?.Airline?.AirlineCode}{" "}{flightReturn?.Airline?.FlightNumber}</p>
               </div>

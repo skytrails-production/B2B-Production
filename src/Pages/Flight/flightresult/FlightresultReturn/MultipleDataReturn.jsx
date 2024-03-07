@@ -87,7 +87,7 @@ const MultipleDataReturn = (props) => {
       <div className="singleDataReturnBox">
         <div className="returnBoxOne">
           <div>
-            <img src={`${process.env.PUBLIC_URL}/FlightImages/${img}.png`} />{" "}
+            <img src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${img}.png`} alt="flightImg"/>{" "}
           </div>
           <span>{flight[0]?.Airline?.AirlineName}</span>
           <p>
@@ -148,7 +148,7 @@ const MultipleDataReturn = (props) => {
           }}
         >
           <img
-            src={`${process.env.PUBLIC_URL}/FlightImages/${img}.png`}
+            src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${img}.png`}
             alt="flight"
             style={{
               width: "60px",

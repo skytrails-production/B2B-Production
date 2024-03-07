@@ -21,7 +21,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 // import FlightLoader from "../FlightLoader/FlightLoader";
 import Divider from "@mui/material/Divider";
-import filterImg from "../../../../Images/FlightImages/filter.png";
+import filterImg from "../../../../Images/filter.png";
 
 const FlightReturnInternational = () => {
   const navigate = useNavigate();
@@ -1258,7 +1258,7 @@ const FlightReturnInternational = () => {
                                   objectFit: "contain",
                                 }}
                                 src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${item.AirlineCode}.png`}
-                              />{" "}
+                              alt="flightImg" />{" "}
                             </div>
                             <div>{item.AirlineName}</div>
                           </div>
@@ -1400,6 +1400,7 @@ const FlightReturnInternational = () => {
                     <img
                       src={filterImg}
                       style={{ width: "50px", height: "50px" }}
+                      alt="filterImg"
                     />
                   </div>
                   <div className="filter_noresult_inner_dev">

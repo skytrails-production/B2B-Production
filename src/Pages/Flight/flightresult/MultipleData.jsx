@@ -164,7 +164,7 @@ const MultipleData = (props) => {
   return (
     <div key={indexKey} className="singleFlightBox">
       <div className="singleFlightBoxOne">
-        <div><img src={`${process.env.PUBLIC_URL}/FlightImages/${img}.png`} /> </div>
+        <div><img src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${img}.png`} alt="flightImage"/> </div>
         <span>{flight[0]?.Airline?.AirlineName}</span>
         <p>{flight[0]?.Airline?.AirlineCode}{" "}{flight[0]?.Airline?.FlightNumber}</p>
       </div>

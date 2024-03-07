@@ -477,7 +477,7 @@ useEffect(() => {
       <div className="col-lg-12">
         <div className="singleFlightBox justify-content-evenly">
           <div className="singleFlightBoxOne">
-            <div><img src={`${process.env.PUBLIC_URL}/FlightImages/${img}.png`} /> </div>
+            <div><img src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${img}.png`} alt="flightimg"/> </div>
             <span>{airlineName}</span>
             <p>{airlineCode}{" "}{flightNumber}</p>
           </div>

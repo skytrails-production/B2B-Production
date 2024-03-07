@@ -1376,7 +1376,7 @@ const FlightresultReturn = () => {
                                     objectFit: "contain",
                                   }}
                                   src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${item.AirlineCode}.png`}
-                                />{" "}
+                                 alt="flightImg"/>{" "}
                               </div>
                               <div>{item.AirlineName}</div>
                             </div>

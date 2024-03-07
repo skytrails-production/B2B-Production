@@ -5,7 +5,6 @@ import Fairrule from "./Fairrule";
 import Nonrefundable from "./Nonrefundable";
 import LuggageIcon from "@mui/icons-material/Luggage";
 import { useDispatch, useSelector, useReducer } from "react-redux";
-import image from "../../../Images/FlightImages/1AC.png";
 import SingleData from "./SingleData";
 import MultipleData from "./MultipleData";
 import { tokenAction } from "../../../Redux/ResultIndex/resultIndex";
@@ -401,7 +400,7 @@ const Flightdetail = () => {
                             <div>
                               <span className="checkedSVG pe-2">
                                 <img
-                                  src={`${process.env.PUBLIC_URL}/FlightImages/SG.png`}
+                                  src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/SG.png`}
                                   alt="flight"
                                 />{" "}
                               </span>
@@ -425,7 +424,7 @@ const Flightdetail = () => {
                             <div>
                               <span className="checkedSVG pe-2">
                                 <img
-                                  src={`${process.env.PUBLIC_URL}/FlightImages/UK.png`}
+                                  src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/UK.png`}
                                   alt="flight"
                                 />{" "}
                               </span>
@@ -811,8 +810,7 @@ const Flightdetail = () => {
                               <div>
                                 <span className="checkedSVG imgBoxFilter pe-2">
                                   <img
-                                    src={`${process.env.PUBLIC_URL
-                                      }/FlightImages/${airline
+                                    src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${airline
                                         .split(",")[1]
                                         .trim()}.png`}
                                     alt="flight"

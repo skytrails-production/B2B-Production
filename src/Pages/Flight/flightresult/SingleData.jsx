@@ -119,7 +119,7 @@ function SingleData(props) {
     <div className="singleFlightBox">
       <div className="singleFlightBoxOne">
         <div>
-          <img src={`${process.env.PUBLIC_URL}/FlightImages/${img}.png`} />{" "}
+          <img src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${img}.png`} alt="flightImg" />{" "}
         </div>
         <span>{flight?.Airline?.AirlineName}</span>
         <p>
@@ -240,7 +240,7 @@ function SingleData(props) {
                         }}
                       >
                         <img
-                          src={`${process.env.PUBLIC_URL}/FlightImages/${imgReturn}.png`}
+                          src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${imgReturn}.png`}
                           alt="flight"
                           style={{
                             width: "-webkit-fill-available",

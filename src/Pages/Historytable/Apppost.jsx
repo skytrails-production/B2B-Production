@@ -148,6 +148,9 @@ function Apppost() {
 
   return (
     <>
+    {loading?(
+       <div style={{position: 'absolute', top: '-20%', left: '0', right:'0' ,width: '100%', height: '100%', backdropFilter: 'blur(10px)', backgroundColor: 'rgba(255, 230, 220, 0.5)', zIndex: 1}}></div>
+    ):null}
       <ConfirmationDialog
         open={confirmationOpen}
         onClose={() => setConfirmationOpen(false)}
@@ -205,7 +208,7 @@ function Apppost() {
             height: "300px",
           }}
         >
-          Loading...
+           <CircularProgress color="primary" size={50} thickness={3} style={{ position: 'absolute', top: '50%', left: '49.8%', transform: 'translate(-50%, -50%)',zIndex:2 }} />
         </div>
         ) : error ? (
           <Typography

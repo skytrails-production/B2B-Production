@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { searchPackageAction } from "../../../../../Redux/SearchPackage/actionSearchPackage";
 import { apiURL } from "../../../../../Constants/constant";
-import { Box, Button, MenuItem, Select } from "@mui/material";
+import { Box, Button, MenuItem, Select ,CircularProgress} from "@mui/material";
 import "./packageUpdate.css";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import axios from "axios";
@@ -353,6 +353,10 @@ function PackageDetails() {
   ];
 
   return (
+    <>
+    {holidayPackage.length === 0 ? (
+      <div style={{position: 'absolute', top: '-20%', left: '0', right:'0' ,width: '100%', height: '100%', backdropFilter: 'blur(10px)', backgroundColor: 'rgba(255, 230, 220, 0.5)', zIndex: 1}}></div>
+  ) : null}
     <div
       className="subad-table-container"
       style={{ position: "relative", width: "130%" }}
@@ -366,10 +370,13 @@ function PackageDetails() {
         </Typography>
       </div>
       <div style={{ width: "100%", backgroundColor: "#fff" }}>
+      {/* {holidayPackage.length === 0 ? (
+        <div style={{position: 'absolute', top: '-20%', left: '0', right:'0' ,width: '100%', height: '100%', backdropFilter: 'blur(10px)', backgroundColor: 'rgba(255, 255, 255, 0.5)', zIndex: 1}}></div>
+    ) : null} */}
         {holidayPackage.length === 0 ? (
            <div style={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center", height: "100px" }}>
            {/* <Alert severity="info" variant="outlined"> */}
-             Loading....
+           <CircularProgress color="primary" size={50} thickness={3} style={{ position: 'absolute', top: '50%', left: '49.8%', transform: 'translate(-50%, -50%)',zIndex:2 }} />
            {/* </Alert> */}
          </div>
         ) : (
@@ -381,8 +388,8 @@ function PackageDetails() {
             getRowId={(row) => row._id}
             components={{
               Toolbar: () => (
-                <div style={{ marginTop: "10px" }}>
-                  <GridToolbar />
+                <div style={{ marginTop: "10px"}}>
+                  {/* <GridToolbar /> */}
                 </div>
               ),
             //  Pagination: () => null,
@@ -561,6 +568,7 @@ function PackageDetails() {
         </Box>
       </Modal>
     </div>
+    </>
   );
 }
 

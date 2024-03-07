@@ -774,8 +774,8 @@ const FlightReturnBookingDetails = () => {
               <div className="returnBoxOne">
                 <div>
                   <img
-                    src={`${process.env.PUBLIC_URL}/FlightImages/${flightDeparture?.Airline?.AirlineCode}.png`}
-                  />{" "}
+                    src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${flightDeparture?.Airline?.AirlineCode}.png`}
+                  alt="flightImg"/>{" "}
                 </div>
                 <span>{flightDeparture?.Airline?.AirlineName}</span>
                 <p>
@@ -806,8 +806,8 @@ const FlightReturnBookingDetails = () => {
               <div className="returnBoxOne">
                 <div>
                   <img
-                    src={`${process.env.PUBLIC_URL}/FlightImages/${flightReturn?.Airline?.AirlineCode}.png`}
-                  />{" "}
+                    src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${flightReturn?.Airline?.AirlineCode}.png`}
+                  alt="flightImg"/>{" "}
                 </div>
                 <span>{flightReturn?.Airline?.AirlineName}</span>
                 <p>

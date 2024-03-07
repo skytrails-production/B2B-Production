@@ -128,7 +128,7 @@ function SingleDataReturnInternational(props) {
     >
       <div className="singleDataReturnBox">
         <div className="returnBoxOne">
-          <div><img src={`${process.env.PUBLIC_URL}/FlightImages/${img}.png`} /> </div>
+          <div><img src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${img}.png`} alt="flightImg"/> </div>
           <span>{flight?.Airline?.AirlineName}</span>
           <p>{flight?.Airline?.AirlineCode}{" "}{flight?.Airline?.FlightNumber}</p>
         </div>
@@ -182,7 +182,7 @@ function SingleDataReturnInternational(props) {
           }}
         >
           <img
-            src={`${process.env.PUBLIC_URL}/FlightImages/${img}.png`}
+            src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${img}.png`}
             alt="flight"
             style={{
               width: "60px",

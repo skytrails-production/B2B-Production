@@ -9,6 +9,7 @@ import {
   Stack,
   ToggleButtonGroup,
   ToggleButton,
+  CircularProgress
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
@@ -213,7 +214,10 @@ const AllAdvertisementTable = () => {
       </div>
       <div style={{ marginTop:"0px", width: "100%", backgroundColor: "#fff" }}>
         {loading ? (
-          <div  className="loading-message" style={{marginTop:"25px", display:"flex",justifyContent:"center",alignItems:"center"}}>Loading...</div>
+          <div  className="loading-message" style={{marginTop:"25px", display:"flex",justifyContent:"center",alignItems:"center"}}>
+             <CircularProgress color="primary" size={80} thickness={4} style={{ position: 'absolute', top: '50%', left: '49.8%', transform: 'translate(-50%, -50%)' }} />
+
+          </div>
         ) : filteredData.length === 0 ? (
 
 

@@ -267,7 +267,7 @@ export default function VerticalTabs() {
     setOpen(false);
   };
   const handleMenuItemClick = (menuItem) => {
-    // console.log(menuItem,menuData)
+    // console.log(menuItem,menuData,"hello")
     setLoading(true);
     setMenuData(menuItem);
 
@@ -548,6 +548,9 @@ export default function VerticalTabs() {
 
   return (
     <>
+    {passload?(
+      <div style={{ position: 'absolute', top: '-20%', left: '0', right: '0', width: '100%', height: '140%', backdropFilter: 'blur(10px)', backgroundColor: 'rgba(255, 230, 220, 0.5)', zIndex:999 }}></div>
+    ):null}
       <Box sx={{ display: "flex", backgroundColor: "#f0f2f5" }}>
         <CssBaseline />
         <AppBar
@@ -743,11 +746,13 @@ export default function VerticalTabs() {
         </IconButton>
       </Tooltip>
       {passload && (
-         <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', marginTop: '100px', zIndex: 999, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-         <CircularProgress style={{color:'red'}}/>
+         <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', marginTop: '200px', zIndex: 999, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+         <CircularProgress color="primary" size={80} thickness={4} style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />
      </div>
-      
       )}
+     
+      
+      
       <Snackbar 
         open={snackbarOpen} 
         autoHideDuration={5000} 
@@ -761,7 +766,7 @@ export default function VerticalTabs() {
           severity="success" 
           sx={{ width: '100%', textAlign: 'center' }}
         >
-          Congratulations!Pass Booked
+          Congratulations!Pass Generated
         </MuiAlert>
       </Snackbar>
    
@@ -1354,7 +1359,7 @@ export default function VerticalTabs() {
               <ListItemButton
                 sx={{
                   minHeight: 48,
-                  justifyContent: open ? "center" : "center",
+                  justifyContent: open ? "initial" : "center",
                   px: 2.5,
                   ...((menuData === "Cancel Ticket"
                     ? activeMenuItemClass
@@ -1381,7 +1386,7 @@ export default function VerticalTabs() {
                   <ListItemButton
                     sx={{
                       minHeight: 48,
-                      justifyContent: open ? "center" : "center",
+                      justifyContent: open ? "initial" : "center",
                       px: 2.5,
                     }}
                     onClick={handleButtonClickTwo}
@@ -1508,7 +1513,7 @@ export default function VerticalTabs() {
                   <ListItemButton
                     sx={{
                       minHeight: 48,
-                      justifyContent: open ? "center" : "center",
+                      justifyContent: open ? "initial" : "center",
                       px: 2.5,
                     }}
                     onClick={handleButtonClickThree}
@@ -1629,7 +1634,7 @@ export default function VerticalTabs() {
               <ListItemButton
                 sx={{
                   minHeight: 48,
-                  justifyContent: open ? "center" : "center",
+                  justifyContent: open ? "initial" : "center",
                   px: 2.5,
                   ...((menuData === "Change Request"
                     ? activeMenuItemClass
