@@ -155,12 +155,17 @@ const CreateEventForm = () => {
                   placeholder="Title"
                 />
                 <input
-                  type="text"
+                  type="number"
                   name="price"
                   value={formValues.price}
                   onChange={handleInputChange}
                   className="addEvent-input addEvent-input-small"
                   placeholder="Price"
+                  onKeyDown={(e) => {
+                    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+                      e.preventDefault();
+                    }
+                  }}
                 />
               </div>
             </div>
@@ -168,12 +173,17 @@ const CreateEventForm = () => {
               <div className="addEvent-input-row">
 
                 <input
-                  type="text"
+                  type="number"
                   name="bookingPrice"
                   value={formValues.bookingPrice}
                   onChange={handleInputChange}
                   className="addEvent-input"
                   placeholder="BookingPrice"
+                  onKeyDown={(e) => {
+                    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+                      e.preventDefault();
+                    }
+                  }}
                 />
 
 
@@ -244,6 +254,11 @@ const CreateEventForm = () => {
                   onChange={handleInputChange}
                   className="addEvent-input"
                   placeholder="AdultPrice"
+                  onKeyDown={(e) => {
+                    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+                      e.preventDefault();
+                    }
+                  }}
                 />
 
 
@@ -254,6 +269,11 @@ const CreateEventForm = () => {
                   onChange={handleInputChange}
                   className="addEvent-input"
                   placeholder="ChildPrice"
+                  onKeyDown={(e) => {
+                    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+                      e.preventDefault();
+                    }
+                  }}
                 />
               </div>
             </div>
@@ -292,10 +312,8 @@ const CreateEventForm = () => {
                   placeholder="endTime"
 
                 />
-
-
-
-              </div> </div>
+              </div> 
+              </div>
 
             <div className="addEvent-form-group">
               <div className="addEvent-input-row">
@@ -314,6 +332,11 @@ const CreateEventForm = () => {
                   onChange={handleInputChange}
                   className="addEvent-input"
                   placeholder="BreakTime"
+                  onKeyDown={(e) => {
+                    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+                      e.preventDefault();
+                    }
+                  }}
                 />
 
 
@@ -329,6 +352,11 @@ const CreateEventForm = () => {
                   onChange={handleInputChange}
                   className="addEvent-input"
                   placeholder=" NoOfShows"
+                  onKeyDown={(e) => {
+                    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+                      e.preventDefault();
+                    }
+                  }}
                 />
 
 
@@ -339,6 +367,11 @@ const CreateEventForm = () => {
                   onChange={handleInputChange}
                   className="addEvent-input"
                   placeholder="SlotTime"
+                  onKeyDown={(e) => {
+                    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+                      e.preventDefault();
+                    }
+                  }}
                 />
               </div> </div>
 
@@ -352,6 +385,11 @@ const CreateEventForm = () => {
                   onChange={handleInputChange}
                   className="addEvent-input"
                   placeholder="Latitude"
+                  onKeyDown={(e) => {
+                    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+                      e.preventDefault();
+                    }
+                  }}
                 />
 
 
@@ -362,6 +400,11 @@ const CreateEventForm = () => {
                   onChange={handleInputChange}
                   className="addEvent-input"
                   placeholder="longitude"
+                  onKeyDown={(e) => {
+                    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+                      e.preventDefault();
+                    }
+                  }}
                 />
               </div> </div>
 
@@ -378,6 +421,11 @@ const CreateEventForm = () => {
                   onChange={handleInputChange}
                   className="addEvent-input"
                   placeholder="No of member"
+                  onKeyDown={(e) => {
+                    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+                      e.preventDefault();
+                    }
+                  }}
                 />
                 <input
                   type="number"
@@ -386,6 +434,11 @@ const CreateEventForm = () => {
                   onChange={handleInputChange}
                   className="addEvent-input"
                   placeholder="couplePrice"
+                  onKeyDown={(e) => {
+                    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+                      e.preventDefault();
+                    }
+                  }}
                 />
               </div> </div>
 

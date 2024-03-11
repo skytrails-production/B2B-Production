@@ -36,15 +36,18 @@ const AgentProfileLogin = () => {
     // console.log(reducerState,"reducerState")
 
 
-    let adminData = reducerState?.adminAuth?.isLogin;
+    let adminData = reducerState?.agentProfileReducer
+    ?.isLogin;
 
-    const error = useSelector(state => state.adminAuth.adminData.error);
-    const errorMessage = useSelector(state => state.adminAuth.adminData.errormessage);
+    const error = useSelector(state => state.agentProfileReducer
+        .agentProfileloginData.error);
+    const errorMessage = useSelector(state => state.agentProfileReducer
+        .agentProfileloginData.errormessage);
 
     useEffect(() => {
         if (adminData) {
             console.log(adminData, "adminData")
-            navigate("/admin/dashboard")
+            navigate("/agentProfile/dashboard")
         }
     }, [adminData]);
 
@@ -55,6 +58,9 @@ const AgentProfileLogin = () => {
         }
 
     }, [error, errorMessage]);
+    useEffect(()=>{
+        console.log(reducerState?.agentProfileReducer)
+    },[reducerState?.agentProfileReducer])
 
 
     const handleSubmit = async (event) => {
@@ -65,7 +71,7 @@ const AgentProfileLogin = () => {
         }
         setLoading(true);
         const payload = {
-            username: email,
+            email: email,
             password: password,
         };
 
@@ -74,9 +80,9 @@ const AgentProfileLogin = () => {
 
 
         try {
-            console.log("madarchod")
+            
             await dispatch(Agent_ProfileRequest(payload));
-            console.log("mohit")
+            
             setFormError(""); // Clear any previous errors on success
         } catch (error) {
             console.error("Error occurred while authenticating:", error);

@@ -57,6 +57,7 @@ import InsuranceReviewBooking from "../Pages/assistance&inssurance/insurancerevi
 import InsuranceBookingConfirmation from "../Pages/assistance&inssurance/insurancebookingconfirmation/InsuranceBookingConfirmation";
 import Admin from "../Pages/admin/Admin";
 import AgentProfileLogin from "../Pages/agentProfile/AgentProfileLogin";
+import AgentProfileDashbord from "../Pages/agentProfile/AgentProfileDashbord";
 import AdminUserForm from "../Pages/admin/AdminUserForm";
 import Administration from "../Pages/Account/Administration";
 import Account from "../Pages/Account/Account";
@@ -127,7 +128,7 @@ const MainPage = () => {
   const isLoginRoute = location.pathname === "/Login";
   const isRegisterRoute = location.pathname === "/Registration";
   const isLogin = location.pathname === "/adminLogin";
-  const isAgentProfileLogin = location.pathname === "/agentProfileLogin";
+  const isAgentProfileLogin = location.pathname === "/agentProfile/login";
   const isDashboard = location.pathname === "/admin/dashboard";
   const isSubAdminLogin = location.pathname === "/subAdminLogin";
   const isSubAdmindashboard = location.pathname === "/subAdmin/dashboard";
@@ -185,7 +186,8 @@ const MainPage = () => {
       !location.pathname.includes("/subAdmin") &&
       !location.pathname.includes("/skyTrails/agent")&&
       !location.pathname.includes("/admin/dashboard")&&
-      !location.pathname.includes("/agentProfileLogin")
+      !location.pathname.includes("/agentProfile/Login")&&
+      !location.pathname.includes("/agentProfile/dashboard")
     ) {
       navigate("/Login");
     } 
@@ -212,10 +214,10 @@ const MainPage = () => {
         navigate('/admin/dashboard')
       }
     }
-    else if(location.pathname === "agentProfileLogin"){
+    else if(location.pathname === "agentProfile/Login"){
       // if(reducerState?.adminAuth?.isLogin){
         // console.log(reducerState?.adminAuth?.isLogin,'/admin/dashboard')
-        navigate('/agentProfileLogin')
+        navigate('/agentProfile/Login')
       // }
     }
   }, []);
@@ -326,7 +328,7 @@ const MainPage = () => {
       location.pathname === "/subAdmin/dashboard/holidaypackage" ||
       location.pathname === "/subAdmin/dashboard/addmarkups" ||
       location.pathname.includes("skyTrails/agent") ||
-      location.pathname.includes("agentProfileLogin") ||
+      location.pathname.includes("agentProfile/Login") ||
       
       // /subAdmin/dashboard/addmarkups"
       isFlightEticketPage ||
@@ -398,7 +400,7 @@ const MainPage = () => {
       location.pathname === "/subAdmin/dashboard/addagent" ||
       location.pathname === "/subAdmin/dashboard/addAdvertisements" ||
       location.pathname.includes("skyTrails/agent") ||
-      location.pathname.includes("agentProfileLogin") ||
+      location.pathname.includes("agentProfile/Login") ||
 
       isFlightEticketPage ||
       isBusEticketPage ||
@@ -764,8 +766,13 @@ const MainPage = () => {
             path="/admin/dashboard/*"
             element={<Dashboard />}
           ></Route>
+          <Route
+            exact
+            path="/agentProfile/dashboard/*"
+            element={<AgentProfileDashbord />}
+          ></Route>
           <Route exact path="/adminLogin" element={<AdminLogin />}></Route>
-          <Route exact path="/agentProfileLogin" element={<AgentProfileLogin />}></Route>
+          <Route exact path="/agentProfile/Login" element={<AgentProfileLogin />}></Route>
           <Route
             exact
             path="/subAdmin/dashboard/*"

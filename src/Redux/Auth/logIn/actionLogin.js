@@ -29,3 +29,9 @@ export const logoutAction = () => {
     type: types.LOGOUT_REQUEST,
   };
 };
+
+export const clearErrorMsg = () => {
+  return {
+    type: types.LOGIN_CLEAR,
+  };
+};

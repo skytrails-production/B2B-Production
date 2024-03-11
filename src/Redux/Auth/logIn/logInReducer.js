@@ -29,12 +29,20 @@ export const logInReducer = (state = initialState, action) => {
       };
     case types.LOGIN_FAILURE:
       return {
-        loginData: [],
+        // loginData: [],
+        ...state,
+        loginData: payload,
         isLogin: false,
         isLoading: false,
-        isError: false,
-      }
-
+        isError: true,
+      };
+      case types.LOGIN_CLEAR:
+        return {
+          loginData: [],
+          isLogin: false,
+          isLoading: false,
+          isError: false,
+        };
     default:
       return state;
   }

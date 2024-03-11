@@ -1,63 +1,59 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import "./login.css";
-import RefreshIcon from "@mui/icons-material/Refresh";
 import { Button, Box } from "@mui/material";
-import { useDispatch, useSelector, useReducer } from "react-redux";
-import { loginAction } from "../../Redux/Auth/logIn/actionLogin";
-import Alert from "@mui/material/Alert";
+// import { useDispatch } from "react-redux";
+// import { loginAction } from "../../Redux/Auth/logIn/actionLogin";
 import color from "../../color/color";
 export default function Demo(props) {
-  const dispatch = useDispatch();
-  const reducerState = useSelector((state) => state);
+  // const dispatch = useDispatch();
+  // const reducerState = useSelector((state) => state);
 
   // console.log("reducerState", reducerState);
-  const [isDisabled, setIsDisabled] = useState(true);
+  // const [isDisabled, setIsDisabled] = useState(true);
 
-  const [value, setValue] = useState(false);
-  const [text, getText] = useState("");
+  // const [value, setValue] = useState(false);
+  // const [text, getText] = useState("");
 
-  const handleText = (event) => {
-    getText(event.target.value);
-  };
+  
 
-  const [string, setString] = useState("");
+  // const [string, setString] = useState("");
 
   useEffect(() => {
     generateRandomString();
   }, []);
 
-  useEffect(() => {
-    handleValidate();
-  }, [text]);
+  // useEffect(() => {
+  //   handleValidate();
+  // }, [text]);
 
-  const handleValidate = () => {
-    if (string === text) {
-      setIsDisabled(false);
-      setValue(true);
-    } else {
-      setIsDisabled(true);
-    }
-  };
+  // const handleValidate = () => {
+  //   if (string === text) {
+  //     setIsDisabled(false);
+  //     setValue(true);
+  //   } else {
+  //     setIsDisabled(true);
+  //   }
+  // };
 
   const handleSubmit = () => {
-    if (value == true) {
-      const payload = {
-        email: props.email,
-        password: props.password,
-      };
-      dispatch(loginAction(payload));
-    }
+    // if (value == true) {
+    //   const payload = {
+    //     email: props.email,
+    //     password: props.password,
+    //   };
+    //   dispatch(loginAction(payload));
+    // }
   };
 
   const generateRandomString = () => {
-    let result = "";
-    const characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    const charactersLength = characters.length;
-    for (let i = 0; i < 6; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    setString(result);
+    // let result = "";
+    // const characters =
+    //   "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    // const charactersLength = characters.length;
+    // for (let i = 0; i < 6; i++) {
+    //   result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    // }
+    // setString(result);
   };
 
   return (
@@ -89,7 +85,7 @@ export default function Demo(props) {
             borderRadius: "8px",
           }}
           onClick={handleSubmit}
-          disabled={isDisabled}
+          // disabled={isDisabled}
         >
           Login
         </Button>
