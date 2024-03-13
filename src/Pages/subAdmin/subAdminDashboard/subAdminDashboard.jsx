@@ -1266,7 +1266,7 @@ function ResponsiveDrawer(props) {
             }}
           >
             {access === "VISA_PROCESSING" && (
-              <div style={{display:"flex"}}>
+              <div style={{ display: "flex" }}>
                 {" "}
                 <InputLabel
                   id="dropdown-label"
@@ -1477,6 +1477,29 @@ function ResponsiveDrawer(props) {
               >
                 <ExitToAppIcon />
               </IconButton>
+              <div>
+                <Dialog
+                  open={logoutDialogOpen}
+                  onClose={() => setLogoutDialogOpen(false)}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                >
+                  <DialogTitle id="alert-dialog-title">{"Logout"}</DialogTitle>
+                  <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                      Are you sure you want to log out?
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={() => setLogoutDialogOpen(false)}>
+                      Cancel
+                    </Button>
+                    <Button onClick={() => handleLogoutConfirm()} autoFocus>
+                      Logout
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              </div>
             </div>
           </div>
         </Toolbar>
@@ -1683,28 +1706,6 @@ function ResponsiveDrawer(props) {
           {menuData === "Documenttype" && <Visacountryselect />}
         </Typography>
       </Box>
-
-      <div>
-        <Dialog
-          open={logoutDialogOpen}
-          onClose={() => setLogoutDialogOpen(false)}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">{"Logout"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              Are you sure you want to log out?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => setLogoutDialogOpen(false)}>Cancel</Button>
-            <Button onClick={() => handleLogoutConfirm()} autoFocus>
-              Logout
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
     </Box>
   );
 }

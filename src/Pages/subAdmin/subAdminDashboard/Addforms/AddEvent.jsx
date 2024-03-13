@@ -381,7 +381,7 @@ const CreateEventForm = () => {
                   name="isPaid"
                   checked={formValues.isPaid}
                   onChange={(e) => handleInputChange({ target: { name: 'isPaid', value: e.target.checked } })}
-                  style={{ alignItems: "left" }}
+                  style={{ marginRight:"10px"}}
 
                 />
 

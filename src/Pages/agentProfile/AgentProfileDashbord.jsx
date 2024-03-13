@@ -12,6 +12,10 @@ import { IoSettingsOutline } from "react-icons/io5";
 import axios from 'axios';
 import { apiURL } from '../../Constants/constant';
 import AgentProfileLeft from './AgentProfileLeft';
+import AgentHome from './AgentHome';
+// import { IoMdHome } from "react-icons/io";
+import { FaUserFriends } from "react-icons/fa";
+import AgentList from './AgentList';
 
 
 const AgentProfileDashbord = () => {
@@ -21,19 +25,31 @@ const AgentProfileDashbord = () => {
     const location = useLocation();
     const [isProfile, setIsProfile] = useState(false)
     const prams = useParams()
+    const [tab, setTab] = useState("home")
+    const [menu, setMenu] = useState(true)
+    const leftPath = [{ name: "home", icon: <IoMdHome size={30} /> }, { name: "Agent List", icon: <FaUserFriends size={30} /> }]
+
     const handleLogout = () => {
         dispatch(Agent_ProfileLogout());
     }
     const agentData = reducerState?.
         agentProfileReducer
+    const [data, setData] = useState(null)
+    useEffect(() => {
+
+        console.log(tab, leftPath, "/////////////////////////")
+    }, [tab])
 
     const [routeData, setRouteData] = useState([])
     const fetchData = async () => {
-        const data = await axios.get(`${apiURL.baseURL}/skyTrails/agent/getAllInvitesBooking/${reducerState?.
-            agentProfileReducer?.agentProfileloginData?.
-            data?.data?.
-            id}`)
-        console.log(location.pathname, "data")
+        // const Data = await axios.get(`${apiURL.baseURL}/skyTrails/agent/getAllInvitesBooking/${reducerState?.
+        //     agentProfileReducer?.agentProfileloginData?.
+        //     data?.data?.
+        //     id}`)
+        const Data = await axios.get(`${apiURL.baseURL}/skyTrails/agent/getAllInvitesBooking/65e959e675e669a23dfd9bb7`)
+        setData(Data?.data)
+        console.log(Data?.data
+            , "data")
     }
     useEffect(() => {
 
@@ -44,6 +60,10 @@ const AgentProfileDashbord = () => {
             fetchData()
         }
     }, [agentData.isLogin])
+    const toggleChangeTab = () => {
+        // setTab("hhhh");
+        console.log("weeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+    }
 
 
     return (
@@ -52,8 +72,9 @@ const AgentProfileDashbord = () => {
                 <div style={{ display: "flex", justifyContent: 'space-between', alignItems: "center", width: "100%" }} >
                     <div style={{
                         display: "flex",
-                        alignItems: "center"
-                    }}> <MenuIcon sx={{ color: "white", }} size={30} /><img
+                        alignItems: "center",
+                        gap: "15px"
+                    }}> <MenuIcon sx={{ color: "white", }} size={35} onClick={() => setMenu((pre) => !pre)} /><img
                             src={newlogo}
                             height="50px"
                             alt="logo"
@@ -100,8 +121,15 @@ const AgentProfileDashbord = () => {
             </div>
 
 
-            <div>
-                <AgentProfileLeft pathName={location.pathname} />
+            <div style={{ display: "flex", }}>
+                <AgentProfileLeft leftPath={leftPath} pathName={location.pathname} toggle={setTab} tab={tab} data={data} menu={menu} />
+                <div className='agentProfileRight' style={{ width: "100%" }}>
+                    {tab === leftPath[0].name &&
+                        <AgentHome data={data} toggle={setTab} tab={tab} />}
+                    {tab === leftPath[1].name &&
+                        <AgentList data={data} toggle={setTab} tab={tab} />}
+                </div>
+
 
             </div>
 

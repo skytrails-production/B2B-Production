@@ -214,6 +214,31 @@
   margin-top: 5px;
 }
 
+.addEvent-input-row-check{
+  display: flex;
+  gap:"50px"
+}
+
+.addEvent-input-row-sub{
+  display: flex;
+  gap:20px;
+}
+
+
+.addEvent-input-rows {
+  display: flex;
+  margin-top: 5px;
+}
+.addEvent-input-rows input {
+  flex: 1;
+  /* Distribute space equally */
+  margin-right: 10px;
+  /* Adjust as needed */
+  border:1px solid #21325D;
+  width: 20px;
+}
+
+
 .addEvent-input-row input {
   flex: 1;
   /* Distribute space equally */
@@ -261,4 +286,44 @@
 
 .addEvent-button-icon {
   font-size: 16px;
+}
+
+/* CSS for Checkbox Styles */
+.checkbox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; /* Adjust spacing between checkboxes */
+}
+
+.isPaid-label {
+  margin-left: 10px; /* Adjust spacing between checkbox and label */
+  font-size: 16px; /* Adjust font size */
+}
+
+/* CSS for Checkbox Customization */
+.checkbox input[type="checkbox"] {
+  /* Hide the default checkbox */
+  display: none;
+}
+
+/* Style for custom checkbox */
+.checkbox input[type="checkbox"] + label::before {
+  content: "";
+  display: inline-block;
+  width: 20px; /* Adjust size of custom checkbox */
+  height: 20px; /* Adjust size of custom checkbox */
+  border: 2px solid #ccc; /* Border color */
+  border-radius: 3px; /* Rounded corners */
+  margin-right: 5px; /* Adjust spacing between custom checkbox and label */
+}
+
+/* Style for custom checkbox when checked */
+.checkbox input[type="checkbox"]:checked + label::before {
+  background-color: #007bff; /* Background color when checked */
+  border-color: #007bff; /* Border color when checked */
+}
+
+/* Style for custom checkbox label text */
+.checkbox input[type="checkbox"] + label {
+  cursor: pointer; /* Show pointer cursor on hover */
 }

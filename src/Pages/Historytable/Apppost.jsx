@@ -28,22 +28,23 @@ function Apppost() {
   const [error, setError] = useState(null);
   const [selectedPostId, setSelectedPostId] = useState(null);
   const [confirmationOpen, setConfirmationOpen] = useState(false);
-
+  const[love,setLove]=useState(null);
+  const [trendedPosts, setTrendedPosts] = useState([]);
+  const [ap,setAp]=useState(null);
   const fetchData = async (pageNumber) => {
-    try { 
+    try {
       const response = await axios.get(
-        `${apiURL.baseURL}/skyTrails/forumPost/getPost?page=${pageNumber}&searchTerm=${searchTerm}`
+        `${apiURL.baseURL}/skyTrails/api/admin/forumPost/getPost?page=${pageNumber}&searchTerm=${searchTerm}`
       );
       const val = response.data.result.post;
+      //console.log(val);
       const filteredPosts = val.filter(post =>
         post.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
         (post.userDetail && post.userDetail.username.toLowerCase().includes(searchTerm.toLowerCase()))
       );
       setPosts(filteredPosts);
-     // setTotalPages(response.data.result.totalPages);
-     // Calculate total pages based on the total number of items and page size
-    const totalCount = response.data.result.totalCount;
-    const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+      const totalCount = response.data.result.totalCount;
+      const totalPages = Math.ceil(totalCount / PAGE_SIZE);
       setTotalPages(totalPages);
       setLoading(false);
     } catch (error) {
@@ -63,28 +64,72 @@ function Apppost() {
 
   useEffect(() => {
     fetchData(currentPage);
-  }, [currentPage,searchTerm]);
+  }, [currentPage, searchTerm]);
+
   const handleDelete = (postId) => {
-    setSelectedPostId(postId); // Set the postId of the post to delete
-    setConfirmationOpen(true); // Open the confirmation dialog
+    setSelectedPostId(postId);
+    setConfirmationOpen(true);
   };
 
-  const handleConfirmDelete = async (id) => {
+  const handleConfirmDelete = async () => {
     try {
-      // Send a request to delete the post with the selectedPostId
       await axios.delete(
         `${apiURL.baseURL}/skyTrails/api/admin/deletePost/${selectedPostId}`
       );
-      // If deletion is successful, update the posts state by filtering out the deleted post
       const updatedPosts = posts.filter((post) => post._id !== selectedPostId);
       setPosts(updatedPosts);
-      // Close the confirmation dialog
       setConfirmationOpen(false);
+      fetchData(currentPage);
     } catch (error) {
-      //console.error("Error deleting post:", error);
-      // Handle error appropriately
+      console.error("Error deleting post:", error);
     }
   };
+
+  const handleApprove = async (storyId) => {
+    try {
+      setAp(storyId);
+    //console.log("Payload:", { storyId: storyId });
+      const response = await axios.put(
+        `${apiURL.baseURL}/skyTrails/api/admin/approvePost`, // URL endpoint
+        { storyId: storyId } // Data to be sent in the request body
+      );
+      
+      const updatedPosts = posts.map((post) =>
+        post.storyId === storyId ? { ...post, status: "ACTIVE" } : post
+      );
+      
+      
+    setPosts(updatedPosts); 
+     
+      //console.log("Post approved successfully!");
+      fetchData(currentPage);
+    } catch (error) {
+      console.error("Error approving post:", error);
+    }
+    finally{
+      setAp(null);
+    }
+  };
+  const handleTrend = async (storyId) => {
+    try {
+      setLove(storyId);
+      const response = await axios.put(
+        `${apiURL.baseURL}/skyTrails/api/admin/addOnTrending`,
+        { storyId: storyId }
+      );
+      console.log('fetched');
+      fetchData(currentPage);
+      console.log('Response from server:', response.data);
+      console.log("Post marked as trending successfully!");
+    } catch (error) {
+      console.error("Error marking post as trending:", error);
+    }
+    finally{
+      setLove(null);
+    }
+  };
+  
+  
 
   const columns = [
     {
@@ -94,7 +139,7 @@ function Apppost() {
       renderCell: (params) => (
         <img
           src={
-           !params?.row?.image
+            !params?.row?.image
               ? appPost
               : params?.row?.image
           }
@@ -103,7 +148,6 @@ function Apppost() {
         />
       ),
     },
-
     {
       field: "userDetail.username",
       headerName: "Name",
@@ -111,7 +155,6 @@ function Apppost() {
       valueGetter: (params) =>
         params.row.userDetail && params.row.userDetail.username,
     },
-
     {
       field: "content",
       headerName: "Content",
@@ -119,23 +162,33 @@ function Apppost() {
       valueGetter: (params) => params.row.content,
     },
     {
-        field:"likesCount",
-        headerName: "Likes",
-        width:150,
-        valueGetter: (params)=>params.row.likesCount,
+      field: "likesCount",
+      headerName: "Likes",
+      width: 150,
+      valueGetter: (params) => params.row.likesCount,
     },
     {
       field: "Status",
       headerName: "Status",
       width: 120,
-      valueGetter: (params) => (params.row.status === "ACTIVE" ? "Active" : "Deactive"),
+      valueGetter: (params) => {
+        if (params.row.status === "ACTIVE") {
+          return "Active";
+        } else if (params.row.status === "DEACTIVE") {
+          return "Deactivate";
+        } else {
+          return "Pending";
+        }
+      },
     },
-
-    {
-      field: "actions",
-      headerName: "Actions",
-      width: 150,
-      renderCell: (params) => (
+    
+  
+  {
+    field: "actions",
+    headerName: "Actions",
+    width: 400,
+    renderCell: (params) => (
+      <div style={{ display: "flex", justifyContent: "space-between" ,width:'100%'}}>
         <Button
           variant="outlined"
           color="error"
@@ -144,15 +197,70 @@ function Apppost() {
         >
           Delete
         </Button>
-      ),
-    },
-  ];
+        <div style={{ width: "10px" }} />
+          <Button
+            variant="outlined"
+            color={ap === params.row._id? "secondary":"primary"}
+            size="small"
+            onClick={() => handleApprove(params.row._id)}
+            disabled={ap=== params.row._id}
+            style={{position : "relative"}}
+        >
+            {ap === params.row._id ? (
+    <>
+        <CircularProgress size={15} thickness={4}  variant="determinate" value={75} style={{ color: 'darkgreen' }} />
+        {/* {"Approving"} */}
+    </>
+) : (
+    "Approved"
+)}
+          </Button>
+      
+       <div style={{ width: "10px" }} />
+       <Button
+  variant="outlined"
+  color={love === params.row._id ? "success" : "secondary"}
+  size="small"
+  onClick={() => handleTrend(params.row._id)}
+  disabled={love === params.row._id}
+  style={{ position: "relative" }} 
+>
+{/* {love === params.row._id ? (
+    <CircularProgress size={20} color="inherit" />
+    {"Added to Trend"}
+):
+  // ) : (
+  //   love === params.row._id ? (
+  //     <CircularProgress size={20} color="inherit" />
+  //   ) : (
+    (
+      "Trending"
+    )
+  )} */}
+  {love === params.row._id ? (
+    <>
+        {/* <CircularProgress size={15} thickness={4} style={{ color: 'darkgreen' }} /> */}
+        <CircularProgress size={15} thickness={4}  variant="determinate" value={75} style={{ color: 'darkgreen' }} />
+        {/* {"Added to Trend"} */}
+    </>
+) : (
+    "Trending"
+)}
 
+
+</Button>
+
+      </div>
+    ),
+  },
+  
+  ];
   return (
     <>
-    {loading?(
-       <div style={{position: 'absolute', top: '-20%', left: '0', right:'0' ,width: '100%', height: '290%', backdropFilter: 'blur(4.5px)', backgroundColor: '#d8d5e663', zIndex: 1}}></div>
-    ):null}
+      {loading ? (
+        <div style={{ position: 'absolute', top: '-20%', left: '0', right: '0', width: '100%', height: '290%', backdropFilter: 'blur(4.5px)', backgroundColor: '#d8d5e663', zIndex: 1 }}></div>
+      ) : null}
+      
       <ConfirmationDialog
         open={confirmationOpen}
         onClose={() => setConfirmationOpen(false)}
@@ -203,15 +311,15 @@ function Apppost() {
         </div>
         {loading ? (
           <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "300px",
-          }}
-        >
-           <CircularProgress color="primary" size={69} thickness={4} style={{ position: 'absolute', top: '50%', left: '49.8%', transform: 'translate(-50%, -50%)',zIndex:2 }} />
-        </div>
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "300px",
+            }}
+          >
+            <CircularProgress color="primary" size={69} thickness={4} style={{ position: 'absolute', top: '50%', left: '49.8%', transform: 'translate(-50%, -50%)', zIndex: 2 }} />
+          </div>
         ) : error ? (
           <Typography
             variant="body1"
@@ -235,24 +343,24 @@ function Apppost() {
                     <GridToolbar />
                   </div>
                 ),
-                Pagination: () => null,
+                // Pagination: () => null,
               }}
               getRowId={(row) => row._id}
               rowHeight={80}
             />
           </div>
         )}
-        <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
+        {/* <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
           <Pagination
             count={totalPages}
             page={currentPage}
             onChange={(event, newPage) => handlePageChange(event, newPage)}
             color="primary"
           />
-        </Stack>
+        </Stack> */}
       </Paper>
     </>
   );
 }
 
-export default Apppost;
+export default Apppost; 

@@ -24,10 +24,11 @@
   position: relative;
 }
 .agentProfileContentContainer {
-  width: 100%;
+  /* width: 100%; */
   display: flex;
   height: calc(100vh - 70px);
   background-color: var(--main-bg-color-text) !important;
+  transition: all 1s ease-in-out;
 }
 .agentProfileContentLeft {
   background-color: var(--main-bg-color) !important;
@@ -36,12 +37,15 @@
   color: var(--main-bg-color-text);
   display: flex;
 
-  width: 200px;
+  /* width: 200px; */
   height: 50px;
   align-items: center;
+  border-radius: 8px;
+  margin: 5px 10px;
 }
 .agentProfileContentLeftItem:hover {
   background-color: var(--main-bg-color-secondery) !important;
+  color: var(--main-bg-color-text) !important;
 }
 .agentProfileContentLeftItemIcon {
   width: 40px;
@@ -59,8 +63,11 @@
 }
 .agentProfileContentLeftItemText {
   color: var(--main-bg-color-text);
-  font-size: 18px !important;
+  font-size: 25px !important;
   font-weight: 500 !important;
+  text-transform: capitalize;
+  width: 175px;
+  transition: all .35s ease-in-out;
 }
 .AgentProfileDropDwon {
   position: absolute;
@@ -78,23 +85,83 @@
   align-items: center;
   gap: 5px;
   padding: 0px 5px;
-  color:var(--main-bg-color);
+  color: var(--main-bg-color);
 }
 .AgentProfileDropDwonAgentDiv:hover {
-    background-color: #161a3021;
+  background-color: #161a3021;
 }
 .AgentProfileDropDwonAgentDivItem {
   display: flex;
   gap: 10px;
   align-items: center;
   padding: 0px 5px;
-  color:var(--main-bg-color);
+  color: var(--main-bg-color);
 }
 .AgentProfileDropDwonAgentDivItem:hover {
   background-color: var(--main-bg-color-text);
   color: #31304d;
   background-color: #161a3021;
 }
-.activeAgentProfile{
-    background-color: var(--main-bg-color);
+.activeAgentProfile {
+  background-color: var(--main-bg-color);
+  color: var(--main-bg-color-secondery);
+}
+.activeAgentProfile div,
+.activeAgentProfile svg {
+  /* background-color: var(--main-bg-color) !important; */
+  color: var(--main-bg-color-secondery) !important;
+}
+.activeAgentProfile div :hover,
+.activeAgentProfile svg:hover {
+  /* background-color: var(--main-bg-color) !important; */
+  color: var(--main-bg-color-text) !important;
+}
+.activeAgentProfile {
+  background-color: var(--main-bg-color-hover);
+}
+.agentProfileRight {
+  background-color: var(--main-bg-color-text);
+}
+.AgentHomeH1 {
+  color: var(--main-bg-color);
+  font-size: 34px;
+  font-weight: 500;
+  margin-top: 50px;
+  margin-left: 50px;
+}
+
+.agentHomeDataContainer {
+  display: flex;
+  justify-content: start;
+  gap: 20px;
+  padding: 10px;
+}
+.agentNotAccess {
+  color: var(--main-bg-color);
+  font-size: 20px;
+  font-weight: 500;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 500px;
+}
+.agentHomeDataItem {
+  width: 300px;
+  background-color: var(--main-bg-color-hover);
+  display: flex;
+  justify-content: space-between;
+  height: 150px;
+  padding: 10px;
+  border-radius: 8px;
+}
+.agentHomeDataItemleft {
+  font-size: 20px;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.MenueFalse {
+  width: 0px !important;
 }

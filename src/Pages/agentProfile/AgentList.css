@@ -1,0 +1,109 @@
+:root {
+  --main-bg-color: #161a30;
+  --main-bg-color-secondery: #31304d;
+  --main-bg-color-hover: #b6bbc4;
+  --main-bg-color-text: #f0ece5;
+}
+.agentProfileListH1 {
+  /* margin-top: 50px; */
+  /* margin-left: 50px; */
+  color: var(--main-bg-color-secondery);
+  font-size: 30px;
+  font-weight: bold;
+  border-radius: 8px;
+  
+}
+.agentProfileListContainer {
+  width: 100%;
+  padding: 50px;
+}
+.agentProfileListCardContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.agentProfileListCard {
+  width: 100%;
+  background-color: var(--main-bg-color-hover);
+
+  border-radius: 8px;
+  padding: 5px 10px;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 15px;
+}
+.agentProfileListCardDiv {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 10px;
+}
+.agentProfileListName {
+  font-size: 20px;
+  color: var(--main-bg-color);
+  font-weight: 500;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+.agentProfileListCardDivItem {
+  padding: 5px 10px;
+  background-color: var(--main-bg-color-text);
+  border-radius: 8px;
+  width: 100%;
+}
+.agentProfileListCardDivItemIcon {
+  background-color: var(--main-bg-color-secondery);
+  padding: 5px;
+  height: 50px;
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+.agentProfileListCardDivItemIcon svg {
+  fill: var(--main-bg-color-text);
+}
+.agentProfileListCardDivItemProflie {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 10px;
+}
+.agentProfileListCardDivItemFlight {
+  display: flex;
+  justify-content: space-between;
+}
+.agentProfileListCardDivItemProflieFlightBooking {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--main-bg-color-secondery);
+}
+.agentProfileCardTotal {
+  font-size: 15px;
+  font-weight: 700;
+}
+.agentProfileCardTotalFlight {
+  font-size: 15px;
+  font-weight: 500;
+}
+.agentProfileCardTotalAmountDiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.agentProfileCardTotalAmount {
+  text-align: center;
+  font-size: 25px;
+  font-weight: 600;
+  color: var(--main-bg-color-secondery);
+}
+.agentProfileCardTotalAmountStr {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--main-bg-color);
+}

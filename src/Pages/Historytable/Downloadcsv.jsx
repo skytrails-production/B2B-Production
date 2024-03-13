@@ -149,8 +149,8 @@ function Downloadcsv() {
           SSDC Leads
         </Typography>
       </div>
-      <div style={{ marginBottom: "20px", textAlign: "center" }}>
-        <button style={{backgroundColor:'green',color:'white',marginTop:'20px'}} onClick={handleDownloadCsv}>Download CSV</button>
+      <div style={{ marginBottom: "10px", textAlign: "center" }}>
+        <button style={{backgroundColor:'green',color:'white',marginTop:'30px'}} onClick={handleDownloadCsv}>Download CSV</button>
       </div>
       <div style={{ overflowX: "auto", backgroundColor:'white'}}>
         <table style={{ width: "100%", borderCollapse: "collapse",border:'none' }}>

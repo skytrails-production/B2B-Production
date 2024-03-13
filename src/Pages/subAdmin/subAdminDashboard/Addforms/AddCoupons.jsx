@@ -205,7 +205,7 @@ const AddCoupons = () => {
             />
           </label>
         </div>
-        <button type="submit">Submit</button>
+        <button className="buttoncsss" type="submit">Submit</button>
       </form>
     </div>
   );

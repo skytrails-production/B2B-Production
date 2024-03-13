@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import profilePicUrl from "../../../../Images/logo.jpeg";
 import "./AddEvents.css";
 import { CircularProgress } from "@mui/material";
+import { padding } from "@mui/system";
 const CreateEventForm = () => {
   const [page, setPage] = useState(1);
 
@@ -19,9 +20,13 @@ const CreateEventForm = () => {
     showType: "",
     age: "",
     venue: "",
+    registrationRequired: false,
+    eventCountry: "",
+    isPaid: false,
+    forCouple:false,
   });
-  const[load,setLoad]=useState(false);
-  const[message,setMessage]=useState("");
+  const [load, setLoad] = useState(false);
+  const [message, setMessage] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -58,7 +63,7 @@ const CreateEventForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  setLoad(true);
+    setLoad(true);
     try {
       const formData = new FormData();
 
@@ -86,6 +91,9 @@ const CreateEventForm = () => {
       formData.append("isPaid", formValues.isPaid);
       // couplePrice
       formData.append("noOfMember", formValues.noOfMember);
+      formData.append("registrationRequired", formValues.registrationRequired);
+      formData.append("eventCountry", formValues.eventCountry);
+      formData.append("forCouple",formValues.forCouple);
 
       const response = await axios.post(
         `${apiURL.baseURL}/skyTrails/api/admin/events/createEvents`,
@@ -98,25 +106,21 @@ const CreateEventForm = () => {
       );
 
       if (response.status >= 200 && response.status < 300) {
-       // alert("Event created successfully!");
-       setMessage('Event created successfully!')
-       setTimeout(()=>{
-        navigate("/admin/dashboard");
-       },5000);
-      
+        // alert("Event created successfully!");
+        setMessage("Event created successfully!");
+        setTimeout(() => {
+          navigate("/admin/dashboard");
+        }, 5000);
       } else {
         //alert("Failed to create Event!");
-        setMessage('Failed to create Event!')
+        setMessage("Failed to create Event!");
       }
     } catch (error) {
-      console.error("API Error:", error.response.data);
-    }
-    finally{
+      console.error("API Error:", error);
+    } finally {
       setLoad(false);
     }
   };
-
-
 
   const nextPage = () => {
     setPage(page + 1);
@@ -128,12 +132,45 @@ const CreateEventForm = () => {
 
   return (
     <div className="addEvent-div">
-                   {load && (
-                <div className="loader-overlay" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(255, 255, 255, 0.5))', zIndex: 9999 }}>
-                     <CircularProgress color="primary" size={50} thickness={3} style={{ position: 'absolute', top: '50%', left: '49.8%', transform: 'translate(-50%, -50%)' }} />
-                </div>
-            )}
-              {message && <div style={{ backgroundColor: '#d4edda', color: '#155724', padding: '10px', marginBottom: '30px', borderRadius: '5px' }}>{message}</div>}
+      {load && (
+        <div
+          className="loader-overlay"
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: "rgba(255, 255, 255, 0.5))",
+            zIndex: 9999,
+          }}
+        >
+          <CircularProgress
+            color="primary"
+            size={50}
+            thickness={3}
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "49.8%",
+              transform: "translate(-50%, -50%)",
+            }}
+          />
+        </div>
+      )}
+      {message && (
+        <div
+          style={{
+            backgroundColor: "#d4edda",
+            color: "#155724",
+            padding: "10px",
+            marginBottom: "30px",
+            borderRadius: "5px",
+          }}
+        >
+          {message}
+        </div>
+      )}
       <header className="sectionagent headersagent">
         <div className="headead">
           <h2>Create Event</h2>
@@ -141,333 +178,441 @@ const CreateEventForm = () => {
       </header>
       <form onSubmit={handleSubmit} className="addEvent-form">
         <div className="addEvent-page">
-
-
-          
-            <div className="addEvent-form-group">
-              <div className="addEvent-input-row">
-                <input
-                  type="text"
-                  name="title"
-                  value={formValues.title}
-                  onChange={handleInputChange}
-                  className="addEvent-input addEvent-input-small"
-                  placeholder="Title"
-                />
-                <input
-                  type="number"
-                  name="price"
-                  value={formValues.price}
-                  onChange={handleInputChange}
-                  className="addEvent-input addEvent-input-small"
-                  placeholder="Price"
-                  onKeyDown={(e) => {
-                    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-                      e.preventDefault();
-                    }
-                  }}
-                />
-              </div>
+          <div className="addEvent-form-group">
+            <div className="addEvent-input-row">
+              <input
+                type="text"
+                name="title"
+                value={formValues.title}
+                onChange={handleInputChange}
+                className="addEvent-input addEvent-input-small"
+                placeholder="Title"
+              />
+              <input
+                type="text"
+                name="price"
+                value={formValues.price}
+                onChange={handleInputChange}
+                className="addEvent-input addEvent-input-small"
+                placeholder="Price"
+                onKeyDown={(e) => {
+                  if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+                    e.preventDefault();
+                  }
+                }}
+              />
             </div>
-            <div className="addEvent-form-group">
-              <div className="addEvent-input-row">
+          </div>
+          <div className="addEvent-form-group">
+            <div className="addEvent-input-row">
+              <input
+                type="text"
+                name="bookingPrice"
+                value={formValues.bookingPrice}
+                onChange={handleInputChange}
+                className="addEvent-input"
+                placeholder="BookingPrice"
+                onKeyDown={(e) => {
+                  if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+                    e.preventDefault();
+                  }
+                }}
+              />
 
-                <input
-                  type="number"
-                  name="bookingPrice"
-                  value={formValues.bookingPrice}
-                  onChange={handleInputChange}
-                  className="addEvent-input"
-                  placeholder="BookingPrice"
-                  onKeyDown={(e) => {
-                    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-                      e.preventDefault();
-                    }
-                  }}
-                />
-
-
-
-                <input
-                  type="string"
-                  name="showType"
-                  value={formValues.showType}
-                  onChange={handleInputChange}
-                  className="addEvent-input"
-                  placeholder="ShowType"
-                />
-              </div>
+              <input
+                type="string"
+                name="showType"
+                value={formValues.showType}
+                onChange={handleInputChange}
+                className="addEvent-input"
+                placeholder="ShowType"
+              />
             </div>
-            <div className="addEvent-form-group">
-              <div className="addEvent-input-row">
+          </div>
+          <div className="addEvent-form-group">
+            <div className="addEvent-input-row">
+              <input
+                type="date"
+                name="startDate"
+                value={formValues.startDate}
+                onChange={handleInputChange}
+                className="addEvent-input"
+              />
 
+              <input
+                type="date"
+                name="endDate"
+                value={formValues.endDate}
+                onChange={handleInputChange}
+                className="addEvent-input"
+              />
+            </div>{" "}
+          </div>
+          <div className="addEvent-form-group">
+            <div className="addEvent-input-row">
+              <input
+                type="string"
+                name="age"
+                value={formValues.age}
+                onChange={handleInputChange}
+                className="addEvent-input"
+                placeholder="Age"
+              />
 
-                <input
-                  type="date"
-                  name="startDate"
-                  value={formValues.startDate}
-                  onChange={handleInputChange}
-                  className="addEvent-input"
-                />
-
-
-                <input
-                  type="date"
-                  name="endDate"
-                  value={formValues.endDate}
-                  onChange={handleInputChange}
-                  className="addEvent-input"
-                />
-              </div>  </div>
-            <div className="addEvent-form-group">
-              <div className="addEvent-input-row">
-
-
-                <input
-                  type="string"
-                  name="age"
-                  value={formValues.age}
-                  onChange={handleInputChange}
-                  className="addEvent-input"
-                  placeholder="Age"
-                />
-
-
-                <input
-                  type="text"
-                  name="venue"
-                  value={formValues.venue}
-                  onChange={handleInputChange}
-                  className="addEvent-input"
-                  placeholder="Venue"
-                />
-              </div>
+              <input
+                type="text"
+                name="venue"
+                value={formValues.venue}
+                onChange={handleInputChange}
+                className="addEvent-input"
+                placeholder="Venue"
+              />
             </div>
-            <div className="addEvent-form-group">
-              <div className="addEvent-input-row">
+          </div>
+          <div className="addEvent-form-group">
+            <div className="addEvent-input-row">
+              <input
+                type="number"
+                name="adultPrice"
+                value={formValues.adultPrice}
+                onChange={handleInputChange}
+                className="addEvent-input"
+                placeholder="AdultPrice"
+                onKeyDown={(e) => {
+                  if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+                    e.preventDefault();
+                  }
+                }}
+              />
 
-
-                <input
-                  type="number"
-                  name="adultPrice"
-                  value={formValues.adultPrice}
-                  onChange={handleInputChange}
-                  className="addEvent-input"
-                  placeholder="AdultPrice"
-                  onKeyDown={(e) => {
-                    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-                      e.preventDefault();
-                    }
-                  }}
-                />
-
-
-                <input
-                  type="number"
-                  name="childPrice"
-                  value={formValues.childPrice}
-                  onChange={handleInputChange}
-                  className="addEvent-input"
-                  placeholder="ChildPrice"
-                  onKeyDown={(e) => {
-                    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-                      e.preventDefault();
-                    }
-                  }}
-                />
-              </div>
+              <input
+                type="number"
+                name="childPrice"
+                value={formValues.childPrice}
+                onChange={handleInputChange}
+                className="addEvent-input"
+                placeholder="ChildPrice"
+                onKeyDown={(e) => {
+                  if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+                    e.preventDefault();
+                  }
+                }}
+              />
             </div>
-            <div className="addEvent-form-group">
-              <div className="addEvent-input-row">
+          </div>
+          <div className="addEvent-form-group">
+            <div className="addEvent-input-row">
+              <textarea
+                type="text"
+                name="content"
+                value={formValues.content}
+                onChange={handleInputChange}
+                className="addEvent-input"
+                style={{ width: "100%" }}
+                placeholder="Content"
+              />
+            </div>
+          </div>
 
-                <textarea
-                  type="text"
-                  name="content"
-                  value={formValues.content}
-                  onChange={handleInputChange}
-                  className="addEvent-input"
-                  style={{ width: "100%" }}
-                  placeholder="Content"
-                />
-              </div></div>
+          <div className="addEvent-form-group">
+            <div className="addEvent-input-row">
+              <input
+                type="time"
+                name="startTime"
+                value={formValues.startTime}
+                onChange={handleInputChange}
+                className="addEvent-input"
+                placeholder="startTime"
+              />
+              <input
+                type="time"
+                name="endTime"
+                value={formValues.endTime}
+                onChange={handleInputChange}
+                className="addEvent-input"
+                placeholder="endTime"
+              />
+            </div>{" "}
+          </div>
 
+          <div className="addEvent-form-group">
+            <div className="addEvent-input-row">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="addEvent-input"
+                style={{ padding: "5px" }}
+              />
+              <input
+                type="number"
+                name="breakTime"
+                value={formValues.breakTime}
+                onChange={handleInputChange}
+                className="addEvent-input"
+                placeholder="BreakTime"
+              />
+            </div>{" "}
+          </div>
 
-            <div className="addEvent-form-group">
-              <div className="addEvent-input-row">
-                <input
-                  type="time"
-                  name="startTime"
-                  value={formValues.startTime}
-                  onChange={handleInputChange}
-                  className="addEvent-input"
-                  placeholder="startTime"
+          <div className="addEvent-form-group">
+            <div className="addEvent-input-row">
+              <input
+                type="number"
+                name="noOfShows"
+                value={formValues.noOfShows}
+                onChange={handleInputChange}
+                className="addEvent-input"
+                placeholder=" NoOfShows"
+              />
 
-                />
-                <input
-                  type="time"
-                  name="endTime"
-                  value={formValues.endTime}
-                  onChange={handleInputChange}
-                  className="addEvent-input"
-                  placeholder="endTime"
+              <input
+                type="number"
+                name="slotTime"
+                value={formValues.slotTime}
+                onChange={handleInputChange}
+                className="addEvent-input"
+                placeholder="SlotTime"
+              />
+            </div>{" "}
+          </div>
 
-                />
-              </div> 
-              </div>
+          <div className="addEvent-form-group">
+            <div className="addEvent-input-row">
+              <input
+                type="number"
+                name="latitude"
+                value={formValues.latitude}
+                onChange={handleInputChange}
+                className="addEvent-input"
+                placeholder="Latitude"
+              />
 
-            <div className="addEvent-form-group">
-              <div className="addEvent-input-row">
+              <input
+                type="number"
+                name="longitude"
+                value={formValues.longitude}
+                onChange={handleInputChange}
+                className="addEvent-input"
+                placeholder="longitude"
+              />
+            </div>{" "}
+          </div>
 
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFileChange}
-                  className="addEvent-input"
-                  style={{padding:"5px"}}
-                />
-                <input
-                  type="number"
-                  name="breakTime"
-                  value={formValues.breakTime}
-                  onChange={handleInputChange}
-                  className="addEvent-input"
-                  placeholder="BreakTime"
-                  onKeyDown={(e) => {
-                    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-                      e.preventDefault();
-                    }
-                  }}
-                />
+          <div className="addEvent-form-group">
+            <div className="addEvent-input-row">
+              <input
+                type="number"
+                name="noOfMember"
+                value={formValues.noOfMember}
+                onChange={handleInputChange}
+                className="addEvent-input"
+                placeholder="No of member"
+              />
+              <input
+                type="number"
+                name="couplePrice"
+                value={formValues.couplePrice}
+                onChange={handleInputChange}
+                className="addEvent-input"
+                placeholder="couplePrice"
+              />
+            </div>{" "}
+          </div>
 
+          {/* <div className="addEvent-form-group">
+            <div className="addEvent-input-row">
+              <input
+                type="text"
+                name="eventCountry"
+                value={formValues.eventCountry}
+                onChange={handleInputChange}
+                placeholder="eventCountry"
+                
+              />
 
-              </div>  </div>
-
-            <div className="addEvent-form-group">
-              <div className="addEvent-input-row">
-
-                <input
-                  type="number"
-                  name="noOfShows"
-                  value={formValues.noOfShows}
-                  onChange={handleInputChange}
-                  className="addEvent-input"
-                  placeholder=" NoOfShows"
-                  onKeyDown={(e) => {
-                    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-                      e.preventDefault();
-                    }
-                  }}
-                />
-
-
-                <input
-                  type="number"
-                  name="slotTime"
-                  value={formValues.slotTime}
-                  onChange={handleInputChange}
-                  className="addEvent-input"
-                  placeholder="SlotTime"
-                  onKeyDown={(e) => {
-                    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-                      e.preventDefault();
-                    }
-                  }}
-                />
-              </div> </div>
-
-            <div className="addEvent-form-group">
-              <div className="addEvent-input-row">
-
-                <input
-                  type="number"
-                  name="latitude"
-                  value={formValues.latitude}
-                  onChange={handleInputChange}
-                  className="addEvent-input"
-                  placeholder="Latitude"
-                  onKeyDown={(e) => {
-                    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-                      e.preventDefault();
-                    }
-                  }}
-                />
-
-
-                <input
-                  type="number"
-                  name="longitude"
-                  value={formValues.longitude}
-                  onChange={handleInputChange}
-                  className="addEvent-input"
-                  placeholder="longitude"
-                  onKeyDown={(e) => {
-                    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-                      e.preventDefault();
-                    }
-                  }}
-                />
-              </div> </div>
-
-
-            <div className="addEvent-form-group">
-              <div className="addEvent-input-row">
-
-
-
-                <input
-                  type="number"
-                  name="noOfMember"
-                  value={formValues.noOfMember}
-                  onChange={handleInputChange}
-                  className="addEvent-input"
-                  placeholder="No of member"
-                  onKeyDown={(e) => {
-                    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-                      e.preventDefault();
-                    }
-                  }}
-                />
-                <input
-                  type="number"
-                  name="couplePrice"
-                  value={formValues.couplePrice}
-                  onChange={handleInputChange}
-                  className="addEvent-input"
-                  placeholder="couplePrice"
-                  onKeyDown={(e) => {
-                    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-                      e.preventDefault();
-                    }
-                  }}
-                />
-              </div> </div>
-
-            <div className="addEvent-form-group">
               <div className="checkbox">
+                <label htmlFor="isPaidCheckbox" className="isPaid-label">
+                  isPaid
+                </label>
                 <input
                   type="checkbox"
                   id="isPaidCheckbox"
                   name="isPaid"
                   checked={formValues.isPaid}
-                  onChange={(e) => handleInputChange({ target: { name: 'isPaid', value: e.target.checked } })}
-                  style={{ alignItems: "left" }}
-
+                  onChange={(e) =>
+                    handleInputChange({
+                      target: { name: "isPaid", value: e.target.checked },
+                    })
+                  }
                 />
-
-                <button type="submit" className="addEvent-button">
-                  <span className="addEvent-button-text">Submit</span>
-                  <span className="addEvent-button-icon">&#10004;</span>
-                </button>
-
               </div>
+              <div className="checkbox">
+                <label htmlFor="isPaidCheckbox" className="isPaid-label">
+                  registrationRequired
+                </label>
+                <input
+                  type="checkbox"
+                  id="isPaidCheckbox"
+                  name="registrationRequired"
+                  checked={formValues.registrationRequired}
+                  onChange={(e) =>
+                    handleInputChange({
+                      target: {
+                        name: "registrationRequired",
+                        value: e.target.checked,
+                      },
+                    })
+                  }
+                />
+              </div>
+            </div>{" "}
+          </div> */}
+
+          <div className="addEvent-form-group">
+            <div className="addEvent-input-row">
+              <input
+                type="text"
+                name="eventCountry"
+                value={formValues.eventCountry}
+                onChange={handleInputChange}
+                placeholder="eventCountry"
+              />
             </div>
+            <div className="addEvent-input-row-check">
+              <div style={{ display: "flex", gap: "10px" }}>
+                <label htmlFor="isPaidCheckbox" className="isPaid-label" style={{marginTop:"8px"}}>
+                  Paid
+                </label>
+                <input
+                  type="checkbox"
+                  id="isPaidCheckbox"
+                  name="isPaid"
+                  checked={formValues.isPaid}
+                  onChange={(e) =>
+                    handleInputChange({
+                      target: { name: "isPaid", value: e.target.checked },
+                    })
+                  }
+                />
+              </div>
+              <div style={{ display: "flex", gap: "10px" }}>
+                <label htmlFor="isPaidCheckbox" className="isPaid-label" style={{marginTop:"8px"}}>
+                  RegistrationRequired
+                </label>
+                <input
+                  type="checkbox"
+                  id="isPaidCheckbox"
+                  name="registrationRequired"
+                  checked={formValues.registrationRequired}
+                  onChange={(e) =>
+                    handleInputChange({
+                      target: {
+                        name: "registrationRequired",
+                        value: e.target.checked,
+                      },
+                    })
+                  }
+                />
+              </div>
+              <div style={{ display: "flex", gap: "10px" }}>
+                <label htmlFor="isPaidCheckbox" className="isPaid-label" style={{marginTop:"8px"}}>
+                Couple
+                </label>
+                <input
+                  type="checkbox"
+                  id="isPaidCheckbox"
+                  name="forCouple"
+                  checked={formValues.forCouple}
+                  onChange={(e) =>
+                    handleInputChange({
+                      target: {
+                        name: "forCouple",
+                        value: e.target.checked,
+                      },
+                    })
+                  }
+                />
+              </div>
+            </div>{" "}
+          </div>
 
+          {/* <div
+            className="addEvent-form-group"
+            style={{ display: "flex", marginTop: "8px", gap: "70px" }}
+          >
+            <input
+              type="number"
+              name="eventCountry"
+              value={formValues.eventCountry}
+              onChange={handleInputChange}
+              className="addEvent-input"
+              placeholder="eventCountry"
+            />
+            <div className="addEvent-input-row-sub">
+              <div className="checkbox">
+                <label htmlFor="isPaidCheckbox" className="isPaid-label">
+                  isPaid
+                </label>
+                <input
+                  type="checkbox"
+                  id="isPaidCheckbox"
+                  name="isPaid"
+                  checked={formValues.isPaid}
+                  onChange={(e) =>
+                    handleInputChange({
+                      target: { name: "isPaid", value: e.target.checked },
+                    })
+                  }
+                />
+              </div>
+              <div className="checkbox">
+                <label htmlFor="isPaidCheckbox" className="isPaid-label">
+                  registrationRequired
+                </label>
+                <input
+                  type="checkbox"
+                  id="isPaidCheckbox"
+                  name="registrationRequired"
+                  checked={formValues.registrationRequired}
+                  onChange={(e) =>
+                    handleInputChange({
+                      target: {
+                        name: "registrationRequired",
+                        value: e.target.checked,
+                      },
+                    })
+                  }
+                />
+              </div>
+            </div>{" "}
+          </div> */}
 
-          
-
+          <div className="addEvent-form-group">
+            {/* <div className="checkbox">
+              <label htmlFor="isPaidCheckbox" className="isPaid-label">
+                isPaid
+              </label>
+              <input
+                type="checkbox"
+                id="isPaidCheckbox"
+                name="isPaid"
+                checked={formValues.isPaid}
+                onChange={(e) =>
+                  handleInputChange({
+                    target: { name: "isPaid", value: e.target.checked },
+                  })
+                }
+                style={{ marginLeft: "-10px" }}
+              />
+            </div> */}
+          </div>
+          <button type="submit" className="addEvent-button">
+            <span className="addEvent-button-text">Submit</span>
+            <span className="addEvent-button-icon">&#10004;</span>
+          </button>
         </div>
         {/* Pagination buttons */}
-
       </form>
     </div>
   );

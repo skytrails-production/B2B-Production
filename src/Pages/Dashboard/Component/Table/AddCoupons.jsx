@@ -5,7 +5,7 @@ import { apiURL } from "../../../../Constants/constant";
 import { useNavigate } from "react-router-dom";
 import "./AddCoupons.css";
 import {swalModal} from "../../../../utils/swal"
-
+import { CircularProgress } from "@mui/material";
 const AddCoupons = () => {
   const data = JSON.parse(sessionStorage.getItem("persist:root"));
   const logdata = JSON.parse(data?.adminAuth);
@@ -25,7 +25,7 @@ const AddCoupons = () => {
     uniqueId: agentID,
     images: couponImg,
   });
-
+ const [load,setLoad]=useState(false);
   useEffect(() => {
     setFormValues({ ...formValues, uniqueId: agentID });
   }, [agentID]);
@@ -46,7 +46,7 @@ const AddCoupons = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  setLoad(true);
     try {
       const response = await axios.post(
         `${apiURL.baseURL}/skyTrails/api/admin/createCoupons`,
@@ -73,10 +73,18 @@ const AddCoupons = () => {
       
       swalModal('flight','Failed to create Coupon!',false);
     }
+    finally{
+      setLoad(false);
+    }
   };
 
   return (
     <div className="addCoupon-div">
+      {load &&
+          <div className="loader-overlay" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(255, 255, 255, 0.5))', zIndex: 9999 }}>
+          <CircularProgress color="primary" size={50} thickness={3} style={{ position: 'absolute', top: '50%', left: '49.8%', transform: 'translate(-50%, -50%)' }} />
+     </div>
+      }
       <h3 style={{ textAlign: "center" }} className="addCoupon-heading">
         <strong>Add Coupons Form</strong>
       </h3>

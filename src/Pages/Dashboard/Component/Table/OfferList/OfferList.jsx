@@ -5,7 +5,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { Alert } from "@mui/material";
 import { apiURL } from "../../../../../Constants/constant";
 import "./OfferList.css";
-
+import {CircularProgress} from "@mui/material";
 const AllOfferList = () => {
   const [offerList, setOfferList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -49,6 +49,10 @@ const AllOfferList = () => {
   };
 
   return (
+    <>
+      {loading ? (
+        <div style={{ position: 'absolute', top: '-20%', left: '0', right: '0', width: '100%', height: '290%', backdropFilter: 'blur(4.5px)', backgroundColor: '#d8d5e663', zIndex: 1 }}></div>
+      ) : null}
     <div className="subada-table-container" style={{ position: "relative", width: "92%" }}>
       <div className="adsearch-bar" id="adssearch"style={{ position: "absolute", top: 10, zIndex: 1, fontWeight: "bold",width:'88%'}}>
         <TextField
@@ -70,7 +74,16 @@ const AllOfferList = () => {
       </div>
       <div style={{ marginTop:"0px", width: "100%", backgroundColor: "#fff" }}>
         {loading ? (
-          <div  className="loading-message" style={{marginTop:"25px", display:"flex",justifyContent:"center",alignItems:"center"}}>Loading...</div>
+           <div
+           style={{
+             display: "flex",
+             justifyContent: "center",
+             alignItems: "center",
+             height: "300px",
+           }}
+         >
+           <CircularProgress color="primary" size={69} thickness={4} style={{ position: 'absolute', top: '50%', left: '49.8%', transform: 'translate(-50%, -50%)', zIndex: 2 }} />
+         </div>
         ) : dataAvailable ? (
           <div className="paginate">
             {Array.from({ length: totalPages }, (_, i) => (
@@ -96,6 +109,7 @@ const AllOfferList = () => {
         />
       </Stack>
     </div>
+    </>
   );
 };
 
