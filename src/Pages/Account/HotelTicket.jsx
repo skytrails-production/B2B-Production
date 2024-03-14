@@ -5,6 +5,7 @@ import { apiURL } from "../../Constants/constant";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { Modal, Box, TextField, Button, Typography } from "@mui/material";
 import "./FlightTicket.css";
+import { usePDF } from 'react-to-pdf';
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 import { useNavigate } from "react-router-dom";
@@ -22,6 +23,7 @@ const HotelTicket = () => {
   const [showEmailModal, setShowEmailModal] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
+  const { toPDF, targetRef } = usePDF({filename: 'hotelBooking.pdf'});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -230,7 +232,7 @@ const HotelTicket = () => {
 
               {/* Button to download as PDF */}
               <button
-                onClick={handleEmailTicket}
+                onClick={() => toPDF()}
                 style={{
                   padding: "0.2rem",
                   background: "red",
@@ -239,7 +241,7 @@ const HotelTicket = () => {
                   border: "none",
                 }}
               >
-                Email Ticket
+                Download as Pdf
               </button>
 
               {/* Button to print ticket */}
@@ -258,6 +260,7 @@ const HotelTicket = () => {
             </div>
 
             <div id="pdf-content">
+              <div ref={targetRef}>
               <div
                 style={{
                   justifyContent: "space-between",
@@ -1882,6 +1885,8 @@ const HotelTicket = () => {
                 </div>
               </div>
 
+              </div>
+
               <div style={{ width: "100%", margin: "0px", padding: 0 }}>
                 <img
                   src="https://travvolt.s3.amazonaws.com/app_banner.png"
@@ -1893,6 +1898,8 @@ const HotelTicket = () => {
                   }}
                 />
               </div>
+
+              
 
               <div
                 style={{

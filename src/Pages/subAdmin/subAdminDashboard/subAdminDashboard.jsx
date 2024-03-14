@@ -1170,7 +1170,7 @@ function ResponsiveDrawer(props) {
           >
             <SupervisorAccount />
           </IconButton>
-          {isBoxOpen && (
+          {isBoxOpen && (access === "REQUEST_HANDLER" || access === "ADS_HANDLER" || access === "EVENT_HANDLER" || access === "COUPON_CODE_HANDLER" ) && (
             <div
               style={{
                 position: "absolute",
@@ -1253,7 +1253,7 @@ function ResponsiveDrawer(props) {
                   transition: "background-color 0.3s, color 0.3s",
                 }}
               >
-                Close
+                Close 
               </button>
             </div>
           )}

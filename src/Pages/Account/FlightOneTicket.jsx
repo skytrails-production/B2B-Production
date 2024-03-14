@@ -6,7 +6,7 @@ import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { Modal, Box, TextField, Button,Typography } from '@mui/material';
 import "./FlightTicket.css";
 import { useNavigate } from "react-router-dom";
-import html2pdf from "html2pdf.js";
+import { usePDF } from 'react-to-pdf';
 import Swal from "sweetalert2";
 const pdfLogo = "https://travvolt.s3.amazonaws.com/ST-Main-LogoPdf.png";
 const Spinner = () => {
@@ -27,6 +27,7 @@ const FlightOneTicket = () => {
     mobileNumber: '',
     price: '',
   });
+  const { toPDF, targetRef } = usePDF({filename: 'flightETicket.pdf'});
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -87,11 +88,7 @@ const FlightOneTicket = () => {
     return date.toLocaleString("en-US", options);
   };
 
-  // Function to handle PDF download
-  const handleDownloadAsPDF = () => {
-    const element = document.getElementById("pdf-content"); // Get the element to convert to PDF
-    html2pdf().from(element).save(); // Convert to PDF and save
-  };
+  
 
   // Function to handle printing
   const handlePrintTicket = () => {
@@ -362,7 +359,7 @@ const FlightOneTicket = () => {
 
               {/* Button to download as PDF */}
               <button
-                onClick={handleDownloadAsPDF}
+                onClick={() => toPDF()}
                 style={{
                   padding: "0.2rem",
                   background: "red",
@@ -388,7 +385,7 @@ const FlightOneTicket = () => {
                 Print Ticket
               </button>
             </div>
-            <div id="pdf-content">
+            <div id="pdf-content" ref={targetRef}>
 
             
               <div

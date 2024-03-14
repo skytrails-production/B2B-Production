@@ -117,18 +117,18 @@ function Apppost() {
         `${apiURL.baseURL}/skyTrails/api/admin/addOnTrending`,
         { storyId: storyId }
       );
-      console.log('fetched');
+     // console.log('fetched');
       fetchData(currentPage);
-      console.log('Response from server:', response.data);
-      console.log("Post marked as trending successfully!");
+     // console.log('Response from server:', response.data);
+     // console.log("Post marked as trending successfully!");
     } catch (error) {
       console.error("Error marking post as trending:", error);
     }
     finally{
       setLove(null);
     }
+    
   };
-  
   
 
   const columns = [
@@ -319,6 +319,7 @@ function Apppost() {
             }}
           >
             <CircularProgress color="primary" size={69} thickness={4} style={{ position: 'absolute', top: '50%', left: '49.8%', transform: 'translate(-50%, -50%)', zIndex: 2 }} />
+            
           </div>
         ) : error ? (
           <Typography

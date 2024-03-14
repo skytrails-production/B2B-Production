@@ -6,6 +6,7 @@ import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { Modal, Box, TextField, Button,Typography } from '@mui/material';
 import "./FlightTicket.css";
 import { useNavigate } from "react-router-dom";
+import { usePDF } from 'react-to-pdf';
 
 import Swal from "sweetalert2";
 const pdfLogo = "https://travvolt.s3.amazonaws.com/ST-Main-LogoPdf.png";
@@ -20,6 +21,8 @@ const BusTicket = () => {
   const [showEmailModal, setShowEmailModal] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
+
+  const { toPDF, targetRef } = usePDF({filename: 'BusETicket.pdf'});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -208,7 +211,7 @@ const BusTicket = () => {
 
               {/* Button to download as PDF */}
               <button
-                onClick={handleEmailTicket}
+                onClick={() => toPDF()}
                 style={{
                   padding: "0.2rem",
                   background: "red",
@@ -217,7 +220,7 @@ const BusTicket = () => {
                   border: "none",
                 }}
               >
-                Email Ticket
+                Download as Pdf
               </button>
 
               {/* Button to print ticket */}
@@ -236,6 +239,7 @@ const BusTicket = () => {
             </div>
 
             <div id="pdf-content">
+              <div ref={targetRef}>
 
             
               <div
@@ -644,6 +648,7 @@ const BusTicket = () => {
                       </div>
                     </div>
                   </div>
+                </div>
                 </div>
 
                 <div  style={{ width: '100%', margin:'0px', padding:0}}>

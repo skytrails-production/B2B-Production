@@ -362,7 +362,7 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { Paper, Typography, Pagination, Stack, TextField, InputAdornment } from '@mui/material';
+import { Paper, Typography, Pagination, Stack, TextField, InputAdornment,GridToolbar } from '@mui/material';
 import { apiURL } from '../../../../Constants/constant';
 import './EventList.css';
 
@@ -379,6 +379,7 @@ const EventList = () => {
           throw new Error('Failed to fetch data');
         }
         const data = await response.json();
+       // console.log(data);
         setEvents(data.result.docs);
         setTotalPages(data.result.totalPages);
       } catch (error) {
@@ -429,15 +430,21 @@ const EventList = () => {
               <th>Name</th>
               <th>City</th>
               <th>Profession</th>
+              <th>Event Name</th>
+              <th>Venue</th>
               <th>Mobile</th>
+             
             </tr>
           </thead>
           <tbody>
             {events.map((event, index) => (
               <tr key={index}>
+               
                 <td style={{ backgroundColor: 'white', color: 'black' }}>{event.name}</td>
                 <td style={{ backgroundColor: 'white', color: 'black' }}>{event.city}</td>
                 <td style={{ backgroundColor: 'white', color: 'black' }}>{event.profession}</td>
+                <td style={{backgroundColor: 'white', color: 'black'}}>{event.eventDetails.title}</td>
+                <td style={{backgroundColor: 'white',color: 'black'}}>{event.eventDetails.venue}</td>
                 <td style={{ backgroundColor: 'white', color: 'black' }}>{event.contactNo?.mobile_number}</td>
               </tr>
             ))}
