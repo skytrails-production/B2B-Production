@@ -1,0 +1,154 @@
+.adminProfileLoginContainerMain {
+  /* background: rgb(27, 31, 104);
+  background: linear-gradient(
+    90deg,
+    rgba(27, 31, 104, 0.9814814814814815) 0%,
+    rgba(38, 48, 145, 1) 39%,
+    rgba(63, 55, 158, 0.9513888888888888) 100%
+  ); */
+  position: fixed;
+  top: 0px;
+  /* background-color: #2d226d; */
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center;
+  align-items: center; */
+  width: 100%;
+  /* height: 100vh; */
+}
+.adminProfileLoginContainer {
+  width: 100%;
+  max-width: 850px;
+  display: flex;
+  border-radius: 12px;
+  height: 600px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.adminProfileLoginHeloContainer {
+  /* padding: 50px; */
+  /* display: flex; */
+}
+.adminProfileLoginLeft {
+  padding: 50px;
+  flex: "3";
+  background-color: white;
+}
+.adminProfileLoginHeloContainer {
+  color: #2d226d;
+  font-size: 30px;
+  font-weight: 600;
+}
+.adminProfileLoginImage {
+  flex: 5;
+}
+.adminProfileLoginImage img {
+  width: 100%;
+  height: 100%;
+}
+.adminProfileLoginfrom {
+  display: flex;
+  justify-content: center;
+  /* width: 100%; */
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 15px;
+  gap: 15px;
+}
+.adminProfileLoginTextDev {
+  display: flex;
+}
+.adminProfileLoginTextDev p {
+  color: #2d226d;
+  font-size: 25px;
+}
+.adminProfileLoginTextDev span {
+  /* color: #2D226D; */
+  font-size: 25px;
+  color: #707070;
+}
+.adminProfileLoginInputContainer {
+  display: flex;
+  flex-direction: column;
+  /* gap: 15px; */
+  border-bottom: 1.5px solid #263091;
+}
+.adminProfileLoginInputContainer input {
+  outline: none;
+  border: none;
+  background-color: transparent !important;
+  font-size: 19px;
+  background-color: transparent;
+  font-weight: 600;
+  color: #2d226d;
+}
+
+.adminProfileLoginInputContainer input :hover {
+  outline: none;
+  border: none;
+  background-color: #263091;
+}
+.adminProfileLoginInputContainer p {
+  font-size: 25px;
+  color: #2d226d;
+}
+.adminProfileLoginInputBtnDiv {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.adminProfileLoginInputBtnDev {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.adminProfileLoginInputBtn {
+  width: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #2d226d;
+  border-radius: 4px;
+  height: 50px;
+  color: white;
+  font-size: 23px;
+  background: rgb(27, 31, 104);
+  background: linear-gradient(
+    90deg,
+    rgba(27, 31, 104, 0.9814814814814815) 0%,
+    rgba(38, 48, 145, 1) 39%,
+    rgba(63, 55, 158, 0.9513888888888888) 100%
+  );
+  transition: all 0.35s ease-in;
+}
+.adminProfileLoginInputBtn :hover {
+  background: rgb(27, 31, 104);
+  background: linear-gradient(
+    346deg,
+    rgba(27, 31, 104, 0.9814814814814815) 0%,
+    rgba(38, 48, 145, 1) 39%,
+    rgba(63, 55, 158, 0.9513888888888888) 100%
+  );
+}
+.agentProfleForget {
+  text-align: right;
+  color: #2d226d;
+}
+.adminProfileLoginInputPassword {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 5px;
+}
+.adminProfileLoginInputDivC {
+  width: 100%;
+}
+.adminProfileLoginInputDivC :hover {
+  background-color: #aca6d746;
+  width: 100%;
+}
+.euye {
+  background-color: transparent;
+}

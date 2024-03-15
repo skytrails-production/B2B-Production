@@ -14,6 +14,7 @@ function* userLoginRequest(action) {
         yield put(Agent_ProfileLogin(user));
         // console.log("hshshsh", fetchLogIn(user))
     } catch (error) {
+        console.log(error, "errorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
         yield put(Agent_ProfileFailure({ error: true, errormessage: error }));
     }
 }

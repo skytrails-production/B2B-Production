@@ -12,10 +12,7 @@ const pdfLogo = "https://travvolt.s3.amazonaws.com/ST-Main-LogoPdf.png";
 const Spinner = () => {
   return <div className="spinner"></div>;
 };
-
-
-
-const FlightOneTicket = () => {
+const FlightOneTicket = () => {      
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);

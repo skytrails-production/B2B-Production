@@ -73,7 +73,14 @@ const Citypackage = () => {
          id="fileInput"
           accept=".jpeg,.jpg,.png"
           onChange={(e) => {setFile(e.target.files[0]);   setDisplay('');}} />
-        <button type="submit">Submit</button>
+        <button type="submit" style={{
+              backgroundColor: 'aqua',
+              borderRadius: '10px',
+              padding: '10px',
+              marginBottom: '10px',
+              width: '250px',
+              marginLeft: '35%'
+          }}>Submit</button>'
       </form>
       {display && (
         <Typography variant="body1" style={{ color: 'red', textAlign: 'center', marginTop: '20px' }}>

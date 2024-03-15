@@ -37,7 +37,7 @@ export const agentProfileReducer = (state = initialState, action) => {
             };
         case types.AGENT_PROFILE_LOGIN_FAILURE:
             return {
-                ...state,
+                agentProfileloginData: payload,
                 isLogin: false,
                 isLoading: false,
                 isError: true,

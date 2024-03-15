@@ -59,7 +59,7 @@ const AllFlightBooking = () => {
     const row = booking;
     const passengerCount = row.passengerDetails.length;
     const passengerDetailsHtml = row.passengerDetails.map(passenger => `
-      <div class="passenger-details">
+      <div class="passenger-details" style="font-size: 14px">
         <div><strong>Title:</strong> ${passenger.title}</div>
         <div><strong>First Name:</strong> ${passenger.firstName}</div>
         <div><strong>Last Name:</strong> ${passenger.lastName}</div>

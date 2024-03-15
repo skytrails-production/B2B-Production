@@ -26,10 +26,11 @@ export const Agent_ProfileLogout = () => {
 };
 
 
-export const Agent_ProfileFailure = () => {
+export const Agent_ProfileFailure = (payload) => {
 
     return {
         type: types.AGENT_PROFILE_LOGIN_FAILURE,
+        payload: payload,
 
     };
 

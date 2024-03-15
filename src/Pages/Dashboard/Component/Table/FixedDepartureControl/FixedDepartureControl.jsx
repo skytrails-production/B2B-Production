@@ -153,7 +153,7 @@ const FixedDepartureControl = () => {
           Fixed Departure Control
         </Typography>
       </div>
-      <div style={{ width: "100%" }}>
+      <div style={{ width: "100%" ,marginTop:'25px',marginLeft:'20px'}}>
         {filteredData.length === 0 ? (
           <Typography>No data available</Typography>
         ) : (

@@ -2,11 +2,19 @@
   --main-bg-color: #161a30;
   --main-bg-color-secondery: #31304d;
   --main-bg-color-hover: #b6bbc4;
-  --main-bg-color-text: #f0ece5;
+  --main-bg-color-text: #e6e5f0;
+  /* --main-bg-color: #5B0888;
+  --main-bg-color-secondery: #713ABE;
+  --main-bg-color-hover: #9D76C1;
+  --main-bg-color-text: #E5CFF7; */
+  /* #5B0888 */
+  /* 713ABE */
+  /* #9D76C1 */
+  /* E5CFF7 */
 }
 
 .agentProfileDasbordContainer {
-  background-color: #161a30 !important;
+  background-color: var(--main-bg-color) !important;
   width: 100%;
   position: fixed;
   top: 0 !important;
@@ -15,7 +23,7 @@
 }
 .agentProfileDasbordNavBar {
   width: 100%;
-  height: 70px;
+  height: 60px;
   color: var(--main-bg-color-text);
   padding: 0px 10px !important;
   display: flex;
@@ -67,15 +75,21 @@
   font-weight: 500 !important;
   text-transform: capitalize;
   width: 175px;
-  transition: all .35s ease-in-out;
+  transition: all 0.35s ease-in-out;
+  white-space: nowrap;
 }
 .AgentProfileDropDwon {
   position: absolute;
   top: 70px;
   right: 44px;
   width: 200px;
+  padding: 10px;
   background-color: var(--main-bg-color-hover) !important;
   border-radius: 4px;
+  -webkit-box-shadow: -4px 2px 19px -7px rgba(49, 48, 77, 1);
+  -moz-box-shadow: -4px 2px 19px -7px rgba(49, 48, 77, 1);
+  box-shadow: -4px 2px 19px -7px rgba(49, 48, 77, 1);
+  /* animation: DropDownAnimation 1s ease-in  infinite; */
 }
 .AgentProfileDropDwonAgentDiv {
   width: 100%;
@@ -109,7 +123,7 @@
 .activeAgentProfile div,
 .activeAgentProfile svg {
   /* background-color: var(--main-bg-color) !important; */
-  color: var(--main-bg-color-secondery) !important;
+  color: var(--main-bg-color-text) !important;
 }
 .activeAgentProfile div :hover,
 .activeAgentProfile svg:hover {
@@ -121,6 +135,9 @@
 }
 .agentProfileRight {
   background-color: var(--main-bg-color-text);
+  border-radius: 12px;
+  margin: 12px;
+  margin-top: 0px;
 }
 .AgentHomeH1 {
   color: var(--main-bg-color);
@@ -164,4 +181,18 @@
 }
 .MenueFalse {
   width: 0px !important;
+}
+.AgentProfileDropDwonAgentDiv span {
+  font-size: 25px;
+}
+.AgentProfileDropDwonAgentDivItem div {
+  font-size: 20px !important;
+}
+@keyframes DropDownAnimation {
+  0% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(100px);
+  }
 }

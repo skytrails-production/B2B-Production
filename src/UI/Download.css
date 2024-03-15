@@ -104,7 +104,7 @@
     position: relative;
 }
 
-.outerBacksvg::before {
+/* .outerBacksvg::before { */
     /* position: absolute;
   content: '';
   width: 300px;
@@ -114,7 +114,7 @@
   height: 300px;
   border-radius: 50%;
   background-image: radial-gradient(#fff, #fff, #d90429, #d90429); */
-}
+/* } */
 
 .firFrame {
     width: 100%;

@@ -8,10 +8,12 @@ import "../AdminLogin/AdminLogin.css";
 import bg from "../../Images/bg-cover.jpeg";
 import { adminReducer } from "../../Redux/AdminLogin/adminReducer";
 import { styled } from '@mui/material/styles';
-
+import loginImg from "./agentProfilelogin.jpg"
 import SubAdminAccess from "../subAdmin/subAdminDashboard/subAdminaccess";
 import { Grid, Card, CardHeader, CardContent, Typography, Divider, LinearProgress } from '@mui/material';
 import axios from "axios";
+import "./adminProglieLogin.css"
+import { Agent_ProfileLogout } from "../../Redux/AgentProfiltLogin/actionAgentProfiltLogin";
 const MuiGridItem = styled(Grid)(({ theme }) => ({
     padding: theme.spacing(2),
 }));
@@ -37,12 +39,12 @@ const AgentProfileLogin = () => {
 
 
     let adminData = reducerState?.agentProfileReducer
-    ?.isLogin;
+        ?.isLogin;
 
-    const error = useSelector(state => state.agentProfileReducer
-        .agentProfileloginData.error);
-    const errorMessage = useSelector(state => state.agentProfileReducer
-        .agentProfileloginData.errormessage);
+    const error = useSelector(state => state?.agentProfileReducer
+        ?.agentProfileloginData?.error);
+    const errorMessage = useSelector(state => state?.agentProfileReducer
+        ?.agentProfileloginData?.errormessage);
 
     useEffect(() => {
         if (adminData) {
@@ -58,9 +60,9 @@ const AgentProfileLogin = () => {
         }
 
     }, [error, errorMessage]);
-    useEffect(()=>{
+    useEffect(() => {
         console.log(reducerState?.agentProfileReducer)
-    },[reducerState?.agentProfileReducer])
+    }, [reducerState?.agentProfileReducer])
 
 
     const handleSubmit = async (event) => {
@@ -80,9 +82,9 @@ const AgentProfileLogin = () => {
 
 
         try {
-            
+
             await dispatch(Agent_ProfileRequest(payload));
-            
+
             setFormError(""); // Clear any previous errors on success
         } catch (error) {
             console.error("Error occurred while authenticating:", error);
@@ -101,11 +103,17 @@ const AgentProfileLogin = () => {
     };
 
     const handleEmailChange = (event) => {
+        if (error) {
+            dispatch(Agent_ProfileLogout())
+        }
         setEmail(event.target.value);
         setFormError("");
     };
 
     const handlePasswordChange = (event) => {
+        if (error) {
+            dispatch(Agent_ProfileLogout())
+        }
         setPassword(event.target.value);
         setFormError("");
     };
@@ -119,7 +127,7 @@ const AgentProfileLogin = () => {
     return (
         <>
             {reducerState?.logIn?.isLogin || reducerState?.subadminLogin?.isLogin ? <div><SubAdminAccess /></div> :
-                <div>
+                <div className="adminProfileLoginContainerMain">
                     <div
                         className="coverletter"
                         style={{
@@ -176,7 +184,70 @@ const AgentProfileLogin = () => {
                         </section>
                         {formError && <p style={{ color: "red", padding: "0px 0px 5px 50px" }}>{formError}</p>}
                     </div>
-                </div>}
+                </div>
+                // <div className="adminProfileLoginContainerMain" >
+                //     <div className="adminProfileLoginContainer" >
+                //         <div className="adminProfileLoginImage" ><img src={loginImg} alt="" /></div>
+                //         <div className="adminProfileLoginLeft" >
+                //             <div className="adminProfileLoginHeloContainer">
+                //                 <div>Hello!</div>
+                //                 <div>Good Morning</div>
+                //             </div>
+                //             <div className="adminProfileLoginfrom"  >
+                //                 <div className="adminProfileLoginTextDev">
+                //                     <p>Login </p>
+                //                     <span>Your account</span>
+                //                 </div>
+                //                 <div className="adminProfileLoginfrom ">
+
+
+
+
+                //                     <div className="adminProfileLoginInputContainer">
+                //                         <p>Username</p>
+                //                         <div className="adminProfileLoginInputDivC">
+                //                             <input name="username"
+                //                                 type="text"
+                //                                 // placeholder="Enter your Email Address"
+                //                                 value={email}
+                //                                 // className="admininput"
+                //                                 onChange={handleEmailChange} />
+                //                         </div>
+                //                     </div>
+
+                //                     <div className="adminProfileLoginInputContainer">
+                //                         <p>Password</p>
+                //                         <div className="adminProfileLoginInputPassword adminProfileLoginInputDivC">
+
+                //                             <input type={showPassword ? "text" : "password"}
+                //                                 name="password"
+                //                                 // placeholder="Enter Your Password"
+                //                                 value={password}
+                //                                 onChange={handlePasswordChange} />
+                //                             <div className="euye" onClick={togglePasswordVisibility}>
+                //                                 {showPassword ? <FaEyeSlash /> : <FaEye />}
+                //                             </div>
+
+                //                         </div>
+                //                     </div>
+                //                     <div className=" agentProfleForget">
+                //                         forget password?
+                //                     </div>
+                //                     <div className="adminProfileLoginInputBtnDev">
+                //                         <div onClick={(e) => handleSubmit(e)} className="adminProfileLoginInputBtn">
+
+                //                             Login
+                //                         </div>
+                //                     </div>
+
+                //                 </div>
+                //             </div>
+                //         </div>
+                //     </div>
+                // </div>
+
+
+            }
         </>
     );
 };

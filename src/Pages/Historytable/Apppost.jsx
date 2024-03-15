@@ -208,11 +208,11 @@ function Apppost() {
         >
             {ap === params.row._id ? (
     <>
-        <CircularProgress size={15} thickness={4}  variant="determinate" value={75} style={{ color: 'darkgreen' }} />
+        <CircularProgress disableShrink size={15} thickness={4}  variant="determinate" value={75} style={{ color: 'darkgreen' }} />
         {/* {"Approving"} */}
     </>
 ) : (
-    "Approved"
+    "Approve" 
 )}
           </Button>
       
@@ -240,7 +240,7 @@ function Apppost() {
   {love === params.row._id ? (
     <>
         {/* <CircularProgress size={15} thickness={4} style={{ color: 'darkgreen' }} /> */}
-        <CircularProgress size={15} thickness={4}  variant="determinate" value={75} style={{ color: 'darkgreen' }} />
+        <CircularProgress disableShrink size={15} thickness={4}  variant="determinate" value={75} style={{ color: 'darkgreen' }} />
         {/* {"Added to Trend"} */}
     </>
 ) : (
@@ -318,7 +318,7 @@ function Apppost() {
               height: "300px",
             }}
           >
-            <CircularProgress color="primary" size={69} thickness={4} style={{ position: 'absolute', top: '50%', left: '49.8%', transform: 'translate(-50%, -50%)', zIndex: 2 }} />
+            <CircularProgress disableShrink  color="primary" size={69} thickness={4} style={{ position: 'absolute', top: '50%', left: '49.8%', transform: 'translate(-50%, -50%)', zIndex: 2 }} />
             
           </div>
         ) : error ? (

@@ -563,7 +563,15 @@ function PackageDetails() {
               justifyContent: "center",
             }}
           >
-            <button onClick={handleCloseView}>Close</button>
+            <button onClick={handleCloseView}
+            style={{
+              backgroundColor: 'blue',
+            color: 'white',
+            width: '70px',
+           borderRadius: '5px',
+            boxShadow: '2px 5px grey'
+            }}
+            >Close</button>
           </Box>
         </Box>
       </Modal>
@@ -573,3 +581,5 @@ function PackageDetails() {
 }
 
 export default PackageDetails;
+
+

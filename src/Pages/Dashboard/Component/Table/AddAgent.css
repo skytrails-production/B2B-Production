@@ -19,10 +19,6 @@
 
 /* AdminLogin.css */
 
-
-
-
-
 .headead h1 {
   font-size: 2rem;
   color: #fff;
@@ -37,13 +33,13 @@
     position: relative;
     padding: 3.5rem 0 7rem;
 
-    >h1 {
+    > h1 {
       margin: 0;
       font-size: 2.5rem;
     }
   }
 
-  >.trapezoid {
+  > .trapezoid {
     position: absolute;
     top: 0;
     left: 0;
@@ -77,7 +73,7 @@
 /* Form container */
 .form-containers {
   width: 500px;
-  margin:  auto;
+  margin: auto;
   padding: 30px;
   border-radius: 15px;
   /* White background color */
@@ -101,7 +97,7 @@
 .headead h2 {
   font-size: 24px;
   margin-left: 20px;
-  color: #fff;
+  color: #ffffffd4;
 }
 
 /* Button style */
@@ -143,7 +139,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background:#fff;
+  background: #fff;
   width: 100%;
   box-shadow: var(--s-basic);
   animation: gradientAnimation 10s infinite alternate;
@@ -153,11 +149,11 @@
 
 .form-agent {
   display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-top: -85px;
-    padding-top: 66px;
-    border-radius: 10px 
+  flex-direction: column;
+  gap: 15px;
+  margin-top: -85px;
+  padding-top: 66px;
+  border-radius: 10px;
 }
 
 .form-group-agent {
@@ -189,7 +185,6 @@
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
 }
 
-
 /* .form-button-agent:hover {
   background-color: #98c1ec;
 } */
@@ -210,13 +205,13 @@
 }
 
 /* Feel free to add more styles and animations as needed! */
-.form-button-agents{
-  background-color: #21325D;
+.form-button-agents {
+  background-color: #21325d;
   color: white;
   padding: 10px 142px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
-  width:100%;
+  width: 100%;
 }

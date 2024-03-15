@@ -206,6 +206,7 @@ const AddCoupons = () => {
         </div>
         <button className="button1" type="submit">Submit</button>
       </form>
+      
     </div>
   );
 };
