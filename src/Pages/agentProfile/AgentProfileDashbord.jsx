@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./AgentProfileDashbord.css";
 import MenuIcon from "@mui/icons-material/Menu";
 import newlogo from "../../Images/whitelogo1.png";
@@ -31,7 +31,7 @@ const AgentProfileDashbord = () => {
     { name: "home", icon: <IoMdHome size={30} /> },
     { name: "Agent List", icon: <FaUserFriends size={30} /> },
   ];
-  const dropDwonRef=useRef(null);
+  const dropDwonRef = useRef(null);
 
   const handleLogout = () => {
     dispatch(Agent_ProfileLogout());
@@ -39,7 +39,11 @@ const AgentProfileDashbord = () => {
   const agentData = reducerState?.agentProfileReducer;
   const [data, setData] = useState(null);
   useEffect(() => {
-    console.log(tab, leftPath, "/////////////////////////");
+    console.log(reducerState?.agentProfileReducer?.
+      agentProfileloginData?.data?.data?.id
+
+
+      , "/////////////////////////");
   }, [tab]);
 
   const [routeData, setRouteData] = useState([]);
@@ -49,7 +53,8 @@ const AgentProfileDashbord = () => {
     //     data?.data?.
     //     id}`)
     const Data = await axios.get(
-      `${apiURL.baseURL}/skyTrails/agent/getAllInvitesBooking/65e959e675e669a23dfd9bb7`
+      `${apiURL.baseURL}/skyTrails/agent/getAllInvitesBooking/${reducerState?.agentProfileReducer?.
+        agentProfileloginData?.data?.data?.id}`
     );
     setData(Data?.data);
     console.log(Data?.data, "data");
@@ -60,7 +65,7 @@ const AgentProfileDashbord = () => {
     } else {
       fetchData();
     }
-  }, [agentData.isLogin]);
+  }, [agentData.isLogin,]);
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
@@ -70,15 +75,13 @@ const AgentProfileDashbord = () => {
 
   const handleClickOutside = (event) => {
     // alert(dropDwonRef.current)
-    console.log(dropDwonRef.current ,!dropDwonRef.current.contains(event.target))
+    console.log(dropDwonRef.current, !dropDwonRef.current.contains(event.target))
     if (dropDwonRef.current && !dropDwonRef.current.contains(event.target)) {
       setIsProfile(false);
     }
   };
-  const toggleChangeTab = () => {
-    // setTab("hhhh");
-    console.log("weeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-  };
+
+  // console.log(data?.agentDetails, "///////////////////////////////////")
 
   return (
     <div className="agentProfileDasbordContainer">
@@ -98,12 +101,15 @@ const AgentProfileDashbord = () => {
               gap: "15px",
             }}
           >
-            {" "}
-            <MenuIcon
-              sx={{ color: "white" }}
-              size={40}
-              onClick={() => setMenu((pre) => !pre)}
-            />
+
+            <div className={`MenuIconAgentProfile ${!menu ? "rotate0" : "rotate180"}`}>
+
+              <MenuIcon
+                sx={{ color: "white" }}
+                size={40}
+                onClick={() => setMenu((pre) => !pre)}
+              />
+            </div>
             <img
               src={newlogo}
               height="50px"
@@ -117,6 +123,8 @@ const AgentProfileDashbord = () => {
               justifyContent: "space-around",
               alignItems: "center",
               width: "200px",
+              gap: "15px",
+              paddingRight: "15px "
             }}
           >
             <div
@@ -124,9 +132,11 @@ const AgentProfileDashbord = () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
+                flex: "1",
+                justifyContent: "end"
               }}
             >
-              <p style={{ fontSize: "25px" }}>2000</p>
+              <p style={{ fontSize: "25px" }}>{data?.agentDetails[0]?.balance}</p>
               {/* <MdAccountBalanceWallet size={30} /> */}
             </div>
             <div
@@ -134,6 +144,7 @@ const AgentProfileDashbord = () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
+                cursor: "pointer"
               }}
             >
               {/* <p style={{ fontSize: "25px" }}>2000</p> */}
@@ -146,6 +157,7 @@ const AgentProfileDashbord = () => {
                 justifyContent: "space-between",
                 gap: "10px",
                 alignItems: "center",
+                cursor: "pointer"
               }}
             >
               <FaCircleUser size={30} />
@@ -154,34 +166,34 @@ const AgentProfileDashbord = () => {
             </div>
           </div>
         </div>
-        {isProfile && (
-          <div ref={dropDwonRef} className="AgentProfileDropDwon">
-            <div className="AgentProfileDropDwonAgentDiv">
-              {" "}
-              <FaCircleUser size={30} /> <span>My Account</span>
+        {/* {isProfile && ( */}
+        <div ref={dropDwonRef} className={`AgentProfileDropDwon ${!isProfile && "AgentProfileDropDwonRemove"}`}>
+          <div className="AgentProfileDropDwonAgentDiv">
+            {" "}
+            <FaCircleUser size={30} /> <span>My Account</span>
+          </div>
+          <div>
+            <div
+              className="AgentProfileDropDwonAgentDivItem"
+              onClick={() => handleLogout()}
+            >
+              {/* <FaCircleUser size={30} /> */}
+              <div>
+                <IoLogOutOutline size={30} />
+              </div>
+              <div>Logout</div>
             </div>
-            <div>
-              <div
-                className="AgentProfileDropDwonAgentDivItem"
-                onClick={() => handleLogout()}
-              >
-                {/* <FaCircleUser size={30} /> */}
-                <div>
-                  <IoLogOutOutline size={30} />
-                </div>
-                <div>Logout</div>
+            <div
+              className="AgentProfileDropDwonAgentDivItem"
+              onClick={() => handleLogout()}
+            >
+              {/* <FaCircleUser size={30} /> */}
+              <div>
+                <IoSettingsOutline size={30} />
               </div>
-              <div
-                className="AgentProfileDropDwonAgentDivItem"
-                onClick={() => handleLogout()}
-              >
-                {/* <FaCircleUser size={30} /> */}
-                <div>
-                  <IoSettingsOutline size={30} />
-                </div>
-                <div>Settings</div>
-              </div>
-              {/* <div className='AgentProfileDropDwonAgentDivItem' onClick={() => handleLogout()} >
+              <div>Settings</div>
+            </div>
+            {/* <div className='AgentProfileDropDwonAgentDivItem' onClick={() => handleLogout()} >
                             
                             <div >
 
@@ -189,9 +201,9 @@ const AgentProfileDashbord = () => {
                             </div>
                             <div>Logout</div>
                         </div> */}
-            </div>
           </div>
-        )}
+        </div>
+        {/* // )} */}
       </div>
 
       <div style={{ display: "flex" }}>

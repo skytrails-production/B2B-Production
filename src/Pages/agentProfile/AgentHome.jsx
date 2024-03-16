@@ -6,7 +6,7 @@ import RiseLoader from "react-spinners/RiseLoader";
 import { dialogActionsClasses } from "@mui/material";
 
 const AgentHome = ({ data }) => {
-  console.log("agent profile data", data);
+  // console.log("agent profile data", data);
   const [TotalRevenue, setTotalRevenue] = useState(0);
   useEffect(() => {
     function getTotalRevenue(agentInviteData) {
@@ -35,23 +35,26 @@ const AgentHome = ({ data }) => {
       setTotalRevenue(getTotalRevenue(data?.agentInviteData));
     }
   }, [data]);
-  // useEffect(()=>{
+  // useEffect(() => {
+  //   console.log(data, ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ")
 
-  // },[data])
-  if (!data?.agentInviteData)
-  return (
-    <div
-      style={{
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <RiseLoader size={50} color="#31304d" />
-    </div>
-  );
+  // }, [data])
+  if (!data?.statusCode
+
+  )
+    return (
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <RiseLoader size={50} color="#31304d" />
+      </div>
+    );
 
   return (
     <div>
@@ -99,11 +102,8 @@ const AgentHome = ({ data }) => {
         ) : (
           <div className="agentNotAccess">
             <div
-              style={{
-                width: "500px",
-                // backgroundColor: 'red',
-                height: "100px",
-              }}
+              
+              className="agentNotAccessDIV"
             >
               <div>You are not authorized to Access this Feature</div>
 

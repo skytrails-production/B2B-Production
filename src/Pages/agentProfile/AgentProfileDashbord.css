@@ -31,6 +31,21 @@
   justify-content: space-between;
   position: relative;
 }
+.MenuIconAgentProfile {
+  /* animation: rotateMenuIcone 0.35 ease-in-out forwards;
+  /* transition: all 0.35 ease-in-out; */ 
+}
+.rotate180 {
+  /* transform: rotate(180deg); */
+  /* animation: rotate0 1s ease-in-out forwards;
+  animation-direction: alternate-reverse; */
+}
+.rotate0 {
+  /* transform: rotate(0deg); */
+  /* animation: ; */
+  animation: rotate0 .35s ease-in-out forwards;
+}
+
 .agentProfileContentContainer {
   /* width: 100%; */
   display: flex;
@@ -89,7 +104,11 @@
   -webkit-box-shadow: -4px 2px 19px -7px rgba(49, 48, 77, 1);
   -moz-box-shadow: -4px 2px 19px -7px rgba(49, 48, 77, 1);
   box-shadow: -4px 2px 19px -7px rgba(49, 48, 77, 1);
-  /* animation: DropDownAnimation 1s ease-in  infinite; */
+  animation: DropDownAnimation 0.35s ease-in forwards;
+}
+.AgentProfileDropDwonRemove {
+  animation: DropDownAnimationLeave 0.35s ease-in forwards;
+  /* display: none !important; */
 }
 .AgentProfileDropDwonAgentDiv {
   width: 100%;
@@ -163,6 +182,22 @@
   justify-content: center;
   height: 500px;
 }
+.agentNotAccessDIV {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+  align-content: space-around;
+  height: 150px;
+  background: var(--main-bg-color-hover);
+  padding: 10px;
+  border-radius: 8px;
+  background-color: var(--main-bg-color-hover) !important;
+  border-radius: 4px;
+  -webkit-box-shadow: -4px 2px 19px -7px rgba(49, 48, 77, 1);
+  -moz-box-shadow: -4px 2px 19px -7px rgba(49, 48, 77, 1);
+  box-shadow: -4px 2px 19px -7px rgba(49, 48, 77, 1);
+}
 .agentHomeDataItem {
   width: 300px;
   background-color: var(--main-bg-color-hover);
@@ -190,9 +225,54 @@
 }
 @keyframes DropDownAnimation {
   0% {
-    transform: translateY(0px);
+    /* transform: translateY(0px); */
+    top: 50px;
+    opacity: 0;
+    scale: 0.8;
   }
   100% {
-    transform: translateY(100px);
+    /* transform: translateY(100px); */
+    top: 70px;
+    opacity: 1;
+    scale: 1;
+  }
+}
+@keyframes DropDownAnimationLeave {
+  0% {
+    /* transform: translateY(100px); */
+    top: 70px;
+    opacity: 1;
+    scale: 1;
+  }
+  100% {
+    /* transform: translateY(0px); */
+    top: 50px;
+    opacity: 0;
+    scale: 0.8;
+    display: none;
+  }
+}
+@keyframes rotateMenuIcone {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(350deg);
+  }
+}
+@keyframes rotate180 {
+  /* 0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(350deg);
+  } */
+}
+@keyframes rotate0 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(90deg);
   }
 }

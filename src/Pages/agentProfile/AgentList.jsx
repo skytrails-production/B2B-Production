@@ -52,7 +52,7 @@ const AgentList = () => {
       </div>
       <div className="agentProfileListCardContainer">
         {data?.agentInviteData?.map((item) => (
-          <div className="agentProfileListCard">
+          <div className="agentProfileListCard ">
             <div className="agentProfileListName">{item.agencyName}</div>
             <div className="agentProfileListCardDiv">
               <div className="agentProfileListCardDivItem">

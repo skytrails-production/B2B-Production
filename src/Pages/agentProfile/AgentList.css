@@ -22,6 +22,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  
 }
 
 .agentProfileListCard {
@@ -33,6 +34,7 @@
   display: flex;
   flex-direction: column;
   padding-bottom: 15px;
+  animation: DropDownAnimation .5s  ease-in  forwards;
 }
 .agentProfileListCardDiv {
   display: flex;
@@ -106,4 +108,21 @@
   font-size: 20px;
   font-weight: 600;
   color: var(--main-bg-color);
+}
+@keyframes DropDownAnimation {
+  0% {
+    /* transform: translateY(0px); */
+    /* top: 50px; */
+    opacity: 0;
+  }
+  50%{
+    opacity: 0;
+    scale: .8;
+  }
+  100% {
+    /* transform: translateY(100px); */
+    /* top: 70px; */
+    opacity: 1;
+    scale: 1;
+  }
 }

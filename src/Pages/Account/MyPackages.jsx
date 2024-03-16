@@ -108,7 +108,7 @@ const MyPackages = () => {
 
     return ( 
     <>
-    <h1>Total Packages {data.length}</h1>
+    <h1>Total Packages {data?.length}</h1>
     </>
     )
    }
@@ -117,7 +117,7 @@ const MyPackages = () => {
 
     return ( 
     <>
-    <h1>Approved Packages {data.length}</h1>
+    <h1>Approved Packages {data?.length}</h1>
     </>
     )
    }
@@ -126,7 +126,7 @@ const MyPackages = () => {
 
     return ( 
     <>
-    <h1>Approved Packages {data.length}</h1>
+    <h1>Approved Packages {data?.length}</h1>
     </>
     )
    }         
@@ -134,7 +134,7 @@ const MyPackages = () => {
  
     
    const Leads=()=>{
-    const agentLeads=Number(leadsData.userBookings.length)+Number(leadsData.agentBookings.length);
+    const agentLeads=Number(leadsData?.userBookings?.length)+Number(leadsData?.agentBookings?.length);
    
 
     return ( 
