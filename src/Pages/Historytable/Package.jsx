@@ -10,15 +10,16 @@ import {
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import axios from "axios";
 import SearchIcon from "@mui/icons-material/Search";
+import Button from "@mui/material/Button";
 import { apiURL } from "../../Constants/constant";
-import Button from '@mui/material/Button'; // Assuming you're using Material-UI
-import Swal from 'sweetalert2'; // Import SweetAlert
+import Swal from "sweetalert2";
 
 function Package() {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [totalDocs, setTotalDocs] = useState(0);
+  const [searchTerm, setSearchTerm] = useState(""); // Define searchTerm state
 
   const fetchData = async (pageNumber) => {
     try {
@@ -28,71 +29,127 @@ function Package() {
       const result = response.data.result.docs;
       setData(result);
       setTotalPages(response.data.result.totalPages);
+      setTotalDocs(response.data.result.totalDocs);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
-
-  
-    // const toolbarSlotProps = {
-    //   Toolbar: {
-    //     csvOptions: {
-    //       allColumns: true,
-    //       allRows: true
-    //     }
-    //   }
-    // };
 
   const handlePageChange = (event, newPage) => {
     setCurrentPage(newPage);
   };
 
   const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-    setCurrentPage(1); // Reset to the first page when performing a new search
+    setSearchTerm(event.target.value); // Update searchTerm state
+    setCurrentPage(1);
   };
 
   useEffect(() => {
     fetchData(currentPage);
-  },[currentPage]);
-
+  }, [currentPage]);
   const handleShowAlert = (params) => {
-    const rowDetails = params.row;
+        const rowDetails = params.row;
+    
+        Swal.fire({
+          title: '<span style="background-color: #21325D; color: #fff; padding: 8px; border-radius: 10px 0px 10px 0px;">View All Details</span>',
+          html: `
+            <div style="text-align: left;">
+              <ol style="list-style-type:disc; padding-left: 20px;">
+              <li><strong style="color: #21325D;">Country:</strong> ${rowDetails.packageId.country}</li>
+              <li><strong style="color: #21325D;">Package Title:</strong> ${rowDetails.packageId.pakage_title}</li> 
+              <li><strong style="color: #21325D;">Package Amount:</strong> ${rowDetails.packageId.pakage_amount.amount} ${rowDetails.packageId.pakage_amount.currency}</li>
+      
+                <li><strong style="color: #21325D;">Full Name:</strong> ${rowDetails.fullName}</li>
+                <li><strong style="color: #21325D;">Contact Number:</strong> ${rowDetails.contactNumber.phone}</li>
+                <li><strong style="color: #21325D;">Email:</strong> ${rowDetails.email}</li>
+                <li><strong style="color: #21325D;">Departure City:</strong> ${rowDetails.departureCity}</li>
+                <li><strong style="color: #21325D;">Adults:</strong> ${rowDetails.adults}</li>
+                <li><strong style="color: #21325D;">Child:</strong> ${rowDetails.child}</li>
+                <li><strong style="color: #21325D;">Package Type:</strong> ${rowDetails.packageType}</li>
+                <li><strong style="color: #21325D;">Departure Date:</strong> ${rowDetails.departureDate}</li>
+                <li><strong style="color: #21325D;">Connected:</strong> ${rowDetails.connected ? "Yes" : "No"}</li>
+                <li><strong style="color: #21325D;">No Of People:</strong> ${rowDetails.noOfPeople}</li>
+                <li><strong style="color: #21325D;">Status:</strong> ${rowDetails.status}</li>
+              </ol>
+            </div>
+          `,
+          showConfirmButton: false, // Remove the OK button
+          customClass: {
+            popup: 'swal-popup-custom' // Custom class for the entire popup
+          }
+        });
+      };
 
-    Swal.fire({
-      title: '<span style="background-color: #21325D; color: #fff; padding: 8px; border-radius: 10px 0px 10px 0px;">View All Details</span>',
-      html: `
-        <div style="text-align: left;">
-          <ol style="list-style-type:disc; padding-left: 20px;">
-          <li><strong style="color: #21325D;">Country:</strong> ${rowDetails.packageId.country}</li>
-          <li><strong style="color: #21325D;">Package Title:</strong> ${rowDetails.packageId.pakage_title}</li> 
-          <li><strong style="color: #21325D;">Package Amount:</strong> ${rowDetails.packageId.pakage_amount.amount} ${rowDetails.packageId.pakage_amount.currency}</li>
+  const handleDownloadAllData = async () => {
+    try {
+      const totalPages = Math.ceil(totalDocs / 8); // Assuming each page has 8 documents
   
-            <li><strong style="color: #21325D;">Full Name:</strong> ${rowDetails.fullName}</li>
-            <li><strong style="color: #21325D;">Contact Number:</strong> ${rowDetails.contactNumber.phone}</li>
-            <li><strong style="color: #21325D;">Email:</strong> ${rowDetails.email}</li>
-            <li><strong style="color: #21325D;">Departure City:</strong> ${rowDetails.departureCity}</li>
-            <li><strong style="color: #21325D;">Adults:</strong> ${rowDetails.adults}</li>
-            <li><strong style="color: #21325D;">Child:</strong> ${rowDetails.child}</li>
-            <li><strong style="color: #21325D;">Package Type:</strong> ${rowDetails.packageType}</li>
-            <li><strong style="color: #21325D;">Departure Date:</strong> ${rowDetails.departureDate}</li>
-            <li><strong style="color: #21325D;">Connected:</strong> ${rowDetails.connected ? "Yes" : "No"}</li>
-            <li><strong style="color: #21325D;">No Of People:</strong> ${rowDetails.noOfPeople}</li>
-            <li><strong style="color: #21325D;">Status:</strong> ${rowDetails.status}</li>
-          </ol>
-        </div>
-      `,
-      showConfirmButton: false, // Remove the OK button
-      customClass: {
-        popup: 'swal-popup-custom' // Custom class for the entire popup
+      let allData = [];
+  
+      // Fetch data from all pages
+      for (let page = 1; page <= totalPages; page++) {
+        const response = await axios.get(
+          `${apiURL.baseURL}/skyTrails/api/admin/getAllPackageEnquiry?page=${page}`
+        );
+        allData = allData.concat(response.data.result.docs);
       }
-    });
+  
+      // Define column titles
+      const columnTitles = [
+        "Country",
+        "Package Title",
+        "Package Amount",
+        "Name",
+        "Contact Number",
+        "Email",
+        "Departure City",
+        "Adults",
+        "Child",
+        "Package Type",
+        "Departure Date",
+        "Connected",
+        "No Of People",
+        "Status",
+      ];
+  
+      // Extract specific fields from data
+      const extractedData = allData.map((row) => ({
+        Country: row.packageId?.country || 'N/A',
+        'Package Title': row.packageId?.pakage_title || 'N/A',
+        'Package Amount': `${row.packageId?.pakage_amount.amount} ${row.packageId.pakage_amount.currency}` || 'N/A',
+        Name: row.fullName || 'N/A',
+        'Contact Number': row.contactNumber?.phone || 'N/A',
+        Email: row.email || 'N/A',
+        'Departure City': row.departureCity || 'N/A',
+        Adults: row.adults || 'N/A',
+        Child: row.child || 'N/A',
+        'Package Type': row.packageType || 'N/A',
+        'Departure Date': row.departureDate || 'N/A',
+        Connected: row.connected ? 'Yes' : 'No',
+        'No Of People': row.noOfPeople || 'N/A',
+        Status: row.status || 'N/A',
+      }));
+  
+      // Convert data to CSV format
+      const csvContent =
+        "data:text/csv;charset=utf-8," +
+        [columnTitles.join(",")].concat(extractedData.map((row) => Object.values(row).join(","))).join("\n");
+  
+      // Create a download link
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "all_data.csv");
+      document.body.appendChild(link);
+  
+      // Click the link to initiate download
+      link.click();
+    } catch (error) {
+      console.error("Error downloading data:", error);
+    }
   };
-
-
-
-
-  const columns = [
+  
+    const columns = [
     {
       field: "viewDetails",
       headerName: "View All Details",
@@ -190,34 +247,10 @@ function Package() {
           }}
         />
         <Typography variant="h5" className="adtable-heading" style={{ marginLeft: "20px" }}>
-          All Package Enquiry 
+          All Package Enquiry
         </Typography>
       </div>
       <div style={{ width: "100%" }}>
-
-        {/* <DataGrid
-
-      <DataGrid  
-        // {...toolbarSlotProps}
-
-          rows={data}
-          columns={columns}
-          pageSize={10}
-          pagination
-          page={currentPage}
-          onPageChange={handlePageChange}
-          rowsPerPageOptions={[]}
-          components={{
-            Toolbar: () => (
-              <div style={{ marginTop: '10px' }}>
-                <GridToolbar />
-              </div>
-            ),
-            Pagination:()=>null,
-          }}
-          getRowId={(row) => row._id}
-
-        /> */}
         <DataGrid
           rows={data}
           columns={columns}
@@ -228,33 +261,22 @@ function Package() {
           rowsPerPageOptions={[]}
           components={{
             Toolbar: () => (
-              <div style={{ marginTop: '10px' }}>
+              <div style={{ marginTop: '20px' ,display:'flex'}}>
                 <GridToolbar />
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleDownloadAllData}
+                  style={{ marginLeft: '10px' }}
+                >
+                  Download All Data
+                </Button>
               </div>
             ),
             Pagination: () => null,
           }}
           getRowId={(row) => row._id}
-          slotProps={{
-            toolbar: {
-              csvOptions: {
-              
-                rows: true, // Set to true to enable exporting rows
-              }
-            }
-          }}
-
-          // slotProps={{
-          //   Toolbar: {
-          //     csvOptions: {
-          //       allColumns:true,
-          //       allRows: true
-          //     }
-          //   }
-          // }}
-
         />
-
       </div>
       <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
         <Pagination
@@ -263,10 +285,11 @@ function Package() {
           onChange={(event, newPage) => handlePageChange(event, newPage)}
           color="primary"
         />
-
       </Stack>
     </Paper>
   );
 }
 
 export default Package;
+
+

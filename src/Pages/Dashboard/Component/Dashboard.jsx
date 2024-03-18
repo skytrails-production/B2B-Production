@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
+import DynamicFeedIcon from '@mui/icons-material/DynamicFeed';
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
 import List from "@mui/material/List";
@@ -122,7 +123,8 @@ import LanguageIcon from '@mui/icons-material/Language';
 import ArticleIcon from '@mui/icons-material/Article';
 import Citypackage from "../../Historytable/Citypackage";
 import Apppost from "../../Historytable/Apppost";
-
+import Enquirylist from "../../Historytable/Enquirylist";
+//import UpdateFeed from "./Table/UpdateFeed";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { IoIosNotifications } from "react-icons/io";
 import {
@@ -296,9 +298,7 @@ export default function VerticalTabs() {
   const signOutAdmin = () => {
     dispatch(adminSignOut());
     navigate("/adminLogin");
-  };
-
-
+  }
 
   const createSubAdmin = () => {
     navigate("/addSubAdmin");
@@ -333,6 +333,9 @@ export default function VerticalTabs() {
     // Navigate to the desired route when the button is clicked
     navigate("/admin/addCoupons");
   };
+  const createupdateFeed=()=>{
+    navigate("/admin/updateFeed")
+  }
   const createNotification = () => {
     navigate("/admin/addnotification")
   }
@@ -865,6 +868,12 @@ export default function VerticalTabs() {
                     <PersonAdd fontSize="small" />
                   </ListItemIcon>
                   Add Notification
+                </MenuItem>
+                <MenuItem onClick={()=>{handleClose(); createupdateFeed(); }}>
+                  <ListItemIcon>
+                    <DynamicFeedIcon fontSize="small"/>
+                  </ListItemIcon>
+                  Update Version
                 </MenuItem>
 
                 {/* <MenuItem
@@ -2810,6 +2819,37 @@ export default function VerticalTabs() {
                 />
               </ListItemButton>
             </ListItem>
+{/* ////////////////////////////////////////////////////////////// */}
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => handleMenuItemClick("EnquiryList")}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                  ...((menuData === "EnquiryList"
+                    ? activeMenuItemClass
+                    : inactiveMenuItemClass) || {}),
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <ArticleIcon sx={{ color: "white" }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Enquiry List"
+                  sx={{ opacity: open ? 1 : 0, color: "white" }}
+                />
+              </ListItemButton>
+            </ListItem>
 
             {/* ////////////////////////////////////////////////////// */}
             <ListItem
@@ -2896,6 +2936,7 @@ export default function VerticalTabs() {
               {menuData === "Agent Table" && <Tables />}
               {menuData === "User Table" && <Usertables />}
               {menuData === "EventList" && <EventList />}
+              {menuData === "EnquiryList" && <Enquirylist/>}
               {menuData === "SubAdmin Table" && <SubAdminTable />}
               {menuData === "AgentRequest" && <AgentRequest />}
               {menuData === "Hotel CancelTicket" && <AgentCancelHotel />}

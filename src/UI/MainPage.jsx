@@ -108,6 +108,7 @@ import CreateAgentPage from "../Pages/Dashboard/Component/Table/AddAgent";
 import CreateEventForm from "../Pages/Dashboard/Component/Table/AddEvent";
 import CreateCouponForm from "../Pages/Dashboard/Component/Table/AddCoupons";
 import AddNotification from "../Pages/Dashboard/Component/Table/AddNotification";
+import UpdateFeed from "../Pages/Dashboard/Component/Table/UpdateFeed";
 import Download from "./Download";
 
 import AboutUs from "../Layout/AboutUs";
@@ -282,6 +283,7 @@ const MainPage = () => {
       location.pathname === "/subAdmin/dashboard/Usertable" ||
       location.pathname === "/subAdmin/dashboard/AgentrequestTable" ||
       location.pathname === "/admin/addCoupons" ||
+      location.pathname === "admin/updateFeed" ||
       location.pathname === "/adminlogin" ||
       location.pathname === "/admin/addnotification" ||
       location.pathname === "/subAdmin/dashboard/Agentflightcancel" ||
@@ -369,6 +371,7 @@ const MainPage = () => {
       location.pathname === "/subAdmin/dashboard/addcouponscode" ||
       location.pathname === "/admin/addCoupons" ||
       location.pathname === "/admin/addnotification" ||
+      location.pathname === "/admin/updateFeed" ||
       location.pathname === "/subAdmin/dashboard/Agenttable" ||
       location.pathname === "/adminlogin" ||
       location.pathname === "/subAdmin/dashboard/Agentflightcancel" ||
@@ -677,6 +680,11 @@ const MainPage = () => {
                   exact
                   path="/admin/addnotification"
                   element={<AddNotification />}
+                />
+                <Route
+                exact
+                path="/admin/updateFeed"
+                element={<UpdateFeed/>}
                 />
 
                 <Route

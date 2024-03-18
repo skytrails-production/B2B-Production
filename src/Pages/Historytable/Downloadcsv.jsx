@@ -83,6 +83,7 @@ function Downloadcsv() {
               <th style={{ borderBottom: "1px solid black", padding: "8px" }}>Mobile</th>
               <th style={{ borderBottom: "1px solid black", padding: "8px" }}>Country</th>
               <th style={{ borderBottom: "1px solid black", padding: "8px" }}>Selected Job</th>
+            
             </tr>
           </thead>
           <tbody>
