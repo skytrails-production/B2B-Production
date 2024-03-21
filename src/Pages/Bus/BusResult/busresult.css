@@ -6,6 +6,12 @@
   background: #fff;
 }
 
+.top_head-new {
+  padding: 32px 16px;
+  border-radius: 12px;
+  background: #fff;
+}
+
 .main_tab {
   background: #cff5ff 0% 0% no-repeat padding-box;
   border-radius: 20px;
@@ -153,12 +159,30 @@
   margin: 20px 0px 10px 0px;
 }
 
+.pickUpBox-new {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+  color: #071c2c;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: 2px solid #ffe7e7;
+  background: #fffbfb;
+  margin: 20px 0px 10px 0px;
+}
+
 .titlePickup p {
   color: #000;
   font-family: "Montserrat";
   font-size: 19px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: bold;
   line-height: normal;
 }
 
@@ -271,7 +295,26 @@
   font-weight: 600;
   line-height: normal;
 }
+.passengerHeading-new {
+  border-radius: var(--rounded, 4px);
+  background: rgba(231, 60, 52, 0.15);
+  display: flex;
 
+  padding: 12px 16px;
+  align-items: center;
+  gap: 8px;
+}
+
+.passengerHeading-new p {
+  color: #e73c34;
+
+  margin-left: 15px;
+  font-family: "Montserrat";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
 .btn-busPassenger {
   display: flex;
   justify-content: center;
@@ -299,13 +342,111 @@
   border-radius: 50%;
   border-top: 2px solid #333;
   animation: spin 1s linear infinite;
-
 }
-
-
 
 @keyframes spin {
   to {
     transform: rotate(360deg);
   }
+}
+
+.busResultBox-new {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 32px 16px;
+
+  border-radius: 8px;
+  border: 2px solid #ffe7e7;
+  background: #fffbfb;
+}
+
+.busResultBox-new p {
+  color: #000;
+
+  font-family: "Montserrat";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-wrap: nowrap;
+}
+
+.busResultBox-new span {
+  color: #000;
+
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.busResultBox-new .busImage {
+  max-width: 30%;
+}
+
+.busResultBox-new img {
+  max-width: 90%;
+}
+
+.busResultBox-new button {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border-radius: 5.64px;
+  border: 1px solid #e73c34;
+  background: var(--white, #fff);
+  color: #e73c34;
+
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  transition: all 0.3s;
+  text-wrap: nowrap;
+}
+
+.busType-new {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: 2px solid #ffe7e7;
+  background: rgba(231, 61, 52, 0.259);
+  margin: 20px 0px 10px 0px;
+}
+
+.busType-new p {
+  color: #000;
+  font-family: "Montserrat";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.btn-busPassenger-new button {
+  border-radius: var(--rounded, 4px);
+  background: #e73c34;
+  display: flex;
+  padding: 8px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 8.952px;
+  color: var(--white, #fff);
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 160%; /* 25.6px */
+}
+
+.btn-busPassenger-new {
+  display: flex;
+
+  justify-content: center !important;
 }

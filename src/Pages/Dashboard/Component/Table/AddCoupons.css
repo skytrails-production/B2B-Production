@@ -55,6 +55,7 @@
   border-radius: 5px;
   height: 50px;
 }
+
 .button1 {
   background-color: #21325d;
   color: #fff;
@@ -66,6 +67,7 @@
   font-weight: bold;
   transition: background-color 0.3s;
 }
+
 
 @media (max-width: 768px) {
   .addCoupon-div {

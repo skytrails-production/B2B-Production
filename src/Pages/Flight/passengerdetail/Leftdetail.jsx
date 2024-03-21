@@ -657,7 +657,7 @@ var formattedTimeStop = dateTime.toLocaleTimeString('en-US', optionsTime);
       </div>
 
       <div className="col-lg-12">
-        <div class="headingflightPassenger">
+        <div class="headingflightPassenger-new">
           <p>Passenger Details</p>
           <span>Total Adult(s) :{' '} {adults} Child:{' '} {childs} Infants: {' '} {infants}</span>
         </div>
@@ -1241,7 +1241,7 @@ var formattedTimeStop = dateTime.toLocaleTimeString('en-US', optionsTime);
 
 
         <div className="col-lg-12">
-          <div class="headingflightPassenger">
+          <div class="headingflightPassenger-new">
             <p>Baggage Details</p>
 
           </div>
@@ -1303,7 +1303,7 @@ var formattedTimeStop = dateTime.toLocaleTimeString('en-US', optionsTime);
                   >
                     <Accordion.Item>
                       <Accordion.Header>
-                        <p>Detailed Fare Rules</p>
+                        <p >Detailed Fare Rules</p>
                       </Accordion.Header>
                       <Accordion.Body>
                         <div className="htmlFare"
@@ -1321,7 +1321,7 @@ var formattedTimeStop = dateTime.toLocaleTimeString('en-US', optionsTime);
 
 
         <div className="col-lg-12">
-          <div class="headingflightPassenger">
+          <div class="headingflightPassenger-new">
             <p>Fare Rule</p>
             <span>{data?.Origin}-{data?.Destination}</span>
           </div>
@@ -1345,7 +1345,7 @@ var formattedTimeStop = dateTime.toLocaleTimeString('en-US', optionsTime);
         </div>
 
 
-        <div className="col-lg-12 mt-5 mb-4 leftDetBut">
+        <div className="col-lg-12 mt-5 mb-4 leftDetBut-new">
           <button
             type="submit"
           >

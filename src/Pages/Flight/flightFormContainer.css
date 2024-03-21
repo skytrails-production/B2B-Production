@@ -15,14 +15,15 @@
   margin: 12px 0px !important;
   /* padding: 5px 50px !important; */
   margin: 12px 0px !important;
-  color: #21325d !important;
+  color: #6B7280 !important;
   font-weight: 600 !important;
+  border-radius: 4px;
   background: #fffbfb !important;
   border-width: 3px 2px 3px 3px !important;
   /* border: 3px solid #21325D !important; */
   /* border-right: 2px !important; */
-  border-style: solid !important;
-  border-color: #21325d !important;
+  /* border-style: solid !important; */
+  /* border-color: #21325d !important; */
 }
 
 .css-1gqfr5c-MuiButtonBase-root-MuiTab-root:nth-child(2) {
@@ -30,18 +31,20 @@
 }
 
 .css-1gqfr5c-MuiButtonBase-root-MuiTab-root.Mui-selected {
-  background: #21325d !important;
-  /* padding: 5px 50px !important; */
-  /* border: 3px solid #fff !important; */
-  border: 3px solid #21325d !important;
-  color: #fff !important;
-  /* border: 2px solid #21325D !important; */
+  color: #E73C34 !important;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: bold;
+  line-height: 162.5%; /* 26px */
+
+  
 }
 
-.btn:hover {
-  background-color: #21325d;
-  color: white;
-}
+/* .btn:hover {
+  /* background-color: #21325d; */
+  /* color: white; */
+/* }  */
 
 .backWall {
   border: 2px solid #d5d4d4;

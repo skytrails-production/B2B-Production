@@ -356,7 +356,7 @@ const BusSaleSummary = () => {
     // </Box>
 
     <div className="saleSummaryBus">
-      <div className="fareSummary">
+      <div className="fareSummary-new">
         <p>Fare Summary</p>
       </div>
       <div className="publishedTax">

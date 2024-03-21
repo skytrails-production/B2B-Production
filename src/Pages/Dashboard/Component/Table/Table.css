@@ -121,3 +121,10 @@
     background-color: #0056b3; /* Change the hover background color as needed */
   }
 }
+.add_bonus_btn{
+  background-color: #007bff;
+  color:#ffffff;
+  &:hover{
+    background-color: #0056b3;
+  }
+}

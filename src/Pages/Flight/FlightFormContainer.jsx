@@ -40,12 +40,14 @@ const StyledTab = styled(Tab)(({ theme }) => ({
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
-  const dummyTicketCheck=JSON.parse(sessionStorage.getItem("6989_n578j_j848433"))
-  useEffect(()=>{
-   if(dummyTicketCheck){
-    sessionStorage.setItem("6989_n578j_j848433",false);
-   }
-  },[])
+  const dummyTicketCheck = JSON.parse(
+    sessionStorage.getItem("6989_n578j_j848433")
+  );
+  useEffect(() => {
+    if (dummyTicketCheck) {
+      sessionStorage.setItem("6989_n578j_j848433", false);
+    }
+  }, []);
 
   return (
     // <Slide direction="up" in={value === index} >
@@ -94,17 +96,47 @@ export default function StyledTabsExample() {
   };
 
   return (
-    <Box sx={{ width: "100%", margin: "auto" }}>
+    <Box sx={{ width: "100%", margin: "auto", gap:"12px" }}>
       <StyledTabs
         value={value}
         onChange={handleChange}
         aria-label="styled tabs example"
-        style={{ width: "100%", margin: "auto", marginTop: "-7px" }}
+        style={{
+          width: "100%",
+          margin: "auto",
+          gap: "12px",
+          marginTop: "-7px",
+        }}
       >
-        <StyledTab style={{flex:1}} label="One Way" {...a11yProps(0)} className="btn" />
-        <StyledTab style={{flex:1}} label="Return" {...a11yProps(1)} className="btn" />
-        <StyledTab style={{flex:1}} label="Fixed Departure" {...a11yProps(2)} className="btn" />
-        <StyledTab style={{flex:1}} label="Dummy Pnr" {...a11yProps(3)} className="btn" />
+      {/* <div style={{display:"flex", gap:"12px"}}> */}
+      <StyledTab
+
+          style={{ flex: 1}}
+          label="One Way"
+          {...a11yProps(0)}
+          className="btn"
+        />
+        <StyledTab
+          style={{ flex: 1  }}
+          label="Return"
+          {...a11yProps(1)}
+          className="btn"
+        />
+        <StyledTab
+          style={{ flex: 1 }}
+          label="Fixed Departure"
+          {...a11yProps(2)}
+          className="btn"
+        />
+        <StyledTab
+          style={{ flex: 1  }}
+          label="Dummy Pnr"
+          {...a11yProps(3)}
+          className="btn"
+        />
+
+      {/* </div> */}
+        
         {/* <StyledTab label="Calendar Fare" {...a11yProps(4)} />
         <StyledTab label="Advance Search" {...a11yProps(5)} /> */}
       </StyledTabs>

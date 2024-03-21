@@ -339,9 +339,7 @@ const HolidayPackageResult = () => {
               </AccordionSummary>
               <AccordionDetails>
                 <div className="flightFilterBox">
-                  <div className="filterTitle">
-                    <p>Select Filters</p>
-                  </div>
+                 
                   {/* <div className="innerFilter">
 
 
@@ -426,8 +424,8 @@ const HolidayPackageResult = () => {
 
                   <div className="innerFilter">
 
-                <div>
-                  <label className="sidebar-label-container ps-0" style={{paddingLeft:"35px"}}>
+                <div style={{ display:"flex", justifyContent:"end"}}>
+                  <label className="sidebar-label-container ps-0" style={{paddingLeft:"35px", display:"flex", justifyContent:"end"}}>
                     <input
                       type="checkbox"
                       onChange={handleRadioChange}
@@ -582,12 +580,12 @@ const HolidayPackageResult = () => {
         </div>
         <div className="col-lg-9">
 
-          <div className="col-lg-12">
+          {/* <div className="col-lg-12">
             <div className="outerFilterBox">
               <div className="filterBox">
                 <p>Showing {' '}{filteredPackage?.length} {' '} Results</p>
                 <p className="searchDestination">Seach Destination{' '}: <b>{savedDestination}</b></p>
-                {/* <p className="searchDestination">Days {' '} <b>{savedDays}</b></p> */}
+              
                 <div className="d-flex align-items-center">
                   <label>Price <FilterAltIcon style={{ fontWeight: "600", fontFamily: "Montserrat", fontSize: '14px', marginLeft: "7px" }} /></label>
                   <select onChange={handleSortChange} value={sortOption}>
@@ -599,7 +597,7 @@ const HolidayPackageResult = () => {
 
               </div>
             </div>
-          </div>
+          </div> */}
 
           {sortedAndFilteredResults && sortedAndFilteredResults.length > 0 ? (
             sortedAndFilteredResults
@@ -616,7 +614,7 @@ const HolidayPackageResult = () => {
                           <p>{item?.pakage_title}</p>
                         </div>
                         <div>
-                          <p className="customize">{`${item?.days - 1}N`} / {`${item?.days}D`}</p>
+                          <p className="customize-new">{`${item?.days - 1}N`} / {`${item?.days}D`}</p>
                           <p className="departure">
                             {item?.schedule?.flexible ? 'Flexible' : item?.schedule?.fixed_departure ? 'Fixed Departure' : ''}
                           </p>
@@ -824,7 +822,7 @@ const HolidayPackageResult = () => {
                           })}
                         </div>
 
-                        <div className="destination">
+                        <div className="destination-new">
                           <ul>
                             {item?.destination?.slice(0, 3).map((destinationItem, index) => (
                               <li key={index}>{destinationItem?.addMore}</li>
@@ -833,13 +831,14 @@ const HolidayPackageResult = () => {
                         </div>
                       </div>
 
-                      <div className="priceBook">
+                      <div className="priceBook-new">
                         <div className="priceBookOne">
-                          <h3>{`${item?.days - 1}N`} / {`${item?.days}D`}</h3>
+                          {/* <h3>{`${item?.days - 1}N`} / {`${item?.days}D`}</h3> */}
                           <span>Offer Price</span>
                           <p>₹{' '} {item?.pakage_amount?.amount}</p>
-                          <h4>Show More<ArrowForwardIosIcon /></h4>
+                          
                         </div>
+                        <h4 className="show-more-package-new" style={{fontSize:"20px"}}>Show More<ArrowForwardIosIcon /></h4>
                       </div>
                     </div>
                   </div>

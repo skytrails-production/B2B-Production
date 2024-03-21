@@ -13,22 +13,16 @@ import {
 } from "../../../Redux/busSearch/busSearchAction";
 import { apiURL } from "../../../Constants/constant.js";
 
-import DateRangeIcon from '@mui/icons-material/DateRange';
-import FmdGoodIcon from '@mui/icons-material/FmdGood';
+import DateRangeIcon from "@mui/icons-material/DateRange";
+import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import NavBarBox from "../../../Components/NavBarBox.jsx";
-import BusLoading from "../busLoading/BusLoading.jsx"
+import BusLoading from "../busLoading/BusLoading.jsx";
 import Swal from "sweetalert2";
 import { PiBusDuotone } from "react-icons/pi";
 import { GiIndiaGate } from "react-icons/gi";
 import { BsBusFront } from "react-icons/bs";
 import { IoLocationOutline } from "react-icons/io5";
-import {swalModal} from '../../../utils/swal.js'
-
-
-
-
-
-
+import { swalModal } from "../../../utils/swal.js";
 
 // const variants = {
 //   open: {
@@ -69,10 +63,6 @@ const variants = {
   },
 };
 
-
-
-
-
 const BusForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -112,34 +102,32 @@ const BusForm = () => {
         // Clicked outside the list, so close it
         setSubfrom(false);
       }
-    }
-
+    };
 
     // Attach the event listener when the component mounts
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
     // Detach the event listener when the component unmounts
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [listFromRef]);
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (lisToRef.current && !lisToRef.current.contains(event.target) ) {
+      if (lisToRef.current && !lisToRef.current.contains(event.target)) {
         // Clicked outside the list, so close it
         setSubTo(false);
       }
     };
 
     // Attach the event listener when the component mounts
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
     // Detach the event listener when the component unmounts
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [lisToRef]);
-
 
   const [errors, setErrors] = useState({
     from: "",
@@ -147,15 +135,14 @@ const BusForm = () => {
     date: "",
   });
   useEffect(() => {
-    console.warn("from value")
-  }, [from])
+    console.warn("from value");
+  }, [from]);
 
   useEffect(() => {
     dispatch(clearBusSearchReducer());
 
-    sessionStorage.removeItem("busPassName")
-    sessionStorage.removeItem("seatData")
-
+    sessionStorage.removeItem("busPassName");
+    sessionStorage.removeItem("seatData");
   }, []);
 
   //============== copied -----=======//
@@ -231,14 +218,14 @@ const BusForm = () => {
 
     setSelectedFrom(result?.CityId);
     // setdisplayFrom(false);
-    setSubfrom(false)
+    setSubfrom(false);
   };
 
   const handleToClick = (result) => {
     setTO({ cityId: result.CityId, cityName: result.CityName });
     setSelectedTo(result.CityId);
     // setdisplayTo(false);
-    setSubTo(false)
+    setSubTo(false);
   };
 
   const handleFromSearch = (e) => {
@@ -284,12 +271,24 @@ const BusForm = () => {
     return valid;
   };
   useEffect(() => {
-    if (reducerState?.getBusResult?.busResult?.data?.data?.BusSearchResult?.Error?.ErrorCode === 0) {
-      setLoader(false)
+    if (
+      reducerState?.getBusResult?.busResult?.data?.data?.BusSearchResult?.Error
+        ?.ErrorCode === 0
+    ) {
+      setLoader(false);
       navigate("/BusResult");
-    }
-    else if (reducerState?.getBusResult?.busResult?.data?.data?.BusSearchResult?.Error?.ErrorCode !== 0 && reducerState?.getBusResult?.busResult?.data?.data?.BusSearchResult?.Error?.ErrorCode !== undefined) {
-      swalModal("bus",reducerState?.getBusResult?.busResult?.data?.data?.BusSearchResult?.Error?.ErrorMessage,false)
+    } else if (
+      reducerState?.getBusResult?.busResult?.data?.data?.BusSearchResult?.Error
+        ?.ErrorCode !== 0 &&
+      reducerState?.getBusResult?.busResult?.data?.data?.BusSearchResult?.Error
+        ?.ErrorCode !== undefined
+    ) {
+      swalModal(
+        "bus",
+        reducerState?.getBusResult?.busResult?.data?.data?.BusSearchResult
+          ?.Error?.ErrorMessage,
+        false
+      );
       // Swal.fire({
       //   title: "Something went wrong",
       //   text: reducerState?.getBusResult?.busResult?.data?.data?.BusSearchResult?.Error?.ErrorMessage,
@@ -311,11 +310,11 @@ const BusForm = () => {
       //     `,
       //   },
       // });
-      setLoader(false)
+      setLoader(false);
     }
     // console.warn(reducerState?.getBusResult?.busResult?.data?.data?.BusSearchResult?.Error?.ErrorCode
     //   , "reducerState?.getBusResult?.data?.data?.BusSearchResult?.Error?.ErrorCode")
-  }, [reducerState?.getBusResult])
+  }, [reducerState?.getBusResult]);
 
   // form submit data
   function handleSubmit(event) {
@@ -334,18 +333,17 @@ const BusForm = () => {
         formattedDate = `${year}/${month.toString().padStart(2, "0")}/${day
           .toString()
           .padStart(2, "0")}`;
-        }
-        const payload = {
-          EndUserIp: reducerState?.ip?.ipData,
-          TokenId: reducerState?.ip?.tokenData,
-          DateOfJourney: formattedDate,
-          DestinationId: to.cityId,
-          OriginId: from.cityId,
-        };
-        setLoader(true)
+      }
+      const payload = {
+        EndUserIp: reducerState?.ip?.ipData,
+        TokenId: reducerState?.ip?.tokenData,
+        DateOfJourney: formattedDate,
+        DestinationId: to.cityId,
+        OriginId: from.cityId,
+      };
+      setLoader(true);
       // console.log("payload", payload);
       dispatch(busSearchAction(payload));
-
     } else {
       // Focus on the first empty field
       if (!from) {
@@ -360,8 +358,6 @@ const BusForm = () => {
 
   // /BusResult
 
-
-
   // import React from "react";
   // import { InnerBarLogo } from "../data";
   // import { Link } from "react-router-dom";
@@ -370,16 +366,10 @@ const BusForm = () => {
   // import "./maixBox.css"
   // import { motion } from "framer-motion";
 
-
-
-
-
-
   // function MainBox() {
   //   const reducerState = useSelector((state) => state);
   //   console.log(reducerState, "jfglkdsja;edj")
   //   return (
-
 
   //     <motion.div
   //       initial={{ opacity: 0, scale: 0.5 }}
@@ -426,29 +416,31 @@ const BusForm = () => {
   //   );
   // }
 
-  // export default MainBox;      
+  // export default MainBox;
 
   if (loader) {
-    return (<BusLoading />)
+    return <BusLoading />;
   }
-
 
   return (
     <div className="container  " id="margin-pecentage-large">
       <div className="row mt-0 px-2">
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="col-lg-7 bgBusImg">
-
-        </motion.div>
-        <motion.div variants={variants} initial="initial"
-          whileInView="animate" className="col-lg-5 bgBusForm">
+          className="col-lg-7 bgBusImg"
+        ></motion.div> */}
+        <motion.div
+          variants={variants}
+          initial="initial"
+          whileInView="animate"
+          className="col-lg-5 bgBusForm"
+        >
           <form className="BusForm" onSubmit={handleSubmit}>
             <motion.div className="row">
-              <motion.div variants={variants} className="col-xs-12 col-md-12">
-                <div >
+              <motion.div className="col-lg-4 col-xs-12 col-md-4">
+                <div style={{ width: "100%" }}>
                   <label>FROM</label>
                   <div className="locationFrom">
                     {/* <FmdGoodIcon className="locationFromIcon" /> */}
@@ -463,7 +455,6 @@ const BusForm = () => {
                         handleFromSearch(event.target.value);
                         // setSubfrom(true)
                         // console.log(subFrom)
-
                       }}
                       onClick={() => setSubfrom(true)}
                       ref={fromInputRef}
@@ -475,21 +466,19 @@ const BusForm = () => {
                       <div
                         style={{
                           backgroundColor: "white",
-                          display:"block" ,
+                          display: "block",
                         }}
                         className="busFormRes"
                         ref={listFromRef}
-
                       >
                         <ul>
                           {fromSearchResults.map((result) => (
                             <li
                               key={result._id}
                               onClick={() => handleFromClick(result)}
-
                             >
-                              <strong>{<GiIndiaGate />}</strong> {result.CityName}{" "}
-                              {/* {result.CityId} */}
+                              <strong>{<GiIndiaGate />}</strong>{" "}
+                              {result.CityName} {/* {result.CityId} */}
                             </li>
                           ))}
                         </ul>
@@ -500,9 +489,12 @@ const BusForm = () => {
                 </div>
               </motion.div>
 
-              <motion.div variants={variants} className="col-xs-12 col-md-12">
+              <motion.div
+                variants={variants}
+                className="col-lg-4 col-xs-12 col-md-4"
+              >
                 <div className="">
-                  <label >TO</label>
+                  <label>TO</label>
                   <div className="locationTo">
                     <FmdGoodIcon className="locationToIcon" />
                     <input
@@ -546,8 +538,8 @@ const BusForm = () => {
                                 key={result._id}
                                 onClick={() => handleToClick(result)}
                               >
-                                <strong>{<GiIndiaGate />}</strong> {result.CityName}{" "}
-
+                                <strong>{<GiIndiaGate />}</strong>{" "}
+                                {result.CityName}{" "}
                               </li>
                             ))}
                           </Box>
@@ -559,10 +551,12 @@ const BusForm = () => {
                 </div>
               </motion.div>
 
-
-              <motion.div variants={variants} className="col-xs-12 col-md-12">
+              <motion.div
+                variants={variants}
+                className="col-lg-4 col-xs-12 col-md-4"
+              >
                 <div className="">
-                  <label >DEPARTURE</label>
+                  <label>DEPARTURE</label>
 
                   <div className="dateDepart">
                     <DateRangeIcon className="dateIcon" />
@@ -587,11 +581,17 @@ const BusForm = () => {
                 {errors.date && <div className="error">{errors.date}</div>}
               </motion.div>
 
-              <motion.div variants={variants} className="col-xs-6 col-md-12">
-                <div className="BusSubmitForm">
-                  <button type="submit">
-                    Bus Search
-                  </button>
+              <motion.div
+                variants={variants}
+                className="col-xs-6 col-md-4 mt-4"
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <div className="BusSubmitForm-new">
+                  <button type="submit">Bus Search</button>
                 </div>
               </motion.div>
             </motion.div>

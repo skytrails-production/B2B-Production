@@ -315,13 +315,11 @@ export default function Popularfilter() {
           ></div>
           <AccordionDetails>
             <div className="flightFilterBox">
-              <div className="filterTitle">
-                <p>Select Filters</p>
-              </div>
+             
               <div className="innerFilter">
                 <div>
                   <label
-                    className="sidebar-label-container ps-0"
+                    className="sidebar-label-container-new  ps-0"
                     style={{ paddingLeft: "35px" }}
                   >
                     <input
@@ -550,7 +548,7 @@ export default function Popularfilter() {
         </Accordion>
       </div>
       <div className="col-lg-9 col-md-12 ">
-        <div className="col-lg-12">
+        {/* <div className="col-lg-12">
           <div className="outerFilterBox">
             <div className="filterBox">
               <p>Showing {sortedAndFilteredResults?.length} Results</p>
@@ -575,7 +573,7 @@ export default function Popularfilter() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="col-lg-12">
           {sortedAndFilteredResults && sortedAndFilteredResults.length > 0 ? (
@@ -592,7 +590,7 @@ export default function Popularfilter() {
                   <motion.div
                     variants={variants}
                     onClick={(e) => handleClick(resultIndex, hotelCode)}
-                    className="hotelResultBoxSearch"
+                    className="hotelResultBoxSearch-new"
                     key={index}
                   >
                     <div>
@@ -642,10 +640,10 @@ export default function Popularfilter() {
                         {/* <span><del>₹{result?.Price?.OfferedPrice}</del></span> */}
                         <span>Offer Price</span>
                         <p>₹{result?.Price?.PublishedPrice}</p>
-                        <h4>
+                        <h6 className="showmorehotel">
                           Show More
                           <ArrowForwardIosIcon />
-                        </h4>
+                        </h6>
                       </div>
                     </div>
                   </motion.div>

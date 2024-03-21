@@ -11,6 +11,7 @@ const CreateMarkup = ({ formId }) => {
     flightMarkup: 0,
     busMarkup: 0,
     packageMarkup: 0,
+    rechargeMarkup:0
   });
   const [error, setError] = useState('');
 
@@ -120,6 +121,19 @@ const CreateMarkup = ({ formId }) => {
             id="packageMarkup"
             name="packageMarkup"
             value={formData.packageMarkup}
+            onChange={handleChange}
+            className="form-input"
+          />
+        </div>
+        <div className="mark-form-group">
+          <label htmlFor="rechargeMarkup" className="form-label-subAdmin">
+            Recharge Markup:
+          </label>
+          <input
+            type="number"
+            id="rechargeMarkup"
+            name="rechargeMarkup"
+            value={formData.rechargeMarkup}
             onChange={handleChange}
             className="form-input"
           />

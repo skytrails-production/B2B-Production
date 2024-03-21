@@ -269,7 +269,7 @@ const Holidayguestinfo = ({ setadultCount, setchildCount }) => {
       <div className="row">
 
         <div className="col-lg-12 mb-4">
-          <div className="packageName">
+          <div className="packageName-new">
             <p className="mb-3">{onePackage?.pakage_title}</p>
             <span>{`${onePackage?.days - 1}N`} / {`${onePackage?.days}D`}</span>
           </div>
@@ -298,21 +298,21 @@ const Holidayguestinfo = ({ setadultCount, setchildCount }) => {
             </div> */}
             <div className="formBoxInner">
               <div className="row">
-                <div className="col-lg-3">
+                <div className="col-lg-4">
                   <div class="form-floating md-mb-3">
                     <input type="text" class="form-control" name="name" value={formData.name} onChange={handlePersonChange} id="floatingInput" placeholder="Enter Your Name" />
                     <label for="floatingInput">Enter Your Name</label>
                   </div>
                   {add && formData.name === "" && <span id="error1">Enter name</span>}
                 </div>
-                <div className="col-lg-3">
+                <div className="col-lg-4">
                   <div class="form-floating md-mb-3">
                     <input type="date" class="form-control" name="dob" max={(new Date()).toISOString().split('T')[0]} value={formData.dob} onChange={handlePersonChange} id="floatingInput" placeholder="Enter Your DOB" />
                     <label for="floatingInput">Date of Birth</label>
                   </div>
                   {add && formData.dob === "" && <span id="error1">Enter DOB</span>}
                 </div>
-                <div className="col-lg-3">
+                <div className="col-lg-4">
                   <div class="form-floating md-mb-3">
                     <select class="form-select" name="gender" value={formData.gender} onChange={handlePersonChange} id="floatingSelect" aria-label="Floating label select example">
                       <option value="male">Male</option>
@@ -323,9 +323,7 @@ const Holidayguestinfo = ({ setadultCount, setchildCount }) => {
                   </div>
                   {add && formData.gender === "" && <span id="error1">Enter DOB</span>}
                 </div>
-                <div className="col-lg-3 ">
-                  <button className="btnAddGuest" onClick={handlePersonAdd}> Add Guest</button>
-                </div>
+               
                 <div className="col-lg-12 addedGuest">
                   {reducerForm.slice(1).map((singleService, index) => {
                     return (
@@ -389,6 +387,12 @@ const Holidayguestinfo = ({ setadultCount, setchildCount }) => {
                       </div>
                       {sub && requestData.departureCity === "" && <span id="error1">Enter Departure City </span>}
                     </div>
+
+                    <div className="col-lg-3 mt-4 ">
+                  <button className="btnAddGuest-new" onClick={handlePersonAdd}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+  <path d="M8 3.5V12.5M12.5 8H3.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg> Add Guest</button>
+                </div>
                   </div>
                 </div>
               </div>
@@ -401,7 +405,7 @@ const Holidayguestinfo = ({ setadultCount, setchildCount }) => {
 
         <div className="col-lg-12 my-3 " >
           <div className="headingGuestHoliday">
-            <p></p>
+            <p>Trip Details</p>
           </div>
 
           {onePackage?.detailed_ltinerary?.map((item, index) => {

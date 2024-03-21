@@ -258,7 +258,7 @@ const BusReviewBooking = () => {
             className="col-lg-9 order-lg-1  order-md-2 order-sm-2"
           >
             <motion.div variants={variants} className="col-lg-12">
-              <div className="headingReview">
+              <div className="headingReview-new">
                 <p>Review Booking</p>
               </div>
             </motion.div>
@@ -361,7 +361,7 @@ const BusReviewBooking = () => {
               </div>
             </motion.div>
 
-            <motion.div variants={variants} className="col-lg-12 mt-4 bookBus">
+            <motion.div variants={variants} className="col-lg-12 mt-4 bookBus-new">
               <button onClick={handleBookBus}>Book Ticket</button>
             </motion.div>
           </motion.div>

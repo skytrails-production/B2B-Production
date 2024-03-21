@@ -5,10 +5,10 @@ import { Box, Flex, Spacer, Text } from "@chakra-ui/react";
 import "./hotelbooknow.css";
 import { Divider, Grid, Typography } from "@mui/material";
 import bed from "../../../Images/bed.png";
-import availableRooms from "../../../Images/Hotel/availableRooms.png"
-import hotelMap from "../../../Images/Hotel/hotelMap.png"
-import hotelDetails from "../../../Images/Hotel/hotelDetails.png"
-import imageGallery from "../../../Images/Hotel/imageGallery.png"
+import availableRooms from "../../../Images/Hotel/availableRooms.png";
+import hotelMap from "../../../Images/Hotel/hotelMap.png";
+import hotelDetails from "../../../Images/Hotel/hotelDetails.png";
+import imageGallery from "../../../Images/Hotel/imageGallery.png";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Input from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
@@ -33,7 +33,7 @@ import {
 } from "../../../Redux/Hotel/hotel";
 import HotelLoading from "../hotelLoading/HotelLoading";
 import Swal from "sweetalert2";
-import {swalModal} from "../../../utils/swal"
+import { swalModal } from "../../../utils/swal";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -47,11 +47,18 @@ const HotelBooknow = () => {
   const ResultIndex = sessionStorage.getItem("ResultIndex");
   const HotelCode = sessionStorage.getItem("HotelCode");
   useEffect(() => {
-    if (reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult
-      ?.Error?.ErrorCode !== 0 && reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult
-        ?.Error?.ErrorCode !== undefined) {
-          // swalModal("py",reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult.Error?.ErrorMessage,true)
-          swalModal("py","'We're sorry, but there was an issue with your hotel booking",true)
+    if (
+      reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult?.Error
+        ?.ErrorCode !== 0 &&
+      reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult?.Error
+        ?.ErrorCode !== undefined
+    ) {
+      // swalModal("py",reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult.Error?.ErrorMessage,true)
+      swalModal(
+        "py",
+        "'We're sorry, but there was an issue with your hotel booking",
+        true
+      );
       // Swal.fire({
       //   title: "Failed!",
       //   text: reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult
@@ -73,18 +80,24 @@ const HotelBooknow = () => {
       //     `
       //   }
       // })
-      sessionStorage.removeItem("HotelCode")
-      sessionStorage.removeItem("ResultIndex")
-      navigate("/")
+      sessionStorage.removeItem("HotelCode");
+      sessionStorage.removeItem("ResultIndex");
+      navigate("/");
     }
-  }, [reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult
-    ?.Error?.ErrorCode])
+  }, [
+    reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult?.Error
+      ?.ErrorCode,
+  ]);
 
   useEffect(() => {
-    if (ResultIndex === undefined||ResultIndex === null || HotelCode === undefined || HotelCode === null) {
-      navigate("/hotel/hotelsearch")
-    }
-    else {
+    if (
+      ResultIndex === undefined ||
+      ResultIndex === null ||
+      HotelCode === undefined ||
+      HotelCode === null
+    ) {
+      navigate("/hotel/hotelsearch");
+    } else {
       const payload = {
         ResultIndex: ResultIndex,
         HotelCode: HotelCode,
@@ -96,10 +109,10 @@ const HotelBooknow = () => {
       };
 
       dispatch(hotelSearchInfoAction(payload));
-      dispatch(hotelRoomAction(payload))
+      dispatch(hotelRoomAction(payload));
     }
   }, []);
-  console.warn(ResultIndex,HotelCode,"ResultIndex,HotelCode")
+  console.warn(ResultIndex, HotelCode, "ResultIndex,HotelCode");
 
   useEffect(() => {
     if (reducerState?.hotelSearchResult?.isLoadingHotelRoom == true) {
@@ -132,7 +145,6 @@ const HotelBooknow = () => {
   const hotelRoom =
     reducerState?.hotelSearchResult?.hotelRoom?.GetHotelRoomResult;
 
-
   const star = (data) => {
     const stars = [];
     for (let i = 0; i < data; i++) {
@@ -152,7 +164,7 @@ const HotelBooknow = () => {
     totalChildren += room?.NoOfChild || 0;
   });
 
-  const storedFormData = JSON.parse(sessionStorage.getItem('hotelFormData'));
+  const storedFormData = JSON.parse(sessionStorage.getItem("hotelFormData"));
   const data = storedFormData?.dynamicFormData[0];
   // console.log(storedFormData);
 
@@ -167,14 +179,33 @@ const HotelBooknow = () => {
           <div className="container-fluid margin-pecentage">
             <div className="row">
               <div className="col-lg-12 col-md-12 col-sm-12 mb-3">
-                <div className="hotelBookNowOuter">
-                  <div className="hotelBookNowHeader">
-                    <p>Your Search criteria:{storedFormData?.city},{' '} India</p>
+                <div className="hotelBookNowOuter-new">
+                  <div className="hotelBookNowHeader-new">
+                    {/* <p>Your Search criteria:{storedFormData?.city},{' '} India</p>
                     <p>Duration: {storedFormData?.night}{' '}Nights</p>
                     <p>{storedFormData?.checkIn}- {storedFormData?.checkOut}</p>
                     <p>Guest(s): {totalAdults}Adult(s) </p>
-                    <p>Room(s): {storedFormData?.room}</p>
-
+                    <p>Room(s): {storedFormData?.room}</p> */}
+                    <div className="serach-hotel-discribe-new">
+                      <p className="serach-hotel-discribe-new-content">City</p>
+                      <p className="serach-hotel-discribe-new-content1">{storedFormData?.city} </p>
+                    </div>
+                    {/* <div className="serach-hotel-discribe-new">
+                      <p>Duration</p>
+                      <p>{storedFormData?.night}</p>
+                    </div> */}
+                    <div className="serach-hotel-discribe-new">
+                      <p className="serach-hotel-discribe-new-content">Check-In</p>
+                      <p className="serach-hotel-discribe-new-content1">{storedFormData?.checkIn}</p>
+                    </div>
+                    <div className="serach-hotel-discribe-new">
+                      <p className="serach-hotel-discribe-new-content"> Check-out</p>
+                      <p className="serach-hotel-discribe-new-content1">{storedFormData?.checkOut}</p>
+                    </div>
+                    <div className="serach-hotel-discribe-new">
+                      <p className="serach-hotel-discribe-new-content">Rooms</p>
+                      <p className="serach-hotel-discribe-new-content1">{storedFormData?.room}</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -182,7 +213,7 @@ const HotelBooknow = () => {
             <div className="row">
               <div className="col-lg-12 col-md-12 col-sm-12 mb-0">
                 <div className="availabilityOuter">
-                  <div className="availabilityInner">
+                  <div className="availabilityInner-new">
                     <div>
                       <div>
                         <p>Available Room(s)</p>
@@ -211,8 +242,6 @@ const HotelBooknow = () => {
                 </div>
               </div>
             </div>
-
-
 
             <Box className="book_content" mt={3}>
               <Box py={1}>

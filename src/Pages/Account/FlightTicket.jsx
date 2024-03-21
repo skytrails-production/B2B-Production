@@ -54,7 +54,7 @@ const FlightTicket = () => {
 
   return (
     <div className="container">
-      <div className="buttonBox">
+      <div className="buttonBox-new">
         <button onClick={handleFlightButtonClick}>Flight</button>
         <button onClick={handleHotelButtonClick}>Hotel</button>
         <button onClick={handleBusButtonClick}>Bus</button>

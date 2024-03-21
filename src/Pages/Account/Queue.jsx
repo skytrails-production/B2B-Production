@@ -28,10 +28,10 @@ const Queue = () => {
           <h5>Administration / Queues / Your Bookings</h5>
         </div > */}
         <div className="main-search">
-          <div className="heading">
+          <div className="heading-new">
             <h3>Your Bookings</h3>
           </div>
-          <div className="searchbar">
+          <div className="searchbar-new">
             <input
               // value={searchTerm}
               // onChange={(e) => setSearchTerm(e.target.value)}

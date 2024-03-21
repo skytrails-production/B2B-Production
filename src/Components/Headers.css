@@ -1,71 +1,71 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .header-container {
-    width: 100%;
-    /* height: 115px; */
-    background: white;
-    position: relative;
-    z-index: 2;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  width: 100%;
+  height: 115px;
+  background: white;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 10px;
 }
 
 .logo-container {
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    max-width: 300px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  max-width: 300px;
 }
 
 .logo {
-    width: 100%;
-    /* height: 220px; */
+  width: 100%;
+  /* height: 220px; */
 }
 
 .info-container {
-    align-items: center;
-    gap: 25px;
+  align-items: center;
+  gap: 25px;
 }
 
 .welcome {
-    /* height: 50px; */
-    border-radius: 16px 0 0 16px;
-    background: #d1ebff;
-    display: flex;
-    padding: 16px;
-    justify-content: center;
-    align-items: center;
-    gap: 16px;
+  /* height: 50px; */
+  /* border-radius: 16px 0 0 16px; */
+  /* background: #d1ebff; */
+  display: flex;
+  padding: 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
 }
 
 .welcome-text {
-    color: #000;
-    font-family: "Montserrat";
-    font-size: 16px;
-    font-weight: 400;
-    line-height: normal;
+  color: #000;
+  font-family: "Montserrat";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .separator {
-    color: black;
-    font-size: 16px;
-    font-family: "Montserrat";
-    font-weight: 400;
-    word-wrap: break-word;
+  color: black;
+  font-size: 16px;
+  font-family: "Montserrat";
+  font-weight: 400;
+  word-wrap: break-word;
 }
 
 .balance-container {
-    /* width: 173px;
+  /* width: 173px;
     height: 20px;
     position: relative; */
 }
 
-
 .rupee-logo {
-    /* width: 10px;
+  /* width: 10px;
     left: 70px;
     height: 12px;
     margin-top: -2px;
@@ -73,89 +73,112 @@
 }
 
 .balanceBox {
-    color: black;
-    font-size: 16px;
-    font-family: "Montserrat";
-    font-weight: 700;
-
+  color: #e73c34;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }
 
 .balanceBox p {
-    margin-bottom: 0 !important;
+  margin-bottom: 0 !important;
 }
 
 .balanceBox p svg {
-    font-size: 15px !important;
-    font-weight: 700;
-
+  font-size: 15px !important;
+  font-weight: 700;
 }
 
 .rechargeBox {
-    cursor: pointer;
-    color: black;
-    font-size: 16px;
-    font-family: "Montserrat";
-    font-weight: 700;
-    word-wrap: break-word;
+  cursor: pointer;
+  display: flex;
+  width: 116px;
+  height: 40px;
+  padding: var(--2, 8px) var(--4, 16px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--1, 4px);
+  border-radius: 10px;
+  border: 1px solid #e73c34;
+  color: #e73c34;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }
 
 .profileBox {
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 4px;
-    display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  padding: 5px;
+  width: 32px;
+  height: 32px;
+  background: #071c2c;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
 }
 
-
 .profileName {
-    color: black;
-    font-size: 16px;
-    font-family: "Montserrat";
-    font-weight: 700;
-    word-wrap: break-word;
+  color: black;
+  font-size: 16px;
+  font-family: "Montserrat";
+  font-weight: 700;
+  word-wrap: break-word;
 }
 
 .profileIcon {
-    width: 20px;
-    height: 20px;
-    position: relative;
-    opacity: 0.8;
+  width: 20px;
+  height: 20px;
+  position: relative;
+  opacity: 0.8;
 }
-
 
 .profileMenu {
-    width: 17.5px;
+  /* width: 17.5px;
     height: 17.5px;
-    left: 1.25px;
-    top: -5px;
-    position: absolute;
+    left: 1.25px; */
+  top: -16px;
+  position: absolute;
 }
 
+.profileIcon1 {
+  position: relative;
+}
 
 @media screen and (min-width: 600px) and (max-width: 850px) {
-    .header-container {
-        flex-direction: column;
-    }
+  .header-container {
+    flex-direction: column;
+  }
 
-    .welcome {
-        padding: 16px;
-        width: 100%;
-        border-radius: 0 0 0 0px;
-    }
+  .welcome {
+    padding: 16px;
+    width: 100%;
+    border-radius: 0 0 0 0px;
+  }
 
-    .welcome-text {
-        font-size: 13px !important;
-        text-align: center;
-    }
+  .welcome-text {
+    font-size: 13px !important;
+    text-align: center;
+  }
 
-    .balanceBox p {
-        font-size: 13px !important;
-        margin-bottom: 0 !important;
-        text-align: center;
-    }
+  .balanceBox p {
+    font-size: 13px !important;
+    margin-bottom: 0 !important;
+    text-align: center;
+  }
 
-    .balanceBox p svg {
-        font-size: 15px !important;
+  .balanceBox p svg {
+    font-size: 15px !important;
+  }
+}
 
-    }
+.welcome-text1 {
+  color: #e73c34;
+  cursor: pointer;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }

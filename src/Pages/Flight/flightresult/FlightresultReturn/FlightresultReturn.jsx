@@ -1789,6 +1789,8 @@ const FlightresultReturn = () => {
               width: "100px",
               borderRadius: "10px",
               // border: "10px solid red",
+              color:"#fff",
+              background:"#E73C34",
               height: "40px",
               fontSize: "11px",
               marginTop: "10px",

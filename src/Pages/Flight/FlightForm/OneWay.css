@@ -9,6 +9,22 @@
 
 }
 
+.flightFormSubmit-new{
+  border-radius: var(--rounded-lg, 8px);
+background: #E73C34;
+display: flex;
+color: var(--white, #FFF);
+font-family: Montserrat;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: 150%; /* 24px */
+padding: var(--25, 10px) var(--5, 20px);
+justify-content: center !important;
+align-items: center !important;
+gap: var(--2, 8px);
+}
+
 .form_input input {
   width: 332px;
   height: 56px;

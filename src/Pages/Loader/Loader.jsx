@@ -15,12 +15,12 @@ function Loader() {
     <div className="body">
       <div className="loader">
         <div className="box">
-          <div className="logo-bx">
+          {/* <div className="logo-bx">
             <img src={logo} />
-          </div>
+          </div> */}
           <div className="bottom-box">
             <div className="loader-content">
-              <h2>Please Wait</h2>
+              <h2>Please Wait.......................</h2>
               <p>We are Searching For the best hotels in</p>
               <h3>{storedFormData?.city}</h3>
             </div>

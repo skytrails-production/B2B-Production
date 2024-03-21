@@ -10,7 +10,7 @@
   /* background: #006fff 0% 0% no-repeat padding-box !important;
   box-shadow: 0px 3px 6px #00000029 !important;
   border-radius: 10px !important; */
-  background-color: #21325D !important;
+  background-color: #21325d !important;
   color: white !important;
   font-weight: 700 !important;
   border-radius: 10px !important;
@@ -32,8 +32,6 @@
   opacity: 1;
 }
 
-
-
 .filterBox {
   display: flex;
   width: 100%;
@@ -43,9 +41,8 @@
   border-radius: 4px;
   border: 1px solid #c9caca;
   gap: 20px;
-  color: #21325D;
+  color: #21325d;
   background-color: #fff;
-
 }
 
 .filterBox p {
@@ -60,7 +57,7 @@
 }
 
 .filterBox label {
-  color: #21325D;
+  color: #21325d;
 
   font-family: Montserrat;
   font-size: 15px;
@@ -73,14 +70,11 @@
   padding: 4px !important;
 }
 
-
 .book-btn {
-  background-color: #21325D;
+  background-color: #21325d;
   color: white;
   padding: 8px 12px;
 }
-
-
 
 .hotelResultBox {
   padding: 10px;
@@ -110,14 +104,11 @@
   padding: 10px;
   border-radius: 10px;
   background: rgb(241, 241, 241);
-
 }
-
 
 .searchDestination b {
   text-transform: capitalize;
 }
-
 
 .css-k008qs {
   display: -webkit-box;
@@ -126,9 +117,6 @@
   display: flex;
   justify-content: space-between;
 }
-
-
-
 
 .filteredNotFound {
   display: flex;
@@ -140,36 +128,27 @@
 }
 
 .filteredNotFound h1 {
-  color: #E73C33;
+  color: #e73c33;
   font-weight: 700;
   font-size: 22px;
 }
-
 
 .filteredNotFound img {
   width: 130px;
   height: 130px;
 }
 
-
-
-
-
-
-
-
 .hotelResultBoxSearch {
   display: flex;
   justify-content: space-between;
   border-radius: 8px;
   border: 1px solid lightgray;
-  background: #FFFBFB;
+  background: #fffbfb;
   margin-bottom: 17px;
   cursor: pointer;
   flex-wrap: nowrap;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
-
 
 .highSelect {
   height: 50px;
@@ -177,7 +156,7 @@
   margin-bottom: 20px;
 }
 
-.hotelResultBoxSearch>div {
+.hotelResultBoxSearch > div {
   display: flex;
   flex-direction: row;
 }
@@ -195,7 +174,6 @@
   height: 180px;
 }
 
-
 .hotelResultDetails {
   display: flex;
   flex-direction: column;
@@ -208,10 +186,9 @@
   display: flex;
   gap: 10px;
   flex-direction: row;
-
 }
 
-.icon-box>div {
+.icon-box > div {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -226,7 +203,7 @@
   flex-direction: column;
   align-items: flex-end;
   padding: 15px;
-  border-left: 1px solid lightgray;
+  /* border-left: 1px solid lightgray; */
 }
 
 .priceBookHotelOne {
@@ -249,7 +226,7 @@
 }
 
 .priceBookHotelOne p {
-  color: #E73C33;
+  color: #e73c33;
 
   text-align: center;
   font-family: Montserrat;
@@ -260,7 +237,7 @@
 }
 
 .priceBookHotelOne h3 {
-  color: #FFF;
+  color: #fff;
 
   text-align: center;
   font-family: Montserrat;
@@ -270,12 +247,12 @@
   line-height: normal;
   padding: 4px 12px;
   border-radius: 16px;
-  background: #071C2C;
+  background: #071c2c;
   display: inline-block;
 }
 
 .priceBookHotelOne h4 {
-  color: #071C2C;
+  color: #071c2c;
 
   text-align: center;
   font-family: Montserrat;
@@ -283,7 +260,6 @@
   font-style: normal;
   font-weight: 700;
   cursor: pointer;
-
 }
 
 .priceBookHotelOne h4 svg {
@@ -303,35 +279,32 @@
   padding: 11.28px 28.199px;
   border-radius: 5.64px;
   font-weight: 600;
-  background: #21325D;
+  background: #21325d;
   color: #fff;
-  border: 2px solid #21325D;
+  border: 2px solid #21325d;
   transition: 0.3s all;
 }
 
 .priceBookTwo button:hover {
   background: transparent;
-  color: #21325D;
-
+  color: #21325d;
 }
 
 .hotleTitle {
-  color: #071C2C;
+  color: #071c2c;
   font-family: Montserrat;
   font-size: 19px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-
 }
-
 
 .css-i4bv87-MuiSvgIcon-root {
   font-size: 1.1rem !important;
 }
 
 .customize {
-  color: #E73C33;
+  color: #e73c33;
   font-family: Montserrat;
   font-size: 10px;
   font-style: normal;
@@ -340,7 +313,7 @@
 }
 
 .hotAddress {
-  color: #071C2C;
+  color: #071c2c;
   font-family: Montserrat;
   font-size: 14.1px;
   font-style: normal;
@@ -359,11 +332,11 @@
   line-height: normal;
 }
 
-
-.hotelRating {}
+.hotelRating {
+}
 
 .seeMore button {
-  color: #0048FF;
+  color: #0048ff;
 
   font-family: Montserrat;
   font-size: 16.919px;
@@ -378,7 +351,6 @@
 .packageResult .container-fluid {
   padding: 0px 20px !important;
 }
-
 
 /* style= {
         {
@@ -397,14 +369,13 @@
   /* margin: 10px 0px; */
   /* margin: 10px 0px; */
   border-radius: 8px;
-  border: 1px solid #5C85A4;
-  background: #FFF;
+  border: 1px solid #5c85a4;
+  background: #fff;
   padding-top: 8px;
   margin-bottom: 10px;
-
 }
 
-.icon-box-inner>div {
+.icon-box-inner > div {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -412,12 +383,7 @@
   gap: 5px;
 }
 
-
-
-
-
 @media (max-width: 850px) {
-
   .packageImage {
     flex: 100% !important;
   }
@@ -431,26 +397,56 @@
   .priceBookHotel {
     flex: 20% !important;
     margin-top: 20px;
-
   }
 
   .filterBox p {
     color: #000;
     font-family: Montserrat;
     font-size: 13px;
-
   }
 
   .filterBox {
-
     gap: 12px;
-
   }
 }
 
-
-
-
 .ratingStar img {
   margin-right: 8px;
+}
+
+.hotelResultBoxSearch-new {
+  display: flex;
+  justify-content: space-between;
+  border-radius: 8px;
+
+  border-radius: 8px;
+  border: 2px solid #ffe7e7;
+  background: #fffbfb;
+  margin-bottom: 17px;
+  cursor: pointer;
+  flex-wrap: nowrap;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.hotelResultBoxSearch-new > div {
+  display: flex;
+  flex-direction: row;
+}
+
+.hotelResultBoxSearch-new p {
+  margin-bottom: 0 !important;
+}
+
+.showmorehotel {
+  display: flex;
+  padding:12px;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+  gap: 14.1px;
+  color: #e73c34;
+  align-self: stretch;
+  border-radius: 5.64px;
+  border: 1px solid #e73c34;
+  background: var(--white, #fff);
 }

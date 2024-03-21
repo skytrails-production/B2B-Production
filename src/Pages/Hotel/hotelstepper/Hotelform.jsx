@@ -14,10 +14,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { FaTrash } from "react-icons/fa";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
-import {swalModal} from "../../../utils/swal"
+import { swalModal } from "../../../utils/swal";
 import { clearPassengersReducer } from "../../../Redux/Passengers/passenger";
-
-
 
 const variants = {
   initial: {
@@ -34,16 +32,9 @@ const variants = {
   },
 };
 
-
-
-
-
 const HotelForm = () => {
-
-
-
   const [searchTerm, setSearchTerm] = useState("");
-  const[countryCode,setCountryCode]=useState("");
+  const [countryCode, setCountryCode] = useState("");
   const [cityid, setCityid] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -77,7 +68,7 @@ const HotelForm = () => {
   const initialvalue = {
     City: "",
     nationality: "IN",
-    star: 5
+    star: 5,
   };
   const [open, setOpen] = useState(false);
   const [loader, setLoader] = useState(false);
@@ -86,21 +77,20 @@ const HotelForm = () => {
   const [error, setError] = useState({
     nationality: false,
   });
-  const [sub, setSub] = useState(false)
-  const listRef = useRef(null)
-
+  const [sub, setSub] = useState(false);
+  const listRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (listRef.current && !listRef.current.contains(event.target)) {
-        setToggleSearch(false)
+        setToggleSearch(false);
       }
-    }
-    document.addEventListener('mousedown', handleClickOutside);
+    };
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    }
-  }, [listRef])
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [listRef]);
 
   const [isVisible, setIsVisible] = useState(false);
   const changeHandler = (e) => {
@@ -112,14 +102,14 @@ const HotelForm = () => {
   };
   function All_Hotel_Reducer_Clear() {
     dispatch(clearHotelReducer());
-    dispatch(clearPassengersReducer())
-    sessionStorage?.removeItem("hotelFormData")
-    sessionStorage?.removeItem("HotelCode")
-    sessionStorage?.removeItem("HotelIndex")
-    sessionStorage?.removeItem("ResultIndex")
+    dispatch(clearPassengersReducer());
+    sessionStorage?.removeItem("hotelFormData");
+    sessionStorage?.removeItem("HotelCode");
+    sessionStorage?.removeItem("HotelIndex");
+    sessionStorage?.removeItem("ResultIndex");
   }
   useEffect(() => {
-    All_Hotel_Reducer_Clear()
+    All_Hotel_Reducer_Clear();
   }, []);
 
   useEffect(() => {
@@ -128,18 +118,26 @@ const HotelForm = () => {
     }
   }, [reducerState?.hotelSearchResult?.isLoading]);
 
-  console.warn("Error code.......................", (reducerState?.hotelSearchResult?.ticketData?.data?.data?.HotelSearchResult
-    ?.Error?.ErrorCode !== 0
-    && reducerState?.hotelSearchResult?.ticketData?.data?.data?.HotelSearchResult
-      ?.Error?.ErrorCode !== undefined))
+  console.warn(
+    "Error code.......................",
+    reducerState?.hotelSearchResult?.ticketData?.data?.data?.HotelSearchResult
+      ?.Error?.ErrorCode !== 0 &&
+      reducerState?.hotelSearchResult?.ticketData?.data?.data?.HotelSearchResult
+        ?.Error?.ErrorCode !== undefined
+  );
   useEffect(() => {
-    if (reducerState?.hotelSearchResult?.ticketData?.data?.data?.HotelSearchResult
-      ?.Error?.ErrorCode !== 0
-      && reducerState?.hotelSearchResult?.ticketData?.data?.data?.HotelSearchResult
+    if (
+      reducerState?.hotelSearchResult?.ticketData?.data?.data?.HotelSearchResult
+        ?.Error?.ErrorCode !== 0 &&
+      reducerState?.hotelSearchResult?.ticketData?.data?.data?.HotelSearchResult
         ?.Error?.ErrorCode !== undefined
     ) {
-      swalModal('package', reducerState?.hotelSearchResult?.ticketData?.data?.data?.HotelSearchResult
-      ?.Error?.ErrorMessage,false)
+      swalModal(
+        "package",
+        reducerState?.hotelSearchResult?.ticketData?.data?.data
+          ?.HotelSearchResult?.Error?.ErrorMessage,
+        false
+      );
       // Swal.fire({
       //   title: "Failed!",
       //   text: reducerState?.hotelSearchResult?.ticketData?.data?.data?.HotelSearchResult
@@ -162,12 +160,9 @@ const HotelForm = () => {
       //   }
       // })
       setLoader(false);
-      All_Hotel_Reducer_Clear()
+      All_Hotel_Reducer_Clear();
       navigate("/");
-
-
-    }
-    else if (
+    } else if (
       reducerState?.hotelSearchResult?.ticketData?.data?.data?.HotelSearchResult
         ?.HotelResults?.length >= 0
     ) {
@@ -175,7 +170,7 @@ const HotelForm = () => {
       navigate("/hotel/hotelsearch");
     }
   }, [
-    reducerState?.hotelSearchResult?.ticketData?.data?.data?.HotelSearchResult
+    reducerState?.hotelSearchResult?.ticketData?.data?.data?.HotelSearchResult,
   ]);
   //fetch city Logic implemented below
   useEffect(() => {
@@ -232,16 +227,11 @@ const HotelForm = () => {
     setFormData(updatedFormData);
   };
 
-
-
   const handleChildAgeChange = (index, childIndex, value) => {
     const updatedFormData = [...formDataDynamic];
     updatedFormData[index].ChildAge[childIndex] = value;
     setFormData(updatedFormData);
   };
-
-
-
 
   const handleDeleteRoom = () => {
     if (condition > 1) {
@@ -254,9 +244,9 @@ const HotelForm = () => {
     setSearchTerm(city.Destination); // Set the input field's value to the selected city
     //Below is cityId to send in payload
     setCityid(city.cityid);
-    setCountryCode(city.countrycode)
+    setCountryCode(city.countrycode);
     // setResults([]); // Clear the results
-    setToggleSearch(false)
+    setToggleSearch(false);
     setCityError("");
   };
 
@@ -304,7 +294,11 @@ const HotelForm = () => {
     if (values?.checkOutDeparture && values?.checkOutDeparture <= date) {
       const increasedDate = new Date(date);
       increasedDate.setDate(increasedDate.getDate() + 1);
-      setValues({ ...values, checkOutDeparture: increasedDate, departure: date });
+      setValues({
+        ...values,
+        checkOutDeparture: increasedDate,
+        departure: date,
+      });
       // Update the checkOutDeparture
       // console.warn(values.checkOutDeparture - date, "values.checkOutDeparture<values.departure")
     }
@@ -318,26 +312,25 @@ const HotelForm = () => {
 
   function handleSubmit(event) {
     event.preventDefault();
-    setSub(true)
+    setSub(true);
     if (!cityVal() || searchTerm === "") {
       setCityError("city a  valid city");
       console.warn(cityVal(), "cityVallllll");
       setTimeout(() => {
-        setCityError("")
+        setCityError("");
       }, 5000);
-      return
+      return;
     }
 
     // console.warn(values.departure, values.checkOutDeparture, "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
     if (values.departure === ("" || undefined)) {
-      return
+      return;
     }
     if (values.checkOutDeparture === ("" || undefined)) {
-      return
+      return;
     }
 
     const formData = new FormData(event.target);
-
 
     const date = new Date(formData.get("departure"));
 
@@ -346,19 +339,18 @@ const HotelForm = () => {
     const year = date.getFullYear();
     const formattedDate = `${day}/${month}/${year}`;
 
-
     // saving in session storage
 
     const sessionData = new FormData(event.target);
 
     // Extract specific fields
-    const city = sessionData.get('City');
-    const checkIn = sessionData.get('checkIn');
-    const checkOut = sessionData.get('checkOut');
-    const room = sessionData.get('room');
-    const star = sessionData.get('star');
-    const night = sessionData.get('night');
-    const nationality = sessionData.get('nationality');
+    const city = sessionData.get("City");
+    const checkIn = sessionData.get("checkIn");
+    const checkOut = sessionData.get("checkOut");
+    const room = sessionData.get("room");
+    const star = sessionData.get("star");
+    const night = sessionData.get("night");
+    const nationality = sessionData.get("nationality");
 
     // Extract data from dynamic form fields
     const dynamicFormData = formDataDynamic.map((data) => ({
@@ -380,13 +372,11 @@ const HotelForm = () => {
     };
 
     // Save the extracted form data to sessionStorage
-    sessionStorage.setItem('hotelFormData', JSON.stringify(formFields));
+    sessionStorage.setItem("hotelFormData", JSON.stringify(formFields));
 
-    // saving in session storage 
-
+    // saving in session storage
 
     // validate Error
-
 
     if (!cityid) {
       setCityError("city a  valid city");
@@ -448,14 +438,13 @@ const HotelForm = () => {
   const timeDifference = toDate.getTime() - currentDate.getTime();
   const nightdays = Math.ceil(timeDifference / (1000 * 3600 * 24));
   const cityVal = () => {
-
     // console.warn("results.length()itemmmmmmmmmm", results.length)
     const res = results.filter((item) => item.Destination === searchTerm);
     // console.warn("itemmmmmmmmmm", item)
-    const res1 = res.length > 0 ? true : false
+    const res1 = res.length > 0 ? true : false;
     // console.warn(res, "res", res1, "res111111111111111111111111")
-    return res1
-  }
+    return res1;
+  };
 
   return (
     <>
@@ -463,9 +452,16 @@ const HotelForm = () => {
         <Loader />
       ) : (
         <form onSubmit={handleSubmit}>
-          <motion.div className="row rowcon g-2 gx-3" variants={variants} initial="initial"
-            whileInView="animate">
-            <motion.div variants={variants} className=" col-md-12 col-lg-12 col-xs-12 ps-0 mb-3">
+          <motion.div
+            className="row rowcon g-2 gx-3"
+            variants={variants}
+            initial="initial"
+            whileInView="animate"
+          >
+            <motion.div
+              variants={variants}
+              className=" col-md-12 col-lg-12 col-xs-12 ps-0 mb-3"
+            >
               <div className="hotel_form_input">
                 <label className="form_label">City</label>
                 <input
@@ -479,9 +475,7 @@ const HotelForm = () => {
                   style={{ position: "relative" }}
                   autoComplete="off"
                 />
-                {cityError !== "" && (
-                  <span className="error">{cityError}</span>
-                )}
+                {cityError !== "" && <span className="error">{cityError}</span>}
 
                 {/* {loading && <div>Loading...</div>} */}
                 {toggleSearch && (
@@ -496,7 +490,10 @@ const HotelForm = () => {
               </div>
             </motion.div>
 
-            <motion.div variants={variants} className="col-lg-4 col-md-4 col-xs-12 ps-0 mb-3">
+            <motion.div
+              variants={variants}
+              className="col-lg-4 col-md-4 col-xs-12 ps-0 mb-3"
+            >
               <div className="hotel_form_input">
                 <label className="form_label">Check In</label>
                 <DatePicker
@@ -516,8 +513,10 @@ const HotelForm = () => {
               </div>
             </motion.div>
 
-
-            <motion.div variants={variants} className="col-lg-4 col-md-4 col-xs-12 ps-0 mb-3">
+            <motion.div
+              variants={variants}
+              className="col-lg-4 col-md-4 col-xs-12 ps-0 mb-3"
+            >
               <div className="hotel_form_input">
                 <label className="form_label">Check-Out</label>
                 <DatePicker
@@ -537,8 +536,10 @@ const HotelForm = () => {
               </div>
             </motion.div>
 
-
-            <motion.div variants={variants} className="col-lg-4 col-md-4 col-xs-12 ps-0 mb-3">
+            <motion.div
+              variants={variants}
+              className="col-lg-4 col-md-4 col-xs-12 ps-0 mb-3"
+            >
               <div className="hotel_form_input">
                 <label className="form_label">Room*</label>
                 <select
@@ -547,7 +548,6 @@ const HotelForm = () => {
                   onChange={handleConditionChange}
                   className="hotel_input_select"
                 >
-
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>
@@ -559,18 +559,27 @@ const HotelForm = () => {
               </div>
             </motion.div>
 
-
-
             {/* <Box> */}
-            <motion.div variants={variants} className="col-lg-12 col-md-12 col-xs-12 ps-0 mb-3">
+            <motion.div
+              variants={variants}
+              className="col-lg-12 col-md-12 col-xs-12 ps-0 mb-3"
+            >
               {condition > 0 &&
                 Array.from({ length: condition }).map((_, index) => (
                   <div key={index} className="room-container">
+                    <div
+                      className={`col-lg-4 col-md-4 col-xs-4 ps-0 mb-3 d-flex  ${
+                        formDataDynamic[index]?.NoOfChild > 0
+                          ? "align-items-start"
+                          : "align-items-center"
+                      }`}
+                      style={{ fontWeight: "600px", color:"#111928" }}
+                    >
+                      <h5>ROOM {index + 1}</h5>
+                    </div>
+
                     <div className="row">
-                      <div className={`col-lg-4 col-md-4 col-xs-4 ps-0 mb-3 d-flex justify-content-center ${formDataDynamic[index]?.NoOfChild > 0 ? "align-items-start" : "align-items-center"}`}>
-                        <h5>ROOM {index + 1}</h5>
-                      </div>
-                      <div className="col-lg-4 col-md-4 col-xs-4 ps-0 mb-3 d-flex justify-content-center">
+                      <div className="col-lg-6 col-md-6 col-xs-4 ps-0 mb-3 d-flex justify-content-center">
                         <div className="hotel_form_input">
                           <label className="form_label">No of Adults:</label>
                           <select
@@ -592,7 +601,7 @@ const HotelForm = () => {
                           </select>
                         </div>
                       </div>
-                      <div className="col-lg-4 col-md-4 col-xs-4 ps-0 mb-3 d-flex justify-content-center">
+                      <div className="col-lg-6 col-md-6 col-xs-4 ps-0 mb-3 d-flex justify-content-center">
                         <div className="hotel_form_input">
                           <label className="form_label">No of Child:</label>
                           <select
@@ -619,12 +628,23 @@ const HotelForm = () => {
                               {Array.from({
                                 length: formDataDynamic[index]?.NoOfChild || 0,
                               }).map((_, childIndex) => (
-                                <div key={childIndex} className="child-age-input">
+                                <div
+                                  key={childIndex}
+                                  className="child-age-input"
+                                >
                                   <select
-                                    value={formDataDynamic[index]?.ChildAge?.[childIndex] || ""}
+                                    value={
+                                      formDataDynamic[index]?.ChildAge?.[
+                                        childIndex
+                                      ] || ""
+                                    }
                                     className="hotel_input_select"
                                     onChange={(e) =>
-                                      handleChildAgeChange(index, childIndex, e.target.value)
+                                      handleChildAgeChange(
+                                        index,
+                                        childIndex,
+                                        e.target.value
+                                      )
                                     }
                                   >
                                     {/* Assuming the age range is from 1 to 12 */}
@@ -638,7 +658,6 @@ const HotelForm = () => {
                               ))}
                             </div>
                           )}
-
                         </div>
                       </div>
                     </div>
@@ -649,11 +668,17 @@ const HotelForm = () => {
                   <FaTrash />
                 </button>
               )}
-
             </motion.div>
 
+            {/* <motion.div variants={variants} className="col-lg-6 col-md-6 col-xs-12 ps-0 mb-3">
 
-            <motion.div variants={variants} className="col-lg-4 col-md-4 col-xs-12 ps-0 mb-3">
+        
+            </motion.div> */}
+
+            <motion.div
+              variants={variants}
+              className="col-lg-4 col-md-4 col-xs-12 ps-0 mb-3"
+            >
               <div className="hotel_form_input">
                 <label className="form_label">Star Rating*</label>
                 <select
@@ -676,8 +701,10 @@ const HotelForm = () => {
               </div>
             </motion.div>
 
-
-            <motion.div variants={variants} className="col-lg-4 col-md-4 col-xs-12 ps-0 mb-3">
+            <motion.div
+              variants={variants}
+              className="col-lg-4 col-md-4 col-xs-12 ps-0 mb-3"
+            >
               <div className="hotel_form_input">
                 <label className="form_label">Nights</label>
                 <input
@@ -691,11 +718,12 @@ const HotelForm = () => {
               </div>
             </motion.div>
 
-            <motion.div variants={variants} className="col-lg-4 col-md-4 col-xs-12 ps-0 mb-3">
+            <motion.div
+              variants={variants}
+              className="col-lg-4 col-md-4 col-xs-12 ps-0 mb-3"
+            >
               <div className="hotel_form_input">
-                <label className="form_label">
-                  Nationality*
-                </label>
+                <label className="form_label">Nationality*</label>
                 <input
                   type="text"
                   name="nationality"
@@ -722,16 +750,11 @@ const HotelForm = () => {
 
             <motion.div variants={variants} className="row button-row">
               <div className="col-lg-12 col-md-12 col-xs-12 pe-0 mb-3 d-flex justify-content-center align-items-center">
-
-                <button
-                  type="submit"
-                  className="hotelFormbutton"
-                >Search Hotel
+                <button type="submit" className="hotelFormbutton-new">
+                  Search Hotel
                 </button>
-
               </div>
             </motion.div>
-
           </motion.div>
         </form>
       )}
@@ -741,12 +764,8 @@ const HotelForm = () => {
 
 export default HotelForm;
 
-
-
-
-
-
-{/* <Box px={1}>
+{
+  /* <Box px={1}>
                 <div className="hotel_form_input">
                   <label className="form_lable">Child (2-12)*</label>
                   <select
@@ -762,8 +781,10 @@ export default HotelForm;
                     <option value="number">4</option>
                   </select>
                 </div>
-              </Box> */}
-{/* {isVisible ? (
+              </Box> */
+}
+{
+  /* {isVisible ? (
                 <Box px={1}>
                   <div className="hotel_form_input">
                     <label className="form_lable">Child Age</label>
@@ -775,4 +796,5 @@ export default HotelForm;
                     />
                   </div>
                 </Box>
-              ) : null} */}
+              ) : null} */
+}

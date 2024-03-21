@@ -146,32 +146,35 @@
   margin: 12px 0px !important;
   padding: 10px 50px !important;
   margin: 0px 0px 12px 0px !important;
-  color: #21325d !important;
+  color: #000 !important;
   font-weight: 600 !important;
-  background: #fffbfb !important;
+  background: #fff !important;
   border-width: 3px 3px 3px 3px !important;
   border-style: solid !important;
-  border-color: #21325d !important;
+  border-color: 3px solid #E73C34 !important;
   width: 100%;
   text-align: center;
 }
 
 .flightdetailsTabs:nth-child(1) {
   border-radius: 8px 0px 0px 8px;
+  border: 3px solid #E73C34 !important;
 }
 
 .flightdetailsTabs:nth-child(3) {
   border-radius: 0px 8px 8px 0px;
+  border: 3px solid #E73C34 !important;
 }
 
 .flightdetailsTabs:nth-child(2) {
   border-width: 3px 1px 3px 1px !important;
+  border: 3px solid #E73C34 !important;
 }
 
 .flightdetailsTabsActive {
-  background: #21325d !important;
-  border: 3px solid #21325d !important;
-  color: #fff !important;
+  background: rgba(231, 60, 52, 0.15) !important;
+  border: 3px solid #E73C34 !important;
+  color: #000 !important;
 }
 
 .fareFilter {
@@ -276,7 +279,7 @@
 
 .flightFilterBox {
   background-color: white;
-  border: 1px solid lightgray;
+  /* border: 1px solid lightgray; */
   border-radius: 5px;
   padding: 10px;
 }
@@ -655,7 +658,7 @@ Aesthetics
 .busDepartureMain {
   /* display: flex; */
   padding: 14px 8px;
-  background: #eee;
+  background: #fffbfb;
   border-radius: 8px;
   margin-bottom: 10px;
 }
@@ -667,7 +670,7 @@ Aesthetics
 .PackageDepartureMain {
   /* display: flex; */
   padding: 14px 8px;
-  background: #eee;
+  background: #fffbfb;
   border-radius: 8px;
   margin-bottom: 10px;
 }

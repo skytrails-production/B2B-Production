@@ -9,7 +9,7 @@ import Bookingdetailpackage from './Bookingdetailpackage';
 
 const Holidaybooknow = () => {
   return (
-    <div className='container-fluid margin-pecentage'>
+    <div className='container-fluid margin-pecentage' style={{width:"-webkit-fill-available"}}>
       <div className="row">
         <div className='col-lg-9'>
           <HolidatLeftPackage />

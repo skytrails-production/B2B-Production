@@ -1,5 +1,12 @@
 import Divider from "@mui/material/Divider";
-import { Typography, Box, Grid, Button, FormControlLabel, Switch } from "@mui/material";
+import {
+  Typography,
+  Box,
+  Grid,
+  Button,
+  FormControlLabel,
+  Switch,
+} from "@mui/material";
 import Modal from "@mui/material/Modal";
 import CircularProgress from "@mui/material/CircularProgress";
 import React, { useEffect, useState } from "react";
@@ -26,7 +33,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Swal from "sweetalert2";
-import {swalModal} from "../../../utils/swal"
+import { swalModal } from "../../../utils/swal";
 import { balanceSubtractRequest } from "../../../Redux/Auth/balaceSubtract/actionBalnceSubtract";
 import { clearPassengersReducer } from "../../../Redux/Passengers/passenger";
 import { clearOneWayReducer } from "../../../Redux/FlightSearch/OneWay/oneWay";
@@ -55,7 +62,9 @@ const Flightbookingdetail = () => {
   const reducerState = useSelector((state) => state);
   const markUpamount =
     reducerState?.userData?.userData?.data?.data?.markup?.flight;
-  const dummyPnrCheck = JSON.parse(sessionStorage.getItem("6989_n578j_j848433"));
+  const dummyPnrCheck = JSON.parse(
+    sessionStorage.getItem("6989_n578j_j848433")
+  );
   // console.log(dummyPnrCheck,"hdhdhd")
   const isPassportRequired =
     reducerState?.flightFare?.flightQuoteData?.Results
@@ -90,11 +99,13 @@ const Flightbookingdetail = () => {
   const currentBalance = reducerState?.userData?.userData?.data?.data?.balance;
 
   useEffect(() => {
-    if (reducerState?.flightBook?.flightBookDataGDS?.Response ) {
-      if (dummyPnrCheck){
+    if (reducerState?.flightBook?.flightBookDataGDS?.Response) {
+      if (dummyPnrCheck) {
         balanceSubtractOneWay();
         navigate("/Flightbookingconfirmation");
-      } else{getTicketForNonLCC()};
+      } else {
+        getTicketForNonLCC();
+      }
     }
 
     //  else if (reducerState?.flightBook?.flightBookDataGDS?.Error) {
@@ -230,7 +241,11 @@ const Flightbookingdetail = () => {
     ) {
       setLoading(true);
       // swalModal("flight",reducerState?.flightBook?.flightBookData?.Error?.ErrorMessage,true);
-      swalModal("flight",'Something went wrong with your flight booking. Please check your details and try again.',true);
+      swalModal(
+        "flight",
+        "Something went wrong with your flight booking. Please check your details and try again.",
+        true
+      );
 
       // Swal.fire({
       //   title: "Hii Encounter An Error",
@@ -410,7 +425,11 @@ const Flightbookingdetail = () => {
         }
       } else {
         // alert("Insufficeint balance!! Please Recharge your Wallet");
-        swalModal("py","Insufficeint balance!! Please Recharge your Wallet",true)
+        swalModal(
+          "py",
+          "Insufficeint balance!! Please Recharge your Wallet",
+          true
+        );
         // Swal.fire({
         //   title: "An Error Occured",
         //   text: "Insufficeint balance!! Please Recharge your Wallet",
@@ -469,7 +488,11 @@ const Flightbookingdetail = () => {
           setLoading(true);
         }
       } else {
-        swalModal("py","Insufficeint balance!! Please Recharge your Wallet",true);
+        swalModal(
+          "py",
+          "Insufficeint balance!! Please Recharge your Wallet",
+          true
+        );
         // Swal.fire({
         //   title: "An Error Occured",
         //   text: "Insufficeint balance!! Please Recharge your Wallet",
@@ -596,11 +619,12 @@ const Flightbookingdetail = () => {
     if (userId) {
       const balancePayload = {
         _id: userId,
-        amount:!dummyPnrCheck?
-          fareValue?.Fare?.BaseFare +
-          fareValue?.Fare?.Tax +
-          fareValue?.Fare?.OtherCharges +
-          markUpamount:99,
+        amount: !dummyPnrCheck
+          ? fareValue?.Fare?.BaseFare +
+            fareValue?.Fare?.Tax +
+            fareValue?.Fare?.OtherCharges +
+            markUpamount
+          : 99,
       };
 
       dispatch(balanceSubtractRequest(balancePayload));
@@ -786,7 +810,10 @@ const Flightbookingdetail = () => {
       <div className="singleFlightBox justify-content-evenly">
         <div className="singleFlightBoxOne">
           <div>
-            <img src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${img}.png`} alt="flightImg"/>{" "}
+            <img
+              src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${img}.png`}
+              alt="flightImg"
+            />{" "}
           </div>
           <span>{airlineName}</span>
           <p>
@@ -822,7 +849,7 @@ const Flightbookingdetail = () => {
       </div>
 
       <div className="col-lg-12">
-        <div class="headingflightPassenger">
+        <div class="headingflightPassenger-new">
           <p>Passenger Details</p>
           <span>
             Total Adult(s) : {adults} Child: {childs} Infants: {infants}
@@ -874,8 +901,8 @@ const Flightbookingdetail = () => {
                     {passenger.Gender === "2"
                       ? "Male"
                       : passenger.Gender === "1"
-                      ? "Female"
-                      : "Transgender"}
+                      ? "Transgender"
+                      : "Female"}
                   </span>
                   <span>{passenger.Email}</span>
                   {/* {passenger.AddressLine1 && (
@@ -894,7 +921,7 @@ const Flightbookingdetail = () => {
       <div className="col-lg-12 my-3">
         <Accordion
           style={{
-            background: "#DFE6F7",
+            background: "#FFFBFB",
             borderRadius: 4,
             // position:"relative"
           }}
@@ -906,13 +933,13 @@ const Flightbookingdetail = () => {
             style={{
               height: 49,
 
-              background: "#DFE6F7",
+              background: "#FFFBFB",
               borderRadius: 4,
             }}
           >
             <Typography
               style={{
-                color: "black",
+                color: "#E73C34",
                 fontSize: 24,
                 fontFamily: "Montserrat",
                 fontWeight: "600",
@@ -949,7 +976,7 @@ const Flightbookingdetail = () => {
       </div>
 
       <div className="col-lg-12 my-3">
-        <div class="headingflightPassenger">
+        <div class="headingflightPassenger-new">
           <p>Term & Condition</p>
         </div>
       </div>
@@ -1018,8 +1045,9 @@ const Flightbookingdetail = () => {
           textAlign="center"
           onSubmit={handleSubmit}
         >
-          <div className="flightDetButton">
+          <div className="flightDetButton"  >
             <button
+            
               type="submit"
               disabled={
                 !passengerAgreement || !paymentOption

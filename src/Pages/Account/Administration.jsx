@@ -76,7 +76,7 @@ const Administration = () => {
   return (
 
     <div className="container-fluid " id="margin-pecentage-large">
-      <div className="administrationBoxMain">
+      <div className="administrationBoxMain-new">
         <motion.div className="row" variants={variants} initial="initial"
           whileInView="animate">
           <motion.div className="col-lg-3" variants={variants}>

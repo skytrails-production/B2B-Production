@@ -67,6 +67,7 @@ const Busdetail = () => {
   const [seatLayoutData, setSeatLayoutData] = useState({});
   const [layout, setLayout] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState([]);
+  const [isSelected, setIsSelected] = useState(false);
   const [sortOption, setSortOption] = useState("lowToHigh");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -83,7 +84,7 @@ const Busdetail = () => {
     if (busDataResult === undefined) {
       navigate("/");
     }
-    // console.warn("busDataResult", busDataResult)
+    console.warn("busDataResult", busDataResult)
   }, []);
 
   const maxPrice = busDataResult?.reduce((max, hotel) => {
@@ -303,6 +304,21 @@ const Busdetail = () => {
       // console.log(blockedSeatArray);
     }
   }
+  // const addOrRemoveSeat = (object) => {
+  //   if (!isSelected) {
+  //     setBlockedSeatArray([...blockedSeatArray, object]);
+  //   } else {
+  //     const updatedBlockedSeatArray = blockedSeatArray.filter(
+  //       (seatObject) => seatObject !== object
+  //     );
+  //     setBlockedSeatArray(updatedBlockedSeatArray);
+  //   }
+  //   setIsSelected(!isSelected);
+  // };
+  const handleClick = (e, object) => {
+    setIsSelected(!isSelected);
+    addOrRemoveSeat(object);
+  };
   function handleClose() {
     setBlockedSeatArray([]);
     setSelectedDropPoint("");
@@ -625,9 +641,28 @@ const Busdetail = () => {
                 </AccordionSummary>
                 <AccordionDetails>
                   <div className="flightFilterBox">
-                    <div className="filterTitle">
-                      <p>Select Filters</p>
+                    <div style={{ display: "flex", justifyContent: "end" }}>
+                      <label className="sidebar-label-container ps-0">
+                        <input
+                          type="checkbox"
+                          onChange={handleRadioChange}
+                          value="All"
+                          name="test"
+                          checked={selectedCategory.includes("test:All")}
+                        />
+                        {/* <span className="checkmark"></span> */}
+                        <span
+                          style={{
+                            color: selectedCategory.length > 0 ? "red" : "gray",
+                          }}
+                        >
+                          Clear Filter
+                        </span>
+                      </label>
                     </div>
+                    {/* <div className="filterTitle">
+                      <p>Select Filters</p>
+                    </div> */}
                     {/* <div className="innerFilter">
                       <div>
                         <h2 className="sidebar-title">Sort By</h2>
@@ -841,26 +876,6 @@ const Busdetail = () => {
                         />
                       </div>
                       <div>
-                        <div>
-                          <label className="sidebar-label-container ps-0">
-                            <input
-                              type="checkbox"
-                              onChange={handleRadioChange}
-                              value="All"
-                              name="test"
-                              checked={selectedCategory.includes("test:All")}
-                            />
-                            {/* <span className="checkmark"></span> */}
-                            <span
-                              style={{
-                                color:
-                                  selectedCategory.length > 0 ? "red" : "gray",
-                              }}
-                            >
-                              Clear Filter
-                            </span>
-                          </label>
-                        </div>
                         <Divider
                           sx={{
                             marginBottom: "15px",
@@ -1292,7 +1307,7 @@ const Busdetail = () => {
               variants={variants}
               initial="initial"
               whileInView="animate"
-              className="row top_head"
+              className="row top_head-new"
             >
               {sortedAndFilteredResults &&
               sortedAndFilteredResults.length > 0 ? (
@@ -1306,9 +1321,17 @@ const Busdetail = () => {
                   const arrivalFormattedDate = arrivalDate.format("DD MMM, YY");
                   return (
                     <>
+                      <div className="col-lg-12">
+                        <div className="busType-new">
+                          <p>{item?.BusType}</p>
+                          <Busmoredetail />
+                          <p>{item?.AvailableSeats} Seats Available</p>
+                        </div>
+                      </div>
+
                       <motion.div
                         variants={variants}
-                        className="col-lg-12 busResultBox"
+                        className="col-lg-12 busResultBox-new"
                       >
                         <div className="busSearchOne">
                           <p>{item?.TravelName}</p>
@@ -1365,13 +1388,6 @@ const Busdetail = () => {
                           </button>
                         </div>
                       </motion.div>
-                      <div className="col-lg-12">
-                        <div className="busType">
-                          <p>{item?.BusType}</p>
-                          <Busmoredetail />
-                          <p>{item?.AvailableSeats} Seats Available</p>
-                        </div>
-                      </div>
                     </>
                   );
                 })
@@ -1413,15 +1429,19 @@ const Busdetail = () => {
             sx={{
               height: "100%",
               width: "60%",
+              padding:"12px",
+              marginTop:"20px"
             }}
           >
             <Box class="outerseat">
-              <Box class="busSeatlft">
+            <h2>Upper Birth</h2>
+              {/* <Box class="busSeatlft">
                 <Box class="upper"></Box>
-              </Box>
+              </Box> */}
               <Box class="busSeatrgt">
                 <Box class="busSeat">
                   <Box class="seatcontainer clearfix">
+                  
                     {layout?.map((item, index) => {
                       if (item?.type === "upper") {
                         const divStyle = {
@@ -1431,32 +1451,46 @@ const Busdetail = () => {
 
                         return (
                           <Box
-                            class={item?.class}
-                            id={item?.id}
-                            style={{
-                              ...divStyle,
-                              width: "20px",
-                              height: "20px",
-                              display: "flex",
-                              position: "absolute",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              border: `2px solid ${
-                                item?.SeatType === 2 ? "green" : "blue"
-                              }`, // Change the border color based on SeatType // Change the border color based on SeatType // Change the color based on SeatType
-                            }}
-                          >
-                            <Checkbox
-                              onChange={(e) =>
-                                addOrRemoveSeat(e, upperArray?.[index], index)
-                              }
-                              disabled={
-                                upperArray?.[index]?.SeatStatus === true
-                                  ? false
-                                  : true
-                              }
-                            />
-                          </Box>
+  class={item?.class}
+  id={item?.id}
+  style={{
+    ...divStyle,
+    width: "20px",
+    height: "20px",
+    display: "flex",
+    position: "absolute",
+    justifyContent: "center",
+    alignItems: "center",
+    border: `2px solid ${
+      item?.SeatType === 2 ? "green" : "orange"
+    }`, 
+  }}
+  // onClick={(e) => handleClick(e, upperArray?.[index])}
+>
+  {/* {item?.SeatType === 2 ? (
+    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="122" viewBox="0 0 50 122" fill="none"  onClick={(e) => addOrRemoveSeat(e, upperArray?.[index])}>
+      <path d="M1 115.194V6.80645C1 3.59964 3.68629 1 7 1H43C46.3137 1 49 3.59964 49 6.80645V115.194C49 118.4 46.3137 121 43 121H7C3.68629 121 1 118.4 1 115.194Z" stroke="#B5B5B5"/>
+      <path d="M40 106H12C9.79086 106 8 107.733 8 109.871C8 112.009 9.79086 113.742 12 113.742H40C42.2091 113.742 44 112.009 44 109.871C44 107.733 42.2091 106 40 106Z" stroke="#B5B5B5"/>
+    </svg>
+  ) : (
+    <svg xmlns="http://www.w3.org/2000/svg" width="49" height="52" viewBox="0 0 49 52" fill="none"  onClick={(e) => addOrRemoveSeat(e, upperArray?.[index])}>
+      <path d="M39.1952 39.8836V24.7028C39.1952 23.5415 40.1439 22.6001 41.3142 22.6001H46.381C47.5513 22.6001 48.5 23.5415 48.5 24.7028V49.2974C48.5 50.4587 47.5513 51.4001 46.381 51.4001H2.61895C1.44865 51.4001 0.5 50.4587 0.5 49.2974V24.7028C0.5 23.5415 1.44865 22.6001 2.61895 22.6001H7.50406C8.67436 22.6001 9.62301 23.5415 9.62301 24.7028V39.9628C9.62301 41.1285 10.5761 42.0699 11.7508 42.0655L37.0851 41.9863C38.251 41.9819 39.1952 41.0405 39.1952 39.8836Z" stroke="#1E77E3" stroke-miterlimit="10"/>
+      <path d="M5.30078 22.6V5.6982C5.30078 3.10245 6.82149 1 8.69901 1H40.3026C42.1801 1 43.7008 3.10245 43.7008 5.6982V22.6" stroke="#1E77E3" stroke-miterlimit="10"/>
+    </svg>
+  )} */}
+  
+  <Checkbox
+    onChange={(e) =>
+      addOrRemoveSeat(e, upperArray?.[index], index)
+    }
+    disabled={
+      upperArray?.[index]?.SeatStatus === true
+        ? false
+        : true
+    }
+  />
+</Box>
+
                         );
                       }
                     })}
@@ -1466,9 +1500,10 @@ const Busdetail = () => {
             </Box>
 
             <Box class="outerlowerseat">
-              <Box class="busSeatlft">
+            <h2>Lower Birth</h2>
+              {/* <Box class="busSeatlft">
                 <Box class="lower"></Box>
-              </Box>
+              </Box> */}
               <Box class="busSeatrgt">
                 <Box class="busSeat">
                   <Box class="seatcontainer clearfix">
@@ -1496,6 +1531,19 @@ const Busdetail = () => {
                               alignItems: "center",
                             }}
                           >
+{/* {item?.SeatType === 2 ? (
+    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="122" viewBox="0 0 50 122" fill="none"  onClick={(e) => addOrRemoveSeat(e, upperArray?.[index])}>
+      <path d="M1 115.194V6.80645C1 3.59964 3.68629 1 7 1H43C46.3137 1 49 3.59964 49 6.80645V115.194C49 118.4 46.3137 121 43 121H7C3.68629 121 1 118.4 1 115.194Z" stroke="#B5B5B5"/>
+      <path d="M40 106H12C9.79086 106 8 107.733 8 109.871C8 112.009 9.79086 113.742 12 113.742H40C42.2091 113.742 44 112.009 44 109.871C44 107.733 42.2091 106 40 106Z" stroke="#B5B5B5"/>
+    </svg>
+  ) : (
+    <svg xmlns="http://www.w3.org/2000/svg" width="49" height="52" viewBox="0 0 49 52" fill="none"  onClick={(e) => addOrRemoveSeat(e, upperArray?.[index])}>
+      <path d="M39.1952 39.8836V24.7028C39.1952 23.5415 40.1439 22.6001 41.3142 22.6001H46.381C47.5513 22.6001 48.5 23.5415 48.5 24.7028V49.2974C48.5 50.4587 47.5513 51.4001 46.381 51.4001H2.61895C1.44865 51.4001 0.5 50.4587 0.5 49.2974V24.7028C0.5 23.5415 1.44865 22.6001 2.61895 22.6001H7.50406C8.67436 22.6001 9.62301 23.5415 9.62301 24.7028V39.9628C9.62301 41.1285 10.5761 42.0699 11.7508 42.0655L37.0851 41.9863C38.251 41.9819 39.1952 41.0405 39.1952 39.8836Z" stroke="#1E77E3" stroke-miterlimit="10"/>
+      <path d="M5.30078 22.6V5.6982C5.30078 3.10245 6.82149 1 8.69901 1H40.3026C42.1801 1 43.7008 3.10245 43.7008 5.6982V22.6" stroke="#1E77E3" stroke-miterlimit="10"/>
+    </svg>
+  )} */}
+
+                          
                             <Checkbox
                               onChange={(e) =>
                                 addOrRemoveSeat(
@@ -1511,6 +1559,7 @@ const Busdetail = () => {
                                   : true
                               }
                             />
+                            
                           </Box>
                         );
                       }
@@ -1534,64 +1583,11 @@ const Busdetail = () => {
               sx={{
                 height: "80%",
                 width: "100%",
-                border: "2px solid black",
+               display:"flex",
+               flexDirection:"column"
               }}
             >
-              <Box
-                sx={{
-                  display: "flex",
-                  paddingTop: "5px",
-                  width: "70%",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  margin: "auto",
-                }}
-              >
-                <Box
-                  sx={{
-                    display: "flex",
-                    gap: "8px",
-                  }}
-                >
-                  {" "}
-                  <Typography>Seats:</Typography>
-                  {blockedSeatArray?.map((seat, index) => {
-                    return (
-                      <Typography
-                        sx={{
-                          color: "blue",
-                        }}
-                      >
-                        {seat?.SeatName}
-                      </Typography>
-                    );
-                  })}
-                </Box>
-                <Box>
-                  {() => {
-                    const totalSeatPrice = blockedSeatArray.reduce(
-                      (totalPrice, seat) => {
-                        return totalPrice + (seat?.SeatFare || 0);
-                      },
-                      0
-                    );
-                    return (
-                      <div style={{ display: "flex" }}>
-                        <Typography>Price:</Typography>
-                        <h2
-                          style={{
-                            color: "blue",
-                            marginTop: "3px",
-                            width: "20px",
-                          }}
-                        >
-                          {totalSeatPrice}
-                        </h2>
-                      </div>
-                    );
-                  }}
-                </Box>
-              </Box>
+              
 
               <Box
                 style={{
@@ -1648,6 +1644,64 @@ const Busdetail = () => {
                     )
                   )}
                 </select>
+              </Box>
+
+
+
+              <Box
+                sx={{
+                  display: "flex",
+                  paddingTop: "5px",
+                  width: "70%",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  margin: "auto",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: "8px",
+                  }}
+                >
+                  {" "}
+                  <Typography>Seats:</Typography>
+                  {blockedSeatArray?.map((seat, index) => {
+                    return (
+                      <Typography
+                        sx={{
+                          color: "blue",
+                        }}
+                      >
+                        {seat?.SeatName}
+                      </Typography>
+                    );
+                  })}
+                </Box>
+                <Box>
+                  {() => {
+                    const totalSeatPrice = blockedSeatArray.reduce(
+                      (totalPrice, seat) => {
+                        return totalPrice + (seat?.SeatFare || 0);
+                      },
+                      0
+                    );
+                    return (
+                      <div style={{ display: "flex" }}>
+                        <Typography>Price:</Typography>
+                        <h2
+                          style={{
+                            color: "blue",
+                            marginTop: "3px",
+                            width: "20px",
+                          }}
+                        >
+                          {totalSeatPrice}
+                        </h2>
+                      </div>
+                    );
+                  }}
+                </Box>
               </Box>
 
               <Box

@@ -9,8 +9,9 @@
 
   border-radius: 5px;
   text-align: center;
-  background-color:#21325D;
-  color:white !important;
+  /* background-color:#21325D; */
+  border-bottom: 1px solid #E73C34;
+  color:#E73C34 !important;
 }
 .squre:hover{
   background-color: rgb(240, 186, 153);

@@ -95,6 +95,30 @@
   font-weight: 600;
 }
 
+.headingflightPassenger-new {
+  padding: 12px 20px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  border-radius: var(--rounded, 4px);
+  background: rgba(231, 60, 52, 0.15);
+}
+
+.headingflightPassenger-new p {
+  color: #E73C34;
+  font-family: "Montserrat";
+  font-size: 21px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.headingflightPassenger-new span {
+  font-weight: 600;
+}
+
+
+
 .BaggageSector {
   display: flex;
   flex-direction: row;
@@ -110,18 +134,18 @@
 }
 
 .BaggageSector p {
-  color: black;
+  color: #000;
   font-size: 18.15px;
   font-family: Montserrat;
   font-weight: 400;
 }
 
 .BaggageSector span {
-  color: black;
+  color: #000;
   font-size: 16px;
   font-family: Montserrat;
   font-weight: 600;
-  background-color: #dfe6f7;
+  background-color: rgba(231, 60, 52, 0.15);
   padding: 8px 16px;
   border-radius: 6px;
 }
@@ -150,25 +174,25 @@
 }
 
 .htmlFare {
-  color: black;
+  color: #000;
   font-size: 16px;
   font-family: Montserrat;
   font-weight: 400;
 }
 
 .htmlFare li {
-  color: black;
+  color: #000;
   font-size: 14px;
   font-family: Montserrat;
   font-weight: 400;
 }
 
 .fareRuleleft p {
-  color: #21325d;
+  color: #000;
   font-size: 16px;
   font-family: Montserrat;
   font-weight: 500;
-  background-color: #dfe6f7;
+  background-color: rgba(231, 60, 52, 0.15);
   padding: 7px;
   border-radius: 6px;
   margin-bottom: 0;
@@ -217,4 +241,21 @@
   left: 50%;
   transform: translate(-50%, 0);
   z-index: 9999999999999999999999999;
+}
+
+
+.leftDetBut-new {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.leftDetBut-new button {
+  color: white;
+  font-size: 22px;
+  font-family: Montserrat;
+  font-weight: 600;
+  padding: 10px 30px;
+  border-radius: var(--rounded, 4px);
+  background: #E73C34;
 }

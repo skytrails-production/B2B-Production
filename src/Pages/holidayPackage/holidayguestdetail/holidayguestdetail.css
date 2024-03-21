@@ -89,11 +89,12 @@
 .headingGuestHoliday {
     padding: 12px 20px;
     border-radius: 4px;
-    background: #DFE6F7;
+    border: 1px solid #FFE7E7;
+    background: #FFFBFB;
 }
 
 .headingGuestHoliday p {
-    color: #000;
+    color: #E73C34;
     font-family: 'Montserrat';
     font-size: 21px;
     font-style: normal;
@@ -113,13 +114,26 @@
     transition: all 0.3s;
 }
 
+.btnAddGuest-new {
+    width: 100%;
+    height: 100%;
+    border-radius: 5.64px;
+    border-radius: var(--rounded, 4px);
+background: #E73C34;
+    color: #FFF;
+    font-weight: 700;
+    font-family: 'Montserrat';
+    border: 2px solid #FFE7E7;
+    transition: all 0.3s;
+}
+
 
 .travellerDetailsForm {
     padding: 15px;
 }
 
 .travellerDetailsForm .addGuest {
-    color: #21325D;
+    color: #000;
     font-weight: 700;
 }
 
@@ -155,11 +169,11 @@
     /* width: 100%;
             height: 100%; */
     border-radius: 5.64px;
-    background: #21325D;
+    background: #E73C34;
     color: #FFF;
     font-weight: 700;
     font-family: 'Montserrat';
-    border: 2px solid #21325D;
+    border: 2px solid #FFE7E7;
     transition: all 0.3s;
     padding: 14px 22px;
 }

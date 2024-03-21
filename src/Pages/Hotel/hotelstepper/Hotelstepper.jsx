@@ -6,20 +6,24 @@ import Loader from "../../Loader/Loader";
 import Hotelform from "./Hotelform";
 import { useDispatch, useSelector, useReducer } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import color from "../../../color/color.js"
+import color from "../../../color/color.js";
 import { clearHotelReducer } from "../../../Redux/Hotel/hotel.js";
 const Hotelstepper = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const reducerState = useSelector((state) => state);
-  useEffect(()=>{
-    dispatch(clearHotelReducer())
-  },[])
+  useEffect(() => {
+    dispatch(clearHotelReducer());
+  }, []);
 
   // console.log("State Data", reducerState?.hotelSearchResult);
 
   return (
-    <div className="container-fluid " id="margin-pecentage-large">
+    <div
+      className="container-fluid "
+      id="margin-pecentage-large"
+      style={{ backgroundColor: "red" }}
+    >
       <div>
         <Hotelform />
         {/* <Loader /> */}
@@ -29,7 +33,6 @@ const Hotelstepper = () => {
 };
 
 export default Hotelstepper;
-
 
 // style = {{
 //   width: "55%", margin: "auto", height: "auto", borderRadius: "8px",

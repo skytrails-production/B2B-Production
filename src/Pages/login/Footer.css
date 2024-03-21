@@ -1,0 +1,271 @@
+.footerContainer{
+    padding: 36px 64px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--0, 0px);
+    background: #E8F1FF;
+    width: 100%;
+    }
+    
+    
+    
+    .footercontent1{
+      display: flex;
+    padding: 36px var(--0, 0px);
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid #E0E4E9;
+    }
+    
+    @media only screen and (max-width: 600px) {
+      .footercontent1{
+        flex-direction: column;
+      }
+    }
+    
+    
+    .footerfollowus{
+      display: flex;
+    padding: var(--0, 0px);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    }
+    
+    .footerfollowusheading{
+      color: #071C2C;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 150%; /* 21px */
+    }
+    
+    .footercontentcontainer2{
+      display: flex;
+    padding: var(--0, 0px);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 64px;
+    }
+    
+    .follow-icons{
+      display: flex;
+    padding: var(--1, 4px);
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    }
+    
+    .footercontentcontainer1{
+      display: flex;
+      gap: 2px;
+      flex-direction: column;
+    }
+    @media only screen and (max-width: 600px) {
+      .footercontentcontainer1{
+       margin-top: 12px;
+      }
+    }
+    
+    .download-button{
+      border: none;
+    }
+    
+    .footercontent2{
+      display: flex;
+    padding: 36px var(--0, 0px);
+    /* justify-content: space-between; */
+    gap: 130px;
+    align-items: flex-start;
+    border-bottom: 1px solid #E0E4E9;
+    }
+    
+    @media only screen and (max-width: 500px) {
+      .footercontent2{
+        flex-direction: column;
+        gap: 12px;
+      }
+    }
+    
+    .knowus{
+      display: flex;
+    padding: var(--0, 0px);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    }
+    
+    .know-value{
+      color: #071C2C;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 150%; /* 21px */
+    }
+    
+    .know-value1{
+      color: #071C2C;
+    font-family: Montserrat;
+    font-size: 12px;
+    font-style: normal;
+    text-decoration: none;
+    font-weight: 500;
+    line-height: 16px; /* 133.333% */
+    flex: 1 0 0;
+    }
+    
+    .knowpolicy{
+      display: flex;
+      padding: var(--0, 0px);
+      align-items: flex-start;
+      gap: var(--5, 85px);
+    }
+    
+    @media only screen and (max-width: 870px) {
+      .knowpolicy{
+        gap: 60px;
+        flex-wrap: wrap;
+      }
+    }
+    
+    .Reach-us-out{
+      display: flex;
+    padding: var(--0, 0px);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    }
+    
+    .reach-title{
+      color: #071C2C;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 150%; /* 21px */
+    }
+    
+    .schedule-reach{
+      color: #E73C33;
+    font-family: Montserrat;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 16px; /* 133.333% */
+    display: flex;
+    padding: 8px;
+    align-items: center;
+    gap: var(--6, 24px);
+    border-radius: 16px;
+    border: 1px solid #E73C33;
+    
+    }
+    
+    .react-email-button{
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .footercontent3{
+      display: flex;
+    padding: 36px var(--0, 0px);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    border-bottom: 1px solid #E0E4E9;
+    }
+    
+    .office-location{
+      color: #071C2C;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 150%; /* 21px */
+    }
+    
+    .office-location-names{
+      display: flex;
+    padding: 16px;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-self: stretch;
+    }
+    
+    @media only screen and (max-width: 600px) {
+      .office-location-names{
+        gap: 18px;
+        flex-wrap: wrap;
+      }
+    }
+    
+    
+    .accrodian-button-1{
+      color:  #071C2C; 
+      font-size: 20px;
+       font-style: Montserrat;
+        font-weight: 700;
+    }
+    
+    .accrodian-button-2{
+    color: #071C2C;
+    font-size: 20px;
+    font-style: Montserrat;
+    font-weight: 500;
+    }
+    
+    @media only screen and (max-width: 600px) {
+      .accrodian-button-1{
+        font-size: 18px;
+          font-weight: 500;
+      }
+    }
+    
+    @media only screen and (max-width: 600px) {
+      .accrodian-button-2{
+        font-size: 15px;
+          font-weight: 400;
+      }
+    }
+    
+    
+    
+    
+    .names-office{
+      width: 160px;
+      gap: 22px;
+    }
+    
+    .city-name{
+      color: #071C2C;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 16px; /* 114.286% */
+    }
+    
+    .office-address{
+      color: #071C2C;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+    }
+    
+    .footercontent4{
+      display: flex;
+    padding: 36px var(--0, 0px);
+    justify-content: space-between;
+    align-items: center;
+    }
+    
+    @media only screen and (max-width: 600px) {
+      .footercontent4{
+        gap: 18px;
+       flex-direction: column;
+      }
+    }

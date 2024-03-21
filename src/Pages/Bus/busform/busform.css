@@ -73,9 +73,6 @@
   width: 343px !important;
 } */
 
-
-
-
 .bgBusImg {
   height: 380px;
   /* width: 100%; */
@@ -83,11 +80,7 @@
   background-image: url(../../../Images/busForm.jpg);
   background-repeat: no-repeat;
   background-size: cover;
-
 }
-
-
-
 
 .BusForm {
   flex: 1;
@@ -101,38 +94,38 @@
 .bgBusForm {
   border-radius: 0px 12px 12px 0px;
   background-color: white;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
 }
 
 .BusForm input::placeholder {
-  color: #BBB;
-  font-family: 'Montserrat';
+  color: #bbb;
+  font-family: "Montserrat";
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
 }
-
 
 .BusForm input,
 .BusForm #departure {
   height: 50px;
   padding: 10px;
   padding-left: 40px;
-  border: 1px solid #21325D;
+  border: 1px solid #21325d;
   border-radius: 8px;
   width: 100%;
 
   color: #3e3d3d;
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
 }
 
-
-
-.BusForm>div>div {
+.BusForm > div > div {
   margin-bottom: 10px;
 }
 
@@ -140,13 +133,12 @@
   margin-bottom: 8px;
   color: #000;
 
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
 }
-
 
 .locationFrom,
 .locationTo,
@@ -157,7 +149,7 @@
 .locationFrom .locationFromIcon {
   position: absolute;
   left: 10px;
-  color: #21325D;
+  color: #21325d;
   top: 50%;
   transform: translate(0, -50%);
   z-index: 1;
@@ -166,7 +158,7 @@
 .locationTo .locationToIcon {
   position: absolute;
   left: 10px;
-  color: #21325D;
+  color: #21325d;
   top: 50%;
   transform: translate(0, -50%);
   z-index: 1;
@@ -175,27 +167,24 @@
 .dateDepart .dateIcon {
   position: absolute;
   left: 10px;
-  color: #21325D;
+  color: #21325d;
   top: 50%;
   transform: translate(0, -50%);
   z-index: 1;
 }
 
-
 .BusSubmitForm button {
   width: 100%;
   height: 50px;
-  background-color: #21325D;
+  background-color: #21325d;
   color: white;
-  border: 2px solid #21325D;
+  border: 2px solid #21325d;
   transition: 0.3s all;
   border-radius: 7px;
 }
 
-
 .BusForm input {
   position: relative;
-
 }
 
 .busFormRes {
@@ -207,14 +196,11 @@
 }
 
 .busFormRes ul {
-
   margin: 0 !important;
   max-height: 180px;
   overflow: hidden;
   overflow-y: scroll;
   padding-left: 0 !important;
-
-
 }
 
 .busFormRes ul li {
@@ -223,15 +209,6 @@
   list-style-type: none;
   border-bottom: 1px solid #ddd;
 }
-
-
-
-
-
-
-
-
-
 
 .busToRes {
   position: absolute;
@@ -242,14 +219,11 @@
 }
 
 .busToRes ul {
-
   margin: 0 !important;
   max-height: 180px;
   overflow: hidden;
   overflow-y: scroll;
   padding-left: 0 !important;
-
-
 }
 
 .busToRes ul li {
@@ -260,3 +234,15 @@
 }
 
 /* busToRes */
+
+
+.BusSubmitForm-new button {
+  width: 100%;
+  height: 50px;
+  border-radius: var(--rounded-lg, 8px);
+  background: #E73C34;
+  color: white;
+  border: 2px solid #E73C34;
+  transition: 0.3s all;
+  border-radius: 7px;
+}

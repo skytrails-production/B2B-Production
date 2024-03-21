@@ -417,7 +417,7 @@ const Hoteldescription = () => {
           {/* hotel details area  */}
 
           <div className="col-lg-12">
-            <div className="hotelDetails">
+            <div className="hotelDetails-new">
               <div>
                 <p className="hotelName">
                   {hotelInfo?.HotelDetails?.HotelName}
@@ -474,7 +474,7 @@ const Hoteldescription = () => {
 
           <div className="col-lg-12">
             <div className="bookingDetailsGuest">
-              <div className="bookingDetailsGuestHeader">
+              <div className="bookingDetailsGuestHeader-new">
                 <p>Booking Details</p>
               </div>
               <div className="bookingDetailsGuestBody">
@@ -514,7 +514,7 @@ const Hoteldescription = () => {
 
           <div className="col-lg-12">
             <div className="bookingDetailsGuest">
-              <div className="bookingDetailsGuestHeader">
+              <div className="bookingDetailsGuestHeader-new">
                 <p>Passenger Details</p>
               </div>
               {passenger?.map((name, index) => {
@@ -541,10 +541,10 @@ const Hoteldescription = () => {
 
           <div className="col-lg-12 mt-3">
             <div className="bookingDetailsGuest">
-              <div className="bookingDetailsGuestHeader">
+              <div className="bookingDetailsGuestHeader-new">
                 <p>Cancellation and Charges</p>
               </div>
-              <div className="otherDetailsDataGuest">
+              <div className="otherDetailsDataGuest" style={{backgroundColor:"#ffe7e7"}}>
                 <div className="row">
                   <div className="col-lg-4">
                     <div className="cancelAccord">
@@ -573,7 +573,7 @@ const Hoteldescription = () => {
 
           <div className="col-lg-12 mt-3">
             <div className="bookingDetailsGuest">
-              <div className="bookingDetailsGuestHeader">
+              <div className="bookingDetailsGuestHeader-new">
                 <p>Hotel Facilities</p>
               </div>
               <div className="guestDetailsNorms">
@@ -615,7 +615,7 @@ const Hoteldescription = () => {
           Continue
         </Button>
       </Box> */}
-      <div className="guestDetailsHistory mt-3">
+      <div className="proceed-book-new-hotel mt-3" style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
         <button type="submit" onClick={handleClickBooking}>
           Continue
         </button>

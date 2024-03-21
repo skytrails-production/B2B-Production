@@ -237,7 +237,7 @@ const HolidayForm = () => {
     <React.Fragment>
 
       <div className="row">
-        <div className="col-lg-7">
+        {/* <div className="col-lg-7">
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -245,8 +245,8 @@ const HolidayForm = () => {
             className="holidayFirstPage">
 
           </motion.div>
-        </div>
-        <motion.div className="col-lg-5" variants={variants} initial="initial"
+        </div> */}
+        <motion.div className="col-lg-12" variants={variants} initial="initial"
           whileInView="animate">
           <div className="row holidayForm">
 
@@ -259,7 +259,7 @@ const HolidayForm = () => {
                   {/* <div className="holidayPackagefromchildSearchDev">
                     <input value={searchTerm} onChange={(e) => handleDestinationChange(e)} />
                   </div> */}
-                  < div ref={listRef} className="packageScroll">
+                  <div ref={listRef} className="packageScroll">
                     {Query?.length < 3 ?
                       < div className="packageScroll-div">
 
@@ -281,7 +281,7 @@ const HolidayForm = () => {
                           {result?.map((item, index) => (
                             <div onClick={(e) => handleDestinationChangeClick(e, item)}
                               className="dest-city-container-div" key={index}>
-                              < MdTravelExplore size={20} />
+                              <MdTravelExplore size={20} />
                               <p className="package-p">{item}</p>
                             </div>
                           ))}
@@ -308,7 +308,7 @@ const HolidayForm = () => {
             </motion.div> */}
 
             <motion.div variants={variants} className="col-lg-12">
-              <div className="buttonBoxHoliday">
+              <div className="buttonBoxHoliday-new">
                 {subsearh ? <button
                   onClick={clickUs}
                   variant="contained"

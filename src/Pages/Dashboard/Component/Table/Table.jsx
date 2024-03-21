@@ -1,6 +1,8 @@
 import { styled } from "@mui/material/styles";
 import "./Table.css";
 import Table from "@mui/material/Table";
+import Snackbar from '@mui/material/Snackbar';
+import {CircularProgress} from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
@@ -89,10 +91,11 @@ export default function Tables() {
   const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-
+  const [successMessage, setSuccessMessage] = useState("");
   const reducerState = useSelector((state) => state);
   const activeData = reducerState?.userTableData?.userData?.data?.data?.map(
     (ele) => ele.is_active
+    
   );
 
   // console.log(reducerState);
@@ -157,12 +160,13 @@ export default function Tables() {
   // const [activeSwitch, setActiveSwitch] = useState(true);
 
   useEffect(() => {
-    axios.get(`${apiURL.baseURL}/skyTrails/user/getallusers`);
+  axios.get(`${apiURL.baseURL}/skyTrails/user/getallusers`);
+    //console.log(ab);
   }, []);
 
   // -------- Activate or Deactivate--------//
   const [activeUsers, setActive] = useState({});
-
+ const[load,setLoad] = useState(false);
   const [value, setValue] = React.useState("");
 
   const handleToggle = async (value, userId) => {
@@ -336,8 +340,18 @@ export default function Tables() {
   //  Img Modal POP Up
   const [showImg, setImgShow] = useState(false);
   const [documentImgUrl, setDocumentImgUrl] = useState("");
+  const [bonus, setBonus] = useState("");
+  const [selectedUserId, setSelectedUserId] = useState(null);
+  // Define handleShowBonusModal function to control bonus modal visibility
+  const [showBonusModal, setShowBonusModal] = useState(false);
 
 
+  const handleShowBonusModal = (userId) => {
+   // console.log("User ID in handleShowBonusModal:", userId);
+    // Logic to show bonus modal
+    setSelectedUserId(userId);
+    setShowBonusModal(true);
+  }
 
   const handleImgShow = (img) => {
     // console.log("imgUrl", img);
@@ -349,8 +363,47 @@ export default function Tables() {
     setSearchTerm(event.target.value);
 
   };
+  
+    const handleAddBonus = async (userId) => {
+        try {
+          setLoad(true);
+          //console.log("log",userId);
+          
+          
+          const response = await axios.post(`${apiURL.baseURL}/skyTrails/api/admin/distributeReward`, {
+            agentId: userId, 
+            rewardPercentage: parseFloat(bonus) 
+          });
+         // console.log("Bonus added successfully:", response.data);
+
+          setSuccessMessage(response.data.responseMessage);
+          setShowBonusModal(false);
+          
+      
+    } catch (error) {
+      console.error("Error adding bonus:", error);
+    
+    }
+    finally{
+      setLoad(false);
+    }
+  };      
   return (
     <>
+        {successMessage && (
+      <Snackbar
+        open={!!successMessage}
+        autoHideDuration={4000}
+        onClose={() => setSuccessMessage("")}
+        message={successMessage}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        ContentProps={{
+          style: {
+            backgroundColor: 'red',
+          },
+        }}
+      />
+    )}
       <div className="user-table-container" style={{marginTop:"100px"}}>
         <div className="adminseacrch">
           <TextField
@@ -370,10 +423,13 @@ export default function Tables() {
             Agent Table
           </Typography>
         </div>
+        
+      
         <TableContainer
           component={Paper}
           style={{ border: "none" }}
         >
+        
           <Table
             style={{ border: "none" }}
             aria-label="customized table"
@@ -397,6 +453,8 @@ export default function Tables() {
                   Provisional GSTIN
                 </StyledTableCell>
                 <StyledTableCell align="center">Mobile</StyledTableCell>
+                <StyledTableCell align="center">Revenue</StyledTableCell>
+                <StyledTableCell align="center">Reward Amount</StyledTableCell>
 
                 <StyledTableCell align="center">Is Active</StyledTableCell>
                 <StyledTableCell align="center">Flight Amount</StyledTableCell>
@@ -404,6 +462,7 @@ export default function Tables() {
                 <StyledTableCell align="center">Bus Amount</StyledTableCell>
                 <StyledTableCell align="center">Holiday Amount</StyledTableCell>
                 <StyledTableCell align="center">Vendor Amount</StyledTableCell>
+                <StyledTableCell align="center">Bonus Amount</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody style={{ border: "none" }}>
@@ -498,6 +557,14 @@ export default function Tables() {
 
                           >
                             {ele.personal_details?.mobile?.mobile_number || "No Data"}
+                          </StyledTableCell>
+                          <StyledTableCell
+                            align="right">
+                              {ele?.revenue ||"No Data"}
+                          </StyledTableCell>
+                          <StyledTableCell
+                            align="right">
+                              {ele?.rewardAmount|| "No Data"}
                           </StyledTableCell>
 
 
@@ -723,7 +790,51 @@ export default function Tables() {
                               </Modal.Body>
                             </Modal>
                           </StyledTableCell>
+                          <StyledTableCell>
+        <Button
+          className="add_bonus_btn"
+          variant="contained"
+          color="primary"
+      
+      onClick={() => handleShowBonusModal(ele?._id)}
+          fullWidth
+        >
+          Add Bonus
+        </Button>
+        {/* Modal for adding bonus */}
+        <Modal show={showBonusModal} onHide={() => setShowBonusModal(false)} centered>
+          <Modal.Header closeButton>
+            <Modal.Title>Bonus Amount</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+          {load && (
+           <div className="loader-overlay" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(255, 255, 255, 0.5))', zIndex: 9999 }}>
+           <CircularProgress color="primary" size={50} thickness={3} style={{ position: 'absolute', top: '50%', left: '49.8%', transform: 'translate(-50%, -50%)' }} />
+            </div>
+          )} 
+    
+            <TextField
+              size="large"
+              id="bonus-amount"
+              label="Bonus Amount"
+              placeholder="Enter bonus amount"
+              value={bonus}
+              onChange={(e) => setBonus(e.target.value)}
+              fullWidth
+              sx={{ marginBottom: 2 }}
+            />
 
+            <Button
+              variant="contained"
+              color="success"
+              onClick={() => handleAddBonus(selectedUserId)}
+              fullWidth
+            >
+              Add Bonus
+            </Button>
+          </Modal.Body>
+        </Modal>
+      </StyledTableCell>
 
                         </StyledTableRow>
                       </>
@@ -744,4 +855,4 @@ export default function Tables() {
       </div>
     </>
   );
-}
+};

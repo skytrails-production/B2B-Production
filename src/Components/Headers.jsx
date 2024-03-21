@@ -1,4 +1,4 @@
-import STLOGO from "../Images/ST-Main-Logo.png";
+import STLOGO from "../Images/The hawai yatra final logo.png";
 import * as React from "react";
 import { useState, useEffect } from "react";
 import "./Header.css";
@@ -16,20 +16,14 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import axios from "axios";
 import color from "../../src/color/color.js";
-import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LogoutIcon from "@mui/icons-material/Logout";
+import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
-import {
-  
-  getUserDataAction,
-} from "../Redux/Auth/UserDataById/actionUserData";
-import {
-  FormControl,
-  FormLabel,
-  
-} from "@chakra-ui/react";
-import { useLocation } from 'react-router-dom';
-import "./Headers.css"
+import { getUserDataAction } from "../Redux/Auth/UserDataById/actionUserData";
+import { FormControl, FormLabel } from "@chakra-ui/react";
+import { useLocation } from "react-router-dom";
+import "./Headers.css";
 import { apiURL } from "../Constants/constant.js";
 
 function Headers() {
@@ -37,15 +31,18 @@ function Headers() {
   const reducerState = useSelector((state) => state);
   const [openModal, setOpenModal] = React.useState(false);
   const [amount, setAmount] = React.useState("");
-  const [mobileNumber, setMobileNumber] = useState('');
+  const [mobileNumber, setMobileNumber] = useState("");
   // const [userData, setUserData] = useState(null);
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
- 
+  const [showModal, setShowModal] = useState(false);
 
- 
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -58,8 +55,6 @@ function Headers() {
     dispatch(logoutAction());
     navigate("/Login");
   };
-  
-
 
   useEffect(() => {
     const updateSrollYPosition = () => {
@@ -70,29 +65,27 @@ function Headers() {
     return () => window.removeEventListener("scroll", updateSrollYPosition);
   });
 
-
-
   // easy Buzz payment
 
   const userId = reducerState?.logIn?.loginData?.data?.data?.id;
-// console.log(reducerState, "reducer State")
+  // console.log(reducerState, "reducer State")
 
-const isValidMobileNumber = (mobileNumber) => {
-  // Validate if the mobile number is 10 digits and doesn't start with 0-5
-  return /^[6-9]\d{9}$/.test(mobileNumber);
-};
+  const isValidMobileNumber = (mobileNumber) => {
+    // Validate if the mobile number is 10 digits and doesn't start with 0-5
+    return /^[6-9]\d{9}$/.test(mobileNumber);
+  };
 
-  const handlePayment = async (event) => {      
+  const handlePayment = async (event) => {
     event.preventDefault();
     if (!isValidMobileNumber(mobileNumber)) {
       await Swal.fire({
-         title: 'Invalid Mobile Number',
-         text: 'Please Enter a Valid 10-digit Mobile Number not starting with 0-5',
-         icon: 'error',
-         confirmButtonText: 'OK',
-       });
-       return;
-     }
+        title: "Invalid Mobile Number",
+        text: "Please Enter a Valid 10-digit Mobile Number not starting with 0-5",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+      return;
+    }
     //  if (!isValidMobileNumber(amount)) {
     //   await Swal.fire({
     //      title: 'Amount',
@@ -104,26 +97,28 @@ const isValidMobileNumber = (mobileNumber) => {
     //  }
 
     const payload = {
-      userId:userId,
+      userId: userId,
       firstname: reducerState?.logIn?.loginData?.data?.data?.username,
-      phone:mobileNumber,
-      amount:amount,
+      phone: mobileNumber,
+      amount: amount,
       email: reducerState?.logIn?.loginData?.data?.data?.email,
       productinfo: "wallet",
       bookingType: "Recharge Wallet",
-      surl:`${apiURL.baseURL}/skyTrails/successVerifyApi?merchantTransactionId=`,
-      furl:`${apiURL.baseURL}/skyTrails/paymentFailure?merchantTransactionId=`
+      surl: `${apiURL.baseURL}/skyTrails/successVerifyApi?merchantTransactionId=`,
+      furl: `${apiURL.baseURL}/skyTrails/paymentFailure?merchantTransactionId=`,
     };
 
     try {
-      
-      const response = await fetch(`${apiURL.baseURL}/skyTrails/easebuzzPayment`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
+      const response = await fetch(
+        `${apiURL.baseURL}/skyTrails/easebuzzPayment`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -141,10 +136,7 @@ const isValidMobileNumber = (mobileNumber) => {
       // Handle network errors or exceptions
       console.error("API call failed with an exception:", error.message);
     }
-
-     
   };
-
 
   const proceedPayment = (accessKey, env, key) => {
     const easebuzzCheckout = new window.EasebuzzCheckout(key, env);
@@ -155,16 +147,21 @@ const isValidMobileNumber = (mobileNumber) => {
         if (response.status === "success") {
           try {
             // console.log(response, "response", response.easepayid);
-            const easepayid=response.easepayid;
+            const easepayid = response.easepayid;
             // Make API call if payment status is 'success'
-            const verifyResponse = await axios.post(`
-              ${apiURL.baseURL}/skyTrails/successVerifyApi?merchantTransactionId=${response.txnid}`, {easepayid: easepayid}
+            const verifyResponse = await axios.post(
+              `
+              ${apiURL.baseURL}/skyTrails/successVerifyApi?merchantTransactionId=${response.txnid}`,
+              { easepayid: easepayid }
             );
 
-          setTimeout(()=>{
-            dispatch(getUserDataAction(reducerState?.logIn?.loginData?.data?.data?.id));
-          },10000);
-
+            setTimeout(() => {
+              dispatch(
+                getUserDataAction(
+                  reducerState?.logIn?.loginData?.data?.data?.id
+                )
+              );
+            }, 10000);
           } catch (error) {
             console.error("Error verifying payment:", error);
             // Handle error
@@ -173,8 +170,7 @@ const isValidMobileNumber = (mobileNumber) => {
           try {
             // Make API call if payment status is 'success'
             const verifyResponse = await axios.post(`
-              ${apiURL.baseURL}/skyTrails/paymentFailure?merchantTransactionId=${response.txnid}`
-            );
+              ${apiURL.baseURL}/skyTrails/paymentFailure?merchantTransactionId=${response.txnid}`);
             // console.log(verifyResponse.data);
             // Handle verifyResponse as needed
           } catch (error) {
@@ -190,9 +186,7 @@ const isValidMobileNumber = (mobileNumber) => {
     easebuzzCheckout.initiatePayment(options);
   };
 
-
-  
-//razorpay Payment
+  //razorpay Payment
 
   // const handlePayment = (e) => {
   //   e.preventDefault();
@@ -287,13 +281,10 @@ const isValidMobileNumber = (mobileNumber) => {
   //   rzp.open();
   // };
 
-
   //get user detail for update balance
   // const userId = reducerState?.logIn?.loginData?.data?.data?.id;
 
-
   // console.log("userIdnew", userId, reducerState)
-
 
   useEffect(() => {
     // Make a GET request to the API endpoint
@@ -327,63 +318,109 @@ const isValidMobileNumber = (mobileNumber) => {
     //     console.error(error);
     //     // Handle errors, e.g., display an error message
     //   });
-
   }, [userId, dispatch]);
 
   const userData = reducerState?.userData?.userData?.data?.data;
 
-
   const location = useLocation();
   const { pathname } = location;
 
-  if (pathname === '/admin/dashboard') {
+  if (pathname === "/admin/dashboard") {
     return null; // If the path matches '/admin/dashboard', the header is not rendered
   }
 
-  const isAdminPath = pathname === "/adminLogin" || pathname === "/admin/dashboard "|| pathname==="/subAdminLogin" || pathname==="/addSubAdmin" ||pathname==="/subAdmin/dashboard"||pathname==="/addAgent"||pathname==="/addAdvertisement"||pathname==="/addWebAdvertisement";
+  const isAdminPath =
+    pathname === "/adminLogin" ||
+    pathname === "/admin/dashboard " ||
+    pathname === "/subAdminLogin" ||
+    pathname === "/addSubAdmin" ||
+    pathname === "/subAdmin/dashboard" ||
+    pathname === "/addAgent" ||
+    pathname === "/addAdvertisement" ||
+    pathname === "/addWebAdvertisement";
 
   if (isAdminPath) {
     return null; // Don't render the InnerNavbar for admin paths
   }
+
   return (
     <div className="header-container">
       <div className="logo-container">
-        <Link to="/">
+        <Link to="/" style={{ padding: "12px" }}>
           <img src={STLOGO} className="logo" alt="logo" />
         </Link>
       </div>
       <div className="info-container">
-        <div className="welcome">
-          <p className="welcome-text">
+        <div
+          className="welcome"
+          style={{ height: "0px", borderRadius: "0px", background: "none" }}
+        >
+          <p
+            className="welcome-text1"
+            onClick={toggleModal}
+            style={{ margin: "0px" }}
+          >
             Contact your representative
           </p>
-          <div className="seperator">|</div>
+
+          {/* Bootstrap Modal */}
+          {/* <div className={`modal fade ${showModal ? 'show' : ''}`} style={{ display: showModal ? 'block' : 'none' }} tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden={!showModal}>
+        <div className="modal-dialog modal-dialog-centered" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalCenterTitle">Contact Representative</h5>
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={toggleModal}>
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="modal-body">
+              
+              <p></p>
+            </div>
+            
+          </div>
+        </div>
+      </div> */}
+          {/* <div className="seperator">|</div> */}
 
           <div className="balance-container">
             <div className="balanceBox">
-              <p>Cash Bal: <CurrencyRupeeIcon /> {userData?.balance.toFixed(2) || reducerState?.logIn?.loginData?.data?.data?.balance.toFixed(2)}</p>
+              <p>
+                Current Bal: <CurrencyRupeeIcon />{" "}
+                {userData?.balance.toFixed(2) ||
+                  reducerState?.logIn?.loginData?.data?.data?.balance.toFixed(
+                    2
+                  )}
+              </p>
             </div>
           </div>
-          <div className="seperator">|</div>
-          <div onClick={handleOpenModal} className="rechargeBox">Recharge</div>
-          <div className="seperator">|</div>
+          {/* <div className="seperator">|</div> */}
+          <div onClick={handleOpenModal} className="rechargeBox">
+            Recharge
+          </div>
+          {/* <div className="seperator">|</div> */}
 
-          <div className="profileBox">
+          <div className="profileIcon1">
             <div
-              className="profileName">
-              {" "}{reducerState?.logIn?.loginData?.data?.data?.username}
-            </div>
-            <div className="profileIcon">
-              <div
-                className="profileMenu"
-                onClick={handleClick}
-                id="menu"
-                aria-controls={open ? "menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-                cursor="pointer"
-              >
-                <AccountCircleIcon />
+              className="profileMenu"
+              onClick={handleClick}
+              id="menu"
+              aria-controls={open ? "menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              cursor="pointer"
+            >
+              <div className="profileBox">
+                <div
+                  className="profileName"
+                  style={{
+                    color: "white",
+                    
+                  }}
+                >
+                  {reducerState?.logIn?.loginData?.data?.data?.username &&
+                    reducerState.logIn.loginData.data.data.username.charAt(0)}
+                </div>
               </div>
             </div>
           </div>
@@ -399,14 +436,20 @@ const isValidMobileNumber = (mobileNumber) => {
               onClose={handleClose}
               TransitionComponent={Fade}
             >
-              <MenuItem onClick={handleSubmit} style={{ width: "130px" }} >
+              <MenuItem style={{ fontSize: "15px", fontWeight: "bold" }}>
+                {reducerState?.logIn?.loginData?.data?.data?.username}
+              </MenuItem>
+
+              <MenuItem style={{ fontSize: "15px" }}>
+                {reducerState?.logIn?.loginData?.data?.data?.email}
+              </MenuItem>
+              <hr style={{ margin: "0px" }} />
+              <MenuItem onClick={handleSubmit} style={{ width: "100%", color:"#E73C34" }}>
+                <LogoutIcon style={{ marginRight: "12px", color:"#E73C34" }} />
                 {reducerState?.logIn?.loginData?.data?.data
                   ? "Logout"
                   : "Login"}
               </MenuItem>
-              {/* <MenuItem onClick={editPackage} style={{ fontSize: "15px" }}>
-                My Package
-              </MenuItem> */}
             </Menu>
           </div>
         </div>
@@ -527,37 +570,54 @@ const isValidMobileNumber = (mobileNumber) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          maxWidth: '400px',
-          width: '100%',
-          padding: '10px',
-        }}
-      >
-        <Paper elevation={3} style={{ padding: '20px', maxWidth: '400px', margin: 'auto' }}>
         <Box
           sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: '1rem',
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
           }}
         >
-          <Typography
-            variant="h6"
-            component="h2"
-            sx={{ cursor: 'pointer', flexGrow: 1, textAlign: 'center' }}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              maxWidth: "700px",
+              width: "100%",
+              padding: "10px",
+            }}
           >
-            Enter Payment Detail
-          </Typography>
-          <CloseIcon onClick={handleCloseModal} style={{ cursor: 'pointer' }} />
-        </Box>
+            <Paper
+              elevation={3}
+              style={{ padding: "20px", maxWidth: "400px", margin: "auto" }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginBottom: "1rem",
+                }}
+              >
+                <Typography
+                  variant="h6"
+                  component="h2"
+                  sx={{ cursor: "pointer", flexGrow: 1 }}
+                >
+                  Recharge Wallet
+                </Typography>
 
-        
-          <form onSubmit={handlePayment}>
+                <CloseIcon
+                  onClick={handleCloseModal}
+                  style={{ cursor: "pointer" }}
+                />
+              </Box>
+
+              <hr />
+
+              {/* <div style={{display:"flex",flexDirection:"row", width:"100%"}}> */}
+
+              <form onSubmit={handlePayment}>
                 {/* <FormControl fullwidth sx={{ marginBottom: 2 }}>
                   <FormLabel>Name</FormLabel>
                   <OutlinedInput
@@ -583,36 +643,44 @@ const isValidMobileNumber = (mobileNumber) => {
                   />
                 </FormControl> */}
 
-<FormControl fullWidth sx={{ marginBottom: 2 }}>
-                  <FormLabel>Mobile Number</FormLabel>
-                  <OutlinedInput
-                    type="number"
-                    value={mobileNumber}
-                    onChange={(e) => setMobileNumber(e.target.value)}                    
-                    placeholder="Enter Mobile Number"
-                    sx={{ width: "100%" }}
-                  />
-                </FormControl>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    width: "100%",
+                    gap: "12px",
+                  }}
+                >
+                  <FormControl fullWidth sx={{ marginBottom: 2 }}>
+                    <FormLabel>Mobile Number</FormLabel>
+                    <OutlinedInput
+                      type="number"
+                      value={mobileNumber}
+                      onChange={(e) => setMobileNumber(e.target.value)}
+                      placeholder="Enter Mobile Number"
+                      sx={{ width: "100%" }}
+                    />
+                  </FormControl>
 
-                <FormControl fullwidth sx={{ marginBottom: 6 }}>
-                  <FormLabel>Amount</FormLabel>
-                  <OutlinedInput
-                    startAdornment={
-                      <InputAdornment position="start">₹</InputAdornment>
-                    }
-                    type="text"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                    sx={{ width: "100%" }}
-                  />
-                </FormControl>
+                  <FormControl fullwidth sx={{ marginBottom: 6 }}>
+                    <FormLabel>Amount</FormLabel>
+                    <OutlinedInput
+                      startAdornment={
+                        <InputAdornment position="start">₹</InputAdornment>
+                      }
+                      type="text"
+                      value={amount}
+                      onChange={(e) => setAmount(e.target.value)}
+                      sx={{ width: "100%" }}
+                    />
+                  </FormControl>
+                </div>
 
                 <Box display="flex" justifyContent="space-between">
                   <Button
                     variant="contained"
                     type="submit"
                     sx={{ margin: 0.1, backgroundColor: color.bluedark }}
-                    
                   >
                     Recharge Wallet
                   </Button>
@@ -635,8 +703,8 @@ const isValidMobileNumber = (mobileNumber) => {
                 </span> */}
               </form>
             </Paper>
-            </Box>
           </Box>
+        </Box>
       </Modal>
     </div>
   );

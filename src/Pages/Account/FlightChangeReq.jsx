@@ -307,7 +307,7 @@ const FlightChangeReq = () => {
       )}
 
       {/* Add pagination controls */}
-      <div className="pagination">
+      <div className="pagination buttonBox-new">
         <button
           disabled={currentPage === 1}
           onClick={() => handlePageChange(currentPage - 1)}

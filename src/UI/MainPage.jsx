@@ -74,7 +74,7 @@ import CreateHolidayPackage from "../Pages/HotelPackage/createholidaypackage/Cre
 import EditHolidayPackage from "../Pages/Dashboard/Component/Table/packageUpdate/EditPackage";
 import Queue from "../Pages/Account/Queue";
 import HolidayPackages from "../Pages/Account/HolidayPackages";
-import MainBox from "../Layout/MainBox";
+import MainBox from "../Layout/MainBoxNew";
 import CreateMarkupForm from "../Pages/Dashboard/Component/Table/AddMarkup";
 import {
   useNavigate,
@@ -121,6 +121,7 @@ import { debounce } from "lodash";
 import {} from "../utils/validation";
 
 import Packages from "../Pages/Packagepages/Packages";
+import Loginnew from "../Pages/login/Loginnew";
 
 const MainPage = () => {
   const dispatch = useDispatch();
@@ -417,7 +418,7 @@ const MainPage = () => {
         !isLogin &&
         !isSubAdmindashboard &&
         !isSubAdminLogin && (
-          <div className="mainBox">
+          <div className="mainBox ">
             {/* header of main dashboard */}
 
             {/* all routes of inner navbar */}
@@ -429,8 +430,8 @@ const MainPage = () => {
                 />
                 <Route
                   path="/"
-                  element={<MainBox />}
-                  style={{ color: "inherit", textDecoration: "inherit" }}
+                  element={<MainBox/>}
+                  style={{ color: "inherit", textDecoration: "inherit"}}
                 />
                 <Route
                   path="/Hotel"
@@ -767,7 +768,7 @@ const MainPage = () => {
       {/* <GotoTopBtn /> */}
       <div>
         <Routes>
-          <Route path="login" element={<Login />} />
+          <Route path="login" element={<Loginnew />} />
           <Route path="registration" element={<Registration />} />
           <Route
             exact

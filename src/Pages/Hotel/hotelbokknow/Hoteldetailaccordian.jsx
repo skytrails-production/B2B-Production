@@ -229,14 +229,40 @@ export default function CustomizedAccordions() {
       // </Box>
 
 
-      <div className="offer_area p-2">
-        <div className="roomTypeName">
+      <div className="offer_area-new p-2">
+      <div className="checkromm-tick-new">
+      <div className="roomTypeName">
           <p className="first">
             {filteredComponent[0]?.RoomTypeName}
           </p>
         </div>
 
-        <div className="ratePlan">
+        <div className="ratePlan-new">
+
+<input
+  className="form-check-input"
+  type="checkbox"
+  style={{ width: "25px", height: "25px" }}
+  value={filteredComponent[0]?.RoomIndex}
+  disabled={row >= 0 && col > 0 && filteredComponent[0].disabled}
+  checked={!filteredComponent[0].disabled}
+  onClick={(e) => {
+    setDisabledOption(RoomIndexArr);
+  }}
+/>
+<p className="text">
+  {filteredComponent[0]?.RatePlanName}
+</p>
+</div>
+
+      </div>
+        {/* <div className="roomTypeName">
+          <p className="first">
+            {filteredComponent[0]?.RoomTypeName}
+          </p>
+        </div> */}
+
+        {/* <div className="ratePlan">
 
           <input
             className="form-check-input"
@@ -252,15 +278,15 @@ export default function CustomizedAccordions() {
           <p className="text">
             {filteredComponent[0]?.RatePlanName}
           </p>
-        </div>
+        </div> */}
         <p className="text">
           Last Cancellation till: {formattedDate}
         </p>
-        <div className="priceCheck">
+        <div className="priceCheck-new">
           <p className="price">
             ₹{filteredComponent[0]?.Price?.PublishedPriceRoundedOff}
           </p>
-          <p className="second">
+          <p className="second-new">
             {filteredComponent[0]?.RoomPromotion}
           </p>
         </div>
@@ -442,21 +468,23 @@ export default function CustomizedAccordions() {
               expanded={expanded === "panel1"}
               onChange={handleChange("panel1")}
               sx={{ border: "none", marginY: "20px" }}
+              
             >
               <AccordionSummary
-                sx={{ borderRadius: "20px", boxShadow: "0px 3px 6px #00000029" }}
+                sx={{ borderRadius: "20px", boxShadow: "0px 3px 6px #00000029"}}
                 aria-controls="panel1d-content"
                 id="panel1d-header"
+                // style={{ borderRadius:"4px",backgroundColor:"rgba(231, 60, 52, 0.15)"}}
               >
                 <Grid container>
-                  <Grid md={12}>
+                  <Grid md={12} >
                     <Box display="flex" alignItems="center">
                       <Box>
                         <img src={availableRooms} style={{ width: "100%" }} />
                       </Box>
                       <Typography
                         ml={2}
-                        color="#252525"
+                        color="#E73C34"
                         fontSize="14px"
                         fontWeight="bold"
                       >
@@ -474,6 +502,7 @@ export default function CustomizedAccordions() {
                   borderRadius: "20px",
                   boxShadow: "0px 3px 6px #00000029",
                   marginTop: "20px",
+              
                 }}
               >
 
@@ -485,9 +514,9 @@ export default function CustomizedAccordions() {
                   (item1, index1) => {
                     return (
                       <div className="container">
-                        <div className="roomCompo">
+                        <div className="roomCompo-new">
                           {item1?.RoomIndex?.map((item2, index2) => (
-                            <div className="" key={index2}>
+                            <div className="" key={index2}  style={{width:"100%"}}>
                               {roomComponent(item2, item1?.RoomIndex, index2, index1)}
                             </div>
                           ))}
@@ -519,7 +548,7 @@ export default function CustomizedAccordions() {
                       </Box>
                       <Typography
                         ml={2}
-                        color="#252525"
+                        color="#E73C34"
                         fontSize="14px"
                         fontWeight="bold"
                       >
@@ -572,7 +601,7 @@ export default function CustomizedAccordions() {
                       </Box>
                       <Typography
                         ml={2}
-                        color="#252525"
+                        color="#E73C34"
                         fontSize="14px"
                         fontWeight="bold"
                       >
@@ -633,7 +662,7 @@ export default function CustomizedAccordions() {
                       </Box>
                       <Typography
                         ml={2}
-                        color="#252525"
+                        color="#E73C34"
                         fontSize="14px"
                         fontWeight="bold"
                       >
@@ -677,7 +706,7 @@ export default function CustomizedAccordions() {
           onClick={handleClick}
         />
       </Box> */}
-      <button type="submit" className="bookNowButton" onClick={handleClick}>Continue</button>
+      <button type="submit" className="bookNowButton-new" onClick={handleClick}>Continue</button>
     </div>
   );
 }

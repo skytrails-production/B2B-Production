@@ -245,7 +245,7 @@ const Visaform = () => {
   return (
     <div className="container-fluid  margin-pecentage">
       <Typography
-        sx={{ fontSize: "20px", fontWeight: "bold", color: "#252525" }}
+        sx={{ fontSize: "22px", fontWeight: "bold", color: "#111928" }}
         textAlign="center"
       >
         Apply for Visa Online
@@ -369,7 +369,7 @@ const Visaform = () => {
               >
                 Note : All Document Required
               </Typography> */}
-              <div className="visaButton">
+              <div className="visaButton-new">
                 <button>Apply Now →</button>
               </div>
             </motion.div>
@@ -381,7 +381,7 @@ const Visaform = () => {
       <div className="col-lg-12">
         <div className="row">
           <div className="col-lg-6">
-            <div className="headingVisa">
+            <div className="headingVisa-new">
               <h2>Popular Visa destination</h2>
             </div>
             <div className="headingVisaItems">
@@ -403,7 +403,7 @@ const Visaform = () => {
             </div>
           </div>
           <div className="col-lg-6">
-            <div className="headingVisa">
+            <div className="headingVisa-new">
               <h2>Popular Visa Types</h2>
             </div>
             <div className="headingVisaItems">
@@ -427,11 +427,11 @@ const Visaform = () => {
 
 
       <div className="col-lg-12">
-        <div className="bottomVisaHeading">
+        <div className="bottomVisaHeading-new">
           <p>Types of Visa</p>
           <span>Here's defining the various categories of visa depending on your purpose of visit.</span>
         </div>
-        <div className="visaTexts">
+        <div className="visaTexts-new">
           <h3>Single Entry Visa</h3>
           <h4>A single entry visa is valid for only one visit to the destination country. Whatever the purpose of your visit, you shall be eligible for just one entry through the validity of your visa. For instance your visa validity date has not expired but you have already visited the country once, you shall still not qualify for another trip to the said country.</h4>
           <h3>Multiple Entry Visa:</h3>
@@ -451,11 +451,11 @@ const Visaform = () => {
 
       </div>
       <div className="col-lg-12">
-        <div className="bottomVisaHeading">
+        <div className="bottomVisaHeading-new">
           <p>FAQs on Visa Online</p>
 
         </div>
-        <div className="visaTexts">
+        <div className="visaTexts-new">
           <h3>Q. What is a visa and why is it important?</h3>
           <h4>A Visa is an official certificate of endorsement on your passport giving you the permission to enter, stay and leave a particular country, whether permanently or for a specific period of time. A visa is issued to you by the immigration authorities of the country you intend to travel to after verifying your credentials, the accuracy of your submitted visa form and other necessary documents. Many countries such as UK and USA among others grant you visa only after an in-person interview with the immigration officers. Of all kinds of visas, tourist visas are less hassle and always easy to gain. Where no physical interview is required a visa is even sent to you electronically. Although, the visa is a grant to entry, your actual entry into a foreign country is only subject to approval from the immigration officer at the point of entry.</h4>
           <h3>Q. Do I need a visa for travel?</h3>

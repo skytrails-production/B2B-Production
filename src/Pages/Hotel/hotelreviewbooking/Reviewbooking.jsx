@@ -64,14 +64,34 @@ const Guestdetail = () => {
         <div className="container-fluid margin-pecentage">
           <div className="row">
             <div className="col-lg-12">
-              <div className="hotelBookNowOuter">
-                <div className="hotelBookNowHeader">
-                  <p>Your Search criteria:{storedFormData?.city},{' '} India</p>
-                  <p>Duration: {storedFormData?.night}{' '}Nights</p>
-                  <p>{storedFormData?.checkIn}- {storedFormData?.checkOut}</p>
-                  <p>Guest(s): {totalAdults}Adult(s) </p>
-                  <p>Room(s): {storedFormData?.room}</p>
-                </div>
+              <div className="hotelBookNowOuter-new mb-4">
+              <div className="hotelBookNowHeader-new">
+                    {/* <p>Your Search criteria:{storedFormData?.city},{' '} India</p>
+                    <p>Duration: {storedFormData?.night}{' '}Nights</p>
+                    <p>{storedFormData?.checkIn}- {storedFormData?.checkOut}</p>
+                    <p>Guest(s): {totalAdults}Adult(s) </p>
+                    <p>Room(s): {storedFormData?.room}</p> */}
+                    <div className="serach-hotel-discribe-new">
+                      <p className="serach-hotel-discribe-new-content">City</p>
+                      <p className="serach-hotel-discribe-new-content1">{storedFormData?.city} </p>
+                    </div>
+                    {/* <div className="serach-hotel-discribe-new">
+                      <p>Duration</p>
+                      <p>{storedFormData?.night}</p>
+                    </div> */}
+                    <div className="serach-hotel-discribe-new">
+                      <p className="serach-hotel-discribe-new-content">Check-In</p>
+                      <p className="serach-hotel-discribe-new-content1">{storedFormData?.checkIn}</p>
+                    </div>
+                    <div className="serach-hotel-discribe-new">
+                      <p className="serach-hotel-discribe-new-content"> Check-out</p>
+                      <p className="serach-hotel-discribe-new-content1">{storedFormData?.checkOut}</p>
+                    </div>
+                    <div className="serach-hotel-discribe-new">
+                      <p className="serach-hotel-discribe-new-content">Rooms</p>
+                      <p className="serach-hotel-discribe-new-content1">{storedFormData?.room}</p>
+                    </div>
+                  </div>
               </div>
             </div>
           </div>

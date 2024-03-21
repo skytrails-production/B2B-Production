@@ -289,9 +289,9 @@ const Flightdetail = () => {
               ></div>
               <AccordionDetails>
                 <div className="flightFilterBox">
-                  <div className="filterTitle">
+                  {/* <div className="filterTitle">
                     <p>Select Filters</p>
-                  </div>
+                  </div> */}
                   <div className="innerFilter">
                     <div>
                       <div>

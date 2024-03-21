@@ -205,7 +205,7 @@ const FixedDeparture = () => {
                             ""
                         )}
                         <button
-                            className="fixedDepartButton"
+                            className="fixedDepartButton-new"
                             onClick={() => handelSearch()}
                         >
                             Search
@@ -713,7 +713,7 @@ const FixedDeparture = () => {
 
                                 <button
                                     type="submit"
-                                    className="backButton"
+                                    className="backButto-new"
                                     disabled={numberOfSeats == 0 || !enableName}
                                 >
                                     Submit

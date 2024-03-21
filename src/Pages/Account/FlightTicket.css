@@ -67,11 +67,11 @@
 
 }
 
-
+/* 
 .css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected {
   color: #fff !important;
   background-color: #21325D !important;
-}
+} */
 
 button:hover {
   background-color: white;
@@ -227,6 +227,23 @@ form label {
   padding: 10px 22px;
   background-color: #21325D;
   color: white;
+  border-radius: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: none;
+  outline: none;
+}
+
+.buttonBox-new {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.buttonBox-new button {
+  padding: 10px 22px;
+  background-color: rgba(231, 60, 52, 0.15);;
+  color: #E73C34;
   border-radius: 8px;
   font-weight: 700;
   text-transform: uppercase;

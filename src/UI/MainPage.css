@@ -5,22 +5,14 @@
 .mainBox {
   position: relative;
   padding-top: 20px;
-
- /*height: 100vh;*/
-  /* height: 100%; */
-  /* padding-bottom: 20px;*/
-  /* display: flex;*/
-
-
-  height: 100%;
-  /* padding-bottom: 20px; */
-  /* display: flex; */
-
+  height: 100vh;
   justify-content: center;
   align-items: center;
-  background-color: #f1f1f1;
-  /* background-color: lightgray; */
-
+  /* background-color: #f1f1f1; */
+  background-image: url("../Images/Homepage.png") !important;
+  background-size: cover;
+  background-position: center;
+  /* overflow: hidden !important; */
 }
 
 .body {
@@ -66,11 +58,13 @@
 }
 
 .componentsContainer {
-
   /* display: grid; */
 
   width: 100%;
-
+  background-image: url("../Images/Homepage.png") !important;
+  background-size: contain;
+  background-repeat: repeat;
+  background-position: center;
   border-radius: 10px;
   opacity: 1;
   /* position: absolute;
@@ -80,7 +74,6 @@
   justify-content: center;
   align-items: center;
   margin-top: 30px;
-
 }
 
 @media screen and (max-width: 600px) {
@@ -89,6 +82,5 @@
     font-size: 20px;
     width: 100% !important;
     margin: auto;
-
   }
 }

@@ -10,22 +10,19 @@
 
 .registerContainer {
   padding-top: 20px;
-  width: 100%;
+  width: 60%;
   height: 100%;
   border-radius: 20px;
-  background: white !important;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-
-  background-color: white;
-  border-radius: 10px;
+  /* background-size: 100% 100%; */
+  border-radius: 16px;
+  background: rgba(249, 255, 252, 0.6) !important;
+  /* backdrop-filter: blur(20px); */
   padding: 25px;
   background-size: 100% 100%;
 }
 
 .flightNavBar {
   width: 100%;
-
   margin-top: 20px;
 }
 
@@ -213,7 +210,6 @@
   margin-top: 10px;
 }
 
-
 .Regestration_box_container {
   display: flex;
   justify-content: space-between;
@@ -228,41 +224,36 @@
   overflow: hidden;
 }
 
-.hero-section-two:before {
+.hero-section-two::before {
   content: "";
   position: absolute;
-  width: 135%;
-  height: 50%;
-  border-radius: 50%;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  top: -8%;
-  left: -19%;
+  height: 100%;
+  width: 100vw;
   z-index: -1;
   /* background: linear-gradient(90deg, #ef326f, #fe6c4e); */
   /* background-image: url(./images/newBackGround.jpg) no-repeat right top; */
-  background-image: url(../../Images/newLogin/newBackGround.jpg);
+  background-image: url(../../Images/Latest.png);
   background-repeat: no-repeat;
   background-position: right top;
   background-size: cover;
   /* object-fit: cover; */
-  box-shadow: 50px 50px 0px 0px rgba(237, 208, 215, 1);
+  /* box-shadow: 50px 50px 0px 0px rgba(237, 208, 215, 1);
   -webkit-box-shadow: 50px 50px 0px 0px rgba(237, 208, 215, 1);
-  -moz-box-shadow: 50px 50px 0px 0px rgba(237, 208, 215, 1);
+  -moz-box-shadow: 50px 50px 0px 0px rgba(237, 208, 215, 1); */
 }
 
-.hero-section-two:after {
+/* .hero-section-two::after {
   content: "";
   position: absolute;
   border-radius: 50%;
   width: 245px;
   height: 245px;
-  /* border: 40px solid #ef326f; */
+
   border: 40px solid #d904279d;
   z-index: -1;
   top: 14%;
   left: -12%;
-}
+} */
 .boxContainerRegstration {
   display: flex;
   height: 100%;
@@ -271,7 +262,9 @@
 }
 
 .regestration_Submit_Button {
-  background-color: #21325d;
+  /* background-color: #21325d; */
+
+  background: #e73c34;
   width: 50%;
   height: 36px;
   display: flex;
@@ -327,14 +320,14 @@
   }
 
   .hero-section-two:before {
-    content: "";
+    /* content: "";
     position: absolute;
     width: 135%;
     height: 50%;
     border-radius: 50%;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    top: -12%;
+    top: -12%; */
   }
   .boxContainerRegstration {
     flex-direction: column;
@@ -356,16 +349,31 @@
 
   .hero-section-two:before {
     content: "";
-    position: absolute;
+    /* position: absolute;
     width: 135%;
     height: 50%;
     border-radius: 50%;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    top: -12%;
+    top: -12%; */
   }
 
   .hero-section-two:after {
     left: -23%;
   }
+}
+
+
+
+
+
+/* //////////////new css/////////////////////// */
+
+.Regestration_btn_div-new {
+  display: flex;
+  gap: 12px;
+  /* /* align-items: center; */
+  justify-content: end; 
+  padding-top: 12px;
+  width: 100%;
 }

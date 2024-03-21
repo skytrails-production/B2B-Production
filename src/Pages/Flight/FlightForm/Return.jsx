@@ -463,13 +463,21 @@ const Return = () => {
               </div>
             </motion.div>
 
-            <motion.div variants={variants} className="col-xs-12 col-md-3 col-lg-3 ps-0 mb-3">
+            
+
+          </motion.div>
+
+          <motion.div className="row" variants={variants} initial="initial"
+            whileInView="animate">
+
+<motion.div variants={variants} className="col-xs-12 col-md-3 col-lg-4 ps-0 mb-3">
               <div className="form_input">
                 <label for="departure" className="form_lable">
                   DEPARTURE
                 </label>
 
                 <input
+                style={{display:"flex",justifyContent:"center"}}
                   type="date"
                   name="departure"
                   id="departure"
@@ -483,13 +491,14 @@ const Return = () => {
                 {sub === true && departureDate === "" && <p id="error1">Enter date</p>}
               </div>
             </motion.div>
-            <motion.div variants={variants} className="col-xs-12 col-md-3 col-lg-2 ps-0 mb-3" >
+            <motion.div variants={variants} className="col-xs-12 col-md-3 col-lg-4 ps-0 mb-3" >
               <div className="form_input">
                 <label for="departure" className="form_lable">
                   RETURN
                 </label>
 
                 <input
+                 style={{display:"flex",justifyContent:"center"}}
                   type="date"
                   name="departure1"
                   id="departure1"
@@ -504,7 +513,7 @@ const Return = () => {
               </div>
             </motion.div>
 
-          </motion.div>
+            </motion.div>
 
 
 
@@ -606,11 +615,11 @@ const Return = () => {
               </motion.div> */}
 
               <motion.div variants={variants} initial="initial"
-                whileInView="animate" className="col-md-6 col-lg-6 col-12 col-sm-12 mb-3 ps-0" >
+                whileInView="animate" className="col-md-6 col-lg-6 col-12 col-sm-12 mb-3 ps-0" style={{width:"100%", display:"flex", justifyContent:"center"}} >
                 <motion.button
                   variants={variants}
                   type="submit"
-                  className="flightFormSubmit" >Search Flight <FlightIcon />
+                  className="flightFormSubmit-new" >Search Flight <FlightIcon />
                 </motion.button>
               </motion.div>
             </div>

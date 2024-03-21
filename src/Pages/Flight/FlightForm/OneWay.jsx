@@ -534,10 +534,10 @@ const OneWay = () => {
                 </div> */}
 
 
-                <div variants={variants} className="col-md-6 col-lg-6 col-12 col-sm-12 mb-3 ps-0">
+                <div variants={variants} className="col-md-6 col-lg-6 col-12 col-sm-12 mb-3 ps-0" style={{width:"100%", display:"flex", justifyContent:"center", alignItems:"center"}}>
                   <button
                     type="submit"
-                    className="flightFormSubmit">Search Flight <FlightIcon /></button>
+                    className="flightFormSubmit-new" style={{display:"flex", justifyContent:"center"}}>Search Flight <FlightIcon /></button>
 
                 </div>
               </div>

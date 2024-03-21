@@ -173,7 +173,13 @@ const BusPassengerDetail = () => {
           <motion.div variants={variants} initial="initial"
             whileInView="animate" className="row ">
             <motion.div variants={variants} className="col-lg-12">
-              <div className="busResultBox">
+              <div className="busType-new">
+                <p>{selectedBus?.BusType}</p>
+                <p>{selectedBus?.AvailableSeats} {' '}Seats Available</p>
+              </div>
+            </motion.div>
+            <motion.div variants={variants} className="col-lg-12">
+              <div className="busResultBox-new">
                 <div className="busSearchOne">
                   <p>{selectedBus?.TravelName}</p>
                   {/* <p>Super Hamsafar Express</p> */}
@@ -211,18 +217,13 @@ const BusPassengerDetail = () => {
                 </div>
               </div>
             </motion.div>
-            <motion.div variants={variants} className="col-lg-12">
-              <div className="busType">
-                <p>{selectedBus?.BusType}</p>
-                <p>{selectedBus?.AvailableSeats} {' '}Seats Available</p>
-              </div>
-            </motion.div>
+            
 
             <motion.div variants={variants} className="col-lg-12 mt-3">
-              <div className="titlePickup">
-                <p></p>
+            <div className="passengerHeading-new mb-3">
+                <p> Bus Details</p>
               </div>
-              <div className="pickUpBox">
+              <div className="pickUpBox-new">
                 <div>
                   <div>
                     <p>
@@ -240,8 +241,11 @@ const BusPassengerDetail = () => {
                 </div>
 
 
+                     
+
                 <div>
                   <div>
+                  
 
                     <p>
                       {selectedBus?.DroppingPointsDetails &&
@@ -260,7 +264,7 @@ const BusPassengerDetail = () => {
             </motion.div>
 
             <motion.div variants={variants} className="col-lg-12 py-4">
-              <div className="passengerHeading mb-3">
+              <div className="passengerHeading-new mb-3">
                 <p>Passenger Details</p>
               </div>
               <div className="passengerDetailsBus">
@@ -431,7 +435,7 @@ const BusPassengerDetail = () => {
 
             </motion.div>
 
-            <motion.div variants={variants} className="col-lg-12 btn-busPassenger">
+            <motion.div variants={variants} className="col-lg-12 btn-busPassenger-new ">
               <button onClick={handleSeatBlock}>Proceed to Book</button>
             </motion.div>
           </motion.div>

@@ -206,3 +206,24 @@ select{
 /* .backButton{
     background-color: red;
 } */
+
+.backButto-new button{
+    height: 50px !important;
+    border-radius: var(--rounded, 4px);
+    background: rgba(231, 60, 52, 0.80) !important;
+    color:#fff;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fixedDepartButton-new{
+    border-radius: var(--rounded, 4px);
+    background: rgba(231, 60, 52, 0.80) !important;
+    color:#fff;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

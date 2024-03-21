@@ -21,7 +21,7 @@ const Holidaybooknow = () => {
 
 
   return (
-    <div className='container-fluid margin-pecentage'>
+    <div className='container-fluid margin-pecentage' style={{width:"-webkit-fill-available"}}>
       <div className="row">
         <Bookingdetailpackage />
       </div>

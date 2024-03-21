@@ -29,14 +29,14 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 
-.headingVisa {
+.headingVisa-new {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #21325d;
+  color: #fff;
   font-weight: 600;
   font-size: 2rem;
-  background-color: #b1c6fc;
+  background-color: #E73C34;
   border-radius: 9px;
   padding: 10px 0px;
 }
@@ -101,3 +101,63 @@ input[type="number"]::-webkit-outer-spin-button {
   text-align: justify;
 
 }
+
+
+
+.visaButton-new {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.visaButton-new button {
+  background-color: #E73C34;
+  color: white;
+  border: 2px solid #E73C34;
+  font-family: "Montserrat";
+  padding: 12px 32px;
+  font-size: 18px;
+  border-radius: 8px;
+}
+
+
+.bottomVisaHeading-new {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.bottomVisaHeading-new p {
+  font-size: 24px;
+  font-weight: 700;
+  color: #E73C34;
+
+}
+
+.bottomVisaHeading-new span {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.visaTexts-new {
+  padding: 10px 30px;
+}
+
+.visaTexts-new h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #E73C34;
+  text-align: left;
+
+}
+
+.visaTexts-new h4 {
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+  text-align: justify;
+
+}
+

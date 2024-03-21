@@ -504,7 +504,7 @@ const Leftdetail = () => {
         <div className="row">
 
           <div className="col-lg-6">
-            <div className="singleDataReturnBox">
+            <div className="singleDataReturnBox" style={{backgroundColor:"rgba(231, 60, 52, 0.15)"}}>
               <div className="returnBoxOne">
                 <div><img src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${flightDeparture?.Airline?.AirlineCode}.png`} alt="flightImg"/> </div>
                 <span>{flightDeparture?.Airline?.AirlineName}</span>
@@ -528,7 +528,7 @@ const Leftdetail = () => {
             </div>
           </div>
           <div className="col-lg-6">
-            <div className="singleDataReturnBox">
+            <div className="singleDataReturnBox" style={{backgroundColor:"rgba(231, 60, 52, 0.15)"}}>
               <div className="returnBoxOne">
                 <div><img src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${flightReturn?.Airline?.AirlineCode}.png`} alt="flightImg"/> </div>
                 <span>{flightReturn?.Airline?.AirlineName}</span>
@@ -556,7 +556,7 @@ const Leftdetail = () => {
 
 
       <div className="col-lg-12">
-        <div class="headingflightPassenger">
+        <div class="headingflightPassenger-new">
           <p>Passenger Details</p>
           <span>Total Adult(s) :{' '} {adults} Child:{' '} {childs} Infants: {' '} {infants}</span>
         </div>
@@ -1005,7 +1005,7 @@ const Leftdetail = () => {
                 paddingRight: 16,
                 paddingTop: 8,
                 paddingBottom: 8,
-                background: "rgba(187, 187, 187, 0.30)",
+                background: "rgba(231, 60, 52, 0.15)",
                 borderRadius: 4,
                 justifyContent: "flex-start",
                 alignItems: "center",
@@ -1020,6 +1020,7 @@ const Leftdetail = () => {
                   fontSize: 24,
                   fontFamily: "Montserrat",
                   fontWeight: "600",
+                  
                   wordWrap: "break-word",
                 }}
               >
@@ -1178,6 +1179,7 @@ const Leftdetail = () => {
             <Box
               // className="mid_header"
               p={5}
+             
               mt={25}
             >
               <div
@@ -1185,6 +1187,7 @@ const Leftdetail = () => {
                   color: "black",
                   fontSize: 24,
                   fontFamily: "Montserrat",
+
                   fontWeight: "600",
                   wordWrap: "break-word",
                 }}
@@ -1199,8 +1202,8 @@ const Leftdetail = () => {
         {/* passengerdetraifjdsfjdslkjfkldsjgkldsjfglksdjflk;dsjfkl */}
         {/* passengerdetraifjdsfjdslkjfkldsjgkldsjfglksdjflk;dsjfkl */}
 
-        <div className="col-lg-12">
-          <div class="headingflightPassenger">
+        <div className="col-lg-12"  style={{ background: "rgba(231, 60, 52, 0.15)",}}>
+          <div class="headingflightPassenger" style={{ background: "rgba(231, 60, 52, 0.15)"}}>
             <p>Baggage Details</p>
 
           </div>
@@ -1278,8 +1281,8 @@ const Leftdetail = () => {
         </div>
 
 
-        <div className="col-lg-12">
-          <div class="headingflightPassenger">
+        <div className="col-lg-12"  style={{ background: "rgba(231, 60, 52, 0.15)"}}>
+          <div class="headingflightPassenger" style={{ background: "rgba(231, 60, 52, 0.15)"}}>
             <p>Fare Rule</p>
             <span>{data?.Origin}-{data?.Destination}</span>
           </div>

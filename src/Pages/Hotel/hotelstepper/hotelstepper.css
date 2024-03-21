@@ -4,7 +4,7 @@
   height: 100%;
   border-radius: 10px;
   background: white;
-  border: "2px solid red"
+  border: "2px solid red";
 }
 
 .nhotel_form_input {
@@ -28,7 +28,7 @@
   /* z-index: 99999999; */
 }
 
-#CitySearchID+ul {
+#CitySearchID + ul {
   max-height: 150px;
   list-style: none;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -39,10 +39,9 @@
   position: absolute;
   width: 100%;
   background-color: white;
-
 }
 
-#CitySearchID+ul>li {
+#CitySearchID + ul > li {
   padding: 8px;
   box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
     rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
@@ -50,22 +49,19 @@
 }
 
 .hotel_form_input input {
-
   height: 100%;
   padding-left: 25px;
   border-radius: 8px;
-  border: 1px solid #5C85A4;
-  background: #FFFBFB;
-
+  border: 1px solid #5c85a4;
+  background: #fffbfb;
 }
 
 #datepic {
   height: 50px;
   padding-left: 25px;
   border-radius: 8px;
-  border: 1px solid #5C85A4;
-  background: #FFFBFB;
-
+  border: 1px solid #5c85a4;
+  background: #fffbfb;
 }
 
 .hotel_form_input .lable {
@@ -114,7 +110,6 @@
   border: 1px solid #999 !important;
   margin: 0 !important;
   font-weight: 600;
-
 }
 
 .nhotel_input_select {
@@ -124,8 +119,8 @@
   height: 3.1rem;
 
   border-radius: 8px;
-  border: 1px solid #5C85A4;
-  background: #FFFBFB;
+  border: 1px solid #5c85a4;
+  background: #fffbfb;
 }
 
 .hotel_submit {
@@ -148,7 +143,6 @@
   color: red;
 }
 
-
 @media (max-width: 1240px) {
   .flightContainer {
     display: flex;
@@ -156,12 +150,10 @@
     align-items: center;
   }
 
-  .flightContainer>Box {
+  .flightContainer > Box {
     width: 90%;
   }
 }
-
-
 
 .hotelContainer {
   /* background-color: rgb(248, 243, 243); */
@@ -172,7 +164,6 @@
   border-radius: 12px;
   margin-top: -30px !important;
 }
-
 
 .formFlightSearch {
   /* margin-top: 20px; */
@@ -194,15 +185,9 @@
   border: 1px solid #999 !important;
 }
 
-
 .hotel_form_input input::placeholder {
-
   font-weight: 600;
 }
-
-
-
-
 
 .form_label {
   font-size: 15px !important;
@@ -219,7 +204,6 @@
   padding: 0px 8px;
 }
 
-
 .react-datepicker-wrapper {
   display: inline-block;
   padding: 0;
@@ -227,11 +211,9 @@
   width: 100%;
 }
 
-
 /* .room-container {
   background-color: red;
 } */
-
 
 .delete-button {
   padding: 8px 15px;
@@ -240,7 +222,6 @@
   background-color: white;
   border-radius: 5px;
 }
-
 
 .searchButton {
   display: flex;
@@ -255,7 +236,7 @@
   font-family: Montserrat;
   font-weight: 600;
   word-wrap: break-word;
-  background: #21325D;
+  background: #21325d;
   padding-left: 96px;
   padding-right: 96px;
   padding-top: 32px;
@@ -279,17 +260,94 @@
   justify-content: center;
 }
 
-
-
 .hotelFormbutton {
   padding: 10px 22px;
   padding: 8px 30px;
   border-radius: 5.302px;
-  background: #21325D;
-  color: #FFF;
-  font-family: 'Montserrat';
+  background: #21325d;
+  color: #fff;
+  font-family: "Montserrat";
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
-  border: 2px solid #21325D;
+  border: 2px solid #21325d;
 }
+
+.hotelFormbutton-new {
+  display: flex;
+  width: 50%;
+  border-radius: var(--rounded-lg, 8px);
+  background: #e73c34;
+  padding: var(--25, 10px) var(--5, 20px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--2, 8px);
+}
+
+
+.sidebar-label-container-new {
+  display: flex !important;
+  position: relative !important;
+  /* padding-left: 35px !important; */
+  margin-bottom: 12px !important;
+  justify-content: flex-end;
+  cursor: pointer !important;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-size: 400 !important;
+}
+
+.sidebar-label-container-new-outer-div label {
+  font-size: normal !important;
+}
+
+.sidebar-label-container-new input {
+  position: absolute !important;
+  opacity: 0 !important;
+  cursor: pointer !important;
+}
+
+.checkmark .sidebar-label-container-new:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+.sidebar-label-container-new input:checked ~ .checkmark {
+  background-color: #e73c33 !important;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.sidebar-label-container-new input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.sidebar-label-container-new .checkmark:after {
+  top: 4.4px;
+  left: 4.4px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: white;
+}
+
+.sidebar-label-container-new:has(input:checked) .svgBOx {
+  border: 1px solid #d90429 !important;
+}
+
+.sidebar-label-container-new:has(input:checked) > div .checkedSVG svg {
+  fill: #d90429;
+}
+
+.sidebar-label-container-new:has(input:checked) > div span {
+  color: #d90429;
+}
+
+/* .busDepartureMain .sidebar-label-container-new {
+  margin-bottom: 0 !important;
+} */

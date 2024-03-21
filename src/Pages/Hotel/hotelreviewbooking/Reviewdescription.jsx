@@ -27,8 +27,13 @@ import { PassengersAction } from "../../../Redux/Passengers/passenger";
 import Custombutton from "../../../Custombuttom/Button";
 import HotelLoading from "../hotelLoading/HotelLoading";
 import Swal from "sweetalert2";
-import { validatePhoneNumber, validateEmail, validateName, validatePAN } from "../../../utils/validation"
-import {swalModal} from "../../../../src/utils/swal"
+import {
+  validatePhoneNumber,
+  validateEmail,
+  validateName,
+  validatePAN,
+} from "../../../utils/validation";
+import { swalModal } from "../../../../src/utils/swal";
 const styleLoader = {
   position: "absolute",
   top: "50%",
@@ -43,7 +48,7 @@ const styleLoader = {
 const Flightdetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [loader, setLoader] = useState(false)
+  const [loader, setLoader] = useState(false);
   const reducerState = useSelector((state) => state);
   const noOfRooms =
     reducerState?.hotelSearchResult?.ticketData?.data?.data?.HotelSearchResult
@@ -62,8 +67,15 @@ const Flightdetail = () => {
 
   // console.log("State Data", reducerState);
   useEffect(() => {
-    if (reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult?.Error?.ErrorCode !== 0) {
-      swalModal('flight',"Something went wrong with your flight booking. Please check your details and try again.",false)
+    if (
+      reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult?.Error
+        ?.ErrorCode !== 0
+    ) {
+      swalModal(
+        "flight",
+        "Something went wrong with your flight booking. Please check your details and try again.",
+        false
+      );
       // Swal.fire({
       //   icon: "error",
       //   title: "Oops! Something went wrong",
@@ -87,7 +99,7 @@ const Flightdetail = () => {
       // });
       navigate("/");
     }
-  }, [])
+  }, []);
   useEffect(() => {
     if (bookingStatus == 1) {
       setBookingSuccess(false);
@@ -95,10 +107,17 @@ const Flightdetail = () => {
     }
   }, [bookingStatus]);
   useEffect(() => {
-    if (HotelIndex === undefined || HotelIndex === null || ResultIndex === undefined || ResultIndex === null || HotelCode === undefined || HotelCode === null) {
-      navigate("/hotel/hotelsearch")
+    if (
+      HotelIndex === undefined ||
+      HotelIndex === null ||
+      ResultIndex === undefined ||
+      ResultIndex === null ||
+      HotelCode === undefined ||
+      HotelCode === null
+    ) {
+      navigate("/hotel/hotelsearch");
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     //  console.log(handleSettingPassengerArr(noOfRooms))
@@ -197,8 +216,6 @@ const Flightdetail = () => {
 
   const hotelInfo = reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult;
 
-
-
   const hotelRoom =
     reducerState?.hotelSearchResult?.hotelRoom?.GetHotelRoomResult;
 
@@ -206,7 +223,11 @@ const Flightdetail = () => {
     reducerState?.hotelSearchResult?.hotelRoom?.GetHotelRoomResult
       ?.HotelRoomsDetails[0]?.RoomTypeName;
   // console.log("hotel Room Name", hotelRoomName)
-  const hotelCancellationPolicies = reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult?.HotelRoomsDetails ? reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult?.HotelRoomsDetails[0] : undefined;
+  const hotelCancellationPolicies = reducerState?.hotelSearchResult?.blockRoom
+    ?.BlockRoomResult?.HotelRoomsDetails
+    ? reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult
+        ?.HotelRoomsDetails[0]
+    : undefined;
   const cancellationStartingDate =
     hotelCancellationPolicies?.CancellationPolicies[0]?.FromDate;
   const cancellationFormattedStartingDate = moment(
@@ -235,7 +256,6 @@ const Flightdetail = () => {
   };
 
   const isLoad = reducerState?.hotelSearchResult?.blockRoom;
-
 
   useEffect(() => {
     if (isLoad?.length == 0) {
@@ -266,12 +286,12 @@ const Flightdetail = () => {
   const formattedDate = `${day} ${month} ${year}`;
 
   const handleServiceChange = (e, roomIndex, knowIndex) => {
-
     // console.log(roomIndex, knowIndex, "roomIndex", "knowIndex");
     // console.log(passengerData);
 
     if (
-      roomIndex !== undefined && roomIndex !== null &&
+      roomIndex !== undefined &&
+      roomIndex !== null &&
       knowIndex?.adultIndex !== undefined &&
       knowIndex?.adultIndex !== null
     ) {
@@ -279,7 +299,8 @@ const Flightdetail = () => {
       const { name, value } = e.target;
       const filteredPassenger = passengerData.filter((item, index) => {
         return (
-          item.roomIndex == roomIndex && item?.adultIndex == knowIndex?.adultIndex
+          item.roomIndex == roomIndex &&
+          item?.adultIndex == knowIndex?.adultIndex
         );
       });
       // console.log("filteredPassenger", filteredPassenger);
@@ -310,8 +331,6 @@ const Flightdetail = () => {
       if (indexFind !== -1) {
         passengerData[indexFind] = newFilteredPassenger;
       }
-
-
     }
 
     // console.log("passengerDataNew", passengerData);
@@ -325,15 +344,13 @@ const Flightdetail = () => {
   };
 
   const handleClickSavePassenger = () => {
-
     // console.warn("emailrefffffffffffff", emailRef.current.value);
     setSub(true);
     if (!validation()) {
       setTimeout(() => {
-        setSub(false)
+        setSub(false);
       }, 2000);
       return;
-
     }
 
     dispatch(PassengersAction(passengerData));
@@ -527,9 +544,9 @@ const Flightdetail = () => {
             {/* hotel details area  */}
 
             <div className="col-lg-12">
-              <div className="hotelDetails">
+              <div className="hotelDetails-new">
                 <div>
-                  <p className="hotelName">
+                  <p className="hotelName-new">
                     {hotelInfo?.HotelDetails?.HotelName}
                   </p>
                   <Box alignItems="right">
@@ -581,7 +598,12 @@ const Flightdetail = () => {
 
             {/* room details area  */}
 
-            <div className="col-lg-12">
+            <div className="col-lg-12 " style={{ marginTop: "12px" }}>
+              <div className="col-lg-12">
+                <div className="headText-new">
+                  <h2>Room Details</h2>
+                </div>
+              </div>
               <div className="roomDetails">
                 <div className="row">
                   <div className="col-lg-9 mb-md-3">
@@ -602,7 +624,7 @@ const Flightdetail = () => {
 
           <div className="row">
             <div className="col-lg-12">
-              <div className="headText">
+              <div className="headText-new">
                 <h2>Guest Details</h2>
               </div>
             </div>
@@ -647,7 +669,6 @@ const Flightdetail = () => {
                         {sub && !contactVal && (
                           <span id="error1">Enter a Valid Number</span>
                         )}
-
                       </div>
                     </div>
                   </div>
@@ -662,7 +683,9 @@ const Flightdetail = () => {
                     <Box sx={{ marginBottom: "15px" }}>
                       <div mb={2} key={roomIndex} className="services" py={1}>
                         <Accordion
-                          expanded={accordionExpanded === roomIndex}
+                        //  expanded={true} 
+                        
+                          expanded={accordionExpanded === roomIndex }
                           onChange={handleAccordionChange(roomIndex)}
                           sx={{
                             marginBottom: "15px",
@@ -673,10 +696,11 @@ const Flightdetail = () => {
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1a-content"
                             id="panel1a-header"
+                            style={{ background: "rgba(231, 60, 52, 0.15)" }}
                           >
                             <label>Room {roomIndex + 1}</label>
                           </AccordionSummary>
-                          <AccordionDetails>
+                          <AccordionDetails style={{ background: "none" }}>
                             <div>
                               {noOfRooms[roomIndex]?.NoOfAdults > 0 &&
                                 Array.from(
@@ -703,10 +727,16 @@ const Flightdetail = () => {
                                                 // value={passengerData.FirstName}
                                                 onChange={(e) =>
                                                   setTimeout(() => {
-
-                                                    console.warn((passengerData.filter((item) => (
-                                                      item.roomIndex === roomIndex && item.adultIndex === adultIndex
-                                                    )))[0].FirstName, "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55")
+                                                    console.warn(
+                                                      passengerData.filter(
+                                                        (item) =>
+                                                          item.roomIndex ===
+                                                            roomIndex &&
+                                                          item.adultIndex ===
+                                                            adultIndex
+                                                      )[0].FirstName,
+                                                      "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55"
+                                                    );
 
                                                     handleServiceChange(
                                                       e,
@@ -727,11 +757,16 @@ const Flightdetail = () => {
                                                     }
                                                   </span>
                                                 )}
-
                                             </div>
                                           </Box>
                                         </Grid>
-                                        <Grid item xs={12} sm={12} md={4} py={1}>
+                                        <Grid
+                                          item
+                                          xs={12}
+                                          sm={12}
+                                          md={4}
+                                          py={1}
+                                        >
                                           <Box>
                                             <div className="form_input">
                                               <label
@@ -754,15 +789,28 @@ const Flightdetail = () => {
                                                   }, 300)
                                                 }
                                               />
-                                              {
-                                                sub && (passengerData.filter((item) => (
-                                                  item.roomIndex === roomIndex && item.adultIndex === adultIndex
-                                                )))[0].LastName === "" &&
-                                                <span className="error">Enter Last Name  </span>}
+                                              {sub &&
+                                                passengerData.filter(
+                                                  (item) =>
+                                                    item.roomIndex ===
+                                                      roomIndex &&
+                                                    item.adultIndex ===
+                                                      adultIndex
+                                                )[0].LastName === "" && (
+                                                  <span className="error">
+                                                    Enter Last Name{" "}
+                                                  </span>
+                                                )}
                                             </div>
                                           </Box>
                                         </Grid>
-                                        <Grid item xs={12} sm={12} md={4} py={1}>
+                                        <Grid
+                                          item
+                                          xs={12}
+                                          sm={12}
+                                          md={4}
+                                          py={1}
+                                        >
                                           <Box>
                                             <div className="form_input">
                                               <label
@@ -786,15 +834,28 @@ const Flightdetail = () => {
                                                   }, 300)
                                                 }
                                               />
-                                              {
-                                                sub && (passengerData.filter((item) => (
-                                                  item.roomIndex === roomIndex && item.adultIndex === adultIndex
-                                                )))[0].Age === "" &&
-                                                <span className="error">Enter Age  </span>}
+                                              {sub &&
+                                                passengerData.filter(
+                                                  (item) =>
+                                                    item.roomIndex ===
+                                                      roomIndex &&
+                                                    item.adultIndex ===
+                                                      adultIndex
+                                                )[0].Age === "" && (
+                                                  <span className="error">
+                                                    Enter Age{" "}
+                                                  </span>
+                                                )}
                                             </div>
                                           </Box>
                                         </Grid>
-                                        <Grid item xs={12} sm={12} md={4} py={1}>
+                                        <Grid
+                                          item
+                                          xs={12}
+                                          sm={12}
+                                          md={4}
+                                          py={1}
+                                        >
                                           <Box>
                                             <div className="form_input">
                                               <label
@@ -818,14 +879,21 @@ const Flightdetail = () => {
                                                   }, 300)
                                                 }
                                               />
-                                              {
-                                                sub && !validatePAN(
-                                                  sub && (passengerData.filter((item) => (
-                                                    item.roomIndex === roomIndex && item.adultIndex === adultIndex
-                                                  )))[0].PAN) &&
-                                                <span className="error">Enter PAN </span>}
-
-
+                                              {sub &&
+                                                !validatePAN(
+                                                  sub &&
+                                                    passengerData.filter(
+                                                      (item) =>
+                                                        item.roomIndex ===
+                                                          roomIndex &&
+                                                        item.adultIndex ===
+                                                          adultIndex
+                                                    )[0].PAN
+                                                ) && (
+                                                  <span className="error">
+                                                    Enter PAN{" "}
+                                                  </span>
+                                                )}
                                             </div>
                                           </Box>
                                         </Grid>
@@ -857,29 +925,48 @@ const Flightdetail = () => {
                                                 // value={passengerData.FirstName}
                                                 onChange={(e) =>
                                                   setTimeout(() => {
-
                                                     handleServiceChange(
                                                       e,
                                                       roomIndex,
                                                       { childIndex: childIndex }
                                                     );
                                                     {
-                                                      console.warn((passengerData.filter((item) => (
-                                                        item.roomIndex === roomIndex && item.childIndex === childIndex
-                                                      ))), "dddddddddddddddddddd")
+                                                      console.warn(
+                                                        passengerData.filter(
+                                                          (item) =>
+                                                            item.roomIndex ===
+                                                              roomIndex &&
+                                                            item.childIndex ===
+                                                              childIndex
+                                                        ),
+                                                        "dddddddddddddddddddd"
+                                                      );
                                                     }
                                                   })
                                                 }
                                               />
-                                              {
-                                                sub && (passengerData.filter((item) => (
-                                                  item.roomIndex === roomIndex && item.childIndex === childIndex
-                                                )))[0].FirstName === "" &&
-                                                <span className="error">Enter First Name  </span>}
+                                              {sub &&
+                                                passengerData.filter(
+                                                  (item) =>
+                                                    item.roomIndex ===
+                                                      roomIndex &&
+                                                    item.childIndex ===
+                                                      childIndex
+                                                )[0].FirstName === "" && (
+                                                  <span className="error">
+                                                    Enter First Name{" "}
+                                                  </span>
+                                                )}
                                             </div>
                                           </Box>
                                         </Grid>
-                                        <Grid item xs={12} sm={12} md={4} py={1}>
+                                        <Grid
+                                          item
+                                          xs={12}
+                                          sm={12}
+                                          md={4}
+                                          py={1}
+                                        >
                                           <Box>
                                             <div className="form_input">
                                               <label
@@ -894,9 +981,16 @@ const Flightdetail = () => {
                                                 // value={passengerData.LastName}
                                                 onChange={(e) =>
                                                   setTimeout(() => {
-                                                    console.warn("Last name child", (passengerData.filter((item) => (
-                                                      item.roomIndex === roomIndex && item.childIndex === childIndex
-                                                    )))[0].LastName)
+                                                    console.warn(
+                                                      "Last name child",
+                                                      passengerData.filter(
+                                                        (item) =>
+                                                          item.roomIndex ===
+                                                            roomIndex &&
+                                                          item.childIndex ===
+                                                            childIndex
+                                                      )[0].LastName
+                                                    );
                                                     handleServiceChange(
                                                       e,
                                                       roomIndex,
@@ -905,15 +999,28 @@ const Flightdetail = () => {
                                                   })
                                                 }
                                               />
-                                              {
-                                                sub && (passengerData.filter((item) => (
-                                                  item.roomIndex === roomIndex && item.childIndex === childIndex
-                                                )))[0].LastName === "" &&
-                                                <span className="error">Enter Last Name  </span>}
+                                              {sub &&
+                                                passengerData.filter(
+                                                  (item) =>
+                                                    item.roomIndex ===
+                                                      roomIndex &&
+                                                    item.childIndex ===
+                                                      childIndex
+                                                )[0].LastName === "" && (
+                                                  <span className="error">
+                                                    Enter Last Name{" "}
+                                                  </span>
+                                                )}
                                             </div>
                                           </Box>
                                         </Grid>
-                                        <Grid item xs={12} sm={12} md={4} py={1}>
+                                        <Grid
+                                          item
+                                          xs={12}
+                                          sm={12}
+                                          md={4}
+                                          py={1}
+                                        >
                                           <Box>
                                             <div className="form_input">
                                               <label
@@ -927,27 +1034,39 @@ const Flightdetail = () => {
                                                 type="text"
                                                 placeholder="Enter Age"
                                                 value={
-                                                  noOfRooms[roomIndex]?.ChildAge[
-                                                  childIndex
-                                                  ]
+                                                  noOfRooms[roomIndex]
+                                                    ?.ChildAge[childIndex]
                                                 }
-                                              // onChange={(e) =>
-                                              //   handleServiceChange(
-                                              //     e,
-                                              //     roomIndex,
-                                              //     { childIndex: childIndex }
-                                              //   )
-                                              // }
+                                                // onChange={(e) =>
+                                                //   handleServiceChange(
+                                                //     e,
+                                                //     roomIndex,
+                                                //     { childIndex: childIndex }
+                                                //   )
+                                                // }
                                               />
-                                              {
-                                                sub && (passengerData.filter((item) => (
-                                                  item.roomIndex === roomIndex && item.childIndex === childIndex
-                                                )))[0].Age === "" &&
-                                                <span className="error">Enter Age </span>}
+                                              {sub &&
+                                                passengerData.filter(
+                                                  (item) =>
+                                                    item.roomIndex ===
+                                                      roomIndex &&
+                                                    item.childIndex ===
+                                                      childIndex
+                                                )[0].Age === "" && (
+                                                  <span className="error">
+                                                    Enter Age{" "}
+                                                  </span>
+                                                )}
                                             </div>
                                           </Box>
                                         </Grid>
-                                        <Grid item xs={12} sm={12} md={4} py={1}>
+                                        <Grid
+                                          item
+                                          xs={12}
+                                          sm={12}
+                                          md={4}
+                                          py={1}
+                                        >
                                           <Box>
                                             <div className="form_input">
                                               <label
@@ -971,12 +1090,20 @@ const Flightdetail = () => {
                                                   })
                                                 }
                                               />
-                                              {
-                                                sub && !validatePAN((passengerData.filter((item) => (
-                                                  item.roomIndex === roomIndex && item.childIndex === childIndex
-                                                )))[0].PAN) &&
-                                                <span className="error">Enter PAN  </span>}
-
+                                              {sub &&
+                                                !validatePAN(
+                                                  passengerData.filter(
+                                                    (item) =>
+                                                      item.roomIndex ===
+                                                        roomIndex &&
+                                                      item.childIndex ===
+                                                        childIndex
+                                                  )[0].PAN
+                                                ) && (
+                                                  <span className="error">
+                                                    Enter PAN{" "}
+                                                  </span>
+                                                )}
                                             </div>
                                           </Box>
                                         </Grid>
@@ -994,7 +1121,7 @@ const Flightdetail = () => {
             </div>
 
             <div className="col-lg-12">
-              <div className="headText">
+              <div className="headText-new mb-4">
                 <h2>Other Details</h2>
               </div>
             </div>
@@ -1080,10 +1207,13 @@ const Flightdetail = () => {
                     <label>Amenities</label>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <ul>{reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult?.HotelRoomsDetails[0]?.Amenity.map((item) => (
-                      <li>{item}</li>
-
-                    ))}</ul>
+                    <ul>
+                      {reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult?.HotelRoomsDetails[0]?.Amenity.map(
+                        (item) => (
+                          <li>{item}</li>
+                        )
+                      )}
+                    </ul>
                   </AccordionDetails>
                 </Accordion>
                 <Accordion
@@ -1102,20 +1232,30 @@ const Flightdetail = () => {
                     <label>Hotel Norms</label>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <div>{reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult?.HotelDetails?.HotelPolicy ? reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult?.HotelDetails?.HotelPolicy : "No data"}</div>
+                    <div>
+                      {reducerState?.hotelSearchResult?.hotelInfo
+                        ?.HotelInfoResult?.HotelDetails?.HotelPolicy
+                        ? reducerState?.hotelSearchResult?.hotelInfo
+                            ?.HotelInfoResult?.HotelDetails?.HotelPolicy
+                        : "No data"}
+                    </div>
                   </AccordionDetails>
                 </Accordion>
               </div>
             </div>
 
             <div className="col-lg-12">
-              <div className="reviewDescriptionButton">
+              <div className="proceed-book-new-hotel">
                 {/* <Custombutton
                   title={"Proceed to Booking Review"}
                   type={"submit"}
                   onClick={handleClickSavePassenger}
                 /> */}
-                <button type="submit" onClick={handleClickSavePassenger}>
+                <button
+                  type="submit"
+                  onClick={handleClickSavePassenger}
+                  className="proceed-book-new-hotel"
+                >
                   Proceed to Book
                 </button>
               </div>
