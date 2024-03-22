@@ -102,7 +102,7 @@ const Administration = () => {
           </motion.div>
           
           <motion.div className="col-lg-3" variants={variants}>
-            <div onClick={AgentPackages}><p >My Packges</p></div>
+            <div onClick={AgentPackages}><p >My Package</p></div>
           </motion.div>
           {/* <motion.div className="col-lg-3" variants={variants}>
             <div onClick={Reports}><p >Reports</p></div>

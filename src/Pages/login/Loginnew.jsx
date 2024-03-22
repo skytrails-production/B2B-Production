@@ -94,7 +94,10 @@ function Loginnew() {
           <section class="hero-section-one ">
             <div className="container loginNav">
               <div className="logoLoginBox">
-                <img src={whiteLogo} width={180} alt="" />
+              
+              <img  src={whiteLogo} width={180} alt="" />
+          
+               
               </div>
               <div className="loginSign">
                 <button onClick={() => navigate("/Registration")}>
@@ -222,6 +225,7 @@ function Loginnew() {
                       </div>
                     </div>
                     <button
+                    style={{border:"none"}}
                       className="journeyconnect"
                       onClick={scrollToSection}
                     >

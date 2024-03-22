@@ -272,7 +272,7 @@ const CreateHolidayPackage = () => {
       textAlign: "center",
     },
     button: {
-      backgroundColor: color.bluedark,
+      backgroundColor: "#E73C34",
       color: "#fff",
       borderRadius: "25px",
       marginLeft: "5px",
@@ -500,7 +500,7 @@ const CreateHolidayPackage = () => {
       <div className="row">
         <div className="col-lg-12">
           <div className="headerBoxOuter">
-            <div className="headerBox">
+            <div className="headerBox-new">
               <p>Create a Holiday Package</p>
             </div>
           </div>
@@ -627,7 +627,7 @@ const CreateHolidayPackage = () => {
                       variant="contained"
                       endIcon={<AddIcon />}
                       style={{ backgroundColor: color.bluedark }}
-                      className="insideButton"
+                      className="insideButton-new"
                     >
                       Add
                     </Button>
@@ -2453,7 +2453,7 @@ const CreateHolidayPackage = () => {
                     </div>
                   </div>
                 </div>
-                <div className="buttonBoxPackage">
+                <div className="buttonBoxPackage-new">
                   {/* <button className="draft">Save As Draft</button> */}
                   <button type="submit" class="packageSubmit">
                      {loader ? (

@@ -572,8 +572,9 @@ const DummyTicketBooking = () => {
                 <div
                   variants={variants}
                   className="col-md-6 col-lg-6 col-12 col-sm-12 mb-3 ps-0"
+                  style={{display:"flex", justifyContent:"center"}}
                 >
-                  <button type="submit" className="flightFormSubmit-new">
+                  <button type="submit" className="flightFormSubmit-new" style={{border:"none"}}>
                     Search Flight <FlightIcon />
                   </button>
                 </div>

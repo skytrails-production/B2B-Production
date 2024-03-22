@@ -197,14 +197,19 @@ function Cotactus() {
                   onChange={handleInputChange}
                 ></textarea>
               </div>
+              <div  className="contact-button">
+
               <button
                 type="submit"
-                className="contact-button"
+               
                 style={{color:"#fff", border:"none"}}
                 onClick={handleSubmit}
               >
                 Submit
               </button>
+
+              </div>
+              
               {formError && (
                 <p style={{ color: "red", marginTop: "10px" }}>{formError}</p>
               )}

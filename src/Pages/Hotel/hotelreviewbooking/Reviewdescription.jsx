@@ -683,9 +683,9 @@ const Flightdetail = () => {
                     <Box sx={{ marginBottom: "15px" }}>
                       <div mb={2} key={roomIndex} className="services" py={1}>
                         <Accordion
-                        //  expanded={true} 
-                        
-                          expanded={accordionExpanded === roomIndex }
+                          //  expanded={true}
+
+                          expanded={accordionExpanded === roomIndex}
                           onChange={handleAccordionChange(roomIndex)}
                           sx={{
                             marginBottom: "15px",
@@ -1245,7 +1245,10 @@ const Flightdetail = () => {
             </div>
 
             <div className="col-lg-12">
-              <div className="proceed-book-new-hotel">
+              <div
+                className="proceed-book-new-hotel"
+                style={{ display: "flex", justifyContent: "center" }}
+              >
                 {/* <Custombutton
                   title={"Proceed to Booking Review"}
                   type={"submit"}
@@ -1255,6 +1258,7 @@ const Flightdetail = () => {
                   type="submit"
                   onClick={handleClickSavePassenger}
                   className="proceed-book-new-hotel"
+                  style={{ border: "none" }}
                 >
                   Proceed to Book
                 </button>

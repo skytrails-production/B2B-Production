@@ -203,21 +203,26 @@
   font-weight: 400;
 }
 
-
-.buttonBoxHoliday-new button{
+.buttonBoxHoliday-new button {
   display: flex;
   border-radius: var(--rounded-lg, 8px);
-  background: #E73C34;
-padding: var(--25, 10px) var(--5, 20px);
-justify-content: center;
-align-items: center;
-gap: var(--2, 8px);
-flex-shrink: 0;
+  background: #e73c34;
+  padding: var(--25, 10px) var(--5, 20px);
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  gap: var(--2, 8px);
+  flex-shrink: 0;
 }
-
 
 .buttonBoxHoliday-new {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.buttonBoxHoliday-new button:hover {
+  border: 1px solid #e73c34 !important;
+  padding: var(--25, 10px) var(--5, 20px);
+  color: #000;
 }

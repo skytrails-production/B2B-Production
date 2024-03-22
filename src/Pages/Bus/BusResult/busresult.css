@@ -439,6 +439,7 @@
   gap: 8.952px;
   color: var(--white, #fff);
   font-family: Montserrat;
+  border: none;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -449,4 +450,13 @@
   display: flex;
 
   justify-content: center !important;
+}
+
+
+.btn-busPassenger-new button:hover {
+  border-radius: var(--rounded, 4px);
+  border:1px solid #e73c34;
+  display: flex;
+color: #000;
+
 }

@@ -1,10 +1,12 @@
 // CreateMarkup.js
 import React, { useState } from 'react';
+import axios from "axios";
 import './AddMarkup.css';
 import { apiURL } from '../../../../Constants/constant';
 import { useNavigate } from 'react-router-dom';
 import profilePicUrl from '../../../../Images/logo.jpeg';
-
+import {  useEffect } from 'react';
+import { margin } from '@mui/system';
 const CreateMarkup = ({ formId }) => {
   const [formData, setFormData] = useState({
     hotelMarkup: 0, // Assuming markup values are numeric
@@ -14,6 +16,8 @@ const CreateMarkup = ({ formId }) => {
     rechargeMarkup:0
   });
   const [error, setError] = useState('');
+  const [markupData, setMarkupData] = useState([]);
+
 
 // console.log("formI=============",formId)
   const handleChange = (e) => {
@@ -24,9 +28,32 @@ const CreateMarkup = ({ formId }) => {
   };
 
   const navigate = useNavigate();
+  useEffect(()=>{
+    handleShow();
+  },[])
+const handleShow=async(e)=>{
+  try{
+  const show=await axios.get(`${apiURL.baseURL}/skyTrails/api/admin/getMarkup`);
+  const data= show.data.result[0];
+  console.log(data);
+  if (
+    data &&
+    'hotelMarkup' in data &&
+    'flightMarkup' in data &&
+    'busMarkup' in data &&
+    'holidayPackageMarkup' in data &&
+    'rechargeMarkup' in data
+  ) {
+    setMarkupData(data);
+  } else {
+    console.error('Markup data format is incorrect:', data);
+}} catch (error) {
+  console.error('Error fetching data:', error.message);
+}
 
+};
   const handleSubmit = async (e) => {
-    e.preventDefault();
+   e.preventDefault();
     const isAnyValueNotGreaterThanZero = Object.values(formData).some((value) => value <= 0);
 
     if (isAnyValueNotGreaterThanZero) {
@@ -62,6 +89,7 @@ const CreateMarkup = ({ formId }) => {
   };
 
   return (
+    <>
     <div className="form-containers">
        <header className="sectionagent headersagent">
         <div className="headead">
@@ -69,6 +97,20 @@ const CreateMarkup = ({ formId }) => {
           <h2>Add Markup</h2>
         </div>
       </header>
+      <div style={{ paddingBottom:"50px" }}>
+      {markupData ?(
+         <ul>
+         <li>Hotel Markup: {markupData.hotelMarkup}</li>
+         <li>Flight Markup: {markupData.flightMarkup}</li>
+         <li>Bus Markup: {markupData.busMarkup}</li>
+         <li>Holiday Package Markup: {markupData.holidayPackageMarkup}</li>
+         <li>Recharge Markup: {markupData.rechargeMarkup}</li>
+       
+       </ul>
+      ) : (
+        <p> </p>
+      )}
+      </div>
       <form className={`markup-form ${formId}`} onSubmit={handleSubmit}>
         <div className="mark-form-group">
           <label htmlFor="hotelMarkup" className="form-label-subAdmin">
@@ -145,7 +187,9 @@ const CreateMarkup = ({ formId }) => {
         </div>
       </form>
     </div>
+    </>
   );
 };
 
 export default CreateMarkup;
+

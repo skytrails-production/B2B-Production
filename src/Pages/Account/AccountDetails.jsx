@@ -96,7 +96,7 @@ const Account = () => {
               sx={{
                 fontSize: "24px",
                 fontWeight: "bold",
-                color: color.bluedark,
+                color: "#071C2C",
               }}
               mb={2}
             >
@@ -112,7 +112,7 @@ const Account = () => {
               <Typography
                 sx={{
                   fontSize: "14px",
-                  color: "#666666",
+                  color: "#071C2C",
                   fontWeight: "500",
                   width: "150px",
                   marginLeft: "10px",
@@ -145,7 +145,7 @@ const Account = () => {
               <Typography
                 sx={{
                   fontSize: "14px",
-                  color: "#666666",
+                  color: "#071C2C",
                   fontWeight: "500",
                   width: "150px",
                   marginLeft: "10px",
@@ -178,7 +178,7 @@ const Account = () => {
               <Typography
                 sx={{
                   fontSize: "14px",
-                  color: "#666666",
+                  color: "#071C2C",
                   fontWeight: "500",
                   width: "150px",
                   marginLeft: "10px",
@@ -210,7 +210,7 @@ const Account = () => {
                   borderRadius: "10px",
                   color: "white",
                   fontSize: "16px",
-                  backgroundColor: color.bluedark,
+                  backgroundColor: "#E73C34",
                 }}
               >
                 Change Password
@@ -236,7 +236,7 @@ const Account = () => {
             sx={{
               fontSize: "24px",
               fontWeight: "bold",
-              color: color.bluedark,
+              color: "#071C2C",
               marginBottom: "15px",
             }}
           >
@@ -248,7 +248,7 @@ const Account = () => {
                 <Typography
                   sx={{
                     fontSize: "16px",
-                    color: "#666666",
+                    color: "#071C2C",
                     fontWeight: "500",
                   }}
                 >
@@ -270,7 +270,7 @@ const Account = () => {
                 <Typography
                   sx={{
                     fontSize: "16px",
-                    color: "#252525",
+                    color: "#071C2C",
                     fontWeight: "500",
                   }}
                 >
@@ -279,7 +279,7 @@ const Account = () => {
                 <Typography
                   sx={{
                     fontSize: "16px",
-                    color: "#252525",
+                    color: "#071C2C",
                     fontWeight: "500",
                   }}
                 >
@@ -303,7 +303,7 @@ const Account = () => {
             sx={{
               fontSize: "24px",
               fontWeight: "bold",
-              color: color.bluedark,
+              color: "#071C2C",
               marginBottom: "15px",
             }}
           >
@@ -315,7 +315,7 @@ const Account = () => {
                 <Typography
                   sx={{
                     fontSize: "16px",
-                    color: "#666666",
+                    color: "#071C2C",
                     fontWeight: "500",
                   }}
                 >
@@ -324,7 +324,7 @@ const Account = () => {
                 <Typography
                   sx={{
                     fontSize: "16px",
-                    color: "#666666",
+                    color: "#071C2C",
                     fontWeight: "500",
                   }}
                 >
@@ -333,7 +333,7 @@ const Account = () => {
                 <Typography
                   sx={{
                     fontSize: "16px",
-                    color: "#666666",
+                    color: "#071C2C",
                     fontWeight: "500",
                   }}
                 >
@@ -346,7 +346,7 @@ const Account = () => {
                 <Typography
                   sx={{
                     fontSize: "16px",
-                    color: "#252525",
+                    color: "#071C2C",
                     fontWeight: "500",
                   }}
                 >
@@ -355,7 +355,7 @@ const Account = () => {
                 <Typography
                   sx={{
                     fontSize: "16px",
-                    color: "#252525",
+                    color: "#071C2C",
                     fontWeight: "500",
                   }}
                 >
@@ -364,7 +364,7 @@ const Account = () => {
                 <Typography
                   sx={{
                     fontSize: "16px",
-                    color: "#252525",
+                    color: "#071C2C",
                     fontWeight: "500",
                   }}
                 >
@@ -388,7 +388,7 @@ const Account = () => {
             sx={{
               fontSize: "24px",
               fontWeight: "bold",
-              color: color.bluedark,
+              color: "#071C2C",
               marginBottom: "15px",
             }}
           >
@@ -400,7 +400,7 @@ const Account = () => {
                 <Typography
                   sx={{
                     fontSize: "16px",
-                    color: "#666666",
+                    color: "#071C2C",
                     fontWeight: "500",
                   }}
                 >
@@ -409,7 +409,7 @@ const Account = () => {
                 <Typography
                   sx={{
                     fontSize: "16px",
-                    color: "#666666",
+                    color: "#071C2C",
                     fontWeight: "500",
                   }}
                 >
@@ -418,7 +418,7 @@ const Account = () => {
                 <Typography
                   sx={{
                     fontSize: "16px",
-                    color: "#666666",
+                    color: "#071C2C",
                     fontWeight: "500",
                   }}
                 >
@@ -431,7 +431,7 @@ const Account = () => {
                 <Typography
                   sx={{
                     fontSize: "16px",
-                    color: "#252525",
+                    color: "#071C2C",
                     fontWeight: "500",
                   }}
                 >
@@ -440,7 +440,7 @@ const Account = () => {
                 <Typography
                   sx={{
                     fontSize: "16px",
-                    color: "#252525",
+                    color: "#071C2C",
                     fontWeight: "500",
                   }}
                 >
@@ -449,7 +449,7 @@ const Account = () => {
                 <Typography
                   sx={{
                     fontSize: "16px",
-                    color: "#252525",
+                    color: "#071C2C",
                     fontWeight: "500",
                   }}
                 >
@@ -473,7 +473,7 @@ const Account = () => {
             sx={{
               fontSize: "24px",
               fontWeight: "bold",
-              color: color.bluedark,
+              color: "#071C2C",
               marginBottom: "15px",
             }}
           >
@@ -485,7 +485,7 @@ const Account = () => {
                 <Typography
                   sx={{
                     fontSize: "16px",
-                    color: "#666666",
+                    color: "#071C2C",
                     fontWeight: "500",
                   }}
                 >
@@ -498,7 +498,7 @@ const Account = () => {
                 <Typography
                   sx={{
                     fontSize: "16px",
-                    color: "#252525",
+                    color: "#071C2C",
                     fontWeight: "500",
                   }}
                 >
@@ -510,7 +510,7 @@ const Account = () => {
           <Typography
             sx={{
               fontSize: "16px",
-              color: "#666666",
+              color: "#071C2C",
               fontWeight: "500",
               marginTop: "15px",
             }}
@@ -531,7 +531,7 @@ const Account = () => {
             sx={{
               fontSize: "24px",
               fontWeight: "bold",
-              color: color.bluedark,
+              color:"#071C2C",
               marginBottom: "15px",
             }}
           >
@@ -543,7 +543,7 @@ const Account = () => {
                 <Typography
                   sx={{
                     fontSize: "16px",
-                    color: "#666666",
+                    color: "#071C2C",
                     fontWeight: "500",
                   }}
                 >
@@ -552,7 +552,7 @@ const Account = () => {
                 <Typography
                   sx={{
                     fontSize: "16px",
-                    color: "#666666",
+                    color: "#071C2C",
                     fontWeight: "500",
                   }}
                 >
@@ -565,7 +565,7 @@ const Account = () => {
                 <Typography
                   sx={{
                     fontSize: "16px",
-                    color: "#252525",
+                    color: "#071C2C",
                     fontWeight: "500",
                   }}
                 >
@@ -574,7 +574,7 @@ const Account = () => {
                 <Typography
                   sx={{
                     fontSize: "16px",
-                    color: "#252525",
+                    color: "#071C2C",
                     fontWeight: "500",
                   }}
                 >
@@ -586,7 +586,7 @@ const Account = () => {
           <Typography
             sx={{
               fontSize: "16px",
-              color: "#666666",
+              color: "#071C2C",
               fontWeight: "500",
               marginTop: "15px",
             }}
@@ -607,7 +607,7 @@ const Account = () => {
             sx={{
               fontSize: "24px",
               fontWeight: "bold",
-              color: color.bluedark,
+              color:"#071C2C",
               marginBottom: "15px",
             }}
           >
@@ -619,7 +619,7 @@ const Account = () => {
                 <Typography
                   sx={{
                     fontSize: "16px",
-                    color: "#666666",
+                    color: "#071C2C",
                     fontWeight: "500",
                   }}
                 >
@@ -644,7 +644,7 @@ const Account = () => {
           <Typography
             sx={{
               fontSize: "16px",
-              color: "#666666",
+              color: "#071C2C",
               fontWeight: "500",
               marginTop: "15px",
             }}

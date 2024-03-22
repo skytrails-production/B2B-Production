@@ -147,7 +147,7 @@ const MyPackages = () => {
 
   return (
     <div className="container">
-      <div className="buttonBox">
+      <div className="buttonBox-new">
         <button onClick={handleAllPackagesClick}>All Packages</button>
         <button onClick={handleApprovedPackagesClick}>Approved Packages</button>
         <button onClick={handleRejectPackagesClick}>Hold Packages</button>

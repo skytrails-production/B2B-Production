@@ -34,7 +34,7 @@ function SingleData(props) {
   const results =
     reducerState?.oneWay?.oneWayData?.data?.data?.Response?.Results ||
     reducerState?.return?.returnData?.data?.data?.Response?.Results;
-  console.log("Redux State", results);
+  // console.log("Redux State", results);
   const indexKey = props.index;
   const fare =
     reducerState?.logIn?.loginData.length > 0

@@ -749,8 +749,8 @@ const HotelForm = () => {
             </motion.div>
 
             <motion.div variants={variants} className="row button-row">
-              <div className="col-lg-12 col-md-12 col-xs-12 pe-0 mb-3 d-flex justify-content-center align-items-center">
-                <button type="submit" className="hotelFormbutton-new">
+              <div className="col-lg-12 col-md-12 col-xs-12 pe-0 mb-3 d-flex justify-content-center hotelFormbutton-new align-items-center">
+                <button type="submit"  style={{border:"none", color:"#000"}}>
                   Search Hotel
                 </button>
               </div>

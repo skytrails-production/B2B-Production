@@ -273,14 +273,24 @@
   border: 2px solid #21325d;
 }
 
-.hotelFormbutton-new {
+.hotelFormbutton-new button {
   display: flex;
   width: 50%;
   border-radius: var(--rounded-lg, 8px);
   background: #e73c34;
+
   padding: var(--25, 10px) var(--5, 20px);
   justify-content: center;
   align-items: center;
+  color: white !important;
+  gap: var(--2, 8px);
+}
+
+.hotelFormbutton-new button:hover {
+  display: flex;
+  width: 50%;
+  border:1px solid #e73c34 !important;
+  color: #000 !important;
   gap: var(--2, 8px);
 }
 

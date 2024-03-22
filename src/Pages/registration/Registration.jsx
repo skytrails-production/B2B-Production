@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { Paper } from "@material-ui/core";
+// import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import { Input, Typography } from "@mui/material";
 // import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
@@ -66,7 +67,7 @@ const Login = () => {
   const [sub, setSub] = useState(false);
   const [password, setPassword] = useState("");
   const [AttemptedNext, setAttemptedNext] = useState("");
-  const [referalcodeerror, setreferalcodeerror] = useState('');
+  const [referalcodeerror, setreferalcodeerror] = useState("");
   const [pan, setPan] = useState("");
   const [ReferalCode, setReferalCode] = useState("");
   const [currentStep, setCurrentStep] = useState(1);
@@ -159,45 +160,42 @@ const Login = () => {
           `${apiURL.baseURL}/skyTrails/agent/checkValidReferralCode/${e.target.value}`
         );
         if (response.status === 200) {
-         
-          console.log("Referral code applied successfully",response.data.responseMessage);
+          console.log(
+            "Referral code applied successfully",
+            response.data.responseMessage
+          );
           setreferalcodeerror(response.data.responseMessage);
           setTimeout(() => {
-            setreferalcodeerror('');
-        }, 4000);
-      } else {
-          
-         
+            setreferalcodeerror("");
+          }, 4000);
+        } else {
           setreferalcodeerror(response.data.responseMessage);
           setTimeout(() => {
-            setreferalcodeerror('');
-        }, 4000);
-         
+            setreferalcodeerror("");
+          }, 4000);
+        }
+      } catch (error) {
+        console.error("Error:", error);
       }
-  } catch (error) {
-      console.error("Error:", error);
-      
-  }
     }
   }
 
-
   // const validatePersonalDetails = () => {
-    
+
   //   switch (currentStep) {
   //     case 1:
-       
+
   //       if (
   //         !validateName(personalDetail.first_name) ||
   //         personalDetail.last_name === "" ||
   //         !validateEmail(personalDetail.email) ||
   //         !validatePhoneNumber(personalDetail.mobile.mobile_number)
   //       ) {
-  //         return false; 
+  //         return false;
   //       }
   //       break;
   //     case 2:
-       
+
   //       if (
   //         personalDetail.address_details.residential_address === "" ||
   //         !validatePincode(personalDetail.address_details.pincode) ||
@@ -206,36 +204,34 @@ const Login = () => {
   //         personalDetail.address_details.state === "" ||
   //         personalDetail.address_details.city === ""
   //       ) {
-  //         return false; 
+  //         return false;
   //       }
   //       break;
   //     case 3:
-       
+
   //       if (
   //         !validatePassword(personalDetail.password) ||
   //         !validatePAN(agencyDetails.pan_number) ||
   //         !pan ||
   //         agencyDetails.agency_name === ""
   //       ) {
-  //         return false; 
+  //         return false;
   //       }
   //       break;
   //     default:
   //       break;
   //   }
-  //   return true; 
+  //   return true;
   // };
-  
-
 
   const handleNext = () => {
     setAttemptedNext(true);
     // setSub(true);
 
     // if (!validatePersonalDetails()) {
-    //   return; 
+    //   return;
     // }
-    
+
     // }
 
     setCurrentStep(currentStep + 1);
@@ -390,7 +386,13 @@ const Login = () => {
               <Grid container px={10}>
                 <div className="container loginNav">
                   <div className="logoLoginBox">
-                    <img src={whiteLogo} width={180} alt="" />
+                    <img
+                      onClick={() => navigate("/Login")}
+                      src={whiteLogo}
+                      width={180}
+                      alt=""
+                      style={{ cursor: "pointer" }}
+                    />
                   </div>
                   <div className="loginSign">
                     <button onClick={() => navigate("/Login")}>Log In</button>
@@ -432,10 +434,9 @@ const Login = () => {
                         </motion.div>
                       </div> */}
 
-                     <Box
+                    <Box
                       flex={1}
                       style={{
-                        
                         display: "contents",
                       }}
                     >
@@ -444,13 +445,7 @@ const Login = () => {
                         style={{ background: "rgba(249, 255, 252, 0.4)" }}
                       >
                         <div>
-                          <div
-                            style={
-                              {
-                               
-                              }
-                            }
-                          >
+                          <div style={{}}>
                             <Grid
                               container
                               spacing={2}
@@ -470,10 +465,7 @@ const Login = () => {
                                 </Typography>
                               </div>
                               <div className="Regestration_inputFilds_Container">
-                                <div
-                                  
-                                  className="Regestration_box_container"
-                                >
+                                <div className="Regestration_box_container">
                                   <div className="form_input_regestration">
                                     <label
                                       htmlFor="first_name"
@@ -604,7 +596,6 @@ const Login = () => {
                                         })
                                       }
                                     />
-                                    
                                   </div>
                                 </div>
                               </div>
@@ -947,17 +938,15 @@ const Login = () => {
                                       value={ReferalCode}
                                       onChange={(e) => handlereferalcode(e)}
                                     />
-                                    
                                   </div>
                                 </div>
-                               
+
                                 {referalcodeerror && (
-        <div className="error-message">
-            {referalcodeerror}
-        </div>
-    )}
+                                  <div className="error-message">
+                                    {referalcodeerror}
+                                  </div>
+                                )}
                               </div>
-                             
                             </Grid>
                           </div>
                           <div className="Regestration_btn_div">
@@ -966,13 +955,14 @@ const Login = () => {
                                 handleSubmit();
                               }}
                               className="regestration_Submit_Button"
+                              style={{ border: "none" }}
                             >
                               Create
                             </button>
                           </div>
                         </div>
                       </div>
-                    </Box> 
+                    </Box>
                     {/* <Box flex={1} style={{ display: "contents" }} >
       <div className="registerContainer" style={{ background: "rgba(249, 255, 252, 0.4)" }}>
         <div>
@@ -1503,8 +1493,6 @@ const Login = () => {
         </div>
       </div>
     </Box>  */}
-
-
                   </div>
                   {/* </Paper> */}
                 </Grid>

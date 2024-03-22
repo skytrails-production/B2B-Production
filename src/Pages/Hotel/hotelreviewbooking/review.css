@@ -348,7 +348,7 @@ background: rgba(231, 60, 52, 0.15);
 
   .proceed-book-new-hotel button{
     display: flex;
-    width: 50%;
+
 padding: 6px;
 
 color: var(--white, #FFF);

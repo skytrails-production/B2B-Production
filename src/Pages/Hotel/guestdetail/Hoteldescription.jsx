@@ -616,7 +616,7 @@ const Hoteldescription = () => {
         </Button>
       </Box> */}
       <div className="proceed-book-new-hotel mt-3" style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
-        <button type="submit" onClick={handleClickBooking}>
+        <button type="submit" onClick={handleClickBooking} style={{border:"none"}}>
           Continue
         </button>
       </div>

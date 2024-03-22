@@ -316,6 +316,8 @@ const HolidayForm = () => {
                   <Typewriter />
                 </button> : <button
                   onClick={clickUs}
+                
+                  style={{border:"none"}}
                   variant="contained"
                 >
                   Search Holiday Package

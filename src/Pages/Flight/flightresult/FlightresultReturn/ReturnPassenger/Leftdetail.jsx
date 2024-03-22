@@ -1306,9 +1306,10 @@ const Leftdetail = () => {
         </div>
 
 
-        <div className="col-lg-12 mt-5 mb-4 leftDetBut">
+        <div className="col-lg-12 mt-5 mb-4 leftDetBut-new">
           <button
             type="submit"
+            style={{border:"none"}}
           >
             Proceed to Book
           </button>

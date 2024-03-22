@@ -1348,6 +1348,7 @@ var formattedTimeStop = dateTime.toLocaleTimeString('en-US', optionsTime);
         <div className="col-lg-12 mt-5 mb-4 leftDetBut-new">
           <button
             type="submit"
+            style={{border:"none"}}
           >
             Proceed to Book
           </button>

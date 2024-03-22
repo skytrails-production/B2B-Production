@@ -226,6 +226,23 @@ transition: background-color 0.2s ease 0s; */
   margin-bottom: 0 !important;
 }
 
+.headerBox-new {
+  width: 900px;
+  max-width: 900px;
+  border-radius: var(--rounded, 4px);
+  background: rgba(231, 60, 52, 0.80);
+  padding: 20px;
+  font-size: 1.8rem;
+  text-align: center;
+  color: #fff;
+  margin: 10px 40px;
+  border-radius: 15px;
+}
+
+.headerBox-new p {
+  margin-bottom: 0 !important;
+}
+
 .pricing {
   display: flex;
   width: auto;
@@ -251,6 +268,24 @@ transition: background-color 0.2s ease 0s; */
 .buttonBoxPackage .packageSubmit {
   padding: 10px 22px;
   background-color: #21325d;
+  color: white;
+  border-radius: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: none;
+  outline: none;
+}
+
+.buttonBoxPackage-new {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.buttonBoxPackage-new .packageSubmit {
+  padding: 10px 22px;
+  background-color: #E73C34;
   color: white;
   border-radius: 8px;
   font-weight: 700;
@@ -292,6 +327,22 @@ transition: background-color 0.2s ease 0s; */
   background-color: #dfe6f7 !important;
   color: #111 !important;
   border: 2px solid #111 !important;
+}
+
+.insideButton-new {
+  position: absolute !important;
+  right: 10px !important;
+  transform: translate(0%, 25%);
+  border-radius: 30px;
+  color: white;
+  border: 2px solid #E73C34 !important;
+  background-color: #E73C34 !important;
+}
+
+.insideButton-new:hover {
+  color: white;
+  border: 2px solid #E73C34 !important;
+  background-color: #E73C34 !important;
 }
 
 /* .form-floating>flootting {

@@ -84,7 +84,7 @@ const MultipleDataReturn = (props) => {
         handleClick(props.wholeFlight, props.index);
       }}
     >
-      <div className="singleDataReturnBox" style={{backgroundColor:"rgba(231, 60, 52, 0.15)"}}>
+      <div className="singleDataReturnBox" style={{backgroundColor:"#FFFBFB"}}>
         <div className="returnBoxOne">
           <div>
             <img src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${img}.png`} alt="flightImg"/>{" "}

@@ -1,18 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { apiURL } from "../../../../Constants/constant";
 import { useNavigate } from "react-router-dom";
 import { CircularProgress, TextField, Button,Typography,gutterBottom } from "@mui/material";
 import './AddCoupons.css';
 import './UpdateFeed.css';
+import { RecordVoiceOver } from "@mui/icons-material";
 
 const UpdateFeed = () => {
   const [load, setLoad] = useState(false);
-  const [iosVersion, setIOSVersion] = useState("");
-  const [androidVersion, setAndroidVersion] = useState("");
+  const [iosVersions, setIOSVersions] = useState("");
+  const [io,setIo]=useState([]);
+  const[andr,setAndr]=useState([]);
+  const [androidVersions, setAndroidVersions] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+  useEffect(() => {
+    handleDisplay(); // Fetch version details when component mounts
+  }, []);
+  const handleDisplay= async(e)=>{
+    try{
+   const record=await axios.get(`${apiURL.baseURL}/skyTrails/api/admin/getAppVersion`);
+   //console.log("record===========================",record);
 
+   if (record.status === 200) {
+    const { iosVersion, androidVersion } = record.data.result;
+    setIo(iosVersion);
+    setAndr(androidVersion);
+  }
+    }
+    catch(error){
+     console.error(error)
+    }
+  };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoad(true);
@@ -20,8 +41,8 @@ const UpdateFeed = () => {
       const response = await axios.post(
         `${apiURL.baseURL}/skyTrails/api/admin/createAppVersion`,
         {
-          iosVersion: iosVersion,
-          androidVersion: androidVersion,
+          iosVersion: iosVersions,
+          androidVersion: androidVersions,
         }
       );
       if (response.status >= 200 && response.status < 300) {
@@ -66,12 +87,18 @@ const UpdateFeed = () => {
       <h3 style={{ textAlign: "center" }} className="addCoupon-heading">
         <strong>Update Version</strong>
       </h3>
+      <Typography variant="body1" gutterBottom style={{ textAlign: "center" }}>
+        Current iOS Version: {io}
+      </Typography>
+      <Typography variant="body1" gutterBottom style={{ textAlign: "center" }}>
+        Current Android Version: {andr}
+      </Typography>
       <form onSubmit={handleSubmit}>
         <TextField
           label="iOS Version"
           variant="outlined"
-          value={iosVersion}
-          onChange={(e) => setIOSVersion(e.target.value)}
+          value={iosVersions}
+          onChange={(e) => setIOSVersions(e.target.value)}
           fullWidth
           margin="normal"
           padding="25px"
@@ -79,8 +106,8 @@ const UpdateFeed = () => {
         <TextField
           label="Android Version"
           variant="outlined"
-          value={androidVersion}
-          onChange={(e) => setAndroidVersion(e.target.value)}
+          value={androidVersions}
+          onChange={(e) => setAndroidVersions(e.target.value)}
           fullWidth
           margin="normal"
         />

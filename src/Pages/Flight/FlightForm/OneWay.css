@@ -25,6 +25,14 @@ align-items: center !important;
 gap: var(--2, 8px);
 }
 
+
+.flightFormSubmit-new:hover{
+  border-radius: var(--rounded-lg, 8px);
+border:1px solid #E73C34 !important;
+color: "#000";
+font-size: 16px;
+}
+
 .form_input input {
   width: 332px;
   height: 56px;

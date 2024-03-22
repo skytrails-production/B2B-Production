@@ -207,6 +207,7 @@ const FixedDeparture = () => {
                         <button
                             className="fixedDepartButton-new"
                             onClick={() => handelSearch()}
+                            style={{border:"none"}}
                         >
                             Search
                         </button>
@@ -715,6 +716,7 @@ const FixedDeparture = () => {
                                     type="submit"
                                     className="backButto-new"
                                     disabled={numberOfSeats == 0 || !enableName}
+                                   
                                 >
                                     Submit
                                 </button>

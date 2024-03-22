@@ -381,7 +381,7 @@ const Return = () => {
         <div className="container">
           <motion.div variants={variants} initial="initial"
             whileInView="animate" className="row">
-            <motion.div variants={variants} className="col-xs-12 col-md-3 col-lg-3 ps-0 mb-3">
+            <motion.div variants={variants} className="col-xs-12 col-md-3 col-lg-5 ps-0 mb-3">
               <div className="form_input" style={{ zIndex: 10, position: "relative" }}>
                 <label for="from" className="form_lable" > FROM</label>
                 <input
@@ -423,7 +423,7 @@ const Return = () => {
               <img src={interchange} alt="name" className="align-self-center" />
             </motion.div>
 
-            <motion.div variants={variants} className="col-xs-12 col-md-2 col-lg-3 ps-0 mb-3">
+            <motion.div variants={variants} className="col-xs-12 col-md-2 col-lg-5 ps-0 mb-3">
               <div className="form_input" style={{ zIndex: 10, position: "relative" }}>
 
                 <label for="to" className="form_lable">
@@ -619,7 +619,7 @@ const Return = () => {
                 <motion.button
                   variants={variants}
                   type="submit"
-                  className="flightFormSubmit-new" >Search Flight <FlightIcon />
+                  className="flightFormSubmit-new" style={{border:"none"}}>Search Flight <FlightIcon />
                 </motion.button>
               </motion.div>
             </div>

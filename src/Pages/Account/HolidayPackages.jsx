@@ -11,7 +11,7 @@ const HolidayPackages = () => {
       <div className="container-fluid margin-pecentage">
         
         <div className="main-search">
-          <div className="heading">
+          <div className="heading-new">
             <h3>Your Packages</h3>
           </div>
         </div>
