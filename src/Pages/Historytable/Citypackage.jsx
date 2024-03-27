@@ -1,96 +1,151 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { Typography } from '@mui/material';
+import React, { useState } from "react";
+import axios from "axios";
+import {
+  Typography,
+  TextField,
+  Button,
+  Box,
+  Paper,
+  CircularProgress,
+  IconButton,
+} from "@mui/material";
+import { CloudUpload } from "@mui/icons-material";
 import { apiURL } from "../../Constants/constant";
-import UploadFileIcon from '@mui/icons-material/UploadFile';
-const Citypackage = () => {
-  const [cityName, setCityName] = useState('');
-  const [description, setDescription] = useState('');
-  const [file, setFile] = useState(null);
-  const [submitting, setSubmitting] = useState(false); 
-  const [display,setDisplay]=useState('');
 
+const Citypackage = () => {
+  const [cityName, setCityName] = useState("");
+  const [description, setDescription] = useState("");
+  const [file, setFile] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [display, setDisplay] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     //validation
     if (!cityName || !description || !file) {
-      setDisplay("Please fill out all required fields.")
+      setDisplay("Please fill out all required fields.");
       return;
     }
     setSubmitting(true); // Set submitting to true when form submission starts
     try {
       const formData = new FormData();
-      formData.append('cityName', cityName);
-      formData.append('description', description);
-      formData.append('file', file);
+      formData.append("cityName", cityName);
+      formData.append("description", description);
+      formData.append("file", file);
 
-      const response = await axios.post(`${apiURL.baseURL}/skyTrails/package/packageCityData`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+      const response = await axios.post(
+        `${apiURL.baseURL}/skyTrails/package/packageCityData`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
-      });
-      setCityName('');
-      setDescription('');
+      );
+      setCityName("");
+      setDescription("");
       setFile(null);
     } catch (error) {
-      console.error('Error sending data:', error);
+      console.error("Error sending data:", error);
     } finally {
-      setSubmitting(false); 
-      setDisplay('');
+      setSubmitting(false);
+      setDisplay("");
       // Reset file input value
-    document.getElementById('fileInput').value = '';
+      document.getElementById("fileInput").value = "";
     }
   };
 
   return (
-    <div className="subada-table-container" style={{ position: 'relative', width: '100%' }}>
+    <Box
+      mt={8}
+      p={3}
+      width="100%"
+      maxWidth="500px"
+      mx="auto"
+      component={Paper}
+      elevation={3}
+      borderRadius={5}
+    >
+      <Typography variant="h4" gutterBottom align="center">
+        Upload City Package
+      </Typography>
       {submitting && (
-        <div className="loader-overlay" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(255, 255, 255, 0.5)', zIndex: 2, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <Typography variant="h5">Uploading...</Typography>
-        </div>
+        <Box display="flex" justifyContent="center" alignItems="center" mb={3}>
+          <CircularProgress />
+          <Typography variant="h6" ml={2}>
+            Uploading...
+          </Typography>
+        </Box>
       )}
-      <div className="adsearch-bar" id="adssearch" style={{ position: "absolute", top: 10, zIndex: 3, fontWeight: "bold", display: "flex", justifyContent: "center", alignItems: "center" }}>
-        <Typography variant="h5" className="adtable-heading">
-          Upload City Package
-        </Typography>
-      </div>
-     
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="City Name"
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <TextField
+          label="City Name"
+          variant="outlined"
           value={cityName}
-          onChange={(e) => {setCityName(e.target.value); setDisplay('');}}
+          onChange={(e) => {
+            setCityName(e.target.value);
+            setDisplay("");
+          }}
+          fullWidth
+          margin="normal"
+          sx={{
+            "& .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input": {
+              height: "2.4375em",
+            },
+          }}
+        />
 
-        />
-        <textarea
-          placeholder="Description"
+        <TextField
+          label="Description"
+          variant="outlined"
           value={description}
-          onChange={(e) => {setDescription(e.target.value);   setDisplay('');}}
+          onChange={(e) => {
+            setDescription(e.target.value);
+            setDisplay("");
+          }}
+          multiline
+          rows={4}
+          fullWidth
+          margin="normal"
         />
-        <input type="file"
-         id="fileInput"
-          accept=".jpeg,.jpg,.png"
-          onChange={(e) => {setFile(e.target.files[0]);   setDisplay('');}} />
-        <button type="submit" style={{
-              backgroundColor: 'aqua',
-              borderRadius: '10px',
-              padding: '10px',
-              marginBottom: '10px',
-              width: '250px',
-              marginLeft: '35%'
-          }}>Submit</button>'
+        <Box display="flex" alignItems="center" width="100%" mb={2}>
+          <label htmlFor="fileInput">
+            <IconButton component="span">
+              <CloudUpload />
+            </IconButton>
+          </label>
+          <input
+            type="file"
+            id="fileInput"
+            accept=".jpeg,.jpg,.png"
+            onChange={(e) => {
+              setFile(e.target.files[0]);
+              setDisplay("");
+            }}
+            style={{ display: "none" }}
+          />
+          <Typography variant="body1" ml={1}>
+            {file ? file.name : "Choose file"}
+          </Typography>
+        </Box>
+        <Button type="submit" variant="contained" color="primary" fullWidth>
+          Submit
+        </Button>
       </form>
       {display && (
-        <Typography variant="body1" style={{ color: 'red', textAlign: 'center', marginTop: '20px' }}>
+        <Typography variant="body1" color="error" align="center" mt={2}>
           {display}
         </Typography>
       )}
-    </div>
+    </Box>
   );
 };
 
 export default Citypackage;
-
-  

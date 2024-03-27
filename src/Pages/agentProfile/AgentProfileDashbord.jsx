@@ -38,13 +38,13 @@ const AgentProfileDashbord = () => {
   };
   const agentData = reducerState?.agentProfileReducer;
   const [data, setData] = useState(null);
-  useEffect(() => {
-    console.log(reducerState?.agentProfileReducer?.
-      agentProfileloginData?.data?.data?.id
+  // useEffect(() => {
+  //   console.log(reducerState?.agentProfileReducer?.
+  //     agentProfileloginData?.data?.data?.id
 
 
-      , "/////////////////////////");
-  }, [tab]);
+  //     , "/////////////////////////");
+  // }, [tab]);
 
   const [routeData, setRouteData] = useState([]);
   const fetchData = async () => {
@@ -57,7 +57,7 @@ const AgentProfileDashbord = () => {
         agentProfileloginData?.data?.data?.id}`
     );
     setData(Data?.data);
-    console.log(Data?.data, "data");
+    // console.log(Data?.data, "data");
   };
   useEffect(() => {
     if (!agentData.isLogin) {
@@ -75,7 +75,7 @@ const AgentProfileDashbord = () => {
 
   const handleClickOutside = (event) => {
     // alert(dropDwonRef.current)
-    console.log(dropDwonRef.current, !dropDwonRef.current.contains(event.target))
+    // console.log(dropDwonRef.current, !dropDwonRef.current.contains(event.target))
     if (dropDwonRef.current && !dropDwonRef.current.contains(event.target)) {
       setIsProfile(false);
     }

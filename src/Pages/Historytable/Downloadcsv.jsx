@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { apiURL } from "../../Constants/constant";
-import{Typography,Paper}from "@mui/material"; 
+import { Typography, Paper } from "@mui/material";
+import GetAppIcon from "@mui/icons-material/GetApp"; // Import the download icon
+
 function Downloadcsv() {
   const [leadsData, setLeadsData] = useState([]);
 
@@ -12,7 +14,6 @@ function Downloadcsv() {
           `${apiURL.baseURL}/skyTrails/ssdc/leads`
         );
         const { data } = response.data;
-        
 
         if (Array.isArray(data)) {
           setLeadsData(data); // Store data in state
@@ -43,67 +44,142 @@ function Downloadcsv() {
 
   return (
     <div style={{ marginTop: "50px" }}>
-       <Paper
-      className="subada-table-container"
-      elevation={3}
-      style={{
-        position: 'relative',
-        width: '100%',
-        backgroundColor: 'white',
-        padding: '20px',
-        boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
-      }}
-    >
-      <div
-        className="adsearch-bar"
+      <Paper
+        className="subada-table-container"
+        elevation={3}
         style={{
-          position: 'absolute',
-          top: 10,
-          zIndex: 1,
-          fontWeight: 'bold',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center', 
-          width: '92%',
+          position: "relative",
+          width: "100%",
+          backgroundColor: "white",
+          padding: "20px",
+          boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
         }}
       >
-        <Typography variant="h5" className="adtable-heading" style={{ marginLeft: '20px', color: 'white',fontWeight:'500'}}>
-          SSDC Leads
-        </Typography>
-      </div>
-      <div style={{ marginBottom: "10px", textAlign: "center" }}>
-        <button style={{backgroundColor:'green',color:'white',marginTop:'30px',padding:"8px",borderRadius: '5px'}} onClick={handleDownloadCsv}>Download CSV</button>
-      </div>
-      <div style={{ overflowX: "auto", backgroundColor:'white'}}>
-        <table style={{ width: "100%", borderCollapse: "collapse",border:'none' }}>
-          <thead>
-            <tr>
-              <th style={{ borderBottom: "1px solid black", padding: "8px" }}>Name</th>
-              <th style={{ borderBottom: "1px solid black", padding: "8px" }}>Email</th>
-              <th style={{ borderBottom: "1px solid black", padding: "8px" }}>Mobile</th>
-              <th style={{ borderBottom: "1px solid black", padding: "8px" }}>Country</th>
-              <th style={{ borderBottom: "1px solid black", padding: "8px" }}>Selected Job</th>
-            
-            </tr>
-          </thead>
-          <tbody>
-            {leadsData.map((lead, index) => (
-              <tr key={index}>
-                <td style={{ borderBottom: "1px solid black", padding: "8px",backgroundColor:'white' ,color:'black'}}>{lead.name}</td>
-                <td style={{ borderBottom: "1px solid black", padding: "8px",backgroundColor:'white',color:'black'}}>{lead.email}</td>
-                <td style={{ borderBottom: "1px solid black", padding: "8px",backgroundColor:'white',color:'black'}}>{lead.mobile}</td>
-                <td style={{ borderBottom: "1px solid black", padding: "8px" ,backgroundColor:'white',color:'black'}}>{lead.country}</td>
-                <td style={{ borderBottom: "1px solid black", padding: "8px",backgroundColor:'white',color:'black' }}>{lead.subCategory}</td>
+        <div
+          className="adsearch-bar"
+          style={{
+            position: "absolute",
+            top: 10,
+            zIndex: 1,
+            fontWeight: "bold",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Typography
+            variant="h5"
+            className="adtable-heading"
+            style={{ color: "white", fontWeight: "500" }}
+          >
+            SSDC Leads
+          </Typography>
+
+          <button
+            style={{
+              backgroundColor: "#21325D",
+              color: "white",
+
+              padding: "8px",
+              borderRadius: "5px",
+            }}
+            onClick={handleDownloadCsv}
+          >
+            Download CSV
+            <GetAppIcon style={{ marginLeft: "5px" }} />
+          </button>
+        </div>
+
+        <div style={{ overflowX: "auto", backgroundColor: "white" }}>
+          <table
+            style={{
+              width: "100%",
+              borderCollapse: "collapse",
+              border: "none",
+            }}
+          >
+            <thead>
+              <tr>
+                <th style={{ borderBottom: "1px solid black", padding: "8px" }}>
+                  Name
+                </th>
+                <th style={{ borderBottom: "1px solid black", padding: "8px" }}>
+                  Email
+                </th>
+                <th style={{ borderBottom: "1px solid black", padding: "8px" }}>
+                  Mobile
+                </th>
+                <th style={{ borderBottom: "1px solid black", padding: "8px" }}>
+                  Country
+                </th>
+                <th style={{ borderBottom: "1px solid black", padding: "8px" }}>
+                  Selected Job
+                </th>
+
+       
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {leadsData.map((lead, index) => (
+                <tr key={index}>
+                  <td
+                    style={{
+                      borderBottom: "1px solid black",
+                      padding: "8px",
+                      backgroundColor: "white",
+                      color: "black",
+                    }}
+                  >
+                    {lead.name}
+                  </td>
+                  <td
+                    style={{
+                      borderBottom: "1px solid black",
+                      padding: "8px",
+                      backgroundColor: "white",
+                      color: "black",
+                    }}
+                  >
+                    {lead.email}
+                  </td>
+                  <td
+                    style={{
+                      borderBottom: "1px solid black",
+                      padding: "8px",
+                      backgroundColor: "white",
+                      color: "black",
+                    }}
+                  >
+                    {lead.mobile}
+                  </td>
+                  <td
+                    style={{
+                      borderBottom: "1px solid black",
+                      padding: "8px",
+                      backgroundColor: "white",
+                      color: "black",
+                    }}
+                  >
+                    {lead.country}
+                  </td>
+                  <td
+                    style={{
+                      borderBottom: "1px solid black",
+                      padding: "8px",
+                      backgroundColor: "white",
+                      color: "black",
+                    }}
+                  >
+                    {lead.subCategory}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </Paper>
     </div>
   );
 }
 
 export default Downloadcsv;
-
-
