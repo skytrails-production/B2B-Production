@@ -19,9 +19,9 @@ const MyPackages = () => {
     try {
       let endpoint;
       if (status === "all") {
-        endpoint = `${apiURL.baseURL}/skyTrails/agent/packages?userId=${userId}`;
+        endpoint = `${apiURL.baseURL}/skyTrails/agent/packages/${userId}`;
       } else {
-        endpoint = `${apiURL.baseURL}/skyTrails/agent/packages?userId=${userId}&isActive=${status}`;
+        endpoint = `${apiURL.baseURL}/skyTrails/agent/packages/${userId}/${status}`;
       }
 
       const response = await axios.get(endpoint);
@@ -42,7 +42,7 @@ const MyPackages = () => {
   const fetchLeads= async()=>{
     try {
       setLoading(true);     
-      const  endpoint = `${apiURL.baseURL}/skyTrails/agent/leads?userId=${userId}`;
+      const  endpoint = `${apiURL.baseURL}/skyTrails/agent/leads/${userId}`;
       
 
       const response = await axios.get(endpoint);
@@ -126,7 +126,7 @@ const MyPackages = () => {
 
     return ( 
     <>
-    <h1>Approved Packages {data?.length}</h1>
+    <h1>Hold Packages {data?.length}</h1>
     </>
     )
    }         

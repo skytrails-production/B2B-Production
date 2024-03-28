@@ -4,6 +4,7 @@
   --main-bg-color-hover: #b6bbc4;
   --main-bg-color-text: #f0ece5;
 }
+
 .agentProfileListH1 {
   /* margin-top: 50px; */
   /* margin-left: 50px; */
@@ -44,7 +45,7 @@
   gap: 10px;
 }
 .agentProfileListName {
-  font-size: 20px;
+  font-size: 1rem;
   color: var(--main-bg-color);
   font-weight: 500;
   height: 40px;
@@ -81,7 +82,7 @@
   justify-content: space-between;
 }
 .agentProfileListCardDivItemProflieFlightBooking {
-  font-size: 20px;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--main-bg-color-secondery);
 }
@@ -125,4 +126,11 @@
     opacity: 1;
     scale: 1;
   }
+}
+
+
+
+.scrollableContainer {
+  max-height: 500px; /* Adjust the height as needed */
+  overflow-y: auto;
 }

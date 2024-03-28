@@ -14,15 +14,15 @@ const AgentList = () => {
   const agentData = reducerState?.agentProfileReducer;
 
   const fetchData = async () => {
-    // const Data = await axios.get(`${apiURL.baseURL}/skyTrails/agent/getAllInvitesBooking/${reducerState?.
-    //     agentProfileReducer?.agentProfileloginData?.
-    //     data?.data?.
-    //     id}`)
-    const Data = await axios.get(
-      `${apiURL.baseURL}/skyTrails/agent/getAllInvitesBooking/65e959e675e669a23dfd9bb7`
-    );
+    const Data = await axios.get(`${apiURL.baseURL}/skyTrails/agent/getAllInvitesBooking/${reducerState?.
+        agentProfileReducer?.agentProfileloginData?.
+        data?.data?.
+        id}`)
+    // const Data = await axios.get(
+    //   `${apiURL.baseURL}/skyTrails/agent/getAllInvitesBooking/65e959e675e669a23dfd9bb7`
+    // );
     setData(Data?.data);
-    console.log(Data?.data, "data");
+    // console.log(Data?.data, "data");
   };
   useEffect(() => {
     if (!agentData.isLogin) {
@@ -46,13 +46,13 @@ const AgentList = () => {
       </div>
     );
   return (
-    <div className="agentProfileListContainer">
+    <div className="scrollableContainer agentProfileListContainer">
       <div className="agentProfileListH1">
         Total Agents {data?.agentInviteData?.length}
       </div>
       <div className="agentProfileListCardContainer">
-        {data?.agentInviteData?.map((item) => (
-          <div className="agentProfileListCard ">
+        {data?.agentInviteData?.map((item,index) => (
+          <div className="agentProfileListCard " key={index}>
             <div className="agentProfileListName">{item.agencyName}</div>
             <div className="agentProfileListCardDiv">
               <div className="agentProfileListCardDivItem">
