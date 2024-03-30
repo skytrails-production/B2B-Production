@@ -65,7 +65,7 @@ function Footer() {
             <div  className="know-value1" >
               Email: info@theskytrails.com
             </div>
-            <div  className="know-value1">Phone Number: +91 9209793097</div>
+            <div  className="know-value1">Phone Number: +91 8989897676</div>
           </div>
         
         </div>

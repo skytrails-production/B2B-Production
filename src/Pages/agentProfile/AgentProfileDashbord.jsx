@@ -13,6 +13,7 @@ import axios from "axios";
 import { apiURL } from "../../Constants/constant";
 import AgentProfileLeft from "./AgentProfileLeft";
 import AgentHome from "./AgentHome";
+import UploadAgent from "./UploadAgent";
 // import { IoMdHome } from "react-icons/io";
 import { FaUserFriends } from "react-icons/fa";
 import AgentList from "./AgentList";
@@ -30,6 +31,7 @@ const AgentProfileDashbord = () => {
   const leftPath = [
     { name: "home", icon: <IoMdHome size={30} /> },
     { name: "Agent List", icon: <FaUserFriends size={30} /> },
+    { name: "Upload Agent", icon: <FaUserFriends size={30} /> },
   ];
   const dropDwonRef = useRef(null);
 
@@ -222,6 +224,11 @@ const AgentProfileDashbord = () => {
           {tab === leftPath[1].name && (
             <AgentList data={data} toggle={setTab} tab={tab} />
           )}
+          {tab === leftPath[2].name &&(
+            <UploadAgent data={data} toggle={setTab} tab={tab}/>
+          )
+
+          }
         </div>
       </div>
     </div>

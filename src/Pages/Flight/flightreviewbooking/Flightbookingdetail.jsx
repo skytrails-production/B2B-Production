@@ -940,9 +940,9 @@ const Flightbookingdetail = () => {
             <Typography
               style={{
                 color: "#E73C34",
-                fontSize: 24,
+                fontSize: 19,
                 fontFamily: "Montserrat",
-                fontWeight: "600",
+                fontWeight: "500",
                 wordWrap: "break-word",
               }}
             >
@@ -1045,9 +1045,9 @@ const Flightbookingdetail = () => {
           textAlign="center"
           onSubmit={handleSubmit}
         >
-          <div className="flightDetButton"  >
+          <div className="flightDetButton" style={{fontSize:"16px"}} >
             <button
-            
+             style={{fontSize:"16px"}}
               type="submit"
               disabled={
                 !passengerAgreement || !paymentOption

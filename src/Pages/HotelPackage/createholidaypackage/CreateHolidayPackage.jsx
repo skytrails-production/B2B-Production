@@ -664,7 +664,8 @@ const CreateHolidayPackage = () => {
                 </div>
 
                 <div class="mb-3">
-                  <label class="form-label">
+                <div style={{display:"flex",flexDirection:"row",gap:"12px"}}>
+                <label class="form-label" style={{display:"flex",alignItems:"center", justifyContent:"center"}}>
                     What is the schedule?{" "}
                     <span style={{ color: "red" }}>*</span>
                   </label>
@@ -678,11 +679,8 @@ const CreateHolidayPackage = () => {
                       paddingBottom: "20px",
                       borderRadius: "4px",
                       padding: "5px",
-                      border: "1px solid #5C85A4",
-                      backgroundColor: "#FFFBFB",
-                      width: "400px",
-                      height: "80px",
-                      marginTop: "10px",
+                    
+                      
                       paddingLeft: "10px",
                     }}
                   >
@@ -693,14 +691,14 @@ const CreateHolidayPackage = () => {
                           name="schedule"
                           id="schedule"
                           value="fixed departure"
-                          width="32px"
+                          width="30px"
                           onChange={handleScheduleChange}
                         />
                       </Box>
                       <Box>
                         <Typography
                           style={{
-                            fontSize: "20px",
+                            fontSize: "18px",
                             color: "#000",
 
                             fontFamily: "Montserrat",
@@ -725,7 +723,7 @@ const CreateHolidayPackage = () => {
                       <Box>
                         <Typography
                           style={{
-                            fontSize: "20px",
+                            fontSize: "18px",
                             color: "#000",
 
                             fontFamily: "Montserrat",
@@ -736,6 +734,8 @@ const CreateHolidayPackage = () => {
                       </Box>
                     </Box>
                   </Box>
+                </div>
+                 
                 </div>
                 <div class="mb-3">
                   <label class="form-label">

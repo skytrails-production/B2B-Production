@@ -207,7 +207,7 @@ const FixedDeparture = () => {
                         <button
                             className="fixedDepartButton-new"
                             onClick={() => handelSearch()}
-                            style={{border:"none"}}
+                            style={{border:"none", padding:"10px"}}
                         >
                             Search
                         </button>

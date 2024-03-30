@@ -78,8 +78,8 @@ transition: background-color 0.2s ease 0s; */
 
 .relevant__tag {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  /* align-items: center; */
+  justify-content: start;
   flex-wrap: wrap;
   width: 100% !important;
 }

@@ -117,10 +117,10 @@ function Enquirylist() {
                         thickness={4}
                         variant="determinate"
                         value={75}
-                        style={{ color: 'white' }}
+                        style={{ color: '#21325D' }}
                       />
                     ) : (
-                      "RESOLVE"
+                      "Resolve"
                     )}
                   </button>
                 </td>

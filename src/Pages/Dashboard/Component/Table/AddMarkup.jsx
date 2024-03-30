@@ -97,16 +97,17 @@ const handleShow=async(e)=>{
           <h2>Add Markup</h2>
         </div>
       </header>
+      {/* //http://localhost:3000/addMarkup */}
       <div style={{ paddingBottom:"50px" }}>
       {markupData ?(
-         <ul>
-         <li>Hotel Markup: {markupData.hotelMarkup}</li>
-         <li>Flight Markup: {markupData.flightMarkup}</li>
-         <li>Bus Markup: {markupData.busMarkup}</li>
-         <li>Holiday Package Markup: {markupData.holidayPackageMarkup}</li>
-         <li>Recharge Markup: {markupData.rechargeMarkup}</li>
-       
-       </ul>
+        
+        <ul style={{ listStyleType: 'none', padding: 0 }}>
+        <li style={{ marginBottom: '10px', backgroundColor: '#f0f0f0', padding: '10px' }}>Hotel Markup: {markupData.hotelMarkup}</li>
+        <li style={{ marginBottom: '10px', backgroundColor: '#f9f9f9', padding: '10px' }}>Flight Markup: {markupData.flightMarkup}</li>
+        <li style={{ marginBottom: '10px', backgroundColor: '#f0f0f0', padding: '10px' }}>Bus Markup: {markupData.busMarkup}</li>
+        <li style={{ marginBottom: '10px', backgroundColor: '#f9f9f9', padding: '10px' }}>Holiday Package Markup: {markupData.holidayPackageMarkup}</li>
+        <li style={{ backgroundColor: '#f0f0f0', padding: '10px' }}>Recharge Markup: {markupData.rechargeMarkup}</li>
+    </ul>
       ) : (
         <p> </p>
       )}

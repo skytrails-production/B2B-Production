@@ -17,10 +17,11 @@ import patnershipimg3 from "../../Images/indigo-vector-logo-2022 1.png";
 import patnershipimg4 from "../../Images/lemon-tree-hotels-logo-2A55C28509-seeklogo 1.png";
 import patnershipimg5 from "../../Images/jumeirah-logo-B7B760C975-seeklogo 1.png";
 import patnershipimg6 from "../../Images/2560px-Marriott_Logo 1.png";
-import calenderimg from "../../Images/Calendar New 1.svg";
-import offerimg from "../../Images/Offer 2.svg";
-import recordsimg from "../../Images/Online records 1.svg";
+import calenderimg from "../../Images/calenderimg1.png";
+import offerimg from "../../Images/offerimg.png";
+import recordsimg from "../../Images/paymenimg.png";
 import Cotactus from "./Cotactus.jsx";
+import Patners from "./Patners.jsx";
 
 function Loginnew() {
   const dispatch = useDispatch();
@@ -94,10 +95,7 @@ function Loginnew() {
           <section class="hero-section-one ">
             <div className="container loginNav">
               <div className="logoLoginBox">
-              
-              <img  src={whiteLogo} width={180} alt="" />
-          
-               
+                <img src={whiteLogo} width={180} alt="" />
               </div>
               <div className="loginSign">
                 <button onClick={() => navigate("/Registration")}>
@@ -210,7 +208,7 @@ function Loginnew() {
             </div>
           </section>
 
-          <section class="together-gap" style={{}}>
+          <section class="together-gap" style={{background: "#FFFEFB"}}>
             <div className="container">
               <div className="row">
                 <div className="col-md-6">
@@ -225,7 +223,7 @@ function Loginnew() {
                       </div>
                     </div>
                     <button
-                    style={{border:"none"}}
+                      style={{ border: "none" }}
                       className="journeyconnect"
                       onClick={scrollToSection}
                     >
@@ -235,8 +233,8 @@ function Loginnew() {
                 </div>
                 <div className="col-md-6">
                   <div className="overseasoncontent-grid">
-                    <div className="overseasoncontent-grid1">
-                      <div className="overseason-grid1">
+                    <div className="overseasoncontent-grid1" style={{width:"50%"}}>
+                      <div className="overseason-grid1" style={{width:"100%"}}>
                         <div className="servicecardjourneygrid">
                           <div className="service-card1">We Provide</div>
                           <div className="service-card-number">
@@ -245,16 +243,16 @@ function Loginnew() {
                         </div>
                       </div>
 
-                      <div className="overseason-grid2">
+                      <div className="overseason-grid2" style={{width:"100%"}}>
                         <div className="servicecardjourneygrid">
-                          <div className="service-card1">Guranting You</div>
+                          <div className="service-card1">Promising you to</div>
                           <div className="service-card-number">
-                            Lowest Rates
+                          Beat any price
                           </div>
                         </div>
                       </div>
 
-                      <div className="overseason-grid3">
+                      <div className="overseason-grid3" style={{width:"100%"}}>
                         <div className="servicecardjourneygrid">
                           <div className="service-card1">Flexible</div>
                           <div className="service-card-number">
@@ -264,20 +262,21 @@ function Loginnew() {
                       </div>
                     </div>
 
-                    <div className="overseasoncontent-grid2">
-                      <div className="note-member">
+                    <div className="overseasoncontent-grid2" style={{width:"50%"}}>
+                      <div className="note-member" style={{width:"100%"}}>
                         <div className="membersdetail">
                           <div className="total-member">Wide range of </div>
-                          <div className="total-member-no">10+ Products</div>
+                          <div className="total-member-no">50+ Products</div>
                         </div>
                       </div>
 
-                      <div className="succesful-visa">
+                      <div className="succesful-visa" style={{width:"100%"}}>
                         <div className="membersdetail">
                           <div className="total-member">
-                            Customize Visa Assistance
+                          Customization
                           </div>
-                          <div className="total-member-no">2600+</div>
+                          <div className="total-member-no">Visa 
+Assisstance</div>
                         </div>
                       </div>
                     </div>
@@ -293,19 +292,21 @@ function Loginnew() {
                 <div className="recognized-patner-value">
                   <p className="patner-heading">Recognized Partnership</p>
                 </div>
-                <div className="patner-logo">
-                  <img src={patnershipimg1} alt="" />
-                  <img src={patnershipimg2} alt="" />
+                 <div className="patner-logo">
+                  {/* <img src={patnershipimg1} alt="" /> */}
+                  {/* <img src={patnershipimg2} alt="" />
                   <img src={patnershipimg3} alt="" />
                   <img src={patnershipimg4} alt="" />
                   <img src={patnershipimg5} alt="" />
-                  <img src={patnershipimg6} alt="" />
-                </div>
+                  <img src={patnershipimg6} alt="" /> */}
+                  <Patners/>
+                </div> 
+                
               </div>
             </div>
           </section>
 
-          <section class="together-gap" style={{}}>
+          <section class="together-gap" style={{ padding: "0px" ,background: "#FFFEFB"}}>
             <div className="about-us-value">
               <div className="heading1">Why choose The Hawai Yatra ? </div>
               <div className="travel-content-para">
@@ -318,7 +319,7 @@ function Loginnew() {
                     <div className="about-grid-img">
                       <img
                         src={calenderimg}
-                        // style={{ height: "80px", width: "80px" }}
+                        style={{  width: "100%" }}
                         alt=""
                       />
                     </div>
@@ -334,7 +335,7 @@ function Loginnew() {
                     <div className="about-grid-img">
                       <img
                         src={offerimg}
-                        // style={{ height: "80px", width: "80px" }}
+                        style={{width: "100%" }}
                         alt=""
                       />
                     </div>
@@ -351,7 +352,7 @@ function Loginnew() {
                     <div className="about-grid-img">
                       <img
                         src={recordsimg}
-                        // style={{ height: "80px", width: "80px" }}
+                        style={{ width:"100%" }}
                         alt=""
                       />
                     </div>
@@ -371,7 +372,7 @@ function Loginnew() {
 
           <section
             class="together-gap"
-            style={{ padding: "0px" }}
+            style={{ padding: "0px", background: "white" }}
             ref={togetherSectionRef}
           >
             <Cotactus />

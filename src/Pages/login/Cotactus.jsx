@@ -84,8 +84,9 @@ function Cotactus() {
     <>
       <div className="conatiner">
         <div className="heading1">Connect with us</div>
-        <div className="contactuscontainer">
+        
           <div className="container">
+          <div className="contactuscontainer">
             <div className="row">
               <div className="col-md-6">
                 <div className="need-assistance">

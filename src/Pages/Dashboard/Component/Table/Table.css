@@ -43,7 +43,7 @@
     box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
     border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
     color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  background-color: #21325D !important;
+  background-color: #21325d !important;
   color: #fff !important;
   margin: 0 0 3px -10px !important;
 }
@@ -81,11 +81,9 @@
     box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
     border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
     color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  background-color: #21325D !important;
+  background-color: #21325d !important;
   color: #fff !important;
- 
 }
-
 
 .adminseacrch {
   margin-bottom: 20px;
@@ -110,7 +108,7 @@
   color: black;
 }
 
-.tableheadadmin{
+.tableheadadmin {
   background-color: none !important;
 }
 .addVendorButton {
@@ -121,10 +119,7 @@
     background-color: #0056b3; /* Change the hover background color as needed */
   }
 }
-.add_bonus_btn{
-  background-color: #007bff;
-  color:#ffffff;
-  &:hover{
-    background-color: #0056b3;
-  }
+.add_bonus_btn {
+  background-color: #21325d;
+  color: #ffffff;
 }

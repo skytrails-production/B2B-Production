@@ -1013,7 +1013,7 @@ ul.list li img {
 }
 .service-card-number {
   color: #071c2c;
-  font-size: 25px;
+  font-size: 20px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -1144,7 +1144,7 @@ ul.list li img {
 
 .total-member-no {
   color: #071c2c;
-  font-size: 25px;
+  font-size: 20px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -1167,12 +1167,12 @@ ul.list li img {
 
 .patner-container {
   display: flex;
-  padding: 64px 32px;
+  padding: 34px;
   flex-direction: column;
   align-items: center;
-  gap: 120px;
+  gap: 2px;
   border-radius: 36px;
-  background:  #1e429f;
+  background: #1e429f;
 }
 
 .recognized-patner-value {
@@ -1203,8 +1203,9 @@ ul.list li img {
 .patner-logo {
   display: flex;
   width: 100%;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
+  justify-content: flex-start;
+  /* overflow-x: scroll; */
+  gap: 12px;
 }
 
 .travel-content-heading {
@@ -1250,7 +1251,7 @@ ul.list li img {
   width: 100%;
   flex-direction: column;
   align-items: center;
-  gap: 64px;
+  gap: 25px;
   background: var(--white, #fff);
 }
 
@@ -1258,6 +1259,7 @@ ul.list li img {
   color: #071c2c;
   font-size: 40px;
   font-style: normal;
+  padding-bottom: 30px;
   font-weight: 700;
   text-align: center;
 }
@@ -1269,8 +1271,17 @@ ul.list li img {
   align-items: center;
   gap: var(--6, 24px);
   border-radius: 16px;
-  background: #f9ffff;
-  box-shadow: 0px 4px 4px 0px rgba(126, 126, 126, 0.25);
+  /* background: #f9ffff; */
+  /* box-shadow: 0px 4px 4px 0px rgba(126, 126, 126, 0.25); */
+}
+
+.about-us-content-2{
+  color: #071C2C;
+text-align: center;
+font-size: 18px;
+font-style: normal;
+font-weight: 500;
+line-height: 160%; /* 28.8px */
 }
 
 .about-us-grid-content {
@@ -1323,9 +1334,13 @@ ul.list li img {
 /* ////////////////////////conatct us///////////////////////////// */
 
 .contactuscontainer {
-  background-image: url("../../Images/signupimg.png"); /* Replace 'path/to/your/image.jpg' with the path to your image */
-  background-size: cover; /* Adjusts the background image size to cover the entire container */
-  background-position: center; /* Centers the background image */
+  background-image: url("../../Images/signupimg.png"); 
+  background-size: cover; 
+  background-position: center; 
+  border-radius: 16px;
+/* background: var(--primary-800, #1E429F); */
+/* box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.05); */
+backdrop-filter: blur(7.5px);
   padding: 40px;
 }
 
@@ -1334,9 +1349,10 @@ ul.list li img {
 
 .need-assistance {
   display: flex;
-
+height: 100% !important;
+justify-content: space-around !important;
   flex-direction: column;
-  align-items: flex-start;
+  /* align-items: flex-start; */
   gap: 100px;
 }
 .need-assistance1 {
@@ -1372,9 +1388,8 @@ ul.list li img {
   gap: var(--2, 8px);
 }
 .contact-button button:hover {
-  border:1px solid #e73c34 !important;
+  border: 1px solid #e73c34 !important;
   color: #071c2c !important;
-
 }
 
 .need-assistance2 {
@@ -1386,4 +1401,109 @@ ul.list li img {
 
 .contact-mail {
   color: white;
+}
+
+
+
+/* ////////Patners////////////////////////// */
+.partnerBox {
+  padding: 60px 30px;
+  /* background-color: #1e429f; */
+}
+
+.partner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.partner-container h3 {
+  text-align: center !important;
+  width: 73% !important;
+  /* margin: auto !important; */
+
+  padding-bottom: 10px !important;
+  font-family: Montserrat;
+  font-weight: 800;
+  font-size: 1.7rem;
+  margin-bottom: 30px;
+}
+
+.partner-slide {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  background-color: white;
+  border-radius: 10px;
+  width: 90% !important;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+
+
+@media(max-width:650px) {
+  .partner-slide img {
+      width: 60%;
+  }
+}
+
+/* Custom styles for Glider slider */
+
+/* Container styling */
+.glider-container {
+  max-width: 1100px;
+  /* Adjust the width as needed */
+  margin: 0 auto;
+}
+
+/* Slide styling */
+.glider-track {
+  display: flex;
+}
+
+.advertise-container {
+  margin-top: 30px;
+}
+
+.advertise-slide {
+  padding: 10px 2px;
+  box-sizing: border-box;
+}
+
+/* Image styling */
+.advertise-slide img {
+  width: 100%;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  /* Optional: Add border-radius for rounded corners */
+}
+
+/* Title styling */
+.advertise-slide .title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+
+
+
+.advertise-container .slick-dots li button:before {
+  font-family: 'slick' !important;
+  font-size: 6px !important;
+  line-height: 20px !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 20px !important;
+  height: 20px !important;
+  /* content: '•' !important; */
+  background-color: #21325d;
+  border-radius: 50%;
+  text-align: center !important;
+  opacity: .25 !important;
+  color: white !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

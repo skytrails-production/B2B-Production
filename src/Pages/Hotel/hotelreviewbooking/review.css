@@ -79,7 +79,7 @@
 }
 
 .hotelName {
-  font-size: 1.6rem;
+  font-size: 18px;
   color: #21325d;
   font-weight: bold;
 }
@@ -340,7 +340,7 @@ background: rgba(231, 60, 52, 0.15);
   .headText-new h2 {
     color: #000;
     font-family: "Montserrat";
-    font-size: 24px;
+    font-size: 18px;
     font-style: normal;
     font-weight: 600;
     line-height: normal;

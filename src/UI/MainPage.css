@@ -6,10 +6,11 @@
   position: relative;
   padding-top: 20px;
   height: 100vh;
+  background-color: #BFD6FC !important;
   justify-content: center;
   align-items: center;
   /* background-color: #f1f1f1; */
-  background-image: url("../Images/Homepage.png") !important;
+  /* background-image: url("../Images/Homepage.png") !important; */
   background-size: cover;
   background-position: center;
   /* overflow: hidden !important; */
@@ -59,9 +60,9 @@
 
 .componentsContainer {
   /* display: grid; */
-
+  background-color: #BFD6FC !important;
   width: 100%;
-  background-image: url("../Images/Homepage.png") !important;
+  /* background-image: url("../Images/Homepage.png") !important; */
   background-size: contain;
   background-repeat: repeat;
   background-position: center;

@@ -6,7 +6,5 @@ exports.apiURL = {
   // baseURL: "http://localhost:8000",
 
   flightEmail: "shivam@theskytrails.com",
-  phoneNo: "9999479696"
+  phoneNo: "9999479696",
 };
-
-

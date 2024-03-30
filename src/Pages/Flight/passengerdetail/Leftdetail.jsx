@@ -671,8 +671,17 @@ var formattedTimeStop = dateTime.toLocaleTimeString('en-US', optionsTime);
               {Array.from({ length: adults }, (err, i) => {
                 return (
                   <div className="mb-2">
-                    <div className="p-2 mb-2 passenTitle">
-                      Passenger {i + 1} {i == 0 ? "( Lead )" : ""}
+                    <div className="p-2 mb-2 passenTitle" style={{fontSize:"16px", fontWeight:"600"}}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="16" viewBox="0 0 15 16" fill="none">
+  <g clip-path="url(#clip0_163_1749)">
+    <path d="M7.5 7.55921C8.14897 7.55921 8.78337 7.36676 9.32297 7.00622C9.86256 6.64567 10.2831 6.13321 10.5315 5.53364C10.7798 4.93407 10.8448 4.27432 10.7182 3.63782C10.5916 3.00132 10.2791 2.41665 9.82019 1.95776C9.3613 1.49887 8.77664 1.18636 8.14014 1.05975C7.50364 0.933146 6.84389 0.998126 6.24432 1.24648C5.64475 1.49483 5.13229 1.91539 4.77174 2.45499C4.41119 2.99459 4.21875 3.62899 4.21875 4.27796C4.21875 5.1482 4.56445 5.9828 5.17981 6.59815C5.79516 7.2135 6.62976 7.55921 7.5 7.55921ZM7.5 8.49671C5.46621 8.49671 1.40625 9.75296 1.40625 12.2467V14.1217H13.5938V12.2467C13.5938 9.75296 9.53379 8.49671 7.5 8.49671Z" fill="#071C2C"/>
+  </g>
+  <defs>
+    <clipPath id="clip0_163_1749">
+      <rect width="15" height="15" fill="white" transform="translate(0 0.0592041)"/>
+    </clipPath>
+  </defs>
+</svg>  Passenger {i + 1} {i == 0 ? "( Lead )" : ""}
                     </div>
                     <div className="col-lg-12"
                     >

@@ -108,7 +108,7 @@ export default function StyledTabsExample() {
           marginTop: "-7px",
         }}
       >
-      {/* <div style={{display:"flex", gap:"12px"}}> */}
+      
       <StyledTab
 
           style={{ flex: 1}}
@@ -135,10 +135,7 @@ export default function StyledTabsExample() {
           className="btn"
         />
 
-      {/* </div> */}
-        
-        {/* <StyledTab label="Calendar Fare" {...a11yProps(4)} />
-        <StyledTab label="Advance Search" {...a11yProps(5)} /> */}
+      
       </StyledTabs>
       <CustomTabPanel value={value} index={0}>
         <OneWay />
