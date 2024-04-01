@@ -19,7 +19,7 @@ import GroupIcon from "@mui/icons-material/Group";
 import Usertable from "./Usertable";
 import stlogo from "../../../Images/ST-Main-Logo.png";
 import AgentRequest from "./AgentRequest";
-
+import Enquirylists from "./Enquirylists";
 import { Menu, MenuItem } from "@mui/material";
 import newlogo from "../../../Images/whitelogo1.png";
 import Home from "./Home";
@@ -90,7 +90,7 @@ import AddNotification from "./Addforms/AddNotification";
 import AddWebAdvertisement from "./Addforms/AddWebAdvertisement";
 import DomainIcon from "@mui/icons-material/Domain";
 import DescriptionIcon from "@mui/icons-material/Description"; // Import the DescriptionIcon component
-
+import Citypackage from "./Addforms/Citypackage";
 import AddEvent from "./Addforms/AddEvent";
 import { FaPassport } from "react-icons/fa";
 import { FormControl, InputLabel, Select } from "@mui/material";
@@ -110,7 +110,7 @@ import { IoIosNotifications } from "react-icons/io";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { subAdminLogout } from "../../../Redux/SubAdminLogin/actionsubadminlogin";
-
+import DownloadSSDC from "./DownloadSSDC";
 const drawerWidth = 240;
 function ResponsiveDrawer(props) {
   const { window } = props;
@@ -120,7 +120,8 @@ function ResponsiveDrawer(props) {
   const [showAgentData, setShowAgentData] = React.useState(false);
   const [showAgentRequest, setshowAgentRequest] = React.useState(false);
   const [showSubadmin, setshowSubadmin] = React.useState(false);
-
+  const [showSsdc, setshowSsdc] = React.useState(false);
+  const [showEnquiry, setshowEnquiry] = React.useState(false);
   const [showHome, setShowHome] = React.useState(false);
   const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
   const navigate = useNavigate();
@@ -148,6 +149,7 @@ function ResponsiveDrawer(props) {
   const [addMarkups, setaddMarkups] = React.useState(false);
   const [addEvents, setaddEvents] = React.useState(false);
   const [holidayPackages, setHolidayPackage] = React.useState(false);
+  const [packages, setaddPackages] = React.useState(false);
   const reducerState = useSelector((state) => state);
   const access =
     reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
@@ -159,7 +161,8 @@ function ResponsiveDrawer(props) {
     location.pathname === "/subAdmin/dashboard/Subadmintable";
   const holidayPackage =
     location.pathname === "/subAdmin/dashboard/holidaypackage";
-
+  const ssdc = location.pathname === "/subAdmin/dashboard/ssdc";
+  const enquirylist = location.pathname === "/subAdmin/dashboard/enquirylist";
   const agentUserView = location.pathname === "/subAdmin/dashboard/Usertable";
   const agentRequestView =
     location.pathname === "/subAdmin/dashboard/AgentrequestTable";
@@ -220,6 +223,7 @@ function ResponsiveDrawer(props) {
     location.pathname === "/subAdmin/dashboard/addnotification";
   const addMarkup = location.pathname === "/subAdmin/dashboard/addmarkups";
   const addEvent = location.pathname === "/subAdmin/dashboard/addEvents";
+  const citypackages = location.pathname === "/subAdmin/dashboard/addpackage";
   const fixedDeparturecontrol =
     location.pathname === "/subAdmin/dashboard/fixedDeparturecontrol";
 
@@ -283,6 +287,10 @@ function ResponsiveDrawer(props) {
     setShowAgentData(true);
     navigate("./Agenttable");
   };
+  const handleSsdcTable = () => {
+    setshowSsdc(true);
+    navigate("./ssdc");
+  };
 
   const handleSubadminTable = () => {
     setshowSubadmin(true);
@@ -343,6 +351,12 @@ function ResponsiveDrawer(props) {
     setaddCoupons(true);
     navigate("/subAdmin/dashboard/addcouponscode");
   };
+
+  const handlePackages = () => {
+    setaddPackages(true);
+    navigate("/subAdmin/dashboard/addpackage");
+  };
+
   const handleNotification = () => {
     setaddNotification(true);
     navigate("/subAdmin/dashboard/addnotification");
@@ -374,6 +388,11 @@ function ResponsiveDrawer(props) {
   const handleAgentRequest = () => {
     setshowAgentRequest(true);
     navigate("./AgentrequestTable");
+  };
+
+  const handleEnquiryList = () => {
+    setshowEnquiry(true);
+    navigate("./enquirylist");
   };
 
   const handleAgentFlightCancel = () => {
@@ -1049,6 +1068,23 @@ function ResponsiveDrawer(props) {
             </ListItemButton>
           </ListItem>
         )}
+        {access === "PACKAGE_HANDLER" && (
+          <ListItem
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "-25px",
+              paddingLeft: "0px",
+            }}
+          >
+            <ListItemButton onClick={handleEnquiryList}>
+              <WebIcon sx={{ color: "white", fontSize: "15px" }} />
+              <ListItemText style={{ color: "white", marginLeft: "5px" }}>
+                Enquiry list
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
+        )}
         {access === "USER_MANAGER" && (
           <ListItem
             style={{
@@ -1066,6 +1102,25 @@ function ResponsiveDrawer(props) {
             </ListItemButton>
           </ListItem>
         )}
+
+        {access === "USER_MANAGER" && (
+          <ListItem
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "-25px",
+              paddingLeft: "0px",
+            }}
+          >
+            <ListItemButton onClick={handleSsdcTable}>
+              <PersonSearchIcon sx={{ color: "white", fontSize: "15px" }} />
+              <ListItemText style={{ color: "white", marginLeft: "5px" }}>
+                Ssdc
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
+        )}
+
         {access === "PACKAGE_HANDLER" && (
           <ListItem
             style={{
@@ -1170,93 +1225,107 @@ function ResponsiveDrawer(props) {
           >
             <SupervisorAccount />
           </IconButton>
-          {isBoxOpen && (access === "REQUEST_HANDLER" || access === "ADS_HANDLER" || access === "EVENT_HANDLER" || access === "COUPON_CODE_HANDLER" ) && (
-            <div
-              style={{
-                position: "absolute",
-                top: "40px", // Adjust as needed to position the box below the icon
-                left: "0",
-                backgroundColor: "#fff",
-                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-                padding: "20px",
-                zIndex: "999", // Ensure the box appears above other elements
-              }}
-            >
-              {/* <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleAddSubadmin}> Add subadmin </Typography> */}
-              {access === "REQUEST_HANDLER" && (
-                <Typography
-                  sx={{ color: "black", cursor: "pointer" }}
-                  onClick={handleAddAdgent}
-                >
-                  {" "}
-                  Add Agent{" "}
-                </Typography>
-              )}
-              {access === "ADS_HANDLER" && (
-                <Typography
-                  sx={{ color: "black", cursor: "pointer" }}
-                  onClick={handleAddAdvertisment}
-                >
-                  {" "}
-                  Add Advertisement
-                </Typography>
-              )}
-              {access === "ADS_HANDLER" && (
-                <Typography
-                  sx={{ color: "black", cursor: "pointer" }}
-                  onClick={handleWebAdvertisment}
-                >
-                  {" "}
-                  Add WebAdvertisement{" "}
-                </Typography>
-              )}
-              {access === "EVENT_HANDLER" && (
-                <Typography
-                  sx={{ color: "black", cursor: "pointer" }}
-                  onClick={handleAddEvents}
-                >
-                  {" "}
-                  Add Events{" "}
-                </Typography>
-              )}
-              {/* <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleMarkup}> Add Markup </Typography> */}
-              {access === "COUPON_CODE_HANDLER" && (
-                <Typography
-                  sx={{ color: "black", cursor: "pointer" }}
-                  onClick={handleCoupons}
-                >
-                  {" "}
-                  Add Coupon{" "}
-                </Typography>
-              )}
-              {access === "ADS_HANDLER" && (
-                <Typography
-                  sx={{ color: "black", cursor: "pointer" }}
-                  onClick={handleNotification}
-                >
-                  {" "}
-                  Add Notification{" "}
-                </Typography>
-              )}
-              <button
-                onClick={() => setIsBoxOpen(false)}
+          {isBoxOpen &&
+            (access === "REQUEST_HANDLER" ||
+              access === "ADS_HANDLER" ||
+              access === "EVENT_HANDLER" ||
+              access === "COUPON_CODE_HANDLER" ||
+              access === "PACKAGE_HANDLER") && (
+              <div
                 style={{
-                  border: "1px solid #E73C33",
-                  borderRadius: "4px",
-                  backgroundColor: "#E73C33",
-                  color: "#fff",
-                  padding: "4px 10px",
-                  cursor: "pointer",
-                  fontSize: "14px",
-                  fontWeight: "bold",
-                  outline: "none",
-                  transition: "background-color 0.3s, color 0.3s",
+                  position: "absolute",
+                  top: "40px", // Adjust as needed to position the box below the icon
+                  left: "0",
+                  backgroundColor: "#fff",
+                  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+                  padding: "20px",
+                  zIndex: "999", // Ensure the box appears above other elements
                 }}
               >
-                Close 
-              </button>
-            </div>
-          )}
+                {/* <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleAddSubadmin}> Add subadmin </Typography> */}
+                {access === "REQUEST_HANDLER" && (
+                  <Typography
+                    sx={{ color: "black", cursor: "pointer" }}
+                    onClick={handleAddAdgent}
+                  >
+                    {" "}
+                    Add Agent{" "}
+                  </Typography>
+                )}
+                {access === "ADS_HANDLER" && (
+                  <Typography
+                    sx={{ color: "black", cursor: "pointer" }}
+                    onClick={handleAddAdvertisment}
+                  >
+                    {" "}
+                    Add Advertisement
+                  </Typography>
+                )}
+                {access === "ADS_HANDLER" && (
+                  <Typography
+                    sx={{ color: "black", cursor: "pointer" }}
+                    onClick={handleWebAdvertisment}
+                  >
+                    {" "}
+                    Add WebAdvertisement{" "}
+                  </Typography>
+                )}
+                {access === "EVENT_HANDLER" && (
+                  <Typography
+                    sx={{ color: "black", cursor: "pointer" }}
+                    onClick={handleAddEvents}
+                  >
+                    {" "}
+                    Add Events{" "}
+                  </Typography>
+                )}
+                {/* <Typography sx={{ color: "black", cursor: "pointer" }} onClick={handleMarkup}> Add Markup </Typography> */}
+                {access === "COUPON_CODE_HANDLER" && (
+                  <Typography
+                    sx={{ color: "black", cursor: "pointer" }}
+                    onClick={handleCoupons}
+                  >
+                    {" "}
+                    Add Coupon{" "}
+                  </Typography>
+                )}
+                {access === "PACKAGE_HANDLER" && (
+                  <Typography
+                    sx={{ color: "black", cursor: "pointer" }}
+                    onClick={handlePackages}
+                  >
+                    {" "}
+                    Upload Package{" "}
+                  </Typography>
+                )}
+                {access === "ADS_HANDLER" && (
+                  <Typography
+                    sx={{ color: "black", cursor: "pointer" }}
+                    onClick={handleNotification}
+                  >
+                    {" "}
+                    Add Notification{" "}
+                  </Typography>
+                )}
+                <button
+                  onClick={() => setIsBoxOpen(false)}
+                  style={{
+                    border: "1px solid #E73C33",
+                    borderRadius: "4px",
+                    backgroundColor: "#E73C33",
+                    color: "#fff",
+                    padding: "4px 10px",
+                    cursor: "pointer",
+                    fontSize: "14px",
+                    fontWeight: "bold",
+                    outline: "none",
+                    transition: "background-color 0.3s, color 0.3s",
+                  }}
+                >
+                  Close
+                </button>
+              </div>
+            )}
 
           <div
             style={{
@@ -1615,6 +1684,10 @@ function ResponsiveDrawer(props) {
         </Typography>
 
         <Typography paragraph>
+          {AgentbusBooking && <AgentBusBooking />}
+        </Typography>
+
+        <Typography paragraph>
           {userflightBooking && <UserFlightBooking />}
         </Typography>
 
@@ -1650,6 +1723,7 @@ function ResponsiveDrawer(props) {
           {webadvertisement && <Webadvertisement />}
         </Typography>
 
+        <Typography>{ssdc && <DownloadSSDC />}</Typography>
         <Typography paragraph>{getevent && <EventGet />}</Typography>
 
         <Typography paragraph>{searchdata && <SearchData />}</Typography>
@@ -1693,11 +1767,12 @@ function ResponsiveDrawer(props) {
 
         <Typography paragraph>{addMarkup && <AddMarkup />}</Typography>
         <Typography paragraph>{addEvent && <AddEvent />}</Typography>
+        <Typography paragraph>{citypackages && <Citypackage />}</Typography>
 
         <Typography paragraph>
           {visadocumentsCategorys && <Documentcategorys />}
         </Typography>
-
+        <Typography paragraph>{enquirylist && <Enquirylists />}</Typography>
         <Typography paragraph>
           {holidayPackage && <PackageDetails />}
         </Typography>

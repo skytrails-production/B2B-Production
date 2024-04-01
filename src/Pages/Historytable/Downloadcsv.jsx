@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { apiURL } from "../../Constants/constant";
@@ -6,6 +7,7 @@ import GetAppIcon from "@mui/icons-material/GetApp"; // Import the download icon
 
 function Downloadcsv() {
   const [leadsData, setLeadsData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,6 +24,8 @@ function Downloadcsv() {
         }
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -79,7 +83,6 @@ function Downloadcsv() {
             style={{
               backgroundColor: "#21325D",
               color: "white",
-
               padding: "8px",
               borderRadius: "5px",
             }}
@@ -90,93 +93,97 @@ function Downloadcsv() {
           </button>
         </div>
 
-        <div style={{ overflowX: "auto", backgroundColor: "white" }}>
-          <table
-            style={{
-              width: "100%",
-              borderCollapse: "collapse",
-              border: "none",
-            }}
-          >
-            <thead>
-              <tr>
-                <th style={{ borderBottom: "1px solid black", padding: "8px" }}>
-                  Name
-                </th>
-                <th style={{ borderBottom: "1px solid black", padding: "8px" }}>
-                  Email
-                </th>
-                <th style={{ borderBottom: "1px solid black", padding: "8px" }}>
-                  Mobile
-                </th>
-                <th style={{ borderBottom: "1px solid black", padding: "8px" }}>
-                  Country
-                </th>
-                <th style={{ borderBottom: "1px solid black", padding: "8px" }}>
-                  Selected Job
-                </th>
-
-       
-              </tr>
-            </thead>
-            <tbody>
-              {leadsData.map((lead, index) => (
-                <tr key={index}>
-                  <td
-                    style={{
-                      borderBottom: "1px solid black",
-                      padding: "8px",
-                      backgroundColor: "white",
-                      color: "black",
-                    }}
-                  >
-                    {lead.name}
-                  </td>
-                  <td
-                    style={{
-                      borderBottom: "1px solid black",
-                      padding: "8px",
-                      backgroundColor: "white",
-                      color: "black",
-                    }}
-                  >
-                    {lead.email}
-                  </td>
-                  <td
-                    style={{
-                      borderBottom: "1px solid black",
-                      padding: "8px",
-                      backgroundColor: "white",
-                      color: "black",
-                    }}
-                  >
-                    {lead.mobile}
-                  </td>
-                  <td
-                    style={{
-                      borderBottom: "1px solid black",
-                      padding: "8px",
-                      backgroundColor: "white",
-                      color: "black",
-                    }}
-                  >
-                    {lead.country}
-                  </td>
-                  <td
-                    style={{
-                      borderBottom: "1px solid black",
-                      padding: "8px",
-                      backgroundColor: "white",
-                      color: "black",
-                    }}
-                  >
-                    {lead.subCategory}
-                  </td>
+        {loading ? (
+          <Typography>Loading...</Typography>
+        ) : leadsData.length === 0 ? (
+          <Typography style={{ marginTop: '100px', marginLeft: '30%', fontSize: '2.5rem' }}>Data is not available.</Typography>
+        ) : (
+          <div style={{ overflowX: "auto", backgroundColor: "white" }}>
+            <table
+              style={{
+                width: "100%",
+                borderCollapse: "collapse",
+                border: "none",
+              }}
+            >
+              <thead>
+                <tr>
+                  <th style={{ borderBottom: "1px solid black", padding: "8px" }}>
+                    Name
+                  </th>
+                  <th style={{ borderBottom: "1px solid black", padding: "8px" }}>
+                    Email
+                  </th>
+                  <th style={{ borderBottom: "1px solid black", padding: "8px" }}>
+                    Mobile
+                  </th>
+                  <th style={{ borderBottom: "1px solid black", padding: "8px" }}>
+                    Country
+                  </th>
+                  <th style={{ borderBottom: "1px solid black", padding: "8px" }}>
+                    Selected Job
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {leadsData.map((lead, index) => (
+                  <tr key={index}>
+                    <td
+                      style={{
+                        borderBottom: "1px solid black",
+                        padding: "8px",
+                        backgroundColor: "white",
+                        color: "black",
+                      }}
+                    >
+                      {lead.name}
+                    </td>
+                    <td
+                      style={{
+                        borderBottom: "1px solid black",
+                        padding: "8px",
+                        backgroundColor: "white",
+                        color: "black",
+                      }}
+                    >
+                      {lead.email}
+                    </td>
+                    <td
+                      style={{
+                        borderBottom: "1px solid black",
+                        padding: "8px",
+                        backgroundColor: "white",
+                        color: "black",
+                      }}
+                    >
+                      {lead.mobile}
+                    </td>
+                    <td
+                      style={{
+                        borderBottom: "1px solid black",
+                        padding: "8px",
+                        backgroundColor: "white",
+                        color: "black",
+                      }}
+                    >
+                      {lead.country}
+                    </td>
+                    <td
+                      style={{
+                        borderBottom: "1px solid black",
+                        padding: "8px",
+                        backgroundColor: "white",
+                        color: "black",
+                      }}
+                    >
+                      {lead.subCategory}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </Paper>
     </div>
   );
