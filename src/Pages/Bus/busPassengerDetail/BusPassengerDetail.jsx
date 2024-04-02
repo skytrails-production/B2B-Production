@@ -213,7 +213,7 @@ const BusPassengerDetail = () => {
 
                 </div>
                 <div className="busSearchThree">
-                  <p>₹ {selectedBus?.BusPrice?.BasePrice}</p>
+                  {/* <p>₹ {selectedBus?.BusPrice?.BasePrice}</p> */}
                 </div>
               </div>
             </motion.div>

@@ -245,7 +245,7 @@ const HotelBooknow = () => {
 
             <Box className="book_content" mt={3}>
               <Box py={1}>
-                <Box className="accordian_area">
+                <Box className="accordian_area w-100">
                   <Hoteldetailaccordian />
                 </Box>
               </Box>

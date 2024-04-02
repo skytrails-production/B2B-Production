@@ -646,12 +646,12 @@ function Headers() {
                 <div
                   style={{
                     display: "flex",
-                    flexDirection: "row",
+                    flexDirection: "column",
                     width: "100%",
                     gap: "12px",
                   }}
                 >
-                  <FormControl fullWidth sx={{ marginBottom: 2 }}>
+                  <FormControl fullWidth sx={{ marginBottom: 2 , padding:"0px"}}>
                     <FormLabel>Mobile Number</FormLabel>
                     <OutlinedInput
                       type="number"

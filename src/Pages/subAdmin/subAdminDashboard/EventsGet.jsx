@@ -9,7 +9,7 @@ import {
   Pagination,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { DataGrid,GridToolbar,GridToolbarExport } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar, GridToolbarExport } from "@mui/x-data-grid";
 import { apiURL } from "../../../Constants/constant";
 const EventGet = () => {
   const [data, setData] = useState([]);
@@ -59,42 +59,42 @@ const EventGet = () => {
       headerName: "Title",
       width: 400,
       renderCell: (params) => (
-        <div style={{ whiteSpace: 'pre-line' }}>{params.row.title}</div>
+        <div style={{ whiteSpace: "pre-line" }}>{params.row.title}</div>
       ),
     },
-    { 
-      field: "content", 
-      headerName: "Content", 
+    {
+      field: "content",
+      headerName: "Content",
       width: 220,
       renderCell: (params) => (
         // <div style={{ padding: '8px' }}>
-          <textarea
-            style={{
-              width: '100%',
-              height: '100%',
-              border: '1px solid #ccc',
-              borderRadius: '4px',
-              padding: '4px',
-              resize: 'none',
-              boxSizing: 'border-box',
-            }}
-            readOnly
-            value={params.row.content}
-          />
+        <textarea
+          style={{
+            width: "100%",
+            height: "100%",
+            border: "1px solid #ccc",
+            borderRadius: "4px",
+            padding: "4px",
+            resize: "none",
+            boxSizing: "border-box",
+          }}
+          readOnly
+          value={params.row.content}
+        />
         // </div>
       ),
     },
-    { 
-      field: "startDate", 
-      headerName: "Start Date", 
+    {
+      field: "startDate",
+      headerName: "Start Date",
       width: 220,
       renderCell: (params) => (
         <div>{new Date(params.value).toLocaleDateString()}</div>
       ),
     },
-    { 
-      field: "endDate", 
-      headerName: "End Date", 
+    {
+      field: "endDate",
+      headerName: "End Date",
       width: 220,
       renderCell: (params) => (
         <div>{new Date(params.value).toLocaleDateString()}</div>
@@ -127,7 +127,6 @@ const EventGet = () => {
     },
   ];
 
-
   return (
     <Paper
       className="subada-table-container"
@@ -138,7 +137,7 @@ const EventGet = () => {
         backgroundColor: "white",
         padding: "20px",
         boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-        marginTop:"-15px"
+        marginTop: "-15px",
       }}
     >
       <div
@@ -150,34 +149,52 @@ const EventGet = () => {
           fontWeight: "bold",
           display: "flex",
           alignItems: "center",
-          backgroundColor:"#E73C33"
+          backgroundColor: "#E73C33",
         }}
       >
-       
-        <Typography variant="h5" className="adtable-heading" style={{ marginLeft: "20px" }}>
+        <Typography
+          variant="h5"
+          className="adtable-heading"
+          style={{ marginLeft: "20px" }}
+        >
           All Events
         </Typography>
       </div>
       <div style={{ width: "100%" }}>
-        <DataGrid
-          rows={data}
-          columns={columns}
-          pageSize={pageSize}
-          pagination
-          page={page}
-          onPageChange={(newPage) => handlePageChange(newPage)}
-          getRowId={(row) => row._id}
-          components={{
-            Toolbar: () => (
-                <div style={{ marginTop: '10px' }}>
-                <GridToolbar />
-               
-              </div>
-            ),
-            Pagination:()=>null,
-          }}
-        />
+        {data.length === 0 ? (
+          <div
+            style={{
+              textAlign: "center",
+              padding: "20px",
+
+              borderRadius: "5px",
+            }}
+          >
+            <p style={{ fontSize: "18px", color: "#666" }}>
+              Event is not available
+            </p>
+          </div>
+        ) : (
+          <DataGrid
+            rows={data}
+            columns={columns}
+            pageSize={pageSize}
+            pagination
+            page={page}
+            onPageChange={(newPage) => handlePageChange(newPage)}
+            getRowId={(row) => row._id}
+            components={{
+              Toolbar: () => (
+                <div style={{ marginTop: "10px" }}>
+                  <GridToolbar />
+                </div>
+              ),
+              Pagination: () => null,
+            }}
+          />
+        )}
       </div>
+
       <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
         <Pagination
           count={totalPages}

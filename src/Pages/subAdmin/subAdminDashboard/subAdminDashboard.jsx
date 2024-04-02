@@ -531,12 +531,20 @@ function ResponsiveDrawer(props) {
     dispatch(subAdminLogout());
     navigate("/subAdminLogin");
   };
+  // const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
+
+  
 
   const handleLogoutConfirm = () => {
     handleLogout();
     setLogoutDialogOpen(false);
   };
-
+const style={
+  color:"red"
+}
+const style1={
+  color:"#21325D"
+}
   const [anchorEl, setAnchorEl] = useState(null);
   const [anchorElUserCancel, setAnchorElUserCancel] = useState(null);
   const [anchorElAgentChange, setAnchorElAgentChange] = useState(null);
@@ -1546,29 +1554,29 @@ function ResponsiveDrawer(props) {
               >
                 <ExitToAppIcon />
               </IconButton>
-              <div>
-                <Dialog
-                  open={logoutDialogOpen}
-                  onClose={() => setLogoutDialogOpen(false)}
-                  aria-labelledby="alert-dialog-title"
-                  aria-describedby="alert-dialog-description"
-                >
-                  <DialogTitle id="alert-dialog-title">{"Logout"}</DialogTitle>
-                  <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                      Are you sure you want to log out?
-                    </DialogContentText>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button onClick={() => setLogoutDialogOpen(false)}>
-                      Cancel
-                    </Button>
-                    <Button onClick={() => handleLogoutConfirm()} autoFocus>
-                      Logout
-                    </Button>
-                  </DialogActions>
-                </Dialog>
-              </div>
+              <Dialog
+                open={logoutDialogOpen}
+                onClose={() => setLogoutDialogOpen(false)}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+                fullWidth
+                maxWidth="xs"
+              >
+                <DialogTitle id="alert-dialog-title">{"Logout"}</DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    Are you sure you want to log out?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={() => setLogoutDialogOpen(false)} style={style}>
+                    Cancel
+                  </Button>
+                  <Button onClick={() => handleLogoutConfirm()} autoFocus style={style1}>
+                    Logout
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </div>
           </div>
         </Toolbar>

@@ -39,6 +39,7 @@ function Packagepage1() {
   const [Packagetitle, setPackagetitle] = useState("");
   const [agentname, setagentname] = useState("");
   const [packagelength, setPackagelength] = useState("");
+  const[sky,setSky]=useState("");
   const { first_name } = useParams();
 
   useEffect(() => {
@@ -48,12 +49,12 @@ function Packagepage1() {
         const response = await axios.get(
           `${apiURL.baseURL}/skyTrails/agent/${first_name}`
         );
-
+       console.log(response);
         // Check if the response status is 500
         if (response.status === 500) {
           setError1("Page Not Found");
         }
-
+        const taxi=response.data.data.userProfile.agentCompanyLogo;
         const agentvalue = response.data.data.userProfile.personal_details.first_name;
         const countrynamedata = response.data.data.userProfile.personal_details.address_details.country;
         const packagelengthvalue = response.data.data.agentPackages.length;
@@ -65,6 +66,7 @@ function Packagepage1() {
         setPackagelength(packagelengthvalue);
         setPackageamount(PackageValue);
         setLoading(false);
+        setSky(taxi);
       }
        catch (error) {
         setError("Data Not Found");
@@ -112,26 +114,30 @@ function Packagepage1() {
 
   return (
     <>
-      <div className="pakagepage-container" style={{ marginTop: "-50px" }}>
+      <div className="pakagepage-container" style={{ marginTop: "-50px" ,backgroundColor:'white'}}>
         <div className="package-content">
           <div className="package-page-background ">
             <img src={banner} alt="" />
           </div>
-
+         
           <div className="package-content-no">
             <div className="Packages-name-content">
-              Package <span> {packagelength ? packagelength : 0}</span>
+              Packages <span> {packagelength ? packagelength : 0}</span>
             </div>
           </div>
         </div>
 
         <div className="container">
+          
+        <div className="skylogo">
+          <img src={sky} alt="THE SKYTRAILS"/>
+          </div>
           <div className="row">
             <div className="col-md-3">
               {/* <div className="logo-content-circle">
           <img src={logoimg} alt="" />
         </div> */}
-              <div className="">
+              <div className="" style={{marginTop:'50px'}}>
                 <h2>{agentname}</h2>
                 <h5 style={{ color: "grey" }}>
                   <LocationOnIcon style={{ color: "lightblue" }} />
@@ -215,8 +221,9 @@ function Packagepage1() {
               {packages.length > 0 ? (
                 packages.map((packageData, index) => (
                   <div key={index} className="col-md-9">
-                    <div className="card mb-3">
+                    <div className="card mb-3"style={{width:'600px'}}>
                       <img
+                      style={{height:'300px',width:'600px'}}
                         src={packageData.pakage_img}
                         className="card-img-top"
                         alt="..."

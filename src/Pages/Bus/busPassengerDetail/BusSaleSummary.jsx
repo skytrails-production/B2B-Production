@@ -362,7 +362,7 @@ const BusSaleSummary = () => {
       <div className="publishedTax">
         <div>
           <p>Published Price:</p>
-          <span>₹{publishedPrice}</span>
+          <span>₹{publishedPrice.toFixed(2)}</span>
         </div>
         <div>
           <p>Taxes:</p>
