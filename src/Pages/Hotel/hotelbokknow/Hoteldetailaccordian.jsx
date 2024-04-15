@@ -24,10 +24,10 @@ import { useNavigate } from "react-router-dom";
 import Custombutton from "../../../Custombuttom/Button";
 import { hotelBlockRoomAction } from "../../../Redux/Hotel/hotel";
 
-import availableRooms from "../../../Images/Hotel/availableRooms.png"
-import hotelMap from "../../../Images/Hotel/hotelMap.png"
-import hotelDetails from "../../../Images/Hotel/hotelDetails.png"
-import imageGallery from "../../../Images/Hotel/imageGallery.png"
+import availableRooms from "../../../Images/Hotel/availableRooms.png";
+import hotelMap from "../../../Images/Hotel/hotelMap.png";
+import hotelDetails from "../../../Images/Hotel/hotelDetails.png";
+import imageGallery from "../../../Images/Hotel/imageGallery.png";
 import HotelLoading from "../hotelLoading/HotelLoading";
 
 const Accordion = styled((props) => (
@@ -81,7 +81,6 @@ export default function CustomizedAccordions() {
   );
   // console.log("initialDisabledOption", disabledOption);
 
-
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
@@ -91,9 +90,9 @@ export default function CustomizedAccordions() {
   const hotelll = reducerState?.hotelSearchResult;
   useEffect(() => {
     if (HotelCode === undefined || ResultIndex === undefined) {
-      navigate("/hotel/hotelsearch")
+      navigate("/hotel/hotelsearch");
     }
-  }, [])
+  }, []);
   // console.log(hotelll, "hotelll");
   //Below is the functionality applied for the multiRoom selection
   const roomComponent = (RoomIndex, RoomIndexArr, col, row) => {
@@ -132,7 +131,7 @@ export default function CustomizedAccordions() {
         <>
           <HotelLoading />
         </>
-      )
+      );
     }
     return (
       // <Box className="offer_area" p={2}>
@@ -228,34 +227,27 @@ export default function CustomizedAccordions() {
       //   </Grid>
       // </Box>
 
-
       <div className="offer_area-new p-2">
-      <div className="checkromm-tick-new">
-      <div className="roomTypeName">
-          <p className="first">
-            {filteredComponent[0]?.RoomTypeName}
-          </p>
+        <div className="checkromm-tick-new">
+          <div className="roomTypeName">
+            <p className="first">{filteredComponent[0]?.RoomTypeName}</p>
+          </div>
+
+          <div className="ratePlan-new">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              style={{ width: "25px", height: "25px" }}
+              value={filteredComponent[0]?.RoomIndex}
+              disabled={row >= 0 && col > 0 && filteredComponent[0].disabled}
+              checked={!filteredComponent[0].disabled}
+              onClick={(e) => {
+                setDisabledOption(RoomIndexArr);
+              }}
+            />
+            <p className="text">{filteredComponent[0]?.RatePlanName}</p>
+          </div>
         </div>
-
-        <div className="ratePlan-new">
-
-<input
-  className="form-check-input"
-  type="checkbox"
-  style={{ width: "25px", height: "25px" }}
-  value={filteredComponent[0]?.RoomIndex}
-  disabled={row >= 0 && col > 0 && filteredComponent[0].disabled}
-  checked={!filteredComponent[0].disabled}
-  onClick={(e) => {
-    setDisabledOption(RoomIndexArr);
-  }}
-/>
-<p className="text">
-  {filteredComponent[0]?.RatePlanName}
-</p>
-</div>
-
-      </div>
         {/* <div className="roomTypeName">
           <p className="first">
             {filteredComponent[0]?.RoomTypeName}
@@ -279,19 +271,14 @@ export default function CustomizedAccordions() {
             {filteredComponent[0]?.RatePlanName}
           </p>
         </div> */}
-        <p className="text">
-          Last Cancellation till: {formattedDate}
-        </p>
+        <p className="text">Last Cancellation till: {formattedDate}</p>
         <div className="priceCheck-new">
           <p className="price">
             ₹{filteredComponent[0]?.Price?.PublishedPriceRoundedOff}
           </p>
-          <p className="second-new">
-            {filteredComponent[0]?.RoomPromotion}
-          </p>
+          <p className="second-new">{filteredComponent[0]?.RoomPromotion}</p>
         </div>
-      </div >
-
+      </div>
     );
   };
   const handleChoosenRoom = () => {
@@ -468,16 +455,18 @@ export default function CustomizedAccordions() {
               expanded={expanded === "panel1"}
               onChange={handleChange("panel1")}
               sx={{ border: "none", marginY: "20px" }}
-              
             >
               <AccordionSummary
-                sx={{ borderRadius: "20px", boxShadow: "0px 3px 6px #00000029"}}
+                sx={{
+                  borderRadius: "20px",
+                  boxShadow: "0px 3px 6px #00000029",
+                }}
                 aria-controls="panel1d-content"
                 id="panel1d-header"
                 // style={{ borderRadius:"4px",backgroundColor:"rgba(231, 60, 52, 0.15)"}}
               >
                 <Grid container>
-                  <Grid md={12} >
+                  <Grid md={12}>
                     <Box display="flex" alignItems="center">
                       <Box>
                         <img src={availableRooms} style={{ width: "100%" }} />
@@ -502,13 +491,8 @@ export default function CustomizedAccordions() {
                   borderRadius: "20px",
                   boxShadow: "0px 3px 6px #00000029",
                   marginTop: "20px",
-              
                 }}
               >
-
-
-
-
                 {/* <Box> */}
                 {hotelRoom?.RoomCombinations?.RoomCombination.map(
                   (item1, index1) => {
@@ -516,8 +500,17 @@ export default function CustomizedAccordions() {
                       <div className="container">
                         <div className="roomCompo-new">
                           {item1?.RoomIndex?.map((item2, index2) => (
-                            <div className="" key={index2}  style={{width:"100%"}}>
-                              {roomComponent(item2, item1?.RoomIndex, index2, index1)}
+                            <div
+                              className=""
+                              key={index2}
+                              style={{ width: "100%" }}
+                            >
+                              {roomComponent(
+                                item2,
+                                item1?.RoomIndex,
+                                index2,
+                                index1
+                              )}
                             </div>
                           ))}
                         </div>
@@ -536,7 +529,10 @@ export default function CustomizedAccordions() {
               sx={{ border: "none", marginY: "20px" }}
             >
               <AccordionSummary
-                sx={{ borderRadius: "20px", boxShadow: "0px 3px 6px #00000029" }}
+                sx={{
+                  borderRadius: "20px",
+                  boxShadow: "0px 3px 6px #00000029",
+                }}
                 aria-controls="panel2d-content"
                 id="panel2d-header"
               >
@@ -589,7 +585,10 @@ export default function CustomizedAccordions() {
               sx={{ border: "none", marginY: "20px" }}
             >
               <AccordionSummary
-                sx={{ borderRadius: "20px", boxShadow: "0px 3px 6px #00000029" }}
+                sx={{
+                  borderRadius: "20px",
+                  boxShadow: "0px 3px 6px #00000029",
+                }}
                 aria-controls="panel3d-content"
                 id="panel3d-header"
               >
@@ -622,12 +621,15 @@ export default function CustomizedAccordions() {
                 }}
               >
                 <Box display="flex" justifyContent="left">
-
                   <Box>
                     <img src={hotelDetails} style={{ width: "100%" }} />
                   </Box>
                   <Typography
-                    sx={{ fontsize: "14px", color: "#252525", textAlign: "left" }}
+                    sx={{
+                      fontsize: "14px",
+                      color: "#252525",
+                      textAlign: "left",
+                    }}
                     ml={2}
                     mb={2}
                   >
@@ -641,7 +643,6 @@ export default function CustomizedAccordions() {
                     }}
                   />
                 </Typography>
-
               </AccordionDetails>
             </Accordion>
             <Accordion
@@ -650,7 +651,10 @@ export default function CustomizedAccordions() {
               onChange={handleChange("panel4")}
             >
               <AccordionSummary
-                sx={{ borderRadius: "20px", boxShadow: "0px 3px 6px #00000029" }}
+                sx={{
+                  borderRadius: "20px",
+                  boxShadow: "0px 3px 6px #00000029",
+                }}
                 aria-controls="panel4d-content"
                 id="panel4d-header"
               >
@@ -706,7 +710,9 @@ export default function CustomizedAccordions() {
           onClick={handleClick}
         />
       </Box> */}
-      <button type="submit" className="bookNowButton-new" onClick={handleClick}>Continue</button>
+      <button type="submit" className="bookNowButton-new" onClick={handleClick}>
+        Continue
+      </button>
     </div>
   );
 }

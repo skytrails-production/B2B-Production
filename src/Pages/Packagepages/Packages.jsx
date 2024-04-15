@@ -49,7 +49,7 @@ function Packagepage1() {
         const response = await axios.get(
           `${apiURL.baseURL}/skyTrails/agent/${first_name}`
         );
-       console.log(response);
+       
         // Check if the response status is 500
         if (response.status === 500) {
           setError1("Page Not Found");
@@ -72,7 +72,7 @@ function Packagepage1() {
         setError("Data Not Found");
         setError1("Page not found");
         setLoading(false);
-      }
+       }
     };
     fetchData();
   }, [first_name]);
@@ -137,9 +137,9 @@ function Packagepage1() {
               {/* <div className="logo-content-circle">
           <img src={logoimg} alt="" />
         </div> */}
-              <div className="" style={{marginTop:'50px'}}>
+              <div className="deta" style={{marginTop:'50px'}}>
                 <h2>{agentname}</h2>
-                <h5 style={{ color: "grey" }}>
+                <h5 style={{ color: "blue" ,fontWeight:'700'}}>
                   <LocationOnIcon style={{ color: "lightblue" }} />
                   {countryname}
                 </h5>
@@ -147,10 +147,12 @@ function Packagepage1() {
                   style={{
                     fontSize: "18px",
                     line_height: "22px",
-                    color: "grey",
+                    color: "blue",
+                    display:'flex',
+                    flexWrap:'wrap',   
                   }}
                 >
-                  <EditIcon style={{ color: "lightblue" }} /> Musafir.com is one
+                  <EditIcon style={{ color: "lightblue" }} /> The HawaiYatra is one
                   of India’s fastest growing travel websites. The team thrives
                   towards providing an inspiring and premium travel experience
                   for their clients with services driven by the vision of
@@ -221,13 +223,31 @@ function Packagepage1() {
               {packages.length > 0 ? (
                 packages.map((packageData, index) => (
                   <div key={index} className="col-md-9">
-                    <div className="card mb-3"style={{width:'600px'}}>
-                      <img
-                      style={{height:'300px',width:'600px'}}
-                        src={packageData.pakage_img}
-                        className="card-img-top"
-                        alt="..."
-                      />
+                    <div className="card mb-3"
+                    style={{
+                      maxWidth:'600px',
+                      width:'90%',
+                      margin:'0px auto',
+                      padding:'5px',
+                    }}
+                    >
+                        {packageData.package_img && packageData.package_img.length > 0 ? (
+                          <img
+                              style={{ height: '300px', width: '100%', objectFit:'cover',objectPosition:'center'}}
+                              src={packageData.package_img[0]}
+                              className="card-img-top"
+                              alt="..."
+                          />
+                      ) : (
+                          <img
+                              style={{  height: '300px', width: '100%', objectFit:'cover',objectPosition:'center' }}
+                              src={packageData.pakage_img}
+                              className="card-img-top"
+                              alt="..."
+                          />
+                      )}
+                      
+                  
                       <div className="card-body">
                         <p className="card-package-content">
                           {" "}
@@ -299,7 +319,7 @@ function Packagepage1() {
                       marginTop: "12px",
                     }}
                   >
-                    Data Not Found
+                    Data not found
                   </h2>
                 </div>
               )}

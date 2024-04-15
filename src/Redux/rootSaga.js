@@ -28,6 +28,7 @@ import { getVisaRequestWatcher } from "./Saga/visaRequestSaga";
 import { userVisaWatcher } from "./Saga/visaDataSaga";
 import { getHolidayBookingWatcher } from "./Saga/packageBookingSaga";
 import { hotelSearchWatcher } from "./Saga/hotelSaga";
+import { hotelSearchWatcherGRN } from "./Saga/hotelSagaGrn";
 import { watchFormSubmission } from "./Saga/HolidayPackageTravellerDetailsSaga";
 import { getHolidayBookingRequestWatcher } from "./Saga/packageBookingRequestSaga";
 import { userDataWatcher } from "./Saga/userDataSaga";
@@ -39,6 +40,7 @@ export function* rootSaga() {
     agentProfileWatcher(),
     signUpWatcher(),
     ipWatcher(),
+    hotelSearchWatcherGRN(),
     oneWayWatcher(),
     returnWatcher(),
     passengersWatcher(),

@@ -1,5 +1,7 @@
 import axios from "axios";
 import { apiURL } from "../../Constants/constant";
+import SecureStorage from 'react-secure-storage';
+import secureLocalStorage from "react-secure-storage";
 
 
 function api() {
@@ -407,6 +409,96 @@ function api() {
       },
     });
   };
+  
+    // new hotel grn api's
+
+  const hotelSearchGRN = (payload) => {
+    return axios({
+      method: "POST",
+      url: "/skyTrails/grnconnect/hotelSearch",
+      baseURL: `${apiURL.baseURL}`,
+      data: payload,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
+
+  const hotelsingleDataGRN = (payload) => {
+    // console.log("key")
+    const { data } = payload;
+    const searchId = payload.searchID;
+    return axios({
+      method: "POST",
+      url: `/skyTrails/grnconnect/rateRefetchHotel?searchId=${searchId}`,
+      baseURL: `${apiURL.baseURL}`,
+      data: data,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+  const hotelBookRoomGRN = (payload) => {
+    // console.log("key")
+    const { data } = payload;
+    const searchId = payload.searchID;
+    const hcode = payload.hotel_code;
+    return axios({
+      method: "GET",
+      // url: `/skyTrails/grnconnect/rateRefetchHotel?searchId=${searchId}`,
+      url: `/skyTrails/grnconnect/refetchHotel?searchId=${searchId}&hcode=${hcode}`,
+      baseURL: `${apiURL.baseURL}`,
+      data: data,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
+
+  const hotelGalleryGRN = (payload) => {
+    console.log("key")
+    const hotel_id = payload.hotel_id;
+    return axios({
+      method: "GET",
+      url: `/skyTrails/grnconnect/hotelimages?hotelCode=${hotel_id}`,
+      baseURL: `${apiURL.baseURL}`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
+  const hotelBookingGRN = (payload) => {
+    return axios({
+      method: "POST",
+      url: "/skyTrails/grnconnect/hotelbooking",
+      baseURL: `${apiURL.baseURL}`,
+      data: payload,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
+
+  const hotelBookingDetailsSaveGRN = (payload) => {
+    const token = secureLocalStorage?.getItem("jwtToken");
+    return axios({
+      method: "POST",
+      url: "/skyTrails/grnconnect/addhotelBooking",
+      baseURL: `${apiURL.baseURL}`,
+      data: payload,
+      headers: {
+        "Content-Type": "application/json",
+        token: token,
+      },
+    });
+  }
+
+  // new hotel grn api's
+
 
   const hotelSearchInfo = (payload) => {
     return axios({
@@ -653,6 +745,8 @@ function api() {
     searchPackage,
     getOnePackage,
     hotelSearch,
+    hotelSearchGRN,
+    hotelBookingDetailsSaveGRN,
     hotelSearchInfo,
     hotelRoomInfo,
     hotelBlockRoom,
@@ -660,6 +754,7 @@ function api() {
     hotelBookingDetails,
     bookingHolidayRequest,
     bookingHoliday,
+    hotelsingleDataGRN,
     createForex,
     createForexForCustomer,
     forexData,
@@ -667,6 +762,9 @@ function api() {
     visaRequest,
     getBusSearch,
     busBlock,
+    hotelBookingGRN,
+    hotelGalleryGRN,
+    hotelBookRoomGRN,
     busBook,
     busBookDetails,
     busBookingDataSave,

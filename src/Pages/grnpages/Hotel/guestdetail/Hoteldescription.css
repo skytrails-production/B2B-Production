@@ -1,0 +1,32 @@
+.viewinvoice {
+  display: flex;
+  padding: 8px 16px;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8.952px;
+  border-radius: var(--rounded, 4px);
+  background: #e73c34;
+  color: var(--white, #fff);
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 160%; /* 25.6px */
+}
+
+.viewvoucher {
+  display: flex;
+  padding: 8px 16px;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8.952px;
+  border-radius: var(--rounded, 4px);
+  border: 1px solid #e73c34;
+  background: var(--white, #fff);
+  color: #e73c34;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 160%; /* 25.6px */
+}

@@ -6,6 +6,8 @@ import {
   InputAdornment,
   Typography,
 } from "@mui/material";
+import Button from "@mui/material/Button";
+import GetAppIcon from "@mui/icons-material/GetApp";
 import SearchIcon from "@mui/icons-material/Search";
 import { apiURL } from "../../../../Constants/constant";
 import "./UserTable.css";
@@ -19,6 +21,7 @@ const Usertables = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+  const [totalDocs,setTotalDocs] = useState(0);
 
   useEffect(() => {
     async function fetchUserData() {
@@ -36,6 +39,7 @@ const Usertables = () => {
         );
         setUserData(response.data.result.docs);
         setTotalPages(response.data.result.totalPages);
+        setTotalDocs(response.data.result.totalDocs);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching User bookings:", error);
@@ -44,7 +48,7 @@ const Usertables = () => {
     }
     fetchUserData();
   }, [currentPage, searchTerm]);
-
+     
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
@@ -53,7 +57,94 @@ const Usertables = () => {
     setSearchTerm(event.target.value);
     setCurrentPage(1); // Reset to the first page when performing a new search
   };
+  const handleDownloadAllData = async () => {
+    try {
+      const totalPages = Math.ceil(totalDocs / 8);
+      let allData = [];
+      for (let page = 1; page <= totalPages; page++) {
+        const response = await axios.get(
+          `${apiURL.baseURL}/skyTrails/api/admin/getAllUsers?page=${page}`
+        );
+        allData = allData.concat(response.data.result.docs);
+      }
+      const columnTitles = ["UserName", "Email", "DOB", "Phone Number"];
+      const extractedData = allData.map((row) => ({
+        UserName: row.username || "N/A",
+        Email: row.email || "N/A",
+        DOB: row.dob || "N/A",
+        "Phone Number": row.phone?.mobile_number || "N/A",
+      }));
+      const csvContent =
+        "data:text/csv;charset=utf-8," +
+        [columnTitles.join(",")]    
+          .concat(extractedData.map((row) => Object.values(row).join(",")))
+          .join("\n");
+  
+      // Create blob object
+      const blob = new Blob([csvContent], { type: "text/csv" });
+      const url = window.URL.createObjectURL(blob);
+  
+      // Create a temporary link element
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", "all_data.csv");
+      link.style.display = "none"; // Hide the link
+  
+      // Append the link to the body and trigger the click event
+      document.body.appendChild(link);
+      link.click();
+  
+      // Clean up by removing the link and revoking the object URL
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading data:", error);
+    }
+  };
+  
+  
+//   const handleDownloadAllData = async () =>{
+//     try{
+//       const totalPages =Math.ceil(totalDocs/8);
+//       let allData =[];
+//       for(let page=1; page<=totalPages; page++){
+//         const response =await axios.get(
+//         `${apiURL.baseURL}/skyTrails/api/admin/getAllUsers?page=${page}`
+//         );
+//         allData =allData.concat(response.data.result.docs);
+//       }
+// const columnTitles = [
+//    "UserName",
+//    "Email",
+//    "DOB",
+//    "Phone Number",
+// ];
+// const extractedData = allData.map((row) =>({
+//   UserName:row.username || "N/A",
+//   Email:row.email ||"N/A",
+//   DOB:row.dob ||"N/A",
+//   "Phone Number":row.phone?.mobile_number ||"N/A",  
+// })
+// );
+// const csvContent =
+// "data:text/csv;charset=utf-8," +
+// [columnTitles.join(",")]
+//   .concat(extractedData.map((row) => Object.values(row).join(",")))
+//   .join("\n");
 
+//   const encodedUri = encodeURI(csvContent);
+//   const link = document.createElement("a");
+//   link.setAttribute("href", encodedUri);
+//   link.setAttribute("download", "all_data.csv");
+//   document.body.appendChild(link);
+
+//   // Click the link to initiate download
+//   link.click();
+//     }catch (error) {
+//       console.error("Error downloading data:", error);
+//     }
+//   }
+  
   const columns = [
     {
       field: "username",
@@ -106,7 +197,7 @@ const Usertables = () => {
 
 
     },
-    // Add more columns here if needed
+    // Add more columns here if needed or add more data if needed
   ];
 
 
@@ -127,6 +218,18 @@ const Usertables = () => {
             ),
           }}
         />
+         <Button
+          variant="contained"
+          onClick={handleDownloadAllData}
+          style={{
+            marginLeft: "10px",
+            backgroundColor: "#21325D",
+            color: "white",
+          }}
+        >
+          Download All Data
+          <GetAppIcon style={{ marginLeft: "5px" }} />
+        </Button>
         <Typography variant="h5" className="adtable-heading">
           User Table
         </Typography>

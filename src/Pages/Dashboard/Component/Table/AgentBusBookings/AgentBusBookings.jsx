@@ -36,6 +36,7 @@ const AllBusBooking = () => {
             search: searchTerm,
           },
         });
+        console.log(response);
         setBusBookings(response.data.result.docs);
         setTotalPages(response.data.result.totalPages);
         setLoading(false);

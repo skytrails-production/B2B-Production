@@ -5,6 +5,8 @@ import { apiURL } from "../../../../Constants/constant";
 import { useNavigate } from "react-router-dom";
 import "./UserTable.css";
 import SearchIcon from "@mui/icons-material/Search";
+
+import GetAppIcon from "@mui/icons-material/GetApp";
 import "./subAdmin.css";
 import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
@@ -24,7 +26,7 @@ const SubAdminTable = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedUserStatusMap, setSelectedUserStatusMap] = useState({}); // Map to store status for each user
-
+  const [totalDocs,setTotalDocs] = useState(0);
   // Declare the fetchUserData function
   const fetchUserData = useCallback(async () => {
     try {
@@ -39,6 +41,7 @@ const SubAdminTable = () => {
           },
         }
       );
+     // console.log(response);
       // Initialize status for each user
       const initialStatusMap = {};
       response.data.result.docs.forEach((user) => {
@@ -47,7 +50,9 @@ const SubAdminTable = () => {
       setSelectedUserStatusMap(initialStatusMap);
       setUserData(response.data.result.docs);
       setTotalPages(response.data.result.totalPages);
+      setTotalDocs(response.data.result.totalDocs);
       setLoading(false);
+
     } catch (error) {
       console.error("Error fetching User bookings:", error);
       setLoading(false);
@@ -118,6 +123,54 @@ const SubAdminTable = () => {
         return "black"; // Default text color
     }
   };
+  const handleDownloadAllData = async () => {
+  try{
+    const totalPages = Math.ceil(totalDocs / 8);
+    let allData = [];
+    for(let page=1;page<=totalPages; page++){
+      const response =await axios.get(
+        `${apiURL.baseURL}/skytrails/api/admin/getSubAdmin?page=${page}`
+      );
+      console.log(response);
+      allData =allData.concat(response.data.result.docs);
+    }
+    const columnTitles = ["Name","Email","contactnumber","Auth Type","Status"];
+    const extractedData =allData.map((row)=>({
+    Name:row.userName || "N/A",
+    Email:row.email || "N/A",
+    Number :row.contactNumber||"N/A",
+    "Auth Type" :row.authType || "N/A",
+     Status: row.status || "N/A",
+    }));
+    const csvContent =
+    "data:text/csv;charset=utf-8," +
+    [columnTitles.join(",")]
+      .concat(extractedData.map((row) => Object.values(row).join(",")))
+      .join("\n");
+
+  // Create blob object
+  const blob = new Blob([csvContent], { type: "text/csv" });
+  const url = window.URL.createObjectURL(blob);
+
+  // Create a temporary link element
+  const link = document.createElement("a");
+  link.setAttribute("href", url);
+  link.setAttribute("download", "all_data.csv");
+  link.style.display = "none"; // Hide the link
+
+  // Append the link to the body and trigger the click event
+  document.body.appendChild(link);
+  link.click();
+
+  // Clean up by removing the link and revoking the object URL
+  document.body.removeChild(link);
+  window.URL.revokeObjectURL(url);
+
+  } catch (error) {
+    console.error("Error downloading data:", error);
+  }
+
+  }
   const columns = [
     { field: "userName", headerName: "User Name", minWidth: 150, },
     { field: "email", headerName: "Email", minWidth: 250, },
@@ -172,6 +225,18 @@ const SubAdminTable = () => {
             ),
           }}
         />
+        <Button
+          variant="contained"
+          onClick={handleDownloadAllData}
+          style={{
+            marginLeft: "10px",
+            backgroundColor: "#21325D",
+            color: "white",
+          }}
+        >
+          Download All Data
+          <GetAppIcon style={{ marginLeft: "5px" }} />
+        </Button>
         <Typography variant="h5" className="adtable-heading">
           Subadmin Table
         </Typography>

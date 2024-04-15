@@ -88,7 +88,7 @@ export default function Popularfilter() {
   useEffect(() => {
     if (result?.length === 0 || result === undefined) {
       All_Hotel_Reducer_Clear();
-      navigate("/hotel");
+      navigate("/hotels");
     }
   }, [result]);
 
@@ -611,7 +611,7 @@ export default function Popularfilter() {
                       </div>
                       <div className="hotelResultDetails">
                         <div className="hotleTitle">
-                          <p>{result?.HotelName}</p>
+                          <p>{result?.HotelName}</p> 
                         </div>
 
                         <div className="hotelRating">

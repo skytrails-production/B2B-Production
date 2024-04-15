@@ -378,6 +378,7 @@ export default function Tables() {
       setLoad(false);
     }
   };
+ 
   return (
     <>
       {successMessage && (

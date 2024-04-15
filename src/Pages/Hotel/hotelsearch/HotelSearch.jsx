@@ -12,9 +12,9 @@ import { clearHotelReducer } from "../../../Redux/Hotel/hotel";
 import { useDispatch } from "react-redux";
 
 const HotelSearch = () => {
-
   return (
     <div className="container-fluid margin-pecentage">
+     
       <Hotelresult />
     </div>
   );

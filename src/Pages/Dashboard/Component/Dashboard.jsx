@@ -26,7 +26,7 @@ import {
   ListItemText,
   Collapse,
 } from "@mui/material";
-
+import Grnuser from "../../Historytable/Grnuser";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import AirplaneTicketIcon from "@mui/icons-material/AirplaneTicket";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
@@ -124,6 +124,8 @@ import ArticleIcon from '@mui/icons-material/Article';
 import Citypackage from "../../Historytable/Citypackage";
 import Apppost from "../../Historytable/Apppost";
 import Enquirylist from "../../Historytable/Enquirylist";
+import PackageBannerAd from "../../Historytable/PackageBannerAd";
+import PopularDest from "../../Historytable/PopularDest";
 //import UpdateFeed from "./Table/UpdateFeed";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { IoIosNotifications } from "react-icons/io";
@@ -329,6 +331,7 @@ export default function VerticalTabs() {
     navigate("/addMarkup");
   };
 
+
   const createCoupon = () => {
     // Navigate to the desired route when the button is clicked
     navigate("/admin/addCoupons");
@@ -336,8 +339,20 @@ export default function VerticalTabs() {
   const createupdateFeed=()=>{
     navigate("/admin/updateFeed")
   }
+   const createReward=()=>{
+    navigate("/admin/addReward");
+   }
+   const addPackagebanner =()=>{
+    navigate("/admin/addPackagebanner");
+   }
+   const addPopular=()=>{
+    navigate("/admin/addPopulardestination")
+   }
   const createNotification = () => {
     navigate("/admin/addnotification")
+  }
+  const addPackCat=()=>{
+    navigate("/admin/createPackageCategory")
   }
   // /adminprofile
   // const AdminProfile = () => {
@@ -869,11 +884,36 @@ export default function VerticalTabs() {
                   </ListItemIcon>
                   Add Notification
                 </MenuItem>
+                <MenuItem onClick={() => { handleClose(); addPackagebanner(); }}>
+                  <ListItemIcon>
+                    <PersonAdd fontSize="small" />
+                  </ListItemIcon>
+                  Add Package Banner
+                </MenuItem>
+                <MenuItem onClick={() => { handleClose(); addPopular(); }}>
+                  <ListItemIcon>
+                    <PersonAdd fontSize="small" />
+                  </ListItemIcon>
+                  Add Popular Destination
+                </MenuItem>
+                <MenuItem onClick={() => { handleClose(); addPackCat(); }}>
+                  <ListItemIcon>
+                    <PersonAdd fontSize="small" />
+                  </ListItemIcon>
+                  Create Package Category
+                </MenuItem>
                 <MenuItem onClick={()=>{handleClose(); createupdateFeed(); }}>
                   <ListItemIcon>
                     <DynamicFeedIcon fontSize="small"/>
                   </ListItemIcon>
                   Update Version
+                </MenuItem>
+
+                <MenuItem onClick={()=>{handleClose(); createReward();}}>
+                <ListItemIcon>
+                <DynamicFeedIcon fontSize="small"/>
+                </ListItemIcon>
+                Referral Reward
                 </MenuItem>
 
                 {/* <MenuItem
@@ -2205,6 +2245,36 @@ export default function VerticalTabs() {
                 <ListItem
                   disablePadding
                   sx={{ display: "block", marginLeft: "20px" }}
+                  onClick={() => handleMenuItemClick("GRN Booking")}
+                >
+                  <ListItemButton
+                    sx={{
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
+                      ...((menuData === "GRN Booking"
+                        ? activeMenuItemClass
+                        : inactiveMenuItemClass) || {}),
+                    }}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <HotelIcon sx={{ color: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary="GRN Booking"
+                      sx={{ opacity: open ? 1 : 0, color: "white" }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+                <ListItem
+                  disablePadding
+                  sx={{ display: "block", marginLeft: "20px" }}
                   onClick={() => handleMenuItemClick("Flight Booking")}
                 >
                   <ListItemButton
@@ -2324,6 +2394,69 @@ export default function VerticalTabs() {
                 />
               </ListItemButton>
             </ListItem>
+
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => handleMenuItemClick("packagebanner")}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                  ...((menuData === "packagebanner"
+                    ? activeMenuItemClass
+                    : inactiveMenuItemClass) || {}),
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <ReceiptOutlinedIcon sx={{ color: "white" }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Package Banner"
+                  sx={{ opacity: open ? 1 : 0, color: "white" }}
+                />
+              </ListItemButton>
+            </ListItem>
+
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => handleMenuItemClick("popularDestination")}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                  ...((menuData === "popularDestination"
+                    ? activeMenuItemClass
+                    : inactiveMenuItemClass) || {}),
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <ReceiptOutlinedIcon sx={{ color: "white" }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Popular Destination"
+                  sx={{ opacity: open ? 1 : 0, color: "white" }}
+                />
+              </ListItemButton>
+            </ListItem>
+
             <ListItem
               disablePadding
               sx={{ display: "block" }}
@@ -2916,6 +3049,7 @@ export default function VerticalTabs() {
               {menuData === "profile" && (
                 <AdminProfile />
               )}
+              {menuData === "GRN Booking" &&<Grnuser/>}
               {menuData === "Downloadcsv" && <Downloadcsv/>}
               {menuData === "Packageenquiry" && <Package />}
               {menuData === "apppost" && <Apppost/>}
@@ -2968,6 +3102,8 @@ export default function VerticalTabs() {
               {menuData === "Flight Booking" && <FlightBookings />}
               {menuData === "Bus Booking" && <BusBookings />}
               {menuData === "OfferList" && <OfferList />}
+              {menuData === "packagebanner" && <PackageBannerAd/>}
+              {menuData === "popularDestination" && <PopularDest/>}
               {menuData === "fixedDeparture" && <FixedDeparture />}
               {menuData === "fixedDepartureControl" && (
                 <FixedDepartureControl />

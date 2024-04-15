@@ -210,10 +210,10 @@ color: black;
   overflow: hidden; /* Ensure the image stays within the circular container */
 }
 
-.skylogo img {
-  width: 100%; /* Make sure the image fills the circular container */
-  height: 500px; 
-  object-fit: cover;
+.skylogo >img {
+  width: 800px; /* Make sure the image fills the circular container */
+  height: 800px; 
+  
   /* Maintain aspect ratio */
 }
 
@@ -223,8 +223,25 @@ color: black;
    margin-left: 0;
    justify-content: center;
   }
+  
 }
-
+@media (max-width: 991px){
+  .package-get-button{
+    width: max-content !important;
+  }
+}
+@media (max-width:856px){
+  .card-img-top{
+    height: 300px;
+    width:550px;
+  }
+  .card{
+    width: 550px;
+  }
+}
+.card {
+  width: 600px;
+}
 .rating-container-package{
   margin-top: 15px;
   color: #fff;
@@ -271,8 +288,8 @@ border: none;
 color: white;
 background: #111;
 border-radius: 100px !important;
-padding-right: 8px;
 padding-left: 8px;
+padding-right: 8px;
 float: right;
 height: 25px;
 }

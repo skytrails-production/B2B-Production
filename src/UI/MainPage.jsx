@@ -33,14 +33,17 @@ import HolidayconfirmationDetail from "../Pages/holidayPackage/holidaybookingcon
 import Assistanceinssurance from "../Pages/assistance&inssurance/Assistanceinssurance";
 import Sightseeing from "../Pages/sightseeing/Sightseeing";
 import BusResult from "../Pages/Bus/BusResult/BusResult";
+import Hotelresult from "../Pages/grnpages/Hotel/hotelresult/Hotelresult";
 import BusPassengerDetail from "../Pages/Bus/busPassengerDetail/BusPassengerDetail";
 import BusReviewBooking from "../Pages/Bus/busreviewbooking/BusReviewBooking";
 import Busbookingconfirmation from "../Pages/Bus/busbookingconfirmation/Busbookingconfirmation";
 import SightseeingResult from "../Pages/sightseeing/sightseeingresult/SightseeingResult";
 import SightseeingGuestDetail from "../Pages/sightseeing/sightseeingGuestDetail/SightseeingGuestsalesummary";
 import HotelBooknow from "../Pages/Hotel/hotelbokknow/HotelBooknow";
+import HotelBooknowGrm from "../Pages/grnpages/Hotel/hotelbooknow/HotelBooknowGrm";
 import Guestdetail from "../Pages/Hotel/guestdetail/Guestdetail";
 import Reviewbooking from "../Pages/Hotel/hotelreviewbooking/Reviewbooking";
+import ReviewbookingGrn from "../Pages/grnpages/Hotel/hotelreviewbooking/ReviewbookingGrn";
 import Bus from "../Pages/Bus/Bus";
 import SightseeingReviewBooking from "../Pages/sightseeing/sightseeingreviewbooking/SightseeingReviewBooking";
 import SightseeingBookingConfirmation from "../Pages/sightseeing/sightseeingbookingconfirmation/SightseeingBookingConfirmation";
@@ -87,9 +90,9 @@ import { ipAction, tokenAction } from "../Redux/IP/actionIp";
 // import Slider from "../Pages/Banner/Slider";
 import GotoTopBtn from "../Components/GotoTopBtn";
 import FlightresultReturn from "../Pages/Flight/flightresult/FlightresultReturn/FlightresultReturn";
-
+import GuestdetailGrm from "../Pages/grnpages/Hotel/guestdetail/GuestdetailGrm";
 import FlightReturnInternational from "../Pages/Flight/flightresult/FlightresultReturn/FlightReturnInternational";
-
+import Hotels from "../Pages/grnpages/Hotel/Hotels";
 import Headers from "../Components/Headers";
 import InnerNavbar1 from "../Layout/InnerNavbar1";
 import LoadingSpinner from "./LoadingSpinner";
@@ -110,19 +113,21 @@ import CreateCouponForm from "../Pages/Dashboard/Component/Table/AddCoupons";
 import AddNotification from "../Pages/Dashboard/Component/Table/AddNotification";
 import UpdateFeed from "../Pages/Dashboard/Component/Table/UpdateFeed";
 import Download from "./Download";
-
+import AddReward from "../Pages/Dashboard/Component/Table/AddReward";
+import PackageBanner from "../Pages/Dashboard/Component/Table/PackageBanner";
 import AboutUs from "../Layout/AboutUs";
 import ContactUs from "../Layout/ContactUs";
 import PrivacyPolicy from "../Layout/PrivacyPolicy";
 import RefundPolicy from "../Layout/RefundPolicy";
 import TermandCondition from "../Layout/TermandCondition";
 import AdminProfile from "../Pages/Dashboard/Component/Table/AdminProfile";
+import Popular from "../Pages/Dashboard/Component/Table/Popular";
 import { debounce } from "lodash";
 import {} from "../utils/validation";
-
+import Pakcat from "../Pages/Dashboard/Component/Table/Pakcat";
 import Packages from "../Pages/Packagepages/Packages";
 import Loginnew from "../Pages/login/Loginnew";
-
+import HotelSearchs from "../Pages/grnpages/Hotel/hotelsearch/HotelSearch";
 const MainPage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -186,14 +191,13 @@ const MainPage = () => {
       !location.pathname.includes("/adminLogin") &&
       !location.pathname.includes("/subAdminLogin") &&
       !location.pathname.includes("/subAdmin") &&
-      !location.pathname.includes("/skyTrails/agent")&&
-      !location.pathname.includes("/admin/dashboard")&&
-      !location.pathname.includes("/agentProfile/Login")&&
+      !location.pathname.includes("/skyTrails/agent") &&
+      !location.pathname.includes("/admin/dashboard") &&
+      !location.pathname.includes("/agentProfile/Login") &&
       !location.pathname.includes("/agentProfile/dashboard")
     ) {
       navigate("/Login");
-    } 
-    else if (location.pathname === "/admin/dashboard") {
+    } else if (location.pathname === "/admin/dashboard") {
       if (!reducerState?.adminAuth?.isLogin) {
         // navigate("/admin/dashboard");
         navigate("/adminLogin");
@@ -204,22 +208,20 @@ const MainPage = () => {
       if (!reducerState?.subadminLogin?.isLogin) {
         // navigate("/subAdmin/dashboard");
         navigate("/subAdminLogin");
-      } 
+      }
       // else {
       // }
     } else if (location.pathname.includes("skyTrails/agent")) {
       navigate(location.pathname);
-    }
-    else if(location.pathname === "adminLogin"){
-      if(reducerState?.adminAuth?.isLogin){
-        console.log(reducerState?.adminAuth?.isLogin,'/admin/dashboard')
-        navigate('/admin/dashboard')
+    } else if (location.pathname === "adminLogin") {
+      if (reducerState?.adminAuth?.isLogin) {
+        console.log(reducerState?.adminAuth?.isLogin, "/admin/dashboard");
+        navigate("/admin/dashboard");
       }
-    }
-    else if(location.pathname === "agentProfile/Login"){
+    } else if (location.pathname === "agentProfile/Login") {
       // if(reducerState?.adminAuth?.isLogin){
-        // console.log(reducerState?.adminAuth?.isLogin,'/admin/dashboard')
-        navigate('/agentProfile/Login')
+      // console.log(reducerState?.adminAuth?.isLogin,'/admin/dashboard')
+      navigate("/agentProfile/Login");
       // }
     }
   }, []);
@@ -285,6 +287,7 @@ const MainPage = () => {
       location.pathname === "/subAdmin/dashboard/AgentrequestTable" ||
       location.pathname === "/admin/addCoupons" ||
       location.pathname === "admin/updateFeed" ||
+      location.pathname === "/admin/createPackageCategory" ||
       location.pathname === "/adminlogin" ||
       location.pathname === "/admin/addnotification" ||
       location.pathname === "/subAdmin/dashboard/Agentflightcancel" ||
@@ -332,7 +335,6 @@ const MainPage = () => {
       location.pathname === "/subAdmin/dashboard/addmarkups" ||
       location.pathname.includes("skyTrails/agent") ||
       location.pathname.includes("agentProfile/Login") ||
-      
       // /subAdmin/dashboard/addmarkups"
       isFlightEticketPage ||
       isBusEticketPage ||
@@ -405,7 +407,6 @@ const MainPage = () => {
       location.pathname === "/subAdmin/dashboard/addAdvertisements" ||
       location.pathname.includes("skyTrails/agent") ||
       location.pathname.includes("agentProfile/Login") ||
-
       isFlightEticketPage ||
       isBusEticketPage ||
       isHotelEticketPage ? null : (
@@ -430,8 +431,8 @@ const MainPage = () => {
                 />
                 <Route
                   path="/"
-                  element={<MainBox/>}
-                  style={{ color: "inherit", textDecoration: "inherit"}}
+                  element={<MainBox />}
+                  style={{ color: "inherit", textDecoration: "inherit" }}
                 />
                 <Route
                   path="/Hotel"
@@ -456,6 +457,33 @@ const MainPage = () => {
                   path="/hotel/hotelsearch"
                   element={<HotelSearch />}
                 />
+                {/* grm */}
+                
+
+                
+                <Route
+                  path="/Hotels"
+                  element={<Hotels />}
+                  style={{ color: "inherit", textDecoration: "inherit" }}
+                />
+                <Route
+                  exact
+                  path="/hotels/hotelsearchs"
+                  element={<HotelSearchs />}
+                />
+                <Route
+                  exact
+                  path="/hotels/hotelsearchs/HotelBooknowgrm"
+                  element={<HotelBooknowGrm />}
+                />
+                <Route      
+                  exact
+                  path="/hotels/hotelsearchs/guestDetails"
+                  element={<ReviewbookingGrn />}
+                />
+                 <Route exact path="/GuestdetailGrm" element={<GuestdetailGrm />} />
+
+{/* grm */}
                 <Route
                   exact
                   path="/Flightresult/booknow"
@@ -485,6 +513,8 @@ const MainPage = () => {
                   path="/hotel/hotelsearch/HotelBooknow/Reviewbooking"
                   element={<Reviewbooking />}
                 />
+
+                {/* Reviewbookinggrn */}
                 <Route
                   exact
                   path="/passengerdetail"
@@ -683,11 +713,30 @@ const MainPage = () => {
                   element={<AddNotification />}
                 />
                 <Route
-                exact
-                path="/admin/updateFeed"
-                element={<UpdateFeed/>}
+                  exact
+                  path="/admin/updateFeed"
+                  element={<UpdateFeed />}
                 />
-
+                <Route
+                exact
+                path="/admin/addReward"
+                element={<AddReward/>}
+                />
+                <Route
+                exact
+                path="/admin/addPackagebanner"
+                element={<PackageBanner/>}
+                />
+                <Route
+                exact
+                path="/admin/addPopulardestination"
+                element={<Popular/>}
+                />
+                <Route
+                exact
+                path="/admin/createPackageCategory"
+                element={<Pakcat/>}
+                />
                 <Route
                   exact
                   path="/AdminUserForm"
@@ -781,7 +830,11 @@ const MainPage = () => {
             element={<AgentProfileDashbord />}
           ></Route>
           <Route exact path="/adminLogin" element={<AdminLogin />}></Route>
-          <Route exact path="/agentProfile/Login" element={<AgentProfileLogin />}></Route>
+          <Route
+            exact
+            path="/agentProfile/Login"
+            element={<AgentProfileLogin />}
+          ></Route>
           <Route
             exact
             path="/subAdmin/dashboard/*"

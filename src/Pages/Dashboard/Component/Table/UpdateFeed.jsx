@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { CircularProgress, TextField, Button,Typography,gutterBottom } from "@mui/material";
 import './AddCoupons.css';
 import './UpdateFeed.css';
-import { RecordVoiceOver } from "@mui/icons-material";
 
 const UpdateFeed = () => {
   const [load, setLoad] = useState(false);
@@ -87,12 +86,31 @@ const UpdateFeed = () => {
       <h3 style={{ textAlign: "center" }} className="addCoupon-heading">
         <strong>Update Version</strong>
       </h3>
-      <Typography variant="body1" gutterBottom style={{ textAlign: "center" }}>
+      <div className="updio">
+      <Typography variant="body1" gutterBottom style={{ textAlign: "center",
+      backgroundColor:'#090962de',
+      borderRadius:'20px',
+      padding:'10px',
+      color:'white',
+      fontSize:'larger',
+      fontWeight:'700',
+      margin:'10px',
+    
+    }}>
         Current iOS Version: {io}
       </Typography>
-      <Typography variant="body1" gutterBottom style={{ textAlign: "center" }}>
+      </div>
+      <div className="updandr">
+      <Typography variant="body1" gutterBottom style={{ textAlign: "center" ,backgroundColor:'#090962de',
+      borderRadius:'20px',
+      padding:'10px',
+      color:'white',
+      fontSize:'larger',
+      fontWeight:'700',
+      margin:'10px',}}>
         Current Android Version: {andr}
       </Typography>
+      </div>
       <form onSubmit={handleSubmit}>
         <TextField
           label="iOS Version"

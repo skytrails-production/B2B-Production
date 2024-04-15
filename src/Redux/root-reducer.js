@@ -20,6 +20,7 @@ import { ADMIN_SIGN_OUT_REQUEST } from "./Auth/AdminSignOut/actionType";
 import { searchPackageReducer } from "./SearchPackage/searchPackageReducer";
 import { searchOnePackageReducer } from "./OnePackageSearchResult/searchOnePackageReducer";
 import { hotelReducer } from "./Hotel/hotelReducer";
+import { hotelReducerGRN } from "./HotelGrn/hotelReducer";
 import { createForexReducer } from "./CreateForxWithMe/createForexReducer";
 import { createForex4CustomerReducer } from "./CreateForexWithCustomer/createForexReducer";
 import { forexDataReducer } from "./Auth/forexData/forexDataReducer";
@@ -55,6 +56,7 @@ const appReducer = combineReducers({
   searchResult: searchPackageReducer,
   searchOneResult: searchOnePackageReducer,
   hotelSearchResult: hotelReducer,
+  hotelSearchResultGRN: hotelReducerGRN,
   updatePackage: updatePackageReducer,
   packageBook: getPackageBookingReducer,
   createForex: createForexReducer,
