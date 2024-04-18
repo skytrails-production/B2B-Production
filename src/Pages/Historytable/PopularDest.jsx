@@ -212,7 +212,7 @@ const PopularDest = () => {
     };
 
     const columns = [
-        {
+        {           
             field: 'images',
             headerName: 'Profile',
             width: 200,

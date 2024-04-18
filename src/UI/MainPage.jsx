@@ -230,12 +230,34 @@ const MainPage = () => {
     dispatch(ipAction());
   }, []);
 
+  // useEffect(() => {
+  //   const payload = {
+  //     EndUserIp: reducerState?.ip?.ipData,
+  //   };
+  //   dispatch(tokenAction(payload));
+  // }, [reducerState?.ip?.ipData]);
+  // console.log(reducerState?.ip,"reducerState")
+
   useEffect(() => {
-    const payload = {
-      EndUserIp: reducerState?.ip?.ipData,
+    const fetchData = async () => {
+      try {
+        const payload = {
+          EndUserIp: reducerState?.ip?.ipData,
+        };
+        await dispatch(tokenAction(payload)); // Dispatch the action to fetch data
+      } catch (error) {
+        console.error('Error fetching token:', error);
+      }
     };
-    dispatch(tokenAction(payload));
-  }, [reducerState?.ip?.ipData]);
+
+    if (reducerState && reducerState.ip && reducerState.ip.tokenData && Object.keys(reducerState.ip.tokenData).length === 0) {
+      fetchData();
+    }
+
+  }, [reducerState?.ip?.ipData, reducerState?.ip?.tokenData]);
+
+
+
 
   const [isLoading, setIsLoading] = useState(true);
 
