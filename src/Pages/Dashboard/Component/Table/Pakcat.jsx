@@ -95,8 +95,8 @@ const Pakcat = () => {
                         marginBottom: '30px',
                         borderRadius: '5px',
 
-                    }}
-                >
+                    }}      
+                >   
                     {message}
                 </div>
             )}

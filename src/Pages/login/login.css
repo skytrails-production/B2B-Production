@@ -1507,3 +1507,13 @@ justify-content: space-around !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.eye-icon{
+  
+    position: "absolute";
+    top: "50%";
+    right: "10px";
+    transform: "translateY(-50%)";
+    cursor: "pointer";
+  
+}

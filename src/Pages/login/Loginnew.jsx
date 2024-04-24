@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import whiteLogo from "../../Images/The hawai yatra final logo.png";
 import color from "../../color/color";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./login.css";
 import Footer from "../login/Footer.jsx";
 // import Footer from "../../Layout/Footer";
@@ -27,6 +28,7 @@ function Loginnew() {
   const dispatch = useDispatch();
   const reducerState = useSelector((state) => state);
   const togetherSectionRef = useRef(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   // console.log(reducerState,"data")
 
@@ -82,7 +84,9 @@ function Loginnew() {
   const handlelinkRegister = () => {
     navigate("/Registration");
   };
-
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   return (
     <>
       {reducerState?.subadminLogin?.isLogin ||
@@ -140,23 +144,36 @@ function Loginnew() {
                               onChange={handleInputChange}
                             />
                           </div>
-                          <div class="mb-3">
+                          <div className="mb-3">
                             <label
                               htmlFor="exampleInputPassword1"
-                              class="form-label"
+                              className="form-label"
                             >
                               Password
                             </label>
-                            {/* <input type="password" class="form-control" id="exampleInputPassword1"> */}
-
-                            <input
-                              type="password"
-                              name="password"
-                              placeholder="Enter Your Password"
-                              class="form-control"
-                              value={formData.password}
-                              onChange={handleInputChange}
-                            />
+                            <div style={{ position: "relative" }}>
+                              <input
+                                type={showPassword ? "text" : "password"}
+                                name="password"
+                                placeholder="Enter Your Password"
+                                className="form-control"
+                                value={formData.password}
+                                onChange={handleInputChange}
+                              />
+                              <div
+                                className="eye-icon"
+                                style={{
+                                  position: "absolute",
+                                  top: "50%",
+                                  right: "10px",
+                                  transform: "translateY(-50%)",
+                                  cursor: "pointer",
+                                }}
+                                onClick={togglePasswordVisibility}
+                              >
+                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                              </div>
+                            </div>
                           </div>
 
                           {/* <Capchacode email={email} password={password} /> */}
@@ -208,7 +225,7 @@ function Loginnew() {
             </div>
           </section>
 
-          <section class="together-gap" style={{background: "#FFFEFB"}}>
+          <section class="together-gap" style={{ background: "#FFFEFB" }}>
             <div className="container">
               <div className="row">
                 <div className="col-md-6">
@@ -233,8 +250,14 @@ function Loginnew() {
                 </div>
                 <div className="col-md-6">
                   <div className="overseasoncontent-grid">
-                    <div className="overseasoncontent-grid1" style={{width:"50%"}}>
-                      <div className="overseason-grid1" style={{width:"100%"}}>
+                    <div
+                      className="overseasoncontent-grid1"
+                      style={{ width: "50%" }}
+                    >
+                      <div
+                        className="overseason-grid1"
+                        style={{ width: "100%" }}
+                      >
                         <div className="servicecardjourneygrid">
                           <div className="service-card1">We Provide</div>
                           <div className="service-card-number">
@@ -243,16 +266,22 @@ function Loginnew() {
                         </div>
                       </div>
 
-                      <div className="overseason-grid2" style={{width:"100%"}}>
+                      <div
+                        className="overseason-grid2"
+                        style={{ width: "100%" }}
+                      >
                         <div className="servicecardjourneygrid">
                           <div className="service-card1">Promising you to</div>
                           <div className="service-card-number">
-                          Beat any price
+                            Beat any price
                           </div>
                         </div>
                       </div>
 
-                      <div className="overseason-grid3" style={{width:"100%"}}>
+                      <div
+                        className="overseason-grid3"
+                        style={{ width: "100%" }}
+                      >
                         <div className="servicecardjourneygrid">
                           <div className="service-card1">Flexible</div>
                           <div className="service-card-number">
@@ -262,21 +291,23 @@ function Loginnew() {
                       </div>
                     </div>
 
-                    <div className="overseasoncontent-grid2" style={{width:"50%"}}>
-                      <div className="note-member" style={{width:"100%"}}>
+                    <div
+                      className="overseasoncontent-grid2"
+                      style={{ width: "50%" }}
+                    >
+                      <div className="note-member" style={{ width: "100%" }}>
                         <div className="membersdetail">
                           <div className="total-member">Wide range of </div>
                           <div className="total-member-no">50+ Products</div>
                         </div>
                       </div>
 
-                      <div className="succesful-visa" style={{width:"100%"}}>
+                      <div className="succesful-visa" style={{ width: "100%" }}>
                         <div className="membersdetail">
-                          <div className="total-member">
-                          Customization
+                          <div className="total-member">Customization</div>
+                          <div className="total-member-no">
+                            Visa Assisstance
                           </div>
-                          <div className="total-member-no">Visa 
-Assisstance</div>
                         </div>
                       </div>
                     </div>
@@ -292,21 +323,23 @@ Assisstance</div>
                 <div className="recognized-patner-value">
                   <p className="patner-heading">Recognized Partnership</p>
                 </div>
-                 <div className="patner-logo">
+                <div className="patner-logo">
                   {/* <img src={patnershipimg1} alt="" /> */}
                   {/* <img src={patnershipimg2} alt="" />
                   <img src={patnershipimg3} alt="" />
                   <img src={patnershipimg4} alt="" />
                   <img src={patnershipimg5} alt="" />
                   <img src={patnershipimg6} alt="" /> */}
-                  <Patners/>
-                </div> 
-                
+                  <Patners />
+                </div>
               </div>
             </div>
           </section>
 
-          <section class="together-gap" style={{ padding: "0px" ,background: "#FFFEFB"}}>
+          <section
+            class="together-gap"
+            style={{ padding: "0px", background: "#FFFEFB" }}
+          >
             <div className="about-us-value">
               <div className="heading1">Why choose The Hawai Yatra ? </div>
               <div className="travel-content-para">
@@ -317,11 +350,7 @@ Assisstance</div>
                 <div className="col-lg-4 col-md-6 col-sm-12">
                   <div className="about-us-grid-1">
                     <div className="about-grid-img">
-                      <img
-                        src={calenderimg}
-                        style={{  width: "100%" }}
-                        alt=""
-                      />
+                      <img src={calenderimg} style={{ width: "100%" }} alt="" />
                     </div>
                     <div className="about-us-grid-content">
                       <div className="about-us-content-2">
@@ -333,11 +362,7 @@ Assisstance</div>
                 <div className="col-lg-4 col-md-6 col-sm-12">
                   <div className="about-us-grid-1">
                     <div className="about-grid-img">
-                      <img
-                        src={offerimg}
-                        style={{width: "100%" }}
-                        alt=""
-                      />
+                      <img src={offerimg} style={{ width: "100%" }} alt="" />
                     </div>
                     <div className="about-us-grid-content">
                       <div className="about-us-content-2 mb-3">
@@ -350,11 +375,7 @@ Assisstance</div>
                 <div className="col-lg-4 col-md-6 col-sm-12">
                   <div className="about-us-grid-1">
                     <div className="about-grid-img">
-                      <img
-                        src={recordsimg}
-                        style={{ width:"100%" }}
-                        alt=""
-                      />
+                      <img src={recordsimg} style={{ width: "100%" }} alt="" />
                     </div>
                     <div className="about-us-grid-content">
                       <div

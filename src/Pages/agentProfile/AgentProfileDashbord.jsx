@@ -18,7 +18,9 @@ import UploadAgent from "./UploadAgent";
 import { FaUserFriends } from "react-icons/fa";
 import AgentList from "./AgentList";
 import { MdAccountBalanceWallet } from "react-icons/md";
-
+import StaticContent from "./StaticContent";
+import Social from "./Social";
+import DisplayAgentCont from "./DisplayAgentCont";
 const AgentProfileDashbord = () => {
   const dispatch = useDispatch();
   const reducerState = useSelector((state) => state);
@@ -32,6 +34,10 @@ const AgentProfileDashbord = () => {
     { name: "home", icon: <IoMdHome size={30} /> },
     { name: "Agent List", icon: <FaUserFriends size={30} /> },
     { name: "Upload Agent", icon: <FaUserFriends size={30} /> },
+    {name: "Upload Static", icon: <FaUserFriends size={30}/>},
+    {name: "Social Account", icon: <FaUserFriends size={30}/>},
+    {name: "Static Content", icon: <FaUserFriends size={30}/>},
+    
   ];
   const dropDwonRef = useRef(null);
 
@@ -229,6 +235,20 @@ const AgentProfileDashbord = () => {
           )
 
           }
+          { tab === leftPath[3].name &&(
+            <StaticContent data={data} toggle={setTab} tab={tab}/>
+          )
+
+          }
+          {tab === leftPath[4].name &&(
+            <Social data={data} toggle={setTab} tab={tab}/>
+          )}
+          {
+            tab === leftPath[5].name &&(
+              <DisplayAgentCont data={data} toggle={setTab} tab={tab}/>
+            )
+          }
+         
         </div>
       </div>
     </div>

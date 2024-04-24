@@ -20,6 +20,7 @@ import NavBarBox from "../../Components/NavBarBox";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import Alert from "@mui/material/Alert";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -374,7 +375,10 @@ const Login = () => {
       return true;
     }
   }
-
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   return (
     <React.Fragment>
       <section class="hero-section-two">
@@ -885,20 +889,41 @@ const Login = () => {
                                     <label className="form_lable_regestration">
                                       Password*
                                     </label>
-                                    <input
-                                      type="password"
-                                      name="password"
-                                      placeholder="Enter Your Password"
-                                      className="input_size"
-                                      required
-                                      value={personalDetail.password}
-                                      onChange={(e) =>
-                                        setPersonalDetails({
-                                          ...personalDetail,
-                                          password: e.target.value,
-                                        })
-                                      }
-                                    />
+                                    <div style={{ position: "relative" }}>
+                                      <input
+                                        type={
+                                          showPassword ? "text" : "password"
+                                        }
+                                        name="password"
+                                        placeholder="Enter Your Password"
+                                        className="input_size"
+                                        required
+                                        value={personalDetail.password}
+                                        onChange={(e) =>
+                                          setPersonalDetails({
+                                            ...personalDetail,
+                                            password: e.target.value,
+                                          })
+                                        }
+                                      />
+                                      <div
+                                        className="eye-icon"
+                                        style={{
+                                          position: "absolute",
+                                          top: "50%",
+                                          right: "10px",
+                                          transform: "translateY(-50%)",
+                                          cursor: "pointer",
+                                        }}
+                                        onClick={togglePasswordVisibility}
+                                      >
+                                        {showPassword ? (
+                                          <FaEyeSlash />
+                                        ) : (
+                                          <FaEye />
+                                        )}
+                                      </div>
+                                    </div>
                                     {sub &&
                                       !validatePassword(
                                         personalDetail.password
