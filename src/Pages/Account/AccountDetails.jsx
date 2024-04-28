@@ -274,7 +274,7 @@ const Account = () => {
                     fontWeight: "500",
                   }}
                 >
-                  {`${user?.personal_details?.first_name} ${user?.personal_details?.last_name}`}
+                  {`${user?.personal_details?.first_name} ${user?.personal_details?.last_name !== undefined ? user?.personal_details?.last_name : ""}`}
                 </Typography>
                 <Typography
                   sx={{
@@ -515,7 +515,7 @@ const Account = () => {
               marginTop: "15px",
             }}
           >
-            Please contact skyTrails if you want to change your EmailId
+            Please contact The Hawai Yatra if you want to change your EmailId
           </Typography>
         </Box>
 
@@ -531,7 +531,7 @@ const Account = () => {
             sx={{
               fontSize: "24px",
               fontWeight: "bold",
-              color:"#071C2C",
+              color: "#071C2C",
               marginBottom: "15px",
             }}
           >
@@ -578,7 +578,7 @@ const Account = () => {
                     fontWeight: "500",
                   }}
                 >
-                  {`${user?.agency_details?.agency_mobile?.country_code} ${user?.agency_details?.agency_mobile?.mobile_number}`}
+                  {`${user?.agency_details?.agency_mobile?.country_code} ${user?.agency_details?.agency_mobile?.mobile_number !== undefined ? user?.agency_details?.agency_mobile?.mobile_number : ""}`}
                 </Typography>
               </Box>
             </Grid>
@@ -591,7 +591,7 @@ const Account = () => {
               marginTop: "15px",
             }}
           >
-            Please contact skyTrails if you want to change your Mobile Number
+            Please contact The Hawai Yatra if you want to change your Mobile Number
           </Typography>
         </Box>
 
@@ -607,7 +607,7 @@ const Account = () => {
             sx={{
               fontSize: "24px",
               fontWeight: "bold",
-              color:"#071C2C",
+              color: "#071C2C",
               marginBottom: "15px",
             }}
           >

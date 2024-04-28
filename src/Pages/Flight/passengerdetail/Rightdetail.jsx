@@ -95,22 +95,22 @@ export default function Popularfilter() {
 
       {fareQuote === 0 ? (
         <>
-          {fareValue?.Segments?.map((dat, index) => {
-            return dat?.map((data1) => {
-              const dateString = data1?.Origin?.DepTime;
-              const date = new Date(dateString);
-              const day = date.getDate();
-              const month = date.toLocaleString("default", {
-                month: "short",
-              });
-              const year = date.getFullYear();
-              const formattedDate = `${day} ${month} ${year}`;
-              return (
-                <>
-                  <div className="priceSummary">
-                    <div className="head">
-                      <span>Price Summary</span>
-                    </div>
+          <div className="priceSummary">
+            <div className="head">
+              <span>Price Summary</span>
+            </div>
+            {fareValue?.Segments?.map((dat, index) => {
+              return dat?.map((data1) => {
+                const dateString = data1?.Origin?.DepTime;
+                const date = new Date(dateString);
+                const day = date.getDate();
+                const month = date.toLocaleString("default", {
+                  month: "short",
+                });
+                const year = date.getFullYear();
+                const formattedDate = `${day} ${month} ${year}`;
+                return (
+                  <>
                     {/* <div className="hotName">
                       <p>hotel name</p>
                     </div> */}
@@ -140,55 +140,56 @@ export default function Popularfilter() {
                         <p className="text-bold">2</p>
                       </div> */}
                     </div>
-                    <div className="totCOmm">
-                      {fareValue?.FareBreakdown?.map((data) => {
-                        return (
-                          <div className="">
-                            {data?.PassengerType === 1 && (
-                              <>
-                                <span>Adult x {data?.PassengerCount}</span>
-                                <p>{'₹'}{data?.BaseFare + data?.Tax}</p>
 
-                              </>
-                            )}
-                            {data?.PassengerType === 2 && (
-                              <>
-                                <span>Child x {data?.PassengerCount}</span>
-                                <p>{'₹'}{data?.BaseFare + data?.Tax}</p>
-                              </>
-                            )}
-                            {data?.PassengerType === 3 && (
-                              <>
-                                <span>Infant x {data?.PassengerCount}</span>
-                                <p>{'₹'}{data?.BaseFare + data?.Tax}</p>
-                              </>
-                            )}
+                  </>
+                );
+              });
+            })}
+            <div className="totCOmm">
+              {fareValue?.FareBreakdown?.map((data) => {
+                return (
+                  <div className="">
+                    {data?.PassengerType === 1 && (
+                      <>
+                        <span>Adult x {data?.PassengerCount}</span>
+                        <p>{'₹'}{data?.BaseFare + data?.Tax}</p>
+
+                      </>
+                    )}
+                    {data?.PassengerType === 2 && (
+                      <>
+                        <span>Child x {data?.PassengerCount}</span>
+                        <p>{'₹'}{data?.BaseFare + data?.Tax}</p>
+                      </>
+                    )}
+                    {data?.PassengerType === 3 && (
+                      <>
+                        <span>Infant x {data?.PassengerCount}</span>
+                        <p>{'₹'}{data?.BaseFare + data?.Tax}</p>
+                      </>
+                    )}
 
 
-                          </div>
-                        );
-                      })}
-
-                    </div>
-
-                    <div className="TotGst">
-                      <div>
-                        <span>Total TAX: </span>
-                        <p>{'₹'}{markUpamount}</p>
-                      </div>
-                      <div >
-                        <span>Grand Total:</span>
-                        <p>{'₹'}{fareValue?.Fare?.BaseFare +
-                          fareValue?.Fare?.Tax +
-                          fareValue?.Fare?.OtherCharges +
-                          markUpamount}</p>
-                      </div>
-                    </div>
                   </div>
-                </>
-              );
-            });
-          })}
+                );
+              })}
+
+            </div>
+
+            <div className="TotGst">
+              <div>
+                <span>Total TAX: </span>
+                <p>{'₹'}{markUpamount}</p>
+              </div>
+              <div >
+                <span>Grand Total:</span>
+                <p>{'₹'}{fareValue?.Fare?.BaseFare +
+                  fareValue?.Fare?.Tax +
+                  fareValue?.Fare?.OtherCharges +
+                  markUpamount}</p>
+              </div>
+            </div>
+          </div>
         </>
       ) : (
         <>

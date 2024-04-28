@@ -89,7 +89,7 @@ function UploadAgent({ data }) {
 
     return (
         <>
-            <div style={{ marginTop: '40px', fontWeight: 'bold', color: 'var(--main-bg-color-secondery)', borderRadius: '8px', fontSize: '30px', marginLeft: '45px' }}>Upload Agent</div>
+            <div style={{ marginTop: '40px', fontWeight: 'bold', color: 'var(--main-bg-color-secondery)', borderRadius: '8px', fontSize: '30px', marginLeft: '45px' }}>Upload Agent Logo</div>
 
             <div className="cardHolder"
                 style={{

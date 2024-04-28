@@ -125,6 +125,7 @@ import Citypackage from "../../Historytable/Citypackage";
 import Apppost from "../../Historytable/Apppost";
 import Enquirylist from "../../Historytable/Enquirylist";
 import PackageBannerAd from "../../Historytable/PackageBannerAd";
+import Quiz from "../../Historytable/Quiz";
 import PopularDest from "../../Historytable/PopularDest";
 //import UpdateFeed from "./Table/UpdateFeed";
 import { IoIosNotificationsOutline } from "react-icons/io";
@@ -341,6 +342,9 @@ export default function VerticalTabs() {
   }
    const createReward=()=>{
     navigate("/admin/addReward");
+   }
+   const createQuiz=()=>{
+    navigate("/admin/createQuiz");
    }
    const addPackagebanner =()=>{
     navigate("/admin/addPackagebanner");
@@ -914,6 +918,13 @@ export default function VerticalTabs() {
                 <DynamicFeedIcon fontSize="small"/>
                 </ListItemIcon>
                 Referral Reward
+                </MenuItem>
+
+                <MenuItem onClick={()=>{handleClose(); createQuiz();}}>
+                <ListItemIcon>
+                <DynamicFeedIcon fontSize="small"/>
+                </ListItemIcon>
+                Create Quiz
                 </MenuItem>
 
                 {/* <MenuItem
@@ -2460,6 +2471,37 @@ export default function VerticalTabs() {
             <ListItem
               disablePadding
               sx={{ display: "block" }}
+              onClick={() => handleMenuItemClick("quiz")}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                  ...((menuData === "quiz"
+                    ? activeMenuItemClass
+                    : inactiveMenuItemClass) || {}),
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <ReceiptOutlinedIcon sx={{ color: "white" }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Quiz Data"
+                  sx={{ opacity: open ? 1 : 0, color: "white" }}
+                />
+              </ListItemButton>
+            </ListItem>
+
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
               onClick={() => handleMenuItemClick("fixedDeparture")}
             >
               <ListItemButton
@@ -3109,6 +3151,7 @@ export default function VerticalTabs() {
                 <FixedDepartureControl />
               )}
               {menuData === "Advertisment" && <AllAdvertisementTable />}
+              {menuData === "quiz" && <Quiz/>}
               {menuData === "Web Advertisment" && <AllWebAdvertisement />}
             </div>
           )}

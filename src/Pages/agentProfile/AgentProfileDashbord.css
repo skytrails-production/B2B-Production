@@ -86,7 +86,7 @@
 }
 .agentProfileContentLeftItemText {
   color: var(--main-bg-color-text);
-  font-size: 25px !important;
+  font-size: 20px !important;
   font-weight: 500 !important;
   text-transform: capitalize;
   width: 175px;
@@ -105,6 +105,7 @@
   -moz-box-shadow: -4px 2px 19px -7px rgba(49, 48, 77, 1);
   box-shadow: -4px 2px 19px -7px rgba(49, 48, 77, 1);
   animation: DropDownAnimation 0.35s ease-in forwards;
+  z-index: 999;
 }
 .AgentProfileDropDwonRemove {
   animation: DropDownAnimationLeave 0.35s ease-in forwards;

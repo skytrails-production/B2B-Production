@@ -225,7 +225,6 @@ const Flightdetail = () => {
   const year = date1.getFullYear();
   const formattedDate = `${day} ${month} ${year}`;
 
- 
   // const handleClickBooking = async () => {
 
   //   // sessionStorage.setItem("HotelIndex", HotelIndex);
@@ -417,21 +416,20 @@ const Flightdetail = () => {
   const emailRef = useRef();
 
   // new values
-  
-    const hotelinfoGRN = reducerState?.hotelSearchResultGRN?.hotelRoom?.hotel;
+
+  const hotelinfoGRN = reducerState?.hotelSearchResultGRN?.hotelRoom?.hotel;
   const hotelMainReducer =
     reducerState?.hotelSearchResultGRN?.ticketData?.data?.data;
   const hotelGallery =
     reducerState?.hotelSearchResultGRN?.hotelGallery?.data?.data?.images
       ?.regular;
- 
+
   // new values
 
- 
   // console.log(galleryItems)
 
   // passenger details adding
-  
+
   const [passengerData, setPassengerData] = useState([]);
 
   const initializePassengerData = async () => {

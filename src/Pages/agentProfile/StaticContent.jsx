@@ -16,6 +16,7 @@ function StaticContent({data}){
     const [RegisteredAddress,setRegisteredAddress]=useState('');
     const[latitude,setLatitude]=useState('');
     const [longitude,setLongitude]=useState('');
+    
     // agentId,title,description,type,contactNumber,email,OperationalAddress,RegisteredAddress,latitude,longitude,
     
     const handleSubmit=async(e)=>{
@@ -31,7 +32,7 @@ function StaticContent({data}){
         if (!emailRegex.test(email)) {
             setErrorMessage('Invalid email format');
             return;
-        }
+        }                         
         setLoading(true);
         const payload={
             agentId:data.agentDetails[0]._id,

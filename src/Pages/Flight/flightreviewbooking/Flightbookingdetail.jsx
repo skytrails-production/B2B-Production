@@ -43,6 +43,7 @@ import { ClearAllActionReturn } from "../../../Redux/FlightFareQuoteRule/actionF
 // import { clearOneWayReducer } from "../../../Redux/FlightSearch/OneWay/oneWay";
 
 import FlightLoader from "../FlightLoader/FlightLoader";
+import dayjs from "dayjs";
 const style = {
   position: "absolute",
   top: "50%",
@@ -387,13 +388,13 @@ const Flightbookingdetail = () => {
       // console.log("returnInitiated")
       if (
         fareValue?.Fare?.BaseFare +
-          fareValue?.Fare?.Tax +
-          fareValue?.Fare?.OtherCharges +
-          markUpamount +
-          fareValueReturn?.Fare?.BaseFare +
-          fareValueReturn?.Fare?.Tax +
-          fareValueReturn?.Fare?.OtherCharges +
-          markUpamount <=
+        fareValue?.Fare?.Tax +
+        fareValue?.Fare?.OtherCharges +
+        markUpamount +
+        fareValueReturn?.Fare?.BaseFare +
+        fareValueReturn?.Fare?.Tax +
+        fareValueReturn?.Fare?.OtherCharges +
+        markUpamount <=
         currentBalance
       ) {
         e.preventDefault();
@@ -456,9 +457,9 @@ const Flightbookingdetail = () => {
       console.log("returnInitiated");
       if (
         fareValue?.Fare?.BaseFare +
-          fareValue?.Fare?.Tax +
-          fareValue?.Fare?.OtherCharges +
-          markUpamount <=
+        fareValue?.Fare?.Tax +
+        fareValue?.Fare?.OtherCharges +
+        markUpamount <=
         currentBalance
       ) {
         e.preventDefault();
@@ -621,9 +622,9 @@ const Flightbookingdetail = () => {
         _id: userId,
         amount: !dummyPnrCheck
           ? fareValue?.Fare?.BaseFare +
-            fareValue?.Fare?.Tax +
-            fareValue?.Fare?.OtherCharges +
-            markUpamount
+          fareValue?.Fare?.Tax +
+          fareValue?.Fare?.OtherCharges +
+          markUpamount
           : 99,
       };
 
@@ -656,7 +657,7 @@ const Flightbookingdetail = () => {
   const originCity =
     fareQuoteData?.Segments?.[0]?.[0]?.Origin?.Airport?.CityName;
   const DestinationCity =
-    fareQuoteData?.Segments?.[0]?.[0]?.Destination?.Airport?.CityName;
+    fareQuoteData?.Segments?.[0]?.[fareQuoteData?.Segments?.[0]?.length - 1]?.Destination?.Airport?.CityName;
   const flightFare = fareQuoteData?.Fare?.PublishedFare;
   const originTerminal =
     fareQuoteData?.Segments?.[0]?.[0]?.Origin?.Airport?.Terminal;
@@ -666,67 +667,13 @@ const Flightbookingdetail = () => {
   const adults = sessionStorage.getItem("adults");
   const childs = sessionStorage.getItem("childs");
   const infants = sessionStorage.getItem("infants");
-  const dateString = fareQuoteData?.Segments?.[0]?.[0]?.Origin?.DepTime;
-  const date = new Date(dateString);
-  const options = {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    hour12: true,
-  };
-  const formattedDate = date.toLocaleString("en-US", options);
 
-  const [month, day, year, time, ampm] = formattedDate.split(" ");
-  const desiredFormat = `${day}${month}-${year} ${time} ${ampm}`;
 
-  const dateString1 = fareQuoteData?.Segments?.[0]?.[0]?.Destination?.ArrTime;
-  const date1 = new Date(dateString1);
-  const options1 = {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    hour12: true,
-  };
-  const formattedDate1 = date1.toLocaleString("en-US", options1);
-  const [month1, day1, year1, time1, ampm1] = formattedDate1.split(" ");
-  const desiredFormat1 = `${day1}${month1}-${year1} ${time1} ${ampm1}`;
-  console.warn(
-    "eror.....................",
-    reducerState?.flightBook?.flightBookData?.Error?.ErrorMessage
-  );
 
-  const Duration = `${Math.floor(
-    fareQuoteData?.Segments?.[0]?.[0]?.Duration / 60
-  )}hr ${fareQuoteData?.Segments?.[0]?.[0]?.Duration % 60}min`;
-  // const dateString = fareQuoteData?.Segments?.[0]?.[0]?.Origin?.DepTime;
-  // const date1 = new Date(dateString);
-  // const time1 = date1.toLocaleTimeString([], {
-  //   hour: "2-digit",
-  //   minute: "2-digit",
-  // });
 
-  // const day = date1.getDate();
-  // const month = date1.toLocaleString("default", {
-  //   month: "short",
-  // });
-  // const year = date1.getFullYear();
-  // const formattedDate = `${day} ${month} ${year}`;
 
-  // const dateString1 = fareQuoteData?.Segments?.[0]?.[0]?.Destination?.ArrTime;
-  // const date2 = new Date(dateString1);
-  // const time2 = date2.toLocaleTimeString([], {
-  //   hour: "2-digit",
-  //   minute: "2-digit",
-  // });
-
-  // const day1 = date2.getDate();
-  // const month1 = date2.toLocaleString("default", {
-  //   month: "short",
-  // });
+  const timeDuration = `${Math.floor(fareQuoteData?.Segments?.[0]?.[0]?.Duration / 60)}hr ${fareQuoteData?.Segments?.[0]?.[0]?.Duration % 60
+    }min`;
 
   if (loading) {
     return (
@@ -823,23 +770,21 @@ const Flightbookingdetail = () => {
         <div className="singleFlightBoxTwo">
           <span>{originCity}</span>
           {/* <p>{time1.substr(0, 5)}</p> */}
-          <p>{desiredFormat.slice(0, 12)}</p>
-          <p style={{ fontSize: "14px" }}>{desiredFormat.slice(13)}</p>
+          <p>{dayjs(fareQuoteData?.Segments?.[0]?.[0]?.Origin?.DepTime).format("DD MMM, YY")}</p>
+          <p>{dayjs(fareQuoteData?.Segments?.[0]?.[0]?.Origin?.DepTime).format("h:mm A")}</p>
           <p>Terminal {originTerminal}</p>
         </div>
         <div className="singleFlightBoxThree">
-          <h4>{Duration}</h4>
-          <div>
-            <img src={flightdir} />
-          </div>
-          <p>Direct Flight</p>
+          <h4>{fareQuoteData?.Segments[0].length === 2 ? `${timeDuration} ${" - "} ${Math.floor(fareQuoteData?.Segments?.[0]?.[1]?.Duration / 60)}hr ${fareQuoteData?.Segments?.[0]?.[1]?.Duration % 60
+            }min` : `${timeDuration}`}</h4>
+          <div><img src={flightdir} /></div>
+          <p>{fareQuoteData?.Segments[0].length === 2 ? `${fareQuoteData?.Segments[0].length - 1} stop via ${DestinationCity}` : 'Direct Flight'}</p>
           <span>Refundable</span>
         </div>
         <div className="singleFlightBoxFour">
           <span>{DestinationCity}</span>
-          {/* <p>{time2.substr(0, 5)}</p> */}
-          <p>{desiredFormat1.slice(0, 12)}</p>
-          <p style={{ fontSize: "14px" }}>{desiredFormat1.slice(13)}</p>
+          <p>{dayjs(fareQuoteData?.Segments?.[0]?.[fareQuoteData?.Segments?.[0]?.length - 1]?.Destination?.ArrTime).format("DD MMM, YY")}</p>
+          <p>{dayjs(fareQuoteData?.Segments?.[0]?.[fareQuoteData?.Segments?.[0]?.length - 1]?.Destination?.ArrTime).format("h:mm A")}</p>
           <p>Terminal {destinationTerminal}</p>
         </div>
         <div className="singleFlightBoxFive">
@@ -877,8 +822,8 @@ const Flightbookingdetail = () => {
                     {passenger.PaxType === 1
                       ? "Adult"
                       : passenger.PaxType === 2
-                      ? "Child"
-                      : "Infant"}
+                        ? "Child"
+                        : "Infant"}
                     )
                   </span>
                 </p>
@@ -901,8 +846,8 @@ const Flightbookingdetail = () => {
                     {passenger.Gender === "2"
                       ? "Male"
                       : passenger.Gender === "1"
-                      ? "Transgender"
-                      : "Female"}
+                        ? "Transgender"
+                        : "Female"}
                   </span>
                   <span>{passenger.Email}</span>
                   {/* {passenger.AddressLine1 && (
@@ -1045,16 +990,16 @@ const Flightbookingdetail = () => {
           textAlign="center"
           onSubmit={handleSubmit}
         >
-          <div className="flightDetButton" style={{fontSize:"16px"}} >
+          <div className="flightDetButton" style={{ fontSize: "16px" }} >
             <button
-             style={{fontSize:"16px"}}
+              style={{ fontSize: "16px" }}
               type="submit"
               disabled={
                 !passengerAgreement || !paymentOption
                   ? true
                   : loading
-                  ? true
-                  : false
+                    ? true
+                    : false
               }
             >
               {" "}

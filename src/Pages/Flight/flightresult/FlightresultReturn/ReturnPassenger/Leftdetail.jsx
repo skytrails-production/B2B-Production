@@ -1,26 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { dangerouslySetInnerHTML } from "react";
-import { Box, Flex, Spacer, Text } from "@chakra-ui/react";
-import Grid from "@mui/material/Grid";
+// import { dangerouslySetInnerHTML } from "react";
+import { Box } from "@chakra-ui/react";
+
 import Accordion from "react-bootstrap/Accordion";
 import "./passenger.css";
-import { Typography, Button } from "@mui/material";
-import { useDispatch, useSelector, useReducer } from "react-redux";
+import { Typography } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import groupimg from "../../../../../Images/Groupl.png";
 import flightdir from "../../../../../Images/flgihtdir.png";
-import {
-  bookAction,
-  bookActionGDS,
-} from "../../../../../Redux/FlightBook/actionFlightBook";
+// import {
+//   bookAction,
+//   bookActionGDS,
+// } from "../../../../../Redux/FlightBook/actionFlightBook";
 import {
   PassengersAction,
   PassengersActionReturn,
 } from "../../../../../Redux/Passengers/passenger";
 import FlightLoader from "../../../FlightLoader/FlightLoader";
-import { setLoading } from "../../../../../Redux/FlightFareQuoteRule/actionFlightQuote";
+// import { setLoading } from "../../../../../Redux/FlightFareQuoteRule/actionFlightQuote";
 import Alert from '@mui/material/Alert';
 import { isValidPassportNumber } from "../../../../../../src/utils/validation"
+import dayjs from "dayjs";
 const Leftdetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -28,8 +29,7 @@ const Leftdetail = () => {
   const childs = sessionStorage.getItem("childs");
   const infants = sessionStorage.getItem("infants");
   const reducerState = useSelector((state) => state);
-  // console.log("reducerState", reducerState);
-  const ResultIndex = sessionStorage.getItem("ResultIndex");
+  // const ResultIndex = sessionStorage.getItem("ResultIndex");
   const [farePrice, setFarePrice] = useState("");
   const [farePriceReturn, setFarePriceReturn] = useState("");
   const [sub, setSub] = useState(false);
@@ -41,30 +41,23 @@ const Leftdetail = () => {
   const fareValueReturn =
     isPassportRequired ? reducerState?.flightFare?.flightQuoteData?.Results :
       reducerState?.flightFare?.flightQuoteDataReturn?.Results;
-  // console.log("fareValue", fareValue);
   const fareRule = isPassportRequired ?
     reducerState?.flightFare?.flightRuleData?.FareRules
     : reducerState?.flightFare?.flightRuleDataReturn?.FareRules;
-  const fareRuleReturn =
-    reducerState?.flightFare?.flightRuleDataReturn?.FareRules;
-  // console.log(fareValueReturn, fareRuleReturn, "vivekk");
+  // const fareRuleReturn =
+  // reducerState?.flightFare?.flightRuleDataReturn?.FareRules;
   const data = reducerState?.oneWay?.oneWayData?.data?.data?.Response;
-
-
-  // const img = flight?.Airline?.AirlineCode;
   const result = reducerState?.flightFare?.flightQuoteData?.Results
-  // console.warn(result?.Segments[1][result?.Segments[1]?.length - 1]
-  //   ,"result.....")
 
-  const flightDeparture = reducerState?.flightFare?.flightQuoteData?.Results?.Segments[0]?.[0];
-  const flightReturn = isPassportRequired ? reducerState?.flightFare?.flightQuoteData?.Results?.Segments[1]?.[0] : reducerState?.flightFare?.flightQuoteDataReturn?.Results?.Segments[0]?.[0];
+  const flightDeparture = reducerState?.flightFare?.flightQuoteData?.Results?.Segments[0]?.[reducerState?.flightFare?.flightQuoteData?.Results?.Segments[0]?.length - 1];
+  const flightReturn = isPassportRequired ? reducerState?.flightFare?.flightQuoteData?.Results?.Segments[1] : reducerState?.flightFare?.flightQuoteDataReturn?.Results?.Segments[0];
   useEffect(() => {
     if (adults === undefined || adults === null || childs === undefined || childs === null || infants === undefined || infants === null) {
       navigate("/FlightresultReturn")
     }
   })
   // console.log(flightDeparture, "flight departure")
-  // console.log(flightReturn, "flight return ")
+  console.log(flightReturn, "flight return ")
 
 
   const passengerTemplate = {
@@ -127,6 +120,8 @@ const Leftdetail = () => {
   const passengerLists = [];
   const passengerChildLists = [];
   const passengerInfantLists = [];
+
+
   useEffect(() => {
     if (fareValue && fareValueReturn) {
       const fareDetails = fareValue?.Fare;
@@ -147,14 +142,7 @@ const Leftdetail = () => {
             price?.AdditionalTxnFeePub / price?.PassengerCount,
           AdditionalTxnFeeOfrd:
             price?.AdditionalTxnFeeOfrd / price?.PassengerCount,
-          // OtherCharges: price?.OtherCharges / price?.PassengerCount,
-          // Discount: price?.Discount / price?.PassengerCount,
-          // PublishedFare: +price?.BaseFare + +price?.Tax / price?.PassengerCount,
-          // OfferedFare: price?.OfferedFare / price?.PassengerCount,
-          // TdsOnCommission: price?.TdsOnCommission / price?.PassengerCount,
-          // TdsOnPLB: price?.TdsOnPLB / price?.PassengerCount,
-          // TdsOnIncentive: price?.TdsOnIncentive / price?.PassengerCount,
-          // ServiceFee: price?.ServiceFee / price?.PassengerCount,
+
         };
         arr.push(obj1);
         // console.log(arr[1]);
@@ -176,7 +164,8 @@ const Leftdetail = () => {
       });
     }
   }, [fareValue, fareValueReturn]);
-  // console.log("farePrice", farePrice);
+
+
   for (let i = 0; i < adults; i++) {
     passengerLists.push({
       ...passengerTemplate,
@@ -198,7 +187,6 @@ const Leftdetail = () => {
   }
   const [serviceList, setServiceList] = useState([{ service: "" }]);
 
-  // const [passengerData,setPassengerData] = useState(allPassenger.flat())
 
   const [passengerList, setPassengerList] = useState(passengerLists);
   const allPassenger = [
@@ -234,17 +222,11 @@ const Leftdetail = () => {
 
   const fareQuoteData = reducerState?.flightFare?.flightQuoteData?.Results;
   function validatePhoneNumber(phoneNumber) {
-    // Define the regular expression pattern for a valid phone number
     var phonePattern = /^\d{10}$/;
-
-    // Test the phone number against the pattern
     return phonePattern.test(phoneNumber);
   }
   function validateEmail1(email) {
-    // Define the regular expression pattern for a valid phone number
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    // Test the phone number against the pattern
     return emailRegex.test(email);
   }
 
@@ -252,28 +234,16 @@ const Leftdetail = () => {
     // Regular expression for a simple email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     var phonePattern = /^\d{10}$/;
-
-    // Test the phone number against the pattern
     const result2 = validatePhoneNumber(phoneNumber);
-
-
-    // Test the email against the regular expression
     const result1 = validateEmail1(email);
     const result3 = isPassportRequired ? isValidPassportNumber(passport) : true;
     const result = result1 && result2 && result3;
-    // console.warn(result, "Please fill all the details/////");
     return result
   }
   function convertDateFormat(inputDate) {
-    // Split the input date string into year, month, and day
     const [year, month, day] = inputDate.split("-");
-
-    // Create a new Date object using the components
     const newDate = new Date(year, month - 1, day);
-
-    // Format the output date string as "yyyy-mm-ddTHH:mm:ss"
     const outputDate = newDate.toISOString().slice(0, 19).replace("T", "T00:00:00");
-    // console.log(outputDate, "outputdate")
 
     return outputDate;
   }
@@ -311,22 +281,14 @@ const Leftdetail = () => {
   function handleSubmit(event) {
     event.preventDefault();
     setSub(true)
-    // const r=validateEmail1(passengerList[0].Email)
-    //   console.warn(passengerList[0].Email,r, "***********************************************nooooooooooooooooooooooooooooo")
-    // const r1=validatePhoneNumber(passengerList[0].ContactNo)
-    //   console.warn(passengerList[0].ContactNo,r1, "***********************************************nooooooooooooooooooooooooooooo")
+
     const valid = passengerData.filter(
       (item) =>
         item.FirstName === "" || item.LastName === "" || item.DateOfBirth === ""
     );
 
     const emailVal = passengerList.filter((item) =>
-
-      // console.warn(passengerList[0].Email, "***********************************************nooooooooooooooooooooooooooooo")
-
       !isValidEmail(item.Email, item.ContactNo, item.PassportNo)
-
-
     )
 
     if (valid.length !== 0 && emailVal.length !== 0) {
@@ -372,102 +334,14 @@ const Leftdetail = () => {
 
 
 
-  //departure flight data in passenger page 
-
-
-  // const flightDeparture = reducerState?.flightFare?.flightQuoteData?.Results?.Segments[0]?.[0];
-  // const flightReturn = reducerState?.flightFare?.flightQuoteDataReturn?.Results?.Segments[0]?.[0];
-
-  // console.log(flightDeparture, "flight departure")
-  // console.log(flightReturn, "flight return ")
-
-
-
-
-
   const duration1 = `${Math.floor(flightDeparture?.Duration / 60)}hr ${flightDeparture?.Duration % 60
     }min`;
-  const dateString = flightDeparture?.Origin?.DepTime;
-  const date1 = new Date(dateString);
-  const options = {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    hour12: true,
-  };
-  const formattedDate = date1.toLocaleString("en-US", options);
-  const [month, day, year, time, ampm] = formattedDate.split(" ");
-  const desiredFormat = `${day}${month}-${year} ${time} ${ampm}`;
-
-
-  const dateString1 = flightDeparture?.Destination?.ArrTime;
-  const date2 = new Date(dateString1);
-  const options1 = {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    hour12: true,
-  };
-  const formattedDate1 = date2.toLocaleString("en-US", options1);
-  const [month1, day1, year1, time1, ampm1] =
-    formattedDate1.split(" ");
-  const desiredFormat1 = `${day1}${month1}-${year1} ${time1} ${ampm1}`;
-  // console.log(desiredFormat1, 'desired format')
-  // console.log(desiredFormat, 'desired format')
-
-
-
-
-  const duration3 = `${Math.floor(flightReturn?.Duration / 60)}hr ${flightReturn?.Duration % 60
-    }min`;
-  const dateString3 = flightReturn?.Origin?.DepTime;
-  const date3 = new Date(dateString3);
-  const options3 = {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    hour12: true,
-  };
-  const formattedDate3 = date3.toLocaleString("en-US", options3);
-  const [month3, day3, year3, time3, ampm3] = formattedDate3.split(" ");
-  const desiredFormat3 = `${day3}${month3}-${year3} ${time3} ${ampm3}`;
-
-
-  const dateString4 = flightReturn?.Destination?.ArrTime;
-  const date4 = new Date(dateString4);
-  const options4 = {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    hour12: true,
-  };
-  const formattedDate4 = date4.toLocaleString("en-US", options4);
-  const [month4, day4, year4, time4, ampm4] =
-    formattedDate4.split(" ");
-  const desiredFormat4 = `${day4}${month4}-${year4} ${time4} ${ampm4}`;
-  // console.log(desiredFormat4, 'desired format')
-  // console.log(desiredFormat3, 'desired format')
-
-
-
-
-
 
 
 
   const [Loading, setLoading] = useState(true);
 
 
-  // console.log(flightDeparture, "flight departure")
-  // console.log(flightReturn, "flight return ")
   useEffect(() => {
     if (flightDeparture?.Airline?.AirlineCode === undefined) {
       setLoading(true)
@@ -476,11 +350,25 @@ const Leftdetail = () => {
     }
     else (setLoading(false))
   }, [flightDeparture?.Airline?.AirlineCode])
+
   if (Loading) {
     return (<div>
       <FlightLoader />
     </div>)
   }
+
+
+  let layoverHours = 0;
+  let layoverMinutes = 0;
+  let layoverDuration = 0;
+
+
+  const arrivalTime = dayjs(flightReturn?.[0]?.Origin?.DepTime);
+  const departureTime = dayjs(flightReturn?.[flightReturn?.length - 1]?.Destination?.ArrTime);
+  layoverDuration = departureTime.diff(arrivalTime, 'minutes'); // Calculate difference in minutes
+  layoverHours = Math.floor(layoverDuration / 60); // Extract hours
+  layoverMinutes = layoverDuration % 60;
+
 
 
   return (
@@ -504,16 +392,17 @@ const Leftdetail = () => {
         <div className="row">
 
           <div className="col-lg-6">
-            <div className="singleDataReturnBox" style={{backgroundColor:"rgba(231, 60, 52, 0.15)"}}>
+            <div className="singleDataReturnBox" style={{ backgroundColor: "rgba(231, 60, 52, 0.15)" }}>
               <div className="returnBoxOne">
-                <div><img src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${flightDeparture?.Airline?.AirlineCode}.png`} alt="flightImg"/> </div>
+                <div><img src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${flightDeparture?.Airline?.AirlineCode}.png`} alt="flightImg" /> </div>
                 <span>{flightDeparture?.Airline?.AirlineName}</span>
                 <p>{flightDeparture?.Airline?.AirlineCode}{" "}{flightDeparture?.Airline?.FlightNumber}</p>
               </div>
               <div className="returnBoxTwo">
                 <span>{flightDeparture?.Origin?.Airport?.CityName}</span>
-                <p>{desiredFormat.slice(0, 12)}</p>
-                <p>{desiredFormat.slice(13)}</p>
+
+                <p>{dayjs(flightDeparture?.Origin?.DepTime).format("DD MMM, YY")}</p>
+                <p>{dayjs(flightDeparture?.Origin?.DepTime).format("h:mm A")}</p>
               </div>
               <div className="returnBoxThree">
                 <h4>{duration1}</h4>
@@ -521,32 +410,32 @@ const Leftdetail = () => {
               </div>
               <div className="returnBoxFour">
                 <span>{isPassportRequired ? result?.Segments[0][result?.Segments[0]?.length - 1]?.Destination?.Airport?.CityName : flightDeparture?.Destination?.Airport?.CityName}</span>
-                <p>{desiredFormat1.slice(0, 12)}</p>
-                <p>{desiredFormat1.slice(13)}</p>
+                <p>{dayjs(flightDeparture?.Destination?.ArrTime).format("DD MMM, YY")}</p>
+                <p>{dayjs(flightDeparture?.Destination?.ArrTime).format("h:mm A")}</p>
               </div>
 
             </div>
           </div>
           <div className="col-lg-6">
-            <div className="singleDataReturnBox" style={{backgroundColor:"rgba(231, 60, 52, 0.15)"}}>
+            <div className="singleDataReturnBox" style={{ backgroundColor: "rgba(231, 60, 52, 0.15)" }}>
               <div className="returnBoxOne">
-                <div><img src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${flightReturn?.Airline?.AirlineCode}.png`} alt="flightImg"/> </div>
-                <span>{flightReturn?.Airline?.AirlineName}</span>
-                <p>{flightReturn?.Airline?.AirlineCode}{" "}{flightReturn?.Airline?.FlightNumber}</p>
+                <div><img src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${flightReturn?.[0]?.Airline?.AirlineCode}.png`} alt="flightImg" /> </div>
+                <span>{flightReturn?.[0]?.Airline?.AirlineName}</span>
+                <p>{flightReturn?.[0]?.Airline?.AirlineCode}{" "}{flightReturn?.[0]?.Airline?.FlightNumber}</p>
               </div>
               <div className="returnBoxTwo">
-                <span>{flightReturn?.Origin?.Airport?.CityName}</span>
-                <p>{desiredFormat3.slice(0, 12)}</p>
-                <p>{desiredFormat3.slice(13)}</p>
+                <span>{flightReturn?.[0]?.Origin?.Airport?.CityName}</span>
+                <p>{dayjs(flightReturn?.[0]?.Origin?.DepTime).format("DD MMM, YY")}</p>
+                <p>{dayjs(flightReturn?.[0]?.Origin?.DepTime).format("h:mm A")}</p>
               </div>
               <div className="returnBoxThree">
-                <h4>{duration3}</h4>
+                <h4>{`${layoverHours} hr ${layoverMinutes} min `}</h4>
                 <div><img src={flightdir} /></div>
               </div>
               <div className="returnBoxFour">
-                <span>{isPassportRequired ? result?.Segments[1][result?.Segments[1]?.length - 1]?.Destination?.Airport?.CityName : flightReturn?.Destination?.Airport?.CityName}</span>
-                <p>{desiredFormat4.slice(0, 12)}</p>
-                <p>{desiredFormat4.slice(13)}</p>
+                <span>{isPassportRequired ? result?.Segments[1][result?.Segments[1]?.length - 1]?.Destination?.Airport?.CityName : flightReturn?.[flightReturn?.length - 1]?.Destination?.Airport?.CityName}</span>
+                <p>{dayjs(flightReturn?.[flightReturn?.length - 1]?.Destination?.ArrTime).format("DD MMM, YY")}</p>
+                <p>{dayjs(flightReturn?.[flightReturn?.length - 1]?.Destination?.ArrTime).format("h:mm A")}</p>
               </div>
 
             </div>
@@ -1020,7 +909,7 @@ const Leftdetail = () => {
                   fontSize: 24,
                   fontFamily: "Montserrat",
                   fontWeight: "600",
-                  
+
                   wordWrap: "break-word",
                 }}
               >
@@ -1179,7 +1068,7 @@ const Leftdetail = () => {
             <Box
               // className="mid_header"
               p={5}
-             
+
               mt={25}
             >
               <div
@@ -1202,8 +1091,8 @@ const Leftdetail = () => {
         {/* passengerdetraifjdsfjdslkjfkldsjgkldsjfglksdjflk;dsjfkl */}
         {/* passengerdetraifjdsfjdslkjfkldsjgkldsjfglksdjflk;dsjfkl */}
 
-        <div className="col-lg-12"  style={{ background: "rgba(231, 60, 52, 0.15)",}}>
-          <div class="headingflightPassenger" style={{ background: "rgba(231, 60, 52, 0.15)"}}>
+        <div className="col-lg-12" style={{ background: "rgba(231, 60, 52, 0.15)", }}>
+          <div class="headingflightPassenger" style={{ background: "rgba(231, 60, 52, 0.15)" }}>
             <p>Baggage Details</p>
 
           </div>
@@ -1281,8 +1170,8 @@ const Leftdetail = () => {
         </div>
 
 
-        <div className="col-lg-12"  style={{ background: "rgba(231, 60, 52, 0.15)"}}>
-          <div class="headingflightPassenger" style={{ background: "rgba(231, 60, 52, 0.15)"}}>
+        <div className="col-lg-12" style={{ background: "rgba(231, 60, 52, 0.15)" }}>
+          <div class="headingflightPassenger" style={{ background: "rgba(231, 60, 52, 0.15)" }}>
             <p>Fare Rule</p>
             <span>{data?.Origin}-{data?.Destination}</span>
           </div>
@@ -1309,7 +1198,7 @@ const Leftdetail = () => {
         <div className="col-lg-12 mt-5 mb-4 leftDetBut-new">
           <button
             type="submit"
-            style={{border:"none"}}
+            style={{ border: "none" }}
           >
             Proceed to Book
           </button>

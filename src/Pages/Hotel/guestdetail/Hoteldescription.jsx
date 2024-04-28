@@ -18,7 +18,7 @@ import { balanceSubtractRequest } from "../../../Redux/Auth/balaceSubtract/actio
 import userApi from "../../../Redux/API/api";
 import { swalModal } from "../../../utils/swal";
 
-const Hoteldescription = () => {
+const  Hoteldescription = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const OpenNewpage = () => {

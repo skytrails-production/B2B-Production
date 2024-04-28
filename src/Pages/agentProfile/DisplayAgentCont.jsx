@@ -103,12 +103,14 @@ function DisplayAgentCont() {
                      <td style={{ color: 'black' }}>{item?.title || "No Data"}</td>
                        <td style={{ color: 'black' }}>{item?.status || "No Data"}</td>
                          <td style={{ color: 'black' }}>{item?.type || "No Data"}</td>
-                       <td style={{ color: 'black' }}>{item?.description || "No Data"}</td>
+                       <td style={{ color: 'black' }}>{item?.description || `${item?.contactNumber || 'No Data'} ${item?.email || ''}` || 'No Data'}
+                      </td>
                       </tr>
                       ))
                       ) : (
-                           // If `cont` is not an array
+                     // If `cont` is not an array
                      Object.entries(cont).map(([key, value]) => (
+                        
                                   <tr key={key}>
                               <td style={{ color: 'black' }}>{key}</td>
                             <td style={{ color: 'black' }}>{value}</td>

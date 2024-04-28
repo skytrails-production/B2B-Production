@@ -10,6 +10,7 @@ import { IoMdHome } from "react-icons/io";
 import { FaCircleUser } from "react-icons/fa6";
 import { IoSettingsOutline } from "react-icons/io5";
 import axios from "axios";
+import { GiStaticGuard } from "react-icons/gi";
 import { apiURL } from "../../Constants/constant";
 import AgentProfileLeft from "./AgentProfileLeft";
 import AgentHome from "./AgentHome";
@@ -20,7 +21,9 @@ import AgentList from "./AgentList";
 import { MdAccountBalanceWallet } from "react-icons/md";
 import StaticContent from "./StaticContent";
 import Social from "./Social";
+import { MdSupportAgent } from "react-icons/md";
 import DisplayAgentCont from "./DisplayAgentCont";
+import { MdAddModerator } from "react-icons/md";
 const AgentProfileDashbord = () => {
   const dispatch = useDispatch();
   const reducerState = useSelector((state) => state);
@@ -33,10 +36,10 @@ const AgentProfileDashbord = () => {
   const leftPath = [
     { name: "home", icon: <IoMdHome size={30} /> },
     { name: "Agent List", icon: <FaUserFriends size={30} /> },
-    { name: "Upload Agent", icon: <FaUserFriends size={30} /> },
-    {name: "Upload Static", icon: <FaUserFriends size={30}/>},
-    {name: "Social Account", icon: <FaUserFriends size={30}/>},
-    {name: "Static Content", icon: <FaUserFriends size={30}/>},
+    { name: "Agent Logo", icon: <MdSupportAgent size={30} /> },
+    {name: "Upload Static", icon: <GiStaticGuard size={30}/>},
+    {name: "Social Account", icon: <MdAddModerator size={30}/>},
+    {name: "Static Content", icon: <GiStaticGuard size={30}/>},
     
   ];
   const dropDwonRef = useRef(null);

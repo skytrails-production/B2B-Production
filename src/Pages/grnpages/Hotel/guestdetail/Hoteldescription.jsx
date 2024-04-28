@@ -19,141 +19,138 @@ import userApi from "../../../../Redux/API/api";
 import { swalModal } from "../../../../utils/swal";
 import "./Hoteldescription.css";
 const Hoteldescription = () => {
+  const apiUrlPayment = `${apiURL.baseURL}/skyTrails/api/transaction/easebussPayment`;
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [loader, setLoader] = useState(false);
   const reducerState = useSelector((state) => state);
-  // console.warn(reducerState, "reducer State;;;;;;;;;;;;;;;;;;;;;;;;;;");
-  const bookingId =
-    reducerState?.hotelSearchResult?.bookRoom?.BookResult?.BookingId;
+  const authenticUser = reducerState?.logIn?.loginData?.status;
   let bookingStatus =
     reducerState?.hotelSearchResult?.bookRoom?.BookResult?.Status || false;
-
-  const hotelBlockDetails =
-    reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult;
-  const hotelDetails = hotelBlockDetails?.HotelRoomsDetails;
-  const resultIndex = sessionStorage.getItem("ResultIndex");
-  const hotelCode = sessionStorage.getItem("HotelCode");
   const [bookingSuccess, setBookingSuccess] = useState(bookingStatus);
+  const [loaderPayment1, setLoaderPayment1] = useState(false);
+  const [loaderPayment, setLoaderPayment] = useState(false);
 
-  const hotelData =
-    reducerState?.hotelSearchResult?.ticketData?.data?.data?.HotelSearchResult;
-  // console.log(resultIndex, hotelCode);
-  const hotelInfo = reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult;
-  // console.log("hotelDetails", hotelDetails);
-  // console.log("passenger", passenger);
-  // console.log("hotel block details", hotelBlockDetails)
-  // console.log("hotel data", hotelData)
-  // console.log("hotel Info", hotelInfo);
+  const hotelinfoGRN = reducerState?.hotelSearchResultGRN?.hotelRoom?.hotel;
+  const hotelMainReducer =
+    reducerState?.hotelSearchResultGRN?.ticketData?.data?.data;
+ console.log(hotelMainReducer,"hotel============================");
+  const passenger = reducerState?.passengers?.passengersData;
+  const [isDisableScroll, setIsDisableScroll] = useState(false);
+  // const [sub, setSub] = useState(false);
+  //const emailRef = useRef();
 
-  const checkInDate = moment(hotelDetails?.CheckInDate).format("MMMM DD, YYYY");
-  const checkOutDate = moment(hotelDetails?.CheckOutDate).format(
-    "MMMM DD, YYYY"
-  );
-  const cancelDuedate = moment(hotelDetails?.LastCancellationDate).format(
-    "MMMM DD, YYYY"
-  );
+  const star = (data) => {
+    const stars = [];
+    for (let i = 0; i < data; i++) {
+      stars.push(<StarIcon key={i} style={{ color: "#FF8900" }} />);
+    }
+    return stars;
+  };
 
-  const getBookingDetails =
-    reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult
-      ?.HotelRoomsDetails;
-  // console.log("reducerState", reducerState);
+  useEffect(() => {
+    if (reducerState?.hotelSearchResultGRN?.bookRoom?.status === "confirmed") {
+      setLoaderPayment(false);
+      navigate("/hotel/hotelsearchGRM/guestDetails/review/ticket");
+      return;
+    }
+  }, [reducerState?.hotelSearchResultGRN?.bookRoom?.status]);
 
-  const totalAmount = getBookingDetails?.reduce((accumulator, item) => {
-    return accumulator + item?.Price?.PublishedPriceRoundedOff;
-  }, 0);
-  // console.log("totalAmount in last page", totalAmount);
+  useEffect(() => {
+    if (
+      reducerState?.hotelSearchResult?.bookRoom?.BookResult?.Error
+        ?.ErrorCode !== 0 &&
+      reducerState?.hotelSearchResult?.bookRoom?.BookResult?.Error
+        ?.ErrorCode !== undefined
+    ) {
+      swalModal(
+        "py",
+        "Booking Issue - Your refund will be processed within 7 working days. We apologize for any inconvenience caused.",
+        true
+      );
+    }
+  }, [reducerState?.hotelSearchResult?.bookRoom]);
 
-  const markUpamount =
-    reducerState?.userData?.userData?.data?.data?.markup?.hotel;
-  const userBalance = reducerState?.userData?.userData?.data?.data?.balance;
+  useEffect(() => {
+    if (loaderPayment == true) {
+      handleClickBooking();
+    }
+  }, [loaderPayment]);
 
-  // console.log("markup hotel", markUpamount)
-  const grandTotal = totalAmount + markUpamount;
+  function generateMixedString() {
+    const fixedText = "skyTrails_";
+    const currentTime = Date.now().toString(); //add current time
+    return fixedText + currentTime;
+  }
 
-  // useEffect(() => {
-  //   if (
-  //     reducerState?.hotelSearchResult?.bookRoom?.BookResult?.Error
-  //       ?.ErrorCode !== 0 &&
-  //     reducerState?.hotelSearchResult?.bookRoom?.BookResult?.Error
-  //       ?.ErrorCode !== undefined
-  //   ) {
-  //     // swalModal("hotel",reducerState?.hotelSearchResult?.bookRoom?.BookResult?.Error?.ErrorMessage,false)
-  //     swalModal("hotel","'We're sorry, but there was an issue with your hotel booking",false)
-  //     // Swal.fire({
-  //     //   icon: "error",
-  //     //   title: "Oops...",
-  //     //   text: reducerState?.hotelSearchResult?.bookRoom?.BookResult?.Error
-  //     //     ?.ErrorMessage,
-  //     //   timer: 3000,
-  //     //   showClass: {
-  //     //     popup: `
-  //     //         animate__animated
-  //     //         animate__fadeInUp
-  //     //         animate__faster
-  //     //       `,
-  //     //   },
-  //     //   hideClass: {
-  //     //     popup: `
-  //     //         animate__animated
-  //     //         animate__fadeOutDown
-  //     //         animate__faster
-  //     //       `,
-  //     //   },
-  //     // });
-  //     navigate("/");
-  //   }
-  // }, [reducerState?.hotelSearchResult?.bookRoom?.BookResult]);
+  function generateMixedString() {
+    const fixedText = "skyTrails_";
+    const currentTime = Date.now().toString(); //add current time
+    return fixedText + currentTime;
+  }
+
+  const mixedString = generateMixedString();
 
   const handleClickBooking = async () => {
     // console.log(userBalance,"userbalance", grandTotal, "grandTotal")
 
     if (userBalance >= grandTotal) {
       const payload = {
-        ResultIndex: resultIndex,
-        HotelCode: hotelCode,
-        HotelName: hotelBlockDetails?.HotelName,
-        GuestNationality: "IN",
-        NoOfRooms: hotelDetails?.length,
-        ClientReferenceNo: 0,
-        IsVoucherBooking: true,
-        HotelRoomsDetails: hotelDetails?.map((item, hotelIndex) => {
-          return {
-            RoomIndex: item?.RoomIndex,
-            RoomTypeCode: item?.RoomTypeCode,
-            RoomTypeName: item?.RoomTypeName,
-            RatePlanCode: item?.RatePlanCode,
-            BedTypeCode: null,
-            SmokingPreference: 0,
-            Supplements: null,
-            Price: item?.Price,
-            HotelPassenger: passenger
-              .map((itemPassenger, index) => {
-                if (itemPassenger?.roomIndex === hotelIndex) {
-                  return {
-                    ...itemPassenger,
-                    Email: apiURL.flightEmail,
-                    Phoneno: apiURL.phoneNo,
-                  };
-                } // If the condition is not met, return the original item
-              })
-              .filter(Boolean),
-          };
-        }),
-
-        EndUserIp: reducerState?.ip?.ipData,
-        TokenId: reducerState?.ip?.tokenData,
-        TraceId:
-          reducerState?.hotelSearchResult?.ticketData?.data?.data
-            ?.HotelSearchResult?.TraceId,
+        search_id:
+          reducerState?.hotelSearchResultGRN?.hotelDetails?.data?.data
+            ?.search_id,
+        hotel_code: hotelinfoGRN?.hotel_code,
+        city_code: hotelinfoGRN?.city_code,
+        group_code: hotelinfoGRN?.rate?.group_code,
+        checkout: hotelMainReducer?.checkout,
+        checkin: hotelMainReducer?.checkin,
+        booking_comments: "Test booking",
+        payment_type: "AT_WEB",
+        agent_reference: mixedString,
+        booking_items: [
+          {
+            room_code: hotelinfoGRN?.rate?.room_code,
+            rate_key: hotelinfoGRN?.rate?.rate_key,
+            rooms: passenger.map((item, index) => ({
+              room_reference:
+                hotelinfoGRN?.rate?.rooms?.[index]?.room_reference,
+              paxes: [
+                ...item.adults.map((adult) => ({
+                  title: adult.Title,
+                  name: adult.FirstName,
+                  surname: adult.LastName,
+                  type: "AD",
+                })),
+                ...item.children.map((child) => ({
+                  title: child.Title,
+                  name: child.FirstName,
+                  surname: child.LastName,
+                  type: "CH",
+                  age: child.age,
+                })),
+              ],
+            })),
+          },
+        ],
+        holder: {
+          title: passenger?.[0]?.adults?.[0]?.Title,
+          name: passenger?.[0]?.adults?.[0]?.FirstName,
+          surname: passenger?.[0]?.adults?.[0]?.LastName,
+          email: passenger?.[0]?.adults?.[0]?.Email,
+          phone_number: passenger?.[0]?.adults?.[0]?.Phoneno,
+          client_nationality: "in",
+          pan_number: passenger?.[0]?.adults?.[0]?.PAN,
+        },
       };
       // console.log(payload)
 
-      const hotelDetailsPayload = {
-        BookingId: await bookingId,
-        EndUserIp: reducerState?.ip?.ipData,
-        TokenId: reducerState?.ip?.tokenData,
-      };
+      // const hotelDetailsPayload = {
+      //   BookingId: await bookingId,
+      //   EndUserIp: reducerState?.ip?.ipData,
+      //   TokenId: reducerState?.ip?.tokenData,
+      // };
+
       // console.log("hotelDetailsPayload", hotelDetailsPayload);
       // Dispatch the hotelBookRoomAction
       //  bookingStatus = true;
@@ -184,7 +181,7 @@ const Hoteldescription = () => {
       // });
       // if(1>2){
       // setBookingSuccess(true);
-      dispatch(hotelBookRoomActionGRN([payload, hotelDetailsPayload]));
+      dispatch(hotelBookRoomActionGRN(payload));
       // dispatch(hotelBookRoomAction(payload));
     } else {
       // alert("Insufficent balance!! Please Recharge your Wallet");
@@ -221,7 +218,99 @@ const Hoteldescription = () => {
     }
   };
 
-  // balance subtract and update
+  useEffect(() => {
+    if (isDisableScroll) {
+      document.body.classList.add("disableTrue");
+      document.body.classList.remove("disableFalse");
+    } else {
+      document.body.classList.remove("disableTrue");
+      document.body.classList.add("disableFalse");
+    }
+    return () => {
+      document.body.classList.add("disableFalse");
+
+      document.body.classList.remove("disableTrue");
+    };
+  }, [isDisableScroll]);
+
+  const [paymentLoading, setPaymentLoading] = useState(false);
+
+  const hotelBlockDetails =
+    reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult;
+  const hotelDetails = hotelBlockDetails?.HotelRoomsDetails;
+  const resultIndex = sessionStorage.getItem("ResultIndex");
+  const hotelCode = sessionStorage.getItem("HotelCode");
+
+  const hotelData =
+    reducerState?.hotelSearchResult?.ticketData?.data?.data?.HotelSearchResult;
+  // console.log(resultIndex, hotelCode);
+  const hotelInfo = reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult;
+  // console.log("hotelDetails", hotelDetails);
+  // console.log("passenger", passenger);
+  // console.log("hotel block details", hotelBlockDetails)
+  // console.log("hotel data", hotelData)
+  // console.log("hotel Info", hotelInfo);
+
+  const checkInDate = moment(hotelDetails?.CheckInDate).format("MMMM DD, YYYY");
+  const checkOutDate = moment(hotelDetails?.CheckOutDate).format(
+    "MMMM DD, YYYY"
+  );
+  const cancelDuedate = moment(hotelDetails?.LastCancellationDate).format(
+    "MMMM DD, YYYY"
+  );
+
+  const getBookingDetails =
+    reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult
+      ?.HotelRoomsDetails;
+  // console.log("reducerState", reducerState);
+
+  const totalAmount = getBookingDetails?.reduce((accumulator, item) => {
+    return accumulator + item?.Price?.PublishedPriceRoundedOff;
+  }, 0);
+  // console.log("totalAmount in last page", totalAmount);
+
+  const markUpamount =
+    reducerState?.userData?.userData?.data?.data?.markup?.hotel;
+  const userBalance = reducerState?.userData?.userData?.data?.data?.balance;
+
+  // console.log("markup hotel", markUpamount)
+  //const grandTotal = totalAmount + markUpamount;
+
+  const grandTotal = 1;
+
+  // useEffect(() => {
+  //   if (
+  //     reducerState?.hotelSearchResult?.bookRoom?.BookResult?.Error
+  //       ?.ErrorCode !== 0 &&
+  //     reducerState?.hotelSearchResult?.bookRoom?.BookResult?.Error
+  //       ?.ErrorCode !== undefined
+  //   ) {
+  //     // swalModal("hotel",reducerState?.hotelSearchResult?.bookRoom?.BookResult?.Error?.ErrorMessage,false)
+  //     swalModal("hotel","'We're sorry, but there was an issue with your hotel booking",false)
+  //     // Swal.fire({
+  //     //   icon: "error",
+  //     //   title: "Oops...",
+  //     //   text: reducerState?.hotelSearchResult?.bookRoom?.BookResult?.Error
+  //     //     ?.ErrorMessage,
+  //     //   timer: 3000,
+  //     //   showClass: {
+  //     //     popup: `
+  //     //         animate__animated
+  //     //         animate__fadeInUp
+  //     //         animate__faster
+  //     //       `,
+  //     //   },
+  //     //   hideClass: {
+  //     //     popup: `
+  //     //         animate__animated
+  //     //         animate__fadeOutDown
+  //     //         animate__faster
+  //     //       `,
+  //     //   },
+  //     // });
+  //     navigate("/");
+  //   }
+  // }, [reducerState?.hotelSearchResult?.bookRoom?.BookResult]);
 
   const userId = reducerState?.logIn?.loginData?.data?.data?.id;
   // const bookingResonse=reducerState?.hotelSearchResult?.bookRoom?.BookResult?.Error?.ErrorCode;
@@ -308,85 +397,8 @@ const Hoteldescription = () => {
     ? hotelCancellationPolicies?.CancellationPolicies[0]?.Charge
     : null;
 
-  const star = (data) => {
-    const stars = [];
-    for (let i = 0; i < data; i++) {
-      stars.push(<StarIcon key={i} style={{ color: "#FF8900" }} />);
-    }
-    return stars;
-  };
   // console.warn(userBalance, grandTotal, "userBalance >= grandTotal");
-  useEffect(() => {
-    if (
-      reducerState?.hotelSearchResult?.bookRoom?.BookResult?.Error
-        ?.ErrorCode === 0
-    ) {
-      const payload = {
-        ResultIndex: resultIndex,
-        HotelCode: hotelCode,
-        HotelName: hotelBlockDetails?.HotelName,
-        GuestNationality: "IN",
-        NoOfRooms: hotelDetails?.length,
-        ClientReferenceNo: 0,
-        IsVoucherBooking: true,
-        HotelRoomsDetails: hotelDetails?.map((item, hotelIndex) => {
-          return {
-            RoomIndex: item?.RoomIndex,
-            RoomTypeCode: item?.RoomTypeCode,
-            RoomTypeName: item?.RoomTypeName,
-            RatePlanCode: item?.RatePlanCode,
-            BedTypeCode: null,
-            SmokingPreference: 0,
-            Supplements: null,
-            Price: item?.Price,
-            HotelPassenger: passenger
-              .map((itemPassenger, index) => {
-                if (itemPassenger?.roomIndex === hotelIndex) {
-                  return {
-                    ...itemPassenger,
-                    Email: apiURL.flightEmail,
-                    Phoneno: apiURL.phoneNo,
-                  };
-                } // If the condition is not met, return the original item
-              })
-              .filter(Boolean),
-          };
-        }),
 
-        EndUserIp: reducerState?.ip?.ipData,
-        TokenId: reducerState?.ip?.tokenData,
-        TraceId:
-          reducerState?.hotelSearchResult?.ticketData?.data?.data
-            ?.HotelSearchResult?.TraceId,
-      };
-      // dispatch(hotelBookRoomAction(payload));
-      Swal.fire({
-        icon: "success",
-        title: "Hotel Booking Success",
-        text: `Booking Id: ${reducerState?.hotelSearchResult?.bookRoom?.BookResult?.BookingId} and Confirmation Number id ${reducerState?.hotelSearchResult?.reducerState?.hotelSearchResult?.bookRoom?.Error?.ErrorCode?.BookResult?.ConfirmationNo}`,
-        didOpen: () => {
-          navigate("/");
-        },
-
-        // timer: 3000,
-        showClass: {
-          popup: `
-              animate__animated
-              animate__fadeInUp
-              animate__faster
-            `,
-        },
-        hideClass: {
-          popup: `
-              animate__animated
-              animate__fadeOutDown
-              animate__faster
-            `,
-        },
-      });
-      // navigate("/");
-    }
-  }, [reducerState?.hotelSearchResult?.bookRoom]);
   // console.warn("reducerState?.hotelSearchResult?.bookRoom?.Error?.ErrorCode",reducerState?.hotelSearchResult?.bookRoom?.Error?.ErrorCode)
 
   // if (
@@ -399,14 +411,7 @@ const Hoteldescription = () => {
   //   // navigate("/hotel/hotelsearch/HotelBooknow/Reviewbooking")
   //   return <div>loading....</div>;
   // }
-  //grn
-  const hotelinfoGRN =
-    reducerState?.hotelSearchResultGRN?.hotelDetails?.data?.data?.hotel;
-  const hotelMainReducer =
-    reducerState?.hotelSearchResultGRN?.ticketData?.data?.data;
-  const passenger = reducerState?.passengers?.passengersData;
 
-  console.log(hotelMainReducer?.checkin, "-------------------checkin");
   return (
     <>
       <div className="container-fluid rmv-margin">
@@ -676,7 +681,7 @@ const Hoteldescription = () => {
 
               <div className="guestDetailsNorms">
                 <ul>
-                {hotelinfoGRN?.facilities.split(";").map((item, index) => (
+                  {hotelinfoGRN?.facilities.split(";").map((item, index) => (
                     <p key={index}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -740,9 +745,8 @@ const Hoteldescription = () => {
           style={{ border: "none" }}
           className="viewinvoice"
         >
-          View Invoice
+          Pay Now
         </button>
-        
       </div>
     </>
     // <Box p={3} backgroundColor="#F5F5F5" borderRadius="10px">

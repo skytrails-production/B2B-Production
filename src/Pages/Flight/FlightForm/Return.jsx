@@ -89,7 +89,7 @@ const Return = () => {
   const [minReturnDate, setMinReturnDate] = useState(""); // To store the minimum return date
   const [displayFrom, setdisplayFrom] = useState(false);
   const [displayTo, setdisplayTo] = useState(true);
-
+  const [activeIdClass, setActiveIdClass] = useState(1);
 
   // error show
 
@@ -147,6 +147,19 @@ const Return = () => {
   //     mounted = false;
   //   };
   // }, [fromQuery]);
+
+
+
+  const ClassItems = [
+    { id: 1, label: "All" },
+    { id: 2, label: "Economy" },
+    { id: 3, label: "Premium Economy" },
+    { id: 4, label: "Business" },
+    { id: 5, label: "Premium Business" },
+    { id: 6, label: "First" },
+  ];
+
+
   useEffect(() => {
     const fetchSearchResults = async () => {
       // make an API call to get search results
@@ -341,7 +354,7 @@ const Return = () => {
       InfantCount: formData.get("infant"),
       DirectFlight: "false",
       OneStopFlight: "false",
-      JourneyType: "2",
+      JourneyType: activeIdClass,
       PreferredAirlines: null,
       Segments: [
         {
@@ -374,6 +387,8 @@ const Return = () => {
     await setFrom(to)
     await setTO(temp)
   }
+
+
 
   return (
     <div className="">
@@ -463,21 +478,21 @@ const Return = () => {
               </div>
             </motion.div>
 
-            
+
 
           </motion.div>
 
           <motion.div className="row" variants={variants} initial="initial"
             whileInView="animate">
 
-<motion.div variants={variants} className="col-xs-12 col-md-3 col-lg-4 ps-0 mb-3">
+            <motion.div variants={variants} className="col-xs-12 col-md-3 col-lg-4 ps-0 mb-3">
               <div className="form_input">
                 <label for="departure" className="form_lable">
                   DEPARTURE
                 </label>
 
                 <input
-                style={{display:"flex",justifyContent:"center"}}
+                  style={{ display: "flex", justifyContent: "center" }}
                   type="date"
                   name="departure"
                   id="departure"
@@ -498,7 +513,7 @@ const Return = () => {
                 </label>
 
                 <input
-                 style={{display:"flex",justifyContent:"center"}}
+                  style={{ display: "flex", justifyContent: "center" }}
                   type="date"
                   name="departure1"
                   id="departure1"
@@ -513,7 +528,7 @@ const Return = () => {
               </div>
             </motion.div>
 
-            </motion.div>
+          </motion.div>
 
 
 
@@ -579,13 +594,18 @@ const Return = () => {
             <motion.div className="col-lg-3 col-md-6 col-12 mb-3 ps-0 mb-3" variants={variants}>
               <div className="form_input">
                 <label className="form_lable">Class</label>
-                <select name="class" id="" className="form_input_select">
-                  <option value="1">All</option>
-                  <option value="2">Ecomomy</option>
-                  <option value="3">Premimum Economy</option>
-                  <option value="4">Business</option>
-                  <option value="5">Premimum Business</option>
-                  <option value="6">First</option>
+                <select
+                  name="class"
+                  id=""
+                  className="form_input_select"
+                  value={activeIdClass}
+                  onChange={(e) => setActiveIdClass(parseInt(e.target.value))}
+                >
+                  {ClassItems.map((ele) => (
+                    <option key={ele.id} value={ele.id}>
+                      {ele.label}
+                    </option>
+                  ))}
                 </select>
               </div>
             </motion.div>
@@ -615,11 +635,11 @@ const Return = () => {
               </motion.div> */}
 
               <motion.div variants={variants} initial="initial"
-                whileInView="animate" className="col-md-6 col-lg-6 col-12 col-sm-12 mb-3 ps-0" style={{width:"100%", display:"flex", justifyContent:"center"}} >
+                whileInView="animate" className="col-md-6 col-lg-6 col-12 col-sm-12 mb-3 ps-0" style={{ width: "100%", display: "flex", justifyContent: "center" }} >
                 <motion.button
                   variants={variants}
                   type="submit"
-                  className="flightFormSubmit-new" style={{border:"none"}}>Search Flight <FlightIcon />
+                  className="flightFormSubmit-new" style={{ border: "none" }}>Search Flight <FlightIcon />
                 </motion.button>
               </motion.div>
             </div>

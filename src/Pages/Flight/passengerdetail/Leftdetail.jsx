@@ -18,6 +18,7 @@ import Headers from "../../../Components/Headers";
 import FlightLoader from "../FlightLoader/FlightLoader";
 import Alert from "@mui/material/Alert";
 import { FalseAllActionReturn, quoteActionReturn, ruleActionReturn, setLoading } from "../../../Redux/FlightFareQuoteRule/actionFlightQuote";
+import dayjs from "dayjs";
 
 const Leftdetail = () => {
 
@@ -46,8 +47,8 @@ const Leftdetail = () => {
   const [sub, setSub] = useState(false);
   const [alert, setAlert] = useState(false);
   console.warn("resucer state.....................", reducerState)
-  useEffect(()=>{
-    if(adults===null || adults===undefined || childs===undefined|| childs===null||infants===undefined|| infants===null|| ResultIndex===undefined || ResultIndex===null||data===undefined || null){
+  useEffect(() => {
+    if (adults === null || adults === undefined || childs === undefined || childs === null || infants === undefined || infants === null || ResultIndex === undefined || ResultIndex === null || data === undefined || null) {
       navigate("/Flightresult")
     }
   })
@@ -113,11 +114,11 @@ const Leftdetail = () => {
   const passengerInfantLists = [];
   // useEffect(() => {
   //   // dispatch(setLoading(reducerState?.flightFare))
-    
+
   //   dispatch(FalseAllActionReturn(reducerState?.flightFare))
   //   console.warn("seLoding dispatch cleanup complete",reducerState?.flightFare)
   // }, [])
-  console.warn("seLoding dispatch cleanup complete 1111111111111111111111",reducerState?.flightFare)
+  console.warn("seLoding dispatch cleanup complete 1111111111111111111111", reducerState?.flightFare)
   useEffect(() => {
     if (fareValue) {
       let fareDetails = fareValue?.Fare;
@@ -340,124 +341,11 @@ const Leftdetail = () => {
       }, 3000);
     }
 
-    // if()
 
-    // const payload = {
-    //   PreferredCurrency: null,
-    //   ResultIndex: ResultIndex,
-    //   AgentReferenceNo: "sonam1234567890",
-    //   Passengers: [
-    //     {
-    //       Title: formData.get("title"),
-    //       FirstName: formData.get("name"),
-    //       LastName: formData.get("lastname"),
-    //       PaxType: 1,
-    //       DateOfBirth: formData.get("dateofbirth"),
-    //       Gender: formData.get("gender"),
-    //       PassportNo: "",
-    //       PassportExpiry: "",
-    //       AddressLine1: formData.get("address"),
-    //       AddressLine2: "",
-    //       Fare: {
-    //         Currency:fareValue?.Fare?.Currency,
-    //         BaseFare: fareValue?.Fare?.BaseFare,
-    //         Tax: fareValue?.Fare?.Tax,
-    //         YQTax: fareValue?.Fare?.YQTax,
-    //         AdditionalTxnFeePub: fareValue?.Fare?.AdditionalTxnFeePub,
-    //         AdditionalTxnFeeOfrd: fareValue?.Fare?.AdditionalTxnFeeOfrd,
-    //         OtherCharges: fareValue?.Fare?.OtherCharges,
-    //         Discount:fareValue?.Fare?.Discount,
-    //         PublishedFare: fareValue?.Fare?.PublishedFare,
-    //         OfferedFare: fareValue?.Fare?.OfferedFare,
-    //         TdsOnCommission: fareValue?.Fare?.TdsOnCommission,
-    //         TdsOnPLB: fareValue?.Fare?.TdsOnPLB,
-    //         TdsOnIncentive: fareValue?.Fare?.TdsOnIncentive,
-    //         ServiceFee: fareValue?.Fare?.ServiceFee
-    //       },
-    //       City: formData.get("city"),
-    //       CountryCode: "IN",
-    //       CountryName: formData.get("country"),
-    //       Nationality: "IN",
-    //       ContactNo: formData.get("mobilenumber"),
-    //       Email: formData.get("email"),
-    //       IsLeadPax: true,
-    //       FFAirlineCode: "6E",
-    //       FFNumber: "123",
-    //       Baggage: [
-    //         {
-    //           AirlineCode: fareValue?.Segments[0]?.Airline?.AirlineCode,
-    //           FlightNumber: fareValue?.Segments[0]?.Airline?.FlightNumber,
-    //           WayType: ,
-    //           Code: ,
-    //           Description: ,
-    //           Weight: 0,
-    //           Currency: "INR",
-    //           Price: 0,
-    //           Origin: "DEL",
-    //           Destination: "DXB",
-    //         },
-    //       ],
-    //       MealDynamic: [
-    //         {
-    //           AirlineCode: "6E",
-    //           FlightNumber: "23",
-    //           WayType: 2,
-    //           Code: "No Meal",
-    //           Description: 2,
-    //           AirlineDescription: "",
-    //           Quantity: 0,
-    //           Currency: "INR",
-    //           Price: 0,
-    //           Origin: "DEL",
-    //           Destination: "DXB",
-    //         },
-    //       ],
-    //       SeatDynamic: [
-    //         {
-    //           AirlineCode: "6E",
-    //           FlightNumber: "2978",
-    //           CraftType: "A320-180",
-    //           Origin: "DEL",
-    //           Destination: "DXB",
-    //           AvailablityType: 1,
-    //           Description: 2,
-    //           Code: "2A",
-    //           RowNo: "2",
-    //           SeatNo: "A",
-    //           SeatType: 1,
-    //           SeatWayType: 2,
-    //           Compartment: 1,
-    //           Deck: 1,
-    //           Currency: "INR",
-    //           Price: 300,
-    //         },
-    //       ],
-    //       GSTCompanyAddress: "",
-    //       GSTCompanyContactNumber: "",
-    //       GSTCompanyName: "",
-    //       GSTNumber: "",
-    //       GSTCompanyEmail: "",
-    //     },
-    //   ],
-    //   EndUserIp: reducerState?.ip?.ipData,
-    //   TokenId: reducerState?.ip?.tokenData,
-    //   TraceId: reducerState?.oneWay?.oneWayData?.data?.data?.Response?.TraceId,
-    // };
-    // dispatch(bookAction(payload));
-
-    // sessionStorage.setItem("Passengers", payload?.Passengers);
-    // navigate("flightreviewbooking");
 
   }
 
-  // Add form
 
-  // const handleServiceChange = (e, index) => {
-  //   const { name, value } = e.target;
-  //   const list = [...serviceList];
-  //   list[index][name] = value;
-  //   setServiceList(list);
-  // };
 
   const handleServiceRemove = (index) => {
     const list = [...serviceList];
@@ -478,8 +366,6 @@ const Leftdetail = () => {
   };
   const datet = new Date();
 
-  // Set the minimum date to 12 years ago
-  // const minDateValue = new Date(datet);
   const maxDateValue = new Date(datet);
   maxDateValue.setFullYear(datet.getFullYear() - 12);
   const minDateValueChild = new Date(datet);
@@ -489,8 +375,6 @@ const Leftdetail = () => {
   minDateValueChild.setFullYear(datet.getFullYear() - 11)
   maxDateValueChild.setFullYear(datet.getFullYear() - 2)
   minDateValueInfer.setFullYear(datet.getFullYear() - 2)
-
-
 
 
 
@@ -504,7 +388,6 @@ const Leftdetail = () => {
 
 
   const fareQuoteData = reducerState?.flightFare?.flightQuoteData?.Results;
-  // console.log(fareQuoteData, "fare quote data");
 
 
   const img = fareQuoteData?.Segments?.[0]?.[0]?.Airline?.AirlineCode;
@@ -512,143 +395,71 @@ const Leftdetail = () => {
   const airlineCode = fareQuoteData?.Segments?.[0]?.[0]?.Airline?.AirlineCode;
   const flightNumber = fareQuoteData?.Segments?.[0]?.[0]?.Airline?.FlightNumber;
   const originCity = fareQuoteData?.Segments?.[0]?.[0]?.Origin?.Airport?.CityName;
-  const DestinationCity = fareQuoteData?.Segments?.[0]?.[fareQuoteData?.Segments[0].length-1]?.Destination?.Airport?.CityName;
+  const DestinationCity = fareQuoteData?.Segments?.[0]?.[fareQuoteData?.Segments[0].length - 1]?.Destination?.Airport?.CityName;
   const flightFare = fareQuoteData?.Fare?.PublishedFare;
   const originTerminal = fareQuoteData?.Segments?.[0]?.[0]?.Origin?.Airport?.Terminal;
-  const destinationTerminal = fareQuoteData?.Segments?.[0]?.[fareQuoteData?.Segments[0].length-1]?.Destination?.Airport?.Terminal;
-
-
-
-// console.log(fareQuoteData?.Segments[0],'length')
-
-  // const time = `${Math.floor(fareQuoteData?.Segments?.[0]?.[0]?.Duration / 60)}hr ${fareQuoteData?.Segments?.[0]?.[0]?.Duration % 60
-  //   }min`;
-  // const dateString = fareQuoteData?.Segments?.[0]?.[0]?.Origin?.DepTime;
-  // const date1 = new Date(dateString);
-  // const time1 = date1.toLocaleTimeString([], {
-  //   hour: "2-digit",
-  //   minute: "2-digit",
-  // });
-
-  // const day = date1.getDate();
-  // const month = date1.toLocaleString("default", {
-  //   month: "short",
-  // });
-  // const year = date1.getFullYear();
-  // const formattedDate = `${day} ${month} ${year}`;
-
-  // const dateString1 = fareQuoteData?.Segments?.[0]?.[0]?.Destination?.ArrTime;
-  // const date2 = new Date(dateString1);
-  // const time2 = date2.toLocaleTimeString([], {
-  //   hour: "2-digit",
-  //   minute: "2-digit",
-  // });
-
-  // const day1 = date2.getDate();
-  // const month1 = date2.toLocaleString("default", {
-  //   month: "short",
-  // });
-
-
-
+  const destinationTerminal = fareQuoteData?.Segments?.[0]?.[fareQuoteData?.Segments[0].length - 1]?.Destination?.Airport?.Terminal;
 
 
 
 
   const timeDuration = `${Math.floor(fareQuoteData?.Segments?.[0]?.[0]?.Duration / 60)}hr ${fareQuoteData?.Segments?.[0]?.[0]?.Duration % 60
     }min`;
-  const dateString = fareQuoteData?.Segments?.[0]?.[0]?.Origin?.DepTime;
-  const date1 = new Date(dateString);
-  const options = {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    hour12: true,
-  };
-  const formattedDate = date1.toLocaleString("en-US", options);
-  const [month, day, year, time, ampm] = formattedDate.split(" ");
-  const desiredFormat = `${day}${month}-${year} ${time} ${ampm}`;
 
 
-  const dateString1 = fareQuoteData?.Segments?.[0]?.[0]?.Destination?.ArrTime;
-  const date2 = new Date(dateString1);
-  const options1 = {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    hour12: true,
-  };
-  const formattedDate1 = date2.toLocaleString("en-US", options1);
-  const [month1, day1, year1, time1, ampm1] =
-    formattedDate1.split(" ");
-  const desiredFormat1 = `${day1}${month1}-${year1} ${time1} ${ampm1}`;
 
+  if (fareQuoteData?.Segments[0].length === 2) {
+    const dateTime = new Date(fareQuoteData?.Segments[0][1]?.Destination?.ArrTime);
 
-  if(fareQuoteData?.Segments[0].length===2){
-  const dateTime = new Date(fareQuoteData?.Segments[0][1]?.Destination?.ArrTime);
+    // Format date (30, Dec-2023)
+    const options = { day: '2-digit', month: 'short', year: 'numeric' };
+    var formattedDateStop = dateTime.toLocaleDateString('en-US', options);
 
-// Format date (30, Dec-2023)
-const options = { day: '2-digit', month: 'short', year: 'numeric' };
-var formattedDateStop = dateTime.toLocaleDateString('en-US', options);
-
-// Format time (9:00 AM)
-const optionsTime = { hour: 'numeric', minute: 'numeric', hour12: true };
-var formattedTimeStop = dateTime.toLocaleTimeString('en-US', optionsTime);
+    // Format time (9:00 AM)
+    const optionsTime = { hour: 'numeric', minute: 'numeric', hour12: true };
+    var formattedTimeStop = dateTime.toLocaleTimeString('en-US', optionsTime);
 
   }
 
-  // console.warn(minDateChild, "minDateChild", maxDateChild, "maxDateChild", 'currentDate&&&&&&&&&&&&&&&&&&&&&&&&&78888888888888888888')
 
   return (
     <div>
       {alert &&
         <Alert className="alert_passenger" onClick={() => {
-          // dispatch(signUpActionClear());
         }} severity="error">
           Please fill all the details
         </Alert>}
 
       <div className="singleFlightBox justify-content-evenly">
         <div className="singleFlightBoxOne">
-          <div><img src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${img}.png`} alt="flightImg"/> </div>
+          <div><img src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${img}.png`} alt="flightImg" /> </div>
           <span>{airlineName}</span>
           <p>{airlineCode}{" "}{flightNumber}</p>
         </div>
         <div className="singleFlightBoxTwo">
           <span>{originCity}</span>
           {/* <p>{time1.substr(0, 5)}</p> */}
-          <p>{desiredFormat.slice(0, 12)}</p>
-          <p>{desiredFormat.slice(13)}</p>
+          <p>{dayjs(fareQuoteData?.Segments?.[0]?.[0]?.Origin?.DepTime).format("DD MMM, YY")}</p>
+          <p>{dayjs(fareQuoteData?.Segments?.[0]?.[0]?.Origin?.DepTime).format("h:mm A")}</p>
           <p>Terminal{' '}{originTerminal}</p>
         </div>
         <div className="singleFlightBoxThree">
-          <h4>{fareQuoteData?.Segments[0].length===2?`${timeDuration} ${" - "} ${Math.floor(fareQuoteData?.Segments?.[0]?.[1]?.Duration / 60)}hr ${fareQuoteData?.Segments?.[0]?.[1]?.Duration % 60
-    }min`:`${timeDuration}`}</h4>
+          <h4>{fareQuoteData?.Segments[0].length === 2 ? `${timeDuration} ${" - "} ${Math.floor(fareQuoteData?.Segments?.[0]?.[1]?.Duration / 60)}hr ${fareQuoteData?.Segments?.[0]?.[1]?.Duration % 60
+            }min` : `${timeDuration}`}</h4>
           <div><img src={flightdir} /></div>
-          <p>{fareQuoteData?.Segments[0].length===2?`${fareQuoteData?.Segments[0].length-1} stop via ${DestinationCity}`:'Direct Flight'}</p>
+          <p>{fareQuoteData?.Segments[0].length === 2 ? `${fareQuoteData?.Segments[0].length - 1} stop via ${DestinationCity}` : 'Direct Flight'}</p>
           <span>Refundable</span>
         </div>
         <div className="singleFlightBoxFour">
-  {fareQuoteData?.Segments[0].length === 2 ? (
-    <>
-      <span>{fareQuoteData?.Segments[0][fareQuoteData?.Segments[0].length-1]?.Destination?.Airport?.CityName}</span>           
-      <p>{formattedDateStop}</p>
-      <p>{formattedTimeStop}</p>
-      <p>Terminal {fareQuoteData?.Segments[0][fareQuoteData?.Segments[0].length-1]?.Destination?.Airport?.Terminal}</p>
-    </>
-  ) : (
-    <>
-      <span>{DestinationCity}</span>
-      <p>{desiredFormat1.slice(0, 12)}</p>
-      <p>{desiredFormat1.slice(13)}</p>
-      <p>Terminal {destinationTerminal}</p>
-    </>
-  )}
-</div>
+
+          <>
+            <span>{DestinationCity}</span>
+            <p>{dayjs(fareQuoteData?.Segments?.[0]?.[fareQuoteData?.Segments?.[0]?.length - 1]?.Destination?.ArrTime).format("DD MMM, YY")}</p>
+            <p>{dayjs(fareQuoteData?.Segments?.[0]?.[fareQuoteData?.Segments?.[0]?.length - 1]?.Destination?.ArrTime).format("h:mm A")}</p>
+            <p>Terminal {destinationTerminal}</p>
+          </>
+
+        </div>
 
         <div className="singleFlightBoxFive">
           <span>₹{flightFare}</span>
@@ -671,17 +482,17 @@ var formattedTimeStop = dateTime.toLocaleTimeString('en-US', optionsTime);
               {Array.from({ length: adults }, (err, i) => {
                 return (
                   <div className="mb-2">
-                    <div className="p-2 mb-2 passenTitle" style={{fontSize:"16px", fontWeight:"600"}}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="16" viewBox="0 0 15 16" fill="none">
-  <g clip-path="url(#clip0_163_1749)">
-    <path d="M7.5 7.55921C8.14897 7.55921 8.78337 7.36676 9.32297 7.00622C9.86256 6.64567 10.2831 6.13321 10.5315 5.53364C10.7798 4.93407 10.8448 4.27432 10.7182 3.63782C10.5916 3.00132 10.2791 2.41665 9.82019 1.95776C9.3613 1.49887 8.77664 1.18636 8.14014 1.05975C7.50364 0.933146 6.84389 0.998126 6.24432 1.24648C5.64475 1.49483 5.13229 1.91539 4.77174 2.45499C4.41119 2.99459 4.21875 3.62899 4.21875 4.27796C4.21875 5.1482 4.56445 5.9828 5.17981 6.59815C5.79516 7.2135 6.62976 7.55921 7.5 7.55921ZM7.5 8.49671C5.46621 8.49671 1.40625 9.75296 1.40625 12.2467V14.1217H13.5938V12.2467C13.5938 9.75296 9.53379 8.49671 7.5 8.49671Z" fill="#071C2C"/>
-  </g>
-  <defs>
-    <clipPath id="clip0_163_1749">
-      <rect width="15" height="15" fill="white" transform="translate(0 0.0592041)"/>
-    </clipPath>
-  </defs>
-</svg>  Passenger {i + 1} {i == 0 ? "( Lead )" : ""}
+                    <div className="p-2 mb-2 passenTitle" style={{ fontSize: "16px", fontWeight: "600" }}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="16" viewBox="0 0 15 16" fill="none">
+                        <g clip-path="url(#clip0_163_1749)">
+                          <path d="M7.5 7.55921C8.14897 7.55921 8.78337 7.36676 9.32297 7.00622C9.86256 6.64567 10.2831 6.13321 10.5315 5.53364C10.7798 4.93407 10.8448 4.27432 10.7182 3.63782C10.5916 3.00132 10.2791 2.41665 9.82019 1.95776C9.3613 1.49887 8.77664 1.18636 8.14014 1.05975C7.50364 0.933146 6.84389 0.998126 6.24432 1.24648C5.64475 1.49483 5.13229 1.91539 4.77174 2.45499C4.41119 2.99459 4.21875 3.62899 4.21875 4.27796C4.21875 5.1482 4.56445 5.9828 5.17981 6.59815C5.79516 7.2135 6.62976 7.55921 7.5 7.55921ZM7.5 8.49671C5.46621 8.49671 1.40625 9.75296 1.40625 12.2467V14.1217H13.5938V12.2467C13.5938 9.75296 9.53379 8.49671 7.5 8.49671Z" fill="#071C2C" />
+                        </g>
+                        <defs>
+                          <clipPath id="clip0_163_1749">
+                            <rect width="15" height="15" fill="white" transform="translate(0 0.0592041)" />
+                          </clipPath>
+                        </defs>
+                      </svg>  Passenger {i + 1} {i == 0 ? "( Lead )" : ""}
                     </div>
                     <div className="col-lg-12"
                     >
@@ -1135,118 +946,6 @@ var formattedTimeStop = dateTime.toLocaleTimeString('en-US', optionsTime);
           </form>
         </div>
 
-        {/* <Box className="mid_header" p={5} mt={25}>
-          <Typography className="Top_txt">Travellers</Typography>
-
-          <div className="services">
-            <Box className="mid_header" p={5} mt={25}>
-              <Box p={15} display="flex">
-                <Box>
-                  <div className="form_input">
-                    <label hotel_form_input className="form_lable">
-                      First name*
-                    </label>
-                    <input name="name" placeholder="Enter your name" />
-                  </div>
-                </Box>
-                <Box marginLeft={15}>
-                  <div className="form_input">
-                    <label hotel_form_input className="form_lable">
-                      Last name*
-                    </label>
-                    <input name="lastname" placeholder="Enter your last name" />
-                  </div>
-                </Box>
-              </Box>
-              <Box p={15} display="flex">
-                <Box>
-                  <div className="hotel_form_input">
-                    <label className="form_lable">Gender*</label>
-                    <select name="gender" className="hotel_input_select">
-                      <option value="1">Female</option>
-                      <option value="2">Male</option>
-                      <option value="3">Transgender</option>
-                    </select>
-                  </div>
-                </Box>
-                <Box marginLeft={15}>
-                  <div className="form_input">
-                    <label hotel_form_input className="form_lable">
-                      Mobile*
-                    </label>
-                    <input
-                      name="mobilenumber"
-                      type="text"
-                      placeholder="Enter your number"
-                    />
-                  </div>
-                </Box>
-                <Box marginLeft={15}>
-                  <div className="form_input">
-                    <label hotel_form_input className="form_lable">
-                      Date Of Birth*
-                    </label>
-                    <input
-                      type="date"
-                      name="dateofbirth"
-                      className="deaprture_input"
-                    />
-                  </div>
-                </Box>
-              </Box>
-              <Box p={15} display="flex">
-                <Box>
-                  <div className="form_input">
-                    <label hotel_form_input className="form_lable">
-                      Email**
-                    </label>
-                    <input
-                      name="email"
-                      type="email"
-                      placeholder="Enter your email"
-                    />
-                  </div>
-                </Box>
-                <Box marginLeft={15}>
-                  <div className="form_input">
-                    <label hotel_form_input className="form_lable">
-                      Address*
-                    </label>
-                    <input
-                      name="address"
-                      type="text"
-                      placeholder="Enter your Address"
-                    />
-                  </div>
-                </Box>
-                <Box marginLeft={15}>
-                  <div className="form_input">
-                    <label hotel_form_input className="form_lable">
-                      City*
-                    </label>
-                    <input
-                      name="city"
-                      type="text"
-                      placeholder="Enter your City"
-                    />
-                  </div>
-                </Box>
-              </Box>
-              <Box p={15} display="flex">
-                <Box>
-                  <div className="form_input">
-                    <label className="form_lable">Country*</label>
-                    <input
-                      name="country"
-                      type="text"
-                      placeholder="Enter your Country"
-                    />
-                  </div>
-                </Box>
-              </Box>
-            </Box>
-          </div>
-        </Box> */}
 
 
         <div className="col-lg-12">
@@ -1357,7 +1056,7 @@ var formattedTimeStop = dateTime.toLocaleTimeString('en-US', optionsTime);
         <div className="col-lg-12 mt-5 mb-4 leftDetBut-new">
           <button
             type="submit"
-            style={{border:"none"}}
+            style={{ border: "none" }}
           >
             Proceed to Book
           </button>

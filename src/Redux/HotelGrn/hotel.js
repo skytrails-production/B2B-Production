@@ -81,7 +81,7 @@ export const fetchBookRoomHotelGRN = (data) => {
 };
 
 export const hotelBookRoomActionGRN = (data) => {
-  if (data) {
+  if (data) {  
     return {
       type: types.HOTEL_B0OKROOM_REQUESTGRN,
       payload: data,
