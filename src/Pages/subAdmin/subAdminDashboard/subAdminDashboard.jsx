@@ -27,6 +27,7 @@ import Agenttable from "./Agenttable";
 import AgentBusCancel from "./AgentBusCancel";
 import AgentFlightCancel from "./AgentFlightCancel";
 import AgentHotelCancel from "./AgentHotelCancel";
+import RelationShip from "./Addforms/RelationShip";
 import {
   Dialog,
   DialogActions,
@@ -110,6 +111,7 @@ import { IoIosNotifications } from "react-icons/io";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { subAdminLogout } from "../../../Redux/SubAdminLogin/actionsubadminlogin";
+import RelationshipCreate from "./RelationshipCreate";
 import DownloadSSDC from "./DownloadSSDC";
 const drawerWidth = 240;
 function ResponsiveDrawer(props) {
@@ -131,6 +133,7 @@ function ResponsiveDrawer(props) {
   const [fixedDeparturescontrol, setfixedDepartureControl] =
     React.useState(false);
   const [advertisements, setAdvertisement] = React.useState(false);
+  const [reationship, setRelationship] = React.useState(false);
   const [visaCountryforms, setvisaCountryform] = React.useState(false);
   const [visaCountrysforms, setvisaCountrysform] = React.useState(false);
   const [visaCategoryforms, setvisaCategoryforms] = React.useState(false);
@@ -177,6 +180,8 @@ function ResponsiveDrawer(props) {
     location.pathname === "/subAdmin/dashboard/Userflightcancel";
   const userhotelCancel =
     location.pathname === "/subAdmin/dashboard/Userhotelcancel";
+
+  const relationShip = location.pathname === "/subAdmin/dashboard/Relationship";
   const userbusCancel =
     location.pathname === "/subAdmin/dashboard/Userbuscancel";
 
@@ -231,6 +236,8 @@ function ResponsiveDrawer(props) {
     location.pathname === "/subAdmin/dashboard/advertisement";
   const webadvertisement =
     location.pathname === "/subAdmin/dashboard/webadvertisement";
+
+  const relationship = location.pathname === "/subAdmin/dashboard/relationship";
 
   const getevent = location.pathname === "/subAdmin/dashboard/getevent";
   const searchdata = location.pathname === "/subAdmin/dashboard/searchdata";
@@ -351,6 +358,11 @@ function ResponsiveDrawer(props) {
     setaddCoupons(true);
     navigate("/subAdmin/dashboard/addcouponscode");
   };
+  const handleRelationship = () => {
+    setRelationship(true);
+    navigate("/subAdmin/dashboard/relationship");
+    console.log("/subAdmin/dashboard/relationship");
+  };
 
   const handlePackages = () => {
     setaddPackages(true);
@@ -383,6 +395,11 @@ function ResponsiveDrawer(props) {
   const handleUserTable = () => {
     setShowAgentData(true);
     navigate("./Usertable");
+  };
+
+  const handleRelationShip = () => {
+    setShowAgentData(true);
+    navigate("./Relationship");
   };
 
   const handleAgentRequest = () => {
@@ -533,18 +550,16 @@ function ResponsiveDrawer(props) {
   };
   // const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
 
-  
-
   const handleLogoutConfirm = () => {
     handleLogout();
     setLogoutDialogOpen(false);
   };
-const style={
-  color:"red"
-}
-const style1={
-  color:"#21325D"
-}
+  const style = {
+    color: "red",
+  };
+  const style1 = {
+    color: "#21325D",
+  };
   const [anchorEl, setAnchorEl] = useState(null);
   const [anchorElUserCancel, setAnchorElUserCancel] = useState(null);
   const [anchorElAgentChange, setAnchorElAgentChange] = useState(null);
@@ -699,7 +714,7 @@ const style1={
           </ListItemButton>
         </ListItem>
 
-        {access === "AGENT_MANAGER" && (
+        {access === "BOOKING_MANAGER" && (
           <ListItem
             style={{
               display: "flex",
@@ -963,6 +978,24 @@ const style1={
               <DomainIcon style={{ color: "white", fontSize: "10px" }} />
               <ListItemText style={{ color: "white", marginLeft: "5px" }}>
                 B2B Booking
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
+        )}
+
+        {access === "BOOKING_MANAGER" && (
+          <ListItem
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "-25px",
+              paddingLeft: "0px",
+            }}
+          >
+            <ListItemButton onClick={handleRelationShip}>
+              <DomainIcon style={{ color: "white", fontSize: "10px" }} />
+              <ListItemText style={{ color: "white", marginLeft: "5px" }}>
+                Relationship
               </ListItemText>
             </ListItemButton>
           </ListItem>
@@ -1238,6 +1271,7 @@ const style1={
               access === "ADS_HANDLER" ||
               access === "EVENT_HANDLER" ||
               access === "COUPON_CODE_HANDLER" ||
+              access === "BOOKING_MANAGER" ||
               access === "PACKAGE_HANDLER") && (
               <div
                 style={{
@@ -1313,6 +1347,15 @@ const style1={
                   >
                     {" "}
                     Add Notification{" "}
+                  </Typography>
+                )}
+                {access === "BOOKING_MANAGER" && (
+                  <Typography
+                    sx={{ color: "black", cursor: "pointer" }}
+                    onClick={handleRelationship}
+                  >
+                    {" "}
+                    Add Relationship Manager{" "}
                   </Typography>
                 )}
                 <button
@@ -1569,10 +1612,17 @@ const style1={
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                  <Button onClick={() => setLogoutDialogOpen(false)} style={style}>
+                  <Button
+                    onClick={() => setLogoutDialogOpen(false)}
+                    style={style}
+                  >
                     Cancel
                   </Button>
-                  <Button onClick={() => handleLogoutConfirm()} autoFocus style={style1}>
+                  <Button
+                    onClick={() => handleLogoutConfirm()}
+                    autoFocus
+                    style={style1}
+                  >
                     Logout
                   </Button>
                 </DialogActions>
@@ -1700,7 +1750,11 @@ const style1={
         </Typography>
 
         <Typography paragraph>
-          {userhotelBooking && <UserHotelBooking />}
+          {userflightBooking && <UserFlightBooking />}
+        </Typography>
+
+        <Typography paragraph>
+          {relationShip && <RelationshipCreate />}
         </Typography>
 
         <Typography paragraph>
@@ -1719,6 +1773,8 @@ const style1={
         <Typography paragraph>
           {addwebAdvertisements && <AddWebAdvertisement />}
         </Typography>
+
+        <Typography paragraph>{relationship && <RelationShip />}</Typography>
 
         {/* addsubadmin */}
         <Typography paragraph>

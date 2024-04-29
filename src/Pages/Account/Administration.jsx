@@ -27,7 +27,7 @@ const Administration = () => {
 
 
   const [hovered, setHovered] = useState({
-    Services: false,
+    Controls: false,
     Accounts: false,
     Reports: false,
     Queues: false,
@@ -48,27 +48,28 @@ const Administration = () => {
 
 
   const navigate = useNavigate();
-  const Services = () => {
-    navigate("/Services");
+  const Controls = () => {
+    // navigate("/controls");
+    navigate("/controls")
   };
   const Accounts = () => {
     navigate("/accounts");
   };
-  const Reports = () => {
-    navigate("/Reports");
-  };
+  // const Reports = () => {
+  //   navigate("/Reports");
+  // };
   const Queues = () => {
     navigate("/Queue");
   };
-  const GST = () => {
-    navigate("/GST");
-  };
-  const Service_Request = () => {
-    navigate("/ServiceRequest");
-  };
-  const Forex = () => {
-    navigate("/Forex");
-  };
+  // const GST = () => {
+  //   navigate("/GST");
+  // };
+  // const Service_Request = () => {
+  //   navigate("/ServiceRequest");
+  // };
+  // const Forex = () => {
+  //   navigate("/Forex");
+  // };
 
   const AgentPackages=()=>{
     navigate("/holidayPackages");
@@ -87,16 +88,10 @@ const Administration = () => {
           {/* <motion.div className="col-lg-3" variants={variants}>
             <div onClick={Services}><p >Services</p></div>
           </motion.div> */}
-          <motion.div
-            className="col-lg-3"
-            variants={variants}
-            onMouseEnter={() => handleHover("Services")}
-            onMouseLeave={() => handleHoverLeave("Services")}
-          >
-            <div>
-              <p>{hovered.Services ? "Coming Soon" : "Services"}</p>
-            </div>
+          <motion.div className="col-lg-3" variants={variants}>
+            <div onClick={Controls}><p >Controls</p></div>
           </motion.div>
+          
           <motion.div className="col-lg-3" variants={variants}>
             <div onClick={Accounts}><p >Accounts</p></div>
           </motion.div>
@@ -108,7 +103,7 @@ const Administration = () => {
             <div onClick={Reports}><p >Reports</p></div>
           </motion.div> */}
 
-          <motion.div
+          {/* <motion.div
             className="col-lg-3"
             variants={variants}
             onMouseEnter={() => handleHover("Reports")}
@@ -117,7 +112,7 @@ const Administration = () => {
             <div>
               <p>{hovered.Reports ? "Coming Soon" : "Reports"}</p>
             </div>
-          </motion.div>
+          </motion.div> */}
           <motion.div className="col-lg-3" variants={variants}>
             <div onClick={Queues}><p  >Bookings</p></div>
           </motion.div>
@@ -130,7 +125,7 @@ const Administration = () => {
           <motion.div className="col-lg-3" variants={variants}>
             <div onClick={Forex}><p >Forex</p></div>
           </motion.div> */}
-          <motion.div
+          {/* <motion.div
             className="col-lg-3"
             variants={variants}
             onMouseEnter={() => handleHover("GST")}
@@ -139,9 +134,9 @@ const Administration = () => {
             <div>
               <p>{hovered.GST ? "Coming Soon" : "GST"}</p>
             </div>
-          </motion.div>
+          </motion.div> */}
 
-          <motion.div
+          {/* <motion.div
             className="col-lg-3"
             variants={variants}
             onMouseEnter={() => handleHover("Service_Request")}
@@ -150,8 +145,8 @@ const Administration = () => {
             <div>
               <p>{hovered.Service_Request ? "Coming Soon" : "Service Request"}</p>
             </div>
-          </motion.div>
-          <motion.div
+          </motion.div> */}
+          {/* <motion.div
             className="col-lg-3"
             variants={variants}
             onMouseEnter={() => handleHover("Forex")}
@@ -160,7 +155,7 @@ const Administration = () => {
             <div>
               <p>{hovered.Forex ? "Coming Soon" : "Forex"}</p>
             </div>
-          </motion.div>
+          </motion.div> */}
 
 
         </motion.div>

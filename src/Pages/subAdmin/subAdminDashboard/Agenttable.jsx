@@ -341,7 +341,7 @@ export default function Agenttable() {
   };
   return (
     <>
-     {access !== "AGENT_MANAGER" ? <div style={{textAlign:"center"}}>INVALID PAGE</div> :
+     {access !== "BOOKING_MANAGER" ? <div style={{textAlign:"center"}}>INVALID PAGE</div> :
       <div className="user-table-container">
         <div className="adminseacrch" style={{backgroundColor:"#E73C33"}}>
          

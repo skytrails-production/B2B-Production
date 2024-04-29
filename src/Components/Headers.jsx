@@ -346,7 +346,7 @@ function Headers() {
   return (
     <div className="header-container">
       <div className="logo-container">
-        <Link to="/" style={{ padding: "12px" }}>
+        <Link to="/" style={{ paddingTop: "18px", paddingLeft: "18px" }}>
           <img src={STLOGO} className="logo" alt="logo" />
         </Link>
       </div>
@@ -415,7 +415,6 @@ function Headers() {
                   className="profileName"
                   style={{
                     color: "white",
-                    
                   }}
                 >
                   {reducerState?.logIn?.loginData?.data?.data?.username &&
@@ -444,8 +443,11 @@ function Headers() {
                 {reducerState?.logIn?.loginData?.data?.data?.email}
               </MenuItem>
               <hr style={{ margin: "0px" }} />
-              <MenuItem onClick={handleSubmit} style={{ width: "100%", color:"#E73C34" }}>
-                <LogoutIcon style={{ marginRight: "12px", color:"#E73C34" }} />
+              <MenuItem
+                onClick={handleSubmit}
+                style={{ width: "100%", color: "#E73C34" }}
+              >
+                <LogoutIcon style={{ marginRight: "12px", color: "#E73C34" }} />
                 {reducerState?.logIn?.loginData?.data?.data
                   ? "Logout"
                   : "Login"}
@@ -651,7 +653,10 @@ function Headers() {
                     gap: "12px",
                   }}
                 >
-                  <FormControl fullWidth sx={{ marginBottom: 2 , padding:"0px"}}>
+                  <FormControl
+                    fullWidth
+                    sx={{ marginBottom: 2, padding: "0px" }}
+                  >
                     <FormLabel>Mobile Number</FormLabel>
                     <OutlinedInput
                       type="number"

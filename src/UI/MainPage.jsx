@@ -129,6 +129,7 @@ import Packages from "../Pages/Packagepages/Packages";
 import Loginnew from "../Pages/login/Loginnew";
 import HotelSearchs from "../Pages/grnpages/Hotel/hotelsearch/HotelSearch";
 import CreateQuiz from "../Pages/Dashboard/Component/Table/CreateQuiz";
+import Controls from "../Pages/Account/Controls";
 const MainPage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -800,6 +801,7 @@ const MainPage = () => {
                   element={<EditHolidayPackage />}
                 ></Route>
                 <Route exact path="/Queue" element={<Queue />}></Route>
+                <Route exact path="/controls" element={<Controls />}></Route>
 
                 <Route
                   exact

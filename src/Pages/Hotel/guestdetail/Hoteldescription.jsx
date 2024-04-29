@@ -43,11 +43,7 @@ const  Hoteldescription = () => {
     reducerState?.hotelSearchResult?.ticketData?.data?.data?.HotelSearchResult;
   // console.log(resultIndex, hotelCode);
   const hotelInfo = reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult;
-  // console.log("hotelDetails", hotelDetails);
-  // console.log("passenger", passenger);
-  // console.log("hotel block details", hotelBlockDetails)
-  // console.log("hotel data", hotelData)
-  // console.log("hotel Info", hotelInfo);
+ 
 
   const checkInDate = moment(hotelDetails?.CheckInDate).format("MMMM DD, YYYY");
   const checkOutDate = moment(hotelDetails?.CheckOutDate).format(
@@ -93,27 +89,7 @@ const  Hoteldescription = () => {
     ) {
       // swalModal("hotel",reducerState?.hotelSearchResult?.bookRoom?.BookResult?.Error?.ErrorMessage,false)
       swalModal("hotel","'We're sorry, but there was an issue with your hotel booking",false)
-      // Swal.fire({
-      //   icon: "error",
-      //   title: "Oops...",
-      //   text: reducerState?.hotelSearchResult?.bookRoom?.BookResult?.Error
-      //     ?.ErrorMessage,
-      //   timer: 3000,
-      //   showClass: {
-      //     popup: `
-      //         animate__animated
-      //         animate__fadeInUp
-      //         animate__faster
-      //       `,
-      //   },
-      //   hideClass: {
-      //     popup: `
-      //         animate__animated
-      //         animate__fadeOutDown
-      //         animate__faster
-      //       `,
-      //   },
-      // });
+     
       navigate("/");
     }
   }, [reducerState?.hotelSearchResult?.bookRoom?.BookResult]);
@@ -121,8 +97,7 @@ const  Hoteldescription = () => {
 
 
   const handleClickBooking = async () => {
-    // console.log(userBalance,"userbalance", grandTotal, "grandTotal")
-
+   
     if (userBalance >= grandTotal) {
       const payload = {
         ResultIndex: resultIndex,
@@ -169,74 +144,20 @@ const  Hoteldescription = () => {
         EndUserIp: reducerState?.ip?.ipData,
         TokenId: reducerState?.ip?.tokenData,
       };
-      // console.log("hotelDetailsPayload", hotelDetailsPayload);
-      // Dispatch the hotelBookRoomAction
-      //  bookingStatus = true;
-      // Swal.fire({
-      //   title: "Congratulation!",
-      //   text: "Your hotel is booked",
-      //   icon: "success",
-      //   timer: 5000,
-      //   showClass: {
-      //     popup: `
-      //       animate__animated
-      //       animate__fadeInUp
-      //       animate__faster
-      //     `
-      //   },
-      //   hideClass: {
-      //     popup: `
-      //       animate__animated
-      //       animate__fadeOutDown
-      //       animate__faster
-      //     `
-      //   }
-      // })
-      // .then(() => {
-      //   dispatch(clearHotelReducer());
-      //   navigate("/");
-      //   // Navigate to "/hotel" after the Swal dialog is closed
-      // });
-      // if(1>2){
-      // setBookingSuccess(true);
+     
       dispatch(hotelBookRoomAction([payload, hotelDetailsPayload]));
       // dispatch(hotelBookRoomAction(payload));
     } else {
-      // alert("Insufficent balance!! Please Recharge your Wallet");
-      // navigate("/hotel");
+      
       swalModal('py',"Insufficient balance!! Please Recharge your Wallet!",true)
-      // Swal.fire({
-      //   icon: "error",
-      //   title: "Oops...",
-      //   text: "Insufficient balance!! Please Recharge your Wallet!",
-      //   timer: 3000,
-      //   showClass: {
-      //     popup: `
-      //       animate__animated
-      //       animate__fadeInUp
-      //       animate__faster
-      //     `,
-      //   },
-      //   hideClass: {
-      //     popup: `
-      //       animate__animated
-      //       animate__fadeOutDown
-      //       animate__faster
-      //     `,
-      //   },
-      // }).then(() => {
-      //   // dispatch(clearHotelReducer());
-      //   // navigate("/");
-      //   // Navigate to "/hotel" after the Swal dialog is closed
-      // });
+     
     }
   };
 
   // balance subtract and update
 
   const userId = reducerState?.logIn?.loginData?.data?.data?.id;
-  // const bookingResonse=reducerState?.hotelSearchResult?.bookRoom?.BookResult?.Error?.ErrorCode;
-
+  
   useEffect(() => {
     if (
       reducerState?.hotelSearchResult?.hotelDetails?.data?.data
@@ -590,64 +511,18 @@ const  Hoteldescription = () => {
 
           {/* booking history  */}
 
-          {/* <div className="col-lg-12 mt-3">
-            <div className="bookingDetailsGuest">
-              <div className="bookingDetailsGuestHeader">
-                <p>Booking History</p>
-              </div>
-              <div className="guestDetailsHistory">
-                <button>View Voucher</button>
-                <button>View Invoice</button>
-              </div>
-
-            </div>
-          </div> */}
+          
         </div>
       </div>
 
-      {/* <Box textAlign="center" mt={2}>
-        <Button
-          className="continue_btn"
-          type="submit"
-          variant="contained"
-          onClick={handleClickBooking}
-        >
-          Continue
-        </Button>
-      </Box> */}
+     
       <div className="proceed-book-new-hotel mt-3" style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
         <button type="submit" onClick={handleClickBooking} style={{border:"none"}}>
           Continue
         </button>
       </div>
     </>
-    // <Box p={3} backgroundColor="#F5F5F5" borderRadius="10px">
-    //   {passenger?.map((name, index) => {
-    //     return (
-    //       <Box display="flex" justifyContent="space-between" mt={2}>
-    //         <Box display="flex">
-    //           <Typography
-    //             sx={{ fontSize: "16px", color: "#252525", fontWeight: "bold" }}
-    //           >
-    //             {name?.FirstName} {name?.LastName}
-    //           </Typography>
-    //         </Box>
-    //       </Box>
-    //     );
-    //   })}
-    //   <Divider sx={{ backgroundColor: "gray", marginY: "5px" }} />
-
-    // <Box textAlign="center" mt={2}>
-    //   <Button
-    //     className="continue_btn"
-    //     type="submit"
-    //     variant="contained"
-    //     onClick={handleClickBooking}
-    //   >
-    //     Continue
-    //   </Button>
-    // </Box>
-    // </Box>
+  
   );
 };
 
