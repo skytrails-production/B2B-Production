@@ -25,7 +25,7 @@ const Hoteldescription = () => {
   const navigate = useNavigate();
   const [loader, setLoader] = useState(false);
   const reducerState = useSelector((state) => state);
-  const authenticUser = reducerState?.logIn?.loginData?.status;
+
   let bookingStatus =
     reducerState?.hotelSearchResult?.bookRoom?.BookResult?.Status || false;
   const [bookingSuccess, setBookingSuccess] = useState(bookingStatus);
@@ -49,89 +49,119 @@ const Hoteldescription = () => {
     return stars;
   };
 
-  // reducerState?.hotelSearchResultGRN?.ticketData?.data?.data
-
-  useEffect(() => {
-    if (reducerState?.hotelSearchResultGRN?.bookRoom?.status === "confirmed") {
-      navigate("/hotel/hotelsearchGRM/guestDetails/review/ticket");
-      return;
-    }
-  }, [reducerState?.hotelSearchResultGRN?.bookRoom?.status]);
-
-  useEffect(() => {
-    Swal.fire({
-      icon: "success",
-      title: "Hotel Booking Success",
-      text: `Booking Id: ${reducerState?.hotelSearchResult?.bookRoom?.BookResult?.BookingId} and Confirmation Number id ${reducerState?.hotelSearchResult?.reducerState?.hotelSearchResult?.bookRoom?.Error?.ErrorCode?.BookResult?.ConfirmationNo}`,
-      didOpen: () => {
-        navigate("/");
-      },
-
-      // timer: 3000,
-      showClass: {
-        popup: `
-            animate__animated
-            animate__fadeInUp
-            animate__faster
-          `,
-      },
-      hideClass: {
-        popup: `
-            animate__animated
-            animate__fadeOutDown
-            animate__faster
-          `,
-      },
-    });
-    {
-      // dispatch(hotelBookRoomAction(payload));
-      Swal.fire({
-        icon: "success",
-        title: "Hotel Booking Success",
-        text: `Booking Id: ${reducerState?.hotelSearchResult?.bookRoom?.BookResult?.BookingId} and Confirmation Number id ${reducerState?.hotelSearchResult?.reducerState?.hotelSearchResult?.bookRoom?.Error?.ErrorCode?.BookResult?.ConfirmationNo}`,
-        didOpen: () => {
-          navigate("/");
-        },
-
-        // timer: 3000,
-        showClass: {
-          popup: `
-              animate__animated
-              animate__fadeInUp
-              animate__faster
-            `,
-        },
-        hideClass: {
-          popup: `
-              animate__animated
-              animate__fadeOutDown
-              animate__faster
-            `,
-        },
-      });
-      // navigate("/");
-    }
-  }, [reducerState?.hotelSearchResult?.bookRoom]);
-  useEffect(() => {
-    if (
-      reducerState?.hotelSearchResult?.bookRoom?.BookResult?.Error
-        ?.ErrorCode !== 0 &&
-      reducerState?.hotelSearchResult?.bookRoom?.BookResult?.Error
-        ?.ErrorCode !== undefined
-    ) {
-      swalModal(
-        "py",
-        "Booking Issue - Your refund will be processed within 7 working days. We apologize for any inconvenience caused.",
-        true
-      );
-    }
-  }, [reducerState?.hotelSearchResult?.bookRoom]);
-
+ 
   useEffect(() => {
     if (loaderPayment == true) {
       handleClickBooking();
     }
   }, [loaderPayment]);
+
+  const [paymentLoading, setPaymentLoading] = useState(false);
+
+  const hotelBlockDetails =
+    reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult;
+  const hotelDetails = hotelBlockDetails?.HotelRoomsDetails;
+  
+
+  const getBookingDetails =
+    reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult
+      ?.HotelRoomsDetails;
+
+  const totalAmount = getBookingDetails?.reduce((accumulator, item) => {
+    return accumulator + item?.Price?.PublishedPriceRoundedOff;
+  }, 0);
+
+  const markUpamount =
+    reducerState?.userData?.userData?.data?.data?.markup?.hotel;
+  const userBalance = reducerState?.userData?.userData?.data?.data?.balance;
+
+  const userId = reducerState?.logIn?.loginData?.data?.data?.id;
+  console.log(userId, "---------------userid");
+  // const bookingResonse=reducerState?.hotelSearchResult?.bookRoom?.BookResult?.Error?.ErrorCode;
+  const nonRefundable =
+    getBookingDetails?.hotel?.booking_items?.[0]?.non_refundable;
+  const cancelDetails =
+    getBookingDetails?.hotel?.booking_items?.[0]?.cancellation_policy;
+  const grandTotal = totalAmount + markUpamount;
+  //const grandTotal = 1;
+  useEffect(() => {
+    if (
+      userId &&
+      reducerState?.hotelSearchResultGRN?.bookRoom?.status === "confirmed"
+    ) {
+      const balancePayload = {
+        _id: userId,
+        amount: grandTotal,
+      };
+
+      dispatch(balanceSubtractRequest(balancePayload));
+
+      const payload = {
+        userId: reducerState?.logIn?.loginData?.data?.result?._id,
+        agnet_reference: getBookingDetails?.agent_reference,
+        booking_date: getBookingDetails?.booking_date,
+        booking_id: getBookingDetails?.booking_id,
+        booking_reference: getBookingDetails?.booking_reference,
+        checkin: getBookingDetails?.checkin,
+        checkout: getBookingDetails?.checkout,
+        total: getBookingDetails?.price?.total,
+        holder: {
+          title: passenger?.[0]?.adults?.[0]?.Title,
+          name: passenger?.[0]?.adults?.[0]?.FirstName,
+          surname: passenger?.[0]?.adults?.[0]?.LastName,
+          email: passenger?.[0]?.adults?.[0]?.Email,
+          phone_number: passenger?.[0]?.adults?.[0]?.Phoneno,
+          client_nationality: "in",
+          pan_number: passenger?.[0]?.adults?.[0]?.PAN,
+        },
+        hotel: {
+          address: getBookingDetails?.hotel?.address,
+          name: getBookingDetails?.hotel?.name,
+          price: getBookingDetails?.price?.total,
+          imageUrl: hotelDetails?.images?.url,
+          phoneNumber: "",
+          geolocation: {
+            latitude: getBookingDetails?.hotel?.geolocation?.latitude,
+            longitude: getBookingDetails?.hotel?.geolocation?.longitude,
+          },
+          category: getBookingDetails?.hotel?.category,
+          city_code: getBookingDetails?.hotel?.city_code,
+          country_code: getBookingDetails?.hotel?.country_code,
+          paxes: getBookingDetails?.hotel?.paxes?.map((item) => ({
+            age: item.age || "",
+            name: item.name,
+            pax_id: item.pax_id,
+            surname: item.surname,
+            title: item.title,
+            type: item.type,
+          })),
+          rooms: getBookingDetails?.hotel?.booking_items?.[0].rooms?.map(
+            (item) => ({
+              description: item?.description,
+              no_of_adults: item?.no_of_adults,
+              no_of_children: item?.no_of_children,
+              no_of_rooms: item?.no_of_rooms,
+            })
+          ),
+          non_refundable: nonRefundable,
+          cancellation_policy:
+            nonRefundable === false
+              ? {
+                  amount_type: cancelDetails?.amount_type,
+                  cancel_by_date: cancelDetails?.cancel_by_date,
+                  details: [
+                    {
+                      from: cancelDetails?.details?.[0]?.from,
+                    },
+                  ],
+                }
+              : null,
+        },
+        bookingType: "HOTELS",
+      };
+      userApi.hotelBookingDetailsSaveGRN(payload);
+    }
+  }, [reducerState?.hotelSearchResultGRN?.bookRoom]);
 
   function generateMixedString() {
     const fixedText = "skyTrails_";
@@ -198,124 +228,20 @@ const Hoteldescription = () => {
           pan_number: passenger?.[0]?.adults?.[0]?.PAN,
         },
       };
-    
+
       dispatch(hotelBookRoomActionGRN(payload));
-      // dispatch(hotelBookRoomAction(payload));
     } else {
-      // alert("Insufficent balance!! Please Recharge your Wallet");
-      // navigate("/hotel");
       swalModal(
         "py",
         "Insufficient balance!! Please Recharge your Wallet!",
         true
       );
-     
     }
   };
 
-  const [paymentLoading, setPaymentLoading] = useState(false);
-
-  const hotelBlockDetails =
-    reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult;
-  const hotelDetails = hotelBlockDetails?.HotelRoomsDetails;
-  const resultIndex = sessionStorage.getItem("ResultIndex");
-  const hotelCode = sessionStorage.getItem("HotelCode");
-
-  const hotelData =
-    reducerState?.hotelSearchResult?.ticketData?.data?.data?.HotelSearchResult;
-  // console.log(resultIndex, hotelCode);
-  const hotelInfo = reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult;
-  
-
-  const checkInDate = moment(hotelDetails?.CheckInDate).format("MMMM DD, YYYY");
-  const checkOutDate = moment(hotelDetails?.CheckOutDate).format(
-    "MMMM DD, YYYY"
-  );
-  const cancelDuedate = moment(hotelDetails?.LastCancellationDate).format(
-    "MMMM DD, YYYY"
-  );
-
-  const getBookingDetails =
-    reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult
-      ?.HotelRoomsDetails;
-  // console.log("reducerState", reducerState);
-
-  const totalAmount = getBookingDetails?.reduce((accumulator, item) => {
-    return accumulator + item?.Price?.PublishedPriceRoundedOff;
-  }, 0);
-  // console.log("totalAmount in last page", totalAmount);
-
-  const markUpamount =
-    reducerState?.userData?.userData?.data?.data?.markup?.hotel;
-  const userBalance = reducerState?.userData?.userData?.data?.data?.balance;
-
-  // console.log("markup hotel", markUpamount)
-  //const grandTotal = totalAmount + markUpamount;
-
-  const grandTotal = 1;
-
-  const userId = reducerState?.logIn?.loginData?.data?.data?.id;
-  // const bookingResonse=reducerState?.hotelSearchResult?.bookRoom?.BookResult?.Error?.ErrorCode;
-
-  useEffect(() => {
-    if (
-      reducerState?.hotelSearchResultGRN?.ticketData?.data?.data
-        ?.GetBookingDetailResult?.Error?.ErrorCode == 0
-    ) {
-      if (userId) {
-        const balancePayload = {
-          _id: userId,
-          amount: grandTotal,
-        };
-        dispatch(balanceSubtractRequest(balancePayload));
-        const payload = {
-          userId: reducerState?.logIn?.loginData?.data?.data?.id,
-          name: reducerState?.hotelSearchResult?.hotelDetails?.data?.data
-            ?.GetBookingDetailResult?.HotelRoomsDetails[0]?.HotelPassenger[0]
-            ?.FirstName,
-          phone: passenger[0]?.Phoneno,
-          email: passenger[0]?.Email,
-          destination:
-            reducerState?.hotelSearchResult?.hotelDetails?.data?.data
-              ?.GetBookingDetailResult?.City,
-          bookingId: `${reducerState?.hotelSearchResult?.hotelDetails?.data?.data?.GetBookingDetailResult?.BookingId}`,
-          CheckInDate:
-            reducerState?.hotelSearchResult?.hotelDetails?.data?.data
-              ?.GetBookingDetailResult?.CheckInDate,
-          CheckOutDate:
-            reducerState?.hotelSearchResult?.hotelDetails?.data?.data
-              ?.GetBookingDetailResult?.CheckOutDate,
-          hotelName:
-            reducerState?.hotelSearchResult?.hotelDetails?.data?.data
-              ?.GetBookingDetailResult?.HotelName,
-          hotelId:
-            reducerState?.hotelSearchResult?.hotelDetails?.data?.data
-              ?.GetBookingDetailResult?.HotelId,
-          cityName:
-            reducerState?.hotelSearchResult?.hotelDetails?.data?.data
-              ?.GetBookingDetailResult?.City,
-          country:
-            reducerState?.hotelSearchResult?.hotelDetails?.data?.data
-              ?.GetBookingDetailResult?.CountryCode,
-          address:
-            reducerState?.hotelSearchResult?.hotelDetails?.data?.data
-              ?.GetBookingDetailResult?.AddressLine1,
-          room: reducerState?.hotelSearchResult?.hotelDetails?.data?.data
-            ?.GetBookingDetailResult?.NoOfRooms,
-          amount: grandTotal,
-          noOfPeople: 2,
-        };
-        userApi.hotelBookingDataSave(payload);
-      }
-    }
-  }, [
-    reducerState?.hotelSearchResult?.hotelDetails?.data?.data
-      ?.GetBookingDetailResult,
-  ]);
-
   const storedFormData = JSON.parse(sessionStorage.getItem("hotelFormData"));
   //const data = storedFormData?.dynamicFormData[0]; // Assuming dynamicFormData is an array with at least one element
-
+  console.log(reducerState, "reducer state");
   const hotelCancellationPolicies = reducerState?.hotelSearchResult?.blockRoom
     ?.BlockRoomResult?.HotelRoomsDetails
     ? reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult
@@ -351,7 +277,6 @@ const Hoteldescription = () => {
 
           <div className="col-lg-12">
             <div className="bookingDetailsGuest">
-             
               <div
                 className="headText-new"
                 style={{ display: "flex", justifyContent: "space-between" }}
@@ -540,7 +465,6 @@ const Hoteldescription = () => {
                               </p>
                             </div>
                           </div>
-                         
                         </div>
                       </div>
                     </div>
@@ -600,12 +524,9 @@ const Hoteldescription = () => {
           </div>
 
           {/* booking history  */}
-
-         
         </div>
       </div>
 
-    
       <div
         className="proceed-book-new-hotel mt-3"
         style={{
@@ -625,7 +546,6 @@ const Hoteldescription = () => {
         </button>
       </div>
     </>
-   
   );
 };
 

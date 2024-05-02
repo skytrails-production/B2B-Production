@@ -142,8 +142,8 @@ function UploadLogo({ userId }) {
                     <div style={{
                         width: '100px',
                         height: '100px',
-                        backgroundColor: "#6c757d4a",
-                        background: 'aqua',
+                        backgroundColor: "#6c757d29",
+
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
@@ -195,7 +195,7 @@ function UploadLogo({ userId }) {
                         <button type="submit"
                             style={{
                                 // width: '70px',
-                                width: '131px',
+                                width: '130px',
                                 height: '38px',
                                 // padding: '6.5px',
                                 // marginTop: '30px',
@@ -205,7 +205,7 @@ function UploadLogo({ userId }) {
                                 boxShadow: '5px 4px #dce0ec',
                                 fontSize: 'larger',
                                 color: 'white',
-                                borderRadius: '13px'
+                                borderRadius: '7px'
 
                                 // position: 'relative',
                                 // marginLeft: '45%',

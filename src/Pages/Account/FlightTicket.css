@@ -238,6 +238,8 @@ form label {
   display: flex;
   flex-direction: row;
   gap: 20px;
+  align-items: center;
+  justify-content: center;
 }
 
 .buttonBox-new button {

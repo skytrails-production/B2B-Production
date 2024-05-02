@@ -122,7 +122,7 @@ const AgentProfileLogin = () => {
     if (adminData) {
         return <div><MuiGridItem item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
             <CustomLinearProgress />
-        </MuiGridItem></div>
+        </MuiGridItem></div> 
     }
     return (
         <>

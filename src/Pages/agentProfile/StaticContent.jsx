@@ -16,17 +16,12 @@ function StaticContent({data}){
     const [RegisteredAddress,setRegisteredAddress]=useState('');
     const[latitude,setLatitude]=useState('');
     const [longitude,setLongitude]=useState('');
-    
-    // agentId,title,description,type,contactNumber,email,OperationalAddress,RegisteredAddress,latitude,longitude,
-    
     const handleSubmit=async(e)=>{
-       
           // Input validation
           if (!type) {
             setErrorMessage('All fields are required');
             return;
         }
-
         // Validate email format
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
@@ -65,8 +60,6 @@ function StaticContent({data}){
         <>
          <div style={{ marginTop: '40px', fontWeight: 'bold', color: 'var(--main-bg-color-secondery)', borderRadius: '8px', fontSize: '30px', marginLeft: '45px' }}>Upload Static Content</div>
          
-         {/* {successMessage && <div style={{ color: 'darkgreen', marginTop: '20px', textAlign: 'center', fontWeight: '700' }}>{successMessage}</div>}
-                {errorMessage && <div style={{ color: 'red', marginTop: '20px', textAlign: 'center', fontWeight: '700' }}>{errorMessage}</div>} */}
         <div className="cardHolder"
          style={{
             position: 'relative',
@@ -77,7 +70,6 @@ function StaticContent({data}){
             height: '80%',
             boxShadow: '12px 9.5px 8px 10px #b9b1b1',
             overflowX: 'auto',
-            marginTop:'1.5%',
         }}
         >
                        {successMessage && <div style={{ color: 'darkgreen', marginTop: '20px', textAlign: 'center', fontWeight: '700' }}>{successMessage}</div>}
@@ -91,8 +83,7 @@ function StaticContent({data}){
                     <input type="hidden" name="userId" value={data.agentDetails[0]._id} />
          <input type="text" name="title" placeholder="Enter Title"   onChange={(e) => setTitle(e.target.value)}style={{ width:"70%",marginLeft:'40px'}}/>
          <input type="text" name="description" placeholder="Enter Description"  onChange={(e) => setDescription(e.target.value)} style={{ width:"70%",marginLeft:'40px'}}/>
-         {/* <input type="text" name="type" placeholder="Enter type like flight,bus,etc"  onChange={(e) => setType(e.target.value)} style={{ width:"50%"}}/> */}
-         <select name="type" onChange={(e) => setType(e.target.value)} style={{ width: "70%",padding:'0px',marginLeft:'40px' }}>
+         <select name="type" onChange={(e) => setType(e.target.value)} style={{ width: "70%",padding:'0px',marginLeft:'40px',border:'2px solid grey' }}>
                         <option value="">Select Type</option>
                         <option value="FLIGHTS">Flights</option>
                         <option value="HOTELS">Hotels</option>
@@ -127,14 +118,12 @@ function StaticContent({data}){
                             style={{
                                 width: '70%',
                                 padding: '6.5px',
-                                
                                 borderRadius: '20px',
                                 cursor: 'pointer',
                                 backgroundColor: 'rgb(14,75,150)',
                                 boxShadow: '5px 4px #dce0ec',
                                 fontSize: 'larger',
                                 color: 'white',
-                                
                                 marginLeft:'40px',
                                 display:'block'
                             }}

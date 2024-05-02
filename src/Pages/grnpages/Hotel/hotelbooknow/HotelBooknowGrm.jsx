@@ -61,27 +61,7 @@ const HotelBooknowGrm = () => {
         "'We're sorry, but there was an issue with your hotel booking",
         true
       );
-      // Swal.fire({
-      //   title: "Failed!",
-      //   text: reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult
-      //     .Error?.ErrorMessage,
-      //   icon: "question",
-      //   timer: 3000,
-      //   showClass: {
-      //     popup: `
-      //       animate__animated
-      //       animate__fadeInUp
-      //       animate__faster
-      //     `
-      //   },
-      //   hideClass: {
-      //     popup: `
-      //       animate__animated
-      //       animate__fadeOutDown
-      //       animate__faster
-      //     `
-      //   }
-      // })
+     
       sessionStorage.removeItem("HotelCode");
       sessionStorage.removeItem("ResultIndex");
       navigate("/");
@@ -91,29 +71,7 @@ const HotelBooknowGrm = () => {
       ?.ErrorCode,
   ]);
 
-  // useEffect(() => {
-  //   if (
-  //     ResultIndex === undefined ||
-  //     ResultIndex === null ||
-  //     HotelCode === undefined ||
-  //     HotelCode === null
-  //   ) {
-  //     navigate("/hotel/hotelsearch");
-  //   } else {
-  //     const payload = {
-  //       ResultIndex: ResultIndex,
-  //       HotelCode: HotelCode,
-  //       EndUserIp: reducerState?.ip?.ipData,
-  //       TokenId: reducerState?.ip?.tokenData,
-  //       TraceId:
-  //         reducerState?.hotelSearchResult?.ticketData?.data?.data
-  //           ?.HotelSearchResult?.TraceId,
-  //     };
-
-  //     dispatch(singleHotelGRN(payload));
-  //     dispatch(hotelBookRoomActionGRN(payload));
-  //   }
-  // }, []);
+  
 
   
   console.warn(ResultIndex, HotelCode, "ResultIndex,HotelCode");
@@ -156,7 +114,7 @@ const HotelBooknowGrm = () => {
     }
     return stars;
   };
-  const hotelContactNo = hotelInfo?.HotelDetails?.HotelContactNo;
+ 
   const result =
     reducerState?.hotelSearchResult?.ticketData?.data?.data?.HotelSearchResult;
 
@@ -170,8 +128,7 @@ const HotelBooknowGrm = () => {
 
   const storedFormData = JSON.parse(sessionStorage.getItem("hotelFormData"));
 
-  //const data = storedFormData?.dynamicFormData[0];
-  // console.log(storedFormData);
+  
   console.log(storedFormData?.city, "000000000000000000");
 
 
@@ -200,11 +157,7 @@ const HotelBooknowGrm = () => {
               <div className="col-lg-12 col-md-12 col-sm-12 mb-3">
                 <div className="hotelBookNowOuter-new">
                   <div className="hotelBookNowHeader-new">
-                    {/* <p>Your Search criteria:{storedFormData?.city},{' '} India</p>
-                    <p>Duration: {storedFormData?.night}{' '}Nights</p>
-                    <p>{storedFormData?.checkIn}- {storedFormData?.checkOut}</p>
-                    <p>Guest(s): {totalAdults}Adult(s) </p>
-                    <p>Room(s): {storedFormData?.room}</p> */}
+                  
                     <div className="serach-hotel-discribe-new">
                       <p className="serach-hotel-discribe-new-content">
                         City, Property Name Or Location
@@ -213,10 +166,7 @@ const HotelBooknowGrm = () => {
                         {storedFormData?.city}{" "}
                       </p>
                     </div>
-                    {/* <div className="serach-hotel-discribe-new">
-                      <p>Duration</p>
-                      <p>{storedFormData?.night}</p>
-                    </div> */}
+                   
                     <div className="serach-hotel-discribe-new">
                       <div style={{ display: "flex", gap: "5px" }}>
                         <p className="serach-hotel-discribe-new-content">

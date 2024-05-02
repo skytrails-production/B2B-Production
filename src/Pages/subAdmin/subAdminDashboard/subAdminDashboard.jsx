@@ -695,7 +695,11 @@ function ResponsiveDrawer(props) {
       }}
     >
       <div className="logo-container">
-        <img src={newlogo} alt="" style={{ width: "100%" }} />
+        <img
+          src={newlogo}
+          alt=""
+          style={{ width: "100%", marginTop: "10px", marginLeft: "10px", marginBottom:"10px" }}
+        />
       </div>
       <List>
         <ListItem
@@ -778,7 +782,7 @@ function ResponsiveDrawer(props) {
           </ListItemButton>
         </ListItem> */}
 
-        {access === "REQUEST_HANDLER" && (
+        {access === "BOOKING_MANAGER" && (
           <ListItem
             style={{
               display: "flex",

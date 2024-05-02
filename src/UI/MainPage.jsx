@@ -60,6 +60,11 @@ import InsuranceReviewBooking from "../Pages/assistance&inssurance/insurancerevi
 import InsuranceBookingConfirmation from "../Pages/assistance&inssurance/insurancebookingconfirmation/InsuranceBookingConfirmation";
 import Admin from "../Pages/admin/Admin";
 import AgentProfileLogin from "../Pages/agentProfile/AgentProfileLogin";
+import RegionLogin from "../Pages/relationshipManager/RegionLogin";
+import RegionDashboard from "../Pages/relationshipManager/RegionDashboard";
+import RegionBookings from "../Pages/relationshipManager/RegionBookings";
+import RegionCancelReq from "../Pages/relationshipManager/RegionCancelReq";
+import RegionChangeReq from "../Pages/relationshipManager/RegionChangeReq";
 import AgentProfileDashbord from "../Pages/agentProfile/AgentProfileDashbord";
 import AdminUserForm from "../Pages/admin/AdminUserForm";
 import Administration from "../Pages/Account/Administration";
@@ -123,13 +128,14 @@ import TermandCondition from "../Layout/TermandCondition";
 import AdminProfile from "../Pages/Dashboard/Component/Table/AdminProfile";
 import Popular from "../Pages/Dashboard/Component/Table/Popular";
 import { debounce } from "lodash";
-import { } from "../utils/validation";
+import {} from "../utils/validation";
 import Pakcat from "../Pages/Dashboard/Component/Table/Pakcat";
 import Packages from "../Pages/Packagepages/Packages";
 import Loginnew from "../Pages/login/Loginnew";
 import HotelSearchs from "../Pages/grnpages/Hotel/hotelsearch/HotelSearch";
 import CreateQuiz from "../Pages/Dashboard/Component/Table/CreateQuiz";
 import Controls from "../Pages/Account/Controls";
+import HotelTicketDB from "../Pages/grnpages/Hotel/guestdetail/HotelTicketDB";
 const MainPage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -196,7 +202,12 @@ const MainPage = () => {
       !location.pathname.includes("/skyTrails/agent") &&
       !location.pathname.includes("/admin/dashboard") &&
       !location.pathname.includes("/agentProfile/Login") &&
-      !location.pathname.includes("/agentProfile/dashboard")
+      !location.pathname.includes("/agentProfile/dashboard") &&
+      !location.pathname.includes("/relationshipManager/Login")&&
+      !location.pathname.includes("relationshipManager/dashboard")&&
+      !location.pathname.includes("relationShipManager/getAgentBookings")&&
+      !location.pathname.includes("relationShipManager/getAgentCancelReq")&&
+      !location.pathname.includes("relationShipManager/getAgentChangeReq")
     ) {
       navigate("/Login");
     } else if (location.pathname === "/admin/dashboard") {
@@ -225,6 +236,14 @@ const MainPage = () => {
       // console.log(reducerState?.adminAuth?.isLogin,'/admin/dashboard')
       navigate("/agentProfile/Login");
       // }
+    }else if(location.pathname === "relationshipManager/Login"){
+      navigate("relationshipManager/Login");
+    }else if(location.pathname === "relationShipManager/getAgentBookings"){
+      navigate("relationShipManager/getAgentBookings");
+    }else if(location.pathname === "relationShipManager/getAgentCancelReq"){
+      navigate("relationShipManager/getAgentCancelReq");
+    }else if(location.pathname === "relationShipManager/getAgentChangeReq"){
+      navigate("relationShipManager/getAgentChangeReq");
     }
   }, []);
 
@@ -257,9 +276,6 @@ const MainPage = () => {
   //   }
 
   // }, [reducerState?.ip?.ipData, reducerState?.ip?.tokenData]);
-
-
-
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -294,8 +310,6 @@ const MainPage = () => {
       {/* <Headers/> */}
 
       {location.pathname === "/Login" ||
-
-
       location.pathname === "/aboutus" ||
       location.pathname === "/contactus" ||
       location.pathname === "/privacypolicy" ||
@@ -316,7 +330,7 @@ const MainPage = () => {
       location.pathname === "/admin/createPackageCategory" ||
       location.pathname === "/adminlogin" ||
       location.pathname === "/admin/addnotification" ||
-      location.pathname === "/admin/createQuiz"||
+      location.pathname === "/admin/createQuiz" ||
       location.pathname === "/subAdmin/dashboard/Agentflightcancel" ||
       location.pathname === "/subAdmin/dashboard/Agenthotelcancel" ||
       location.pathname === "/subAdmin/dashboard/Agentbuscancel" ||
@@ -360,84 +374,94 @@ const MainPage = () => {
       location.pathname === "/subAdmin/dashboard/addEvents" ||
       location.pathname === "/subAdmin/dashboard/holidaypackage" ||
       location.pathname === "/subAdmin/dashboard/addmarkups" ||
+      location.pathname ===
+        "/hotels/hotelsearchGRM/guestDetails/review/ticket" ||
       location.pathname.includes("skyTrails/agent") ||
       location.pathname.includes("agentProfile/Login") ||
+      location.pathname.includes("relationshipManager/Login")||
       // /subAdmin/dashboard/addmarkups"
       isFlightEticketPage ||
       isBusEticketPage ||
       isHotelEticketPage ? null : (
-
         <>{reducerState?.logIn?.isLogin && <Headers />}</>
       )}
       {location.pathname === "/" ||
-        location.pathname === "/aboutus" ||
-        location.pathname === "/contactus" ||
-        location.pathname === "/privacypolicy" ||
-        location.pathname === "/termAndCondition" ||
-        location.pathname === "/subAdmin/dashboard/Usertable" ||
-        location.pathname === "/subAdmin/dashboard/AgentrequestTable" ||
-        location.pathname === "/refundPolicy" ||
-        location.pathname === "/Login" ||
-        location.pathname === "/subAdmin/dashboard/userflightchange" ||
-        location.pathname === "/subAdmin/dashboard/userhotelchange" ||
-        location.pathname === "/subAdmin/dashboard/userbuschange" ||
-        location.pathname === "/Registration" ||
-        location.pathname === "/addMarkup" ||
-        location.pathname === "/addEvents" ||
-        location.pathname === "/subAdmin/dashboard/holidaypackage" ||
-        location.pathname === "/subAdmin/dashboard/visacountryform" ||
-        location.pathname === "/subAdmin/dashboard/visacountrysform" ||
-        location.pathname === "/subAdmin/dashboard/visacategorysform" ||
-        location.pathname === "/subAdmin/dashboard/visadocumentcategorysform" ||
-        location.pathname === "/subAdmin/dashboard/requiredocuments" ||
-        location.pathname === "/adminprofile" ||
-        location.pathname === "/subAdmin/dashboard/addEvents" ||
-        location.pathname === "/subAdmin/dashboard/Subadmintable" ||
-        location.pathname === "/subAdmin/dashboard/visacategory" ||
-        location.pathname === "/subAdmin/dashboard/visacountry" ||
-        location.pathname === "/subAdmin/dashboard/visadocumenttype" ||
-        location.pathname === "/subAdmin/dashboard/visadocumentcategory" ||
-        location.pathname === "/subAdmin/dashboard/visarequiredocument" ||
-        location.pathname === "/subAdmin/dashboard/addwebAdvertisements" ||
-        location.pathname === "/subAdmin/dashboard/addcouponscode" ||
-        location.pathname === "/admin/addCoupons" ||
-        location.pathname === "/admin/addnotification" ||
-        location.pathname === "/admin/updateFeed" ||
-        location.pathname === "/subAdmin/dashboard/Agenttable" ||
-        location.pathname === "/adminlogin" ||
-        location.pathname === "/subAdmin/dashboard/Agentflightcancel" ||
-        location.pathname === "/subAdmin/dashboard/Agenthotelcancel" ||
-        location.pathname === "/subAdmin/dashboard/Agentbuscancel" ||
-        location.pathname === "/subAdmin/dashboard/Userflightcancel" ||
-        location.pathname === "/subAdmin/dashboard/Userhotelcancel" ||
-        location.pathname === "/subAdmin/dashboard/Userbuscancel" ||
-        location.pathname === "/subAdmin/dashboard/agentflightchange" ||
-        location.pathname === "/subAdmin/dashboard/agenthotelchange" ||
-        location.pathname === "/subAdmin/dashboard/agentbuschange" ||
-        location.pathname === "/subAdmin/dashboard/AgentflightBooking" ||
-        location.pathname === "/subAdmin/dashboard/AgenthotelBooking" ||
-        location.pathname === "/subAdmin/dashboard/AgentbusBooking" ||
-        location.pathname === "/subAdmin/dashboard/webadvertisement" ||
-        location.pathname === "/subAdmin/dashboard/addnotification" ||
-        location.pathname === "/subAdmin/dashboard/addmarkups" ||
-        location.pathname === "/subAdmin/dashboard/userflightBooking" ||
-        location.pathname === "/subAdmin/dashboard/userhotelBooking" ||
-        location.pathname === "/subAdmin/dashboard/userbusBooking" ||
-        location.pathname === "/subAdmin/dashboard/markupamount" ||
-        location.pathname === "/subAdmin/dashboard/fixedDeparture" ||
-        location.pathname === "/subAdmin/dashboard/fixedDeparturecontrol" ||
-        location.pathname === "/subAdmin/dashboard/advertisement" ||
-        location.pathname === "/subAdmin/dashboard/getevent" ||
-        location.pathname === "/subAdmin/dashboard/searchdata" ||
-        location.pathname === "/subAdmin/dashboard/packageEnquary" ||
-        location.pathname === "/subAdmin/dashboard/addsubadmins" ||
-        location.pathname === "/subAdmin/dashboard/addagent" ||
-        location.pathname === "/subAdmin/dashboard/addAdvertisements" ||
-        location.pathname.includes("skyTrails/agent") ||
-        location.pathname.includes("agentProfile/Login") ||
-        isFlightEticketPage ||
-        isBusEticketPage ||
-        isHotelEticketPage ? null : (
+
+      location.pathname === "/aboutus" ||
+      location.pathname === "/contactus" ||
+      location.pathname === "/privacypolicy" ||
+      location.pathname === "/termAndCondition" ||
+      location.pathname === "/subAdmin/dashboard/Usertable" ||
+      location.pathname === "/subAdmin/dashboard/AgentrequestTable" ||
+      location.pathname === "/refundPolicy" ||
+      location.pathname === "/Login" ||
+      location.pathname === "/subAdmin/dashboard/userflightchange" ||
+      location.pathname === "/subAdmin/dashboard/userhotelchange" ||
+      location.pathname === "/subAdmin/dashboard/userbuschange" ||
+      location.pathname === "/Registration" ||
+      location.pathname === "/addMarkup" ||
+      location.pathname === "/addEvents" ||
+      location.pathname === "/subAdmin/dashboard/holidaypackage" ||
+      location.pathname === "/subAdmin/dashboard/visacountryform" ||
+      location.pathname === "/subAdmin/dashboard/visacountrysform" ||
+      location.pathname === "/subAdmin/dashboard/visacategorysform" ||
+      location.pathname === "/subAdmin/dashboard/visadocumentcategorysform" ||
+      location.pathname === "/subAdmin/dashboard/requiredocuments" ||
+      location.pathname ===
+        "/hotels/hotelsearchGRM/guestDetails/review/ticket" ||
+
+      location.pathname === "/adminprofile" ||
+      location.pathname === "/subAdmin/dashboard/addEvents" ||
+      location.pathname === "/subAdmin/dashboard/Subadmintable" ||
+      location.pathname === "/subAdmin/dashboard/visacategory" ||
+      location.pathname === "/subAdmin/dashboard/visacountry" ||
+      location.pathname === "/subAdmin/dashboard/visadocumenttype" ||
+      location.pathname === "/subAdmin/dashboard/visadocumentcategory" ||
+      location.pathname === "/subAdmin/dashboard/visarequiredocument" ||
+      location.pathname === "/subAdmin/dashboard/addwebAdvertisements" ||
+      location.pathname === "/subAdmin/dashboard/addcouponscode" ||
+      location.pathname === "/admin/addCoupons" ||
+      location.pathname === "/admin/addnotification" ||
+      location.pathname === "/admin/updateFeed" ||
+      location.pathname === "/subAdmin/dashboard/Agenttable" ||
+      location.pathname === "/adminlogin" ||
+      location.pathname === "/subAdmin/dashboard/Agentflightcancel" ||
+      location.pathname === "/subAdmin/dashboard/Agenthotelcancel" ||
+      location.pathname === "/subAdmin/dashboard/Agentbuscancel" ||
+      location.pathname === "/subAdmin/dashboard/Userflightcancel" ||
+      location.pathname === "/subAdmin/dashboard/Userhotelcancel" ||
+      location.pathname === "/subAdmin/dashboard/Userbuscancel" ||
+      location.pathname === "/subAdmin/dashboard/agentflightchange" ||
+      location.pathname === "/subAdmin/dashboard/agenthotelchange" ||
+      location.pathname === "/subAdmin/dashboard/agentbuschange" ||
+      location.pathname === "/subAdmin/dashboard/AgentflightBooking" ||
+      location.pathname === "/subAdmin/dashboard/AgenthotelBooking" ||
+      location.pathname === "/subAdmin/dashboard/AgentbusBooking" ||
+      location.pathname === "/subAdmin/dashboard/webadvertisement" ||
+      location.pathname === "/subAdmin/dashboard/addnotification" ||
+      location.pathname === "/subAdmin/dashboard/addmarkups" ||
+      location.pathname === "/subAdmin/dashboard/userflightBooking" ||
+      location.pathname === "/subAdmin/dashboard/userhotelBooking" ||
+      location.pathname === "/subAdmin/dashboard/userbusBooking" ||
+      location.pathname === "/subAdmin/dashboard/markupamount" ||
+      location.pathname === "/subAdmin/dashboard/fixedDeparture" ||
+      location.pathname === "/subAdmin/dashboard/fixedDeparturecontrol" ||
+      location.pathname === "/subAdmin/dashboard/advertisement" ||
+      location.pathname === "/subAdmin/dashboard/getevent" ||
+      location.pathname === "/subAdmin/dashboard/searchdata" ||
+      location.pathname === "/subAdmin/dashboard/packageEnquary" ||
+      location.pathname === "/subAdmin/dashboard/addsubadmins" ||
+      location.pathname === "/subAdmin/dashboard/addagent" ||
+      location.pathname === "/subAdmin/dashboard/addAdvertisements" ||
+      location.pathname.includes("skyTrails/agent") ||
+      location.pathname.includes("agentProfile/Login") ||
+
+      location.pathname.includes("relationshipManager/Login")||
+      isFlightEticketPage ||
+      isBusEticketPage ||
+      isHotelEticketPage ? null : (
+
+
         <>{reducerState?.logIn?.isLogin && <InnerNavbar />}</>
       )}
 
@@ -487,8 +511,6 @@ const MainPage = () => {
                 />
                 {/* grm */}
 
-
-
                 <Route
                   path="/Hotels"
                   element={<Hotels />}
@@ -509,7 +531,18 @@ const MainPage = () => {
                   path="/hotels/hotelsearchs/guestDetails"
                   element={<ReviewbookingGrn />}
                 />
-                <Route exact path="/GuestdetailGrm" element={<GuestdetailGrm />} />
+
+                <Route
+                  exact
+                  path="/GuestdetailGrm"
+                  element={<GuestdetailGrm />}
+                />
+
+                <Route
+                  exact
+                  path="/hotels/hotelsearchGRM/guestDetails/review/ticket"
+                  element={<HotelTicketDB />}
+                />
 
                 {/* grm */}
                 <Route
@@ -736,9 +769,9 @@ const MainPage = () => {
                   element={<CreateCouponForm />}
                 />
                 <Route
-                exact
-                path="/admin/createQuiz"
-                element={<CreateQuiz/>}
+                  exact
+                  path="/admin/createQuiz"
+                  element={<CreateQuiz />}
                 />
                 <Route
                   exact
@@ -750,11 +783,7 @@ const MainPage = () => {
                   path="/admin/updateFeed"
                   element={<UpdateFeed />}
                 />
-                <Route
-                  exact
-                  path="/admin/addReward"
-                  element={<AddReward />}
-                />
+                <Route exact path="/admin/addReward" element={<AddReward />} />
                 <Route
                   exact
                   path="/admin/addPackagebanner"
@@ -869,6 +898,38 @@ const MainPage = () => {
             path="/agentProfile/Login"
             element={<AgentProfileLogin />}
           ></Route>
+          <Route
+          exact
+          path="/relationshipManager/Login"
+          element={<RegionLogin/>}
+          >
+          </Route>
+          <Route
+          exact
+          path="relationshipManager/dashboard"
+          element={<RegionDashboard/>}
+          ></Route>
+          <Route
+          exact
+          path="relationShipManager/getAgentBookings"
+          element={<RegionBookings/>}
+          >
+
+          </Route>
+          <Route
+          exact
+          path="relationShipManager/getAgentCancelReq"
+          element={<RegionCancelReq/>}
+          >
+
+          </Route>
+          <Route
+          exact
+          path="relationShipManager/getAgentChangeReq"
+          element={<RegionChangeReq/>}
+          >
+
+          </Route>
           <Route
             exact
             path="/subAdmin/dashboard/*"

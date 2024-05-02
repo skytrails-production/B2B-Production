@@ -77,7 +77,7 @@ const SubAdminLoginForm = () => {
               <div className="screen__contentsub">
 
                 <form className="loginsubadmin" onSubmit={handleSubmit}>
-                  <h4 style={{marginTop:"-50px",fontStyle:"italic"}}>Subadmin Login</h4>
+                  <h4 style={{marginTop:"-50px",fontStyle:"italic"}}>Admin Login</h4>
 
                   <div className="login__fieldsub">
                     <i className="login__iconsub"><FaUser /></i>

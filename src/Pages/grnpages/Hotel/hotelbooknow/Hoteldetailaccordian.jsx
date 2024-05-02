@@ -10,8 +10,7 @@ import map from "../../../../Images/map.png";
 import picture from "../../../../Images/picture.png";
 import file from "../../../../Images/file.png";
 import Box from "@mui/material/Box";
-// import jacuzzii from "../../../../Images/jacuzzii.jpg";
-// import jacuzzy from "../../../../../Images/jacuzzy.jpg";
+
 import bed from "../../../../Images/bed.png";
 import { Grid, Button } from "@mui/material";
 import Link from "@mui/material/Link";
@@ -21,7 +20,7 @@ import Checkbox from "@mui/material/Checkbox";
 
 import { useDispatch, useSelector, useReducer } from "react-redux";
 import { useNavigate } from "react-router-dom";
-//import Custombutton from "../../../Custombuttom/Button";
+
 import { hotelBookRoomAction } from "../../../../Redux/Hotel/hotel";
 import { hotelBookRoomActionGRN } from "../../../../Redux/HotelGrn/hotel";
 import { HotelRoomSelectReqGRN } from "../../../../Redux/HotelGrn/hotel";
@@ -88,8 +87,7 @@ export default function CustomizedAccordions() {
     setExpanded(newExpanded ? panel : false);
   };
 
-  const hotelInfo = reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult;
-
+  
   const hotelll = reducerState?.hotelSearchResult;
   useEffect(() => {
     if (HotelCode === undefined || ResultIndex === undefined) {
@@ -97,208 +95,9 @@ export default function CustomizedAccordions() {
     }
   }, []);
 
-  // console.log(hotelll, "hotelll");
-  //Below is the functionality applied for the multiRoom selection
-  const roomComponent = (RoomIndex, RoomIndexArr, col, row) => {
-    // console.log(RoomIndexArr, "RoomIndexArr");
-    // console.log(RoomIndex, "RoomIndex", col, row);
-    const firstFilteredArray = hotelRoom?.HotelRoomsDetails.map(
-      (item, index) => {
-        // console.log("disabled", disabledOption[0]);
-        if (disabledOption.includes(item.RoomIndex)) {
-          return { ...item, disabled: false };
-        } else {
-          return { ...item, disabled: true };
-        }
-      }
-    );
-    // console.log("firstFilteredArray", firstFilteredArray);
-    const filteredComponent = firstFilteredArray.filter((item, index) => {
-      return item.RoomIndex == RoomIndex;
-    });
-    // console.log("filteredComponent", filteredComponent);
-    const dateString = filteredComponent[0]?.LastCancellationDate;
-    const date1 = new Date(dateString);
-    const time1 = date1.toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-
-    const day = date1.getDate();
-    const month = date1.toLocaleString("default", {
-      month: "short",
-    });
-    const year = date1.getFullYear();
-    const formattedDate = `${day} ${month} ${year}`;
-    if (ResultIndex === undefined || HotelCode === undefined) {
-      return (
-        <>
-          <HotelLoading />
-        </>
-      );
-    }
-    return (
-      // <Box className="offer_area" p={2}>
-      //   <Grid container>
-      //     <Grid md={3}>
-      //       <Box display="grid" justifyContent="left" textAlign="left">
-      //         <Typography
-      //           sx={{
-      //             fontSize: "12px",
-      //             fontWeight: "bold",
-      //             color: "#666666",
-      //           }}
-      //         >
-      //           {filteredComponent[0]?.RoomTypeName}
-      //         </Typography>
-      //         <Typography
-      //           sx={{
-      //             fontSize: "12px",
-      //             fontWeight: "bold",
-      //             color: "#006FFF",
-      //           }}
-      //         >
-      //           {filteredComponent[0]?.RoomPromotion}
-      //         </Typography>
-      //         <Typography>
-      //           <Link
-      //             sx={{
-      //               fontSize: "8px",
-      //               fontWeight: "bold",
-      //               color: "#FF8900",
-      //             }}
-      //           >
-      //             Show Room Description
-      //           </Link>
-      //         </Typography>
-      //       </Box>
-      //     </Grid>
-      //     <Grid md={3} alignItems="center" display="flex">
-      //       <Box>
-      //         <Typography
-      //           sx={{
-      //             fontSize: "8px",
-      //             fontWeight: "bold",
-      //             color: "#666666",
-      //             alignItems: "center",
-      //           }}
-      //         >
-      //           {filteredComponent[0]?.RatePlanName}
-      //         </Typography>
-      //       </Box>
-      //     </Grid>
-      //     <Grid md={3} alignItems="center" display="flex">
-      //       <Box>
-      //         <Typography
-      //           sx={{
-      //             fontSize: "8px",
-      //             fontWeight: "bold",
-      //             color: "#FF0000",
-      //             alignItems: "center",
-      //           }}
-      //         >
-      //           Last Cancellation till:{formattedDate}
-      //         </Typography>
-      //       </Box>
-      //     </Grid>
-      //     <Grid md={3} alignItems="center" display="flex" justifyContent="end">
-      //       <Box>
-      //         <Typography
-      //           sx={{
-      //             fontSize: "8px",
-      //             fontWeight: "bold",
-      //             color: "#006FFF",
-      //           }}
-      //           mr={2}
-      //         >
-      //           ₹{filteredComponent[0]?.Price?.PublishedPriceRoundedOff}
-      //         </Typography>
-      //       </Box>
-      //       <Box>
-      //         <input
-      //           className="radio"
-      //           type="checkbox"
-      //           style={{ width: "25px", height: "25px" }}
-      //           value={`${filteredComponent[0]?.RoomIndex}`}
-      //           disabled={row >= 0 && col > 0 && filteredComponent[0].disabled}
-      //           checked={!filteredComponent[0].disabled}
-      //           onClick={(e) => {
-      //             setDisabledOption(RoomIndexArr);
-      //           }}
-      //         />
-      //       </Box>
-      //     </Grid>
-      //   </Grid>
-      // </Box>
-
-      <div className="offer_area-new p-2">
-        <div className="checkromm-tick-new">
-          <div className="roomTypeName">
-            <p className="first">{filteredComponent[0]?.RoomTypeName}</p>
-          </div>
-
-          <div className="ratePlan-new">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              style={{ width: "25px", height: "25px" }}
-              value={filteredComponent[0]?.RoomIndex}
-              disabled={row >= 0 && col > 0 && filteredComponent[0].disabled}
-              checked={!filteredComponent[0].disabled}
-              onClick={(e) => {
-                setDisabledOption(RoomIndexArr);
-              }}
-            />
-            <p className="text">{filteredComponent[0]?.RatePlanName}</p>
-          </div>
-        </div>
-        {/* <div className="roomTypeName">
-          <p className="first">
-            {filteredComponent[0]?.RoomTypeName}
-          </p>
-        </div> */}
-
-        {/* <div className="ratePlan">
-
-          <input
-            className="form-check-input"
-            type="checkbox"
-            style={{ width: "25px", height: "25px" }}
-            value={filteredComponent[0]?.RoomIndex}
-            disabled={row >= 0 && col > 0 && filteredComponent[0].disabled}
-            checked={!filteredComponent[0].disabled}
-            onClick={(e) => {
-              setDisabledOption(RoomIndexArr);
-            }}
-          />
-          <p className="text">
-            {filteredComponent[0]?.RatePlanName}
-          </p>
-        </div> */}
-        <p className="text">Last Cancellation till: {formattedDate}</p>
-        <div className="priceCheck-new">
-          <p className="price">
-            ₹{filteredComponent[0]?.Price?.PublishedPriceRoundedOff}
-          </p>
-          <p className="second-new">{filteredComponent[0]?.RoomPromotion}</p>
-        </div>
-      </div>
-    );
-  };
-  const handleChoosenRoom = () => {
-    const choosenRoom = [];
-    const option = disabledOption;
-    (option || []).map((matchedItem, index) => {
-      hotelRoom?.HotelRoomsDetails?.map((item, index) => {
-        if (item.RoomIndex == matchedItem) {
-          choosenRoom.push(item);
-        }
-      });
-    });
-
-    return choosenRoom;
-  };
-  // console.log(handleChoosenRoom(), "chooseRoom");
+  
+  
+  
 
   const searchId =
     reducerState?.hotelSearchResultGRN?.ticketData?.data?.data?.search_id;
@@ -739,13 +538,7 @@ export default function CustomizedAccordions() {
           </div>
         </div>
       </div>
-      {/* <Box className="accordian_area">
-        <Custombutton
-          type={"submit"}
-          title={"continue"}
-          onClick={handleClick}
-        />
-      </Box> */}
+     
       <button
         type="submit"
         className="bookNowButton-new"

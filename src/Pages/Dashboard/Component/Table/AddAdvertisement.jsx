@@ -1,27 +1,30 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { apiURL } from '../../../../Constants/constant';
-import { useNavigate } from 'react-router-dom';
-import profilePicUrl from '../../../../Images/logo.jpeg';
+import React, { useState } from "react";
+import axios from "axios";
+import { apiURL } from "../../../../Constants/constant";
+import { useNavigate } from "react-router-dom";
+import profilePicUrl from "../../../../Images/logo.jpeg";
 import "./AddAdvertisement.css";
-import { CircularProgress } from '@mui/material';
+import { CircularProgress } from "@mui/material";
 const CreateAdvertisementForm = () => {
   const [formValues, setFormValues] = useState({
-    title: '',
-    content: '',
-    startDate: '',
-    endDate: '',
-    remainingDays: '',
-    images: '',
+    title: "",
+    content: "",
+    startDate: "",
+    endDate: "",
+    remainingDays: "",
+    images: "",
   });
-const [message,setMessage]=useState("");
-const[load,setLoad] =useState(false);
+  const [message, setMessage] = useState("");
+  const [load, setLoad] = useState(false);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormValues({
       ...formValues,
       [name]: value,
-      remainingDays: calculateRemainingDays(formValues.startDate, formValues.endDate)
+      remainingDays: calculateRemainingDays(
+        formValues.startDate,
+        formValues.endDate
+      ),
     });
   };
 
@@ -44,28 +47,28 @@ const[load,setLoad] =useState(false);
       const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
       return daysDifference >= 0 ? daysDifference : 0;
     }
-    return '';
+    return "";
   };
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
-     setLoad(true)
+    setLoad(true);
     try {
       const formData = new FormData();
-      formData.append('title', formValues.title);
-      formData.append('content', formValues.content);
-      formData.append('startDate', formValues.startDate);
-      formData.append('endDate', formValues.endDate);
-      formData.append('remainingDays', formValues.remainingDays);
-      formData.append('images', formValues.images);
+      formData.append("title", formValues.title);
+      formData.append("content", formValues.content);
+      formData.append("startDate", formValues.startDate);
+      formData.append("endDate", formValues.endDate);
+      formData.append("remainingDays", formValues.remainingDays);
+      formData.append("images", formValues.images);
 
       const response = await axios.post(
         `${apiURL.baseURL}/skyTrails/api/admin/createadvertisment`,
         formData,
         {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'multipart/form-data',
+            "Content-Type": "multipart/form-data",
           },
         }
       );
@@ -73,34 +76,66 @@ const[load,setLoad] =useState(false);
       if (response.status >= 200 && response.status < 300) {
         // console.log('Advertisement created successfully:', response.data);
         //alert('Advertisement created successfully!');
-        setMessage('Advertisement created successfully!');
-        setTimeout(()=>{
-          navigate('/admin/dashboard');
-        },5000) // Redirect to admin dashboard
+        setMessage("Advertisement created successfully!");
+        setTimeout(() => {
+          navigate("/admin/dashboard");
+        }, 5000); // Redirect to admin dashboard
       } else {
         //alert('Failed to create Advertisement!');
-        setMessage('Failed to create Advertisement')
-        console.error('Failed to create Advertisement:', response.statusText);
+        setMessage("Failed to create Advertisement");
+        console.error("Failed to create Advertisement:", response.statusText);
       }
       // console.log('API Response:', response.data);
       // Handle success or further actions as needed
     } catch (error) {
-      console.error('API Error:', error.response.data);
+      console.error("API Error:", error.response.data);
       // Handle error or show error message
-    }
-    finally{
+    } finally {
       setLoad(false);
     }
   };
 
   return (
     <div className="form-containers">
-     {load && (
-                <div className="loader-overlay" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(255, 255, 255, 0.5))', zIndex: 9999 }}>
-                     <CircularProgress color="primary" size={50} thickness={3} style={{ position: 'absolute', top: '50%', left: '49.8%', transform: 'translate(-50%, -50%)' }} />
-                </div>
-            )}
-              {message && <div style={{ backgroundColor: '#d4edda', color: '#155724', padding: '10px', marginBottom: '30px', borderRadius: '5px' }}>{message}</div>}
+      {load && (
+        <div
+          className="loader-overlay"
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: "rgba(255, 255, 255, 0.5))",
+            zIndex: 9999,
+          }}
+        >
+          <CircularProgress
+            color="primary"
+            size={50}
+            thickness={3}
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "49.8%",
+              transform: "translate(-50%, -50%)",
+            }}
+          />
+        </div>
+      )}
+      {message && (
+        <div
+          style={{
+            backgroundColor: "#d4edda",
+            color: "#155724",
+            padding: "10px",       
+            marginBottom: "30px",
+            borderRadius: "5px",
+          }}
+        >
+          {message}
+        </div>
+      )}
       <header className="sectionagent headersagent">
         <div className="headead">
           {/* <img src={profilePicUrl} style={{ width: "80%" }} alt="Logo" /> */}
@@ -110,22 +145,46 @@ const[load,setLoad] =useState(false);
       <form onSubmit={handleSubmit} className="advertisement-form">
         <label className="form-label-add">
           Title:
-          <input type="text" name="title" value={formValues.title} onChange={handleInputChange} className="form-input-ads" />
+          <input
+            type="text"
+            name="title"
+            value={formValues.title}
+            onChange={handleInputChange}
+            className="form-input-ads"
+          />
         </label>
 
         <label className="form-label-add">
           Content:
-          <textarea type="text" name="content" value={formValues.content} onChange={handleInputChange} className="form-textarea" />
+          <textarea
+            type="text"
+            name="content"
+            value={formValues.content}
+            onChange={handleInputChange}
+            className="form-textarea"
+          />
         </label>
 
         <label className="form-label-add">
           Start Date:
-          <input type="date" name="startDate" value={formValues.startDate} onChange={handleInputChange} className="form-input-ads" />
+          <input
+            type="date"
+            name="startDate"
+            value={formValues.startDate}
+            onChange={handleInputChange}
+            className="form-input-ads"
+          />
         </label>
 
         <label className="form-label-add">
           End Date:
-          <input type="date" name="endDate" value={formValues.endDate} onChange={handleInputChange} className="form-input-ads" />
+          <input
+            type="date"
+            name="endDate"
+            value={formValues.endDate}
+            onChange={handleInputChange}
+            className="form-input-ads"
+          />
         </label>
 
         <label className="form-label-add">
@@ -142,12 +201,18 @@ const[load,setLoad] =useState(false);
 
         <label className="form-label-add-image">
           Image:
-          <input type="file" accept="image/*" onChange={handleFileChange} className="form-input-image-ads" />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            className="form-input-image-ads"
+          />
         </label>
-        <button type="submit" className="form-button">Submit</button>
+        <button type="submit" className="form-button">
+          Submit
+        </button>
       </form>
     </div>
-
   );
 };
 

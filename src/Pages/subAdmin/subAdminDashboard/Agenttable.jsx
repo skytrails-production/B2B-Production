@@ -10,7 +10,16 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserAction } from "../../../Redux/Auth/UserData/actionUserData";
-import { Backdrop, Button, Checkbox, Fade, Switch, TextField, InputAdornment, Typography } from "@mui/material";
+import {
+  Backdrop,
+  Button,
+  Checkbox,
+  Fade,
+  Switch,
+  TextField,
+  InputAdornment,
+  Typography,
+} from "@mui/material";
 import "./Agenttable.css";
 import { markUpAction } from "../../../Redux/Auth/markUp/actionMarkUp";
 import { activeStatusAction } from "../../../Redux/Auth/activeStatus/actionActiveStatus";
@@ -26,7 +35,7 @@ import Loader from "../../Loader/Loader";
 import TablePreloader from "../../Loader/TablePreloader";
 import { apiURL } from "../../../Constants/constant";
 //import { useDispatch, useSelector } from "react-redux";
-import subAdminaccess from './subAdminaccess';
+import subAdminaccess from "./subAdminaccess";
 const style = {
   position: "absolute",
   top: "50%",
@@ -50,15 +59,14 @@ const fromStyle = {
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-
     color: theme.palette.common.black,
     fontSize: 16,
-    fontWeight: 'bold',
-    border: 'none',
+    fontWeight: "bold",
+    border: "none",
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
-    border: 'none',
+    border: "none",
   },
 }));
 
@@ -79,7 +87,8 @@ export default function Agenttable() {
   const [searchTerm, setSearchTerm] = useState("");
 
   const reducerState = useSelector((state) => state);
-  const access = reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
+  const access =
+    reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
 
   const activeData = reducerState?.userTableData?.userData?.data?.data?.map(
     (ele) => ele.is_active
@@ -180,8 +189,6 @@ export default function Agenttable() {
     setLoading(false);
     setValue(value);
   };
-
-
 
   // console.log("value", value);
   useEffect(() => {
@@ -302,13 +309,11 @@ export default function Agenttable() {
         currency: "INR",
       },
       key: {
-        walletid: id
+        walletid: id,
       },
     };
     dispatch(vendorAction(payload));
   };
-
-
 
   // React - modal
   const [show, setShow] = useState(false);
@@ -327,8 +332,6 @@ export default function Agenttable() {
   const [showImg, setImgShow] = useState(false);
   const [documentImgUrl, setDocumentImgUrl] = useState("");
 
-
-
   const handleImgShow = (img) => {
     // console.log("imgUrl", img);
     setDocumentImgUrl(img);
@@ -337,193 +340,183 @@ export default function Agenttable() {
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
-
   };
   return (
     <>
-     {access !== "BOOKING_MANAGER" ? <div style={{textAlign:"center"}}>INVALID PAGE</div> :
-      <div className="user-table-container">
-        <div className="adminseacrch" style={{backgroundColor:"#E73C33"}}>
-         
-          <Typography variant="h5" className="adtable-heading">
-            Agent Table
-          </Typography>
-        </div>
-        <TableContainer
-          component={Paper}
-          style={{ border: "none" }}
-        >
-          <Table
-            style={{ border: "none" }}
-            aria-label="customized table"
-            // sx={{ overflowX: "auto" }}
-            className="tablead"
-          >
-            <TableHead style={{ border: "none" }} className="tableheadadmin">
-              <TableRow style={{ border: "none" }}>
-                <StyledTableCell > Document Image</StyledTableCell>
-                <StyledTableCell> Name</StyledTableCell>
-                <StyledTableCell align="center">Agency Name</StyledTableCell>
-                <StyledTableCell align="center">Agency Email</StyledTableCell>
-                <StyledTableCell align="center">
-                  Agency Classification
-                </StyledTableCell>
-                <StyledTableCell width={300} align="center">
-                  Agency Address
-                </StyledTableCell>
-                <StyledTableCell align="center">Contact Person</StyledTableCell>
-                <StyledTableCell align="center">
-                  Provisional GSTIN
-                </StyledTableCell>
-                <StyledTableCell align="center">Mobile</StyledTableCell>
+      {access !== "BOOKING_MANAGER" ? (
+        <div style={{ textAlign: "center" }}>INVALID PAGE</div>
+      ) : (
+        <div className="user-table-container">
+          <div className="adminseacrch" style={{ backgroundColor: "#E73C33" }}>
+            <Typography variant="h5" className="adtable-heading">
+              Agent Table
+            </Typography>
+          </div>
+          <TableContainer component={Paper} style={{ border: "none" }}>
+            <Table
+              style={{ border: "none" }}
+              aria-label="customized table"
+              // sx={{ overflowX: "auto" }}
+              className="tablead"
+            >
+              <TableHead style={{ border: "none" }} className="tableheadadmin">
+                <TableRow style={{ border: "none" }}>
+                  <StyledTableCell> Document Image</StyledTableCell>
+                  <StyledTableCell> Name</StyledTableCell>
+                  <StyledTableCell align="center">Agency Name</StyledTableCell>
+                  <StyledTableCell align="center">Agency Email</StyledTableCell>
+                  <StyledTableCell align="center">
+                    Agency Classification
+                  </StyledTableCell>
+                  <StyledTableCell width={300} align="center">
+                    Agency Address
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    Contact Person
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    Provisional GSTIN
+                  </StyledTableCell>
+                  <StyledTableCell align="center">Mobile</StyledTableCell>
 
-                <StyledTableCell align="center">Is Active</StyledTableCell>
-                <StyledTableCell align="center">Flight Amount</StyledTableCell>
+                  <StyledTableCell align="center">Is Active</StyledTableCell>
+                  {/* <StyledTableCell align="center">Flight Amount</StyledTableCell>
                 <StyledTableCell align="center">Hotel Amount</StyledTableCell>
                 <StyledTableCell align="center">Bus Amount</StyledTableCell>
                 <StyledTableCell align="center">Holiday Amount</StyledTableCell>
-                <StyledTableCell align="center">Vendor Amount</StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody style={{ border: "none" }}>
-              {tableData
-                ? tableData
-                  .filter((ele) => {
-                    const fullName = ele.personal_details?.first_name || "";
-                    const lowerCaseFullName = fullName.toLowerCase();
-                    return lowerCaseFullName.includes(searchTerm.toLowerCase());
-                  })
-                  .slice((page - 1) * rowsPerPage, page * rowsPerPage)
-                  .map((ele, index) => {
-                    return (
-                      <>
-                        <StyledTableRow key={index}>
-                          {/* <img src={ele.agency_details.document_details.pan_card_document}  alt={index} /> */}
-                          <StyledTableCell align="right">
-                            {ele?.agency_details?.document_details?.pan_card_document ? (
-                              <img
-                                style={{
-                                  width: "100%",
-                                  height: "100%",
-                                  objectFit: "cover",
-                                  borderRadius: "10%",
-                                }}
-                                src={ele.agency_details.document_details.pan_card_document}
-                                alt="PAN Card Document"
-                              />
-                            ) : (
-                              <img
-                                src="https://www.sarojhospital.com/images/testimonials/dummy-profile.png"
-                                alt="Dummy"
-                                style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                              />
-                            )}
-                          </StyledTableCell>
+                <StyledTableCell align="center">Vendor Amount</StyledTableCell> */}
+                </TableRow>
+              </TableHead>
+              <TableBody style={{ border: "none" }}>
+                {tableData
+                  ? tableData
+                      .filter((ele) => {
+                        const fullName = ele.personal_details?.first_name || "";
+                        const lowerCaseFullName = fullName.toLowerCase();
+                        return lowerCaseFullName.includes(
+                          searchTerm.toLowerCase()
+                        );
+                      })
+                      .slice((page - 1) * rowsPerPage, page * rowsPerPage)
+                      .map((ele, index) => {
+                        return (
+                          <>
+                            <StyledTableRow key={index}>
+                              {/* <img src={ele.agency_details.document_details.pan_card_document}  alt={index} /> */}
+                              <StyledTableCell align="right">
+                                {ele?.agency_details?.document_details
+                                  ?.pan_card_document ? (
+                                  <img
+                                    style={{
+                                      width: "100%",
+                                      height: "100%",
+                                      objectFit: "cover",
+                                      borderRadius: "10%",
+                                    }}
+                                    src={
+                                      ele.agency_details.document_details
+                                        .pan_card_document
+                                    }
+                                    alt="PAN Card Document"
+                                  />
+                                ) : (
+                                  <img
+                                    src="https://www.sarojhospital.com/images/testimonials/dummy-profile.png"
+                                    alt="Dummy"
+                                    style={{
+                                      width: "100%",
+                                      height: "100%",
+                                      objectFit: "cover",
+                                    }}
+                                  />
+                                )}
+                              </StyledTableCell>
 
+                              <StyledTableCell scope="row">
+                                {ele.personal_details?.first_name
+                                  ? ele.personal_details.first_name
+                                  : "No Data"}
+                              </StyledTableCell>
 
+                              <StyledTableCell align="right">
+                                {ele.agency_details?.agency_name || "No Data"}
+                              </StyledTableCell>
 
-                          <StyledTableCell scope="row">
-                            {ele.personal_details?.first_name ? ele.personal_details.first_name : "No Data"}
-                          </StyledTableCell>
+                              <StyledTableCell align="right">
+                                {ele.agency_gst_details?.email
+                                  ? ele.agency_gst_details.email
+                                  : "No Data"}
+                              </StyledTableCell>
 
-                          <StyledTableCell align="right">
-                            {ele.agency_details?.agency_name || "No Data"}
-                          </StyledTableCell>
+                              <StyledTableCell align="right">
+                                {ele.agency_gst_details
+                                  ?.agency_classification || "No Data"}
+                              </StyledTableCell>
 
-                          <StyledTableCell
-                            align="right"
+                              <StyledTableCell align="right">
+                                <StyledTableCell align="right">
+                                  {ele.agency_details?.address || "No Data"}
+                                </StyledTableCell>
+                              </StyledTableCell>
 
-                          >
+                              <StyledTableCell align="right">
+                                {ele.agency_gst_details?.contact_person ||
+                                  "No Data"}
+                              </StyledTableCell>
 
-                            {ele.agency_gst_details?.email ? ele.agency_gst_details.email : "No Data"}
-                          </StyledTableCell>
+                              <StyledTableCell align="right">
+                                {ele.agency_gst_details?.provisional_GSTIN ||
+                                  "No Data"}
+                              </StyledTableCell>
 
-                          <StyledTableCell
-                            align="right"
+                              <StyledTableCell align="right">
+                                {ele.personal_details?.mobile?.mobile_number ||
+                                  "No Data"}
+                              </StyledTableCell>
 
-                          >
-                            {ele.agency_gst_details?.agency_classification ||
-                              "No Data"}
-                          </StyledTableCell>
-
-                          <StyledTableCell
-                            align="right"
-
-                          >
-                            <StyledTableCell align="right">
-
-                              {ele.agency_details?.address || "No Data"}
-                            </StyledTableCell>
-
-                          </StyledTableCell>
-
-                          <StyledTableCell
-                            align="right"
-
-                          >
-                            {ele.agency_gst_details?.contact_person
-                              || "No Data"}
-                          </StyledTableCell>
-
-                          <StyledTableCell
-                            align="right"
-
-                          >
-                            {ele.agency_gst_details?.provisional_GSTIN || "No Data"}
-                          </StyledTableCell>
-
-                          <StyledTableCell
-                            align="right"
-
-                          >
-                            {ele.personal_details?.mobile?.mobile_number || "No Data"}
-                          </StyledTableCell>
-
-
-
-                          <StyledTableCell
-                            align="right"
-                            style={{ color: "black" }}
-                          >
-                            {ele.is_active == 1 && (
-                              <span
-                                style={{
-                                  backgroundColor: "green",
-                                  padding: "5px 10px",
-                                  borderRadius: "7px",
-                                  color: "white",
-                                  marginRight: "8px",
-                                }}
+                              <StyledTableCell
+                                align="right"
+                                style={{ color: "black" }}
                               >
-                                Active
-                              </span>
-                            )}
-                            {ele.is_active === 0 && (
-                              <span
-                                style={{
-                                  backgroundColor: "red",
-                                  padding: "5px 10px",
-                                  borderRadius: "7px",
-                                  color: "white",
-                                  marginRight: "8px",
-                                }}
-                              >
-                                Inactive
-                              </span>
-                            )}
-                            <select
-                              value={ele.is_active}
-                              onChange={(e) =>
-                                handleToggle(e.target.value, ele._id)
-                              }
-                            >
-                              <option>Update</option>
-                              <option value="active">Active</option>
-                              <option value="inactive">Inactive</option>
-                            </select>
-                          </StyledTableCell>
+                                {ele.is_active == 1 && (
+                                  <span
+                                    style={{
+                                      backgroundColor: "green",
+                                      padding: "5px 10px",
+                                      borderRadius: "7px",
+                                      color: "white",
+                                      marginRight: "8px",
+                                    }}
+                                  >
+                                    Active
+                                  </span>
+                                )}
+                                {ele.is_active === 0 && (
+                                  <span
+                                    style={{
+                                      backgroundColor: "red",
+                                      padding: "5px 10px",
+                                      borderRadius: "7px",
+                                      color: "white",
+                                      marginRight: "8px",
+                                    }}
+                                  >
+                                    Inactive
+                                  </span>
+                                )}
+                                <select
+                                  value={ele.is_active}
+                                  onChange={(e) =>
+                                    handleToggle(e.target.value, ele._id)
+                                  }
+                                >
+                                  <option>Update</option>
+                                  <option value="active">Active</option>
+                                  <option value="inactive">Inactive</option>
+                                </select>
+                              </StyledTableCell>
 
-                          <StyledTableCell align="center">
+                              {/* <StyledTableCell align="center">
                             <Box
                               sx={{
                                 width: 150,
@@ -556,9 +549,9 @@ export default function Agenttable() {
                                 <DoneIcon />
                               </button>
                             </Box>
-                          </StyledTableCell>
+                          </StyledTableCell> */}
 
-                          <StyledTableCell align="center">
+                              {/* <StyledTableCell align="center">
                             <Box
                               sx={{
                                 width: 150,
@@ -589,9 +582,9 @@ export default function Agenttable() {
                                 <DoneIcon />
                               </button>
                             </Box>
-                          </StyledTableCell>
+                          </StyledTableCell> */}
 
-                          <StyledTableCell align="center">
+                              {/* <StyledTableCell align="center">
                             <Box
                               sx={{
                                 width: 150,
@@ -622,9 +615,9 @@ export default function Agenttable() {
                                 <DoneIcon />
                               </button>
                             </Box>
-                          </StyledTableCell>
+                          </StyledTableCell> */}
 
-                          <StyledTableCell align="center">
+                              {/* <StyledTableCell align="center">
                             <Box
                               sx={{
                                 width: 250,
@@ -656,8 +649,9 @@ export default function Agenttable() {
                                 <DoneIcon />
                               </button>
                             </Box>
-                          </StyledTableCell>
-                          <StyledTableCell>
+                          </StyledTableCell> */}
+
+                              {/* <StyledTableCell>
                             <Button
                               className="add_vendor_btn"
                               variant="contained"
@@ -666,7 +660,7 @@ export default function Agenttable() {
                             >
                               Add Amount
                             </Button>
-                            {/* Modal */}
+                          
                             <Modal show={show} onHide={handleClose} centered>
                               <Modal.Header closeButton>
                                 <Modal.Title>Vendor Amount</Modal.Title>
@@ -701,26 +695,25 @@ export default function Agenttable() {
                                 </Box>
                               </Modal.Body>
                             </Modal>
-                          </StyledTableCell>
-
-
-                        </StyledTableRow>
-                      </>
-                    );
-                  })
-                : ""}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}>
-          <Pagination
-            count={Math.ceil((tableData?.length || 1) / rowsPerPage)}
-            page={page}
-            onChange={handleChangePage}
-            color="primary"
-          />
-        </Box>
-      </div>}
+                          </StyledTableCell> */}
+                            </StyledTableRow>
+                          </>
+                        );
+                      })
+                  : ""}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}>
+            <Pagination
+              count={Math.ceil((tableData?.length || 1) / rowsPerPage)}
+              page={page}
+              onChange={handleChangePage}
+              color="primary"
+            />
+          </Box>
+        </div>
+      )}
     </>
   );
 }

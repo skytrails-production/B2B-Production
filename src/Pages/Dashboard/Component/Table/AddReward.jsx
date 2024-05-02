@@ -10,6 +10,10 @@ const AddReward = () => {
   const[andr,setAndr]=useState([]);
   const [androidVersions, setAndroidVersions] = useState("");
   const [message, setMessage] = useState("");
+  const [coinValue,setCoinValue]=useState("");
+  const [likeCoins,setLikeCoins]=useState("");
+  const[co,setCo] =useState([]);
+  const[li,setLi]=useState([]);
   const navigate = useNavigate();
   useEffect(() => {
     handleDisplay(); 
@@ -20,6 +24,8 @@ const AddReward = () => {
    //console.log("record===========================",record);
    setIo(record.data.result.refereeAmount);
    setAndr(record.data.result. referrerAmount);
+   setCo(record.data.result.coinValue);
+   setLi(record.data.result.likeCoins);
     }
     catch(err){
       console.error("error",err);
@@ -36,6 +42,8 @@ const AddReward = () => {
         {
           refereeAmount: iosVersions,
           referrerAmount: androidVersions,
+          coinValue:coinValue,
+          likeCoins:likeCoins,
         }
       );
       
@@ -105,6 +113,30 @@ const AddReward = () => {
         Current Referrer Amount: {andr}
       </Typography>
       </div>
+      {/* for coins */}
+      <div className="updandr">
+      <Typography variant="body1" gutterBottom style={{ textAlign: "center" ,backgroundColor:'#090962de',
+      borderRadius:'20px',
+      padding:'10px',
+      color:'white',
+      fontSize:'larger',
+      fontWeight:'700',
+      margin:'10px',}}>
+        Current Coin Value: {co}
+      </Typography>
+      </div>
+      <div className="updandr">
+      <Typography variant="body1" gutterBottom style={{ textAlign: "center" ,backgroundColor:'#090962de',
+      borderRadius:'20px',
+      padding:'10px',
+      color:'white',
+      fontSize:'larger',
+      fontWeight:'700',
+      margin:'10px',}}>
+        Current Coin Likes: {li}
+      </Typography>
+      </div>
+
       <form onSubmit={handleSubmit}>
         <TextField
           label="Referee Amount"
@@ -120,6 +152,22 @@ const AddReward = () => {
           variant="outlined"
           value={androidVersions}
           onChange={(e) => setAndroidVersions(e.target.value)}
+          fullWidth
+          margin="normal"
+        />
+         <TextField
+          label="Coin Value"
+          variant="outlined"
+          value={coinValue}
+          onChange={(e) => setCoinValue(e.target.value)}
+          fullWidth
+          margin="normal"
+        />
+          <TextField
+          label="Like Coins"
+          variant="outlined"
+          value={likeCoins}
+          onChange={(e) => setLikeCoins(e.target.value)}
           fullWidth
           margin="normal"
         />

@@ -1,0 +1,33 @@
+.contolsMainDiv {
+  display: flex;
+  width: 100%;
+  flex-direction:  column;
+}
+.cardHolder{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 600px;
+    align-items: center;
+    margin: 50px auto;
+    padding: 30px;
+}
+.contolsFrom{
+    
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 100%;
+        /* max-width: 389px; */
+        background-color: aliceblue;
+        /* height: 400px; */
+        padding: 10px;
+        border-radius: 8px;
+        display: grid;
+        gap: 20px;
+    
+}
+
+.contolsFrom >input{
+    width: 100%;
+}
