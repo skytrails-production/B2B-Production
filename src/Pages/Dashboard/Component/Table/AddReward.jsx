@@ -12,8 +12,18 @@ const AddReward = () => {
   const [message, setMessage] = useState("");
   const [coinValue,setCoinValue]=useState("");
   const [likeCoins,setLikeCoins]=useState("");
+  const [hotelBookingCoin,setHotelBookingCoin]=useState("");
+  const [flightBookingCoin,setFlightBookingCoin]=useState("");
+  const [busBookingCoin,setBusBookingCoin]=useState("");
+  const [packageBookingCoin,setPackageBookingCoin]=useState("");
+  const [flight,setFlight]=useState([]);
+  const[hotel,setHotel]=useState([]);
+  const[bus,setBus]=useState([]);
+  const[pack,setPack]=useState([]);
+
   const[co,setCo] =useState([]);
   const[li,setLi]=useState([]);
+
   const navigate = useNavigate();
   useEffect(() => {
     handleDisplay(); 
@@ -26,6 +36,10 @@ const AddReward = () => {
    setAndr(record.data.result. referrerAmount);
    setCo(record.data.result.coinValue);
    setLi(record.data.result.likeCoins);
+   setFlight(record.data.result.flightBookingCoin);
+   setBus(record.data.result.busBookingCoin);
+   setHotel(record.data.result.hotelBookingCoin);
+   setPack(record.data.result.packageBookingCoin);
     }
     catch(err){
       console.error("error",err);
@@ -44,6 +58,10 @@ const AddReward = () => {
           referrerAmount: androidVersions,
           coinValue:coinValue,
           likeCoins:likeCoins,
+          flightBookingCoin:flightBookingCoin,
+          hotelBookingCoin:hotelBookingCoin,
+          busBookingCoin:busBookingCoin,
+          packageBookingCoin:packageBookingCoin,
         }
       );
       
@@ -136,6 +154,50 @@ const AddReward = () => {
         Current Coin Likes: {li}
       </Typography>
       </div>
+      <div className="updandr">
+      <Typography variant="body1" gutterBottom style={{ textAlign: "center" ,backgroundColor:'#090962de',
+      borderRadius:'20px',
+      padding:'10px',
+      color:'white',
+      fontSize:'larger',
+      fontWeight:'700',
+      margin:'10px',}}>
+        Current Flight Booking Coins: {flight}
+      </Typography>
+      </div>
+      <div className="updandr">
+      <Typography variant="body1" gutterBottom style={{ textAlign: "center" ,backgroundColor:'#090962de',
+      borderRadius:'20px',
+      padding:'10px',
+      color:'white',
+      fontSize:'larger',
+      fontWeight:'700',
+      margin:'10px',}}>
+        Current Hotel Booking Coin: {hotel}
+      </Typography>
+      </div>
+      <div className="updandr">
+      <Typography variant="body1" gutterBottom style={{ textAlign: "center" ,backgroundColor:'#090962de',
+      borderRadius:'20px',
+      padding:'10px',
+      color:'white',
+      fontSize:'larger',
+      fontWeight:'700',
+      margin:'10px',}}>
+        Current Bus Booking Coin: {bus}
+      </Typography>
+      </div>
+      <div className="updandr">
+      <Typography variant="body1" gutterBottom style={{ textAlign: "center" ,backgroundColor:'#090962de',
+      borderRadius:'20px',
+      padding:'10px',
+      color:'white',
+      fontSize:'larger',
+      fontWeight:'700',
+      margin:'10px',}}>
+        Current Package Booking Coin: {pack}
+      </Typography>
+      </div>
 
       <form onSubmit={handleSubmit}>
         <TextField
@@ -171,6 +233,39 @@ const AddReward = () => {
           fullWidth
           margin="normal"
         />
+        <TextField
+        label="flight booking coin"
+        variant="outlined"
+        value={flightBookingCoin}
+        onChange={(e)=>setFlightBookingCoin(e.target.value)}
+        fullWidth
+        margin="normal"
+      />
+      <TextField
+      label="hotel booking coin"
+      variant="outlined"
+      value={hotelBookingCoin}
+      onChange={(e)=>setHotelBookingCoin(e.target.value)}
+      fullWidth
+      margin="normal"
+      />
+      <TextField
+      label="bus boking coin"
+      variant="outlined"
+      value={busBookingCoin}
+      onChange={(e)=>setBusBookingCoin(e.target.value)}
+      fullWidth
+      margin="normal"
+      
+      />
+      <TextField
+      label="package booking coin"
+      variant="outlined"
+      value={packageBookingCoin}
+      onChange={(e)=>setPackageBookingCoin(e.target.value)}
+      fullWidth
+      margin="normal"
+      />
         <Button className="button1" type="submit" variant="contained" color="primary">
           Submit
         </Button>
