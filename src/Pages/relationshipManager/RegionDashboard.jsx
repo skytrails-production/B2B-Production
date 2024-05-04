@@ -55,7 +55,7 @@ const RegionDashboard = () => {
   return (
     <div style={{ display: 'flex', height: '100vh' ,position:'fixed',top:'0',left:'0',right:'0',width:'100%',overflow:'auto'}}>
       {/* Left Side Navigation */}
-      <div style={{ flex: '0 0 250px', backgroundColor: 'lightgray', padding: '20px', borderRight: '1px solid gray', overflow: 'auto' }}>
+      <div style={{ flex: '0 0 275px', backgroundColor: 'lightgray', padding: '20px', borderRight: '1px solid gray', overflow: 'auto' }}>
         <img
           src={ab}
           alt='Skytrails'

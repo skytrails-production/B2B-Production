@@ -5,10 +5,10 @@ import { CircularProgress, TextField, Button,Typography,gutterBottom } from "@mu
 import axios from 'axios';
 const AddReward = () => {
   const [load, setLoad] = useState(false);
-  const [iosVersions, setIOSVersions] = useState("");
-  const [io,setIo]=useState([]);
-  const[andr,setAndr]=useState([]);
-  const [androidVersions, setAndroidVersions] = useState("");
+  const [referreamount, setReferreAmount ]= useState("");
+  const [referre,setReferre]=useState([]);
+  const[referrer,setReferrer]=useState([]);
+  const [referrerAmount, setReferrerAmount] = useState("");
   const [message, setMessage] = useState("");
   const [coinValue,setCoinValue]=useState("");
   const [likeCoins,setLikeCoins]=useState("");
@@ -20,9 +20,10 @@ const AddReward = () => {
   const[hotel,setHotel]=useState([]);
   const[bus,setBus]=useState([]);
   const[pack,setPack]=useState([]);
-
-  const[co,setCo] =useState([]);
-  const[li,setLi]=useState([]);
+  const[coinQuantity,setCoinQuantity]=useState("");
+  const [quant,setQuant]=useState([]);
+  const[coin,setCoin] =useState([]);
+  const[like,setLike]=useState([]);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -32,14 +33,15 @@ const AddReward = () => {
     try{
    const record=await axios.get(`${apiURL.baseURL}/skyTrails/api/admin/reward/getReward`);
    //console.log("record===========================",record);
-   setIo(record.data.result.refereeAmount);
-   setAndr(record.data.result. referrerAmount);
-   setCo(record.data.result.coinValue);
-   setLi(record.data.result.likeCoins);
+   setReferre(record.data.result.refereeAmount);
+   setReferrer(record.data.result. referrerAmount);
+   setCoin(record.data.result.coinValue);
+   setLike(record.data.result.likeCoins);
    setFlight(record.data.result.flightBookingCoin);
    setBus(record.data.result.busBookingCoin);
    setHotel(record.data.result.hotelBookingCoin);
    setPack(record.data.result.packageBookingCoin);
+   setQuant(record.data.result.coinQuantity);
     }
     catch(err){
       console.error("error",err);
@@ -54,14 +56,15 @@ const AddReward = () => {
       const response = await axios.post(
         `${apiURL.baseURL}/skyTrails/api/admin/refferral/createReferralAmount`,
         {
-          refereeAmount: iosVersions,
-          referrerAmount: androidVersions,
+          refereeAmount: referreamount,
+          referrerAmount: referrerAmount,
           coinValue:coinValue,
           likeCoins:likeCoins,
           flightBookingCoin:flightBookingCoin,
           hotelBookingCoin:hotelBookingCoin,
           busBookingCoin:busBookingCoin,
           packageBookingCoin:packageBookingCoin,
+          coinQuantity:coinQuantity,
         }
       );
       
@@ -83,7 +86,7 @@ const AddReward = () => {
     }
   };
   return (
-    <div className="updateFeed-div" style={{marginTop:'50px',border:'2px solid white',padding :'80px' ,backgroundColor:'rgb(255,255,255,0.8)' ,borderRadius:'10%',boxShadow:'8px 5px 8px 5px darkgray'}}>
+    <div className="updateFeed-div" style={{marginTop:'50px',border:'2px solid rgb(255,255,255,0.8)',padding :'80px' ,paddingBottom:'0px',backgroundColor:'rgb(255,255,255,0.8)' ,borderRadius:'2%',overflowX:'scroll',overflowY:'scroll',marginBottom:'10%'}}>
       {/* <Typography variant ="h6" gutterBottom>Update Version</Typography> */}
       {load && (
            <div className="loader-overlay" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(255, 255, 255, 0.5))', zIndex: 9999 }}>
@@ -106,10 +109,33 @@ const AddReward = () => {
       <h3 style={{ textAlign: "center" }} className="addCoupon-heading">
         <strong>Reward</strong>
       </h3>
-      <div className="updio">
+      <div className="sta_curr" style={{display:'grid',
+           gridTemplateColumns: 'repeat(2, 1fr)',
+           gap:'20px',
+           justifyContent:'center',
+    }}>
+      <Typography variant="body1" gutterBottom style={{ textAlign: "center" ,backgroundColor:'#090962de',
+      padding:'10px',
+      color:'white',
+      fontSize:'larger',
+      fontWeight:'700',
+      margin:'10px',}}>
+        Current total Coin Value: {coin}
+      </Typography>
+  
+      <Typography variant="body1" gutterBottom style={{ textAlign: "center" ,backgroundColor:'#090962de',
+    
+      padding:'10px',
+      color:'white',
+      fontSize:'larger',
+      fontWeight:'700',
+      margin:'10px',}}>
+        Current total Coin Likes: {like}
+      </Typography>
+
       <Typography variant="body1" gutterBottom style={{ textAlign: "center",
       backgroundColor:'#090962de',
-      borderRadius:'20px',
+    
       padding:'10px',
       color:'white',
       fontSize:'larger',
@@ -117,46 +143,20 @@ const AddReward = () => {
       margin:'10px',
     
     }}>
-        Current Referee Amount: {io}
+        Current Referee Amount: {referre}
       </Typography>
-      </div>
-      <div className="updandr">
+
       <Typography variant="body1" gutterBottom style={{ textAlign: "center" ,backgroundColor:'#090962de',
-      borderRadius:'20px',
+    
       padding:'10px',
       color:'white',
       fontSize:'larger',
       fontWeight:'700',
       margin:'10px',}}>
-        Current Referrer Amount: {andr}
+        Current Referrer Amount: {referrer}
       </Typography>
-      </div>
-      {/* for coins */}
-      <div className="updandr">
       <Typography variant="body1" gutterBottom style={{ textAlign: "center" ,backgroundColor:'#090962de',
-      borderRadius:'20px',
-      padding:'10px',
-      color:'white',
-      fontSize:'larger',
-      fontWeight:'700',
-      margin:'10px',}}>
-        Current Coin Value: {co}
-      </Typography>
-      </div>
-      <div className="updandr">
-      <Typography variant="body1" gutterBottom style={{ textAlign: "center" ,backgroundColor:'#090962de',
-      borderRadius:'20px',
-      padding:'10px',
-      color:'white',
-      fontSize:'larger',
-      fontWeight:'700',
-      margin:'10px',}}>
-        Current Coin Likes: {li}
-      </Typography>
-      </div>
-      <div className="updandr">
-      <Typography variant="body1" gutterBottom style={{ textAlign: "center" ,backgroundColor:'#090962de',
-      borderRadius:'20px',
+    
       padding:'10px',
       color:'white',
       fontSize:'larger',
@@ -164,10 +164,9 @@ const AddReward = () => {
       margin:'10px',}}>
         Current Flight Booking Coins: {flight}
       </Typography>
-      </div>
-      <div className="updandr">
+      
       <Typography variant="body1" gutterBottom style={{ textAlign: "center" ,backgroundColor:'#090962de',
-      borderRadius:'20px',
+    
       padding:'10px',
       color:'white',
       fontSize:'larger',
@@ -175,10 +174,9 @@ const AddReward = () => {
       margin:'10px',}}>
         Current Hotel Booking Coin: {hotel}
       </Typography>
-      </div>
-      <div className="updandr">
+      
       <Typography variant="body1" gutterBottom style={{ textAlign: "center" ,backgroundColor:'#090962de',
-      borderRadius:'20px',
+    
       padding:'10px',
       color:'white',
       fontSize:'larger',
@@ -186,90 +184,120 @@ const AddReward = () => {
       margin:'10px',}}>
         Current Bus Booking Coin: {bus}
       </Typography>
-      </div>
-      <div className="updandr">
+      
+      
       <Typography variant="body1" gutterBottom style={{ textAlign: "center" ,backgroundColor:'#090962de',
-      borderRadius:'20px',
+      
       padding:'10px',
       color:'white',
       fontSize:'larger',
       fontWeight:'700',
       margin:'10px',}}>
-        Current Package Booking Coin: {pack}
+        Current Package  Coin: {pack}
       </Typography>
+      <Typography variant="body1" gutterBottom style={{ textAlign: "center" ,backgroundColor:'#090962de',
+      
+      padding:'10px',
+      color:'white',
+      fontSize:'larger',
+      fontWeight:'700',
+      margin:'10px',
+      height:'70%'}}>
+        Current Quantity of Coin: {quant}
+      </Typography>
+      <TextField
+      label="Coin Quantity"
+      variant="outlined"
+      value={coinQuantity}
+      onChange={(e) => setCoinQuantity(e.target.value)}
+      fullWidth
+      margin="normal"
+    />
+    
       </div>
 
-      <form onSubmit={handleSubmit}>
-        <TextField
-          label="Referee Amount"
-          variant="outlined"
-          value={iosVersions}
-          onChange={(e) => setIOSVersions(e.target.value)}
-          fullWidth
-          margin="normal"
-          padding="25px"
-        />
-        <TextField
-          label="Referrer Amount"
-          variant="outlined"
-          value={androidVersions}
-          onChange={(e) => setAndroidVersions(e.target.value)}
-          fullWidth
-          margin="normal"
-        />
-         <TextField
-          label="Coin Value"
-          variant="outlined"
-          value={coinValue}
-          onChange={(e) => setCoinValue(e.target.value)}
-          fullWidth
-          margin="normal"
-        />
-          <TextField
-          label="Like Coins"
-          variant="outlined"
-          value={likeCoins}
-          onChange={(e) => setLikeCoins(e.target.value)}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-        label="flight booking coin"
-        variant="outlined"
-        value={flightBookingCoin}
-        onChange={(e)=>setFlightBookingCoin(e.target.value)}
-        fullWidth
-        margin="normal"
-      />
-      <TextField
-      label="hotel booking coin"
+      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
+  <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+    <TextField
+      label="Referee Amount"
+      variant="outlined"
+      value={referreamount}
+      onChange={(e) => setReferreAmount(e.target.value)}
+      fullWidth
+      margin="normal"
+      style={{ marginRight: '10px' }}
+    />
+    <TextField
+      label="Referrer Amount"
+      variant="outlined"
+      value={referrerAmount}
+      onChange={(e) => setReferrerAmount(e.target.value)}
+      fullWidth
+      margin="normal"
+    />
+  </div>
+  <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+    <TextField
+      label="Coin Value"
+      variant="outlined"
+      value={coinValue}
+      onChange={(e) => setCoinValue(e.target.value)}
+      fullWidth
+      margin="normal"
+      style={{ marginRight: '10px' }}
+    />
+    <TextField
+      label="Like Coins"
+      variant="outlined"
+      value={likeCoins}
+      onChange={(e) => setLikeCoins(e.target.value)}
+      fullWidth
+      margin="normal"
+    />
+  </div>
+  <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+    <TextField
+      label="Flight Booking Coin"
+      variant="outlined"
+      value={flightBookingCoin}
+      onChange={(e) => setFlightBookingCoin(e.target.value)}
+      fullWidth
+      margin="normal"
+      style={{ marginRight: '10px' }}
+    />
+    <TextField
+      label="Hotel Booking Coin"
       variant="outlined"
       value={hotelBookingCoin}
-      onChange={(e)=>setHotelBookingCoin(e.target.value)}
+      onChange={(e) => setHotelBookingCoin(e.target.value)}
       fullWidth
       margin="normal"
-      />
-      <TextField
-      label="bus boking coin"
+    />
+  </div>
+  <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+    <TextField
+      label="Bus Booking Coin"
       variant="outlined"
       value={busBookingCoin}
-      onChange={(e)=>setBusBookingCoin(e.target.value)}
+      onChange={(e) => setBusBookingCoin(e.target.value)}
       fullWidth
       margin="normal"
-      
-      />
-      <TextField
-      label="package booking coin"
+      style={{ marginRight: '10px' }}
+    />
+    <TextField
+      label="Package Booking Coin"
       variant="outlined"
       value={packageBookingCoin}
-      onChange={(e)=>setPackageBookingCoin(e.target.value)}
+      onChange={(e) => setPackageBookingCoin(e.target.value)}
       fullWidth
       margin="normal"
-      />
-        <Button className="button1" type="submit" variant="contained" color="primary">
-          Submit
-        </Button>
-      </form>
+    />
+  </div>
+  <button className="button1" type="submit"  style={{ marginTop: '10px' ,marginLeft:'auto',marginRight:'auto',width:'40%'}}>
+    Submit
+  </button>
+</form>
+
 
       {load && (
         <div

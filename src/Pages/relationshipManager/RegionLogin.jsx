@@ -14,6 +14,7 @@ const RegionLogin = () => {
   const [loading, setLoading] = useState(false);
   const [formError, setFormError] = useState("");
   const [token, setToken] = useState("");
+  const[isloggedIn,setIsLoggedIn]=useState(false);
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!email.trim() || !password.trim()) {
@@ -32,18 +33,20 @@ const RegionLogin = () => {
       );
       if (response.status === 200) {
         setToken(response?.data?.result?.token);
-        console.log(
-          response?.data?.result?.token,
+        // console.log(
+        //   response?.data?.result?.token,
 
-          "8115199076"
-        );
+        //   "8115199076"
+        // );
         localStorage.setItem("token", response.data.result.token);
+        setIsLoggedIn(true);
         navigate("/relationshipManager/dashboard");
       } else {
         setFormError("Login failed. Please check your credentials.");
       }
     } catch (error) {
       console.error(error);
+      setFormError("Login failed. Please check your credentials.");
     } finally {
       setLoading(false);
     }
@@ -97,7 +100,7 @@ const RegionLogin = () => {
           marginRight: "auto",
           top: "0px",
           position: "relative",
-          marginTop: "-70px",
+          marginTop: "-110px",
         }}
       >
         <form
@@ -114,7 +117,7 @@ const RegionLogin = () => {
            <img
             src={ab}
             alt=""
-            style={{width:'200px',marginLeft:'80px'}}
+            style={{width:'260px',marginLeft:'80px'}}
             />
             <h2
               style={{
@@ -136,12 +139,14 @@ const RegionLogin = () => {
               placeholder="Enter your Email Address or Contact Number"
               value={email}
               style={{
-                width: "100%",
+                width: "80%",
                 padding: "10px",
-                marginBottom: "15px",
+                marginBottom: "5px",
                 border: "1px solid #0f0f60",
                 borderRadius: "4px",
                 boxSizing: "border-box",
+                marginLeft:'auto',
+                marginRight:'auto',
               }}
               onChange={handleEmailChange}
             />
@@ -152,13 +157,15 @@ const RegionLogin = () => {
               placeholder="Enter Your Password"
               value={password}
               style={{
-                width: "100%",
+                width: "80%",
                 padding: "10px",
                 marginBottom: "15px",
                 border: "1px solid #0f0f60",
                 borderRadius: "4px",
                 boxSizing: "border-box",
                 paddingRight: "40px",
+                marginLeft:"auto",
+                marginRight:"auto",
               }}
               onChange={handlePasswordChange}
             />
@@ -167,7 +174,7 @@ const RegionLogin = () => {
               style={{
                 position: "absolute",
                 top: "33%",
-                right: "10px",
+                right: "55px",
                 transform: "translateY(-50%)",
                 cursor: "pointer",
               }}

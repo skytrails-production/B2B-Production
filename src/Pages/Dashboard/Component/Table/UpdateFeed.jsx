@@ -63,7 +63,7 @@ const UpdateFeed = () => {
   };
 //http://localhost:3000/admin/updateFeed
   return (
-    <div className="updateFeed-div" style={{marginTop:'50px',border:'2px solid white',padding :'80px' ,backgroundColor:'rgb(255,255,255,0.8)' ,borderRadius:'10%',boxShadow:'8px 5px 8px 5px darkgray'}}>
+    <div className="updateFeed-div" style={{marginTop:'50px',border:'2px solid rgb(255,255,255,0.8)',padding :'80px' ,backgroundColor:'rgb(255,255,255,0.8)' ,borderRadius:'1%',overflowX:'scroll',overflowY:'scroll'}}>
       {/* <Typography variant ="h6" gutterBottom>Update Version</Typography> */}
       {load && (
            <div className="loader-overlay" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(255, 255, 255, 0.5))', zIndex: 9999 }}>
@@ -88,12 +88,12 @@ const UpdateFeed = () => {
       </h3>
       <div className="updio">
       <Typography variant="body1" gutterBottom style={{ textAlign: "center",
-      backgroundColor:'#090962de',
-      borderRadius:'20px',
+      backgroundColor:'rgb(16 18 71 / 87%)',
+      borderRadius:'2%',
       padding:'10px',
       color:'white',
-      fontSize:'larger',
-      fontWeight:'700',
+      fontSize:'medium',
+      fontWeight:'600',
       margin:'10px',
     
     }}>
@@ -102,12 +102,13 @@ const UpdateFeed = () => {
       </div>
       <div className="updandr">
       <Typography variant="body1" gutterBottom style={{ textAlign: "center" ,backgroundColor:'#090962de',
-      borderRadius:'20px',
+      borderRadius:'2%',
       padding:'10px',
       color:'white',
-      fontSize:'larger',
-      fontWeight:'700',
-      margin:'10px',}}>
+      fontSize:'medium',
+      fontWeight:'600',
+      margin:'10px',
+      backgroundColor:'rgb(16 18 71 / 87%)'}}>
         Current Android Version: {andr}
       </Typography>
       </div>
@@ -129,9 +130,9 @@ const UpdateFeed = () => {
           fullWidth
           margin="normal"
         />
-        <Button className="button1" type="submit" variant="contained" color="primary">
+        <button className="button1" type="submit" >
           Submit
-        </Button>
+        </button>
       </form>
 
       {load && (

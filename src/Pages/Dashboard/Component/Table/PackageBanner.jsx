@@ -56,7 +56,7 @@ function PackageBanner() {
     };
 
     return (
-        <div className="updateFeed-div" style={{ marginTop: '50px', border: '2px solid white', padding: '80px', backgroundColor: 'rgb(255,255,255,0.8)', borderRadius: '10%', boxShadow: '8px 5px 8px 5px darkgray' }}>
+        <div className="updateFeed-div" style={{ marginTop: '50px', border: '2px solid rgb(255,255,255,0.8)', padding: '80px', backgroundColor: 'rgb(255,255,255,0.8)', borderRadius: '1%',overflowX:'scroll',overflowY:'scroll' }}>
             {load && (
                 <div className="loader-overlay" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(255, 255, 255, 0.5))', zIndex: 9999 }}>
                     <CircularProgress color="primary" size={50} thickness={3} style={{ position: 'absolute', top: '50%', left: '49.8%', transform: 'translate(-50%, -50%)' }} />
@@ -101,10 +101,11 @@ function PackageBanner() {
                     type="file"
                     accept=".jpeg,.jpg,.png"
                     onChange={(e) => setImage(e.target.files[0])}
+                    style={{padding:'4.5px'}}
                 />
-                <Button className="button1" type="submit" variant="contained" color="primary">
+                <button className="button1" type="submit"  style={{backgroundColor:'#21325d !important'}}>
                     Submit
-                </Button>
+                </button>
             </form>
             {load && (
                 <div

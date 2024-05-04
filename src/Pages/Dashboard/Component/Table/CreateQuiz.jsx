@@ -66,10 +66,11 @@ function CreateQuiz() {
     <h3 style={{ textAlign: "center" }} className="addCoupon-heading">
       <strong>QUIZ</strong>
     </h3>
-    <form onSubmit={handleSubmit}>
-      {/* I added div so that if need to display data horizontally,you can */}
-      <div className='quizzzzz'>
-      <div>
+    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
+  {/* I added div so that if need to display data horizontally, you can */}
+  <div className='quizzzzz'>
+    <div style={{ display: 'flex' }}>
+      <div style={{ flex: 1, marginRight: '10px' }}>
         <TextField
           label="question"
           variant="outlined"
@@ -79,8 +80,8 @@ function CreateQuiz() {
           margin="normal"
           padding="25px"
         />
-        </div>
-        <div>
+      </div>
+      <div style={{ flex: 1, marginLeft: '10px' }}>
         <TextField
           label="answer"
           variant="outlined"
@@ -88,44 +89,59 @@ function CreateQuiz() {
           onChange={(e) => setAnswer(e.target.value)}
           fullWidth
           margin="normal"
-        /></div><div>
-          <TextField
+        />
+      </div>
+    </div>
+    <div style={{ display: 'flex' }}>
+      <div style={{ flex: 1, marginRight: '10px' }}>
+        <TextField
           label="opt1"
           variant="outlined"
           value={opt1}
           onChange={(e) => setOpt1(e.target.value)}
           fullWidth
           margin="normal"
-        /></div><div>
-          <TextField
+        />
+      </div>
+      <div style={{ flex: 1, marginLeft: '10px' }}>
+        <TextField
           label="opt2"
           variant="outlined"
           value={opt2}
           onChange={(e) => setOpt2(e.target.value)}
           fullWidth
           margin="normal"
-        /></div><div>
-          <TextField
+        />
+      </div>
+    </div>
+    <div style={{ display: 'flex' }}>
+      <div style={{ flex: 1, marginRight: '10px' }}>
+        <TextField
           label="opt3"
           variant="outlined"
           value={opt3}
           onChange={(e) => setOpt3(e.target.value)}
           fullWidth
           margin="normal"
-        /></div><div>
-          <TextField
+        />
+      </div>
+      <div style={{ flex: 1, marginLeft: '10px' }}>
+        <TextField
           label="opt4"
           variant="outlined"
           value={opt4}
           onChange={(e) => setOpt4(e.target.value)}
           fullWidth
           margin="normal"
-        /></div>
-        </div>
-        <Button className="button1" type="submit" variant="contained" color="primary">
-          Submit
-        </Button>
-      </form>
+        />
+      </div>
+    </div>
+  </div>
+  <button className="button1" type="submit"  style={{ marginTop: '10px' ,marginLeft:'auto',marginRight:'auto',width:'40%'}}>
+    Submit
+  </button>
+</form>
+
   </div>
   </>
   )

@@ -53,11 +53,13 @@ const Pakcat = () => {
             className="updateFeed-div"
             style={{
                 marginTop: '50px',
-                border: '2px solid white',
+                border: '2px solid rgb(255,255,255,0.8)',
                 padding: '80px',
                 backgroundColor: 'rgb(255,255,255,0.8)',
-                borderRadius: '10%',
-                boxShadow: '8px 5px 8px 5px darkgray',
+                borderRadius: '1%',
+                overflowX:'scroll',
+                overflowY:'scroll'
+                
             }}
         >
             {load && (
@@ -108,6 +110,8 @@ const Pakcat = () => {
                     type="file"
                     accept=".jpeg,.jpg,.png"
                     onChange={(e) => setImages(e.target.files[0])}
+                    style={{padding:'4.5px'}}
+
                 />
                 <TextField
                     label="inclusion"
@@ -131,14 +135,14 @@ const Pakcat = () => {
                     />
                 </div>
                 </div>
-                <Button
+                <button
                     className="button1"
                     type="submit"
-                    variant="contained"
-                    color="primary"
+                    style={{backgroundColor:'#21325d !important'}}
+                
                 >
                     Submit
-                </Button>
+                </button>
             </form>
             {load && (
                 <div
