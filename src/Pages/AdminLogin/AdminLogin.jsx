@@ -41,7 +41,7 @@ const AdminLogin = () => {
     errorMessage);
 
   useEffect(() => {
-    console.log(errorMessage,"adminData",error);
+    //console.log(errorMessage,"adminData",error);
     if (adminData) {
       navigate("/admin/dashboard")
     }
@@ -73,8 +73,10 @@ const AdminLogin = () => {
 
 
     try {
-      await dispatch(adminAuthAction(payload));
+      const response=await dispatch(adminAuthAction(payload));
+    
       setFormError(""); // Clear any previous errors on success
+      
     } catch (error) {
       console.error("Error occurred while authenticating:", error);
       // Error handling is done in the useEffect
@@ -85,7 +87,12 @@ const AdminLogin = () => {
 
   };
 
-
+  useEffect(() => {
+    if (reducerState.adminAuth.isLogin) {
+      const id = reducerState.adminAuth.adminData.id; 
+      navigate("/admin/dashboard", { state: { adminId: id } }); 
+    }
+  }, [reducerState.adminAuth, navigate]);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);

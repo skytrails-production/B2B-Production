@@ -92,6 +92,7 @@ const Hoteldescription = () => {
       const balancePayload = {
         _id: userId,
         amount: grandTotal,
+        bookingType:"Hotel booking"
       };
 
       dispatch(balanceSubtractRequest(balancePayload));

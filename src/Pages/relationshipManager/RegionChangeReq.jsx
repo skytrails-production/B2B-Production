@@ -328,6 +328,10 @@ const RegionChangeReq=()=> {
     const navigate=useNavigate();
     useEffect(() => {
       const fetchData = async () => {
+        const token = localStorage.getItem("token");
+        if(!token){
+          navigate('/relationshipManager/Login');
+        }else{
         try {
           // Fetch agents for the second select element
           const result = await axios.get(`${apiURL.baseURL}/skyTrails/api/relationShipManager/getAllRMOfAGENT`, {
@@ -339,10 +343,11 @@ const RegionChangeReq=()=> {
         } catch (error) {
           console.error("Error fetching agents:", error);
         }
+      }
       };
   
       fetchData();
-    }, []);
+    }, [navigate]);
   
     const fetchData = async () => {
       const payload = {
@@ -405,6 +410,7 @@ const RegionChangeReq=()=> {
         fetchData(); // Call fetchData when the form is submitted
       };
       const handlemove=()=>{
+        localStorage.removeItem("token")
         navigate('/relationshipManager/Login');
       }
       useEffect(() => {
@@ -412,7 +418,7 @@ const RegionChangeReq=()=> {
       }, [type]);
   return (
     <div style={{position:'fixed',top:'0',left:'0',right:'0',width:'100%',overflow:'auto',display:'flex',height:'100vh'}}>
-      <div style={{ flex: '0 0 250px', backgroundColor: 'lightgray', padding: '20px', borderRight: '1px solid gray', overflow: 'auto' }}>
+      <div style={{ flex: '0 0 290px', backgroundColor: 'lightgray', padding: '20px', borderRight: '1px solid gray', overflow: 'auto' }}>
       <img
           src={ab}
           alt='Skytrails'
@@ -422,7 +428,7 @@ const RegionChangeReq=()=> {
           <li
             style={{
               fontSize: '1.8rem',
-              fontWeight: '700',
+              fontWeight: '500',
               listStyle: 'none',
               backgroundColor: selectedNavItem === 'home' ? 'skyblue' : 'white',
               color: selectedNavItem === 'home' ? 'white' : 'black',
@@ -430,16 +436,18 @@ const RegionChangeReq=()=> {
               cursor: 'pointer',
               padding: '10px',
               borderRadius: '5px',
-              marginBottom: '10px' // Space between list items
+              marginBottom: '10px', // Space between list items
+              boxShadow:'0px 0px 5px',
+              fontFamily:'fantasy',
             }}
             onClick={handleHomeClick}
           >
-            Home
+            <button style={{border:'none',fontWeight:'400',backgroundColor:'white',color:'#514141'}}>Home</button>
           </li>
           <li
             style={{
               fontSize: '1.8rem',
-              fontWeight: '700',
+              fontWeight: '500',
               listStyle: 'none',
               backgroundColor: selectedNavItem === 'bookings' ? 'skyblue' : 'white',
               color: selectedNavItem === 'bookings' ? 'white' : 'black',
@@ -447,16 +455,18 @@ const RegionChangeReq=()=> {
               cursor: 'pointer',
               padding: '10px',
               borderRadius: '5px',
-              marginBottom: '10px' // Space between list items
+              marginBottom: '10px', // Space between list items
+              boxShadow:'0px 0px 5px',
+              fontFamily:'fantasy',
             }}
             onClick={handleBookingsClick}
-          >
-            Booking
+          ><button style={{border:'none',fontWeight:'400',backgroundColor:'white',color:'#514141'}}>Booking</button>
+            
           </li>
           <li
             style={{
               fontSize: '1.8rem',
-              fontWeight: '700',
+              fontWeight: '500',
               listStyle: 'none',
               backgroundColor: selectedNavItem === 'cancel' ? 'skyblue' : 'white',
               color: selectedNavItem === 'cancel' ? 'white' : 'black',
@@ -464,16 +474,19 @@ const RegionChangeReq=()=> {
               cursor: 'pointer',
               padding: '10px',
               borderRadius: '5px',
-              marginBottom: '10px' // Space between list items
+              marginBottom: '10px', // Space between list items
+              width:'220px',
+              boxShadow:'0px 0px 5px',
+              fontFamily:'fantasy',
             }}
             onClick={handleCancelReq}
-          >
-            Cancel Request
+          ><button style={{border:'none',fontWeight:'400',backgroundColor:'white',color:'#514141'}}>Cancel Request</button>
+            
           </li>
           <li
             style={{
-              fontSize: '1.8rem',
-              fontWeight: '700',
+              fontSize: '1.69rem',
+              fontWeight: '500',
               listStyle: 'none',
               backgroundColor: selectedNavItem === 'change' ? 'skyblue' : 'white',
               color: selectedNavItem === 'change' ? 'white' : 'black',
@@ -481,23 +494,28 @@ const RegionChangeReq=()=> {
               cursor: 'pointer',
               padding: '10px',
               borderRadius: '5px',
-              marginBottom: '10px' // Space between list items
+              marginBottom: '10px' ,// Space between list items
+              width:'220px',
+              boxShadow:'0px 0px 5px',
+              fontFamily:'fantasy',
             }}
             onClick={handleChangeReq}
-          >
-            Change Request
+          ><button style={{border:'none',fontWeight:'400',backgroundColor:'white',color:'#514141'}}>Change Request</button>
+        
           </li>
         </ul>
         </div>  
         <div style={{ flex: '1', padding: '20px', overflow: 'auto' }}>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}> 
 
-<h2 style={{ color: 'blue' }}>Welcome to Relationship Manager Portal</h2>
-<FiLogOut  style={{cursor:'pointer',fontSize:'30px'}} onClick={handlemove}/>
+<h2 style={{ color: 'blue' ,fontFamily:'fantasy'}}>Welcome to Relationship Manager Portal</h2>
+<span  onClick={handlemove}style={{cursor:'pointer',color:'red',fontFamily:'fantasy',fontSize:'large'}} >
+          <FiLogOut style={{ cursor: 'pointer', fontSize: '30px' }} />Logout
+          </span>
 </div>
         <div className='relationType' style={{marginLeft:'auto',marginRight:'auto',width:'50%'}}>
-          <form onSubmit={handleSubmit} style={{backgroundColor:'white',borderRadius:'10px',marginTop:'30px'}}>
-          
+          <form onSubmit={handleSubmit} style={{backgroundColor:'white',borderRadius:'10px',marginTop:'30px',boxShadow:'0px 0px 12px #0c0c0f'}}>
+          <p style={{color:'#0d4ce0',fontSize:'large'}}>Change Booking Details</p>
             <select name="agentId" onChange={handleAgentSelectChange} style={{ padding: '0px'}}>
               <option value="">Select Agent</option>
               {/* Mapping over agents to create select options with first name */}

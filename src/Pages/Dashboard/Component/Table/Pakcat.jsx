@@ -58,7 +58,9 @@ const Pakcat = () => {
                 backgroundColor: 'rgb(255,255,255,0.8)',
                 borderRadius: '1%',
                 overflowX:'scroll',
-                overflowY:'scroll'
+                overflowY:'scroll',
+                boxShadow:'0px 0px 5px #767070',
+                marginBottom:'20px',
                 
             }}
         >

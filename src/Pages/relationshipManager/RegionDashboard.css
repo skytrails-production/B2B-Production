@@ -1,0 +1,12 @@
+.dash td{
+    background-color: rgb(186, 178, 178) !important;
+    color: black!important;
+    font-weight:700;
+    border: none;
+}
+.dash1 th{
+     background-color: blue;
+     color: white;
+    border: none;
+
+}

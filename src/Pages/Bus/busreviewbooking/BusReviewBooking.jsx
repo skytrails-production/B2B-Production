@@ -167,6 +167,7 @@ const BusReviewBooking = () => {
         const balancePayload = {
           _id: userId,
           amount: tds + publishedPrice,
+          bookingType:"Bus booking"
         };
 
         dispatch(balanceSubtractRequest(balancePayload));

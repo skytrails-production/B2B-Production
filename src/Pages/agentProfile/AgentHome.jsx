@@ -58,7 +58,7 @@ const AgentHome = ({ data }) => {
 
   return (
     <div>
-      <div className="AgentHomeH1">Welcome to the VIP Agent Portal</div>
+      <div className="AgentHomeH1" style={{fontFamily:'fantasy'}}>Welcome to the VIP Agent Portal</div>
       <div>
         {data?.agentInviteData?.length > 0 && data?.statusCode ? (
           <div className="agentHomeDataContainer">

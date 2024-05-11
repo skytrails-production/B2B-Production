@@ -113,7 +113,6 @@ const Default = () => {
     { key: "totalChangeRequests", title: "Total Change Request" },
     { key: "TotalEventBooking", title: "Event Booking" },
   ];
-
   const lineChartData = Object.keys(dashboardData).map((sectionKey) => ({
     name: sectionTitles.find((item) => item.key === sectionKey)?.title,
     value: dashboardData[sectionKey],
@@ -142,8 +141,7 @@ const Default = () => {
           access === "COUPON_CODE_HANDLER" ||
           access === "VISA_PROCESSING" ||
           access === "BOOKING_MANAGER" ||
-          access==="USER_MANAGER"
-          ? (
+          access === "USER_MANAGER" ? (
             lineChartData.map((data, index) => (
               <MuiGridItem item xs={12} sm={6} md={4} key={index}>
                 <MuiCard>

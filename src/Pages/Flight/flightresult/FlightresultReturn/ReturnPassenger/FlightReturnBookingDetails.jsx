@@ -636,6 +636,7 @@ const FlightReturnBookingDetails = () => {
           fareValue?.Fare?.Tax +
           fareValue?.Fare?.OtherCharges +
           markUpamount,
+          bookingType:"Flight booking"
       };
 
       dispatch(balanceSubtractRequest(balancePayload));
@@ -651,6 +652,7 @@ const FlightReturnBookingDetails = () => {
           fareValueReturn?.Fare?.Tax +
           fareValueReturn?.Fare?.OtherCharges +
           markUpamount,
+          bookingType:"Flight booking"
       };
 
       dispatch(balanceSubtractRequest(balancePayload));

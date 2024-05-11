@@ -48,7 +48,7 @@ function Popular() {
     }
 
   return (
-    <div className="updateFeed-div" style={{ marginTop: '50px', border: '2px solid rgb(255,255,255,0.8)', padding: '80px', backgroundColor: 'rgb(255,255,255,0.8)', borderRadius: '1%' }}>
+    <div className="updateFeed-div" style={{ marginTop: '50px', border: '2px solid rgb(255,255,255,0.8)', padding: '80px', backgroundColor: 'rgb(255,255,255,0.8)', borderRadius: '1%' ,boxShadow:'0px 0px 5px #767070'}}>
     {load && (
         <div className="loader-overlay" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(255, 255, 255, 0.5))', zIndex: 9999 }}>
             <CircularProgress color="primary" size={50} thickness={3} style={{ position: 'absolute', top: '50%', left: '49.8%', transform: 'translate(-50%, -50%)' }} />

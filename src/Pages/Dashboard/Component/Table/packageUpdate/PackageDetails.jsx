@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { searchPackageAction } from "../../../../../Redux/SearchPackage/actionSearchPackage";
 import { apiURL } from "../../../../../Constants/constant";
-import { Box, Button, MenuItem, Select ,CircularProgress} from "@mui/material";
+import { Box, Button, MenuItem, Select, CircularProgress } from "@mui/material";
 import "./packageUpdate.css";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import axios from "axios";
@@ -275,8 +275,16 @@ function PackageDetails() {
         // Define the button content based on approval status
         const buttonContent = isApproved ? (
           <>
-            <DeleteOutlineIcon style={{ marginRight: "4px", color: "gray" }} />
-            <span style={{ color: "gray" }}>Delete</span>
+            <DeleteOutlineIcon
+              style={{
+                marginRight: "4px",
+                color: "gray",
+                cursor: "no-drop !important",
+              }}
+            />
+            <span style={{ color: "gray", cursor: "no-drop !important" }}>
+              Delete
+            </span>
           </>
         ) : (
           <>
@@ -354,128 +362,164 @@ function PackageDetails() {
 
   return (
     <>
-    {holidayPackage.length === 0 ? (
-      <div style={{position: 'absolute', top: '-20%', left: '0', right:'0' ,width: '100%', height: '190%', backdropFilter: 'blur(4.5px)', backgroundColor: '#d8d5e663', zIndex: 1}}></div>
-  ) : null}
-    <div
-      className="subad-table-container"
-      style={{ position: "relative", width: "130%" }}
-    >
-      <div
-        className="adsearch-bar"
-        style={{ position: "absolute", top: 10, zIndex: 1, fontWeight: "bold" }}
-      >
-        <Typography variant="h5" className="adtable-heading">
-          Edit Holiday Package
-        </Typography>
-      </div>
-      <div style={{ width: "100%", backgroundColor: "#fff" }}>
-      {/* {holidayPackage.length === 0 ? (
-        <div style={{position: 'absolute', top: '-20%', left: '0', right:'0' ,width: '100%', height: '100%', backdropFilter: 'blur(10px)', backgroundColor: 'rgba(255, 255, 255, 0.5)', zIndex: 1}}></div>
-    ) : null} */}
-        {holidayPackage.length === 0 ? (
-           <div style={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center", height: "100px" }}>
-           {/* <Alert severity="info" variant="outlined"> */}
-           <CircularProgress color="primary" size={69} thickness={4} style={{ position: 'absolute', top: '50%', left: '49.8%', transform: 'translate(-50%, -50%)',zIndex:2 }} />
-           {/* </Alert> */}
-         </div>
-        ) : (
-          <DataGrid
-            rows={holidayPackage}
-            columns={columns}
-            pageSize={5}
-            checkboxSelection
-            getRowId={(row) => row._id}
-            components={{
-              Toolbar: () => (
-                <div style={{ marginTop: "10px"}}>
-                  {/* <GridToolbar /> */}
-                </div>
-              ),
-            //  Pagination: () => null,
-            }}
-          />
-        )}
-      </div>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Are you sure you want to delete this package?
-          </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginTop: "20px",
-            }}
-          >
-            {loading ? (
-              "Loading..." // Render loading text or spinner while loading is true
-            ) : (
-              <>
-                <Button
-                  variant="outlined"
-                  onClick={handleDelete}
-                  style={{
-                    padding: "10px 20px",
-                    color: "#333",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Yes
-                </Button>
-                <Button
-                  variant="contained"
-                  onClick={handleClose}
-                  style={{
-                    padding: "10px 20px",
-                    backgroundColor: "#ff0000",
-                    color: "#fff",
-                    fontWeight: "bold",
-                  }}
-                >
-                  No
-                </Button>
-              </>
-            )}
-          </Box>
-        </Box>
-      </Modal>
-
-      <Modal
-        open={openEdit}
-        onClose={handleCloseEdit}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box
-          sx={{
+      {holidayPackage.length === 0 ? (
+        <div
+          style={{
             position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
+            top: "-20%",
+            left: "0",
+            right: "0",
             width: "100%",
-            maxWidth: "80%",
-            maxHeight: "90vh",
-            bgcolor: "background.paper",
-            border: "2px solid #000",
-            boxShadow: 24,
-            p: 4,
-            overflowY: "auto",
+            height: "190%",
+            backdropFilter: "blur(4.5px)",
+            backgroundColor: "#d8d5e663",
+            zIndex: 1,
+          }}
+        ></div>
+      ) : null}
+      <div
+        className="subad-table-container"
+        style={{ position: "relative", width: "130%" }}
+      >
+        <div
+          className="adsearch-bar"
+          style={{
+            position: "absolute",
+            top: 10,
+            zIndex: 1,
+            fontWeight: "bold",
           }}
         >
-          <Box>
-            <EditHolidayPackage
-              onClose={handleCloseEdit}
-              packageData={editPackageData}
+          <Typography variant="h5" className="adtable-heading">
+            Edit Holiday Package
+          </Typography>
+        </div>
+        <div style={{ width: "100%", backgroundColor: "#fff" }}>
+          {/* {holidayPackage.length === 0 ? (
+        <div style={{position: 'absolute', top: '-20%', left: '0', right:'0' ,width: '100%', height: '100%', backdropFilter: 'blur(10px)', backgroundColor: 'rgba(255, 255, 255, 0.5)', zIndex: 1}}></div>
+    ) : null} */}
+          {holidayPackage.length === 0 ? (
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100px",
+              }}
+            >
+              {/* <Alert severity="info" variant="outlined"> */}
+              <CircularProgress
+                color="primary"
+                size={69}
+                thickness={4}
+                style={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "49.8%",
+                  transform: "translate(-50%, -50%)",
+                  zIndex: 2,
+                }}
+              />
+              {/* </Alert> */}
+            </div>
+          ) : (
+            <DataGrid
+              rows={holidayPackage}
+              columns={columns}
+              pageSize={5}
+              checkboxSelection
+              getRowId={(row) => row._id}
+              components={{
+                Toolbar: () => (
+                  <div style={{ marginTop: "10px" }}>
+                    {/* <GridToolbar /> */}
+                  </div>
+                ),
+                //  Pagination: () => null,
+              }}
             />
+          )}
+        </div>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Are you sure you want to delete this package?
+            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginTop: "20px",
+              }}
+            >
+              {loading ? (
+                "Loading..." // Render loading text or spinner while loading is true
+              ) : (
+                <>
+                  <Button
+                    variant="outlined"
+                    onClick={handleDelete}
+                    style={{
+                      padding: "10px 20px",
+                      color: "#333",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Yes
+                  </Button>
+                  <Button
+                    variant="contained"
+                    onClick={handleClose}
+                    style={{
+                      padding: "10px 20px",
+                      backgroundColor: "#ff0000",
+                      color: "#fff",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    No
+                  </Button>
+                </>
+              )}
+            </Box>
           </Box>
-          {/* <Box
+        </Modal>
+
+        <Modal
+          open={openEdit}
+          onClose={handleCloseEdit}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "100%",
+              maxWidth: "80%",
+              maxHeight: "90vh",
+              bgcolor: "background.paper",
+              border: "2px solid #000",
+              boxShadow: 24,
+              p: 4,
+              overflowY: "auto",
+            }}
+          >
+            <Box>
+              <EditHolidayPackage
+                onClose={handleCloseEdit}
+                packageData={editPackageData}
+              />
+            </Box>
+            {/* <Box
                         sx={{
                             display: "flex",
                             justifyContent: 'center'
@@ -483,103 +527,104 @@ function PackageDetails() {
                     >
                         <button onClick={handleCloseEdit}>Close</button>
                     </Box> */}
-        </Box>
-      </Modal>
-
-      <Modal
-        open={openApprove}
-        onClose={handleCloseApprove}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-        style={styles.modal}
-      >
-        <Box sx={styles.modalContent}>
-          <Typography variant="h6" component="h2">
-            Are you sure you want to approve this package?
-          </Typography>
-
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginTop: "20px",
-            }}
-          >
-            <Button
-              variant="outlined"
-              onClick={handleApprove}
-              style={{
-                padding: "10px 20px",
-                color: "#333",
-                fontWeight: "bold",
-              }}
-            >
-              Yes
-            </Button>
-            <Button
-              variant="contained"
-              onClick={handleCloseApprove}
-              style={{
-                padding: "10px 20px",
-                backgroundColor: "#ff0000",
-                color: "#fff",
-                fontWeight: "bold",
-              }}
-            >
-              No
-            </Button>
           </Box>
-        </Box>
-      </Modal>
+        </Modal>
 
-      <Modal
-        open={openView}
-        onClose={handleCloseView}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "100%",
-            maxWidth: "80%",
-            maxHeight: "90vh",
-            bgcolor: "background.paper",
-            border: "2px solid #000",
-            boxShadow: 24,
-            p: 4,
-            overflowY: "auto",
-          }}
+        <Modal
+          open={openApprove}
+          onClose={handleCloseApprove}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+          style={styles.modal}
         >
-          <Box>
-            <ViewPackage />
+          <Box sx={styles.modalContent}>
+            <Typography variant="h6" component="h2">
+              Are you sure you want to approve this package?
+            </Typography>
+
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginTop: "20px",
+              }}
+            >
+              <Button
+                variant="outlined"
+                onClick={handleApprove}
+                style={{
+                  padding: "10px 20px",
+                  color: "#333",
+                  fontWeight: "bold",
+                }}
+              >
+                Yes
+              </Button>
+              <Button
+                variant="contained"
+                onClick={handleCloseApprove}
+                style={{
+                  padding: "10px 20px",
+                  backgroundColor: "#ff0000",
+                  color: "#fff",
+                  fontWeight: "bold",
+                }}
+              >
+                No
+              </Button>
+            </Box>
           </Box>
+        </Modal>
+
+        <Modal
+          open={openView}
+          onClose={handleCloseView}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
           <Box
             sx={{
-              display: "flex",
-              justifyContent: "center",
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "100%",
+              maxWidth: "80%",
+              maxHeight: "90vh",
+              bgcolor: "background.paper",
+              border: "2px solid #000",
+              boxShadow: 24,
+              p: 4,
+              overflowY: "auto",
             }}
           >
-            <button onClick={handleCloseView}
-            style={{
-              backgroundColor: 'blue',
-            color: 'white',
-            width: '70px',
-           borderRadius: '5px',
-            boxShadow: '2px 5px grey'
-            }}
-            >Close</button>
+            <Box>
+              <ViewPackage />
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <button
+                onClick={handleCloseView}
+                style={{
+                  backgroundColor: "blue",
+                  color: "white",
+                  width: "70px",
+                  borderRadius: "5px",
+                  boxShadow: "2px 5px grey",
+                }}
+              >
+                Close
+              </button>
+            </Box>
           </Box>
-        </Box>
-      </Modal>
-    </div>
+        </Modal>
+      </div>
     </>
   );
 }
 
 export default PackageDetails;
-
-

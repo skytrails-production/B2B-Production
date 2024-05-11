@@ -282,7 +282,7 @@ function PackageDetails() {
         const buttonContent = isApproved ? (
           <>
             <DeleteOutlineIcon style={{ marginRight: "4px", color: "gray" }} />
-            <span style={{ color: "gray" }}>Delete</span>
+            <span style={{ color: "red" }}>Delete</span>
           </>
         ) : (
           <>
@@ -323,7 +323,7 @@ function PackageDetails() {
       headerName: "Status",
       headerClassName: "custom-header",
       width: 200,
-      renderCell: (params) => (
+      renderCell: (params) => ( 
         <Select
           value={params.row.is_active}
           onChange={(event) => handleApprove(event, params.row)}

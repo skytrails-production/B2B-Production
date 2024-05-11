@@ -378,7 +378,7 @@ export default function Tables() {
       setLoad(false);
     }
   };
- 
+
   return (
     <>
       {successMessage && (
@@ -565,7 +565,7 @@ export default function Tables() {
                                 <span
                                   style={{
                                     backgroundColor: "red",
-                                    padding: "5px 10px",
+                                    padding: "5px 20px",
                                     borderRadius: "7px",
                                     color: "white",
                                     marginRight: "8px",
@@ -575,6 +575,7 @@ export default function Tables() {
                                 </span>
                               )}
                               <select
+                                style={{ width: "100px" }}
                                 value={ele.is_active}
                                 onChange={(e) =>
                                   handleToggle(e.target.value, ele._id)

@@ -254,6 +254,7 @@ const Holidayguestinfo = ({ setadultCount, setchildCount }) => {
             amount:
               (reducerForm.length - 1) * onePackage?.pakage_amount.amount * 0.05 +
               (reducerForm.length - 1) * onePackage?.pakage_amount.amount,
+              bookingType:"Package booking"
           };
   
           dispatch(balanceSubtractRequest(balancePayload));

@@ -71,13 +71,19 @@ const RegionLogin = () => {
 
   return (
     <>
+    <div style={{position:'absolute',
+      top:'0',
+      left:'0',
+      right:'0',
+      height:'10.9rem'
+    }}>
       <div
         className="coverletter"
         style={{
           // borderRadius: "15px",
           width: "100%",
-          marginTop: "-740px",
-          height: "350px", // Adjusted height
+          
+          height: "450px", // Adjusted height
           overflow: "hidden", // Ensures the border radius is applied correctly
           position: "relative",
         }}
@@ -98,18 +104,19 @@ const RegionLogin = () => {
           width: "50%",
           marginLeft: "auto",
           marginRight: "auto",
-          top: "0px",
+          top: "-200px",
           position: "relative",
-          marginTop: "-110px",
+        
         }}
       >
         <form
           style={{
             width: "468px",
             padding: "20px",
-            backgroundColor: "#ffffff",
-            borderRadius: "8px",
-            boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+            backgroundColor: "#f8f7f666",
+            borderRadius: "10%",
+            boxShadow: "rgb(4 1 22 / 95%) 0px 0px 10px 4px",
+            marginBottom:'40px',
           }}
           onSubmit={handleSubmit}
         >
@@ -117,9 +124,9 @@ const RegionLogin = () => {
            <img
             src={ab}
             alt=""
-            style={{width:'260px',marginLeft:'80px'}}
+            style={{width:'260px',marginLeft:'80px',boxShadow:'0px 0px 30px 2px',borderRadius:'5%'}}
             />
-            <h2
+            <h3
               style={{
                 color: "white",
                 textAlign: "center",
@@ -133,7 +140,7 @@ const RegionLogin = () => {
               }}>
             
               Relationship Manager Login
-            </h2>
+            </h3>
             <input
               type="text"
               placeholder="Enter your Email Address or Contact Number"
@@ -147,6 +154,8 @@ const RegionLogin = () => {
                 boxSizing: "border-box",
                 marginLeft:'auto',
                 marginRight:'auto',
+                color:'#280765',
+                fontFamily:'fantasy',
               }}
               onChange={handleEmailChange}
             />
@@ -166,6 +175,8 @@ const RegionLogin = () => {
                 paddingRight: "40px",
                 marginLeft:"auto",
                 marginRight:"auto",
+                color:'#280765',
+                fontFamily:'fantasy',
               }}
               onChange={handlePasswordChange}
             />
@@ -177,6 +188,7 @@ const RegionLogin = () => {
                 right: "55px",
                 transform: "translateY(-50%)",
                 cursor: "pointer",
+                color:'#280765',
               }}
             >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -206,6 +218,8 @@ const RegionLogin = () => {
             <p style={{ color: "red", marginTop: "10px" }}>{formError}</p>
           )}
         </form>
+      </div>
+     
       </div>
     </>
   );

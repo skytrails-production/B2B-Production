@@ -9,13 +9,9 @@ import { useNavigate } from "react-router-dom";
 import { Flex, Spacer, Text } from "@chakra-ui/react";
 // import Popularfilter from '../flightresult/Popularfilter';
 import Sailsummary from "./Sailsummary";
-import { useDispatch, useSelector, useReducer } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Hoteldescription from "./Hoteldescription";
-import successGif from "../../../Images/successGif.png";
-// import { clearHotelReducer } from "../../Redux/Hotel/hotel";
-import Swal from "sweetalert2";
 
-import { balanceSubtractRequest } from "../../../Redux/Auth/balaceSubtract/actionBalnceSubtract";
 import { getUserDataAction } from "../../../Redux/Auth/UserDataById/actionUserData";
 
 import "./guestdetail.css";

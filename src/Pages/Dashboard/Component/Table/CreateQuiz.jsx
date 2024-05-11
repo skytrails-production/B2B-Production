@@ -3,7 +3,7 @@ import { apiURL } from '../../../../Constants/constant';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { CircularProgress, TextField, Button,Typography,gutterBottom } from "@mui/material";
-function CreateQuiz() {
+function CreateQuiz({adminId}) {
     const [load,setLoad]=useState(false);
     const[question,setQuestion]=useState("");
     const[answer,setAnswer]=useState("");
@@ -20,6 +20,8 @@ function CreateQuiz() {
       opt2:opt2,
       opt3:opt3,
       opt4:opt4,
+      quizDate:new Date(),
+      adminId: adminId,
   }
     const handleSubmit=async(e)=>{
         e.preventDefault();

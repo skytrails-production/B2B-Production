@@ -257,6 +257,7 @@ const MainPage = () => {
     };
     dispatch(tokenAction(payload));
   }, [reducerState?.ip?.ipData]);
+  
   // console.log(reducerState?.ip,"reducerState")
 
   // useEffect(() => {
@@ -287,10 +288,12 @@ const MainPage = () => {
     return () => clearTimeout(loadingTimeout);
   }, []);
 
+
   if (isLoading) {
     // return
     <LoadingSpinner />;
   }
+
 
   // if (!windowWidth) {
   //   return (

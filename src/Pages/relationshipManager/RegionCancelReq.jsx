@@ -12,10 +12,14 @@ const RegionCancelReq=()=> {
   const [agents, setAgents] = useState([]); // State to hold agents for the second select element
   const [selectedAgentId, setSelectedAgentId] = useState(""); // State to hold the selected agent ID
   const [responseData, setResponseData] = useState(null);
-  console.log(responseData,"responseData")
+ // console.log(responseData,"responseData")
     const navigate=useNavigate();
     useEffect(() => {
       const fetchData = async () => {
+        const token = localStorage.getItem("token");
+        if(!token){
+          navigate('/relationshipManager/Login');
+        }else{
         try {
           // Fetch agents for the second select element
           const result = await axios.get(`${apiURL.baseURL}/skyTrails/api/relationShipManager/getAllRMOfAGENT`, {
@@ -27,10 +31,11 @@ const RegionCancelReq=()=> {
         } catch (error) {
           console.error("Error fetching agents:", error);
         }
+      }
       };
   
       fetchData();
-    }, []);
+    }, [navigate]);
   
     const fetchData = async () => {
       const payload = {
@@ -93,14 +98,15 @@ const RegionCancelReq=()=> {
         fetchData(); // Call fetchData when the form is submitted
       };
       const handlemove=()=>{
+        localStorage.removeItem("token");
         navigate('/relationshipManager/Login');
       }
       useEffect(() => {
         setResponseData(null);
-      }, [type]);
+      }, [type,agents]);
   return (
     <div style={{position:'fixed',top:'0',left:'0',right:'0',width:'100%',overflow:'auto',display:'flex',height:'100vh'}}>
-      <div style={{ flex: '0 0 250px', backgroundColor: 'lightgray', padding: '20px', borderRight: '1px solid gray', overflow: 'auto' }}>
+      <div style={{ flex: '0 0 290px', backgroundColor: 'lightgray', padding: '20px', borderRight: '1px solid gray', overflow: 'auto' }}>
       <img
           src={ab}
           alt='Skytrails'
@@ -110,7 +116,7 @@ const RegionCancelReq=()=> {
           <li
             style={{
               fontSize: '1.8rem',
-              fontWeight: '700',
+              fontWeight: '500',
               listStyle: 'none',
               backgroundColor: selectedNavItem === 'home' ? 'skyblue' : 'white',
               color: selectedNavItem === 'home' ? 'white' : 'black',
@@ -118,16 +124,18 @@ const RegionCancelReq=()=> {
               cursor: 'pointer',
               padding: '10px',
               borderRadius: '5px',
-              marginBottom: '10px' // Space between list items
+              marginBottom: '10px' ,// Space between list items
+              boxShadow:'0px 0px 5px',
+              fontFamily:'fantasy',
             }}
             onClick={handleHomeClick}
-          >
-            Home
+          ><button style={{border:'none',fontWeight:'400',backgroundColor:'white',color:'#514141'}}>Home</button>
+            
           </li>
           <li
             style={{
               fontSize: '1.8rem',
-              fontWeight: '700',
+              fontWeight: '500',
               listStyle: 'none',
               backgroundColor: selectedNavItem === 'bookings' ? 'skyblue' : 'white',
               color: selectedNavItem === 'bookings' ? 'white' : 'black',
@@ -135,11 +143,13 @@ const RegionCancelReq=()=> {
               cursor: 'pointer',
               padding: '10px',
               borderRadius: '5px',
-              marginBottom: '10px' // Space between list items
+              marginBottom: '10px', // Space between list items
+              boxShadow:'0px 0px 5px',
+              fontFamily:'fantasy',
             }}
             onClick={handleBookingsClick}
           >
-            Booking
+            <button style={{border:'none',fontWeight:'400',backgroundColor:'white',color:'#514141'}}>Booking</button>
           </li>
           <li
             style={{
@@ -152,16 +162,19 @@ const RegionCancelReq=()=> {
               cursor: 'pointer',
               padding: '10px',
               borderRadius: '5px',
-              marginBottom: '10px' // Space between list items
+              marginBottom: '10px' ,// Space between list items
+              width:'220px',
+              boxShadow:'0px 0px 5px',
+              fontFamily:'fantasy',
             }}
             onClick={handleCancelReq}
           >
-            Cancel Request
+            <button style={{border:'none',fontWeight:'400',backgroundColor:'white',color:'#514141'}}>Cancel Request</button>
           </li>
           <li
             style={{
-              fontSize: '1.8rem',
-              fontWeight: '700',
+              fontSize: '1.69rem',
+              fontWeight: '500',
               listStyle: 'none',
               backgroundColor: selectedNavItem === 'change' ? 'skyblue' : 'white',
               color: selectedNavItem === 'change' ? 'white' : 'black',
@@ -169,30 +182,35 @@ const RegionCancelReq=()=> {
               cursor: 'pointer',
               padding: '10px',
               borderRadius: '5px',
-              marginBottom: '10px' // Space between list items
+              marginBottom: '10px' ,// Space between list items
+              width:'220px',
+              boxShadow:'0px 0px 5px',
+              fontFamily:'fantasy',
             }}
             onClick={handleChangeReq}
           >
-            Change Request
+            <button style={{border:'none',fontWeight:'400',backgroundColor:'white',color:'#514141'}}>Change Request</button>
           </li>
         </ul>
         </div>  
         <div style={{ flex: '1', padding: '20px', overflow: 'auto' }}>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}> 
 
-<h2 style={{ color: 'blue' }}>Welcome to Relationship Manager Portal</h2>
-<FiLogOut  style={{cursor:'pointer',fontSize:'30px'}} onClick={handlemove}/>
+<h2 style={{ color: 'blue' ,fontFamily:'fantasy'}}>Welcome to Relationship Manager Portal</h2>
+<span  onClick={handlemove}style={{cursor:'pointer',color:'red',fontFamily:'fantasy',fontSize:'large'}} >
+          <FiLogOut style={{ cursor: 'pointer', fontSize: '30px' }} />Logout
+          </span>
 </div>
         <div className='relationType' style={{marginLeft:'auto',marginRight:'auto',width:'50%'}}>
-          <form onSubmit={handleSubmit} style={{backgroundColor:'white',borderRadius:'10px',marginTop:'30px'}}>
-          
+          <form onSubmit={handleSubmit} style={{backgroundColor:'white',borderRadius:'10px',marginTop:'30px',boxShadow:'0px 0px 12px #0c0c0f'}}>
+          <p style={{color:'#0d4ce0',fontSize:'large'}}>Cancel Booking Details</p>
             <select name="agentId" onChange={handleAgentSelectChange} style={{ padding: '0px'}}>
               <option value="">Select Agent</option>
               {/* Mapping over agents to create select options with first name */}
               {agents.map(agent => (
                 <option key={agent._id} value={agent._id}>{agent.personal_details.first_name}</option>
               ))}
-            </select>
+            </select >
             <select name="type" onChange={(e) => setType(e.target.value)} style={{ padding: '0px' }}>
               <option value="">Select Type</option>
               <option value="all">all</option>
@@ -239,6 +257,7 @@ const RegionCancelReq=()=> {
                       <th>Email</th>
                       <th>Name</th>
                       <th>Contact Number</th>
+                      <th>Hotel</th>
                       <th>Cancelled Reason</th>
                     </tr>
                   </thead>
@@ -249,6 +268,7 @@ const RegionCancelReq=()=> {
                         <td>{item.userId.personal_details.email}</td>
                         <td>{item.userId.personal_details.first_name}</td>
                         <td>{item.userId.personal_details.mobile.mobile_number}</td>
+                        <td>{item.hotelBookingId.hotelName}</td>
                         <td>{item.reason}</td>
                       </tr>
                     ))}

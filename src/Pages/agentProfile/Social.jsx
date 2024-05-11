@@ -50,7 +50,7 @@ function Social({ data }) {
                     borderRadius: '50px',
                     marginLeft: '20%',
                     height: '80%',
-                    boxShadow: '12px 9.5px 8px 10px #b9b1b1',
+                    boxShadow: '0px 0px 12px #120808cf',
                     overflowX: 'auto',
                     marginTop:'1.5%',
                 }}
@@ -68,7 +68,7 @@ function Social({ data }) {
                     <input type="text" name="facebookId" placeholder="Enter Facebook Id" onChange={(e) => setFacebookId(e.target.value)} style={{ width: '70%' }} />
                     <input type="text" name="googleId" placeholder="Enter Google Id" onChange={(e) => setGoogleId(e.target.value)} style={{ width: '70%' }} />
                     <input type="text" name="linkedinId" placeholder="Enter Linkedin Id" onChange={(e) => setLinkedinId(e.target.value)} style={{ width: '70%' }} />
-                    <input type="file" accept="jpeg,jpg,png" onChange={(e) => setImages(e.target.files[0])}  style={{width:'70%'}}/>
+                    <input type="file" accept="jpeg,jpg,png" onChange={(e) => setImages(e.target.files[0])}  style={{width:'70%',paddingTop:'5px'}}/>
                     <button type="submit"
                         style={{
                             width: '70%',

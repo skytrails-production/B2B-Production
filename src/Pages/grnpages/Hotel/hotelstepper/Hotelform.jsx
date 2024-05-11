@@ -89,13 +89,8 @@ const HotelForm = () => {
       setSearchTermLast(parsedStoredData[0]);
     }
   }, []);
-  const errorCode =
-    reducerState?.hotelSearchResult?.ticketData?.data?.data?.HotelSearchResult
-      ?.Error?.ErrorCode;
-  const errorMsg =
-    reducerState?.hotelSearchResult?.ticketData?.data?.data?.HotelSearchResult
-      ?.Error?.ErrorMessage;
-
+  
+  
   const initialvalue = {
     City: "",
     nationality: "IN",
@@ -455,51 +450,7 @@ const HotelForm = () => {
   //     setOpen(true);
   //   }
   // }
-  // function handleSubmit(event) {
-  //   event.preventDefault();
-  //   console.log("formmmmmmmmmmmmm");
-  //   sessionStorage.setItem("SessionExpireTime", new Date());
-
-  //   const dynamicFormData = formDataDynamic.map((data) => ({
-  //     adults: data.NoOfAdults || 0,
-  //     children_ages: data.ChildAge || [],
-  //   }));
-
-  //   sessionStorage.setItem("hotelFormData", JSON.stringify(searchTermLast));
-
-  //   const payload = {
-  //     rooms: [...dynamicFormData],
-  //     rates: "concise",
-  //     cityCode: searchTermLast.cityCode,
-  //     // cityCode: "123144",
-  //     currency: "INR",
-  //     client_nationality: "IN",
-  //     checkin: dayjs(checkIn).format("YYYY-MM-DD"),
-  //     checkout: dayjs(checkOut).format("YYYY-MM-DD"),
-  //     cutoff_time: 30000,
-  //     version: "2.0",
-  //   };
-
-  //   SecureStorage.setItem(
-  //     "revisitHotelDataGRN",
-  //     JSON.stringify([
-  //       {
-  //         cityCode: searchTermLast.cityCode,
-  //         cityName: searchTermLast.cityName,
-  //         countryCode: searchTermLast.countryCode,
-  //         countryName: searchTermLast.countryName,
-  //       },
-  //     ])
-  //   );
-
-  //   dispatch(hotelActionGrn(payload));
-  //   navigate("/hotel/hotelsearchs");
-
-  //   // if (reducerState?.hotelSearchResultGRN?.ticketData?.data?.data?.hotels) {
-  //   //   setOpen(false);
-  //   // }
-  //   // setOpen(true);
-  // }
+  
 
   return (
     <>
