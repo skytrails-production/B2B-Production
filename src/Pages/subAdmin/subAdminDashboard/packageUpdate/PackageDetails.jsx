@@ -22,7 +22,8 @@ import LinearProgress from "@mui/material";
 
 function PackageDetails() {
   const reducerState = useSelector((state) => state);
-  const access = reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
+  const access =
+    reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
 
   // const holidayPackage = reducerState?.searchResult?.packageSearchResult?.data?.data?.pakage;
 
@@ -36,22 +37,22 @@ function PackageDetails() {
 
   const [holidayPackage, setHolidayPackage] = useState([]);
   const [loading, setLoading] = useState(false);
-  // const fetchHolidayPackages = async () => {
-  //     try {
-  //         const response = await axios.get(
-  //             ` ${apiURL.baseURL}/skyTrails/international/getAllAdminPackage`
-  //         );
-  //         console.log(response.data, "----------------------");
-  //         setHolidayPackage(response.data.data.pakage);
-  //     } catch (error) {
-  //         console.error("Error fetching holiday packages:", error);
-  //     }
-  // };
 
-  // useEffect(() => {
+  const fetchHolidayPackages = async () => {
+    try {
+      const response = await axios.get(
+        ` ${apiURL.baseURL}/skyTrails/international/getAllAdminPackage`
+      );
+      console.log(response.data, "----------------------");
+      setHolidayPackage(response.data.data.pakage);
+    } catch (error) {
+      console.error("Error fetching holiday packages:", error);
+    }
+  };
 
-  //     fetchHolidayPackages();
-  // }, []);
+  useEffect(() => {
+    fetchHolidayPackages();
+  }, []);
 
   const style = {
     position: "absolute",
@@ -100,17 +101,17 @@ function PackageDetails() {
   const [selectedPackageApprove, setSelectedPackageApprove] = useState("");
   const [selectedPackageDelete, setSelectedPackageDelete] = useState("");
 
-  const fetchHolidayPackages = async () => {
-    try {
-      const response = await axios.get(
-        `${apiURL.baseURL}/skyTrails/international/getAllAdminPackage`
-      );
-      // console.log(response.data, "----------------------");
-      setHolidayPackage(response.data.data.pakage);
-    } catch (error) {
-      console.error("Error fetching holiday packages:", error);
-    }
-  };
+  // const fetchHolidayPackages = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `${apiURL.baseURL}/skyTrails/international/getAllAdminPackage`
+  //     );
+  //     // console.log(response.data, "----------------------");
+  //     setHolidayPackage(response.data.data.pakage);
+  //   } catch (error) {
+  //     console.error("Error fetching holiday packages:", error);
+  //   }
+  // };
   // view modal
   const [openView, setOpenView] = useState(false);
 
@@ -294,17 +295,17 @@ function PackageDetails() {
         // Define the button style based on approval status
         const buttonStyle = isApproved
           ? {
-            color: "gray",
-            backgroundColor: "#f5f5f5", // Add background color here
-            border: "1px solid #FF392F",
-            cursor: "not-allowed",
-            // Disable pointer events when button is disabled
-          }
+              color: "gray",
+              backgroundColor: "#f5f5f5", // Add background color here
+              border: "1px solid #FF392F",
+              cursor: "not-allowed",
+              // Disable pointer events when button is disabled
+            }
           : {
-            color: "black",
-            border: "1px solid #FF392F",
-            cursor: "pointer",
-          };
+              color: "black",
+              border: "1px solid #FF392F",
+              cursor: "pointer",
+            };
 
         return (
           <Button
@@ -323,7 +324,7 @@ function PackageDetails() {
       headerName: "Status",
       headerClassName: "custom-header",
       width: 200,
-      renderCell: (params) => ( 
+      renderCell: (params) => (
         <Select
           value={params.row.is_active}
           onChange={(event) => handleApprove(event, params.row)}
@@ -361,43 +362,57 @@ function PackageDetails() {
   return (
     <div
       className="subad-table-container"
-      style={{ position: "relative", width: "130%",marginTop:"-20px" }}
+      style={{ position: "relative", width: "130%", marginTop: "-20px" }}
     >
       <div
         className="adsearch-bar"
-        style={{ position: "absolute", top: 10, zIndex: 1, fontWeight: "bold",backgroundColor:"#E73C33" }}
+        style={{
+          position: "absolute",
+          top: 10,
+          zIndex: 1,
+          fontWeight: "bold",
+          backgroundColor: "#E73C33",
+        }}
       >
         <Typography variant="h5" className="adtable-heading">
           Edit Holiday Package
         </Typography>
       </div>
-      {access !== "PACKAGE_HANDLER" ? <div>access not granted</div> :
-      <div style={{ width: "100%", backgroundColor: "#fff" }}>
-        {holidayPackage.length === 0 ? (
-          <div style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", height: "100px" }}>
-            
+      {access !== "PACKAGE_HANDLER" ? (
+        <div>access not granted</div>
+      ) : (
+        <div style={{ width: "100%", backgroundColor: "#fff" }}>
+          {holidayPackage.length === 0 ? (
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100px",
+              }}
+            >
               Loading.....
-          
-          </div>
-        ) : (
-          <DataGrid
-            rows={holidayPackage}
-            columns={columns}
-            pageSize={5}
-            checkboxSelection
-            getRowId={(row) => row._id}
-            // components={{
-            //   Toolbar: () => (
-            //     <div style={{ marginTop: "10px" }}>
-            //       <GridToolbar />
-            //     </div>
-            //   ),
-            //   Pagination: () => null,
-            // }}
-          />
-        )}
-      </div>
-}
+            </div>
+          ) : (
+            <DataGrid
+              rows={holidayPackage}
+              columns={columns}
+              pageSize={5}
+              checkboxSelection
+              getRowId={(row) => row._id}
+              // components={{
+              //   Toolbar: () => (
+              //     <div style={{ marginTop: "10px" }}>
+              //       <GridToolbar />
+              //     </div>
+              //   ),
+              //   Pagination: () => null,
+              // }}
+            />
+          )}
+        </div>
+      )}
       <Modal
         open={open}
         onClose={handleClose}

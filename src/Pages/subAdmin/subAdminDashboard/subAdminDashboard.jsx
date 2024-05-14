@@ -56,6 +56,7 @@ import AgentBusBooking from "./AgentBusBooking";
 import AgentHotelBooking from "./AgentHotelBooking";
 import UserBusBooking from "./UserBusBooking";
 import UserFlightBooking from "./UserFlightBooking";
+import AgentList from "./AgentList";
 import UserHotelBooking from "./UserHotelBooking";
 import MarkupAmount from "./MarkupAmount";
 import FixedDeparture from "./FixedDeparture";
@@ -102,7 +103,8 @@ import Visacategorys from "./Visapagesub/Visacategory";
 
 import RequireddocumentFrom from "./Visapagesub/Requireddocument";
 import Documentcategorys from "./Visapagesub/Documentcategorys";
-
+import ChangeAgentWise from "./Addforms/ChangeAgentWise";
+import CancelAgentWise from "./Addforms/CancelAgentWise";
 import { apiURL } from "../../../Constants/constant";
 
 import { PiBackpackThin } from "react-icons/pi";
@@ -113,6 +115,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { subAdminLogout } from "../../../Redux/SubAdminLogin/actionsubadminlogin";
 import RelationshipCreate from "./RelationshipCreate";
 import DownloadSSDC from "./DownloadSSDC";
+import AgentListRM from "./AgentListRM";
+import AgentWise from "./Addforms/AgentWise";
+import BlogForm from "./Addforms/BlogForm";
 const drawerWidth = 240;
 function ResponsiveDrawer(props) {
   const { window } = props;
@@ -134,6 +139,7 @@ function ResponsiveDrawer(props) {
     React.useState(false);
   const [advertisements, setAdvertisement] = React.useState(false);
   const [reationship, setRelationship] = React.useState(false);
+  const [AgentWises, setAgentwise] = React.useState(false);
   const [visaCountryforms, setvisaCountryform] = React.useState(false);
   const [visaCountrysforms, setvisaCountrysform] = React.useState(false);
   const [visaCategoryforms, setvisaCategoryforms] = React.useState(false);
@@ -171,6 +177,8 @@ function ResponsiveDrawer(props) {
     location.pathname === "/subAdmin/dashboard/AgentrequestTable";
   const agentflightCancel =
     location.pathname === "/subAdmin/dashboard/Agentflightcancel";
+  const AgentLists = location.pathname === "/subAdmin/dashboard/AgentList";
+  const AgentListsRM = location.pathname === "/subAdmin/dashboard/AgentListRM";
   const agenthotelCancel =
     location.pathname === "/subAdmin/dashboard/Agenthotelcancel";
   const agentbusCancel =
@@ -226,6 +234,7 @@ function ResponsiveDrawer(props) {
     location.pathname === "/subAdmin/dashboard/addcouponscode";
   const addNotification =
     location.pathname === "/subAdmin/dashboard/addnotification";
+  const createBlogs = location.pathname === "/subAdmin/dashboard/createblog";
   const addMarkup = location.pathname === "/subAdmin/dashboard/addmarkups";
   const addEvent = location.pathname === "/subAdmin/dashboard/addEvents";
   const citypackages = location.pathname === "/subAdmin/dashboard/addpackage";
@@ -238,6 +247,11 @@ function ResponsiveDrawer(props) {
     location.pathname === "/subAdmin/dashboard/webadvertisement";
 
   const relationship = location.pathname === "/subAdmin/dashboard/relationship";
+  const agentWise = location.pathname === "/subAdmin/dashboard/agentwise";
+  const CancelagentWise =
+    location.pathname === "/subAdmin/dashboard/cancelagentwise";
+  const ChangeagentWise =
+    location.pathname === "/subAdmin/dashboard/changeagentwise";
 
   const getevent = location.pathname === "/subAdmin/dashboard/getevent";
   const searchdata = location.pathname === "/subAdmin/dashboard/searchdata";
@@ -290,6 +304,7 @@ function ResponsiveDrawer(props) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
   const handleAgentTable = () => {
     setShowAgentData(true);
     navigate("./Agenttable");
@@ -297,6 +312,25 @@ function ResponsiveDrawer(props) {
   const handleSsdcTable = () => {
     setshowSsdc(true);
     navigate("./ssdc");
+  };
+
+  const handleAgentList = () => {
+    setshowSsdc(true);
+    navigate("./AgentList");
+  };
+
+  const handleRMAgentList = () => {
+    setshowSsdc(true);
+    navigate("./AgentListRM");
+  };
+  const handleCancelAgent = () => {
+    setshowSsdc(true);
+    navigate("./cancelagentwise");
+  };
+
+  const handleChangeAgent = () => {
+    setshowSsdc(true);
+    navigate("./changeagentwise");
   };
 
   const handleSubadminTable = () => {
@@ -362,6 +396,14 @@ function ResponsiveDrawer(props) {
     setRelationship(true);
     navigate("/subAdmin/dashboard/relationship");
     console.log("/subAdmin/dashboard/relationship");
+  };
+
+  const handleBlog = () => {
+    navigate("/subAdmin/dashboard/createblog");
+  };
+  const handleAgentWise = () => {
+    setAgentwise(true);
+    navigate("/subAdmin/dashboard/agentwise");
   };
 
   const handlePackages = () => {
@@ -698,7 +740,12 @@ function ResponsiveDrawer(props) {
         <img
           src={newlogo}
           alt=""
-          style={{ width: "100%", marginTop: "10px", marginLeft: "10px", marginBottom:"10px" }}
+          style={{
+            width: "100%",
+            marginTop: "10px",
+            marginLeft: "10px",
+            marginBottom: "10px",
+          }}
         />
       </div>
       <List>
@@ -1078,6 +1125,42 @@ function ResponsiveDrawer(props) {
           </ListItem>
         )}
 
+        {access === "BOOKING_MANAGER" && (
+          <ListItem
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "-25px",
+              paddingLeft: "0px",
+            }}
+          >
+            <ListItemButton onClick={handleAgentList}>
+              <HomeOutlinedIcon sx={{ color: "white", fontSize: "1.2rem" }} />
+              <ListItemText style={{ color: "white", marginLeft: "5px" }}>
+                ReferralsCount
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
+        )}
+
+        {access === "BOOKING_MANAGER" && (
+          <ListItem
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "-25px",
+              paddingLeft: "0px",
+            }}
+          >
+            <ListItemButton onClick={handleRMAgentList}>
+              <HomeOutlinedIcon sx={{ color: "white", fontSize: "1.2rem" }} />
+              <ListItemText style={{ color: "white", marginLeft: "5px" }}>
+                RMAgent List
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
+        )}
+
         {access === "EVENT_HANDLER" && (
           <ListItem
             style={{
@@ -1276,6 +1359,7 @@ function ResponsiveDrawer(props) {
               access === "EVENT_HANDLER" ||
               access === "COUPON_CODE_HANDLER" ||
               access === "BOOKING_MANAGER" ||
+              access === "CONTENT_MANAGER" ||
               access === "PACKAGE_HANDLER") && (
               <div
                 style={{
@@ -1314,6 +1398,15 @@ function ResponsiveDrawer(props) {
                   >
                     {" "}
                     Add WebAdvertisement{" "}
+                  </Typography>
+                )}
+                {access === "CONTENT_MANAGER" && (
+                  <Typography
+                    sx={{ color: "black", cursor: "pointer" }}
+                    onClick={handleBlog}
+                  >
+                    {" "}
+                    Create Blog{" "}
                   </Typography>
                 )}
                 {access === "EVENT_HANDLER" && (
@@ -1360,6 +1453,34 @@ function ResponsiveDrawer(props) {
                   >
                     {" "}
                     Add Relationship Manager{" "}
+                  </Typography>
+                )}
+
+                {access === "BOOKING_MANAGER" && (
+                  <Typography
+                    sx={{ color: "black", cursor: "pointer" }}
+                    onClick={handleAgentWise}
+                  >
+                    {" "}
+                    Agent Wise{" "}
+                  </Typography>
+                )}
+                {access === "BOOKING_MANAGER" && (
+                  <Typography
+                    sx={{ color: "black", cursor: "pointer" }}
+                    onClick={handleCancelAgent}
+                  >
+                    {" "}
+                    Cancel AgentWise{" "}
+                  </Typography>
+                )}
+                {access === "BOOKING_MANAGER" && (
+                  <Typography
+                    sx={{ color: "black", cursor: "pointer" }}
+                    onClick={handleChangeAgent}
+                  >
+                    {" "}
+                    Change AgentWise{" "}
                   </Typography>
                 )}
                 <button
@@ -1699,9 +1820,13 @@ function ResponsiveDrawer(props) {
         <Typography paragraph>
           {agentRequestView && <AgentRequest />}
         </Typography>
+
+        <Typography paragraph>{AgentLists && <AgentList />}</Typography>
+
         <Typography paragraph>
           {agentflightCancel && <AgentFlightCancel />}
         </Typography>
+
         <Typography paragraph>
           {agenthotelCancel && <AgentHotelCancel />}
         </Typography>
@@ -1746,6 +1871,16 @@ function ResponsiveDrawer(props) {
         </Typography>
 
         <Typography paragraph>
+          {CancelagentWise && <CancelAgentWise />}
+        </Typography>
+
+        <Typography paragraph>
+          {ChangeagentWise && <ChangeAgentWise />}
+        </Typography>
+
+        <Typography paragraph>{AgentListsRM && <AgentListRM />}</Typography>
+
+        <Typography paragraph>
           {AgentbusBooking && <AgentBusBooking />}
         </Typography>
 
@@ -1760,6 +1895,7 @@ function ResponsiveDrawer(props) {
         <Typography paragraph>
           {relationShip && <RelationshipCreate />}
         </Typography>
+        <Typography paragraph>{agentWise && <AgentWise />}</Typography>
 
         <Typography paragraph>
           {userbusBooking && <UserBusBooking />}
@@ -1827,6 +1963,7 @@ function ResponsiveDrawer(props) {
         <Typography paragraph>
           {visarequiredocument && <VisaRequireDoc />}
         </Typography>
+        <Typography paragraph>{createBlogs && <BlogForm />}</Typography>
 
         <Typography paragraph>{addCouponscode && <AddCoupons />}</Typography>
         <Typography paragraph>

@@ -5,7 +5,7 @@ import { Agent_ProfileRequest } from "../../Redux/AgentProfiltLogin/actionAgentP
 import newlogo from "../../Images/whitelogo1.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "../AdminLogin/AdminLogin.css";
-import bg from "../../Images/bg-cover.jpeg";
+import bg from "../../Images/bg-cover.jpg";
 import { adminReducer } from "../../Redux/AdminLogin/adminReducer";
 import { styled } from '@mui/material/styles';
 import loginImg from "./agentProfilelogin.jpg"

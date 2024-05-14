@@ -5,7 +5,7 @@ import { adminAuthAction } from "../../Redux/Auth/AdminAuth/actionAdminAuth";
 import newlogo from "../../Images/whitelogo1.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./AdminLogin.css";
-import bg from "../../Images/bg-cover.jpeg";
+import bg from "../../Images/bg-cover.jpg";
 import { adminReducer } from "../../Redux/AdminLogin/adminReducer";
 import { styled } from '@mui/material/styles';
 
@@ -125,7 +125,7 @@ if(adminData){
               // borderRadius: "15px",
               width: "100%",
               margin: "auto",
-              height: "250px", // Adjusted height
+              height: "350px", // Adjusted height
               overflow: "hidden", // Ensures the border radius is applied correctly
             }}
           >

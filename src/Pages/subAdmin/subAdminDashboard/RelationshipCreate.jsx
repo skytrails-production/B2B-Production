@@ -4,7 +4,6 @@ import axios from "axios";
 import { Paper, Typography, Button } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { apiURL } from "../../../Constants/constant";
-import Swal from "sweetalert2";
 
 const RelationshipCreate = () => {
   const [relationshipManagers, setRelationshipManagers] = useState([]);
@@ -14,6 +13,7 @@ const RelationshipCreate = () => {
 
   useEffect(() => {
     async function fetchRelationshipManagers() {
+      //console.log("+++++++++++++++++++++++++++++++++++++")
       try {
         setLoading(true);
         const response = await axios.get(
@@ -25,8 +25,9 @@ const RelationshipCreate = () => {
             },
           }
         );
+
         setRelationshipManagers(response.data.result);
-        console.log(response.data.result, "========================");
+        // console.log(token, "888888888888888");
         setLoading(false);
       } catch (error) {
         console.error("Error fetching Relationship Managers:", error);
@@ -36,10 +37,6 @@ const RelationshipCreate = () => {
 
     fetchRelationshipManagers();
   }, [token]); // Dependency on token to refetch when token changes
-
-  const handleViewDetails = (manager) => {
-    // Handle viewing details of the relationship manager
-  };
 
   const columns = [
     {
@@ -97,7 +94,7 @@ const RelationshipCreate = () => {
     <div>
       {loading ? (
         <Typography>Loading...</Typography>
-      ) : (
+      ) : relationshipManagers && relationshipManagers.length > 0 ? (
         <Paper style={{ height: 400, width: "100%" }}>
           <DataGrid
             rows={relationshipManagers}
@@ -112,9 +109,18 @@ const RelationshipCreate = () => {
             getRowId={(row) => row._id}
           />
         </Paper>
+      ) : (
+        <Typography sx={{ textAlign: "center" }}>No data available</Typography>
       )}
     </div>
   );
 };
 
 export default RelationshipCreate;
+
+
+
+
+
+
+

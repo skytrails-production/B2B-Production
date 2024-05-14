@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
 import { apiURL } from "../../Constants/constant";
-import bg from "../../Images/bg-cover.jpeg";
+import bg from "../../Images/bg-cover.jpg";
 import ab from '../../Images/The hawai yatra final logo.png';
 import { FiLogOut } from "react-icons/fi";
 const RegionLogin = () => {
@@ -13,6 +13,7 @@ const RegionLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formError, setFormError] = useState("");
+ 
   const [token, setToken] = useState("");
   const[isloggedIn,setIsLoggedIn]=useState(false);
   const handleSubmit = async (event) => {
@@ -39,6 +40,7 @@ const RegionLogin = () => {
         //   "8115199076"
         // );
         localStorage.setItem("token", response.data.result.token);
+        localStorage.setItem("ID", response.data.result._id);
         setIsLoggedIn(true);
         navigate("/relationshipManager/dashboard");
       } else {
