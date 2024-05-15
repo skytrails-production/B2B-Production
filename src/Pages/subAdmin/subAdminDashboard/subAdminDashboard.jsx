@@ -118,6 +118,7 @@ import DownloadSSDC from "./DownloadSSDC";
 import AgentListRM from "./AgentListRM";
 import AgentWise from "./Addforms/AgentWise";
 import BlogForm from "./Addforms/BlogForm";
+import AllBlogs from "./AllBlogs";
 const drawerWidth = 240;
 function ResponsiveDrawer(props) {
   const { window } = props;
@@ -178,6 +179,8 @@ function ResponsiveDrawer(props) {
   const agentflightCancel =
     location.pathname === "/subAdmin/dashboard/Agentflightcancel";
   const AgentLists = location.pathname === "/subAdmin/dashboard/AgentList";
+  const Allblog = location.pathname === "/subAdmin/dashboard/AllBlog";
+  
   const AgentListsRM = location.pathname === "/subAdmin/dashboard/AgentListRM";
   const agenthotelCancel =
     location.pathname === "/subAdmin/dashboard/Agenthotelcancel";
@@ -308,6 +311,10 @@ function ResponsiveDrawer(props) {
   const handleAgentTable = () => {
     setShowAgentData(true);
     navigate("./Agenttable");
+  };
+  const handleAllBlogs = () => {
+   
+    navigate("./AllBlog");
   };
   const handleSsdcTable = () => {
     setshowSsdc(true);
@@ -782,6 +789,50 @@ function ResponsiveDrawer(props) {
             </ListItemButton>
           </ListItem>
         )}
+        {access === "CONTENT_MANAGER" && (
+          <ListItem
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "-25px",
+              paddingLeft: "0px",
+            }}
+          >
+            <ListItemButton onClick={handleBlog}>
+              <GroupIcon style={{ color: "white" }} />
+              <ListItemText style={{ color: "white", marginLeft: "5px" }}>
+                Create Blog
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
+        )}
+        {access === "CONTENT_MANAGER" && (
+          <ListItem
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "-25px",
+              paddingLeft: "0px",
+            }}
+          >
+            <ListItemButton onClick={handleAllBlogs}>
+              <GroupIcon style={{ color: "white" }} />
+              <ListItemText style={{ color: "white", marginLeft: "5px" }}>
+                All Blog
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
+        )}
+
+        {/* {access === "CONTENT_MANAGER" && (
+                  <Typography
+                    sx={{ color: "black", cursor: "pointer" }}
+                    onClick={handleBlog}
+                  >
+                    {" "}
+                    Create Blog{" "}
+                  </Typography>
+                )} */}
 
         {access === "USER_MANAGER" && (
           <ListItem
@@ -1351,7 +1402,7 @@ function ResponsiveDrawer(props) {
             aria-label="user"
             onClick={handleIconClick}
           >
-            <SupervisorAccount /> <span >Form</span>
+            <SupervisorAccount /> <span>Form</span>
           </IconButton>
           {isBoxOpen &&
             (access === "REQUEST_HANDLER" ||
@@ -1400,7 +1451,7 @@ function ResponsiveDrawer(props) {
                     Add WebAdvertisement{" "}
                   </Typography>
                 )}
-                {access === "CONTENT_MANAGER" && (
+                {/* {access === "CONTENT_MANAGER" && (
                   <Typography
                     sx={{ color: "black", cursor: "pointer" }}
                     onClick={handleBlog}
@@ -1408,7 +1459,7 @@ function ResponsiveDrawer(props) {
                     {" "}
                     Create Blog{" "}
                   </Typography>
-                )}
+                )} */}
                 {access === "EVENT_HANDLER" && (
                   <Typography
                     sx={{ color: "black", cursor: "pointer" }}
@@ -1812,6 +1863,7 @@ function ResponsiveDrawer(props) {
         <Toolbar />
         <Typography paragraph>{homeView && <Home />}</Typography>
         <Typography paragraph>{agentTableView && <Agenttable />}</Typography>
+        <Typography paragraph>{Allblog && <AllBlogs />}</Typography>
         <Typography paragraph>
           {subadminTableView && <SubadminAll />}
         </Typography>
@@ -1994,3 +2046,5 @@ ResponsiveDrawer.propTypes = {
   window: PropTypes.func,
 };
 export default ResponsiveDrawer;
+
+

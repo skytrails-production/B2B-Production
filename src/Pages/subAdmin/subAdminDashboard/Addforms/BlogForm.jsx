@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { apiURL } from "../../../../Constants/constant";
 import axios from "axios";
 import Editor from "react-simple-wysiwyg";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 function BlogForm() {
   const initialFormData = {
@@ -17,7 +19,7 @@ function BlogForm() {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false); // New loading state
   const [success, setSuccess] = useState(false); // New success state
-
+  const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
     if (type === "checkbox") {
@@ -59,13 +61,53 @@ function BlogForm() {
     return Object.keys(errors).length === 0;
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (!validateForm()) {
+  //     return;
+  //   }
+
+  //   setLoading(true); // Set loading state to true while submitting
+
+  //   try {
+  //     const formDataToSend = new FormData();
+  //     formDataToSend.append("title", formData.title);
+  //     formDataToSend.append("content", formData.content);
+  //     formDataToSend.append("tags", formData.tags);
+  //     formDataToSend.append("trending", formData.trending);
+  //     formDataToSend.append("location", formData.location);
+
+  //     formData.images.forEach((images) => {
+  //       formDataToSend.append("images", images);
+  //     });
+
+  //     const response = await axios.post(
+  //       `${apiURL.baseURL}/skyTrails/api/blog/createBlog`,
+  //       formDataToSend
+  //     );
+
+  //     console.log("Blog post created successfully:", response.data);
+  //     // Optionally, redirect to a success page or update UI
+  //     setSuccess(true);
+  //     setFormData(initialFormData); // Reset form data after successful submission
+  //     setTimeout(() => {
+  //       setSuccess(false);
+  //     }, 5000); // Hides the success message after 5 seconds
+  //   } catch (error) {
+  //     console.error("Error creating blog post:", error);
+  //     // Optionally, display an error message to the user
+  //     alert("Error creating blog post. Please try again later.");
+  //   } finally {
+  //     setLoading(false); // Reset loading state after submission
+  //   }
+  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) {
       return;
     }
 
-    setLoading(true); // Set loading state to true while submitting
+    setLoading(true);
 
     try {
       const formDataToSend = new FormData();
@@ -75,7 +117,7 @@ function BlogForm() {
       formDataToSend.append("trending", formData.trending);
       formDataToSend.append("location", formData.location);
 
-      formData.images.forEach((images, index) => {
+      formData.images.forEach((images) => {
         formDataToSend.append("images", images);
       });
 
@@ -84,27 +126,29 @@ function BlogForm() {
         formDataToSend
       );
 
-      console.log("Blog post created successfully:", response.data);
-      // Optionally, redirect to a success page or update UI
-      setSuccess(true);
-      setFormData(initialFormData); // Reset form data after successful submission
+      Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: "Blog post created successfully!",
+      }).then(() => {
+        setSuccess(true);
+        setFormData({
+          ...initialFormData, // Reset all form fields to their initial values
+          images: [], // Clear the images field by setting it to an empty array
+        });
+      });
     } catch (error) {
       console.error("Error creating blog post:", error);
-      // Optionally, display an error message to the user
       alert("Error creating blog post. Please try again later.");
     } finally {
-      setLoading(false); // Reset loading state after submission
+      setLoading(false);
     }
   };
 
   return (
     <div className="form-containers" style={{ width: "50%", margin: "auto" }}>
       <h1 style={{ textAlign: "center", marginBottom: "20px" }}>Create Blog</h1>
-      {success && (
-        <p style={{ color: "green", textAlign: "center" }}>
-          Blog post created successfully!
-        </p>
-      )}{" "}
+
       {/* Display success message */}
       <form onSubmit={handleSubmit}>
         <div>

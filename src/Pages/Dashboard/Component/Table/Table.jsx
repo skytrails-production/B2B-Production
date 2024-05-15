@@ -425,6 +425,7 @@ export default function Tables() {
             <TableHead style={{ border: "none" }} className="tableheadadmin">
               <TableRow style={{ border: "none" }}>
                 <StyledTableCell> Document Image</StyledTableCell>
+                <StyledTableCell> CreateAt</StyledTableCell>
                 <StyledTableCell> Name</StyledTableCell>
                 <StyledTableCell align="center">Agency Name</StyledTableCell>
                 <StyledTableCell align="center">Agency Email</StyledTableCell>
@@ -494,6 +495,12 @@ export default function Tables() {
                                   }}
                                 />
                               )}
+                            </StyledTableCell>
+
+                            {/* createdAt */}
+
+                            <StyledTableCell scope="row">
+                              {ele?.createdAt ? ele?.createdAt : "No Data"}
                             </StyledTableCell>
 
                             <StyledTableCell scope="row">
