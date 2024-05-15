@@ -1351,7 +1351,7 @@ function ResponsiveDrawer(props) {
             aria-label="user"
             onClick={handleIconClick}
           >
-            <SupervisorAccount />
+            <SupervisorAccount /> <span >Form</span>
           </IconButton>
           {isBoxOpen &&
             (access === "REQUEST_HANDLER" ||

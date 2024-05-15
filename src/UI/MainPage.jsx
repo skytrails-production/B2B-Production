@@ -134,6 +134,7 @@ import Packages from "../Pages/Packagepages/Packages";
 import Loginnew from "../Pages/login/Loginnew";
 import HotelSearchs from "../Pages/grnpages/Hotel/hotelsearch/HotelSearch";
 import CreateQuiz from "../Pages/Dashboard/Component/Table/CreateQuiz";
+import CreateBlog from "../Pages/Dashboard/Component/Table/CreateBlog";
 import Controls from "../Pages/Account/Controls";
 import HotelTicketDB from "../Pages/grnpages/Hotel/guestdetail/HotelTicketDB";
 const MainPage = () => {
@@ -334,6 +335,7 @@ const MainPage = () => {
       location.pathname === "/adminlogin" ||
       location.pathname === "/admin/addnotification" ||
       location.pathname === "/admin/createQuiz" ||
+      location.pathname === "/admin/createBlog"||
       location.pathname === "/subAdmin/dashboard/Agentflightcancel" ||
       location.pathname === "/subAdmin/dashboard/Agenthotelcancel" ||
       location.pathname === "/subAdmin/dashboard/Agentbuscancel" ||
@@ -775,6 +777,11 @@ const MainPage = () => {
                   exact
                   path="/admin/createQuiz"
                   element={<CreateQuiz />}
+                />
+                <Route
+                exact
+                path="/admin/createBlog"
+                element={<CreateBlog/>}
                 />
                 <Route
                   exact

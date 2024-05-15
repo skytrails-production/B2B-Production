@@ -316,6 +316,10 @@ import axios from 'axios';
 import { apiURL } from '../../Constants/constant';
 import ab from '../../Images/The hawai yatra final logo.png';
 import { FiLogOut } from "react-icons/fi";
+import { IoHome } from "react-icons/io5";
+import { MdSupportAgent } from "react-icons/md";
+import { MdCancel } from "react-icons/md";
+import { LiaExchangeAltSolid } from "react-icons/lia";
 const RegionChangeReq=()=> {
     const [selectedNavItem,setSelectedNavItem]=useState(null);
     const [type, setType] = useState("");
@@ -424,92 +428,104 @@ const RegionChangeReq=()=> {
           alt='Skytrails'
           style={{ width: '250px' }}
         />
-        <ul>
+       <ul style={{paddingLeft:'0px'}}>
           <li
             style={{
-              fontSize: '1.8rem',
+              fontSize: '25px',
               fontWeight: '500',
               listStyle: 'none',
-              backgroundColor: selectedNavItem === 'home' ? 'skyblue' : 'white',
+              backgroundColor: 'lightgray',
               color: selectedNavItem === 'home' ? 'white' : 'black',
               textAlign: 'center',
               cursor: 'pointer',
-              padding: '10px',
-              borderRadius: '5px',
-              marginBottom: '10px', // Space between list items
-              boxShadow:'0px 0px 5px',
-              fontFamily:'fantasy',
+              paddingLeft: '10px',
+              display:"flex",
+              gap:"8px",
+              letterSpacing:'-2px',
+              alignItems:'center',
+              marginBottom: '10px' ,// Space between list items
+              boxShadow:'0px 0px 4px',
+            
             }}
             onClick={handleHomeClick}
-          >
-            <button style={{border:'none',fontWeight:'400',backgroundColor:'white',color:'#514141'}}>Home</button>
+          ><IoHome/><div style={{border:'none',fontWeight:'400',backgroundColor:'lightgray',color:'#514141'}}>Home</div>
+            
           </li>
           <li
             style={{
-              fontSize: '1.8rem',
+              fontSize: '25px',
               fontWeight: '500',
               listStyle: 'none',
-              backgroundColor: selectedNavItem === 'bookings' ? 'skyblue' : 'white',
+              backgroundColor: 'lightgray',
               color: selectedNavItem === 'bookings' ? 'white' : 'black',
               textAlign: 'center',
               cursor: 'pointer',
-              padding: '10px',
-              borderRadius: '5px',
+              paddingLeft: '10px',
+              display:"flex",
+              gap:"8px",
+              letterSpacing:'-2px',
+              alignItems:'center',
               marginBottom: '10px', // Space between list items
-              boxShadow:'0px 0px 5px',
-              fontFamily:'fantasy',
+              boxShadow:'0px 0px 4px',
+            
             }}
             onClick={handleBookingsClick}
-          ><button style={{border:'none',fontWeight:'400',backgroundColor:'white',color:'#514141'}}>Booking</button>
-            
+          ><MdSupportAgent />
+            <div style={{border:'none',fontWeight:'400',backgroundColor:'lightgray',color:'#514141'}}>Booking</div>
           </li>
           <li
             style={{
-              fontSize: '1.8rem',
-              fontWeight: '500',
+              fontSize: '25px',
+              fontWeight: '700',
               listStyle: 'none',
-              backgroundColor: selectedNavItem === 'cancel' ? 'skyblue' : 'white',
+              backgroundColor: 'lightgray',
               color: selectedNavItem === 'cancel' ? 'white' : 'black',
               textAlign: 'center',
               cursor: 'pointer',
-              padding: '10px',
-              borderRadius: '5px',
-              marginBottom: '10px', // Space between list items
-              width:'220px',
-              boxShadow:'0px 0px 5px',
-              fontFamily:'fantasy',
+              paddingLeft: '10px',
+              display:"flex",
+              gap:"8px",
+              letterSpacing:'-2px',
+              alignItems:'center',
+              marginBottom: '10px' ,// Space between list items
+        
+              boxShadow:'0px 0px 4px',
+          
             }}
             onClick={handleCancelReq}
-          ><button style={{border:'none',fontWeight:'400',backgroundColor:'white',color:'#514141'}}>Cancel Request</button>
-            
+          ><MdCancel />
+            <div style={{border:'none',fontWeight:'400',backgroundColor:'lightgray',color:'#514141'}}>Cancel Request</div>
           </li>
           <li
             style={{
-              fontSize: '1.69rem',
+              fontSize: '25px',
               fontWeight: '500',
               listStyle: 'none',
-              backgroundColor: selectedNavItem === 'change' ? 'skyblue' : 'white',
+              backgroundColor: 'lightgray',
               color: selectedNavItem === 'change' ? 'white' : 'black',
               textAlign: 'center',
               cursor: 'pointer',
-              padding: '10px',
-              borderRadius: '5px',
+              paddingLeft: '10px',
+              display:"flex",
+              gap:"8px",
+              letterSpacing:'-2px',
+              alignItems:'center',
               marginBottom: '10px' ,// Space between list items
-              width:'220px',
-              boxShadow:'0px 0px 5px',
-              fontFamily:'fantasy',
+          
+              boxShadow:'0px 0px 4px',
+              
             }}
             onClick={handleChangeReq}
-          ><button style={{border:'none',fontWeight:'400',backgroundColor:'white',color:'#514141'}}>Change Request</button>
-        
+          > <LiaExchangeAltSolid />
+            <div style={{border:'none',fontWeight:'400',backgroundColor:'lightgray',color:'#514141'}}>Change Request</div>
           </li>
         </ul>
         </div>  
         <div style={{ flex: '1', padding: '20px', overflow: 'auto' }}>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}> 
 
-<h2 style={{ color: 'blue' ,fontFamily:'fantasy'}}>Welcome to Relationship Manager Portal</h2>
-<span  onClick={handlemove}style={{cursor:'pointer',color:'red',fontFamily:'fantasy',fontSize:'large'}} >
+<h2 style={{ color: 'blue' }}>Welcome to Relationship Manager Portal</h2>
+<span  onClick={handlemove}style={{cursor:'pointer',color:'red',fontSize:'large'}} >
           <FiLogOut style={{ cursor: 'pointer', fontSize: '30px' }} />Logout
           </span>
 </div>
@@ -546,7 +562,7 @@ const RegionChangeReq=()=> {
                       <th>Name</th>
                       <th>Contact Number</th>
                       <th>Reason </th>
-                      <th></th>
+                  
                     </tr>
                   </thead>
                   <tbody>

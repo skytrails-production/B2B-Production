@@ -309,7 +309,10 @@ import axios from 'axios';
 import { apiURL } from '../../Constants/constant';
 import ab from '../../Images/The hawai yatra final logo.png';
 import { FiLogOut } from "react-icons/fi";
-
+import { IoHome } from "react-icons/io5";
+import { MdSupportAgent } from "react-icons/md";
+import { MdCancel } from "react-icons/md";
+import { LiaExchangeAltSolid } from "react-icons/lia";
 const RegionBookings = () => {
   const [type, setType] = useState(""); 
   const [agents, setAgents] = useState([]); 
@@ -535,91 +538,102 @@ const RegionBookings = () => {
           alt='Skytrails'
           style={{ width: '250px' }}
         />
-        <ul>
+        <ul style={{paddingLeft:'0px'}}>
           <li
             style={{
-              fontSize: '1.8rem',
+              fontSize: '25px',
               fontWeight: '500',
               listStyle: 'none',
-              backgroundColor: type === 'home' ? 'skyblue' : 'white',
+              backgroundColor: 'lightgray',
               color: type === 'home' ? 'white' : 'black',
               textAlign: 'center',
               cursor: 'pointer',
-              padding: '10px',
-              borderRadius: '5px',
+              paddingLeft: '10px',
+              display:"flex",
+              gap:"8px",
+              letterSpacing:'-2px',
+              alignItems:'center',
               marginBottom: '10px',
-              boxShadow:'0px 0px 5px',
-              fontFamily:'fantasy',
+              boxShadow:'0px 0px 4px',
+            
             }}
             onClick={handleHomeClick}
-          ><button style={{border:'none',fontWeight:'400',backgroundColor:'white',color:'#514141'}}>Home</button>
+          ><IoHome/><div style={{border:'none',fontWeight:'400',backgroundColor:'lightgray',color:'#514141'}}>Home</div>
             
           </li>
           <li
             style={{
-              fontSize: '1.8rem',
+              fontSize: '25px',
               fontWeight: '500',
               listStyle: 'none',
-              backgroundColor: type === 'bookings' ? 'skyblue' : 'white',
+              backgroundColor: 'lightgray',
               color: type === 'bookings' ? 'white' : 'black',
               textAlign: 'center',
               cursor: 'pointer',
-              padding: '10px',
-              borderRadius: '5px',
+              paddingLeft: '10px',
+              display:"flex",
+              gap:"8px",
+              letterSpacing:'-2px',
+              alignItems:'center',
               marginBottom: '10px',
-              boxShadow:'0px 0px 5px',
-              fontFamily:'fantasy',
+              boxShadow:'0px 0px 4px',
+
             }}
             onClick={handleBookingsClick}
-          ><button style={{border:'none',fontWeight:'400',color:'#514141',backgroundColor:'white'}}>Booking</button>
+          ><MdSupportAgent /><div style={{border:'none',fontWeight:'400',color:'#514141',backgroundColor:'lightgray'}}>Booking</div>
             
           </li>
           <li
             style={{
-              fontSize: '1.8rem',
+              fontSize: '25px',
               fontWeight: '500',
               listStyle: 'none',
-              backgroundColor: type === 'cancel' ? 'skyblue' : 'white',
+              backgroundColor: 'lightgray',
               color: type === 'cancel' ? 'white' : 'black',
               textAlign: 'center',
               cursor: 'pointer',
-              padding: '10px',
-              borderRadius: '5px',
+              paddingLeft: '10px',
+              display:"flex",
+              gap:"8px",
+              letterSpacing:'-2px',
+              alignItems:'center',
               marginBottom: '10px',
-              width:'220px',
-              boxShadow:'0px 0px 5px',
-              fontFamily:'fantasy',
+        
+              boxShadow:'0px 0px 4px',
             }}
             onClick={handleCancelReq}
-          ><button style={{border:'none',fontWeight:'400',backgroundColor:'white',color:'#514141'}}>  Cancel Request</button>
+          ><MdCancel /><div style={{border:'none',fontWeight:'400',backgroundColor:'lightgray',color:'#514141'}}>  Cancel Request</div>
             
           </li>
           <li
             style={{
-              fontSize: '1.69rem',
+              fontSize: '25px',
               fontWeight: '500',
               listStyle: 'none',
-              backgroundColor: type === 'change' ? 'skyblue' : 'white',
+              backgroundColor: 'lightgray',
               color: type === 'change' ? 'white' : 'black',
               textAlign: 'center',
               cursor: 'pointer',
-              padding: '10px',
-              borderRadius: '5px',
+              paddingLeft: '10px',
+              display:"flex",
+              gap:"8px",
+              letterSpacing:'-2px',
+              alignItems:'center',
               marginBottom: '10px',
-              width:'220px',
-              boxShadow:'0px 0px 5px',
-              fontFamily:'fantasy',
+      
+              boxShadow:'0px 0px 4px',
+              
             }}
             onClick={handleChangeReq}
-          ><button style={{border:'none',fontWeight:'400',backgroundColor:'white',color:'#514141'}}>Change Request</button>
+          ><LiaExchangeAltSolid /><div style={{border:'none',fontWeight:'400',backgroundColor:'lightgray', color: type === 'change' ? 'white' : 'black',}}>Change Request</div>
             
           </li>
         </ul>
       </div>
       <div style={{ flex: '1', padding: '20px', overflow: 'auto' }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <h2 style={{ color: 'blue',fontFamily:'fantasy' }}>Welcome to Relationship Manager Portal</h2>
-          <span  onClick={handleLogout}style={{cursor:'pointer',color:'red',fontFamily:'fantasy',fontSize:'large'}} >
+          <h2 style={{ color: 'blue',}}>Welcome to Relationship Manager Portal</h2>
+          <span  onClick={handleLogout}style={{cursor:'pointer',color:'red',fontSize:'large'}} >
           <FiLogOut style={{ cursor: 'pointer', fontSize: '30px' }} />Logout
           </span>
         

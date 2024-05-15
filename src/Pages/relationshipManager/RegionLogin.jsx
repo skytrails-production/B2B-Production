@@ -116,8 +116,8 @@ const RegionLogin = () => {
             width: "468px",
             padding: "20px",
             backgroundColor: "#f8f7f666",
-            borderRadius: "10%",
-            boxShadow: "rgb(4 1 22 / 95%) 0px 0px 10px 4px",
+            borderRadius: "6%",
+            boxShadow: "rgb(4 1 22 / 95%) 0px 0px 4px",
             marginBottom:'40px',
           }}
           onSubmit={handleSubmit}
@@ -157,7 +157,7 @@ const RegionLogin = () => {
                 marginLeft:'auto',
                 marginRight:'auto',
                 color:'#280765',
-                fontFamily:'fantasy',
+                
               }}
               onChange={handleEmailChange}
             />
@@ -178,7 +178,7 @@ const RegionLogin = () => {
                 marginLeft:"auto",
                 marginRight:"auto",
                 color:'#280765',
-                fontFamily:'fantasy',
+                
               }}
               onChange={handlePasswordChange}
             />

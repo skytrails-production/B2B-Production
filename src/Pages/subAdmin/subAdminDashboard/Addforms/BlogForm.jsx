@@ -1,15 +1,22 @@
 import React, { useState } from "react";
 import { apiURL } from "../../../../Constants/constant";
 import axios from "axios";
+import Editor from "react-simple-wysiwyg";
+
 function BlogForm() {
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     title: "",
     content: "",
     tags: "",
     trending: false,
     location: "",
     images: [],
-  });
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false); // New loading state
+  const [success, setSuccess] = useState(false); // New success state
 
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
@@ -19,10 +26,9 @@ function BlogForm() {
         [name]: checked,
       }));
     } else if (name === "images") {
-      // For images, get the files and update formData
       setFormData((prevState) => ({
         ...prevState,
-        [name]: files ? Array.from(files) : [], // Ensure images is always an array
+        [name]: files ? Array.from(files) : [],
       }));
     } else {
       setFormData((prevState) => ({
@@ -32,9 +38,34 @@ function BlogForm() {
     }
   };
 
+  const validateForm = () => {
+    const errors = {};
+    if (!formData.title.trim()) {
+      errors.title = "Title is required";
+    }
+    if (!formData.content.trim()) {
+      errors.content = "Content is required";
+    }
+    if (!formData.tags.trim()) {
+      errors.tags = "Tags are required";
+    }
+    if (!formData.location.trim()) {
+      errors.location = "Location is required";
+    }
+    if (formData.images.length === 0) {
+      errors.images = "At least one image is required";
+    }
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData.images, "images");
+    if (!validateForm()) {
+      return;
+    }
+
+    setLoading(true); // Set loading state to true while submitting
 
     try {
       const formDataToSend = new FormData();
@@ -55,16 +86,26 @@ function BlogForm() {
 
       console.log("Blog post created successfully:", response.data);
       // Optionally, redirect to a success page or update UI
+      setSuccess(true);
+      setFormData(initialFormData); // Reset form data after successful submission
     } catch (error) {
       console.error("Error creating blog post:", error);
       // Optionally, display an error message to the user
       alert("Error creating blog post. Please try again later.");
+    } finally {
+      setLoading(false); // Reset loading state after submission
     }
   };
 
   return (
     <div className="form-containers" style={{ width: "50%", margin: "auto" }}>
       <h1 style={{ textAlign: "center", marginBottom: "20px" }}>Create Blog</h1>
+      {success && (
+        <p style={{ color: "green", textAlign: "center" }}>
+          Blog post created successfully!
+        </p>
+      )}{" "}
+      {/* Display success message */}
       <form onSubmit={handleSubmit}>
         <div>
           <label
@@ -79,7 +120,6 @@ function BlogForm() {
             name="title"
             value={formData.title}
             onChange={handleChange}
-            required
             style={{
               width: "100%",
               padding: "10px",
@@ -88,6 +128,7 @@ function BlogForm() {
               border: "1px solid #ccc",
             }}
           />
+          {errors.title && <p style={{ color: "red" }}>{errors.title}</p>}
         </div>
 
         <div>
@@ -97,13 +138,12 @@ function BlogForm() {
           >
             Content:
           </label>
-          <textarea
+          <Editor
             id="content"
             name="content"
             value={formData.content}
             onChange={handleChange}
             rows="4"
-            required
             style={{
               width: "100%",
               padding: "10px",
@@ -112,6 +152,7 @@ function BlogForm() {
               border: "1px solid #ccc",
             }}
           />
+          {errors.content && <p style={{ color: "red" }}>{errors.content}</p>}
         </div>
 
         <div>
@@ -127,7 +168,6 @@ function BlogForm() {
             name="tags"
             value={formData.tags}
             onChange={handleChange}
-            required
             style={{
               width: "100%",
               padding: "10px",
@@ -136,6 +176,7 @@ function BlogForm() {
               border: "1px solid #ccc",
             }}
           />
+          {errors.tags && <p style={{ color: "red" }}>{errors.tags}</p>}
         </div>
 
         <div>
@@ -149,7 +190,6 @@ function BlogForm() {
             type="checkbox"
             id="trending"
             name="trending"
-            required
             checked={formData.trending}
             onChange={handleChange}
             style={{ marginRight: "5px" }}
@@ -167,7 +207,6 @@ function BlogForm() {
             type="text"
             id="location"
             name="location"
-            required
             value={formData.location}
             onChange={handleChange}
             style={{
@@ -178,6 +217,7 @@ function BlogForm() {
               border: "1px solid #ccc",
             }}
           />
+          {errors.location && <p style={{ color: "red" }}>{errors.location}</p>}
         </div>
 
         <div>
@@ -191,8 +231,7 @@ function BlogForm() {
             type="file"
             id="images"
             name="images"
-            required
-            multiple // Allow multiple file selection
+            multiple
             onChange={handleChange}
             style={{
               width: "100%",
@@ -202,6 +241,7 @@ function BlogForm() {
               border: "1px solid #ccc",
             }}
           />
+          {errors.images && <p style={{ color: "red" }}>{errors.images}</p>}
         </div>
 
         <button
@@ -215,8 +255,9 @@ function BlogForm() {
             border: "none",
             cursor: "pointer",
           }}
+          disabled={loading} // Disable button when loading
         >
-          Create Post
+          {loading ? "Creating..." : "Create Post"}
         </button>
       </form>
     </div>

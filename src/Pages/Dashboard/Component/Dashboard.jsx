@@ -152,6 +152,7 @@ import MuiAlert from '@mui/material/Alert';
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import Downloadcsv from "../../Historytable/Downloadcsv";
 import UploadFileIcon from '@mui/icons-material/UploadFile';
+import BlogData from "../../Historytable/BlogData";
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -357,6 +358,9 @@ export default function VerticalTabs() {
   }
   const addPackCat=()=>{
     navigate("/admin/createPackageCategory")
+  }
+  const createBlog=()=>{
+    navigate("/admin/createBlog");
   }
   // /adminprofile
   // const AdminProfile = () => {
@@ -925,6 +929,12 @@ export default function VerticalTabs() {
                 <DynamicFeedIcon fontSize="small"/>
                 </ListItemIcon>
                 Create Quiz
+                </MenuItem>
+                <MenuItem onClick={()=>{handleClose(); createBlog();}}>
+                <ListItemIcon>
+                <DynamicFeedIcon fontSize="small"/>
+                </ListItemIcon>
+                Create Blog
                 </MenuItem>
 
                 {/* <MenuItem
@@ -2498,7 +2508,36 @@ export default function VerticalTabs() {
                 />
               </ListItemButton>
             </ListItem>
-
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => handleMenuItemClick("blog")}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                  ...((menuData === "blog"
+                    ? activeMenuItemClass
+                    : inactiveMenuItemClass) || {}),
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <ReceiptOutlinedIcon sx={{ color: "white" }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Blog Data"
+                  sx={{ opacity: open ? 1 : 0, color: "white" }}
+                />
+              </ListItemButton>
+            </ListItem>
             <ListItem
               disablePadding
               sx={{ display: "block" }}
@@ -3152,6 +3191,7 @@ export default function VerticalTabs() {
               )}
               {menuData === "Advertisment" && <AllAdvertisementTable />}
               {menuData === "quiz" && <Quiz/>}
+            {menuData === "blog" && <BlogData/>}
               {menuData === "Web Advertisment" && <AllWebAdvertisement />}
             </div>
           )}
