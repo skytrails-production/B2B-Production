@@ -2,13 +2,14 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { Paper } from "@material-ui/core";
 // import { Link } from "react-router-dom";
+import Swal from "sweetalert2"
 import Grid from "@mui/material/Grid";
 import { Input, Typography } from "@mui/material";
 // import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 // import FlightLandIcon from "@mui/icons-material/FlightLand";
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
-import { Flex, space, Spacer, Text } from "@chakra-ui/react";
+import { Flex, position, space, Spacer, Text } from "@chakra-ui/react";
 import Popularfilter from "../Flight/flightresult/Popularfilter";
 import tra from "../../Images/tra.png";
 import LockIcon from "@mui/icons-material/Lock";
@@ -60,10 +61,12 @@ import {
   validateName,
   validatePhoneNumber,
 } from "../../utils/validation";
+// import { swalModal } from "../../utils/swal"
 const Login = () => {
   const dispatch = useDispatch();
   const reducerState = useSelector((state) => state);
   const navigate = useNavigate();
+  const [loader, setLoader] = useState(false);
   const [email, setEmail] = useState("");
   const [sub, setSub] = useState(false);
   const [password, setPassword] = useState("");
@@ -72,6 +75,7 @@ const Login = () => {
   const [pan, setPan] = useState("");
   const [ReferalCode, setReferalCode] = useState("");
   const [currentStep, setCurrentStep] = useState(1);
+  const [errorMessage, setErrorMessage] = useState('');
   const [personalDetail, setPersonalDetails] = useState({
     first_name: "",
     last_name: "",
@@ -146,6 +150,19 @@ const Login = () => {
       navigate("/");
     }
   }, [reducerState, navigate]);
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file && file.size > 500000) {
+      setErrorMessage('Error: File size exceeds 500kb limit.');
+      // setImageFile(null);
+      setPan(null) // Clear selected file if it's too large
+    } else {
+      setErrorMessage('');
+      // setImageFile(file);
+      setPan(file)
+    }
+  };
+
   function handlePersonalDetail(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -247,7 +264,7 @@ const Login = () => {
 
   function handleSubmit() {
     setSub(true);
-    if (!personalDetailValidations()) {
+    if (!personalDetailValidations() || errorMessage !== "") {
       return;
     }
     // if (
@@ -353,6 +370,44 @@ const Login = () => {
     setSub(false);
   }
 
+  useEffect(() => {
+    if (reducerState.signUp?.isLoading) {
+      setLoader(true)
+    }
+    else {
+      setLoader(false)
+
+    }
+    if (reducerState.signUp?.showSuccessMessage) {
+      // swalModal("py", "Your registration is complete! Welcome to The Hawaiyatra.", false)
+
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Your registration is complete! Welcome to The Hawaiyatra.",
+        showConfirmButton: false,
+        timer: 1500
+      });
+      dispatch(signUpActionClear())
+    }
+    if (reducerState.signUp?.signUpData?.response?.status === 500
+
+    ) {
+
+      // swalModal("py", "There was a problem with your registration. Please check the information you entered and try again.", false)
+      dispatch(signUpActionClear())
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "There was a problem with your registration. Please check the information you entered and try again.",
+        showConfirmButton: false,
+        timer: 1500
+      });
+
+
+    }
+    console.log(reducerState, "ttttt")
+  }, [reducerState.signUp])
   function personalDetailValidations() {
     if (
       !validateName(personalDetail.first_name) ||
@@ -368,6 +423,7 @@ const Login = () => {
       !validatePassword(personalDetail.password) ||
       !validatePAN(agencyDetails.pan_number) ||
       !pan ||
+      errorMessage !== "" ||
       agencyDetails.agency_name === ""
     ) {
       return false;
@@ -381,6 +437,12 @@ const Login = () => {
   };
   return (
     <React.Fragment>
+      {loader &&
+        <div style={{ position: "fixed", width: "100%", height: "100%", backgroundColor: "rgb(176 177 180 / 75%)", zIndex: "100", display: "flex", justifyContent: "center", alignItems: "center" }}>
+
+          <div class="loaderREG"></div>
+        </div>}
+
       <section class="hero-section-two">
         <div className="registrationNNContainer">
           {/* step by step updating part */}
@@ -408,7 +470,7 @@ const Login = () => {
                     className="paper_pin"
                     style={{ height: "auto", width: "100%", borderRadius: "20px", marginTop: "10px" }}
                   > */}
-                  {reducerState.signUp?.showSuccessMessage && (
+                  {/* {reducerState.signUp?.showSuccessMessage && (
                     <Alert
                       onClick={() => {
                         dispatch(signUpActionClear());
@@ -417,7 +479,7 @@ const Login = () => {
                     >
                       Thankyou ! for Registering, we'll contact you ASAP
                     </Alert>
-                  )}
+                  )} */}
 
                   <div className="boxContainerRegstration ">
                     {/* <div className="boxContainerRegstration_innerdiv" >
@@ -631,7 +693,7 @@ const Login = () => {
                                     />
                                     {sub &&
                                       personalDetail.address_details.city ===
-                                        "" && (
+                                      "" && (
                                         <span id="error1">Enter Your City</span>
                                       )}
                                   </div>
@@ -663,7 +725,7 @@ const Login = () => {
                                     />
                                     {sub &&
                                       personalDetail.address_details.state ===
-                                        "" && (
+                                      "" && (
                                         <span id="error1">Enter State</span>
                                       )}
                                   </div>
@@ -728,7 +790,7 @@ const Login = () => {
                                     />
                                     {sub &&
                                       personalDetail.address_details.country ===
-                                        "" && (
+                                      "" && (
                                         <span id="error1">Enter country</span>
                                       )}
                                   </div>
@@ -821,13 +883,16 @@ const Login = () => {
                                       name="pan_card_document"
                                       id="pan_card_document"
                                       type="file"
+                                      accept=".jpg, .jpeg, .png"
+                                      maxlength="10"
                                       className="input_size"
-                                      onChange={(e) =>
-                                        setPan(e.target.files[0])
+                                      onChange={(e) => handleImageChange(e)
+
+
                                       }
                                     />
                                     {sub && !pan && (
-                                      <span id="error1">Enter Pan Number</span>
+                                      <span id="error1">{errorMessage !== "" ? errorMessage : "Upload a Pan Image"}</span>
                                     )}
                                   </div>
                                   <div className="form_input_regestration">

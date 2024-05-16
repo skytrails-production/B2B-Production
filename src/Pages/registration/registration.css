@@ -363,17 +363,35 @@
   }
 }
 
-
-
-
-
 /* //////////////new css/////////////////////// */
 
 .Regestration_btn_div-new {
   display: flex;
   gap: 12px;
   /* /* align-items: center; */
-  justify-content: end; 
+  justify-content: end;
   padding-top: 12px;
   width: 100%;
+}
+.loaderREG {
+  width: 175px;
+  height: 25px;
+  border-radius: 20px;
+  color: #21325d;
+  border: 2px solid;
+  position: relative;
+}
+.loaderREG::before {
+  content: "";
+  position: absolute;
+  margin: 2px;
+  inset: 0 100% 0 0;
+  border-radius: inherit;
+  background: currentColor;
+  animation: l6 2s infinite;
+}
+@keyframes l6 {
+  100% {
+    inset: 0;
+  }
 }

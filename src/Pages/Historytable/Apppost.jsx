@@ -319,7 +319,7 @@ function Apppost() {
             }}
           >
             <CircularProgress disableShrink  color="primary" size={69} thickness={4} style={{ position: 'absolute', top: '50%', left: '49.8%', transform: 'translate(-50%, -50%)', zIndex: 2 }} />
-            
+           
           </div>
         ) : error ? (
           <Typography

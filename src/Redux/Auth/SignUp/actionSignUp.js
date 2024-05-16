@@ -7,6 +7,12 @@ export const fetchSignUp = (user) => {
     payload: user,
   };
 };
+export const signUpFail = (user) => {
+  return {
+    type: types.SIGNUP_FAILURE,
+    payload: user,
+  };
+};
 
 export const signUpAction = (user) => {
   if (user) {
