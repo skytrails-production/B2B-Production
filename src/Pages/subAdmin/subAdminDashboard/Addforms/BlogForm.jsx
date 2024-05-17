@@ -21,6 +21,11 @@ function BlogForm() {
   const [success, setSuccess] = useState(false); // New success state
   const navigate = useNavigate();
   const handleChange = (e) => {
+    // Clear the error for the specific field being updated
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: "",
+    }));
     const { name, value, type, checked, files } = e.target;
     if (type === "checkbox") {
       setFormData((prevState) => ({
@@ -146,7 +151,15 @@ function BlogForm() {
   };
 
   return (
-    <div className="form-containers" style={{ width: "50%", margin: "auto" }}>
+    <div
+      className="form-containers"
+      style={{
+        width: "50%",
+        margin: "auto",
+        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+        marginTop: "-45px",
+      }}
+    >
       <h1 style={{ textAlign: "center", marginBottom: "20px" }}>Create Blog</h1>
 
       {/* Display success message */}

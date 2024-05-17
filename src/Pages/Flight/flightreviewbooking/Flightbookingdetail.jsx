@@ -40,6 +40,7 @@ import { clearOneWayReducer } from "../../../Redux/FlightSearch/OneWay/oneWay";
 import { clearOneWayEMTReducer } from "../../../Redux/FlightSearch/OneWayEMT/oneWayEMT";
 // import {flightReducerClear} from "../../../Redux/FlightBook/actionFlightBook";
 import { ClearAllActionReturn } from "../../../Redux/FlightFareQuoteRule/actionFlightQuote";
+import { useLocation } from 'react-router-dom';
 // import { clearOneWayReducer } from "../../../Redux/FlightSearch/OneWay/oneWay";
 
 import FlightLoader from "../FlightLoader/FlightLoader";
@@ -51,7 +52,7 @@ const style = {
   transform: "translate(-50%, -50%)",
 };
 
-const Flightbookingdetail = () => {
+const Flightbookingdetail = ({passSsramount}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [count, setCount] = useState(1);
@@ -121,7 +122,13 @@ const Flightbookingdetail = () => {
     }
   }, [reducerState?.flightBook?.flightBookDataGDS]);
 
+  const location = useLocation();
+  const { baggageDetails , ssramount} = location.state;
+  // totalAmount(ssramount);
   //Balance Substraction useEffect implemented below
+  passSsramount(ssramount);
+  // console.log("bsvhjsbdvhjsdhjsdddddddddddddddddddddddd",baggageDetails,ssramount);
+
   useEffect(() => {
     if (
       reducerState?.flightBook?.flightTicketDataGDS?.data?.data?.Response?.Error
@@ -135,7 +142,7 @@ const Flightbookingdetail = () => {
         balanceSubtractOneWay();
         setLoading(false);
         setBookingConfirmed(true);
-        navigate("/Flightbookingconfirmation");
+        navigate("/Flightbookingconfirmation", { state: { baggageDetails: baggageDetails, ssramount: ssramount }});
       }
     }
   }, [reducerState?.flightBook?.flightTicketDataGDS]);
@@ -151,7 +158,7 @@ const Flightbookingdetail = () => {
         balanceSubtractOneWay();
         setLoading(false);
         setBookingConfirmed(true);
-        navigate("/Flightbookingconfirmation");
+        navigate("/Flightbookingconfirmation", { state: { baggageDetails: baggageDetails, ssramount: ssramount }});
       }
     }
   }, [reducerState?.flightBook?.flightBookData?.Response]);
@@ -160,7 +167,7 @@ const Flightbookingdetail = () => {
     if (reducerState?.flightBook?.flightBookDataGDSReturn?.Response) {
       setLoading(false);
       getTicketForNonLCCReturn();
-      navigate("/Flightbookingconfirmation");
+      navigate("/Flightbookingconfirmation", { state: { baggageDetails: baggageDetails, ssramount: ssramount }});
     } else if (reducerState?.flightBook?.flightBookDataGDSReturn?.Error) {
       setLoading(false);
       let error =
@@ -173,6 +180,10 @@ const Flightbookingdetail = () => {
   function createMarkup(data) {
     return { __html: data };
   }
+
+
+
+  
 
   // Handling return booking here(flow Here is LCC to LCC  OR LCC to Non-LCC)
   useEffect(() => {
@@ -197,12 +208,35 @@ const Flightbookingdetail = () => {
           TraceId:
             reducerState?.oneWay?.oneWayData?.data?.data?.Response?.TraceId ||
             reducerState?.return?.returnData?.data?.data?.Response?.TraceId,
+            
+          // Passengers: PassengersReturn.map((item, index) => {
+          //   return {
+          //     ...item,
+          //     Email: apiURL.flightEmail,
+          //     ContactNo: apiURL.phoneNo,
+          //   };
+          // }),
           Passengers: PassengersReturn.map((item, index) => {
-            return {
-              ...item,
-              Email: apiURL.flightEmail,
-              ContactNo: apiURL.phoneNo,
-            };
+
+            if (index < baggageDetails.length) {
+    
+    
+              return {
+                ...item,
+                Email: apiURL.flightEmail,
+                ContactNo: apiURL.phoneNo,
+                
+                Baggage: [baggageDetails[index]]
+              }
+            }
+            else {
+              return {
+                ...item,
+                 Email: apiURL.flightEmail,
+                ContactNo: apiURL.phoneNo,
+               
+              }
+            }
           }),
         };
         dispatch(bookActionGDSReturn(payloadGDSReturn));
@@ -370,12 +404,34 @@ const Flightbookingdetail = () => {
           TraceId:
             reducerState?.oneWay?.oneWayData?.data?.data?.Response?.TraceId ||
             reducerState?.return?.returnData?.data?.data?.Response?.TraceId,
+          // Passengers: PassengersReturn.map((item, index) => {
+          //   return {
+          //     ...item,
+          //     Email: apiURL.flightEmail,
+          //     ContactNo: apiURL.phoneNo,
+          //   };
+          // }),
           Passengers: PassengersReturn.map((item, index) => {
-            return {
-              ...item,
-              Email: apiURL.flightEmail,
-              ContactNo: apiURL.phoneNo,
-            };
+
+            if (index < baggageDetails.length) {
+    
+    
+              return {
+                ...item,
+                Email: apiURL.flightEmail,
+                ContactNo: apiURL.phoneNo,
+                
+                Baggage: [baggageDetails[index]]
+              }
+            }
+            else {
+              return {
+                ...item,
+                 Email: apiURL.flightEmail,
+                ContactNo: apiURL.phoneNo,
+               
+              }
+            }
           }),
         };
         dispatch(bookActionGDSReturn(payloadGDSReturn));
@@ -388,13 +444,13 @@ const Flightbookingdetail = () => {
       // console.log("returnInitiated")
       if (
         fareValue?.Fare?.BaseFare +
-        fareValue?.Fare?.Tax +
-        fareValue?.Fare?.OtherCharges +
-        markUpamount +
-        fareValueReturn?.Fare?.BaseFare +
-        fareValueReturn?.Fare?.Tax +
-        fareValueReturn?.Fare?.OtherCharges +
-        markUpamount <=
+          fareValue?.Fare?.Tax +
+          fareValue?.Fare?.OtherCharges +
+          markUpamount + 
+          fareValueReturn?.Fare?.BaseFare +
+          fareValueReturn?.Fare?.Tax +
+          fareValueReturn?.Fare?.OtherCharges + ssramount+
+          markUpamount <=
         currentBalance
       ) {
         e.preventDefault();
@@ -405,12 +461,34 @@ const Flightbookingdetail = () => {
           TraceId:
             reducerState?.oneWay?.oneWayData?.data?.data?.Response?.TraceId ||
             reducerState?.return?.returnData?.data?.data?.Response?.TraceId,
+          // Passengers: Passengers.map((item, index) => {
+          //   return {
+          //     ...item,
+          //     Email: apiURL.flightEmail,
+          //     ContactNo: apiURL.phoneNo,
+          //   };
+          // }),
           Passengers: Passengers.map((item, index) => {
-            return {
-              ...item,
-              Email: apiURL.flightEmail,
-              ContactNo: apiURL.phoneNo,
-            };
+
+            if (index < baggageDetails.length) {
+    
+    
+              return {
+                ...item,
+                Email: apiURL.flightEmail,
+                ContactNo: apiURL.phoneNo,
+                
+                Baggage: [baggageDetails[index]]
+              }
+            }
+            else {
+              return {
+                ...item,
+                 Email: apiURL.flightEmail,
+                ContactNo: apiURL.phoneNo,
+               
+              }
+            }
           }),
         };
 
@@ -457,9 +535,9 @@ const Flightbookingdetail = () => {
       console.log("returnInitiated");
       if (
         fareValue?.Fare?.BaseFare +
-        fareValue?.Fare?.Tax +
-        fareValue?.Fare?.OtherCharges +
-        markUpamount <=
+          fareValue?.Fare?.Tax +
+          fareValue?.Fare?.OtherCharges +
+          markUpamount <=
         currentBalance
       ) {
         e.preventDefault();
@@ -470,13 +548,36 @@ const Flightbookingdetail = () => {
           TraceId:
             reducerState?.oneWay?.oneWayData?.data?.data?.Response?.TraceId ||
             reducerState?.return?.returnData?.data?.data?.Response?.TraceId,
+          // Passengers: Passengers.map((item, index) => {
+          //   return {
+          //     ...item,
+          //     Email: apiURL.flightEmail,
+          //     ContactNo: apiURL.phoneNo,
+          //   };
+          // }),
           Passengers: Passengers.map((item, index) => {
-            return {
-              ...item,
-              Email: apiURL.flightEmail,
-              ContactNo: apiURL.phoneNo,
-            };
+
+            if (index < baggageDetails.length) {
+    
+    
+              return {
+                ...item,
+                Email: apiURL.flightEmail,
+                ContactNo: apiURL.phoneNo,
+                
+                Baggage: [baggageDetails[index]]
+              }
+            }
+            else {
+              return {
+                ...item,
+                 Email: apiURL.flightEmail,
+                ContactNo: apiURL.phoneNo,
+               
+              }
+            }
           }),
+          
         };
 
         if (fareValue?.IsLCC === false) {
@@ -589,13 +690,37 @@ const Flightbookingdetail = () => {
       TraceId:
         reducerState?.oneWay?.oneWayData?.data?.data?.Response?.TraceId ||
         reducerState?.return?.returnData?.data?.data?.Response?.TraceId,
+      // Passengers: Passengers.map((item, index) => {
+      //   return {
+      //     ...item,
+      //     Email: apiURL.flightEmail,
+      //     ContactNo: apiURL.phoneNo,
+      //   };
+      // }),
+
       Passengers: Passengers.map((item, index) => {
-        return {
-          ...item,
-          Email: apiURL.flightEmail,
-          ContactNo: apiURL.phoneNo,
-        };
+
+        if (index < baggageDetails.length) {
+
+
+          return {
+            ...item,
+            Email: apiURL.flightEmail,
+            ContactNo: apiURL.phoneNo,
+            
+            Baggage: [baggageDetails[index]]
+          }
+        }
+        else {
+          return {
+            ...item,
+             Email: apiURL.flightEmail,
+            ContactNo: apiURL.phoneNo,
+           
+          }
+        }
       }),
+      
     };
     dispatch(bookAction(payloadLcc));
   };
@@ -605,12 +730,34 @@ const Flightbookingdetail = () => {
       EndUserIp: reducerState?.ip?.ipData,
       TokenId: reducerState?.ip?.tokenData,
       TraceId: reducerState?.return?.returnData?.data?.data?.Response?.TraceId,
+      // Passengers: PassengersReturn.map((item, index) => {
+      //   return {
+      //     ...item,
+      //     Email: apiURL.flightEmail,
+      //     ContactNo: apiURL.phoneNo,
+      //   };
+      // }),
       Passengers: PassengersReturn.map((item, index) => {
-        return {
-          ...item,
-          Email: apiURL.flightEmail,
-          ContactNo: apiURL.phoneNo,
-        };
+
+        if (index < baggageDetails.length) {
+
+
+          return {
+            ...item,
+            Email: apiURL.flightEmail,
+            ContactNo: apiURL.phoneNo,
+            
+            Baggage: [baggageDetails[index]]
+          }
+        }
+        else {
+          return {
+            ...item,
+             Email: apiURL.flightEmail,
+            ContactNo: apiURL.phoneNo,
+           
+          }
+        }
       }),
     };
     dispatch(bookActionReturn(payloadLccReturn));
@@ -622,9 +769,9 @@ const Flightbookingdetail = () => {
         _id: userId,
         amount: !dummyPnrCheck
           ? fareValue?.Fare?.BaseFare +
-          fareValue?.Fare?.Tax +
-          fareValue?.Fare?.OtherCharges +
-          markUpamount
+            fareValue?.Fare?.Tax +
+            fareValue?.Fare?.OtherCharges +
+            markUpamount + ssramount
           : 99,
           bookingType:"Flight booking"
       };
@@ -659,7 +806,8 @@ const Flightbookingdetail = () => {
   const originCity =
     fareQuoteData?.Segments?.[0]?.[0]?.Origin?.Airport?.CityName;
   const DestinationCity =
-    fareQuoteData?.Segments?.[0]?.[fareQuoteData?.Segments?.[0]?.length - 1]?.Destination?.Airport?.CityName;
+    fareQuoteData?.Segments?.[0]?.[fareQuoteData?.Segments?.[0]?.length - 1]
+      ?.Destination?.Airport?.CityName;
   const flightFare = fareQuoteData?.Fare?.PublishedFare;
   const originTerminal =
     fareQuoteData?.Segments?.[0]?.[0]?.Origin?.Airport?.Terminal;
@@ -670,12 +818,9 @@ const Flightbookingdetail = () => {
   const childs = sessionStorage.getItem("childs");
   const infants = sessionStorage.getItem("infants");
 
-
-
-
-
-  const timeDuration = `${Math.floor(fareQuoteData?.Segments?.[0]?.[0]?.Duration / 60)}hr ${fareQuoteData?.Segments?.[0]?.[0]?.Duration % 60
-    }min`;
+  const timeDuration = `${Math.floor(
+    fareQuoteData?.Segments?.[0]?.[0]?.Duration / 60
+  )}hr ${fareQuoteData?.Segments?.[0]?.[0]?.Duration % 60}min`;
 
   if (loading) {
     return (
@@ -772,21 +917,54 @@ const Flightbookingdetail = () => {
         <div className="singleFlightBoxTwo">
           <span>{originCity}</span>
           {/* <p>{time1.substr(0, 5)}</p> */}
-          <p>{dayjs(fareQuoteData?.Segments?.[0]?.[0]?.Origin?.DepTime).format("DD MMM, YY")}</p>
-          <p>{dayjs(fareQuoteData?.Segments?.[0]?.[0]?.Origin?.DepTime).format("h:mm A")}</p>
+          <p>
+            {dayjs(fareQuoteData?.Segments?.[0]?.[0]?.Origin?.DepTime).format(
+              "DD MMM, YY"
+            )}
+          </p>
+          <p>
+            {dayjs(fareQuoteData?.Segments?.[0]?.[0]?.Origin?.DepTime).format(
+              "h:mm A"
+            )}
+          </p>
           <p>Terminal {originTerminal}</p>
         </div>
         <div className="singleFlightBoxThree">
-          <h4>{fareQuoteData?.Segments[0].length === 2 ? `${timeDuration} ${" - "} ${Math.floor(fareQuoteData?.Segments?.[0]?.[1]?.Duration / 60)}hr ${fareQuoteData?.Segments?.[0]?.[1]?.Duration % 60
-            }min` : `${timeDuration}`}</h4>
-          <div><img src={flightdir} /></div>
-          <p>{fareQuoteData?.Segments[0].length === 2 ? `${fareQuoteData?.Segments[0].length - 1} stop via ${DestinationCity}` : 'Direct Flight'}</p>
+          <h4>
+            {fareQuoteData?.Segments[0].length === 2
+              ? `${timeDuration} ${" - "} ${Math.floor(
+                  fareQuoteData?.Segments?.[0]?.[1]?.Duration / 60
+                )}hr ${fareQuoteData?.Segments?.[0]?.[1]?.Duration % 60}min`
+              : `${timeDuration}`}
+          </h4>
+          <div>
+            <img src={flightdir} />
+          </div>
+          <p>
+            {fareQuoteData?.Segments[0].length === 2
+              ? `${
+                  fareQuoteData?.Segments[0].length - 1
+                } stop via ${DestinationCity}`
+              : "Direct Flight"}
+          </p>
           <span>Refundable</span>
         </div>
         <div className="singleFlightBoxFour">
           <span>{DestinationCity}</span>
-          <p>{dayjs(fareQuoteData?.Segments?.[0]?.[fareQuoteData?.Segments?.[0]?.length - 1]?.Destination?.ArrTime).format("DD MMM, YY")}</p>
-          <p>{dayjs(fareQuoteData?.Segments?.[0]?.[fareQuoteData?.Segments?.[0]?.length - 1]?.Destination?.ArrTime).format("h:mm A")}</p>
+          <p>
+            {dayjs(
+              fareQuoteData?.Segments?.[0]?.[
+                fareQuoteData?.Segments?.[0]?.length - 1
+              ]?.Destination?.ArrTime
+            ).format("DD MMM, YY")}
+          </p>
+          <p>
+            {dayjs(
+              fareQuoteData?.Segments?.[0]?.[
+                fareQuoteData?.Segments?.[0]?.length - 1
+              ]?.Destination?.ArrTime
+            ).format("h:mm A")}
+          </p>
           <p>Terminal {destinationTerminal}</p>
         </div>
         <div className="singleFlightBoxFive">
@@ -824,8 +1002,8 @@ const Flightbookingdetail = () => {
                     {passenger.PaxType === 1
                       ? "Adult"
                       : passenger.PaxType === 2
-                        ? "Child"
-                        : "Infant"}
+                      ? "Child"
+                      : "Infant"}
                     )
                   </span>
                 </p>
@@ -848,8 +1026,8 @@ const Flightbookingdetail = () => {
                     {passenger.Gender === "2"
                       ? "Male"
                       : passenger.Gender === "1"
-                        ? "Transgender"
-                        : "Female"}
+                      ? "Transgender"
+                      : "Female"}
                   </span>
                   <span>{passenger.Email}</span>
                   {/* {passenger.AddressLine1 && (

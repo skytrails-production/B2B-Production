@@ -17,37 +17,39 @@ import { useDispatch, useSelector, useReducer } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Flightnavbar from "../Flightnavbar";
 const Flight = (props) => {
-
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const reducerState = useSelector((state) => state);
+  const [totalAmount, setTotalAmount] = useState(0);
   // console.log("Props", props);
   const ResultIndex = sessionStorage.getItem("ResultIndex");
   // console.log("reducerStateDemount", reducerState);
   // console.log("resultIndex", ResultIndex);
   function backRoute() {
-    navigate("/FlightResult")
+    navigate("/FlightResult");
   }
 
+  // function setaount(price) {
+  //   console.log("setaount", setaount);
+  //   setTotalAmount((prevAmount) => prevAmount + price);
+  // }
+
+  function setamount(price) {
+    console.log("setaount", price);
+    setTotalAmount((prevAmount) => prevAmount + price);
+  }
 
   return (
-
-
     <div className="container-fluid margin-pecentage">
       <div className="row">
         <div className="col-lg-9">
-          <Leftdetail />
+          <Leftdetail totalAmount={totalAmount} setamount={setTotalAmount} />
         </div>
         <div className="col-lg-3">
-          <Rightdetail />
+          <Rightdetail baggageamount={totalAmount} />
         </div>
       </div>
-
-
-
     </div>
-
   );
 };
 

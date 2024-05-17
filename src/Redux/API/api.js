@@ -227,6 +227,18 @@ function api() {
     });
   };
 
+  const Ssr = (payload) => {
+    return axios ({
+      method:"POST",
+      url:"/skyTrails/flight/ssr",
+      baseURL :`${apiURL.baseURL}`,
+      data: payload,
+      headers:{
+        "Content-Type": "application/json",
+      }
+    })
+  }
+
   const flightBookGDS = (payload) => {
     return axios({
       method: "POST",
@@ -776,6 +788,7 @@ function api() {
     fixedDepartureAddSector,
     fixedDepartureBooking,
     updateFlightBookingSeat,
+    Ssr
   };
 }
 

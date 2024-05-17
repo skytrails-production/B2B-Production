@@ -11,6 +11,7 @@ import { getUserDataAction } from "../../../Redux/Auth/UserDataById/actionUserDa
 import userApi from "../../../Redux/API/api";
 import Swal from "sweetalert2";
 import {swalModal} from "../../../utils/swal"
+import { useLocation } from 'react-router-dom';
 import FlightLoader from "../FlightLoader/FlightLoader";
 const FlightReviewbooking = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,12 @@ const FlightReviewbooking = () => {
     sessionStorage.getItem("6989_n578j_j848433")
   );
   // console.log("reducerState", reducerState);
+  const location = useLocation();
+  const { baggageDetails , ssramount} = location.state;
+  // totalAmount(ssramount);
+  //Balance Substraction useEffect implemented below
+
+  // console.log("bsvhjsbdvhjsdhjsdddddddddddddddddddddddd",baggageDetails,ssramount);
   const TicketDetails =
     reducerState?.flightBook?.flightBookDataGDS?.Response ||
     reducerState?.flightBook?.flightBookData?.Response;
@@ -52,7 +59,8 @@ const FlightReviewbooking = () => {
         destination: bookingDataLcc?.FlightItinerary?.Destination,
         paymentStatus: "success",
         totalAmount:
-          bookingDataLcc?.FlightItinerary?.Fare?.PublishedFare?.toFixed() + markUpamount,
+          Number(bookingDataLcc?.FlightItinerary?.Fare?.PublishedFare?.toFixed()) + Number(markUpamount) ,
+
         airlineDetails: bookingDataLcc?.FlightItinerary?.Segments.map(
           (item, index) => {
             return {
@@ -103,6 +111,7 @@ const FlightReviewbooking = () => {
             };
           }
         ),
+        baggage:baggageDetails
       };
       userApi.flightBookingDataSave(payloadLCC);
     } else {
@@ -116,7 +125,7 @@ const FlightReviewbooking = () => {
         destination: bookingDataNonLcc?.FlightItinerary?.Destination,
         paymentStatus: "success",
         totalAmount:
-          bookingDataNonLcc?.FlightItinerary?.Fare?.PublishedFare?.toFixed() + markUpamount,
+        Number( bookingDataNonLcc?.FlightItinerary?.Fare?.PublishedFare?.toFixed()) + Number(markUpamount),
         airlineDetails: bookingDataNonLcc?.FlightItinerary?.Segments.map(
           (item, index) => {
             return {
@@ -167,6 +176,7 @@ const FlightReviewbooking = () => {
             };
           }
         ),
+        baggage:baggageDetails
       };
       userApi.flightBookingDataSave(payloadNonLcc);
     }
@@ -184,7 +194,7 @@ const FlightReviewbooking = () => {
         destination: bookingDataLcc?.FlightItinerary?.Destination,
         paymentStatus: "success",
         totalAmount:
-          bookingDataLcc?.FlightItinerary?.Fare?.PublishedFare?.toFixed() + markUpamount,
+        Number( bookingDataLcc?.FlightItinerary?.Fare?.PublishedFare?.toFixed()) + Number(markUpamount) ,
         airlineDetails: bookingDataLcc?.FlightItinerary?.Segments.map(
           (item, index) => {
             return {
@@ -235,6 +245,7 @@ const FlightReviewbooking = () => {
             };
           }
         ),
+        baggage:baggageDetails
       };
       userApi.flightBookingDataSave(payloadLCC);
     } else {
@@ -249,8 +260,8 @@ const FlightReviewbooking = () => {
         paymentStatus: "success",
         ticketType: dummyPnrCheck ? "Dummy Ticket" : "Original Ticket",
         totalAmount:
-          bookingDataNonLcc?.FlightItinerary?.Fare?.PublishedFare +
-          markUpamount,
+        Number( bookingDataNonLcc?.FlightItinerary?.Fare?.PublishedFare) +
+        Number(  markUpamount) ,
         airlineDetails: bookingDataNonLcc?.FlightItinerary?.Segments.map(
           (item, index) => {
             return {
@@ -303,6 +314,7 @@ const FlightReviewbooking = () => {
             };
           }
         ),
+        baggage:baggageDetails
       };
       userApi.flightBookingDataSave(payloadNonLcc);
     }
@@ -324,7 +336,7 @@ const FlightReviewbooking = () => {
       dispatch(getUserDataAction(payload));
     }
   };
-  console.warn(TicketDetails, "ticlit Detaild0000000000000000000000000");
+  // console.warn(TicketDetails, "ticlit Detaild0000000000000000000000000");
 
   if (TicketDetails == undefined) {
     navigate("/flights");

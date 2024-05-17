@@ -68,7 +68,7 @@ const KeyValue = ({ data, value }) => {
   );
 };
 
-export default function Popularfilter() {
+export default function Popularfilter({baggageamount}) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const reducerState = useSelector((state) => state);
@@ -178,15 +178,16 @@ export default function Popularfilter() {
 
             <div className="TotGst">
               <div>
-                <span>Total TAX: </span>
-                <p>{'₹'}{markUpamount}</p>
+                <span>Others : </span>
+                {/* <p>{totalAmount}</p> */}
+                <p>{'₹'}{markUpamount+baggageamount}</p>
               </div>
               <div >
                 <span>Grand Total:</span>
                 <p>{'₹'}{fareValue?.Fare?.BaseFare +
                   fareValue?.Fare?.Tax +
                   fareValue?.Fare?.OtherCharges +
-                  markUpamount}</p>
+                  markUpamount + baggageamount}</p>
               </div>
             </div>
           </div>
