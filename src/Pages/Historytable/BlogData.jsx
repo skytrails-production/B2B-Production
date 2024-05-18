@@ -7,7 +7,7 @@ import {  Menu, MenuItem } from '@material-ui/core';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import SearchIcon from '@mui/icons-material/Search';
 import { apiURL } from '../../Constants/constant';
-
+import Editor from "react-simple-wysiwyg"
 function BlogData() {
     const [blog, setBlog] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -161,11 +161,9 @@ function BlogData() {
         },
         
         {
-            field: 'action', headerName: 'Actions', width: 450,
+            field: 'action', headerName: 'Actions', width: 350,
             renderCell: (params) => (
                 <div>
-                   
-
                     <Button
                         variant="outlined"
                         size="small"
@@ -270,7 +268,7 @@ function BlogData() {
                         value={updateData.title}
                         onChange={handleUpdateDataChange}
                     />
-                    <TextField
+                    <Editor
                         margin="dense"
                         label="Content"
                         type="text"

@@ -45,7 +45,7 @@ function CreateQuiz({adminId}) {
     };
   return (
     <>
-    <div className="updateFeed-div" style={{marginTop:'50px',border:'2px solid white',padding :'80px' ,backgroundColor:'rgb(255,255,255,0.8)' ,borderRadius:'10%',boxShadow:'8px 5px 8px 5px darkgray'}}>
+    <div className="updateFeed-div" style={{marginTop:'50px',border:'2px solid white',padding :'80px' ,backgroundColor:'rgb(255,255,255,0.8)' ,borderRadius:'2%',boxShadow:'0px 0px 2px darkgray'}}>
     {/* <Typography variant ="h6" gutterBottom>Update Version</Typography> */}
     {load && (
          <div className="loader-overlay" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(255, 255, 255, 0.5))', zIndex: 9999 }}>

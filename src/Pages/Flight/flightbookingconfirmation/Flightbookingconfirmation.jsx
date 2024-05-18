@@ -25,7 +25,7 @@ const FlightReviewbooking = () => {
   );
   // console.log("reducerState", reducerState);
   const location = useLocation();
-  const { baggageDetails , ssramount} = location.state;
+  const { baggageDetails , ssramount,mealdetails} = location.state;
   // totalAmount(ssramount);
   //Balance Substraction useEffect implemented below
 
@@ -111,7 +111,8 @@ const FlightReviewbooking = () => {
             };
           }
         ),
-        baggage:baggageDetails
+        baggage:baggageDetails,
+        mealDynamic:mealdetails
       };
       userApi.flightBookingDataSave(payloadLCC);
     } else {
@@ -176,7 +177,8 @@ const FlightReviewbooking = () => {
             };
           }
         ),
-        baggage:baggageDetails
+        baggage:baggageDetails,
+        mealDynamic:mealdetails
       };
       userApi.flightBookingDataSave(payloadNonLcc);
     }
@@ -245,7 +247,8 @@ const FlightReviewbooking = () => {
             };
           }
         ),
-        baggage:baggageDetails
+        baggage:baggageDetails,
+        mealDynamic:mealdetails
       };
       userApi.flightBookingDataSave(payloadLCC);
     } else {
@@ -314,7 +317,8 @@ const FlightReviewbooking = () => {
             };
           }
         ),
-        baggage:baggageDetails
+        baggage:baggageDetails,
+        mealDynamic:mealdetails
       };
       userApi.flightBookingDataSave(payloadNonLcc);
     }

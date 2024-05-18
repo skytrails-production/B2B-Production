@@ -6,6 +6,7 @@ import Accordion from "react-bootstrap/Accordion";
 import "./passenger.css";
 import { Typography, Button } from "@mui/material";
 import { useDispatch, useSelector, useReducer } from "react-redux";
+import DinnerDiningIcon from '@mui/icons-material/DinnerDining';
 import { useNavigate } from "react-router-dom";
 import flightdir from "../../../Images/flgihtdir.png";
 import groupimg from "../../../Images/Groupl.png";
@@ -47,7 +48,7 @@ const style = {
   borderRadius: "2px",
 };
 
-const Leftdetail = ({ totalAmount, setamount }) => {
+const Leftdetail = ({ totalAmount, setamount, mealamount, setmeal }) => {
   const [loader, setLoader] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -369,12 +370,19 @@ const Leftdetail = ({ totalAmount, setamount }) => {
           state: {
             baggageDetails: baggageData,
             ssramount: baggageFare,
+            mealdetails:mealData , 
+            ssrmeal: mealFare
           },
         });
       } else {
         dispatch(PassengersAction(passengerData));
         navigate("/Flightresult/passengerdetail/flightreviewbooking", {
-          state: { baggageDetails: baggageData, ssramount: baggageFare },
+          state: { 
+              baggageDetails: baggageData,
+              ssramount: baggageFare,
+              mealdetails:mealData , 
+              ssrmeal: mealFare
+            },
         });
       }
     } else {
@@ -422,7 +430,7 @@ const Leftdetail = ({ totalAmount, setamount }) => {
   const minDateInfer = formatDate(maxDateValueChild);
 
   const fareQuoteData = reducerState?.flightFare?.flightQuoteData?.Results;
-  console.log("reducerState", reducerState);
+  // console.log("reducerState", reducerState);
 
   const img = fareQuoteData?.Segments?.[0]?.[0]?.Airline?.AirlineCode;
   const airlineName = fareQuoteData?.Segments?.[0]?.[0]?.Airline?.AirlineName;
@@ -458,6 +466,10 @@ const Leftdetail = ({ totalAmount, setamount }) => {
     var formattedTimeStop = dateTime.toLocaleTimeString("en-US", optionsTime);
   }
 
+
+
+  // ////////////////////////////////baggage/////////////////////////////////////////////////////////////////////////////
+
   const [baggagessr, setBaggagessr] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isBaggageAdded, setIsBaggageAdded] = useState(false);
@@ -466,9 +478,6 @@ const Leftdetail = ({ totalAmount, setamount }) => {
   const [baggageFare, setBaggageFare] = useState(0);
   const [baggageBool, setBaggageBool] = useState(true);
   const [selectedBaggages, setSelectedBaggages] = useState([]);
-
-  
-
   const [open, setOpen] = useState(false);
   // const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -530,8 +539,6 @@ const Leftdetail = ({ totalAmount, setamount }) => {
     return Object.values(selectedBaggages).reduce((acc, curr) => acc + curr, 0);
   };
 
-  // console.log("selectedBaggages", selectedBaggages);
-  // Function to handle confirming the selection
   const handleBaggageSelection = () => {
     setIsBaggageAdded(true);
     setOpen(false);
@@ -569,8 +576,117 @@ const Leftdetail = ({ totalAmount, setamount }) => {
     setOpen(false);
   };
 
-  // const [baggageList,setBaggageList] = useState("");
-  // const [baggageListNub,setBaggageListNub] = useState("")
+
+// /////////////////////////////////////////SSRCMeal//////////////////////////////////////////////
+  const [mealssr, setMealssr] = useState([]);
+  const [isLoading1, setIsLoading1] = useState(true);
+  const [isMealAdded, setIsMealAdded] = useState(false);
+  const [mealList, setmealList] = useState([]);
+  const [mealData, setmealData] = useState([]);
+  const [mealFare, setmealFare] = useState(0);
+  const [mealBool, setmealBool] = useState(true);
+  const [mealBaggages, setmealBaggages] = useState([]);
+  const [open1, setOpen1] = useState(false);
+  // const handleOpen = () => setOpen(true);
+  const handleClose1 = () => setOpen1(false);
+
+  const numbersbaggaege1 = Number(adults) + Number(childs);
+  const handleBaggageChange1 = (price, operation, index1, meal) => {
+    const selectedQuantity1 = mealBaggages[index1] || 0;
+
+    if (operation === "+" && getTotalSelectedBaggages1() < numbersbaggaege1) {
+      setmealBaggages({
+        ...mealBaggages,
+        [index1]: selectedQuantity1 + 1,
+      });
+      updateTotalAmount1(price);
+      setIsMealAdded(true);
+      if (mealData?.length < Number(adults) + Number(childs)) {
+        setmealData((pre) => [...mealData, meal]);
+        let arr = [...mealList];
+        arr[index1] = arr[index1] + 1;
+        setmealList(arr);
+        setmealFare((pre) => pre + meal?.Price);
+      }
+    } else if (operation === "-" && selectedQuantity1 > 0) {
+      setmealBaggages({
+        ...mealBaggages,
+        [index1]: selectedQuantity1 - 1,
+      });
+      updateTotalAmount1(-price);
+      if (mealData?.length && 0 < mealList[index1]) {
+        let arr = [...mealList];
+        arr[index1] = arr[index1] - 1;
+        setmealList(arr);
+        setmealBool(true);
+        let ssrcc = true;
+        let sub = mealData.filter((bagg) => {
+          if (bagg?.Weight === meal?.Weight && ssrcc) {
+            setmealBool(false);
+            ssrcc = false;
+            return false;
+          } else {
+            return true;
+          }
+        });
+        setmealData(sub);
+        setmealFare((pre) => pre - meal?.Price);
+      }
+    }
+  };
+
+  const updateTotalAmount1 = (price) => {
+    const newAmount = mealamount + price;
+    // Prevent the total amount from going negative
+    const updatedAmount1 = newAmount < 0 ? 0 : newAmount;
+    setmeal(updatedAmount1);
+  };
+
+  // Function to calculate the total number of selected baggages
+  const getTotalSelectedBaggages1 = () => {
+    return Object.values(mealBaggages).reduce((acc, curr) => acc + curr, 0);
+  };
+
+  const handleBaggageSelection1 = () => {
+    setIsMealAdded(true);
+    setOpen1(false);
+  };
+
+  const handleAddBaggageClick1 = async () => {
+    setOpen1(true);
+    setIsLoading1(true);
+    // console.log("reducerstate", reducerState);
+    try {
+      const payload = {
+        EndUserIp: reducerState?.ip?.ipData,
+        TokenId: reducerState?.ip?.tokenData,
+        TraceId:
+          reducerState?.oneWay?.oneWayData?.data?.data?.Response?.TraceId,
+        ResultIndex: ResultIndex,
+      };
+
+      const response = await axios.post(
+        `${apiURL.baseURL}/skyTrails/flight/ssr`,
+        payload
+      );
+
+      // console.log("API Response:", response?.data);
+      setIsLoading1(false);
+      setMealssr(response?.data);
+      // setOpen(true);
+    } catch (error) {
+      // console.error("Error calling API:", error);
+      setIsLoading1(false);
+    }
+  };
+
+  const handlecloseicon1 = () => {
+    setOpen1(false);
+  };
+
+
+
+
 
   return (
     <div>
@@ -1222,6 +1338,218 @@ const Leftdetail = ({ totalAmount, setamount }) => {
               <LuggageIcon /> Add Luggage{" "}
             </div> */}
             <div>
+            <Button
+                onClick={handleAddBaggageClick1}
+                style={{
+                  border: "1px solid red",
+                  padding: "8px",
+                  fontSize: "15px",
+                  color: "#000",
+                }}
+              >
+                <span>
+                  <DinnerDiningIcon />
+                </span>{" "}
+                Add Meal{" "}
+              </Button>
+              <Modal
+                open={open1}
+                onClose={handleClose1}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box sx={style}>
+                  <div className="baggagewrapper">
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <p
+                        style={{
+                          color: "#000000",
+                          fontWeight: "500",
+                          paddingBottom: "12px",
+                        }}
+                      >
+                        {" "}
+                        Add Meal
+                      </p>
+                      <div
+                        onClick={handlecloseicon1}
+                        style={{ cursor: "pointer" }}
+                      >
+                        <CloseIcon />
+                      </div>
+                    </div>
+                    <div className="sectrossrc">
+                      <div className="ssrc-sctive">
+                        <div>
+                          <img
+                            src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${img}.png`}
+                            alt="flightImg"
+                            style={{ height: "38px" }}
+                          />{" "}
+                        </div>
+                        <div>
+                          <span>
+                            {
+                              reducerState?.flightFare?.flightRuleData
+                                ?.FareRules?.[0]?.Origin
+                            }
+                          </span>{" "}
+                          -
+                          <span>
+                            {
+                              reducerState?.flightFare?.flightRuleData
+                                ?.FareRules?.[0]?.Destination
+                            }
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      className="appendBottomssrc"
+                      style={{ marginTop: "12px" }}
+                    >
+                      <div className="appendBottomssrcheading">
+                        Included Check-in Meal per person{" "}
+                       
+                      </div>
+
+                      <div className="baggagelist">
+                        {isLoading1 ? (
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                            }}
+                          >
+                            <div className="spinnerssr"></div>
+                          </div>
+                        ) : (
+                          <div className="extrabaggagesection">
+                            <div>
+                              <div>
+                                {/* {baggagessr?.data?.Response?.Err} */}
+                                {!baggagessr?.data?.Response?.MealDynamic || baggagessr?.data?.Response?.MealDynamic.length === 0 ? (
+  <div
+    style={{
+      fontSize: "24px",
+      textAlign: "center",
+      color: "red",
+    }}
+  >
+    {baggagessr?.data?.Response?.Error?.ErrorMessage || "No meal Found"}
+  </div>
+) : (
+  <>
+                                {mealssr?.data?.Response?.MealDynamic?.[0]
+                                  ?.slice(1)
+                                  .map((meal, index1) => (
+                                    <div className="baglistItem" key={index1}>
+                                      <p className="paravaluessrc">
+                                        <span>
+                                          <DinnerDiningIcon />
+                                        </span>
+                                        <span>
+                                          Additional {meal.AirlineDescription} kg
+                                        </span>
+                                      </p>
+                                      <div
+                                        className="paravaluessrc"
+                                        style={{ position: "relative" }}
+                                      >
+                                        <div className="finalrpicessrc">
+                                          ₹ {meal.Price}
+                                        </div>
+                                        <div
+                                          className="plusaddssr"
+                                          onClick={() =>
+                                            handleBaggageChange1(
+                                              meal.Price,
+                                              "-",
+                                              index1,
+                                              meal,
+                                            )
+                                          }
+                                        >
+                                          -
+                                        </div>
+                                        <div className="finalrpicessrc">
+                                          <div className="finalrpicessrc">
+                                            {mealBaggages[index1] || 0}
+                                          </div>
+                                        </div>
+                                        <div
+                                          className="plusaddssr"
+                                          onClick={() =>
+                                            handleBaggageChange1(
+                                              meal.Price,
+                                              "+",
+                                              index1,
+                                              meal,
+                                            )
+                                          }
+                                        >
+                                          +
+                                        </div>
+                                      </div>
+                                    </div>
+                                  ))}
+                                </>
+)}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* {isBaggageAdded && ( */}
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <div>
+                          {getTotalSelectedBaggages1()} of {numbersbaggaege1}{" "}
+                          Meal(s) Selected
+                        </div>
+                        <div>Total Amount: ₹{mealamount}</div>
+                        <button
+                          className="ssrcbutton"
+                          onClick={handleBaggageSelection1}
+                        >
+                          Book
+                        </button>
+                      </div>
+                      {/* )} */}
+                    </div>
+                  </div>
+                </Box>
+              </Modal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              {/* /////////////////////////////////baggage////////////////////////// */}
               <Button
                 onClick={handleAddBaggageClick}
                 style={{
@@ -1319,7 +1647,7 @@ const Leftdetail = ({ totalAmount, setamount }) => {
                             <div>
                               <div>
                                 {/* {baggagessr?.data?.Response?.Err} */}
-                                {/* {baggagessr?.data?.Response?.Error?.ErrorCode !=== 0 ? (
+                                 {!baggagessr?.data?.Response?.Baggage || baggagessr?.data?.Response?.Baggage.length === 0  ? (
   <div
     style={{
       fontSize: "24px",
@@ -1327,10 +1655,10 @@ const Leftdetail = ({ totalAmount, setamount }) => {
       color: "red",
     }}
   >
-    {baggagessr?.data?.Response?.Error?.ErrorMessage}
+    {baggagessr?.data?.Response?.Error?.ErrorMessage || "No SSR Detail Found"}
   </div>
 ) : (
-  <> */}
+  <>
                                 {baggagessr?.data?.Response?.Baggage?.[0]
                                   ?.slice(1)
                                   .map((baggage, index) => (
@@ -1384,8 +1712,8 @@ const Leftdetail = ({ totalAmount, setamount }) => {
                                       </div>
                                     </div>
                                   ))}
-                                {/* </> */}
-                                {/* } */}
+                                </>
+                        )}
                               </div>
                             </div>
                           </div>

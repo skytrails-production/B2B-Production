@@ -39,6 +39,14 @@ const FlightReviewbooking = () => {
     setSsramount(amount);
   };
 
+
+  const [mealamount, setmealamount] = useState(null);
+  const handleSsrmealamount = (amount1) => {
+    setmealamount(amount1);
+  };
+
+
+
   if (loading) {
     return (
       <>
@@ -51,10 +59,10 @@ const FlightReviewbooking = () => {
 
       <div className="row">
         <div className="col-lg-9">
-          <Flightbookingdetail  passSsramount={handleSsramount}/>
+          <Flightbookingdetail  passSsramount={handleSsramount} passssrmeal={handleSsrmealamount}/>
         </div>
         <div className="col-lg-3">
-          <Rightdetail baggageamount={ssramount}  />
+          <Rightdetail baggageamount={ssramount} mealamount={mealamount} />
         </div>
       </div>
 

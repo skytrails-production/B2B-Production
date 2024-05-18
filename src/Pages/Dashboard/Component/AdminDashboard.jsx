@@ -105,17 +105,23 @@ const AdminDashboardData = () => {
   };
 
   return (
-    <Grid container spacing={3} className="admin-dashboard-grid">
+    <div className="admin-dashboard-container">
+    <Grid container spacing={3}   className={`admin-dashboard-grid ${loading ? 'loading' : ''}`}>
+     
       {loading ? (
-        // Display loader while data is being fetched
+         <div className="admin-dashboard-loader">
+      
         <RingLoader
           loading={loading}
           size={80}
           sizeUnit={"px"}
           color="#21325D"
-          // style={{ marginTop: "20px" }}
+      
+         //  style={{ marginTop: "20px" }}
         />
+        </div>
       ) : (
+
         Object.keys(dashboardData).map((key, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
             <div
@@ -123,6 +129,7 @@ const AdminDashboardData = () => {
                 position: 'relative',
                 top: '8px',
                 left: '60px',
+                
               }}
             >
               <div
@@ -187,6 +194,7 @@ const AdminDashboardData = () => {
         ))
       )}
     </Grid>
+    </div>
   );
 };
 

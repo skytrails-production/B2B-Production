@@ -68,7 +68,7 @@ const KeyValue = ({ data, value }) => {
   );
 };
 
-export default function Popularfilter({baggageamount}) {
+export default function Popularfilter({baggageamount, mealamount}) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const reducerState = useSelector((state) => state);
@@ -180,14 +180,14 @@ export default function Popularfilter({baggageamount}) {
               <div>
                 <span>Others : </span>
                 {/* <p>{totalAmount}</p> */}
-                <p>{'₹'}{markUpamount+baggageamount}</p>
+                <p>{'₹'}{markUpamount+baggageamount+mealamount}</p>
               </div>
               <div >
                 <span>Grand Total:</span>
                 <p>{'₹'}{fareValue?.Fare?.BaseFare +
                   fareValue?.Fare?.Tax +
                   fareValue?.Fare?.OtherCharges +
-                  markUpamount + baggageamount}</p>
+                  markUpamount + baggageamount+mealamount}</p>
               </div>
             </div>
           </div>

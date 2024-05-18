@@ -57,7 +57,7 @@ const AllBusBooking = () => {
     },
 
     { field: 'passenger[0].Email', minWidth: 230, headerName: 'Email', cellClassName: 'cell-padding', valueGetter: (params) => params.row.passenger[0]?.Email || 'No Data' },
-    { field: 'passenger[0].Phone', headerName: 'Phone', minWidth: 100, valueGetter: (params) => params.row.passenger[0].Phone || 'No Data' },
+    { field: 'passenger[0].Phone', headerName: 'Phone', minWidth: 100, valueGetter: (params) => params?.row?.passenger[0]?.Phone || 'No Data' },
     { field: 'destination', headerName: 'Destination', minWidth: 100, valueGetter: (params) => params.row.destination || 'No Data' },
     { field: 'origin', headerName: 'Origin', minWidth: 120, valueGetter: (params) => params.row.origin || 'No Data' },
     { field: 'travelName', headerName: 'Bus Name', minWidth: 200, valueGetter: (params) => params.row.travelName || 'No Data' },

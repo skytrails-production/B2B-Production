@@ -1,5 +1,8 @@
 /* AdminDashboard.css */
 /* AdminDashboard.css */
+.admin-dashboard-grid.loading {
+  background-color: white;
+}
 
 .admin-dashboard-grid {
   display: flex;
@@ -93,7 +96,23 @@
 .grid-item-8 .admin-dashboard-card {
   background-color: #d2dff3;
 } */
-
+.admin-dashboard-container {
+  position: absolute;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+  .admin-dashboard-loader {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    right:50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999; 
+    background-color: white;
+  }
 .admin-dashboard-card {
   position: relative;
   max-width: 345px;

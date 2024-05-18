@@ -21,6 +21,7 @@ const Flight = (props) => {
   const navigate = useNavigate();
   const reducerState = useSelector((state) => state);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [mealamount, setMealamount] = useState(0);
   // console.log("Props", props);
   const ResultIndex = sessionStorage.getItem("ResultIndex");
   // console.log("reducerStateDemount", reducerState);
@@ -39,14 +40,19 @@ const Flight = (props) => {
     setTotalAmount((prevAmount) => prevAmount + price);
   }
 
+  function setmeal(price) {
+    setMealamount((prevamount) => 
+      prevamount + price)
+  }
+
   return (
     <div className="container-fluid margin-pecentage">
       <div className="row">
         <div className="col-lg-9">
-          <Leftdetail totalAmount={totalAmount} setamount={setTotalAmount} />
+          <Leftdetail totalAmount={totalAmount} setamount={setTotalAmount}  mealamount={mealamount} setmeal={setMealamount}/>
         </div>
         <div className="col-lg-3">
-          <Rightdetail baggageamount={totalAmount} />
+          <Rightdetail baggageamount={totalAmount}  mealamount={mealamount}/>
         </div>
       </div>
     </div>
