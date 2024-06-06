@@ -219,7 +219,7 @@ function ResponsiveDrawer(props) {
 
   const userflightBooking =
     location.pathname === "/subAdmin/dashboard/userflightBooking";
-  const userhotelBooking =
+  const userhotelBookings =
     location.pathname === "/subAdmin/dashboard/userhotelBooking";
   const userbusBooking =
     location.pathname === "/subAdmin/dashboard/userbusBooking";
@@ -1941,7 +1941,7 @@ function ResponsiveDrawer(props) {
         </Typography>
 
         <Typography paragraph>
-          {userflightBooking && <UserFlightBooking />}
+          {userhotelBookings && <UserHotelBooking />}
         </Typography>
 
         <Typography paragraph>

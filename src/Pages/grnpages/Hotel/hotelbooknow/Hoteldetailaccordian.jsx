@@ -87,17 +87,12 @@ export default function CustomizedAccordions() {
     setExpanded(newExpanded ? panel : false);
   };
 
-  
   const hotelll = reducerState?.hotelSearchResult;
   useEffect(() => {
     if (HotelCode === undefined || ResultIndex === undefined) {
       navigate("/hotel/hotelsearch");
     }
   }, []);
-
-  
-  
-  
 
   const searchId =
     reducerState?.hotelSearchResultGRN?.ticketData?.data?.data?.search_id;
@@ -123,8 +118,8 @@ export default function CustomizedAccordions() {
   const hotelinfoGRN =
     reducerState?.hotelSearchResultGRN?.hotelDetails?.data?.data?.hotel;
 
-    const hotelinfoGRNs = reducerState?.hotelSearchResultGRN?.hotelRoom?.hotel;
-    
+  const hotelinfoGRNs = reducerState?.hotelSearchResultGRN?.hotelRoom?.hotel;
+
   console.log(hotelinfoGRN, "====================hotelinfooooooooooooogrn");
   const hotelMainReducer =
     reducerState?.hotelSearchResultGRN?.ticketData?.data?.data;
@@ -225,16 +220,20 @@ export default function CustomizedAccordions() {
                           }}
                         >
                           <div>
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            style={{width:"20px",height:"20px",marginTop:"1rem" }}
-                            value=""
-                            checked={selectedRoomIndex === index}
-                            onChange={() => handleRoomSelection(index)}
-                          />
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                              style={{
+                                width: "20px",
+                                height: "20px",
+                                marginTop: "1rem",
+                              }}
+                              value=""
+                              checked={selectedRoomIndex === index}
+                              onChange={() => handleRoomSelection(index)}
+                            />
                           </div>
-                         
+
                           <div className="inneraccorHotel">
                             {item?.rooms.map((room, e) => (
                               <div className="ratePlans" key={e}>
@@ -538,7 +537,7 @@ export default function CustomizedAccordions() {
           </div>
         </div>
       </div>
-     
+
       <button
         type="submit"
         className="bookNowButton-new"

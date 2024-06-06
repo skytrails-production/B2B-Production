@@ -49,7 +49,6 @@ const Hoteldescription = () => {
     return stars;
   };
 
- 
   useEffect(() => {
     if (loaderPayment == true) {
       handleClickBooking();
@@ -61,15 +60,12 @@ const Hoteldescription = () => {
   const hotelBlockDetails =
     reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult;
   const hotelDetails = hotelBlockDetails?.HotelRoomsDetails;
-  
 
-  const getBookingDetails =
-    reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult
-      ?.HotelRoomsDetails;
+  const getBookingDetails = reducerState?.hotelSearchResultGRN?.bookRoom;
 
-  const totalAmount = getBookingDetails?.reduce((accumulator, item) => {
-    return accumulator + item?.Price?.PublishedPriceRoundedOff;
-  }, 0);
+  // const totalAmount = getBookingDetails?.reduce((accumulator, item) => {
+  //   return accumulator + item?.Price?.PublishedPriceRoundedOff;
+  // }, 0);
 
   const markUpamount =
     reducerState?.userData?.userData?.data?.data?.markup?.hotel;
@@ -82,8 +78,8 @@ const Hoteldescription = () => {
     getBookingDetails?.hotel?.booking_items?.[0]?.non_refundable;
   const cancelDetails =
     getBookingDetails?.hotel?.booking_items?.[0]?.cancellation_policy;
-  const grandTotal = totalAmount + markUpamount;
-  //const grandTotal = 1;
+  //const grandTotal = totalAmount + markUpamount;
+  const grandTotal = 1;
   useEffect(() => {
     if (
       userId &&
@@ -92,7 +88,7 @@ const Hoteldescription = () => {
       const balancePayload = {
         _id: userId,
         amount: grandTotal,
-        bookingType:"Hotel booking"
+        bookingType: "Hotel booking",
       };
 
       dispatch(balanceSubtractRequest(balancePayload));
@@ -265,8 +261,6 @@ const Hoteldescription = () => {
   const cancellationCharge = hotelCancellationPolicies?.CancellationPolicies
     ? hotelCancellationPolicies?.CancellationPolicies[0]?.Charge
     : null;
-
-  
 
   return (
     <>

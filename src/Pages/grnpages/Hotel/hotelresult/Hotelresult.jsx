@@ -4,18 +4,13 @@ import Divider from "@mui/material/Divider";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import starsvg from "./starsvg.svg";
 import starBlank from "./starBlank.svg";
-
+import { hotelActionGrn } from "../../../../Redux/HotelGrn/hotel";
 // import hotelFilter from "../../images/hotelFilter.png"
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-//import InsideNavbar from "../../UI/BigNavbar/InsideNavbar";
-
-// import {
-//   hotelGalleryRequest,
-//   singleHotelGRN,
-// } from "../../../../Redux/HotelGrn/hotel";
-
+import InfiniteScroll from "react-infinite-scroll-component";
+import { Oval } from "react-loader-spinner";
 import {
   hotelGalleryRequest,
   singleHotelGRN,
@@ -40,70 +35,27 @@ const variants = {
 };
 
 export default function Popularfilter() {
-  // const navigate = useNavigate();
-  // const reducerState = useSelector((state) => state);
-
-  // const dispatch = useDispatch();
-  // const result =
-  //   reducerState?.hotelSearchResultGRN?.ticketData?.data?.data?.hotels;
-
-  // // console.log(result, "result")
-  // console.log(reducerState, "reducerstat");
-
-  // const [loading, setLoading] = useState(false);
-
-  // const [searchId, setSearchId] = useState(
-  //   reducerState?.hotelSearchResultGRN?.ticketData?.data?.data?.search_id
-  // );
-  // const handleClick = (resultIndex, hotelCode) => {
-  //   navigate("HotelBooknowgrm");
-  //   sessionStorage.setItem("ResultIndex", resultIndex);
-  //   sessionStorage.setItem("HotelCode", hotelCode);
-  // };
   function All_Hotel_Reducer_Clear() {
     dispatch(clearHotelReducer());
     sessionStorage.removeItem("hotelFormData");
   }
-  // useEffect(() => {
-  //   if (reducerState?.hotelSearchResultGRN?.hotelDetails?.status === 200) {
-  //     navigate("/hotel/hotelsearchs/guestDetails");
-  //     setLoading(false);
-  //   }
-  // }, [reducerState?.hotelSearchResultGRN?.hotelDetails?.status]);
-
-  // const handleClick = (item) => {
-  //   // sessionStorage.setItem("ResultIndex", resultIndex);
-  //   // sessionStorage.setItem("HotelCode", hotelCode);
-  //   // navigate("guestDetails");
-  //   // console.log(item, "item")
-
-  //   setLoading(true);
-  //   const payload = {
-  //     data: {
-  //       rate_key: item?.min_rate?.rate_key,
-  //       group_code: item?.min_rate?.group_code,
-  //     },
-  //     searchID: searchId,
-  //   };
-
-  //   const galleryPayload = {
-  //     hotel_id: item?.hotel_code,
-  //   };
-  //   console.log(galleryPayload, "payload");
-
-  //   dispatch(hotelGalleryRequest(galleryPayload));
-  //   dispatch(singleHotelGRN(payload));
-  // };
 
   //grn
   const navigate = useNavigate();
   const reducerState = useSelector((state) => state);
 
   const dispatch = useDispatch();
-  const result =
-    reducerState?.hotelSearchResultGRN?.ticketData?.data?.data?.hotels;
+  const [result, setResult] = useState(
+    reducerState?.hotelSearchResultGRN?.hotels
+  );
+  useEffect(() => {
+    setResult(reducerState?.hotelSearchResultGRN?.hotels);
+    setHasMore(reducerState?.hotelSearchResultGRN?.hasMore);
+  }, [reducerState?.hotelSearchResultGRN]);
 
   const [loading, setLoading] = useState(false);
+  const [hotels, setHotels] = useState([]);
+  const [scrollLoding, setScrollLoading] = useState(false);
 
   const [searchId, setSearchId] = useState(
     reducerState?.hotelSearchResultGRN?.ticketData?.data?.data?.search_id
@@ -216,19 +168,7 @@ export default function Popularfilter() {
       switch (groupName) {
         case "star":
           return starRating === parseInt(value);
-        // case "price":
-        //   switch (value) {
-        //     case "2000":
-        //       return publishedPrice <= 2000;
-        //     case "3000":
-        //       return publishedPrice > 2000 && publishedPrice <= 3000;
-        //     case "6500":
-        //       return publishedPrice > 3000 && publishedPrice <= 6500;
-        //     case "9999":
-        //       return publishedPrice > 6500 && publishedPrice <= 10000;
-        //     case "10000":
-        //       return publishedPrice > 10000;
-        //   }
+
         case "location":
           return location === value;
         default:
@@ -263,7 +203,8 @@ export default function Popularfilter() {
 
   console.log(reducerState, "reducer state");
 
-  const storedFormData = JSON.parse(sessionStorage.getItem("hotelFormData"));
+  // const storedFormData = JSON.parse(sessionStorage.getItem("hotelFormData"));
+
   const initialDisplayCount = 6;
   const [displayCount, setDisplayCount] = useState(initialDisplayCount);
 
@@ -319,14 +260,11 @@ export default function Popularfilter() {
     }
   }, [sortedAndFilteredResults]);
 
-  if (loading) {
-  }
-
   //grn
 
   //filtercomponent
   const [checkedItems, setCheckedItems] = useState({});
-
+  const [hasMore, setHasMore] = useState(true);
   const byPriceOptions = [
     { id: 1, name: "Low to High" },
     { id: 2, name: "High to Low" },
@@ -347,6 +285,24 @@ export default function Popularfilter() {
     { id: 5, name: "1 Star" },
   ]);
 
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    if (page > 1) {
+      // setScrollLoading(true);
+
+      const payloadgrn = JSON.parse(sessionStorage.getItem("Payload"));
+      const grnPayload = { ...payloadgrn };
+      dispatch(hotelActionGrn(grnPayload, page));
+    }
+    console.log(page, "pageNumber");
+  }, [page]);
+  useEffect(() => {
+    setScrollLoading(false);
+  }, [result]);
+  function fetchMoreData() {
+    setPage((pre) => pre + 1);
+  }
   const CheckboxList = ({ items, label }) => {
     const [checkedItems, setCheckedItems] = useState({});
 
@@ -473,105 +429,136 @@ export default function Popularfilter() {
                     <div className="priceBookHotel"></div>
                   </motion.div>
                 </motion.div>
-
-                {result?.length > 0 ? (
-                  result?.map((result, index) => {
-                    // const resultIndex = result?.ResultIndex;
-                    const hotelCode = result?.hotel_code;
-                    return (
-                      <motion.div
-                        variants={variants}
-                        initial="initial"
-                        whileInView="animate"
-                        viewport={{ once: true, amount: 0.8 }}
-                        className="col-lg-12"
-                      >
+                <InfiniteScroll
+                  dataLength={result.length}
+                  next={fetchMoreData}
+                  hasMore={hasMore}
+                  loader={
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "100px",
+                      }}
+                    >
+                      <Oval
+                        height={50}
+                        width={50}
+                        color="#4fa94d"
+                        visible={true}
+                        ariaLabel="oval-loading"
+                        secondaryColor="#4fa94d"
+                        strokeWidth={2}
+                        strokeWidthSecondary={2}
+                      />
+                    </div>
+                  }
+                  endMessage={
+                    <p style={{ textAlign: "center" }}>
+                      <b>Thank you for exploring! You've reached the end.</b>
+                    </p>
+                  }
+                >
+                  {result?.length > 0 ? (
+                    result?.map((result, index) => {
+                      // const resultIndex = result?.ResultIndex;
+                      const hotelCode = result?.hotel_code;
+                      return (
                         <motion.div
                           variants={variants}
-                          onClick={() => handleClick(result)}
-                          className="hotelResultBoxSearch"
-                          key={index}
+                          initial="initial"
+                          whileInView="animate"
+                          viewport={{ once: true, amount: 0.8 }}
+                          className="col-lg-12"
                         >
-                          <div>
-                            <div className="hotelImage">
-                              {/* <img
-                                                            src={result?.HotelPicture === "https://b2b.tektravels.com/Images/HotelNA.jpg" ? hotelNotFound : result?.HotelPicture}
-                                                            onError={(e) => {
-                                                                e.target.onerror = null;
-                                                                e.target.src = hotelNotFound;
-                                                            }}
-                                                            alt="package-img"
-                                                        /> */}
-                              <img src={result?.images?.url} alt="hotelImage" />
-                            </div>
-                            <div className="hotelResultDetails">
-                              <div className="hotleTitle">
-                                <p>{result?.name}</p>
+                          <motion.div
+                            variants={variants}
+                            onClick={() => handleClick(result)}
+                            className="hotelResultBoxSearch"
+                            key={index}
+                          >
+                            <div>
+                              <div className="hotelImage">
+                                <img
+                                  src={
+                                    result?.images?.url ||
+                                    "https://b2b.tektravels.com/Images/HotelNA.jpg"
+                                  }
+                                  alt="hotelImage"
+                                />
                               </div>
-
-                              <div className="hotelRating">
-                                <div>
-                                  {Array.from(
-                                    { length: result?.category },
-                                    (_, index) => (
-                                      <img
-                                        key={index}
-                                        src={starsvg}
-                                        alt={`Star ${index + 1}`}
-                                      />
-                                    )
-                                  )}
+                              <div className="hotelResultDetails">
+                                <div className="hotleTitle">
+                                  <p>{result?.name}</p>
                                 </div>
-                              </div>
 
-                              <div>
-                                <p className="hotAddress">{result?.address}</p>
-                              </div>
+                                <div className="hotelRating">
+                                  <div>
+                                    {Array.from(
+                                      { length: result?.category },
+                                      (_, index) => (
+                                        <img
+                                          key={index}
+                                          src={starsvg}
+                                          alt={`Star ${index + 1}`}
+                                        />
+                                      )
+                                    )}
+                                  </div>
+                                </div>
 
-                              {result?.HotelLocation && (
                                 <div>
-                                  <p className="hotAddressLocation">
-                                    <span>
-                                      <svg
-                                        height="17"
-                                        viewBox="0 0 32 32"
-                                        width="17"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        id="fi_3138736"
-                                      >
-                                        <g id="Pin-2" data-name="Pin">
-                                          <path
-                                            fill="#d90429"
-                                            d="m25.0464 8.4834a10 10 0 0 0 -7.9116-5.4258 11.3644 11.3644 0 0 0 -2.2691 0 10.0027 10.0027 0 0 0 -7.9121 5.4253 10.8062 10.8062 0 0 0 1.481 11.8936l6.7929 8.2588a1 1 0 0 0 1.545 0l6.7929-8.2588a10.8055 10.8055 0 0 0 1.481-11.8931zm-9.0464 8.5166a4 4 0 1 1 4-4 4.0047 4.0047 0 0 1 -4 4z"
-                                          ></path>
-                                        </g>
-                                      </svg>
-                                    </span>
-                                    {result?.HotelLocation}
+                                  <p className="hotAddress">
+                                    {result?.address}
                                   </p>
                                 </div>
-                              )}
-                            </div>
-                          </div>
 
-                          <div className="priceBookHotel">
-                            <div className="priceBookHotelOne ">
-                              {/* <span><del>₹{result?.Price?.OfferedPrice}</del></span> */}
-                              <span>Offer Price</span>
-                              <p>₹{result?.min_rate?.price}</p>
-                              <button className="showmore">Show More</button>
+                                {result?.HotelLocation && (
+                                  <div>
+                                    <p className="hotAddressLocation">
+                                      <span>
+                                        <svg
+                                          height="17"
+                                          viewBox="0 0 32 32"
+                                          width="17"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          id="fi_3138736"
+                                        >
+                                          <g id="Pin-2" data-name="Pin">
+                                            <path
+                                              fill="#d90429"
+                                              d="m25.0464 8.4834a10 10 0 0 0 -7.9116-5.4258 11.3644 11.3644 0 0 0 -2.2691 0 10.0027 10.0027 0 0 0 -7.9121 5.4253 10.8062 10.8062 0 0 0 1.481 11.8936l6.7929 8.2588a1 1 0 0 0 1.545 0l6.7929-8.2588a10.8055 10.8055 0 0 0 1.481-11.8931zm-9.0464 8.5166a4 4 0 1 1 4-4 4.0047 4.0047 0 0 1 -4 4z"
+                                            ></path>
+                                          </g>
+                                        </svg>
+                                      </span>
+                                      {result?.HotelLocation}
+                                    </p>
+                                  </div>
+                                )}
+                              </div>
                             </div>
-                          </div>
+
+                            <div className="priceBookHotel">
+                              <div className="priceBookHotelOne ">
+                                {/* <span><del>₹{result?.Price?.OfferedPrice}</del></span> */}
+                                <span>Offer Price</span>
+                                <p>₹{result?.min_rate?.price}</p>
+                                <button className="showmore">Show More</button>
+                              </div>
+                            </div>
+                          </motion.div>
                         </motion.div>
-                      </motion.div>
-                    );
-                  })
-                ) : (
-                  <div className="filteredNotFound">
-                    {/* <img src={hotelFilter} alt="filter" /> */}
-                    <h1>Result not found</h1>
-                  </div>
-                )}
+                      );
+                    })
+                  ) : (
+                    <div className="filteredNotFound">
+                      {/* <img src={hotelFilter} alt="filter" /> */}
+                      <h1>Result not found</h1>
+                    </div>
+                  )}
+                </InfiniteScroll>
               </div>
               {/* for bigger device  */}
             </div>

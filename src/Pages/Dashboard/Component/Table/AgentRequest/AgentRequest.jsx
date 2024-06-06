@@ -9,7 +9,7 @@ import {
   Stack,
   ToggleButtonGroup,
   ToggleButton,
-  CircularProgress
+  CircularProgress,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
@@ -74,7 +74,8 @@ const AllAdvertisementTable = () => {
 
     const filtered = advertisement.filter((item) => {
       const usernameMatch =
-        item.personal_details?.first_name?.toLowerCase().includes(term) || false;
+        item.personal_details?.first_name?.toLowerCase().includes(term) ||
+        false;
       const dobMatch =
         item.personal_details?.email?.toLowerCase().includes(term) || false;
       const mobileNumberMatch =
@@ -120,7 +121,8 @@ const AllAdvertisementTable = () => {
       width: 200,
       sortable: false,
       valueGetter: (params) =>
-        `${params.row.personal_details?.first_name || ""} ${params.row.personal_details?.last_name || ""
+        `${params.row.personal_details?.first_name || ""} ${
+          params.row.personal_details?.last_name || ""
         }`,
     },
     {
@@ -136,23 +138,22 @@ const AllAdvertisementTable = () => {
       headerName: "Email",
       width: 200,
       sortable: false,
-      valueGetter: (params) =>
-        params.row.personal_details?.email || "No Data",
+      valueGetter: (params) => params.row.personal_details?.email || "No Data",
     },
     {
       field: "agencyLocation",
       headerName: "Agency Location",
       width: 200,
       sortable: false,
-      valueGetter: (params) =>
-        params.row.agency_details?.address || "No Data",
+      valueGetter: (params) => params.row.agency_details?.address || "No Data",
     },
     {
       field: "panNumber",
       headerName: "Pan Number",
       width: 150,
       sortable: false,
-      valueGetter: (params) => params.row.agency_details?.pan_number || "No Data",
+      valueGetter: (params) =>
+        params.row.agency_details?.pan_number || "No Data",
     },
     {
       field: "Approve",
@@ -193,8 +194,21 @@ const AllAdvertisementTable = () => {
   ];
 
   return (
-    <div className="subada-table-container" style={{ position: "relative", width: "100%" }}>
-      <div className="adsearch-bar" id="adssearch"style={{ position: "absolute", top: 10, zIndex: 1, fontWeight: "bold",width:'85%' }}>
+    <div
+      className="subada-table-container"
+      style={{ position: "relative", width: "100%" }}
+    >
+      <div
+        className="adsearch-bar"
+        id="adssearch"
+        style={{
+          position: "absolute",
+          top: 10,
+          zIndex: 1,
+          fontWeight: "bold",
+          width: "85%",
+        }}
+      >
         <TextField
           type="text"
           value={searchTerm}
@@ -212,16 +226,39 @@ const AllAdvertisementTable = () => {
           Agent Request Table
         </Typography>
       </div>
-      <div style={{ marginTop:"0px", width: "100%", backgroundColor: "#fff" }}>
+      <div style={{ marginTop: "0px", width: "100%", backgroundColor: "#fff" }}>
         {loading ? (
-          <div  className="loading-message" style={{marginTop:"25px", display:"flex",justifyContent:"center",alignItems:"center"}}>
-             <CircularProgress color="primary" size={80} thickness={4} style={{ position: 'absolute', top: '50%', left: '49.8%', transform: 'translate(-50%, -50%)' }} />
-
+          <div
+            className="loading-message"
+            style={{
+              marginTop: "25px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <CircularProgress
+              color="primary"
+              size={80}
+              thickness={4}
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "49.8%",
+                transform: "translate(-50%, -50%)",
+              }}
+            />
           </div>
         ) : filteredData.length === 0 ? (
-
-
-          <div style={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center", height: "100px" }}>
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100px",
+            }}
+          >
             <Alert severity="info" variant="outlined">
               Data is not available
             </Alert>
@@ -237,11 +274,11 @@ const AllAdvertisementTable = () => {
             getRowId={(row) => row._id}
             components={{
               Toolbar: () => (
-                <div style={{ marginTop: '10px' }}>
+                <div style={{ marginTop: "10px" }}>
                   <GridToolbar />
                 </div>
               ),
-              Pagination:()=>null,
+              Pagination: () => null,
             }}
           />
         )}

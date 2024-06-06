@@ -93,9 +93,12 @@ const AgentList = () => {
         <Button
           type="submit"
           variant="contained"
-          color="primary"
           disabled={!selectedAgent}
-          style={{ marginLeft: "10px", backgroundColor: "#E73C33" }}
+          style={{
+            marginLeft: "10px",
+            backgroundColor: "#E73C33",
+            color: "white",
+          }}
         >
           {loading ? <CircularProgress size={24} /> : "Submit"}
         </Button>

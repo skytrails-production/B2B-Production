@@ -10,6 +10,7 @@ function Cotactus() {
     phone: "",
     content: "",
   });
+  const [loading, setLoading] = useState(false)
   const [formError, setFormError] = useState("");
 
   const handleInputChange = (e) => {
@@ -51,6 +52,7 @@ function Cotactus() {
     }
 
     try {
+      setLoading(true);
       const response = await axios.post(
         `${apiURL.baseURL}/skytrails/api/user/query/createuserInquiry`,
         formData
@@ -64,8 +66,12 @@ function Cotactus() {
         content: "",
       });
       setFormError(""); // Clear any previous form errors
+
     } catch (error) {
       console.error("Error:", error);
+    }
+    finally {
+      setLoading(false);
     }
   };
 
@@ -84,8 +90,8 @@ function Cotactus() {
     <>
       <div className="conatiner">
         <div className="heading1">Connect with us</div>
-        
-          <div className="container">
+
+        <div className="container">
           <div className="contactuscontainer">
             <div className="row">
               <div className="col-md-6">
@@ -135,7 +141,7 @@ function Cotactus() {
                       </svg>{" "}
                       9209793097
                     </div>
-                   
+
                   </div>
                 </div>
               </div>
@@ -146,75 +152,77 @@ function Cotactus() {
                     style={{ width: "100%" }}
                   >
                     <div className="card-body">
-                    <form>
-              <div className="mb-3">
-                <label htmlFor="name" className="form-label">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Enter your Name"
-                  className="form-control"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="email" className="form-label">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Enter your Email"
-                  className="form-control"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="phone" className="form-label">
-                  Phone
-                </label>
-                <input
-                  type="text"
-                  name="phone"
-                  placeholder="Enter your Phone"
-                  className="form-control"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="content" className="form-label">
-                  Message
-                </label>
-                <textarea
-                  name="content"
-                  placeholder="Enter your message"
-                  className="form-control"
-                  value={formData.content}
-                  onChange={handleInputChange}
-                ></textarea>
-              </div>
-              <div  className="contact-button">
+                      <form>
+                        <div className="mb-3">
+                          <label htmlFor="name" className="form-label">
+                            Name
+                          </label>
+                          <input
+                            type="text"
+                            name="name"
+                            placeholder="Enter your Name"
+                            className="form-control"
+                            value={formData.name}
+                            onChange={handleInputChange}
+                          />
+                        </div>
+                        <div className="mb-3">
+                          <label htmlFor="email" className="form-label">
+                            Email
+                          </label>
+                          <input
+                            type="email"
+                            name="email"
+                            placeholder="Enter your Email"
+                            className="form-control"
+                            value={formData.email}
+                            onChange={handleInputChange}
+                          />
+                        </div>
+                        <div className="mb-3">
+                          <label htmlFor="phone" className="form-label">
+                            Phone
+                          </label>
+                          <input
+                            type="text"
+                            name="phone"
+                            placeholder="Enter your Phone"
+                            className="form-control"
+                            value={formData.phone}
+                            onChange={handleInputChange}
+                          />
+                        </div>
+                        <div className="mb-3">
+                          <label htmlFor="content" className="form-label">
+                            Message
+                          </label>
+                          <textarea
+                            name="content"
+                            placeholder="Enter your message"
+                            className="form-control"
+                            value={formData.content}
+                            onChange={handleInputChange}
+                          ></textarea>
+                        </div>
+                        <div className="contact-button">
+                          {
+                            loading ? <div class="loaderCon" />
+                              :
+                              <button
+                                type="submit"
 
-              <button
-                type="submit"
-               
-                style={{color:"#fff", border:"none"}}
-                onClick={handleSubmit}
-              >
-                Submit
-              </button>
+                                style={{ color: "#fff", border: "none" }}
+                                onClick={handleSubmit}
+                              >
+                                Submit
+                              </button>}
 
-              </div>
-              
-              {formError && (
-                <p style={{ color: "red", marginTop: "10px" }}>{formError}</p>
-              )}
-            </form>
+                        </div>
+
+                        {formError && (
+                          <p style={{ color: "red", marginTop: "10px" }}>{formError}</p>
+                        )}
+                      </form>
                     </div>
                   </div>
                 </div>

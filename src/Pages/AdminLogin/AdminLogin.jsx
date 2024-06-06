@@ -125,7 +125,7 @@ if(adminData){
               // borderRadius: "15px",
               width: "100%",
               margin: "auto",
-              height: "350px", // Adjusted height
+              height: "250px", // Adjusted height
               overflow: "hidden", // Ensures the border radius is applied correctly
             }}
           >

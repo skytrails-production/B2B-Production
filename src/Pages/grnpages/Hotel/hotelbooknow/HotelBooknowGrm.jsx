@@ -25,6 +25,7 @@ import StarIcon from "@mui/icons-material/Star";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import Loader from "../../../Loader/Loader";
 import { useDispatch, useSelector, useReducer } from "react-redux";
+import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 import {
   hotelBlockRoomAction,
@@ -61,7 +62,7 @@ const HotelBooknowGrm = () => {
         "'We're sorry, but there was an issue with your hotel booking",
         true
       );
-     
+
       sessionStorage.removeItem("HotelCode");
       sessionStorage.removeItem("ResultIndex");
       navigate("/");
@@ -71,9 +72,6 @@ const HotelBooknowGrm = () => {
       ?.ErrorCode,
   ]);
 
-  
-
-  
   console.warn(ResultIndex, HotelCode, "ResultIndex,HotelCode");
 
   useEffect(() => {
@@ -114,7 +112,7 @@ const HotelBooknowGrm = () => {
     }
     return stars;
   };
- 
+
   const result =
     reducerState?.hotelSearchResult?.ticketData?.data?.data?.HotelSearchResult;
 
@@ -128,22 +126,11 @@ const HotelBooknowGrm = () => {
 
   const storedFormData = JSON.parse(sessionStorage.getItem("hotelFormData"));
 
-  
   console.log(storedFormData?.city, "000000000000000000");
 
+  const hotelMainReducer =
+    reducerState?.hotelSearchResultGRN?.ticketData?.data?.data;
 
-
-
-
-
-
-
-
-
-
-
-
-  
   return (
     <>
       {loader ? (
@@ -157,7 +144,6 @@ const HotelBooknowGrm = () => {
               <div className="col-lg-12 col-md-12 col-sm-12 mb-3">
                 <div className="hotelBookNowOuter-new">
                   <div className="hotelBookNowHeader-new">
-                  
                     <div className="serach-hotel-discribe-new">
                       <p className="serach-hotel-discribe-new-content">
                         City, Property Name Or Location
@@ -166,7 +152,7 @@ const HotelBooknowGrm = () => {
                         {storedFormData?.city}{" "}
                       </p>
                     </div>
-                   
+
                     <div className="serach-hotel-discribe-new">
                       <div style={{ display: "flex", gap: "5px" }}>
                         <p className="serach-hotel-discribe-new-content">
@@ -189,7 +175,7 @@ const HotelBooknowGrm = () => {
                       </div>
 
                       <p className="serach-hotel-discribe-new-content1">
-                        {storedFormData?.checkIn}
+                        {dayjs(hotelMainReducer?.checkin).format("DD MMM, YY")}
                       </p>
                     </div>
                     <div className="serach-hotel-discribe-new">
@@ -215,7 +201,11 @@ const HotelBooknowGrm = () => {
                       </div>
 
                       <p className="serach-hotel-discribe-new-content1">
-                        {storedFormData?.checkOut}
+                        <p>
+                          {dayjs(hotelMainReducer?.checkout).format(
+                            "DD MMM, YY"
+                          )}
+                        </p>
                       </p>
                     </div>
                     <div className="serach-hotel-discribe-new">
@@ -240,7 +230,8 @@ const HotelBooknowGrm = () => {
                       </div>
 
                       <p className="serach-hotel-discribe-new-content1">
-                        {storedFormData?.room}Room,{storedFormData?.noOfAdults}
+                        {hotelMainReducer?.no_of_rooms}Room,
+                        {hotelMainReducer?.no_of_adults}
                         Adults,{storedFormData?.noOfChild}Children
                       </p>
                     </div>

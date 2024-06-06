@@ -49,14 +49,13 @@ const HotelForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
-  useEffect(()=>{
-    dispatch(clearHotelReducer())
-    },[])
+  useEffect(() => {
+    dispatch(clearHotelReducer());
+  }, []);
 
   // error manage
   const [cityError, setCityError] = useState("");
-  
+
   const [condition, setCondition] = useState(1);
   const [formDataDynamic, setFormData] = useState([
     {
@@ -89,8 +88,7 @@ const HotelForm = () => {
       setSearchTermLast(parsedStoredData[0]);
     }
   }, []);
-  
-  
+
   const initialvalue = {
     City: "",
     nationality: "IN",
@@ -118,19 +116,12 @@ const HotelForm = () => {
     };
   }, [listRef]);
 
-
-
-
- 
- 
-
-  useEffect(()=>{
-    if(reducerState?.hotelSearchResultGRN?.isLoading === true){
+  useEffect(() => {
+    if (reducerState?.hotelSearchResultGRN?.isLoading === true) {
       setLoader(true);
     }
-  },[reducerState?.hotelSearchResultGRN?.isLoading])
- 
-  
+  }, [reducerState?.hotelSearchResultGRN?.isLoading]);
+
   //fetch city Logic implemented below
   useEffect(() => {
     if (
@@ -279,42 +270,10 @@ const HotelForm = () => {
     // setCheckOutError("");
   };
 
-  // function handleSubmit(event) {
-  //   event.preventDefault();
-  //   setSub(true);
-  //   if (!cityVal() || searchTerm === "") {
-  //     setCityError("city a  valid city");
-  //     console.warn(cityVal(), "cityVallllll");
-  //     setTimeout(() => {
-  //       setCityError("");
-  //     }, 5000);
-  //     return;
-  //   }
-
-  //   // console.warn(values.departure, values.checkOutDeparture, "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
-  //   if (values.departure === ("" || undefined)) {
-  //     return;
-  //   }
-  //   if (values.checkOutDeparture === ("" || undefined)) {
-  //     return;
-  //   }
-
-  //   const formData = new FormData(event.target);
-
-  //   const date = new Date(formData.get("departure"));
-
-  //   const day = date.getDate().toString().padStart(2, "0");
-  //   const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  //   const year = date.getFullYear();
-  //   const formattedDate = `${day}/${month}/${year}`;
-
-  //   // saving in session storage
-
   const currentDate = new Date(values.departure);
   const toDate = new Date(values.checkOutDeparture);
   const timeDifference = toDate.getTime() - currentDate.getTime();
   const nightdays = Math.ceil(timeDifference / (1000 * 3600 * 24));
-  
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -326,7 +285,7 @@ const HotelForm = () => {
       children_ages: data.ChildAge || [],
     }));
 
-    sessionStorage.setItem("hotelFormData", JSON.stringify(searchTermLast));
+    sessionStorage.setItem("searchLastterm", JSON.stringify(searchTermLast));
 
     const payload = {
       rooms: [...dynamicFormData],
@@ -334,11 +293,12 @@ const HotelForm = () => {
       cityCode: searchTermLast.cityCode,
       currency: "INR",
       client_nationality: "IN",
-      checkin: dayjs(checkIn).format("YYYY-MM-DD"),
-      checkout: dayjs(checkOut).format("YYYY-MM-DD"),
+      checkin: dayjs(values?.departure).format("YYYY-MM-DD"),
+      checkout: dayjs(values?.checkOutDeparture).format("YYYY-MM-DD"),
       cutoff_time: 30000,
       version: "2.0",
     };
+    sessionStorage.setItem("Payload", JSON.stringify(payload));
 
     SecureStorage.setItem(
       "revisitHotelDataGRN",
@@ -348,6 +308,9 @@ const HotelForm = () => {
           cityName: searchTermLast.cityName,
           countryCode: searchTermLast.countryCode,
           countryName: searchTermLast.countryName,
+          checkin: dayjs(values?.departure).format("YYYY-MM-DD"),
+          checkout: dayjs(values?.checkOutDeparture).format("YYYY-MM-DD"),
+          rooms: [...dynamicFormData],
         },
       ])
     );
@@ -356,7 +319,7 @@ const HotelForm = () => {
       city: searchTermLast.cityName,
       checkIn: dayjs(checkIn).format("YYYY-MM-DD"),
       checkOut: dayjs(checkOut).format("YYYY-MM-DD"),
-      room:condition,
+      room: condition,
       star,
       night: nightdays,
       nationality,
@@ -364,11 +327,12 @@ const HotelForm = () => {
       noOfAdults: formDataDynamic[0]?.NoOfAdults || 1,
       noOfChild: formDataDynamic[0]?.NoOfChild || 0,
     };
-
+    const pageNumber = 1;
     // Save the extracted form data to sessionStorage
     sessionStorage.setItem("hotelFormData", JSON.stringify(formFields));
 
-    dispatch(hotelActionGrn(payload));
+    console.log("console.log", pageNumber);
+    dispatch(hotelActionGrn(payload, pageNumber));
 
     if (reducerState?.hotelSearchResultGRN?.ticketData?.data?.data?.hotels) {
       setOpen(false);
@@ -388,7 +352,6 @@ const HotelForm = () => {
   const nationality = sessionData.get("nationality");
 
   //   // Extract data from dynamic form fields
-  
 
   //   // Combine all data into a single object
 
@@ -450,7 +413,6 @@ const HotelForm = () => {
   //     setOpen(true);
   //   }
   // }
-  
 
   return (
     <>
@@ -501,53 +463,53 @@ const HotelForm = () => {
                 )}
               </div>
             </motion.div>
-           
-              <motion.div
-                variants={variants}
-                className="col-lg-4 col-md-4 col-xs-12 ps-0 mb-3"
-              >
-                <div className="hotel_form_input">
-                  <label className="form_label">Check In Date</label>
-                  <DatePicker
-                    selected={values.departure}
-                    onChange={handleStartDateChange}
-                    name="checkIn"
-                    dateFormat="dd MMMyy"
-                    placeholderText="Select Check-In Date"
-                    isClearable
-                    // id="datepic"
-                    minDate={new Date()}
-                    autoComplete="off"
-                  />
-                  {sub && values.departure === ("" || undefined) && (
-                    <span className="error">Enter Check-In Date </span>
-                  )}
-                </div>
-              </motion.div>
 
-              <motion.div
-                variants={variants}
-                className="col-lg-4 col-md-4 col-xs-12 ps-0 mb-3"
-              >
-                <div className="hotel_form_input">
-                  <label className="form_label">Check Out Date</label>
-                  <DatePicker
-                    selected={values.checkOutDeparture}
-                    onChange={handleEndDateChange}
-                    name="checkOut"
-                    dateFormat="dd MMMyy"
-                    placeholderText="Select Check-Out Date"
-                    minDate={values.departure || new Date()} // Disable dates before Check-In date
-                    isClearable
-                    // id="datepic"
-                    autoComplete="off"
-                  />
-                  {sub && values.checkOutDeparture === ("" || undefined) && (
-                    <span className="error">Enter Check-Out Date </span>
-                  )}
-                </div>
-              </motion.div>
-           
+            <motion.div
+              variants={variants}
+              className="col-lg-4 col-md-4 col-xs-12 ps-0 mb-3"
+            >
+              <div className="hotel_form_input">
+                <label className="form_label">Check In Date</label>
+                <DatePicker
+                  selected={values.departure}
+                  onChange={handleStartDateChange}
+                  name="checkIn"
+                  dateFormat="dd MMMyy"
+                  placeholderText="Select Check-In Date"
+                  isClearable
+                  // id="datepic"
+                  minDate={new Date()}
+                  autoComplete="off"
+                />
+                {sub && values.departure === ("" || undefined) && (
+                  <span className="error">Enter Check-In Date </span>
+                )}
+              </div>
+            </motion.div>
+
+            <motion.div
+              variants={variants}
+              className="col-lg-4 col-md-4 col-xs-12 ps-0 mb-3"
+            >
+              <div className="hotel_form_input">
+                <label className="form_label">Check Out Date</label>
+                <DatePicker
+                  selected={values.checkOutDeparture}
+                  onChange={handleEndDateChange}
+                  name="checkOut"
+                  dateFormat="dd MMMyy"
+                  placeholderText="Select Check-Out Date"
+                  minDate={values.departure || new Date()} // Disable dates before Check-In date
+                  isClearable
+                  // id="datepic"
+                  autoComplete="off"
+                />
+                {sub && values.checkOutDeparture === ("" || undefined) && (
+                  <span className="error">Enter Check-Out Date </span>
+                )}
+              </div>
+            </motion.div>
+
             <motion.div
               variants={variants}
               className="col-lg-4 col-md-4 col-xs-12 ps-0 mb-3"
@@ -591,7 +553,6 @@ const HotelForm = () => {
                     </div>
 
                     <div className="row">
-                      
                       <div className="col-lg-6 col-md-6 col-xs-4 ps-0 mb-3 d-flex justify-content-center">
                         <div className="hotel_form_input">
                           <label className="form_label">
@@ -687,9 +648,7 @@ const HotelForm = () => {
               )}
             </motion.div>
 
-           
-
-             <motion.div
+            <motion.div
               variants={variants}
               className="col-lg-4 col-md-4 col-xs-12 ps-0 mb-3"
             >
@@ -713,7 +672,7 @@ const HotelForm = () => {
                   </label>
                 )}
               </div>
-            </motion.div> 
+            </motion.div>
 
             <motion.div
               variants={variants}

@@ -8,11 +8,13 @@ const initState = {
   bookRoom: [],
   hotelDetails: [],
   isLoading: false,
+  hotels: [],
   isLoadingHotelInfo: false,
   isLoadingHotelRoom: false,
   isLoadingBlockRoom: false,
   isLoadingBookRoom: false,
   isError: false,
+  hasMore: true,
   showSuccessMessage: false,
 };
 
@@ -27,13 +29,36 @@ export const hotelReducerGRN = (state = initState, action) => {
       };
 
     case types.HOTEL_SUCCESS_GRN:
-      return {
-        ...state,
-        ticketData: payload,
-        isLoading: false,
-        isError: false,
-        showSuccessMessage: true,
-      };
+      console.log(payload, "pyload");
+      if (payload?.data?.data?.hotels) {
+        const search_id = payload?.data?.data?.search_id;
+        const updatedHotels = payload?.data?.data?.hotels.map((hotel) => ({
+          ...hotel,
+          search_id,
+        }));
+        let olddata = [...state?.hotels].concat(updatedHotels);
+        console.log(olddata, "olddata");
+
+        return {
+          ...state,
+          ticketData: payload,
+          hotels: olddata,
+          isLoading: false,
+          isError: false,
+          showSuccessMessage: true,
+        };
+      } else if (payload?.data?.data?.errors) {
+        return {
+          ...state,
+          hasMore: false,
+
+          isLoading: false,
+          isError: false,
+          showSuccessMessage: true,
+        };
+      } else {
+        return { ...state };
+      }
 
     case types.HOTEL_SINGLE_DETAIL_REQUEST:
       return {
@@ -73,22 +98,22 @@ export const hotelReducerGRN = (state = initState, action) => {
         isLoadingBookRoom: true,
         isError: false,
       };
-      case types.HOTEL_ROOMSELECT_REQUEST:
-        return {
-          ...state,
-          isLoadingHotelRoom: true,
-          isError: false,
-        };
-  
-      case types.HOTEL_ROOMSELECT_SUCCESS:
-        return {
-          ...state,
-          hotelRoom: payload?.data?.data,
-          isLoadingHotelRoom: false,
-          isError: false,
-          showSuccessMessage: true,
-        };
-  
+    case types.HOTEL_ROOMSELECT_REQUEST:
+      return {
+        ...state,
+        isLoadingHotelRoom: true,
+        isError: false,
+      };
+
+    case types.HOTEL_ROOMSELECT_SUCCESS:
+      return {
+        ...state,
+        hotelRoom: payload?.data?.data,
+        isLoadingHotelRoom: false,
+        isError: false,
+        showSuccessMessage: true,
+      };
+
     case types.HOTEL_B0OKROOM_SUCCESSGRN:
       return {
         ...state,
@@ -112,11 +137,13 @@ export const hotelReducerGRN = (state = initState, action) => {
         bookRoom: [],
         hotelDetails: [],
         isLoading: false,
+        hotels: [],
         isLoadingHotelInfo: false,
         isLoadingHotelRoom: false,
         isLoadingBlockRoom: false,
         isLoadingBookRoom: false,
         isError: false,
+        hasMore: true,
         showSuccessMessage: false,
       };
 

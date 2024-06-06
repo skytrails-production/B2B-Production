@@ -930,3 +930,13 @@
   line-height: normal;
   margin-top: 15px;
 }
+
+.hide-scrollbar {
+  overflow-y: scroll; /* Enable vertical scrolling */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}

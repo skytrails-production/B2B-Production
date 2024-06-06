@@ -2,15 +2,14 @@ import React, { useState, useEffect } from "react";
 import { apiURL } from "../../Constants/constant";
 import { useNavigate } from "react-router-dom";
 import "./SubAdminSignIn.css";
-import newlogo from "../../Images/whitelogo1.png";
+import bg from "../../Images/bgsubadmin.jpg";
 import { FaUser, FaLock, FaSignInAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import SubAdminAccess from "./subAdminDashboard/subAdminaccess";
 import {
   subAdminLogin,
   subAdminFailure,
-  subAdminRequest,
-  subAdminLogout,
+  
 } from "../../Redux/SubAdminLogin/actionsubadminlogin";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -87,7 +86,7 @@ const SubAdminLoginForm = () => {
     );
   }
   return (
-    <>
+    <div>
       <ToastContainer position="top-center" autoClose={5000} />
 
       {reducerState?.logIn?.isLogin || reducerState?.adminAuth?.isLogin ? (
@@ -181,8 +180,9 @@ const SubAdminLoginForm = () => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
 export default SubAdminLoginForm;
+

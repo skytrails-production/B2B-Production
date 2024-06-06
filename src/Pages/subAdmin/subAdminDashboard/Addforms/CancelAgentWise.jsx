@@ -5,6 +5,7 @@ import { apiURL } from "../../../../Constants/constant";
 import { useNavigate } from "react-router-dom";
 import profilePicUrl from "../../../../Images/whitelogo1.png";
 import { useSelector } from "react-redux";
+import "./Blogform.css";
 import axios from "axios";
 const CancelAgentWise = () => {
   const navigate = useNavigate();
@@ -170,61 +171,60 @@ const CancelAgentWise = () => {
     }
   };
   return (
-
-    <div style={{ width: "80%",margin:"auto"}}>
-       <div className="form-containers">
-      <header
-        className="sectionagent headersagent"
-        style={{ backgroundColor: "#E73C33" }}
-      >
-        <div className="headead">
-          {/* <img src={profilePicUrl} style={{ width: "80%" }} alt="Logo" /> */}
-          <h2>Cancel AgentWise</h2>
-        </div>
-      </header>
-      <div className="form-agent">
-        <form
-          onSubmit={handleSubmit}
-          style={{
-            backgroundColor: "white",
-            borderRadius: "10px",
-            marginTop: "30px",
-          }}
+    <div style={{ width: "80%", margin: "auto" }}>
+      <div className="form-containers">
+        <header
+          className="sectionagent headersagent"
+          style={{ backgroundColor: "#E73C33" }}
         >
-          <select
-            name="agentId"
-            onChange={handleAgentSelectChange}
-            style={{ padding: "0px" }}
+          <div className="headead">
+            {/* <img src={profilePicUrl} style={{ width: "80%" }} alt="Logo" /> */}
+            <h2>Cancel AgentWise</h2>
+          </div>
+        </header>
+        <div className="form-agent">
+          <form
+            onSubmit={handleSubmit}
+            style={{
+              backgroundColor: "white",
+              borderRadius: "10px",
+              marginTop: "30px",
+            }}
           >
-            <option value="">Select Agent</option>
-            {agents.map((agent) => (
-              <option key={agent.agentId} value={agent.agentId}>
-                {agent.agentName}
-              </option>
-            ))}
-          </select>
-          <select
-            name="type"
-            onChange={(e) => setType(e.target.value)}
-            style={{ padding: "0px" }}
-          >
-            <option value="">Select Type</option>
-            <option value="all">all</option>
-            <option value="flight">flight</option>
-            <option value="bus">bus</option>
-            <option value="hotel">hotel</option>
-          </select>
-          <div className="form-group-agent">
-          <button
-            type="submit"
-            className="form-button-agents"
-            style={{ backgroundColor: "#E73C33" }}
-          >
-            Submit
-          </button>
+            <select
+              name="agentId"
+              onChange={handleAgentSelectChange}
+              style={{ padding: "0px" }}
+            >
+              <option value="">Select Agent</option>
+              {agents.map((agent) => (
+                <option key={agent.agentId} value={agent.agentId}>
+                  {agent.agentName}
+                </option>
+              ))}
+            </select>
+            <select
+              name="type"
+              onChange={(e) => setType(e.target.value)}
+              style={{ padding: "0px" }}
+            >
+              <option value="">Select Type</option>
+              <option value="all">all</option>
+              <option value="flight">flight</option>
+              <option value="bus">bus</option>
+              <option value="hotel">hotel</option>
+            </select>
+            <div className="form-group-agent">
+              <button
+                type="submit"
+                className="form-button-agents"
+                style={{ backgroundColor: "#E73C33" }}
+              >
+                Submit
+              </button>
+            </div>
+          </form>
         </div>
-        </form>
-      </div>
       </div>
       {responseData && (
         <>
@@ -238,9 +238,7 @@ const CancelAgentWise = () => {
           {type !== "all" && type && renderTable(type)}
         </>
       )}
-    
     </div>
-   
   );
 };
 

@@ -224,7 +224,7 @@ function BlogData() {
                                 <GridToolbar />
                             </div>
                         ),
-                        Pagination: () => null,
+                        Pagination: () => null
                     }}
                 />
             </Paper>

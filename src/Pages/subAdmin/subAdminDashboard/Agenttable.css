@@ -134,3 +134,9 @@
     /* Change the hover background color as needed */
   }
 }
+
+/* Agenttable.css */
+.dataGrid .MuiDataGrid-columnHeader .MuiDataGrid-menuIcon {
+  opacity: 1;
+  visibility: visible;
+}

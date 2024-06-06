@@ -20,22 +20,36 @@ function BlogForm() {
   const [loading, setLoading] = useState(false); // New loading state
   const [success, setSuccess] = useState(false); // New success state
   const navigate = useNavigate();
+
   const handleChange = (e) => {
+    const { name, value, type, checked, files } = e.target;
+
     // Clear the error for the specific field being updated
     setErrors((prevErrors) => ({
       ...prevErrors,
       [name]: "",
     }));
-    const { name, value, type, checked, files } = e.target;
+
     if (type === "checkbox") {
       setFormData((prevState) => ({
         ...prevState,
         [name]: checked,
       }));
     } else if (name === "images") {
+      const newImages = files ? Array.from(files) : [];
+      const oversizedImages = newImages.filter(file => file.size > 1024 * 1024);
+
+      if (oversizedImages.length > 0) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          images: "Each image must be less than 1MB",
+        }));
+        return;
+      }
+
       setFormData((prevState) => ({
         ...prevState,
-        [name]: files ? Array.from(files) : [],
+        [name]: newImages,
       }));
     } else {
       setFormData((prevState) => ({
@@ -66,46 +80,6 @@ function BlogForm() {
     return Object.keys(errors).length === 0;
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (!validateForm()) {
-  //     return;
-  //   }
-
-  //   setLoading(true); // Set loading state to true while submitting
-
-  //   try {
-  //     const formDataToSend = new FormData();
-  //     formDataToSend.append("title", formData.title);
-  //     formDataToSend.append("content", formData.content);
-  //     formDataToSend.append("tags", formData.tags);
-  //     formDataToSend.append("trending", formData.trending);
-  //     formDataToSend.append("location", formData.location);
-
-  //     formData.images.forEach((images) => {
-  //       formDataToSend.append("images", images);
-  //     });
-
-  //     const response = await axios.post(
-  //       `${apiURL.baseURL}/skyTrails/api/blog/createBlog`,
-  //       formDataToSend
-  //     );
-
-  //     console.log("Blog post created successfully:", response.data);
-  //     // Optionally, redirect to a success page or update UI
-  //     setSuccess(true);
-  //     setFormData(initialFormData); // Reset form data after successful submission
-  //     setTimeout(() => {
-  //       setSuccess(false);
-  //     }, 5000); // Hides the success message after 5 seconds
-  //   } catch (error) {
-  //     console.error("Error creating blog post:", error);
-  //     // Optionally, display an error message to the user
-  //     alert("Error creating blog post. Please try again later.");
-  //   } finally {
-  //     setLoading(false); // Reset loading state after submission
-  //   }
-  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) {
@@ -122,8 +96,8 @@ function BlogForm() {
       formDataToSend.append("trending", formData.trending);
       formDataToSend.append("location", formData.location);
 
-      formData.images.forEach((images) => {
-        formDataToSend.append("images", images);
+      formData.images.forEach((image) => {
+        formDataToSend.append("images", image);
       });
 
       const response = await axios.post(
@@ -154,10 +128,11 @@ function BlogForm() {
     <div
       className="form-containers"
       style={{
-        width: "50%",
+        width: "80%",
         margin: "auto",
-        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
         marginTop: "-45px",
+        boxShadow:
+          "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px",
       }}
     >
       <h1 style={{ textAlign: "center", marginBottom: "20px" }}>Create Blog</h1>
@@ -207,6 +182,9 @@ function BlogForm() {
               fontSize: "16px",
               borderRadius: "5px",
               border: "1px solid #ccc",
+              overflowY: "auto",
+              maxHeight: "100px", // or any height you prefer
+              cursor: "pointer",
             }}
           />
           {errors.content && <p style={{ color: "red" }}>{errors.content}</p>}

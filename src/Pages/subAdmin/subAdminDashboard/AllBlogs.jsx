@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
   TextField,
-  InputAdornment,
   Typography,
   Stack,
   Pagination,
@@ -14,14 +13,11 @@ import {
   DialogContentText,
   DialogActions,
 } from "@mui/material";
-import { Menu, MenuItem } from "@material-ui/core";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import SearchIcon from "@mui/icons-material/Search";
 import { apiURL } from "../../../Constants/constant";
-import { makeStyles } from "@mui/styles";
 import { htmlToText } from "html-to-text";
-import { Textarea } from "@chakra-ui/react";
 import Editor from "react-simple-wysiwyg";
+
 function AllBlogs() {
   const [blog, setBlog] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -40,6 +36,9 @@ function AllBlogs() {
     status: "",
   });
   const [updatePopupOpen, setUpdatePopupOpen] = useState(false);
+  const [updateMediaPopupOpen, setUpdateMediaPopupOpen] = useState(false);
+  const [selectedBlogId, setSelectedBlogId] = useState(null);
+  const [selectedImages, setSelectedImages] = useState([]);
 
   useEffect(() => {
     async function fetchBlog() {
@@ -147,6 +146,42 @@ function AllBlogs() {
     }
   };
 
+  const handleUpdateMediaPopupOpen = (rowData) => {
+    setSelectedBlogId(rowData._id);
+    setUpdateMediaPopupOpen(true);
+  };
+
+  const handleUpdateMediaPopupClose = () => {
+    setUpdateMediaPopupOpen(false);
+    setSelectedImages([]);
+  };
+
+  const handleImageChange = (event) => {
+    setSelectedImages(Array.from(event.target.files));
+  };
+
+  const handleUpdateImagesSubmit = async () => {
+    const formData = new FormData();
+    formData.append('blogId', selectedBlogId);
+    selectedImages.forEach((image) => {
+      formData.append('images', image);
+    });
+
+    try {
+      await axios.put(`${apiURL.baseURL}/skyTrails/api/blog/editImage`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      // Refresh blog data after image update
+      const response = await axios.get(`${apiURL.baseURL}/skyTrails/api/blog/getAllBlogsAdmin`);
+      setBlog(response.data.result);
+      setUpdateMediaPopupOpen(false);
+    } catch (error) {
+      console.error("Error updating images:", error);
+    }
+  };
+
   const columns = [
     {
       field: "media",
@@ -161,6 +196,21 @@ function AllBlogs() {
       ),
     },
     { field: "title", headerName: "Title", width: 600 },
+    {
+      field: "updateImage",
+      headerName: "Update Image",
+      width: 150,
+      renderCell: (params) => (
+        <Button
+          variant="outlined"
+          size="small"
+          color="primary"
+          onClick={() => handleUpdateMediaPopupOpen(params.row)}
+        >
+          Update Image
+        </Button>
+      ),
+    },
     {
       field: "content",
       headerName: "Content",
@@ -200,7 +250,6 @@ function AllBlogs() {
       width: 180,
       valueGetter: (params) => params.row.status || "No Data",
     },
-
     {
       field: "action",
       headerName: "Actions",
@@ -233,7 +282,6 @@ function AllBlogs() {
             }
           >
             <option value="ACTIVE">ACTIVE</option>
-
             <option value="DELETE">INACTIVE</option>
           </select>
         </div>
@@ -347,6 +395,26 @@ function AllBlogs() {
           </Button>
           <Button onClick={handleUpdateSubmit} color="primary">
             Update
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog open={updateMediaPopupOpen} onClose={handleUpdateMediaPopupClose}>
+        <DialogTitle>Update Blog Images</DialogTitle>
+        <DialogContent>
+          <input
+            type="file"
+            multiple
+            onChange={handleImageChange}
+            accept="image/*"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleUpdateMediaPopupClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleUpdateImagesSubmit} color="primary">
+            Update Images
           </Button>
         </DialogActions>
       </Dialog>

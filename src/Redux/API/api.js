@@ -1,8 +1,7 @@
 import axios from "axios";
 import { apiURL } from "../../Constants/constant";
-import SecureStorage from 'react-secure-storage';
+import SecureStorage from "react-secure-storage";
 import secureLocalStorage from "react-secure-storage";
-
 
 function api() {
   const userIP = (formData) => {
@@ -79,8 +78,8 @@ function api() {
       },
     });
   };
-  
-  const userB2BOnbording=(formData1)=>{
+
+  const userB2BOnbording = (formData1) => {
     return axios({
       method: "POST",
       url: "/skyTrails/b2b/updateProfile",
@@ -90,7 +89,7 @@ function api() {
         "Content-Type": "multipart/form-data",
       },
     });
-  }
+  };
 
   const adminAuth = (payload) => {
     return axios({
@@ -115,8 +114,6 @@ function api() {
       },
     });
   };
-
-
 
   const activeStatus = (payload) => {
     return axios({
@@ -144,7 +141,6 @@ function api() {
   //Flight API's Start
 
   const oneWaySearch = async (payload) => {
-    
     try {
       const response = await axios({
         method: "POST",
@@ -167,8 +163,8 @@ function api() {
     } catch (error) {
       // Handle the error here
       // console.error("An error occurred during the request:", error);
-      
-      alert(error)
+
+      alert(error);
       throw error; // Re-throw the error to propagate it to the caller
     }
   };
@@ -228,16 +224,16 @@ function api() {
   };
 
   const Ssr = (payload) => {
-    return axios ({
-      method:"POST",
-      url:"/skyTrails/flight/ssr",
-      baseURL :`${apiURL.baseURL}`,
+    return axios({
+      method: "POST",
+      url: "/skyTrails/flight/ssr",
+      baseURL: `${apiURL.baseURL}`,
       data: payload,
-      headers:{
+      headers: {
         "Content-Type": "application/json",
-      }
-    })
-  }
+      },
+    });
+  };
 
   const flightBookGDS = (payload) => {
     return axios({
@@ -421,21 +417,20 @@ function api() {
       },
     });
   };
-  
-    // new hotel grn api's
+
+  // new hotel grn api's
 
   const hotelSearchGRN = (payload) => {
     return axios({
       method: "POST",
-      url: "/skyTrails/grnconnect/hotelSearch",
+      url: `/skyTrails/grnconnect/hotelSearchWithPagination?page=${payload.page}`,
       baseURL: `${apiURL.baseURL}`,
-      data: payload,
+      data: payload.data,
       headers: {
         "Content-Type": "application/json",
       },
     });
   };
-
 
   const hotelsingleDataGRN = (payload) => {
     // console.log("key")
@@ -468,9 +463,8 @@ function api() {
     });
   };
 
-
   const hotelGalleryGRN = (payload) => {
-    console.log("key")
+    console.log("key");
     const hotel_id = payload.hotel_id;
     return axios({
       method: "GET",
@@ -494,7 +488,6 @@ function api() {
     });
   };
 
-
   const hotelBookingDetailsSaveGRN = (payload) => {
     const token = secureLocalStorage?.getItem("jwtToken");
     return axios({
@@ -507,10 +500,9 @@ function api() {
         token: token,
       },
     });
-  }
+  };
 
   // new hotel grn api's
-
 
   const hotelSearchInfo = (payload) => {
     return axios({
@@ -656,56 +648,55 @@ function api() {
 
       // Assuming you want to return the response data
       // alert(response.data)
-      return response.data
+      return response.data;
     } catch (error) {
       // Handle the error appropriately, e.g., log it or throw a custom error
-      alert("Sector already exists",error);
+      alert("Sector already exists", error);
       throw error; // You can choose to throw the error again or handle it differently
     }
   };
-   const fixedDepartureBooking = async (payload) => {
-     try {
-       const response = await axios({
-         method: "POST",
-         url: "/skyTrails/fixDepartureBooking",
-         baseURL: `${apiURL.baseURL}`,
-         data: payload,
-         headers: {
-           "Content-Type": "application/json",
-         },
-       });
+  const fixedDepartureBooking = async (payload) => {
+    try {
+      const response = await axios({
+        method: "POST",
+        url: "/skyTrails/fixDepartureBooking",
+        baseURL: `${apiURL.baseURL}`,
+        data: payload,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-       // Assuming you want to return the response data
-       // alert(response.data)
-       return response.data;
-     } catch (error) {
-       // Handle the error appropriately, e.g., log it or throw a custom error
-       alert("Something Went Wrong", error);
-       throw error; // You can choose to throw the error again or handle it differently
-     }
-   };
-   const updateFlightBookingSeat=async(data)=>{
-     try {
-       const response = await axios({
-         method: "POST",
-         url: "/skyTrails/updateFixDepartureData",
-         baseURL: `${apiURL.baseURL}`,
-         data: data,
-         headers: {
-           "Content-Type": "application/json",
-         },
-       });
+      // Assuming you want to return the response data
+      // alert(response.data)
+      return response.data;
+    } catch (error) {
+      // Handle the error appropriately, e.g., log it or throw a custom error
+      alert("Something Went Wrong", error);
+      throw error; // You can choose to throw the error again or handle it differently
+    }
+  };
+  const updateFlightBookingSeat = async (data) => {
+    try {
+      const response = await axios({
+        method: "POST",
+        url: "/skyTrails/updateFixDepartureData",
+        baseURL: `${apiURL.baseURL}`,
+        data: data,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-       // Assuming you want to return the response data
-       // alert(response.data)
-       return response.data;
-     } catch (error) {
-       // Handle the error appropriately, e.g., log it or throw a custom error
-       alert("Something Went Wrong", error);
-       throw error; // You can choose to throw the error again or handle it differently
-     }
-   }
-
+      // Assuming you want to return the response data
+      // alert(response.data)
+      return response.data;
+    } catch (error) {
+      // Handle the error appropriately, e.g., log it or throw a custom error
+      alert("Something Went Wrong", error);
+      throw error; // You can choose to throw the error again or handle it differently
+    }
+  };
 
   /// userDetails by Id
 
@@ -788,7 +779,7 @@ function api() {
     fixedDepartureAddSector,
     fixedDepartureBooking,
     updateFlightBookingSeat,
-    Ssr
+    Ssr,
   };
 }
 
