@@ -1,19 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {
-
-  TextField,
-  InputAdornment,
-  Typography,
-} from "@mui/material";
+import { TextField, InputAdornment, Typography } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { apiURL } from "../../../Constants/constant";
 import "./Usertable.css";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
-import subAdminaccess from './subAdminaccess';
+import subAdminaccess from "./subAdminaccess";
 const Usertable = () => {
   const [userData, setUserData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -22,7 +17,8 @@ const Usertable = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
   const reducerState = useSelector((state) => state);
-  const access = reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
+  const access =
+    reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
 
   useEffect(() => {
     async function fetchUserData() {
@@ -63,19 +59,19 @@ const Usertable = () => {
       field: "username",
       headerName: "UserName",
       minWidth: 200,
-      valueGetter: (params) => params.row.username || "No Data"
+      valueGetter: (params) => params.row.username || "No Data",
     },
     {
       field: "email",
       headerName: "Email",
       minWidth: 240,
-      valueGetter: (params) => params.row.email || "No Data"
+      valueGetter: (params) => params.row.email || "No Data",
     },
     {
       field: "dob",
       headerName: "DOB",
       flex: 1,
-      valueGetter: (params) => params.row.dob || "No Data"
+      valueGetter: (params) => params.row.dob || "No Data",
     },
     {
       field: "phone.mobile_number",
@@ -89,7 +85,14 @@ const Usertable = () => {
       flex: 1,
       //valueGetter: (params) => params.row.profilePic || "No Data",
       renderCell: (params) => (
-        <div style={{ borderRadius: "50%", overflow: "hidden", width: 50, height: 50 }}>
+        <div
+          style={{
+            borderRadius: "50%",
+            overflow: "hidden",
+            width: 50,
+            height: 50,
+          }}
+        >
           {params.value ? (
             <img
               src={params.value}
@@ -107,20 +110,29 @@ const Usertable = () => {
           )}
         </div>
       ),
-
-
     },
     // Add more columns here if needed
   ];
 
-
-
   return (
-
     <>
-      {access !== "USER_MANAGER" ? <div style={{textAlign:"center"}}>INVALID PAGE</div> :
-        <div className="user-table-container" style={{ position: 'relative', width: "100%" }}>
-          <div className="adsearch-bar" style={{ position: 'absolute', top: 10, zIndex: 1, fontWeight: 'bold', backgroundColor: "#E73C33" }}>
+      {access !== "USER_MANAGER" ? (
+        <div style={{ textAlign: "center" }}>INVALID PAGE</div>
+      ) : (
+        <div
+          className="user-table-container"
+          style={{ position: "relative", width: "100%" }}
+        >
+          <div
+            className="adsearch-bar"
+            style={{
+              position: "absolute",
+              top: 10,
+              zIndex: 1,
+              fontWeight: "bold",
+              backgroundColor: "#E73C33",
+            }}
+          >
             <TextField
               type="text"
               value={searchTerm}
@@ -144,21 +156,16 @@ const Usertable = () => {
               columns={columns}
               pageSize={pageSize}
               checkboxSelection
-
-
               getRowId={(row) => row._id}
               components={{
                 Toolbar: () => (
-                  <div style={{ marginTop: '10px' }}>
+                  <div style={{ marginTop: "10px" }}>
                     <GridToolbar />
-                    
                   </div>
                 ),
                 Pagination: () => null,
               }}
             />
-
-
           </div>
           <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
             <Pagination
@@ -168,9 +175,9 @@ const Usertable = () => {
               color="primary"
             />
           </Stack>
-        </div>}
+        </div>
+      )}
     </>
-
   );
 };
 
