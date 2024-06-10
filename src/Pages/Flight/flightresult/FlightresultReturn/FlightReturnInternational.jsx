@@ -10,6 +10,8 @@ import MultipleDataReturnInternational from "./MultipleDataReturnInternational";
 import {
   quoteAction,
   ruleAction,
+  quoteActionReturn,
+  ruleActionReturn,
   setLoading,
 } from "../../../../Redux/FlightFareQuoteRule/actionFlightQuote";
 import MultipleDataReturn from "./MultipleDataReturn";
@@ -35,8 +37,10 @@ const FlightReturnInternational = () => {
   const [selectedCategory, setSelectedCategory] = useState(["Price"]);
   const [expanded, setExpanded] = React.useState("panel1");
   // console.warn(result[0], "resultnvjdfnvjdfnv")
-  let statusRule = reducerState?.flightFare?.isLoadingRuleDone || false;
-  let statusQuote = reducerState?.flightFare?.isLoadingQuoteDone || false;
+  let statusRule = reducerState?.flightFare?.flightRuleDataReturn?.Error?.ErrorCode===0
+  || false;
+  let statusQuote = reducerState?.flightFare?.flightQuoteDataReturn?.Error?.ErrorCode===0
+  || false;
   const initialGoFlight = result ? result[0][0] : [];
   let initialReturnFlight = result ? result[0][1] : [];
   const [selectedFlightIndex, setSelectedFlightIndex] = useState(null);
@@ -65,9 +69,9 @@ const FlightReturnInternational = () => {
   // console.warn(incomeGlight?.Segments[1], "incomingFlight segments //////////////////")
   useEffect(() => {
     if (
-      reducerState?.flightFare?.flightQuoteData?.Error?.ErrorCode !==
-        undefined &&
-      reducerState?.flightFare?.flightQuoteData?.Error?.ErrorCode !== 0
+      reducerState?.flightFare?.flightQuoteDataReturn?.Error?.ErrorCode !==
+      undefined &&
+      reducerState?.flightFare?.flightQuoteDataReturn?.Error?.ErrorCode !== 0
     ) {
       // swalModal("flight", reducerState?.flightFare?.flightQuoteData?.Error?.
       //   ErrorMessage
@@ -89,8 +93,8 @@ const FlightReturnInternational = () => {
   }, [initialGoFlight, initialReturnFlight]);
   useEffect(() => {
     if (statusQuote && statusRule) {
-      navigate("/FlightresultReturn/Passengerdetail");
-      dispatch(setLoading("data"));
+      navigate("FlightresultReturn/PassengerdetailINC");
+      // dispatch(setLoading("data"));
     }
   }, [statusQuote, statusRule]);
   const receiveChildData = (data) => {
@@ -107,7 +111,10 @@ const FlightReturnInternational = () => {
     }
   };
   const handleFareRuleAndQuote = (item, i) => {
-    // console.warn(item, "item?.ResultIndex", result)
+    // console.warn(item?.
+    //   ResultIndex
+    //   , "item?.ResultIndex", result)
+    sessionStorage.setItem("ResultIndex", JSON.stringify(item?.ResultIndex));
     sessionStorage.setItem("flightDetailsONGo", JSON.stringify(result[0][i]));
     sessionStorage.setItem("flightDetailsIncome", JSON.stringify(result[0][i]));
     // sessionStorage.setItem("flightDetailsIncome", JSON.stringify(result[i][1]));
@@ -119,8 +126,10 @@ const FlightReturnInternational = () => {
       ResultIndex: `${item?.ResultIndex}`,
     };
     // console.log(payload);
-    dispatch(ruleAction(payload));
-    dispatch(quoteAction(payload));
+    // dispatch(ruleAction(payload));
+    dispatch(ruleActionReturn(payload));
+    // dispatch(quoteAction(payload));
+    dispatch(quoteActionReturn(payload));
     // console.log("reducerrrState", reducerState);
   };
 
@@ -207,240 +216,240 @@ const FlightReturnInternational = () => {
   }, []);
   const filteredData = result
     ? result[0]?.filter((item) => {
-        const segmentLength = item?.Segments[0].length;
-        const segmentLengthStart = item?.Segments[0]?.length;
-        const segmentLengthLand = item?.Segments[1]?.length;
-        const depTime = new Date(item?.Segments?.[0][0]?.Origin?.DepTime);
-        const depTimeStartTakeOff1 = new Date(
-          item?.Segments?.[0][0]?.Origin?.DepTime
-        );
-        const arrTimeStartLand1 = new Date(
-          item?.Segments?.[0][
-            item?.Segments[0]?.length - 1
-          ]?.Destination?.ArrTime
-        );
-        const depTimeEndTakeOff1 = new Date(
-          item?.Segments?.[1][0]?.Origin?.DepTime
-        );
-        const arrTimeEndLand1 = new Date(
-          item?.Segments?.[1][
-            item?.Segments[1]?.length - 1
-          ]?.Destination?.ArrTime
-        );
-        const hour = depTime.getHours();
-        const hourStart = depTime.getHours();
-        const hourLand = depTime.getHours();
-        const depTimeStartTakeOff = depTimeStartTakeOff1?.getHours();
-        const arrTimeStartLand = arrTimeStartLand1?.getHours();
-        const depTimeEndTakeOff = depTimeEndTakeOff1?.getHours();
-        const arrTimeEndLand = arrTimeEndLand1?.getHours();
-        const airlineName = item?.Segments?.[0][0]?.Airline?.AirlineName;
-        const airlineName1 = item?.Segments?.[1][0]?.Airline?.AirlineName;
-        if (!Airlines.includes(airlineName)) {
-          Airlines.push(airlineName);
-          Airliness.push({
-            AirlineName: airlineName,
-            AirlineCode: item?.Segments?.[0][0]?.Airline?.AirlineCode,
-          });
-        }
-        if (!Airlines.includes(airlineName1)) {
-          Airlines.push(airlineName1);
-          Airliness.push({
-            AirlineName: airlineName,
-            AirlineCode: item?.Segments?.[1][0]?.Airline?.AirlineCode,
-          });
-        }
-        // console.log(depTimeEndTakeOff, "result ........................")
-        const categoryFilters = selectedCategory.map((category) => {
-          switch (category) {
-            case "Price":
-              return (
-                minPrice <= item?.Fare?.PublishedFare &&
-                item?.Fare?.PublishedFare <= priceRange
-              );
-            case "1":
-              return (
-                segmentLength === 1 &&
-                minPrice <= item?.Fare?.PublishedFare &&
-                item?.Fare?.PublishedFare <= priceRange
-              );
-            case "2":
-              return (
-                segmentLength === 2 &&
-                minPrice <= item?.Fare?.PublishedFare &&
-                item?.Fare?.PublishedFare <= priceRange
-              );
-            case "before6AM":
-              return (
-                hour < 6 &&
-                minPrice <= item?.Fare?.PublishedFare &&
-                item?.Fare?.PublishedFare <= priceRange
-              );
-            case "6AMto12PM":
-              return (
-                hour >= 6 &&
-                hour < 12 &&
-                minPrice <= item?.Fare?.PublishedFare &&
-                item?.Fare?.PublishedFare <= priceRange
-              );
-            case "12PMto6PM":
-              return (
-                hour >= 12 &&
-                hour < 18 &&
-                minPrice <= item?.Fare?.PublishedFare &&
-                item?.Fare?.PublishedFare <= priceRange
-              );
-            case "after6PM":
-              return (
-                hour >= 18 &&
-                minPrice <= item?.Fare?.PublishedFare &&
-                item?.Fare?.PublishedFare <= priceRange
-              );
-            case "startTakeoffNon":
-              return (
-                segmentLengthStart === 1 &&
-                minPrice <= item?.Fare?.PublishedFare &&
-                item?.Fare?.PublishedFare <= priceRange
-              );
-            case "startTakeoffStop":
-              return (
-                segmentLengthStart === 2 &&
-                minPrice <= item?.Fare?.PublishedFare &&
-                item?.Fare?.PublishedFare <= priceRange
-              );
-            case "startTakeoffbefore6AM":
-              return (
-                depTimeStartTakeOff < 6 &&
-                minPrice <= item?.Fare?.PublishedFare &&
-                item?.Fare?.PublishedFare <= priceRange
-              );
-            case "startTakeoff6AMto12PM":
-              return (
-                depTimeStartTakeOff >= 6 &&
-                depTimeStartTakeOff < 12 &&
-                minPrice <= item?.Fare?.PublishedFare &&
-                item?.Fare?.PublishedFare <= priceRange
-              );
-            case "startTakeoff12PMto6PM":
-              return (
-                depTimeStartTakeOff >= 12 &&
-                depTimeStartTakeOff < 18 &&
-                minPrice <= item?.Fare?.PublishedFare &&
-                item?.Fare?.PublishedFare <= priceRange
-              );
-            case "startTakeoffafter6PM":
-              return (
-                depTimeStartTakeOff >= 18 &&
-                minPrice <= item?.Fare?.PublishedFare &&
-                item?.Fare?.PublishedFare <= priceRange
-              );
-            case "startLandNon":
-              return (
-                segmentLengthLand === 1 &&
-                minPrice <= item?.Fare?.PublishedFare &&
-                item?.Fare?.PublishedFare <= priceRange
-              );
-            case "startLandStop":
-              return (
-                segmentLengthLand === 2 &&
-                minPrice <= item?.Fare?.PublishedFare &&
-                item?.Fare?.PublishedFare <= priceRange
-              );
-            case "startLandbefore6AM":
-              return (
-                arrTimeStartLand < 6 &&
-                minPrice <= item?.Fare?.PublishedFare &&
-                item?.Fare?.PublishedFare <= priceRange
-              );
-            case "startLand6AMto12PM":
-              return (
-                arrTimeStartLand >= 6 &&
-                arrTimeStartLand < 12 &&
-                minPrice <= item?.Fare?.PublishedFare &&
-                item?.Fare?.PublishedFare <= priceRange
-              );
-            case "startLand12PMto6PM":
-              return (
-                arrTimeStartLand >= 12 &&
-                arrTimeStartLand < 18 &&
-                minPrice <= item?.Fare?.PublishedFare &&
-                item?.Fare?.PublishedFare <= priceRange
-              );
-            case "startLandafter6PM":
-              return (
-                arrTimeStartLand >= 18 &&
-                minPrice <= item?.Fare?.PublishedFare &&
-                item?.Fare?.PublishedFare <= priceRange
-              );
-            case "EndTakeoffbefore6AM":
-              return (
-                depTimeEndTakeOff < 6 &&
-                minPrice <= item?.Fare?.PublishedFare &&
-                item?.Fare?.PublishedFare <= priceRange
-              );
-            case "EndTakeoff6AMto12PM":
-              return (
-                depTimeEndTakeOff >= 6 &&
-                depTimeEndTakeOff < 12 &&
-                minPrice <= item?.Fare?.PublishedFare &&
-                item?.Fare?.PublishedFare <= priceRange
-              );
-            case "EndTakeoff12PMto6PM":
-              return (
-                depTimeEndTakeOff >= 12 &&
-                depTimeEndTakeOff < 18 &&
-                minPrice <= item?.Fare?.PublishedFare &&
-                item?.Fare?.PublishedFare <= priceRange
-              );
-            case "EndTakeoffafter6PM":
-              return (
-                depTimeEndTakeOff >= 18 &&
-                minPrice <= item?.Fare?.PublishedFare &&
-                item?.Fare?.PublishedFare <= priceRange
-              );
-            case "EndLandbefore6AM":
-              return (
-                arrTimeEndLand < 6 &&
-                minPrice <= item?.Fare?.PublishedFare &&
-                item?.Fare?.PublishedFare <= priceRange
-              );
-            case "EndLand6AMto12PM":
-              return (
-                arrTimeEndLand >= 6 &&
-                arrTimeEndLand < 12 &&
-                minPrice <= item?.Fare?.PublishedFare &&
-                item?.Fare?.PublishedFare <= priceRange
-              );
-            case "EndLand12PMto6PM":
-              return (
-                arrTimeEndLand >= 12 &&
-                arrTimeEndLand < 18 &&
-                minPrice <= item?.Fare?.PublishedFare &&
-                item?.Fare?.PublishedFare <= priceRange
-              );
-            case "EndLandafter6PM":
-              return (
-                arrTimeEndLand >= 18 &&
-                minPrice <= item?.Fare?.PublishedFare &&
-                item?.Fare?.PublishedFare <= priceRange
-              );
-            case "Airlines":
-              return (
-                (airlineName === Airlines[airlinesIndex] ||
-                  airlineName1 === Airliness[airlinesIndex]) &&
-                minPrice <= item?.Fare?.PublishedFare &&
-                item?.Fare?.PublishedFare <= priceRange
-              );
-
-            default:
-              return (
-                minPrice <= item?.Fare?.PublishedFare &&
-                item?.Fare?.PublishedFare <= priceRange
-              );
-          }
+      const segmentLength = item?.Segments[0].length;
+      const segmentLengthStart = item?.Segments[0]?.length;
+      const segmentLengthLand = item?.Segments[1]?.length;
+      const depTime = new Date(item?.Segments?.[0][0]?.Origin?.DepTime);
+      const depTimeStartTakeOff1 = new Date(
+        item?.Segments?.[0][0]?.Origin?.DepTime
+      );
+      const arrTimeStartLand1 = new Date(
+        item?.Segments?.[0][
+          item?.Segments[0]?.length - 1
+        ]?.Destination?.ArrTime
+      );
+      const depTimeEndTakeOff1 = new Date(
+        item?.Segments?.[1][0]?.Origin?.DepTime
+      );
+      const arrTimeEndLand1 = new Date(
+        item?.Segments?.[1][
+          item?.Segments[1]?.length - 1
+        ]?.Destination?.ArrTime
+      );
+      const hour = depTime.getHours();
+      const hourStart = depTime.getHours();
+      const hourLand = depTime.getHours();
+      const depTimeStartTakeOff = depTimeStartTakeOff1?.getHours();
+      const arrTimeStartLand = arrTimeStartLand1?.getHours();
+      const depTimeEndTakeOff = depTimeEndTakeOff1?.getHours();
+      const arrTimeEndLand = arrTimeEndLand1?.getHours();
+      const airlineName = item?.Segments?.[0][0]?.Airline?.AirlineName;
+      const airlineName1 = item?.Segments?.[1][0]?.Airline?.AirlineName;
+      if (!Airlines.includes(airlineName)) {
+        Airlines.push(airlineName);
+        Airliness.push({
+          AirlineName: airlineName,
+          AirlineCode: item?.Segments?.[0][0]?.Airline?.AirlineCode,
         });
-        return categoryFilters.every((filter) => filter);
-      })
+      }
+      if (!Airlines.includes(airlineName1)) {
+        Airlines.push(airlineName1);
+        Airliness.push({
+          AirlineName: airlineName,
+          AirlineCode: item?.Segments?.[1][0]?.Airline?.AirlineCode,
+        });
+      }
+      // console.log(depTimeEndTakeOff, "result ........................")
+      const categoryFilters = selectedCategory.map((category) => {
+        switch (category) {
+          case "Price":
+            return (
+              minPrice <= item?.Fare?.PublishedFare &&
+              item?.Fare?.PublishedFare <= priceRange
+            );
+          case "1":
+            return (
+              segmentLength === 1 &&
+              minPrice <= item?.Fare?.PublishedFare &&
+              item?.Fare?.PublishedFare <= priceRange
+            );
+          case "2":
+            return (
+              segmentLength === 2 &&
+              minPrice <= item?.Fare?.PublishedFare &&
+              item?.Fare?.PublishedFare <= priceRange
+            );
+          case "before6AM":
+            return (
+              hour < 6 &&
+              minPrice <= item?.Fare?.PublishedFare &&
+              item?.Fare?.PublishedFare <= priceRange
+            );
+          case "6AMto12PM":
+            return (
+              hour >= 6 &&
+              hour < 12 &&
+              minPrice <= item?.Fare?.PublishedFare &&
+              item?.Fare?.PublishedFare <= priceRange
+            );
+          case "12PMto6PM":
+            return (
+              hour >= 12 &&
+              hour < 18 &&
+              minPrice <= item?.Fare?.PublishedFare &&
+              item?.Fare?.PublishedFare <= priceRange
+            );
+          case "after6PM":
+            return (
+              hour >= 18 &&
+              minPrice <= item?.Fare?.PublishedFare &&
+              item?.Fare?.PublishedFare <= priceRange
+            );
+          case "startTakeoffNon":
+            return (
+              segmentLengthStart === 1 &&
+              minPrice <= item?.Fare?.PublishedFare &&
+              item?.Fare?.PublishedFare <= priceRange
+            );
+          case "startTakeoffStop":
+            return (
+              segmentLengthStart === 2 &&
+              minPrice <= item?.Fare?.PublishedFare &&
+              item?.Fare?.PublishedFare <= priceRange
+            );
+          case "startTakeoffbefore6AM":
+            return (
+              depTimeStartTakeOff < 6 &&
+              minPrice <= item?.Fare?.PublishedFare &&
+              item?.Fare?.PublishedFare <= priceRange
+            );
+          case "startTakeoff6AMto12PM":
+            return (
+              depTimeStartTakeOff >= 6 &&
+              depTimeStartTakeOff < 12 &&
+              minPrice <= item?.Fare?.PublishedFare &&
+              item?.Fare?.PublishedFare <= priceRange
+            );
+          case "startTakeoff12PMto6PM":
+            return (
+              depTimeStartTakeOff >= 12 &&
+              depTimeStartTakeOff < 18 &&
+              minPrice <= item?.Fare?.PublishedFare &&
+              item?.Fare?.PublishedFare <= priceRange
+            );
+          case "startTakeoffafter6PM":
+            return (
+              depTimeStartTakeOff >= 18 &&
+              minPrice <= item?.Fare?.PublishedFare &&
+              item?.Fare?.PublishedFare <= priceRange
+            );
+          case "startLandNon":
+            return (
+              segmentLengthLand === 1 &&
+              minPrice <= item?.Fare?.PublishedFare &&
+              item?.Fare?.PublishedFare <= priceRange
+            );
+          case "startLandStop":
+            return (
+              segmentLengthLand === 2 &&
+              minPrice <= item?.Fare?.PublishedFare &&
+              item?.Fare?.PublishedFare <= priceRange
+            );
+          case "startLandbefore6AM":
+            return (
+              arrTimeStartLand < 6 &&
+              minPrice <= item?.Fare?.PublishedFare &&
+              item?.Fare?.PublishedFare <= priceRange
+            );
+          case "startLand6AMto12PM":
+            return (
+              arrTimeStartLand >= 6 &&
+              arrTimeStartLand < 12 &&
+              minPrice <= item?.Fare?.PublishedFare &&
+              item?.Fare?.PublishedFare <= priceRange
+            );
+          case "startLand12PMto6PM":
+            return (
+              arrTimeStartLand >= 12 &&
+              arrTimeStartLand < 18 &&
+              minPrice <= item?.Fare?.PublishedFare &&
+              item?.Fare?.PublishedFare <= priceRange
+            );
+          case "startLandafter6PM":
+            return (
+              arrTimeStartLand >= 18 &&
+              minPrice <= item?.Fare?.PublishedFare &&
+              item?.Fare?.PublishedFare <= priceRange
+            );
+          case "EndTakeoffbefore6AM":
+            return (
+              depTimeEndTakeOff < 6 &&
+              minPrice <= item?.Fare?.PublishedFare &&
+              item?.Fare?.PublishedFare <= priceRange
+            );
+          case "EndTakeoff6AMto12PM":
+            return (
+              depTimeEndTakeOff >= 6 &&
+              depTimeEndTakeOff < 12 &&
+              minPrice <= item?.Fare?.PublishedFare &&
+              item?.Fare?.PublishedFare <= priceRange
+            );
+          case "EndTakeoff12PMto6PM":
+            return (
+              depTimeEndTakeOff >= 12 &&
+              depTimeEndTakeOff < 18 &&
+              minPrice <= item?.Fare?.PublishedFare &&
+              item?.Fare?.PublishedFare <= priceRange
+            );
+          case "EndTakeoffafter6PM":
+            return (
+              depTimeEndTakeOff >= 18 &&
+              minPrice <= item?.Fare?.PublishedFare &&
+              item?.Fare?.PublishedFare <= priceRange
+            );
+          case "EndLandbefore6AM":
+            return (
+              arrTimeEndLand < 6 &&
+              minPrice <= item?.Fare?.PublishedFare &&
+              item?.Fare?.PublishedFare <= priceRange
+            );
+          case "EndLand6AMto12PM":
+            return (
+              arrTimeEndLand >= 6 &&
+              arrTimeEndLand < 12 &&
+              minPrice <= item?.Fare?.PublishedFare &&
+              item?.Fare?.PublishedFare <= priceRange
+            );
+          case "EndLand12PMto6PM":
+            return (
+              arrTimeEndLand >= 12 &&
+              arrTimeEndLand < 18 &&
+              minPrice <= item?.Fare?.PublishedFare &&
+              item?.Fare?.PublishedFare <= priceRange
+            );
+          case "EndLandafter6PM":
+            return (
+              arrTimeEndLand >= 18 &&
+              minPrice <= item?.Fare?.PublishedFare &&
+              item?.Fare?.PublishedFare <= priceRange
+            );
+          case "Airlines":
+            return (
+              (airlineName === Airlines[airlinesIndex] ||
+                airlineName1 === Airliness[airlinesIndex]) &&
+              minPrice <= item?.Fare?.PublishedFare &&
+              item?.Fare?.PublishedFare <= priceRange
+            );
+
+          default:
+            return (
+              minPrice <= item?.Fare?.PublishedFare &&
+              item?.Fare?.PublishedFare <= priceRange
+            );
+        }
+      });
+      return categoryFilters.every((filter) => filter);
+    })
     : [];
   // useEffect(() => {
   //   console.log(
@@ -684,15 +693,14 @@ const FlightReturnInternational = () => {
                         Stops from{" "}
                         {takeOff
                           ? result[0][0]?.Segments?.[0][0]?.Origin?.Airport
-                              ?.CityName
+                            ?.CityName
                           : result[0][0]?.Segments?.[1][0]?.Origin?.Airport
-                              ?.CityName}
+                            ?.CityName}
                       </h2>
                       <div style={{ width: "100%", display: "flex" }}>
                         <div
-                          className={`timeContainer ${
-                            startTakeOffIndex === 0 && "timeContainerTimeActive"
-                          }`}
+                          className={`timeContainer ${startTakeOffIndex === 0 && "timeContainerTimeActive"
+                            }`}
                           onClick={() => handleStartTakeOffChange(0)}
                         >
                           <span className="checkedSVG pe-2 redd">
@@ -710,9 +718,8 @@ const FlightReturnInternational = () => {
                           <span className="timeContainerTime">Non-Stop</span>
                         </div>
                         <div
-                          className={`timeContainer ${
-                            startTakeOffIndex === 1 && "timeContainerTimeActive"
-                          }`}
+                          className={`timeContainer ${startTakeOffIndex === 1 && "timeContainerTimeActive"
+                            }`}
                           onClick={() => handleStartTakeOffChange(1)}
                         >
                           <span className="checkedSVG pe-2">
@@ -770,15 +777,14 @@ const FlightReturnInternational = () => {
                         Stops from{" "}
                         {!takeOff
                           ? result[0][0]?.Segments?.[0][0]?.Origin?.Airport
-                              ?.CityName
+                            ?.CityName
                           : result[0][0]?.Segments?.[1][0]?.Origin?.Airport
-                              ?.CityName}
+                            ?.CityName}
                       </h2>
                       <div style={{ width: "100%", display: "flex" }}>
                         <div
-                          className={`timeContainer ${
-                            endTakeOffIndex === 0 && "timeContainerTimeActive"
-                          }`}
+                          className={`timeContainer ${endTakeOffIndex === 0 && "timeContainerTimeActive"
+                            }`}
                           onClick={() => handleEndTakeOffChange(0)}
                         >
                           <span className="checkedSVG pe-2 redd">
@@ -796,9 +802,8 @@ const FlightReturnInternational = () => {
                           <span className="timeContainerTime">Non-Stop</span>
                         </div>
                         <div
-                          className={`timeContainer ${
-                            endTakeOffIndex === 1 && "timeContainerTimeActive"
-                          }`}
+                          className={`timeContainer ${endTakeOffIndex === 1 && "timeContainerTimeActive"
+                            }`}
                           onClick={() => handleEndTakeOffChange(1)}
                         >
                           <span className="checkedSVG pe-2">
@@ -866,7 +871,7 @@ const FlightReturnInternational = () => {
                           }}
                         >
                           {" "}
-                          Onward 
+                          Onward
                         </div>
                         <div
                           className={
@@ -890,9 +895,9 @@ const FlightReturnInternational = () => {
                         Take Off from {" "}
                         {takeOff
                           ? result[0][0]?.Segments?.[0][0]?.Origin?.Airport
-                              ?.CityName
+                            ?.CityName
                           : result[0][0]?.Segments?.[1][0]?.Origin?.Airport
-                              ?.CityName}
+                            ?.CityName}
                       </h2>
 
                       {/* <div className="sidebar-label-container-outer-div">
@@ -935,9 +940,8 @@ const FlightReturnInternational = () => {
                       <div style={{ width: "100%" }}>
                         <div style={{ width: "100%", display: "flex" }}>
                           <div
-                            className={`timeContainer ${
-                              takeOffIndex === 0 && "timeContainerTimeActive"
-                            }`}
+                            className={`timeContainer ${takeOffIndex === 0 && "timeContainerTimeActive"
+                              }`}
                             onClick={() => handleTakeOffChange(0)}
                           >
                             <span className="checkedSVG pe-2 redd">
@@ -966,9 +970,8 @@ const FlightReturnInternational = () => {
                             </span>
                           </div>
                           <div
-                            className={`timeContainer ${
-                              takeOffIndex === 1 && "timeContainerTimeActive"
-                            }`}
+                            className={`timeContainer ${takeOffIndex === 1 && "timeContainerTimeActive"
+                              }`}
                             onClick={() => handleTakeOffChange(1)}
                           >
                             <span className="checkedSVG pe-2">
@@ -997,9 +1000,8 @@ const FlightReturnInternational = () => {
                         </div>
                         <div style={{ width: "100%", display: "flex" }}>
                           <div
-                            className={`timeContainer ${
-                              takeOffIndex === 2 && "timeContainerTimeActive"
-                            }`}
+                            className={`timeContainer ${takeOffIndex === 2 && "timeContainerTimeActive"
+                              }`}
                             onClick={() => handleTakeOffChange(2)}
                           >
                             <span className="checkedSVG pe-2 redd">
@@ -1024,9 +1026,8 @@ const FlightReturnInternational = () => {
                             <span className="timeContainerTime">12PM-6PM</span>
                           </div>
                           <div
-                            className={`timeContainer ${
-                              takeOffIndex === 3 && "timeContainerTimeActive"
-                            }`}
+                            className={`timeContainer ${takeOffIndex === 3 && "timeContainerTimeActive"
+                              }`}
                             onClick={() => handleTakeOffChange(3)}
                           >
                             <span className="checkedSVG pe-2">
@@ -1057,9 +1058,9 @@ const FlightReturnInternational = () => {
                         Landing at{" "}
                         {!takeOff
                           ? result[0][0]?.Segments?.[0][0]?.Origin?.Airport
-                              ?.CityName
+                            ?.CityName
                           : result[0][0]?.Segments?.[1][0]?.Origin?.Airport
-                              ?.CityName}
+                            ?.CityName}
                       </h2>
 
                       {/* <div>
@@ -1102,9 +1103,8 @@ const FlightReturnInternational = () => {
                       <div style={{ width: "100%" }}>
                         <div style={{ width: "100%", display: "flex" }}>
                           <div
-                            className={`timeContainer ${
-                              landIndex === 0 && "timeContainerTimeActive"
-                            }`}
+                            className={`timeContainer ${landIndex === 0 && "timeContainerTimeActive"
+                              }`}
                             onClick={() => handleLandChange(0)}
                           >
                             <span className="checkedSVG pe-2 redd">
@@ -1133,9 +1133,8 @@ const FlightReturnInternational = () => {
                             </span>
                           </div>
                           <div
-                            className={`timeContainer ${
-                              landIndex === 1 && "timeContainerTimeActive"
-                            }`}
+                            className={`timeContainer ${landIndex === 1 && "timeContainerTimeActive"
+                              }`}
                             onClick={() => handleLandChange(1)}
                           >
                             <span className="checkedSVG pe-2">
@@ -1164,9 +1163,8 @@ const FlightReturnInternational = () => {
                         </div>
                         <div style={{ width: "100%", display: "flex" }}>
                           <div
-                            className={`timeContainer ${
-                              landIndex === 2 && "timeContainerTimeActive"
-                            }`}
+                            className={`timeContainer ${landIndex === 2 && "timeContainerTimeActive"
+                              }`}
                             onClick={() => handleLandChange(2)}
                           >
                             <span className="checkedSVG pe-2 redd">
@@ -1191,9 +1189,8 @@ const FlightReturnInternational = () => {
                             <span className="timeContainerTime">12PM-6PM</span>
                           </div>
                           <div
-                            className={`timeContainer ${
-                              landIndex === 3 && "timeContainerTimeActive"
-                            }`}
+                            className={`timeContainer ${landIndex === 3 && "timeContainerTimeActive"
+                              }`}
                             onClick={() => handleLandChange(3)}
                           >
                             <span className="checkedSVG pe-2">
@@ -1246,9 +1243,8 @@ const FlightReturnInternational = () => {
                         {Airliness.map((item, index) => (
                           <div
                             onClick={() => handleAirlinesChange(index)}
-                            className={`AirelinesFilter ${
-                              airlinesIndex === index && "AirelineFliterActive"
-                            }`}
+                            className={`AirelinesFilter ${airlinesIndex === index && "AirelineFliterActive"
+                              }`}
                           >
                             <div>
                               <img
@@ -1258,7 +1254,7 @@ const FlightReturnInternational = () => {
                                   objectFit: "contain",
                                 }}
                                 src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${item.AirlineCode}.png`}
-                              alt="flightImg" />{" "}
+                                alt="flightImg" />{" "}
                             </div>
                             <div>{item.AirlineName}</div>
                           </div>
@@ -1561,3 +1557,4 @@ const FlightReturnInternational = () => {
 };
 
 export default FlightReturnInternational;
+

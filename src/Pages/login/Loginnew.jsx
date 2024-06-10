@@ -23,18 +23,24 @@ import offerimg from "../../Images/offerimg.png";
 import recordsimg from "../../Images/paymenimg.png";
 import Cotactus from "./Cotactus.jsx";
 import Patners from "./Patners.jsx";
+import api from "../../Redux/API/api.js"
+import { IoIosDownload } from "react-icons/io";
+
 
 function Loginnew() {
   const dispatch = useDispatch();
   const reducerState = useSelector((state) => state);
   const togetherSectionRef = useRef(null);
+  const [isForget, setIsForget] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+
 
   // console.log(reducerState,"data")
 
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: "", password: "" });
-  const [formError, setFormError] = useState(false);
+  const [formError, setFormError] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -62,6 +68,25 @@ function Loginnew() {
       setFormError(error);
     }
   };
+  const handleReset = async (e) => {
+    e.preventDefault()
+    setLoading(true)
+
+    if (!formData.email.trim()) {
+      setFormError("Please fill Email Address");
+      return;
+    }
+    else {
+      // setSetLoading(true)
+      let payload = {
+        "email": formData.email
+      }
+      const data = await api?.forgetPasswordLink(payload)
+      console.log(data, "forget data")
+      setLoading(false)
+    }
+
+  }
 
   useEffect(() => {
     if (reducerState?.logIn?.isLogin) {
@@ -90,7 +115,7 @@ function Loginnew() {
   return (
     <>
       {reducerState?.subadminLogin?.isLogin ||
-      reducerState?.adminAuth?.isLogin ? (
+        reducerState?.adminAuth?.isLogin ? (
         <>
           <SubAdminAccess />
         </>
@@ -120,31 +145,140 @@ function Loginnew() {
                 </div>
                 <div class="col-lg-6 col-md-6 p-0">
                   <div class="wrapper d-flex align-items-center justify-content-end h-100 bg-rgba(235, 245, 255, 0.50);">
-                    <div class="card login-form">
-                      <div class="card-body">
-                        <h5 class="card-title " style={{ fontWeight: "bold" }}>
-                          Login Form
-                        </h5>
-                        <form>
-                          <div class="mb-3">
-                            <label
-                              htmlFor="exampleInputEmail1"
-                              class="form-label"
-                            >
-                              Email
-                            </label>
+                    {!isForget ?
+                      <div class="card login-form">
+                        <div class="card-body">
+                          <h5 class="card-title " style={{ fontWeight: "bold" }}>
+                            Login Form
+                          </h5>
+                          <form>
+                            <div class="mb-3">
+                              <label
+                                htmlFor="exampleInputEmail1"
+                                class="form-label"
+                              >
+                                Email
+                              </label>
 
-                            <input
-                              name="email"
-                              type="email"
-                              placeholder="Enter your Email "
-                              id="exampleInputEmail1"
-                              class="form-control"
-                              value={formData.email}
-                              onChange={handleInputChange}
-                            />
-                          </div>
-                          <div className="mb-3">
+                              <input
+                                name="email"
+                                type="email"
+                                placeholder="Enter your Email "
+                                id="exampleInputEmail1"
+                                class="form-control"
+                                value={formData.email}
+                                onChange={handleInputChange}
+                              />
+                            </div>
+                            <div className="mb-3">
+                              <label
+                                htmlFor="exampleInputPassword1"
+                                className="form-label"
+                              >
+                                Password
+                              </label>
+                              <div style={{ position: "relative" }}>
+                                <input
+                                  type={showPassword ? "text" : "password"}
+                                  name="password"
+                                  placeholder="Enter Your Password"
+                                  className="form-control"
+                                  value={formData.password}
+                                  onChange={handleInputChange}
+                                />
+                                <div
+                                  className="eye-icon"
+                                  style={{
+                                    position: "absolute",
+                                    top: "50%",
+                                    right: "10px",
+                                    transform: "translateY(-50%)",
+                                    cursor: "pointer",
+                                  }}
+                                  onClick={togglePasswordVisibility}
+                                >
+                                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* <Capchacode email={email} password={password} /> */}
+                            <Box
+                              display="flex"
+                              justifyContent="space-between"
+                              width="100%"
+                              position="relative"
+                            >
+                              <Button
+                                variant="contained"
+                                style={{
+                                  backgroundColor: color.bluedark,
+                                  color: "white",
+                                  width: "100%",
+                                  height: "50px",
+                                  borderRadius: "8px",
+                                }}
+                                className="loginbutton"
+                                onClick={handleSubmit}
+                              >
+                                Submit
+                              </Button>
+                              <div className="forgetBTN" onClick={() => (setIsForget(true), setFormError(""))}>Forget Password ?</div>
+                            </Box>
+                            {!formError === "" && (
+                              <p
+                                style={{
+                                  color: "red",
+                                  padding: "0px 0px 5px 50px",
+                                }}
+                              >
+                                {formError}
+                              </p>
+                            )}
+                            <div class="sign-up1 mt-4">
+                              Not registered yet?{" "}
+                              <Link
+                                onClick={handlelinkRegister}
+                                className="create-account"
+                              >
+                                Create One
+                              </Link>
+                            </div>
+                          </form>
+                        </div>
+                      </div> :
+                      <div class="card login-form">
+                        <div class="card-body">
+
+                          <h5 className="create-account" onClick={() => setIsForget(false)}>
+                            BACK
+                          </h5>
+                          <h5 class="card-title " style={{ fontWeight: "bold" }}>
+                            Forget Password
+                          </h5>
+                          <p style={{ color: "#4a4a4a", fontSize: "10px" }}>{
+                            "We will send you a reset lik on your registered E-mail ID "}</p>
+
+                          <form>
+                            <div class="mb-3">
+                              <label
+                                htmlFor="exampleInputEmail1"
+                                class="form-label"
+                              >
+                                Email
+                              </label>
+
+                              <input
+                                name="email"
+                                type="email"
+                                placeholder="Enter your Email "
+                                id="exampleInputEmail1"
+                                class="form-control"
+                                value={formData.email}
+                                onChange={handleInputChange}
+                              />
+                            </div>
+                            {/* <div className="mb-3">
                             <label
                               htmlFor="exampleInputPassword1"
                               className="form-label"
@@ -174,51 +308,60 @@ function Loginnew() {
                                 {showPassword ? <FaEyeSlash /> : <FaEye />}
                               </div>
                             </div>
-                          </div>
+                          </div> */}
 
-                          {/* <Capchacode email={email} password={password} /> */}
-                          <Box
-                            display="flex"
-                            justifyContent="space-between"
-                            width="100%"
-                          >
-                            <Button
-                              variant="contained"
-                              style={{
-                                backgroundColor: color.bluedark,
-                                color: "white",
-                                width: "100%",
-                                height: "50px",
-                                borderRadius: "8px",
-                              }}
-                              className="loginbutton"
-                              onClick={handleSubmit}
-                            >
-                              Login
-                            </Button>
-                          </Box>
-                          {formError && (
-                            <p
-                              style={{
-                                color: "red",
-                                padding: "0px 0px 5px 50px",
-                              }}
-                            >
-                              {formError}
-                            </p>
-                          )}
-                          <div class="sign-up1 mt-4">
-                            Not registered yet?{" "}
-                            <Link
-                              onClick={handlelinkRegister}
-                              className="create-account"
-                            >
-                              Create One
-                            </Link>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
+                            {/* <Capchacode email={email} password={password} /> */}
+                            <Box
+                              display="flex"
+                              justifyContent="space-between"
+                              width="100%"
+                            >{
+                                loading ? <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%" }}>
+
+                                  <div className="loaderCon"></div>
+                                </div>
+                                  :
+
+                                  <Button
+                                    variant="contained"
+
+                                    style={{
+                                      backgroundColor: color.bluedark,
+                                      color: "white",
+                                      width: "100%",
+                                      height: "50px",
+                                      borderRadius: "8px",
+                                    }}
+                                    className="loginbutton"
+                                    onClick={handleReset}
+                                  >
+                                    Reset
+
+                                  </Button>}
+                            </Box>
+                            {!formError === "" && (
+                              <p
+                                style={{
+                                  color: "red",
+                                  padding: "0px 0px 5px 50px",
+                                }}
+                              >
+                                {formError}
+                              </p>
+                            )}
+                            <div class="sign-up1 mt-4">
+                              Not registered yet?{" "}
+                              <Link
+                                onClick={handlelinkRegister}
+                                className="create-account"
+                              >
+                                Create One
+                              </Link>
+                            </div>
+                          </form>
+
+                        </div>
+                      </div>}
                   </div>
                 </div>
               </div>

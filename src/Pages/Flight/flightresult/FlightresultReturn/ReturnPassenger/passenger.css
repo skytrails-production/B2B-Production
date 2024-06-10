@@ -207,3 +207,8 @@
   line-height: -10px;
   border-bottom: 1px solid #0048FF;
 }
+.boxThreeDirect{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

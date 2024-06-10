@@ -184,6 +184,31 @@ function api() {
       },
     });
   };
+  const forgetPasswordLink=async(payload)=>{
+    return axios({
+      method:"POST",
+      url:"/skyTrails/api/agent/forgetPassword",
+      baseURL: `${apiURL.baseURL}`,
+      data:payload,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+
+    })
+  }
+  const resetPassword=async(userID,payload)=>{
+    return axios({
+      method:"PUT",
+      url:`/skyTrails/api/agent/resetPassword/${userID}`,
+      data:payload,
+      baseURL: `${apiURL.baseURL}`,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
+  }
 
   const oneWayEMTSearch = (payload) => {
     // console.log("Paayload EMT Search", payload);
@@ -758,6 +783,7 @@ function api() {
     bookingHolidayRequest,
     bookingHoliday,
     hotelsingleDataGRN,
+    resetPassword,
     createForex,
     createForexForCustomer,
     forexData,
@@ -780,6 +806,7 @@ function api() {
     fixedDepartureBooking,
     updateFlightBookingSeat,
     Ssr,
+    forgetPasswordLink
   };
 }
 

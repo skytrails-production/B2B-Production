@@ -21,7 +21,13 @@ const FlightReturnBookingConfirmation = () => {
     // console.log("reducerState", reducerState);
     const TicketDetails =
         reducerState?.flightBook?.flightBookDataGDS?.Response ||
-        reducerState?.flightBook?.flightBookData?.Response;
+        reducerState?.flightBook?.flightBookDataGDSReturn?.Response ||
+        reducerState?.flightBook?.flightBookData?.Response ||
+        reducerState?.flightBook?.flightBookDataReturn?.Response 
+   
+
+        
+        
     const userId = reducerState?.logIn?.loginData?.data?.data?.id;
     const [alert, setAlert] = useState(true);
      const PassengersSaved = reducerState?.passengers?.passengersData;
@@ -48,7 +54,7 @@ const FlightReturnBookingConfirmation = () => {
          destination: bookingDataLccReturn?.FlightItinerary?.Destination,
          paymentStatus: "success",
          totalAmount:
-           bookingDataLccReturn?.FlightItinerary?.Fare?.PublishedFare?.toFixed() + markUpamount,
+          Number( bookingDataLccReturn?.FlightItinerary?.Fare?.PublishedFare?.toFixed()) + Number( markUpamount),
          airlineDetails: bookingDataLccReturn?.FlightItinerary?.Segments.map(
            (item, index) => {
              return {
@@ -107,14 +113,14 @@ const FlightReturnBookingConfirmation = () => {
        const payloadNonLcc = {
          userId: reducerState?.logIn?.loginData?.data?.data?.id,
          bookingId: `${bookingDataNonLccReturn?.BookingId}`,
-         oneWay: true,
+         oneWay: false,
          pnr: bookingDataNonLccReturn?.PNR,
          origin: bookingDataNonLccReturn?.FlightItinerary?.Origin,
          destination: bookingDataNonLccReturn?.FlightItinerary?.Destination,
          paymentStatus: "success",
          totalAmount:
-           bookingDataNonLccReturn?.FlightItinerary?.Fare?.PublishedFare?.toFixed() +
-           markUpamount,
+          Number( bookingDataNonLccReturn?.FlightItinerary?.Fare?.PublishedFare?.toFixed()) +
+          Number( markUpamount),
          airlineDetails: bookingDataNonLccReturn?.FlightItinerary?.Segments.map(
            (item, index) => {
              return {
@@ -183,7 +189,7 @@ const FlightReturnBookingConfirmation = () => {
            destination: bookingDataLcc?.FlightItinerary?.Destination,
            paymentStatus: "success",
            totalAmount:
-             bookingDataLcc?.FlightItinerary?.Fare?.PublishedFare?.toFixed() + markUpamount,
+            Number( bookingDataLcc?.FlightItinerary?.Fare?.PublishedFare?.toFixed()) + Number( markUpamount),
            airlineDetails: bookingDataLcc?.FlightItinerary?.Segments.map(
              (item, index) => {
                return {
@@ -247,7 +253,7 @@ const FlightReturnBookingConfirmation = () => {
            destination: bookingDataNonLcc?.FlightItinerary?.Destination,
            paymentStatus: "success",
            totalAmount:
-             bookingDataNonLcc?.FlightItinerary?.Fare?.PublishedFare?.toFixed() + markUpamount,
+           Number( bookingDataNonLcc?.FlightItinerary?.Fare?.PublishedFare?.toFixed()) +Number( markUpamount),
            airlineDetails: bookingDataNonLcc?.FlightItinerary?.Segments.map(
              (item, index) => {
                return {
@@ -306,8 +312,14 @@ const FlightReturnBookingConfirmation = () => {
     const debouncedAddBookingDetailsReturn = debounce(addBookingDetailsReturn, 60000);
     useEffect(() => {
         updateBalance();
-        debouncedAddBookingDetails();
-        debouncedAddBookingDetailsReturn()
+        if(bookingDataLcc || bookingDataNonLcc){
+
+          debouncedAddBookingDetails();
+        }
+        else if(bookingDataLccReturn ||bookingDataNonLccReturn){
+
+          debouncedAddBookingDetailsReturn()
+        }
     }, []);
 
 

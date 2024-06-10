@@ -41,7 +41,7 @@ export const flightFareReducer = (state = initialState, action) => {
     case types.RULE_REQUEST_RETURN:
       return {
         ...state,
-        isLoadingRuleDoneReturn: false,
+        isLoadingRuleDoneReturn: true,
         isError: false,
       };
 

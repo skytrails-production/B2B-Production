@@ -886,7 +886,7 @@ const Leftdetail = () => {
               </Box>
             )}
 
-            <div
+            {/* <div
               style={{
                 width: "100%",
                 height: 45,
@@ -947,12 +947,10 @@ const Leftdetail = () => {
             </div>
             {isGST &&
               <Box className="mid_header1" p={5} mt={25}>
-                {/* <Typography className="p-2 Top_txt text-dark">
-                  Contact Details
-                </Typography> */}
+                
 
                 <div className="mb-2">
-                  {/* <span className=" p-2 ">Passenger {i + 1}</span> */}
+            
                   <Box p={15} display="flex" flexWrap="wrap" gap="10px" justifyContent="space-between">
                     <Box marginLeft={15} flex={1} minWidth="200px" >
                       <div className="form_input1">
@@ -1062,11 +1060,10 @@ const Leftdetail = () => {
                     </Box>
                   </Box>
                 </div>
-                {/* ); */}
-                {/* })} */}
-              </Box>}
+              
+              </Box>} */}
             <Box
-              // className="mid_header"
+          
               p={5}
 
               mt={25}
@@ -1088,8 +1085,6 @@ const Leftdetail = () => {
         </div>
 
 
-        {/* passengerdetraifjdsfjdslkjfkldsjgkldsjfglksdjflk;dsjfkl */}
-        {/* passengerdetraifjdsfjdslkjfkldsjgkldsjfglksdjflk;dsjfkl */}
 
         <div className="col-lg-12" style={{ background: "rgba(231, 60, 52, 0.15)", }}>
           <div class="headingflightPassenger" style={{ background: "rgba(231, 60, 52, 0.15)" }}>

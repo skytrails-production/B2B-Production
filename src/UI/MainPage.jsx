@@ -17,11 +17,13 @@ import Flightresult from "../Pages/Flight/flightresult/Flightresult";
 import Registration from "../Pages/registration/Registration";
 import Onbording from "../Pages/registration/Onbording";
 import Login from "../Pages/login/Login";
+import Forget from "../Pages/login/ForgetPassword";
 import HotelSearch from "../Pages/Hotel/hotelsearch/HotelSearch";
 import Booknow from "../Pages/Flight/booknow/Booknow";
 import Passengerdetail from "../Pages/Flight/passengerdetail/Passengerdetail";
 import FlightReviewbooking from "../Pages/Flight/flightreviewbooking/FlightReviewbooking";
 import ReturnPassenger from "../Pages/Flight/flightresult/FlightresultReturn/ReturnPassenger/PassengerReturn";
+import ReturnPassengerINC from "../Pages/Flight/flightresult/FlightresultReturn/ReturnPassenger/ReturnPassengerINC";
 import Flightbookingconfirmation from "../Pages/Flight/flightbookingconfirmation/Flightbookingconfirmation";
 import HolidayPackage from "../Pages/holidayPackage/HolidayPackage";
 import HolidayPackageResult from "../Pages/holidayPackage/holidaypackageresult/HolidayPackageResult";
@@ -103,6 +105,7 @@ import InnerNavbar1 from "../Layout/InnerNavbar1";
 import LoadingSpinner from "./LoadingSpinner";
 import FlightResResult from "../Pages/Flight/flightresult/FlightresultReturn/FlightResResult";
 import FlightReturnReviewbooking from "../Pages/Flight/flightresult/FlightresultReturn/ReturnPassenger/FlightReturnReviewbooking";
+import FlightReturnReviewbookingINC from "../Pages/Flight/flightresult/FlightresultReturn/ReturnPassenger/FlightReturnReviewbookingINC";
 import FlightReturnBookingConfirmation from "../Pages/Flight/flightresult/FlightresultReturn/ReturnPassenger/FlightReturnBookingConfirmation";
 import CreateSubAdminPage from "../Pages/Dashboard/Component/Table/AddSubadmin";
 import CreateAdvertisementForm from "../Pages/Dashboard/Component/Table/AddAdvertisement";
@@ -197,6 +200,7 @@ const MainPage = () => {
     if (
       !reducerState?.logIn?.loginData?.data &&
       !location.pathname.includes("/Registration") &&
+      !location.pathname.includes("/forgetPassword") &&
       !location.pathname.includes("/adminLogin") &&
       !location.pathname.includes("/subAdminLogin") &&
       !location.pathname.includes("/subAdmin") &&
@@ -243,8 +247,12 @@ const MainPage = () => {
       navigate("relationShipManager/getAgentBookings");
     }else if(location.pathname === "relationShipManager/getAgentCancelReq"){
       navigate("relationShipManager/getAgentCancelReq");
-    }else if(location.pathname === "relationShipManager/getAgentChangeReq"){
+    }
+    else if(location.pathname === "relationShipManager/getAgentChangeReq"){
       navigate("relationShipManager/getAgentChangeReq");
+    }
+    else if(location.pathname === "forgetPassword"){
+      navigate("forgetPassword");
     }
   }, []);
 
@@ -593,6 +601,11 @@ const MainPage = () => {
                 />
                 <Route
                   exact
+                  path="/FlightResultInternational/FlightresultReturn/PassengerdetailINC"
+                  element={<ReturnPassengerINC />}
+                />
+                <Route
+                  exact
                   path="/Flightresult/passengerdetail/flightreviewbooking"
                   element={<FlightReviewbooking />}
                 />
@@ -603,12 +616,17 @@ const MainPage = () => {
                 />
                 <Route
                   exact
+                  path="/Flightresult/passengerdetail/flightReturnreviewbookingINC"
+                  element={<FlightReturnReviewbookingINC />}
+                />
+                <Route
+                  exact
                   path="/Flightbookingconfirmation"
                   element={<Flightbookingconfirmation />}
                 />
                 <Route
                   exact
-                  path="//Flightreturnbookingconfirmation"
+                  path="/Flightreturnbookingconfirmation"
                   element={<FlightReturnBookingConfirmation />}
                 />
 
@@ -891,6 +909,7 @@ const MainPage = () => {
       <div>
         <Routes>
           <Route path="login" element={<Loginnew />} />
+          <Route path="forgetPassword" element={<Forget />} />
           <Route path="registration" element={<Registration />} />
           <Route
             exact
