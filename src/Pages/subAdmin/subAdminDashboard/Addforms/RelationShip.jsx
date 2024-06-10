@@ -21,12 +21,8 @@ const RelationShip = () => {
     country: "",
   });
   const reducerState = useSelector((state) => state);
-  const 
-  token =
-  reducerState?.subadminLogin?.subadminloginData?.result?.
-  token;
-  console.log(
-    token,"token:localStorage.getItem('token')")
+  const token = reducerState?.subadminLogin?.subadminloginData?.result?.token;
+  console.log(token, "token:localStorage.getItem('token')");
 
   const handleChange = (e) => {
     setFormData({
@@ -45,7 +41,7 @@ const RelationShip = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-             token,
+            token,
           },
           body: JSON.stringify(formData),
         }

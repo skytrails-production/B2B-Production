@@ -9,7 +9,7 @@ function api() {
   };
 
   const usersTableData = () => {
-    return axios.get(`${apiURL.baseURL}/skyTrails/user/getallusers`);
+    return axios.get(`${apiURL.baseURL}/skyTrails/api/agent/getAgentTableWithRevenue`);
   };
 
   const userB2BToken = (payload) => {
