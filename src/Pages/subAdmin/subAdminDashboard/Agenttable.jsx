@@ -14,6 +14,7 @@ import Modal from "react-bootstrap/Modal";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
+import Slider from "@mui/material/Slider";
 import SortAscendingIcon from "@mui/icons-material/ArrowUpward";
 import SortDescendingIcon from "@mui/icons-material/ArrowDownward";
 import "./Agenttable.css";
@@ -57,11 +58,39 @@ const CustomToolbar = ({ handleSortAscending, handleSortDescending }) => {
   );
 };
 
+const MAX_REVENUE = 100000;
+const MIN_REVENUE = 0;
+const marks = [
+  {
+    value: MIN_REVENUE,
+    label: "",
+  },
+  {
+    value: MAX_REVENUE,
+    label: "",
+  },
+];
+
+const MAX_BALANCE = 100000;
+const MIN_BALANCE = 0;
+
+const balanceMarks = [
+  {
+    value: MIN_BALANCE,
+    label: "",
+  },
+  {
+    value: MAX_BALANCE,
+    label: "",
+  },
+];
 export default function Agenttable() {
   const [searchTerm, setSearchTerm] = useState("");
   const pageSize = 10;
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
+  const [minRevenue, setMinRevenue] = useState(MIN_REVENUE);
+  const [balanceRange, setBalanceRange] = useState([MIN_BALANCE, MAX_BALANCE]);
 
   const dispatch = useDispatch();
   const reducerState = useSelector((state) => state);
@@ -165,6 +194,19 @@ export default function Agenttable() {
     dispatch(getUserAction());
   };
 
+  const handleRevenueChange = (event, newValue) => {
+    setMinRevenue(newValue[0]);
+  };
+  const handleBalanceRangeChange = (event, newValue) => {
+    setBalanceRange(newValue);
+  };
+  //const filteredRows = rows.filter((row) => row.totalRevenue >= minRevenue);
+  const filteredRows = rows.filter(
+    (row) =>
+      row.totalRevenue >= minRevenue &&
+      row.balance >= balanceRange[0] &&
+      row.balance <= balanceRange[1]
+  );
   const columns = [
     {
       field: "panCardDocument",
@@ -207,7 +249,7 @@ export default function Agenttable() {
     {
       field: "agencyName",
       headerName: "Agency Name",
-      width: 200,
+      width: 250,
     },
 
     {
@@ -221,8 +263,7 @@ export default function Agenttable() {
       field: "totalRevenue",
       headerName: "Agent Revenue",
       width: 150,
-      filterable: true,
-      filterOperators: ["<", ">"],
+
       renderCell: (params) => <div>{params.value}</div>,
     },
     {
@@ -284,7 +325,7 @@ export default function Agenttable() {
             className="adsearch-bar"
             style={{
               position: "absolute",
-              top: 10,
+              top: 5,
               zIndex: 1,
               fontWeight: "bold",
               backgroundColor: "#E73C33",
@@ -293,7 +334,32 @@ export default function Agenttable() {
             <Typography variant="h5" className="adtable-heading">
               Agent Table
             </Typography>
+            <Box sx={{ display: "flex", width: "30%", gap: "10px" }}>
+              <Typography gutterBottom>Revenue: </Typography>
+              <Slider
+                value={[minRevenue, MAX_REVENUE]}
+                onChange={handleRevenueChange}
+                valueLabelDisplay="auto"
+                min={MIN_REVENUE}
+                max={MAX_REVENUE}
+                step={100}
+                marks={marks}
+                // style={{ width: "100px", marginLeft: "16px" }}
+              />
+            </Box>
+            <Box sx={{ display: "flex", width: "30%", gap: "10px" }}>
+              <Typography gutterBottom>Balance</Typography>
+              <Slider
+                value={balanceRange}
+                onChange={handleBalanceRangeChange}
+                valueLabelDisplay="auto"
+                min={MIN_BALANCE}
+                max={MAX_BALANCE}
+                marks={balanceMarks}
+              />
+            </Box>
           </div>
+
           <Box sx={{ height: 600, width: "100%", marginTop: "8px" }}>
             {loading ? (
               <div
@@ -309,7 +375,10 @@ export default function Agenttable() {
             ) : (
               <div>
                 <DataGrid
-                  rows={rows.slice((page - 1) * pageSize, page * pageSize)}
+                  rows={filteredRows.slice(
+                    (page - 1) * pageSize,
+                    page * pageSize
+                  )} // Display only the first 10 rows
                   columns={columns}
                   pageSize={pageSize}
                   components={{
@@ -321,7 +390,6 @@ export default function Agenttable() {
                     ),
                     Pagination: () => null,
                   }}
-                  //pagination={false}
                 />
                 <Box
                   sx={{
@@ -331,7 +399,7 @@ export default function Agenttable() {
                   }}
                 >
                   <Pagination
-                    count={Math.ceil((rows.length || 1) / pageSize)}
+                    count={Math.ceil((filteredRows.length || 1) / pageSize)}
                     page={page}
                     onChange={(event, value) => setPage(value)}
                     color="primary"
@@ -340,6 +408,7 @@ export default function Agenttable() {
               </div>
             )}
           </Box>
+
           <Modal show={show} onHide={handleClose} centered>
             <Modal.Header closeButton>
               <Modal.Title>Vendor Amount</Modal.Title>

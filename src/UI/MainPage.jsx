@@ -18,6 +18,7 @@ import Registration from "../Pages/registration/Registration";
 import Onbording from "../Pages/registration/Onbording";
 import Login from "../Pages/login/Login";
 import Forget from "../Pages/login/ForgetPassword";
+import SubadminForgetPassword from "../Pages/subAdmin/SubadminForgetPassword";
 import HotelSearch from "../Pages/Hotel/hotelsearch/HotelSearch";
 import Booknow from "../Pages/Flight/booknow/Booknow";
 import Passengerdetail from "../Pages/Flight/passengerdetail/Passengerdetail";
@@ -86,6 +87,7 @@ import Queue from "../Pages/Account/Queue";
 import HolidayPackages from "../Pages/Account/HolidayPackages";
 import MainBox from "../Layout/MainBoxNew";
 import CreateMarkupForm from "../Pages/Dashboard/Component/Table/AddMarkup";
+
 import {
   useNavigate,
   useParams,
@@ -201,6 +203,8 @@ const MainPage = () => {
       !reducerState?.logIn?.loginData?.data &&
       !location.pathname.includes("/Registration") &&
       !location.pathname.includes("/forgetPassword") &&
+      !location.pathname.includes("/SubAdminforgetPassword") &&
+      
       !location.pathname.includes("/adminLogin") &&
       !location.pathname.includes("/subAdminLogin") &&
       !location.pathname.includes("/subAdmin") &&
@@ -253,6 +257,10 @@ const MainPage = () => {
     }
     else if(location.pathname === "forgetPassword"){
       navigate("forgetPassword");
+    }
+
+    else if(location.pathname === "SubAdminforgetPassword"){
+      navigate("SubAdminforgetPassword");
     }
   }, []);
 
@@ -910,6 +918,8 @@ const MainPage = () => {
         <Routes>
           <Route path="login" element={<Loginnew />} />
           <Route path="forgetPassword" element={<Forget />} />
+          <Route path="subAdminforgetPassword" element={<SubadminForgetPassword />} />
+          
           <Route path="registration" element={<Registration />} />
           <Route
             exact

@@ -99,7 +99,14 @@ const AgentList = () => {
 
   return (
     <>
-      <Paper style={{ width: "50%", margin: "auto", padding: "20px",marginBottom:"10px" }}>
+      <Paper
+        style={{
+          width: "50%",
+          margin: "auto",
+          padding: "20px",
+          marginBottom: "10px",
+        }}
+      >
         <form onSubmit={handleSubmit}>
           <FormControl fullWidth style={{ marginBottom: "20px" }}>
             <Select
@@ -111,7 +118,7 @@ const AgentList = () => {
               <MenuItem value="" disabled>
                 Select Agent
               </MenuItem>
-              {agents.map((agent) => (
+              {agents?.map((agent) => (
                 <MenuItem key={agent.agentId} value={agent._id}>
                   {agent.firstName}
                 </MenuItem>
@@ -123,14 +130,14 @@ const AgentList = () => {
             variant="contained"
             color="primary"
             disabled={!selectedAgent}
-            style={{ marginLeft: "10px",backgroundColor:"#E73C33" }}
+            style={{ marginLeft: "10px", backgroundColor: "#E73C33" }}
           >
             {loading ? <CircularProgress size={24} /> : "Submit"}
           </Button>
         </form>
       </Paper>
       {!loading && relationshipManagers && (
-        <div style={{ width: "70%", margin:"auto" }}>
+        <div style={{ width: "70%", margin: "auto" }}>
           <DataGrid
             rows={relationshipManagers.result}
             columns={columns}

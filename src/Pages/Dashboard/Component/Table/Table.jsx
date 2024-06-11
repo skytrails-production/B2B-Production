@@ -34,13 +34,20 @@ import { vendorAction } from "../../../../Redux/Auth/VendorAmount/vendorAmountDa
 import { AiFillEdit } from "react-icons/ai";
 import Pagination from "@mui/material/Pagination";
 import SearchIcon from "@mui/icons-material/Search";
+import {
+  DataGrid,
+  GridToolbarContainer,
+  GridToolbarExport,
+  GridToolbarFilterButton,
+} from "@mui/x-data-grid";
 // React-bootstrap
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 import Loader from "../../../Loader/Loader";
 import TablePreloader from "../../../Loader/TablePreloader";
 import { apiURL } from "../../../../Constants/constant";
-
+import SortAscendingIcon from "@mui/icons-material/ArrowUpward";
+import SortDescendingIcon from "@mui/icons-material/ArrowDownward";
 const style = {
   position: "absolute",
   top: "50%",
@@ -85,6 +92,54 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
+
+
+
+
+
+
+
+
+const CustomToolbar = ({ handleSortAscending, handleSortDescending }) => {
+  return (
+    <GridToolbarContainer>
+      <GridToolbarFilterButton />
+      <GridToolbarExport />
+      <Button
+        onClick={handleSortAscending}
+        startIcon={<SortAscendingIcon />}
+        sx={{
+          marginLeft: "8px",
+          backgroundColor: "white",
+          color: "#5298DD",
+          "&:hover": {
+            backgroundColor: "#f0f0f0",
+          },
+        }}
+        variant="contained"
+      >
+        Sort Ascending
+      </Button>
+      <Button
+        onClick={handleSortDescending}
+        startIcon={<SortDescendingIcon />}
+        sx={{
+          marginLeft: "8px",
+          backgroundColor: "white",
+          color: "#5298DD",
+          "&:hover": {
+            backgroundColor: "#f0f0f0",
+          },
+        }}
+        variant="contained"
+      >
+        Sort Descending
+      </Button>
+    </GridToolbarContainer>
+  );
+};
+
+
 export default function Tables() {
   const [imgUrl, setImgUrl] = useState(null);
   const [checked, setChecked] = useState(false);
@@ -103,7 +158,7 @@ export default function Tables() {
   // const [markUpValues, setMarkUpValues] = useState(markups);
 
   // Get api;
-  const tableData = reducerState?.userTableData?.userData?.data?.data;
+  const tableData = reducerState?.userTableData?.userData?.data?.result;
 
   const [markUpValues, setMarkUpValues] = useState({
     flight: "",
@@ -126,12 +181,12 @@ export default function Tables() {
 
   // const [openModal,setOpenModal] = useState(false)
   const [isActive, setIsActive] = useState(
-    reducerState?.userTableData?.userData?.data?.data[0]?.is_active
+    reducerState?.userTableData?.userData?.data?.data?.is_active
   );
 
   // const [markUp, setMarkUp] = useState(reducerState?.userTableData?.userData?.data?.data[0]?.markup)
 
-  const markupData = reducerState?.userTableData?.userData?.data?.data.map(
+  const markupData = reducerState?.userTableData?.userData?.data?.result?.map(
     (ele) => ele.markup
   );
 
@@ -157,10 +212,10 @@ export default function Tables() {
   // const [selected, setSelected] = useState([]);
   // const [activeSwitch, setActiveSwitch] = useState(true);
 
-  useEffect(() => {
-    axios.get(`${apiURL.baseURL}/skyTrails/user/getallusers`);
-    //console.log(ab);
-  }, []);
+  // useEffect(() => {
+  //   axios.get(`${apiURL.baseURL}/skyTrails/user/getallusers`);
+  //   //console.log(ab);
+  // }, []);
 
   // -------- Activate or Deactivate--------//
   const [activeUsers, setActive] = useState({});
