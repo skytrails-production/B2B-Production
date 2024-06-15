@@ -18,6 +18,7 @@ import Registration from "../Pages/registration/Registration";
 import Onbording from "../Pages/registration/Onbording";
 import Login from "../Pages/login/Login";
 import Forget from "../Pages/login/ForgetPassword";
+import RMforgotpassword from "../Pages/relationshipManager/RMforgotpassword";
 import SubadminForgetPassword from "../Pages/subAdmin/SubadminForgetPassword";
 import HotelSearch from "../Pages/Hotel/hotelsearch/HotelSearch";
 import Booknow from "../Pages/Flight/booknow/Booknow";
@@ -204,7 +205,7 @@ const MainPage = () => {
       !location.pathname.includes("/Registration") &&
       !location.pathname.includes("/forgetPassword") &&
       !location.pathname.includes("/SubAdminforgetPassword") &&
-      
+      !location.pathname.includes("/RMforgetPassword") &&
       !location.pathname.includes("/adminLogin") &&
       !location.pathname.includes("/subAdminLogin") &&
       !location.pathname.includes("/subAdmin") &&
@@ -212,10 +213,10 @@ const MainPage = () => {
       !location.pathname.includes("/admin/dashboard") &&
       !location.pathname.includes("/agentProfile/Login") &&
       !location.pathname.includes("/agentProfile/dashboard") &&
-      !location.pathname.includes("/relationshipManager/Login")&&
-      !location.pathname.includes("relationshipManager/dashboard")&&
-      !location.pathname.includes("relationShipManager/getAgentBookings")&&
-      !location.pathname.includes("relationShipManager/getAgentCancelReq")&&
+      !location.pathname.includes("/relationshipManager/Login") &&
+      !location.pathname.includes("relationshipManager/dashboard") &&
+      !location.pathname.includes("relationShipManager/getAgentBookings") &&
+      !location.pathname.includes("relationShipManager/getAgentCancelReq") &&
       !location.pathname.includes("relationShipManager/getAgentChangeReq")
     ) {
       navigate("/Login");
@@ -245,23 +246,22 @@ const MainPage = () => {
       // console.log(reducerState?.adminAuth?.isLogin,'/admin/dashboard')
       navigate("/agentProfile/Login");
       // }
-    }else if(location.pathname === "relationshipManager/Login"){
+    } else if (location.pathname === "relationshipManager/Login") {
       navigate("relationshipManager/Login");
-    }else if(location.pathname === "relationShipManager/getAgentBookings"){
+    } else if (location.pathname === "relationShipManager/getAgentBookings") {
       navigate("relationShipManager/getAgentBookings");
-    }else if(location.pathname === "relationShipManager/getAgentCancelReq"){
+    } else if (location.pathname === "relationShipManager/getAgentCancelReq") {
       navigate("relationShipManager/getAgentCancelReq");
-    }
-    else if(location.pathname === "relationShipManager/getAgentChangeReq"){
+    } else if (location.pathname === "relationShipManager/getAgentChangeReq") {
       navigate("relationShipManager/getAgentChangeReq");
-    }
-    else if(location.pathname === "forgetPassword"){
+    } else if (location.pathname === "forgetPassword") {
       navigate("forgetPassword");
-    }
-
-    else if(location.pathname === "SubAdminforgetPassword"){
+    } else if (location.pathname === "RMforgetPassword") {
+      navigate("RMforgetPassword");
+    } else if (location.pathname === "SubAdminforgetPassword") {
       navigate("SubAdminforgetPassword");
     }
+    
   }, []);
 
   useEffect(() => {
@@ -274,7 +274,7 @@ const MainPage = () => {
     };
     dispatch(tokenAction(payload));
   }, [reducerState?.ip?.ipData]);
-  
+
   // console.log(reducerState?.ip,"reducerState")
 
   // useEffect(() => {
@@ -305,12 +305,10 @@ const MainPage = () => {
     return () => clearTimeout(loadingTimeout);
   }, []);
 
-
   if (isLoading) {
     // return
     <LoadingSpinner />;
   }
-
 
   // if (!windowWidth) {
   //   return (
@@ -351,7 +349,7 @@ const MainPage = () => {
       location.pathname === "/adminlogin" ||
       location.pathname === "/admin/addnotification" ||
       location.pathname === "/admin/createQuiz" ||
-      location.pathname === "/admin/createBlog"||
+      location.pathname === "/admin/createBlog" ||
       location.pathname === "/subAdmin/dashboard/Agentflightcancel" ||
       location.pathname === "/subAdmin/dashboard/Agenthotelcancel" ||
       location.pathname === "/subAdmin/dashboard/Agentbuscancel" ||
@@ -399,7 +397,7 @@ const MainPage = () => {
         "/hotels/hotelsearchGRM/guestDetails/review/ticket" ||
       location.pathname.includes("skyTrails/agent") ||
       location.pathname.includes("agentProfile/Login") ||
-      location.pathname.includes("relationshipManager/Login")||
+      location.pathname.includes("relationshipManager/Login") ||
       // /subAdmin/dashboard/addmarkups"
       isFlightEticketPage ||
       isBusEticketPage ||
@@ -407,7 +405,6 @@ const MainPage = () => {
         <>{reducerState?.logIn?.isLogin && <Headers />}</>
       )}
       {location.pathname === "/" ||
-
       location.pathname === "/aboutus" ||
       location.pathname === "/contactus" ||
       location.pathname === "/privacypolicy" ||
@@ -430,7 +427,6 @@ const MainPage = () => {
       location.pathname === "/subAdmin/dashboard/requiredocuments" ||
       location.pathname ===
         "/hotels/hotelsearchGRM/guestDetails/review/ticket" ||
-
       location.pathname === "/adminprofile" ||
       location.pathname === "/subAdmin/dashboard/addEvents" ||
       location.pathname === "/subAdmin/dashboard/Subadmintable" ||
@@ -476,13 +472,10 @@ const MainPage = () => {
       location.pathname === "/subAdmin/dashboard/addAdvertisements" ||
       location.pathname.includes("skyTrails/agent") ||
       location.pathname.includes("agentProfile/Login") ||
-
-      location.pathname.includes("relationshipManager/Login")||
+      location.pathname.includes("relationshipManager/Login") ||
       isFlightEticketPage ||
       isBusEticketPage ||
       isHotelEticketPage ? null : (
-
-
         <>{reducerState?.logIn?.isLogin && <InnerNavbar />}</>
       )}
 
@@ -507,11 +500,11 @@ const MainPage = () => {
                   element={<MainBox />}
                   style={{ color: "inherit", textDecoration: "inherit" }}
                 />
-                <Route
+                {/* <Route
                   path="/Hotel"
                   element={<Hotel />}
                   style={{ color: "inherit", textDecoration: "inherit" }}
-                />
+                /> */}
                 <Route exact path="flightresult" element={<Flightresult />} />
 
                 <Route
@@ -805,9 +798,9 @@ const MainPage = () => {
                   element={<CreateQuiz />}
                 />
                 <Route
-                exact
-                path="/admin/createBlog"
-                element={<CreateBlog/>}
+                  exact
+                  path="/admin/createBlog"
+                  element={<CreateBlog />}
                 />
                 <Route
                   exact
@@ -918,8 +911,15 @@ const MainPage = () => {
         <Routes>
           <Route path="login" element={<Loginnew />} />
           <Route path="forgetPassword" element={<Forget />} />
-          <Route path="subAdminforgetPassword" element={<SubadminForgetPassword />} />
-          
+          <Route
+            path="subAdminforgetPassword"
+            element={<SubadminForgetPassword />}
+          />
+           <Route
+            path="RMforgetPassword"
+            element={<RMforgotpassword />}
+          />
+
           <Route path="registration" element={<Registration />} />
           <Route
             exact
@@ -938,37 +938,30 @@ const MainPage = () => {
             element={<AgentProfileLogin />}
           ></Route>
           <Route
-          exact
-          path="/relationshipManager/Login"
-          element={<RegionLogin/>}
-          >
-          </Route>
-          <Route
-          exact
-          path="relationshipManager/dashboard"
-          element={<RegionDashboard/>}
+            exact
+            path="/relationshipManager/Login"
+            element={<RegionLogin />}
           ></Route>
           <Route
-          exact
-          path="relationShipManager/getAgentBookings"
-          element={<RegionBookings/>}
-          >
-
-          </Route>
+            exact
+            path="relationshipManager/dashboard"
+            element={<RegionDashboard />}
+          ></Route>
           <Route
-          exact
-          path="relationShipManager/getAgentCancelReq"
-          element={<RegionCancelReq/>}
-          >
-
-          </Route>
+            exact
+            path="relationShipManager/getAgentBookings"
+            element={<RegionBookings />}
+          ></Route>
           <Route
-          exact
-          path="relationShipManager/getAgentChangeReq"
-          element={<RegionChangeReq/>}
-          >
-
-          </Route>
+            exact
+            path="relationShipManager/getAgentCancelReq"
+            element={<RegionCancelReq />}
+          ></Route>
+          <Route
+            exact
+            path="relationShipManager/getAgentChangeReq"
+            element={<RegionChangeReq />}
+          ></Route>
           <Route
             exact
             path="/subAdmin/dashboard/*"

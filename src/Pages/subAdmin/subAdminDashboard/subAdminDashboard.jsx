@@ -180,7 +180,7 @@ function ResponsiveDrawer(props) {
     location.pathname === "/subAdmin/dashboard/Agentflightcancel";
   const AgentLists = location.pathname === "/subAdmin/dashboard/AgentList";
   const Allblog = location.pathname === "/subAdmin/dashboard/AllBlog";
-  
+
   const AgentListsRM = location.pathname === "/subAdmin/dashboard/AgentListRM";
   const agenthotelCancel =
     location.pathname === "/subAdmin/dashboard/Agenthotelcancel";
@@ -313,7 +313,6 @@ function ResponsiveDrawer(props) {
     navigate("./Agenttable");
   };
   const handleAllBlogs = () => {
-   
     navigate("./AllBlog");
   };
   const handleSsdcTable = () => {
@@ -1097,7 +1096,7 @@ function ResponsiveDrawer(props) {
             <ListItemButton onClick={handleRelationShip}>
               <DomainIcon style={{ color: "white", fontSize: "10px" }} />
               <ListItemText style={{ color: "white", marginLeft: "5px" }}>
-                Relationship
+                RM Table
               </ListItemText>
             </ListItemButton>
           </ListItem>
@@ -2046,5 +2045,3 @@ ResponsiveDrawer.propTypes = {
   window: PropTypes.func,
 };
 export default ResponsiveDrawer;
-
-

@@ -242,7 +242,7 @@ export default function CustomizedAccordions() {
                             ))}
                           </div>
                           <div className="priceCheck">
-                            <p className="cancelpolicey">Cancellation Policy</p>
+                            {/* //<p className="cancelpolicey">Cancellation Policy</p> */}
                           </div>
                           <div className="priceCheck">
                             <div

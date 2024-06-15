@@ -72,27 +72,20 @@ const Hoteldescription = () => {
   const userBalance = reducerState?.userData?.userData?.data?.data?.balance;
 
   const userId = reducerState?.logIn?.loginData?.data?.data?.id;
-  console.log(userId, "---------------userid");
+  // console.log(userId, "---------------userid");
   // const bookingResonse=reducerState?.hotelSearchResult?.bookRoom?.BookResult?.Error?.ErrorCode;
   const nonRefundable =
     getBookingDetails?.hotel?.booking_items?.[0]?.non_refundable;
   const cancelDetails =
     getBookingDetails?.hotel?.booking_items?.[0]?.cancellation_policy;
-  //const grandTotal = totalAmount + markUpamount;
-  const grandTotal = 1;
+  const grandTotal = getBookingDetails?.price?.total + markUpamount;
+  // const grandTotal = 1;
   useEffect(() => {
     if (
       userId &&
       reducerState?.hotelSearchResultGRN?.bookRoom?.status === "confirmed"
     ) {
-      const balancePayload = {
-        _id: userId,
-        amount: grandTotal,
-        bookingType: "Hotel booking",
-      };
-
-      dispatch(balanceSubtractRequest(balancePayload));
-
+     
       const payload = {
         userId: reducerState?.logIn?.loginData?.data?.result?._id,
         agnet_reference: getBookingDetails?.agent_reference,
@@ -178,6 +171,7 @@ const Hoteldescription = () => {
     // console.log(userBalance,"userbalance", grandTotal, "grandTotal")
 
     if (userBalance >= grandTotal) {
+
       const payload = {
         search_id:
           reducerState?.hotelSearchResultGRN?.hotelDetails?.data?.data
@@ -227,6 +221,13 @@ const Hoteldescription = () => {
       };
 
       dispatch(hotelBookRoomActionGRN(payload));
+      const balancePayload = {
+        _id: userId,
+        amount: grandTotal,
+        bookingType: "Hotel booking",
+      };
+
+      dispatch(balanceSubtractRequest(balancePayload));
     } else {
       swalModal(
         "py",

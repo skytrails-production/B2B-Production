@@ -66,16 +66,16 @@ export const InnerBarLogo = [
     name: "Flights",
     path: "/flights",
   },
+  // {
+  //   avatar: <FaHotel />,
+  //   name: "Hotels",
+  //   path: "/hotel",
+  // },
   {
     avatar: <FaHotel />,
     name: "Hotels",
-    path: "/hotel",
+    path: "/hotels",
   },
-  // {
-  //   avatar: <FaHotel />,
-  //   name: "HotelsGrn",
-  //   path: "/hotels",
-  // },
   // Add more items with icons as needed
   {
     avatar: <GiCardboardBox />,

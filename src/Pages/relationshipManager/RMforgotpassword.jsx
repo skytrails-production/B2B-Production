@@ -12,6 +12,8 @@
 // import { apiURL } from "../../Constants/constant";
 // import { useDispatch } from "react-redux";
 // import { useLocation } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+
 // const boxStyle = {
 //   maxWidth: 400,
 //   margin: "auto",
@@ -23,16 +25,12 @@
 //   backgroundColor: "white",
 // };
 
-// const inputStyle = {
-//   marginBottom: "20px",
-// };
-
-// const SubadminForgetPassword = () => {
+// const RMforgotpassword = () => {
 //   const dispatch = useDispatch();
 //   const location = useLocation();
 //   const queryParams = new URLSearchParams(location.search);
 //   const token = queryParams.get("token");
-
+//   const navigate = useNavigate();
 //   const [newPassword, setNewPassword] = useState("");
 //   const [confirmPassword, setConfirmPassword] = useState("");
 //   const [showPassword, setShowPassword] = useState(false);
@@ -44,16 +42,20 @@
 //       return;
 //     }
 
+//     console.log("passnotmatched")
 //     try {
 //       const response = await fetch(
-//         `${apiURL.baseURL}/skytrails/api/subAdmin/resetPassword`, // Replace with your API URL
+//         `${apiURL.baseURL}/skyTrails/api/relationShipManager/resetPassword`,
 //         {
 //           method: "PUT",
 //           headers: {
 //             "Content-Type": "application/json",
 //             token: token,
 //           },
-//           body: JSON.stringify({ newPassword }),
+//           body: JSON.stringify({
+//             password: newPassword,
+//             confirmpassword: confirmPassword,
+//           }),
 //         }
 //       );
 
@@ -62,6 +64,7 @@
 //         toast.success("Password has been reset successfully!");
 //         setNewPassword("");
 //         setConfirmPassword("");
+//         navigate("/relationshipManager/Login");
 //       } else {
 //         toast.error("Failed to reset password. Please try again.");
 //       }
@@ -102,6 +105,7 @@
 //               </InputAdornment>
 //             ),
 //           }}
+//           sx={{ minHeight: "56px" }}
 //         />
 //         <TextField
 //           fullWidth
@@ -123,6 +127,7 @@
 //               </InputAdornment>
 //             ),
 //           }}
+//           sx={{ minHeight: "56px" }}
 //         />
 //         <Button
 //           type="submit"
@@ -138,7 +143,7 @@
 //   );
 // };
 
-// export default SubadminForgetPassword;
+// export default RMforgotpassword;
 
 import React, { useState } from "react";
 import {
@@ -152,9 +157,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { apiURL } from "../../Constants/constant";
-import { useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const boxStyle = {
   maxWidth: 400,
@@ -167,12 +170,7 @@ const boxStyle = {
   backgroundColor: "white",
 };
 
-const inputStyle = {
-  marginBottom: "20px",
-};
-
-const SubadminForgetPassword = () => {
-  const dispatch = useDispatch();
+const RMforgotpassword = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const token = queryParams.get("token");
@@ -190,7 +188,7 @@ const SubadminForgetPassword = () => {
 
     try {
       const response = await fetch(
-        `${apiURL.baseURL}/skytrails/api/subAdmin/resetPassword`, // Replace with your API URL
+        `${apiURL.baseURL}/skyTrails/api/relationShipManager/resetPassword`,
         {
           method: "PUT",
           headers: {
@@ -199,19 +197,21 @@ const SubadminForgetPassword = () => {
           },
           body: JSON.stringify({
             password: newPassword,
-            confirmpassword: confirmPassword,
+            confrmPassword: confirmPassword,
           }),
         }
       );
 
       const data = await response.json();
-      if (data.statusCode === 200) {
+      if (response.ok) {
         toast.success("Password has been reset successfully!");
         setNewPassword("");
         setConfirmPassword("");
-        navigate("/subAdminLogin");
+        navigate("/relationshipManager/Login");
       } else {
-        toast.error("Failed to reset password. Please try again.");
+        toast.error(
+          data.message || "Failed to reset password. Please try again."
+        );
       }
     } catch (error) {
       console.error("Error during password reset", error);
@@ -250,6 +250,7 @@ const SubadminForgetPassword = () => {
               </InputAdornment>
             ),
           }}
+         
         />
         <TextField
           fullWidth
@@ -271,8 +272,15 @@ const SubadminForgetPassword = () => {
               </InputAdornment>
             ),
           }}
+         
         />
-        <Button type="submit" variant="contained" color="primary" fullWidth>
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          fullWidth
+          sx={{ minHeight: "56px" }}
+        >
           Reset Password
         </Button>
       </form>
@@ -280,4 +288,4 @@ const SubadminForgetPassword = () => {
   );
 };
 
-export default SubadminForgetPassword;
+export default RMforgotpassword;

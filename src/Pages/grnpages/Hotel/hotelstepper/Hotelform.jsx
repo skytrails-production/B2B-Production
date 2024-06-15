@@ -626,7 +626,7 @@ const HotelForm = () => {
                                     }
                                   >
                                     {/* Assuming the age range is from 1 to 12 */}
-                                    {Array.from({ length: 12 }, (_, i) => (
+                                    {Array.from({ length: 11 }, (_, i) => (
                                       <option key={i} value={i + 1}>
                                         {i + 1}
                                       </option>

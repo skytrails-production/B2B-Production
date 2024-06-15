@@ -337,7 +337,7 @@ const SubAdminLoginForm = () => {
                     <input
                       type="text"
                       className="login__inputsub"
-                      placeholder="Username"
+                      placeholder="Email"
                       value={userName}
                       onChange={(e) => setUserName(e.target.value)}
                       required
@@ -362,7 +362,7 @@ const SubAdminLoginForm = () => {
                       onClick={togglePasswordVisibility}
                       style={{
                         position: "absolute",
-                        top: "50%",
+                        top: "37%",
                         right: "73px",
                         transform: "translateY(-50%)",
                       }}
