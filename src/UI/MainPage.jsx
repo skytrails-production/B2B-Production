@@ -916,7 +916,7 @@ const MainPage = () => {
             element={<SubadminForgetPassword />}
           />
            <Route
-            path="RMforgetPassword"
+            path="RMforgetPassword" 
             element={<RMforgotpassword />}
           />
 

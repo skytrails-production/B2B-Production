@@ -17,6 +17,7 @@ import dayjs, { Dayjs } from "dayjs";
 import { balanceSubtractRequest } from "../../../../Redux/Auth/balaceSubtract/actionBalnceSubtract";
 import userApi from "../../../../Redux/API/api";
 import { swalModal } from "../../../../utils/swal";
+
 import "./Hoteldescription.css";
 const Hoteldescription = () => {
   const apiUrlPayment = `${apiURL.baseURL}/skyTrails/api/transaction/easebussPayment`;
@@ -35,7 +36,7 @@ const Hoteldescription = () => {
   const hotelinfoGRN = reducerState?.hotelSearchResultGRN?.hotelRoom?.hotel;
   const hotelMainReducer =
     reducerState?.hotelSearchResultGRN?.ticketData?.data?.data;
-  console.log(hotelMainReducer, "hotel============================");
+  // console.log(hotelMainReducer, "hotel============================");
   const passenger = reducerState?.passengers?.passengersData;
   const [isDisableScroll, setIsDisableScroll] = useState(false);
   // const [sub, setSub] = useState(false);
@@ -78,7 +79,9 @@ const Hoteldescription = () => {
     getBookingDetails?.hotel?.booking_items?.[0]?.non_refundable;
   const cancelDetails =
     getBookingDetails?.hotel?.booking_items?.[0]?.cancellation_policy;
-  const grandTotal = getBookingDetails?.price?.total + markUpamount;
+  const grandTotal = Number(hotelinfoGRN?.rate?.price)+ Number(markUpamount);
+  // console.log(Number(hotelinfoGRN?.rate?.price),"login")
+  
   // const grandTotal = 1;
   useEffect(() => {
     if (
@@ -94,7 +97,7 @@ const Hoteldescription = () => {
         booking_reference: getBookingDetails?.booking_reference,
         checkin: getBookingDetails?.checkin,
         checkout: getBookingDetails?.checkout,
-        total: getBookingDetails?.price?.total,
+        total: grandTotal,
         holder: {
           title: passenger?.[0]?.adults?.[0]?.Title,
           name: passenger?.[0]?.adults?.[0]?.FirstName,
@@ -228,6 +231,16 @@ const Hoteldescription = () => {
       };
 
       dispatch(balanceSubtractRequest(balancePayload));
+      Swal.fire({
+        title: 'Booking Successful',
+        text: 'Your booking was successful! Thank you for booking with us.',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate('/hotels');
+        }
+      });
     } else {
       swalModal(
         "py",
@@ -239,7 +252,7 @@ const Hoteldescription = () => {
 
   const storedFormData = JSON.parse(sessionStorage.getItem("hotelFormData"));
   //const data = storedFormData?.dynamicFormData[0]; // Assuming dynamicFormData is an array with at least one element
-  console.log(reducerState, "reducer state");
+  // console.log(reducerState, "reducer state");
   const hotelCancellationPolicies = reducerState?.hotelSearchResult?.blockRoom
     ?.BlockRoomResult?.HotelRoomsDetails
     ? reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult
