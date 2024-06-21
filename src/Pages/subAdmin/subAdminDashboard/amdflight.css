@@ -1,0 +1,13 @@
+.update-button {
+    border: 2px solid #007bff; /* Adjust the border size and color as needed */
+    padding: 5px 10px; /* Optional: Adjust padding for better appearance */
+    background-color: #007bff; /* Optional: Set background color */
+    color: white; /* Optional: Set text color */
+    border-radius: 5px; /* Optional: Add rounded corners */
+    cursor: pointer; /* Optional: Change cursor to pointer */
+  }
+  
+  .update-button:hover {
+    background-color: #0056b3; /* Optional: Change background color on hover */
+  }
+  

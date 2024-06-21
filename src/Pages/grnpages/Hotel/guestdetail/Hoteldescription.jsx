@@ -238,7 +238,7 @@ const Hoteldescription = () => {
         confirmButtonText: 'OK'
       }).then((result) => {
         if (result.isConfirmed) {
-          navigate('/hotels');
+          navigate('/');
         }
       });
     } else {

@@ -427,7 +427,7 @@ input[type="range"] {
   /*  slider progress trick  */
   overflow: hidden;
   border-radius: 16px;
-  height: 11px !important;
+  height: 11px;
 }
 
 /* Track: webkit browsers */

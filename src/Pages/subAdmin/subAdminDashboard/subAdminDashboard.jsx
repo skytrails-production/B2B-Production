@@ -37,7 +37,7 @@ import {
   Button,
 } from "@mui/material";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-
+import FlightBookingAmd from "./FlightBookingAmd";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FlightIcon from "@mui/icons-material/Flight";
 import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
@@ -149,7 +149,7 @@ function ResponsiveDrawer(props) {
   const [DocumentsCategorys, setDocumentsCategorys] = React.useState(false);
 
   const [requireDocuments, setrequireDocuments] = React.useState(false);
-
+  const [flightbookingAmds,setshowflightbookingAmd] = React.useState(false);
   const [webadvertisements, setwebadvertisement] = React.useState(false);
   const [addsubadmin, setaddSubadmins] = useState(false);
   const [addAgents, setaddAgents] = useState(false);
@@ -167,6 +167,8 @@ function ResponsiveDrawer(props) {
   // console.log(access, "------------------");
   const homeView = location.pathname === "/subAdmin/dashboard";
   const agentTableView = location.pathname === "/subAdmin/dashboard/Agenttable";
+  const flightbookingAmd =
+    location.pathname === "/subAdmin/dashboard/flightbookingAmd";
   const subadminTableView =
     location.pathname === "/subAdmin/dashboard/Subadmintable";
   const holidayPackage =
@@ -311,6 +313,10 @@ function ResponsiveDrawer(props) {
   const handleAgentTable = () => {
     setShowAgentData(true);
     navigate("./Agenttable");
+  };
+  const handleflightbookingAmd = () => {
+    setshowflightbookingAmd(true);
+    navigate("./flightbookingAmd");
   };
   const handleAllBlogs = () => {
     navigate("./AllBlog");
@@ -788,6 +794,25 @@ function ResponsiveDrawer(props) {
             </ListItemButton>
           </ListItem>
         )}
+         {access === "BOOKING_MANAGER" && (
+          <ListItem
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "-25px",
+              paddingLeft: "0px",
+            }}
+          >
+            <ListItemButton onClick={handleflightbookingAmd}>
+              <DomainIcon
+                style={{ color: "white", fontSize: "10px", marginRight: "2px" }}
+              />
+              <ListItemText style={{ color: "white" }}>
+               Flight Booking Amadeus
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
+        )}
         {access === "CONTENT_MANAGER" && (
           <ListItem
             style={{
@@ -898,6 +923,7 @@ function ResponsiveDrawer(props) {
             </ListItemButton>
           </ListItem>
         )}
+
         <Menu
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
@@ -1876,6 +1902,9 @@ function ResponsiveDrawer(props) {
 
         <Typography paragraph>
           {agentflightCancel && <AgentFlightCancel />}
+        </Typography>
+        <Typography paragraph>
+          {flightbookingAmd && <FlightBookingAmd />}
         </Typography>
 
         <Typography paragraph>

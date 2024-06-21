@@ -45,9 +45,9 @@ export default function Popularfilter() {
   const reducerState = useSelector((state) => state);
 
   const dispatch = useDispatch();
-  const [result, setResult] = useState(
-    reducerState?.hotelSearchResultGRN?.hotels
-  );
+  const [result, setResult] = useState([]);
+
+  console.log(result, "++++++++");
   useEffect(() => {
     setResult(reducerState?.hotelSearchResultGRN?.hotels);
     setHasMore(reducerState?.hotelSearchResultGRN?.hasMore);
@@ -99,15 +99,14 @@ export default function Popularfilter() {
   const handleSortChange = (event) => {
     setSortOption(event.target.value);
   };
-
   const [sortOption, setSortOption] = useState("lowToHigh");
   const [searchInput, setSearchInput] = useState("");
 
-  const maxPrice = result?.HotelResults?.reduce((max, hotel) => {
-    return Math.max(max, hotel?.Price?.PublishedPriceRoundedOff || 0);
+  const maxPrice = result?.reduce((max, hotel) => {
+    return Math.max(max, hotel?.min_rate?.price || 0);
   }, 0);
-  const minPrice = result?.HotelResults?.reduce((min, hotel) => {
-    return Math.min(min, hotel?.Price?.PublishedPriceRoundedOff || Infinity);
+  const minPrice = result?.reduce((min, hotel) => {
+    return Math.min(min, hotel?.min_rate?.price || Infinity);
   }, Infinity);
 
   const [priceRangeValue, setPriceRangeValue] = useState(maxPrice + 5001);
@@ -125,7 +124,6 @@ export default function Popularfilter() {
   }, [maxPrice]);
 
   const [selectedCategory, setSelectedCategory] = useState([]);
-
   const handleRadioChange = (event) => {
     setSearchInput("");
     const selectedValue = event.target.value;
@@ -157,37 +155,87 @@ export default function Popularfilter() {
     });
   };
 
-  const sortedAndFilteredResults = result?.HotelResults?.filter((item) => {
-    const hotelName = item?.HotelName?.toLowerCase();
-    const hotelAddress = item?.HotelLocation?.toLowerCase();
-    const starRating = item?.StarRating;
-    // const publishedPrice = item?.Price?.PublishedPrice;
-    const location = item?.HotelLocation;
-    const categoryFilters = selectedCategory?.map((category) => {
-      const [groupName, value] = category.split(":");
-      switch (groupName) {
-        case "star":
-          return starRating === parseInt(value);
-
-        case "location":
-          return location === value;
-        default:
-          return false;
-      }
-    });
-    const priceInRange = item?.Price?.PublishedPrice <= priceRangeValue;
-    const searchFilter =
-      hotelName?.includes(searchInput?.toLowerCase()) ||
-      hotelAddress?.includes(searchInput?.toLowerCase());
-    // return categoryFilters?.every((filter) => filter);
-    return (
-      categoryFilters?.every((filter) => filter) && searchFilter && priceInRange
+  const allFacilities = result?.reduce((allFacilities, hotel) => {
+    return allFacilities?.concat(
+      hotel?.facilities?.split(";").map((facility) => facility?.trim())
     );
-  })?.sort((a, b) =>
-    sortOption === "lowToHigh"
-      ? a?.Price?.PublishedPriceRoundedOff - b?.Price?.PublishedPriceRoundedOff
-      : b?.Price?.PublishedPriceRoundedOff - a?.Price?.PublishedPriceRoundedOff
-  );
+  }, []);
+
+  const allUniqueFacilities = [...new Set(allFacilities)];
+  const initialDisplayCount = 10;
+  const [displayCount, setDisplayCount] = useState(initialDisplayCount);
+
+  const handleShowMore = () => {
+    setDisplayCount(
+      displayCount === initialDisplayCount
+        ? allUniqueFacilities?.length
+        : initialDisplayCount
+    );
+  };
+
+  const sortedAndFilteredResults = result
+    ?.filter((item) => {
+      const hotelName = item?.name?.toLowerCase();
+      const hotelAddress = item?.address?.toLowerCase();
+      const starRating = item?.category;
+      const categoryFilters = selectedCategory?.map((category) => {
+        const [groupName, value] = category.split(":");
+        switch (groupName) {
+          case "star":
+            return starRating === parseInt(value);
+
+          case "facility":
+            return item?.facilities
+              ?.split(";")
+              .map((f) => f.trim())
+              .includes(value);
+          default:
+            return false;
+        }
+      });
+      const priceInRange = item?.min_rate?.price <= priceRangeValue;
+      const searchFilter =
+        hotelName?.includes(searchInput?.toLowerCase()) ||
+        hotelAddress?.includes(searchInput?.toLowerCase());
+      return (
+        categoryFilters?.every((filter) => filter) &&
+        searchFilter &&
+        priceInRange
+      );
+    })
+    ?.sort((a, b) =>
+      sortOption === "lowToHigh"
+        ? a?.min_rate?.price - b?.min_rate?.price
+        : b?.min_rate?.price - a?.min_rate?.price
+    )
+    ?.filter((item) => item?.images?.main_image !== "" && item?.category > 2);
+  // const sortedAndFilteredResults = result?.filter((item) => {
+  //   const hotelName = item?.name?.toLowerCase();
+  //   const hotelAddress = item?.address?.toLowerCase();
+  //   const starRating = item?.category;
+  //   const categoryFilters = selectedCategory?.map((category) => {
+  //     const [groupName, value] = category.split(":");
+  //     switch (groupName) {
+  //       case "star":
+  //         return starRating === parseInt(value);
+
+  //       case "facility":
+  //         return item.facilities
+  //           .split(";")
+  //           .map((f) => f.trim())
+  //           .includes(value);
+  //       default:
+  //         return false;
+  //     }
+  //   });
+  //   const priceInRange = item?.min_rate?.price <= priceRangeValue;
+  //   const searchFilter =
+  //     hotelName?.includes(searchInput?.toLowerCase()) ||
+  //     hotelAddress?.includes(searchInput?.toLowerCase());
+  //   return (
+  //     categoryFilters?.every((filter) => filter) && searchFilter && priceInRange
+  //   );
+  // });
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -201,20 +249,9 @@ export default function Popularfilter() {
     totalChildren += room?.NoOfChild || 0;
   });
 
-  console.log(reducerState, "reducer state");
-
   // const storedFormData = JSON.parse(sessionStorage.getItem("hotelFormData"));
 
-  const initialDisplayCount = 6;
-  const [displayCount, setDisplayCount] = useState(initialDisplayCount);
-
-  const handleShowMore = () => {
-    setDisplayCount(
-      displayCount === initialDisplayCount
-        ? result?.HotelResults?.length
-        : initialDisplayCount
-    );
-  };
+  const storedFormData = JSON.parse(sessionStorage.getItem("hotelFormData"));
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [xMaxLocation, setxMaxLocation] = useState(0);
   const [valueShow, setValueShow] = useState(false);
@@ -224,7 +261,6 @@ export default function Popularfilter() {
   };
 
   const handleMouseMove = (e) => {
-    // setCursorPosition({...pre, x: e.clientX, y: e.clientY });
     if (xMaxLocation === 0) {
       setxMaxLocation(e.clientX);
     }
@@ -241,12 +277,16 @@ export default function Popularfilter() {
     if (xMaxLocation < e.clientX) {
       setCursorPosition((prevState) => ({ ...prevState, x: xMaxLocation }));
     }
-    // console.log(minPrice, Number(priceRangeValue), maxPrice)
     if (cursorPosition.y === 0) {
       setCursorPosition((prevState) => ({ ...prevState, y: e.clientY }));
     }
-    // console.log(e.clientX,e.clientY,)
   };
+  useEffect(() => {
+    if (xMaxLocation < cursorPosition.x) {
+      setCursorPosition((prevState) => ({ ...prevState, x: xMaxLocation }));
+    }
+  }, [cursorPosition]);
+
   useEffect(() => {
     if (xMaxLocation < cursorPosition.x) {
       setCursorPosition((prevState) => ({ ...prevState, x: xMaxLocation }));
@@ -263,27 +303,8 @@ export default function Popularfilter() {
   //grn
 
   //filtercomponent
-  const [checkedItems, setCheckedItems] = useState({});
+
   const [hasMore, setHasMore] = useState(true);
-  const byPriceOptions = [
-    { id: 1, name: "Low to High" },
-    { id: 2, name: "High to Low" },
-  ];
-
-  const byLocalty = [
-    { id: 1, name: "Dal Lake" },
-    { id: 2, name: "Nishat" },
-    { id: 1, name: "Raj Baagh" },
-    { id: 2, name: "Boulevard Street" },
-  ];
-
-  const [checkboxItems, setCheckboxItems] = useState([
-    { id: 1, name: "5 Star" },
-    { id: 2, name: "4 Star" },
-    { id: 3, name: "3 Star" },
-    { id: 4, name: "2 Star" },
-    { id: 5, name: "1 Star" },
-  ]);
 
   const [page, setPage] = useState(1);
 
@@ -303,39 +324,6 @@ export default function Popularfilter() {
   function fetchMoreData() {
     setPage((pre) => pre + 1);
   }
-  const CheckboxList = ({ items, label }) => {
-    const [checkedItems, setCheckedItems] = useState({});
-
-    const handleCheckboxChange = (id) => {
-      setCheckedItems((prevState) => ({
-        ...prevState,
-        [id]: !prevState[id],
-      }));
-    };
-
-    return (
-      <div>
-        <h3>{label}</h3>
-        <div className="firstdivstar">
-          {items.map((item) => (
-            <div key={item.id} className="newfilterbox">
-              <input
-                className="newcheckbox"
-                type="checkbox"
-                id={`checkbox-${item.id}`}
-                name={item.name}
-                checked={checkedItems[item.id] || false}
-                onChange={() => handleCheckboxChange(item.id)}
-              />
-              <label htmlFor={`checkbox-${item.id}`} className="itemnew">
-                {item.name}
-              </label>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  };
 
   return (
     <>
@@ -346,35 +334,274 @@ export default function Popularfilter() {
           <div className="container">
             <div className="row">
               <div className="d-none d-sm-block col-lg-3 pt-4 ">
-                <div className="flightFilterBox filtersection">
-                  <div className="filterTitles">
-                    <div className="filterimgnew">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        viewBox="0 0 16 16"
-                        fill="none"
-                      >
-                        <path
-                          d="M9.33147 8V13.2533C9.35813 13.4533 9.29147 13.6667 9.13813 13.8067C9.07646 13.8685 9.0032 13.9175 8.92255 13.951C8.8419 13.9844 8.75545 14.0016 8.66813 14.0016C8.58082 14.0016 8.49437 13.9844 8.41372 13.951C8.33307 13.9175 8.25981 13.8685 8.19813 13.8067L6.85813 12.4667C6.78542 12.3956 6.73014 12.3087 6.6966 12.2127C6.66306 12.1167 6.65218 12.0142 6.6648 11.9133V8H6.6448L2.8048 3.08C2.69654 2.94102 2.64769 2.76484 2.66893 2.58995C2.69016 2.41507 2.77976 2.2557 2.91813 2.14667C3.0448 2.05333 3.1848 2 3.33147 2H12.6648C12.8115 2 12.9515 2.05333 13.0781 2.14667C13.2165 2.2557 13.3061 2.41507 13.3273 2.58995C13.3486 2.76484 13.2997 2.94102 13.1915 3.08L9.35147 8H9.33147Z"
-                          fill="black"
-                        />
-                      </svg>
-                      <p className="filterssnew">Filter</p>{" "}
-                    </div>
-
-                    <p className="clearall">Clear all</p>
+                <div className="flightFilterBox  filtersection">
+                  <div className="filterTitle">
+                    <p>Select Filters</p>
                   </div>
-
+                  <div className="ClearFilterOneyOneContainer">
+                    {selectedCategory.map((item, index) => (
+                      <div
+                        onClick={() => handelClearOne(item)}
+                        className="ClearFilterOneyOneItemDev"
+                      >
+                        <div className="ClearFilterOneyOneItem">{item} </div>
+                        <div className="ClearFilterOneyOneItemX">X</div>
+                      </div>
+                    ))}
+                  </div>
                   <div className="innerFilter">
                     <div>
-                      <h2 className="sidebar-titles">Star Rating</h2>
-                      <CheckboxList items={checkboxItems} />
-                      <h2 className="sidebar-titles">By Price</h2>
-                      <CheckboxList items={byPriceOptions} />
-                      <h2 className="sidebar-titles">By Locality</h2>
-                      <CheckboxList items={byLocalty} />
+                      <label className="sidebar-label-container ps-0">
+                        <input
+                          type="checkbox"
+                          onChange={handleRadioChange}
+                          value="All"
+                          name="test"
+                          checked={selectedCategory.includes("test:All")}
+                        />
+                        {/* <span className="checkmark"></span> */}
+                        <span
+                          style={{
+                            color: selectedCategory.length > 0 ? "red" : "gray",
+                          }}
+                        >
+                          Clear Filter
+                        </span>
+                      </label>
+                    </div>
+
+                    <div>
+                      <h2 className="sidebar-title">Sort By Price</h2>
+                      <select
+                        className="highSelect"
+                        value={sortOption}
+                        onChange={handleSortChange}
+                      >
+                        <option value="lowToHigh">Low to High</option>
+                        <option value="highToLow">High to Low</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <h2 className="sidebar-title">By Price</h2>
+                      <div className="position-relative">
+                        <input
+                          type="range"
+                          min={minPrice + 1}
+                          max={maxPrice + 5001}
+                          // step="5000"
+                          value={priceRangeValue}
+                          onChange={handlePriceRangeChange}
+                          // onMouseDown={()=>{setValueShow(true);
+                          // }
+                          // }
+                          onMouseOver={() => setValueShow(true)}
+                          // onMouseUp={()=>setValueShow(true)}
+
+                          onMouseLeave={() => {
+                            setValueShow(false);
+                            setCursorPosition({ x: 0, y: 0 });
+                          }}
+                          onMouseOut={() => {
+                            setValueShow(false);
+                            setCursorPosition({ x: 0, y: 0 });
+                          }}
+                          onMouseMove={(e) => handleMouseMove(e)}
+                        />
+                        {valueShow && (
+                          <span
+                            className="btn btn-secondary"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            data-bs-title="Tooltip on top"
+                            style={{
+                              position: "fixed",
+                              left: cursorPosition.x - 20,
+                              top: cursorPosition.y - 60,
+                            }}
+                          >
+                            {" "}
+                            ₹{priceRangeValue}
+                          </span>
+                          // <span style={{ position: "absolute" }} id="tooltip"> ₹{priceRangeValue}</span>
+                        )}
+                        <span>
+                          Max price ₹{""}
+                          {priceRangeValue}
+                        </span>
+                      </div>
+                      <Divider
+                        sx={{ marginBottom: "15px", backgroundColor: "gray" }}
+                      />
+                    </div>
+
+                    <div>
+                      <h2 className="sidebar-title">By Rating</h2>
+                      <div>
+                        {[
+                          { value: "5", label: "⭐⭐⭐⭐⭐" },
+                          { value: "4", label: "⭐⭐⭐⭐" },
+                          { value: "3", label: "⭐⭐⭐" },
+                        ].map((starRating, index) => {
+                          const itemCount = result?.filter(
+                            (item) =>
+                              item.category === parseInt(starRating.value)
+                          ).length;
+
+                          // Generate star icons based on the selected star rating
+                          const stars = Array.from({ length: 5 }).map(
+                            (_, i) => (
+                              <img
+                                key={i}
+                                src={
+                                  i < parseInt(starRating.value)
+                                    ? starsvg
+                                    : starBlank
+                                }
+                                alt={
+                                  i < parseInt(starRating.value)
+                                    ? "star"
+                                    : "blank star"
+                                }
+                              />
+                            )
+                          );
+
+                          return (
+                            <label
+                              className="sidebar-label-container exceptionalFlex"
+                              key={index}
+                            >
+                              <input
+                                type="checkbox"
+                                onChange={handleRadioChange}
+                                value={starRating.value}
+                                name="star"
+                                checked={selectedCategory.includes(
+                                  `star:${starRating.value}`
+                                )}
+                              />
+                              <span style={{ marginTop: "8px" }}>
+                                ({itemCount})
+                              </span>
+                              <span className="checkmark"></span>
+                              <div
+                                style={{ marginLeft: "30px", marginTop: "8px" }}
+                              >
+                                {stars}
+                              </div>
+                            </label>
+                          );
+                        })}
+                      </div>
+                      <Divider
+                        sx={{ marginBottom: "15px", backgroundColor: "gray" }}
+                      />
+                    </div>
+
+                    <div>
+                      <h2 className="sidebar-title">By Amenities</h2>
+
+                      {result?.length > 0 && (
+                        <div>
+                          {/* Collect all facilities from all hotels */}
+                          {result
+                            ?.reduce((allFacilities, hotel) => {
+                              return allFacilities?.concat(
+                                hotel?.facilities
+                                  ?.split(";")
+                                  ?.map((facility) => facility.trim())
+                              );
+                            }, [])
+                            ?.filter(
+                              (facility, index, self) =>
+                                self.indexOf(facility) === index
+                            ) // Remove duplicates
+                            ?.slice(0, displayCount)
+                            ?.map((facility, index) => {
+                              const noOfTimesCame = result.reduce(
+                                (count, hotel) => {
+                                  return (
+                                    count +
+                                    (hotel?.facilities
+                                      ?.split(";")
+                                      .map((f) => f.trim())
+                                      .includes(facility)
+                                      ? 1
+                                      : 0)
+                                  );
+                                },
+                                0
+                              );
+
+                              return (
+                                <label
+                                  className="sidebar-label-container exceptionalFlex"
+                                  key={index}
+                                >
+                                  <input
+                                    type="checkbox"
+                                    onChange={handleRadioChange}
+                                    value={facility}
+                                    name="facility"
+                                    checked={selectedCategory.includes(
+                                      `facility:${facility}`
+                                    )}
+                                  />
+                                  <span>({noOfTimesCame})</span>
+                                  <span className="checkmark"></span>
+                                  <span
+                                    style={{
+                                      marginLeft: "32px",
+                                      marginTop: "8px",
+                                    }}
+                                  >
+                                    {facility}
+                                  </span>
+                                </label>
+                              );
+                            })}
+                        </div>
+                      )}
+
+                      <p
+                        className="ShowMoreHotel"
+                        style={{ cursor: "pointer" }}
+                        onClick={handleShowMore}
+                      >
+                        {displayCount === initialDisplayCount ? (
+                          <>
+                            Show More
+                            <svg
+                              height="20"
+                              viewBox="0 0 24 24"
+                              width="25"
+                              xmlns="http://www.w3.org/2000/svg"
+                              id="fi_2722987"
+                            >
+                              <g id="_16" data-name="16">
+                                <path d="m12 16a1 1 0 0 1 -.71-.29l-6-6a1 1 0 0 1 1.42-1.42l5.29 5.3 5.29-5.29a1 1 0 0 1 1.41 1.41l-6 6a1 1 0 0 1 -.7.29z"></path>
+                              </g>
+                            </svg>
+                          </>
+                        ) : (
+                          <>
+                            Show Less
+                            <svg
+                              className="rotttt"
+                              height="20"
+                              viewBox="0 0 24 24"
+                              width="25"
+                              xmlns="http://www.w3.org/2000/svg"
+                              id="fi_2722987"
+                            >
+                              <g id="_16" data-name="16">
+                                <path d="m12 16a1 1 0 0 1 -.71-.29l-6-6a1 1 0 0 1 1.42-1.42l5.29 5.3 5.29-5.29a1 1 0 0 1 1.41 1.41l-6 6a1 1 0 0 1 -.7.29z"></path>
+                              </g>
+                            </svg>
+                          </>
+                        )}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -383,7 +610,7 @@ export default function Popularfilter() {
               {/* for bigger device  */}
 
               <div className=" col-lg-9 col-md-12 pt-4">
-                <motion.div
+                {/* <motion.div
                   initial="initial"
                   whileInView="animate"
                   viewport={{ once: true, amount: 0.8 }}
@@ -428,9 +655,9 @@ export default function Popularfilter() {
 
                     <div className="priceBookHotel"></div>
                   </motion.div>
-                </motion.div>
+                </motion.div> */}
                 <InfiniteScroll
-                  dataLength={result.length}
+                  dataLength={sortedAndFilteredResults.length}
                   next={fetchMoreData}
                   hasMore={hasMore}
                   loader={
@@ -461,7 +688,7 @@ export default function Popularfilter() {
                   }
                 >
                   {result?.length > 0 ? (
-                    result?.map((result, index) => {
+                    sortedAndFilteredResults?.map((result, index) => {
                       // const resultIndex = result?.ResultIndex;
                       const hotelCode = result?.hotel_code;
                       return (
