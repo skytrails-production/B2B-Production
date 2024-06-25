@@ -40,7 +40,7 @@ function Loginnew() {
 
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: "", password: "" });
-  const [formError, setFormError] = useState("");
+  const [formError, setFormError] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -56,6 +56,7 @@ function Loginnew() {
   };
 
   const handleSubmit = async () => {
+    // console.log("reducer",reducerState);
     if (!formData.email.trim() || !formData.password.trim()) {
       setFormError("Please fill in all fields.");
       return;
@@ -66,6 +67,7 @@ function Loginnew() {
       setFormError("");
     } catch (error) {
       setFormError(error);
+      console.log(error,"error")
     }
   };
   const handleReset = async (e) => {
@@ -225,7 +227,7 @@ function Loginnew() {
                               </Button>
                               <div className="forgetBTN" onClick={() => (setIsForget(true), setFormError(""))}>Forget Password ?</div>
                             </Box>
-                            {!formError === "" && (
+                            {formError && (
                               <p
                                 style={{
                                   color: "red",

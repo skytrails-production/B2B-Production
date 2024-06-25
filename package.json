@@ -26,6 +26,7 @@
     "caniuse-lite": "^1.0.30001564",
     "context": "^3.0.23",
     "dayjs": "^1.11.10",
+    "express-validator": "^7.1.0",
     "firebase": "^10.8.0",
     "formik": "^2.4.5",
     "framer-motion": "^6.5.1",

@@ -136,10 +136,23 @@ const FlightBookingAmd = () => {
         params.row.passengerDetails[0].TicketNumber || "No Data",
     },
     //   passengerDetails
-    
+
     { field: "destination", headerName: "Destination", width: 180 },
     { field: "totalAmount", headerName: "Amount", width: 180 },
-    
+    {
+      field: "passportNo",
+      headerName: "Passport No",
+      width: 180,
+      valueGetter: (params) =>
+        params.row.passengerDetails[0].passportNo || "No Data",
+    },
+    {
+      field: "passportExpiry",
+      headerName: "passportExpiry",
+      width: 180,
+      valueGetter: (params) =>
+        params.row.passengerDetails[0].passportExpiry || "No Data",
+    },
     { field: "pnr", headerName: "PNR", width: 100 },
     {
       field: "updateTicket",
