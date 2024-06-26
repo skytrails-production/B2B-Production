@@ -40,7 +40,7 @@ import { clearOneWayReducer } from "../../../Redux/FlightSearch/OneWay/oneWay";
 import { clearOneWayEMTReducer } from "../../../Redux/FlightSearch/OneWayEMT/oneWayEMT";
 // import {flightReducerClear} from "../../../Redux/FlightBook/actionFlightBook";
 import { ClearAllActionReturn } from "../../../Redux/FlightFareQuoteRule/actionFlightQuote";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 // import { clearOneWayReducer } from "../../../Redux/FlightSearch/OneWay/oneWay";
 
 import FlightLoader from "../FlightLoader/FlightLoader";
@@ -52,7 +52,7 @@ const style = {
   transform: "translate(-50%, -50%)",
 };
 
-const Flightbookingdetail = ({passSsramount, passssrmeal}) => {
+const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [count, setCount] = useState(1);
@@ -123,7 +123,7 @@ const Flightbookingdetail = ({passSsramount, passssrmeal}) => {
   }, [reducerState?.flightBook?.flightBookDataGDS]);
 
   const location = useLocation();
-  const { baggageDetails , ssramount, mealdetails, ssrmeal} = location.state;
+  const { baggageDetails, ssramount, mealdetails, ssrmeal } = location.state;
   // totalAmount(ssramount);
   //Balance Substraction useEffect implemented below
   passSsramount(ssramount);
@@ -145,7 +145,14 @@ const Flightbookingdetail = ({passSsramount, passssrmeal}) => {
         balanceSubtractOneWay();
         setLoading(false);
         setBookingConfirmed(true);
-        navigate("/Flightbookingconfirmation", { state: { baggageDetails: baggageDetails, ssramount: ssramount, mealdetails: mealdetails, ssrmeal:ssrmeal }});
+        navigate("/Flightbookingconfirmation", {
+          state: {
+            baggageDetails: baggageDetails,
+            ssramount: ssramount,
+            mealdetails: mealdetails,
+            ssrmeal: ssrmeal,
+          },
+        });
       }
     }
   }, [reducerState?.flightBook?.flightTicketDataGDS]);
@@ -161,7 +168,14 @@ const Flightbookingdetail = ({passSsramount, passssrmeal}) => {
         balanceSubtractOneWay();
         setLoading(false);
         setBookingConfirmed(true);
-        navigate("/Flightbookingconfirmation", { state: { baggageDetails: baggageDetails, ssramount: ssramount,mealdetails: mealdetails, ssrmeal:ssrmeal }});
+        navigate("/Flightbookingconfirmation", {
+          state: {
+            baggageDetails: baggageDetails,
+            ssramount: ssramount,
+            mealdetails: mealdetails,
+            ssrmeal: ssrmeal,
+          },
+        });
       }
     }
   }, [reducerState?.flightBook?.flightBookData?.Response]);
@@ -170,7 +184,14 @@ const Flightbookingdetail = ({passSsramount, passssrmeal}) => {
     if (reducerState?.flightBook?.flightBookDataGDSReturn?.Response) {
       setLoading(false);
       getTicketForNonLCCReturn();
-      navigate("/Flightbookingconfirmation", { state: { baggageDetails: baggageDetails, ssramount: ssramount,mealdetail: mealdetails, ssrmeal:ssrmeal }});
+      navigate("/Flightbookingconfirmation", {
+        state: {
+          baggageDetails: baggageDetails,
+          ssramount: ssramount,
+          mealdetail: mealdetails,
+          ssrmeal: ssrmeal,
+        },
+      });
     } else if (reducerState?.flightBook?.flightBookDataGDSReturn?.Error) {
       setLoading(false);
       let error =
@@ -183,10 +204,6 @@ const Flightbookingdetail = ({passSsramount, passssrmeal}) => {
   function createMarkup(data) {
     return { __html: data };
   }
-
-
-
-  
 
   // Handling return booking here(flow Here is LCC to LCC  OR LCC to Non-LCC)
   useEffect(() => {
@@ -211,7 +228,7 @@ const Flightbookingdetail = ({passSsramount, passssrmeal}) => {
           TraceId:
             reducerState?.oneWay?.oneWayData?.data?.data?.Response?.TraceId ||
             reducerState?.return?.returnData?.data?.data?.Response?.TraceId,
-            
+
           // Passengers: PassengersReturn.map((item, index) => {
           //   return {
           //     ...item,
@@ -220,48 +237,37 @@ const Flightbookingdetail = ({passSsramount, passssrmeal}) => {
           //   };
           // }),
           Passengers: PassengersReturn.map((item, index) => {
-
             if (index < baggageDetails.length && index < mealdetails.length) {
-    
-    
               return {
                 ...item,
                 Email: apiURL.flightEmail,
                 ContactNo: apiURL.phoneNo,
-                
+
                 Baggage: [baggageDetails[index]],
-                MealDynamic: [mealdetails[index]]
-              }
-            }
-            else if (index < baggageDetails.length) {
-    
-    
+                MealDynamic: [mealdetails[index]],
+              };
+            } else if (index < baggageDetails.length) {
               return {
                 ...item,
                 Email: apiURL.flightEmail,
                 ContactNo: apiURL.phoneNo,
-                
-                Baggage: [baggageDetails[index]]
-              }
-            }
-            else if (index < mealdetails.length) {
-    
-    
+
+                Baggage: [baggageDetails[index]],
+              };
+            } else if (index < mealdetails.length) {
               return {
                 ...item,
                 Email: apiURL.flightEmail,
                 ContactNo: apiURL.phoneNo,
-                
-                MealDynamic: [mealdetails[index]]
-              }
-            }
-            else {
+
+                MealDynamic: [mealdetails[index]],
+              };
+            } else {
               return {
                 ...item,
-                 Email: apiURL.flightEmail,
+                Email: apiURL.flightEmail,
                 ContactNo: apiURL.phoneNo,
-               
-              }
+              };
             }
           }),
         };
@@ -438,48 +444,36 @@ const Flightbookingdetail = ({passSsramount, passssrmeal}) => {
           //   };
           // }),
           Passengers: PassengersReturn.map((item, index) => {
-
             if (index < baggageDetails.length && index < mealdetails.length) {
-    
-    
               return {
                 ...item,
                 Email: apiURL.flightEmail,
                 ContactNo: apiURL.phoneNo,
-                
-                Baggage: [baggageDetails[index]],
-                MealDynamic: [mealdetails[index]]
-              }
-            }
-            else if (index < baggageDetails.length) {
-    
-    
-              return {
-                ...item,
-                Email: apiURL.flightEmail,
-                ContactNo: apiURL.phoneNo, 
-                Baggage: [baggageDetails[index]]
-              }
-            }
 
-            else if (index < mealdetails.length) {
-    
-    
+                Baggage: [baggageDetails[index]],
+                MealDynamic: [mealdetails[index]],
+              };
+            } else if (index < baggageDetails.length) {
               return {
                 ...item,
                 Email: apiURL.flightEmail,
                 ContactNo: apiURL.phoneNo,
-                
-                MealDynamic: [mealdetails[index]]
-              }
-            }
-            else {
+                Baggage: [baggageDetails[index]],
+              };
+            } else if (index < mealdetails.length) {
               return {
                 ...item,
-                 Email: apiURL.flightEmail,
+                Email: apiURL.flightEmail,
                 ContactNo: apiURL.phoneNo,
-               
-              }
+
+                MealDynamic: [mealdetails[index]],
+              };
+            } else {
+              return {
+                ...item,
+                Email: apiURL.flightEmail,
+                ContactNo: apiURL.phoneNo,
+              };
             }
           }),
         };
@@ -495,10 +489,12 @@ const Flightbookingdetail = ({passSsramount, passssrmeal}) => {
         fareValue?.Fare?.BaseFare +
           fareValue?.Fare?.Tax +
           fareValue?.Fare?.OtherCharges +
-          markUpamount + 
+          markUpamount +
           fareValueReturn?.Fare?.BaseFare +
           fareValueReturn?.Fare?.Tax +
-          fareValueReturn?.Fare?.OtherCharges+ ssrmeal + ssramount+
+          fareValueReturn?.Fare?.OtherCharges +
+          ssrmeal +
+          ssramount +
           markUpamount <=
         currentBalance
       ) {
@@ -518,48 +514,39 @@ const Flightbookingdetail = ({passSsramount, passssrmeal}) => {
           //   };
           // }),
           Passengers: Passengers.map((item, index) => {
-
             if (index < baggageDetails.length && index < mealdetails.length) {
-    
-    
               return {
                 ...item,
                 Email: apiURL.flightEmail,
                 ContactNo: apiURL.phoneNo,
-                
+
                 Baggage: [baggageDetails[index]],
-                MealDynamic: [mealdetails[index]]
-              }
+                MealDynamic: [mealdetails[index]],
+              };
             }
             if (index < baggageDetails.length) {
-    
-    
               return {
                 ...item,
                 Email: apiURL.flightEmail,
                 ContactNo: apiURL.phoneNo,
-                
-                Baggage: [baggageDetails[index]]
-              }
+
+                Baggage: [baggageDetails[index]],
+              };
             }
             if (index < mealdetails.length) {
-    
-    
               return {
                 ...item,
                 Email: apiURL.flightEmail,
                 ContactNo: apiURL.phoneNo,
-                
-                MealDynamic: [mealdetails[index]]
-              }
-            }
-            else {
+
+                MealDynamic: [mealdetails[index]],
+              };
+            } else {
               return {
                 ...item,
-                 Email: apiURL.flightEmail,
+                Email: apiURL.flightEmail,
                 ContactNo: apiURL.phoneNo,
-               
-              }
+              };
             }
           }),
         };
@@ -628,51 +615,39 @@ const Flightbookingdetail = ({passSsramount, passssrmeal}) => {
           //   };
           // }),
           Passengers: Passengers.map((item, index) => {
-
             if (index < baggageDetails.length && index < mealdetails.length) {
-    
-    
               return {
                 ...item,
                 Email: apiURL.flightEmail,
                 ContactNo: apiURL.phoneNo,
-           
+
                 Baggage: [baggageDetails[index]],
-                MealDynamic: [mealdetails[index]]
-              }
-            }
-            else  if (index < baggageDetails.length) {
-    
-    
+                MealDynamic: [mealdetails[index]],
+              };
+            } else if (index < baggageDetails.length) {
               return {
                 ...item,
                 Email: apiURL.flightEmail,
                 ContactNo: apiURL.phoneNo,
-                
-                Baggage: [baggageDetails[index]]
-              }
-            }
-            else  if (index < mealdetails.length) {
-    
-    
+
+                Baggage: [baggageDetails[index]],
+              };
+            } else if (index < mealdetails.length) {
               return {
                 ...item,
                 Email: apiURL.flightEmail,
                 ContactNo: apiURL.phoneNo,
-                
-                MealDynamic: [mealdetails[index]]
-              }
-            }
-            else {
+
+                MealDynamic: [mealdetails[index]],
+              };
+            } else {
               return {
                 ...item,
-                 Email: apiURL.flightEmail,
+                Email: apiURL.flightEmail,
                 ContactNo: apiURL.phoneNo,
-               
-              }
+              };
             }
           }),
-          
         };
 
         if (fareValue?.IsLCC === false) {
@@ -783,8 +758,8 @@ const Flightbookingdetail = ({passSsramount, passssrmeal}) => {
       EndUserIp: reducerState?.ip?.ipData,
       TokenId: reducerState?.ip?.tokenData,
       TraceId:
-        reducerState?.oneWay?.oneWayData?.data?.data?.Response?.TraceId ||
-        reducerState?.return?.returnData?.data?.data?.Response?.TraceId,
+        reducerState?.oneWay?.oneWayData?.data?.tvoTraceId ||
+        reducerState?.return?.returnData?.data?.tvoTraceId,
       // Passengers: Passengers.map((item, index) => {
       //   return {
       //     ...item,
@@ -794,52 +769,39 @@ const Flightbookingdetail = ({passSsramount, passssrmeal}) => {
       // }),
 
       Passengers: Passengers.map((item, index) => {
-
         if (index < baggageDetails.length && index < mealdetails.length) {
-
-
           return {
             ...item,
             Email: apiURL.flightEmail,
             ContactNo: apiURL.phoneNo,
-            
+
             Baggage: [baggageDetails[index]],
-            MealDynamic: [mealdetails[index]]
-          }
-        }
-        else  if (index < baggageDetails.length) {
-
-
+            MealDynamic: [mealdetails[index]],
+          };
+        } else if (index < baggageDetails.length) {
           return {
             ...item,
             Email: apiURL.flightEmail,
             ContactNo: apiURL.phoneNo,
-            
-            Baggage: [baggageDetails[index]]
-          }
-        }
 
-        else  if (index < mealdetails.length) {
-
-
+            Baggage: [baggageDetails[index]],
+          };
+        } else if (index < mealdetails.length) {
           return {
             ...item,
             Email: apiURL.flightEmail,
             ContactNo: apiURL.phoneNo,
-            
-            MealDynamic: [mealdetails[index]]
-          }
-        }
-        else {
+
+            MealDynamic: [mealdetails[index]],
+          };
+        } else {
           return {
             ...item,
-             Email: apiURL.flightEmail,
+            Email: apiURL.flightEmail,
             ContactNo: apiURL.phoneNo,
-           
-          }
+          };
         }
       }),
-      
     };
     dispatch(bookAction(payloadLcc));
   };
@@ -857,48 +819,37 @@ const Flightbookingdetail = ({passSsramount, passssrmeal}) => {
       //   };
       // }),
       Passengers: PassengersReturn.map((item, index) => {
-
-        if (index < baggageDetails.length && index < mealdetails.length ) {
-
-
+        if (index < baggageDetails.length && index < mealdetails.length) {
           return {
             ...item,
             Email: apiURL.flightEmail,
             ContactNo: apiURL.phoneNo,
-            
+
             Baggage: [baggageDetails[index]],
-            MealDynamic: [mealdetails[index]]
-          }
-        }
-        else if (index < baggageDetails.length ) {
-
-
+            MealDynamic: [mealdetails[index]],
+          };
+        } else if (index < baggageDetails.length) {
           return {
             ...item,
             Email: apiURL.flightEmail,
             ContactNo: apiURL.phoneNo,
-            
-            Baggage: [baggageDetails[index]]
-          }
-        }
-        else if (index < mealdetails.length ) {
 
-
+            Baggage: [baggageDetails[index]],
+          };
+        } else if (index < mealdetails.length) {
           return {
             ...item,
             Email: apiURL.flightEmail,
             ContactNo: apiURL.phoneNo,
-            
-            MealDynamic: [mealdetails[index]]
-          }
-        }
-        else {
+
+            MealDynamic: [mealdetails[index]],
+          };
+        } else {
           return {
             ...item,
-             Email: apiURL.flightEmail,
+            Email: apiURL.flightEmail,
             ContactNo: apiURL.phoneNo,
-           
-          }
+          };
         }
       }),
     };
@@ -913,9 +864,11 @@ const Flightbookingdetail = ({passSsramount, passssrmeal}) => {
           ? fareValue?.Fare?.BaseFare +
             fareValue?.Fare?.Tax +
             fareValue?.Fare?.OtherCharges +
-            markUpamount + ssramount + ssrmeal
+            markUpamount +
+            ssramount +
+            ssrmeal
           : 99,
-          bookingType:"Flight booking"
+        bookingType: "Flight booking",
       };
 
       dispatch(balanceSubtractRequest(balancePayload));
@@ -929,9 +882,11 @@ const Flightbookingdetail = ({passSsramount, passssrmeal}) => {
         amount:
           fareValueReturn?.Fare?.BaseFare +
           fareValueReturn?.Fare?.Tax +
-          fareValueReturn?.Fare?.OtherCharges + ssramount + ssrmeal+
+          fareValueReturn?.Fare?.OtherCharges +
+          ssramount +
+          ssrmeal +
           markUpamount,
-          bookingType:"Flight booking"
+        bookingType: "Flight booking",
       };
 
       dispatch(balanceSubtractRequest(balancePayload));
@@ -1312,7 +1267,7 @@ const Flightbookingdetail = ({passSsramount, passssrmeal}) => {
           textAlign="center"
           onSubmit={handleSubmit}
         >
-          <div className="flightDetButton" style={{ fontSize: "16px" }} >
+          <div className="flightDetButton" style={{ fontSize: "16px" }}>
             <button
               style={{ fontSize: "16px" }}
               type="submit"
@@ -1320,8 +1275,8 @@ const Flightbookingdetail = ({passSsramount, passssrmeal}) => {
                 !passengerAgreement || !paymentOption
                   ? true
                   : loading
-                    ? true
-                    : false
+                  ? true
+                  : false
               }
             >
               {" "}

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
   TextField,
-  InputAdornment,
   Paper,
   Stack,
   Pagination,
@@ -13,13 +12,14 @@ import {
   DialogActions,
   Button,
 } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
 import { apiURL } from "../../../Constants/constant";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./amdflight.css";
 
-const FlightBookingAmd = () => {
+const AmdAgentBooking = () => {
   const [flightBookings, setFlightBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const pageSize = 10; // Number of items per page
@@ -38,7 +38,7 @@ const FlightBookingAmd = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `${apiURL.baseURL}/skyTrails/api/amadeus/user/getAllflightBooking`,
+        `${apiURL.baseURL}/skyTrails/flightbooking/amadeus/amadeusagentbooking`,
         {
           params: {
             page: currentPage,
@@ -47,8 +47,9 @@ const FlightBookingAmd = () => {
           },
         }
       );
-      setFlightBookings(response.data.result.docs);
-      setTotalPages(response.data.result.totalPages);
+      setFlightBookings(response.data.data);
+      console.log(response.data, "==============");
+      setTotalPages(response?.data?.result?.totalPages);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching flight bookings:", error);
@@ -60,7 +61,7 @@ const FlightBookingAmd = () => {
     fetchFlightBookings();
   }, [currentPage, searchTerm]);
 
-  const handlePageChange = (page) => {
+  const handlePageChange = (event, page) => {
     setCurrentPage(page);
   };
 
@@ -82,11 +83,16 @@ const FlightBookingAmd = () => {
 
   const handleUpdate = async () => {
     try {
-      const apiUrl = `${apiURL.baseURL}/skyTrails/api/amadeus/user/UpdateTicket`;
+      const apiUrl = `${apiURL.baseURL}/skyTrails/flightbooking/amadeus/updateticket`;
       const payload = {
         bookingId: selectedBooking._id,
-        ticketNumber: ticketNumber,
-        firstName: selectedBooking.passengerDetails[0].firstName,
+        passengerDetails: selectedBooking.passengerDetails.map((passenger) => ({
+          _id: passenger._id,
+          TicketNumber:
+            passenger._id === selectedBooking.passengerDetails[0]._id
+              ? ticketNumber
+              : passenger.TicketNumber,
+        })),
       };
 
       const response = await axios.put(apiUrl, payload);
@@ -94,40 +100,56 @@ const FlightBookingAmd = () => {
 
       // Assuming a successful update, close the dialog and refresh data
       handleCloseDialog();
-      fetchFlightBookings(); // Reload data after update
-
+      fetchFlightBookings();
+      toast.success("Ticket updated successfully!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     } catch (error) {
       console.error("Error updating ticket:", error);
-      alert("Failed to update ticket. Please try again later.");
+      toast.error("Failed to update ticket. Please try again later.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     }
   };
 
   const columns = [
     {
-      field: "userDetails.username",
+      field: "firstName",
       headerName: "Name",
       width: 150,
-      valueGetter: (params) => params?.row.userDetails?.username || "No Data",
+      valueGetter: (params) =>
+        params?.row.passengerDetails[0]?.firstName || "No Data",
     },
     {
-      field: "userDetails.email",
+      field: "email",
       headerName: "Email",
       width: 250,
-      valueGetter: (params) => params?.row?.userDetails?.email || "No Data",
+      valueGetter: (params) =>
+        params?.row?.passengerDetails[0]?.email || "No Data",
     },
     {
-      field: "userDetails.phone.mobile_number",
+      field: "ContactNo",
       headerName: "Phone",
       width: 180,
       valueGetter: (params) =>
-        params?.row?.userDetails?.phone?.mobile_number || "No Data",
+        params?.row?.passengerDetails[0]?.ContactNo || "No Data",
     },
     {
-      field: "userDetails.passengerDetails.firstName",
-      headerName: "firstName",
+      field: "DateOfBirth",
+      headerName: "DateOfBirth",
       width: 180,
       valueGetter: (params) =>
-        params?.row?.passengerDetails[0]?.firstName || "No Data",
+        params?.row?.passengerDetails[0]?.DateOfBirth || "No Data",
     },
     {
       field: "userDetails.passengerDetails.TicketNumber",
@@ -136,10 +158,14 @@ const FlightBookingAmd = () => {
       valueGetter: (params) =>
         params?.row?.passengerDetails[0]?.TicketNumber || "No Data",
     },
-    //   passengerDetails
-
     { field: "destination", headerName: "Destination", width: 180 },
-    { field: "totalAmount", headerName: "Amount", width: 180 },
+    {
+      field: "amount",
+      headerName: "Amount",
+      width: 180,
+      valueGetter: (params) =>
+        params?.row?.passengerDetails[0]?.amount || "No Data",
+    },
     {
       field: "passportNo",
       headerName: "Passport No",
@@ -172,6 +198,7 @@ const FlightBookingAmd = () => {
 
   return (
     <>
+      <ToastContainer />
       {access !== "BOOKING_MANAGER" ? (
         <div style={{ textAlign: "center" }}>INVALID PAGE</div>
       ) : (
@@ -194,7 +221,7 @@ const FlightBookingAmd = () => {
               className="adtable-heading"
               style={{ fontWeight: "bold" }}
             >
-              Amadeus User Booking
+              Amadeus Agent Booking
             </Typography>
           </div>
           {flightBookings.length === 0 ? (
@@ -230,7 +257,7 @@ const FlightBookingAmd = () => {
               <Pagination
                 count={totalPages}
                 page={currentPage}
-                onChange={(event, page) => handlePageChange(page)}
+                onChange={handlePageChange}
                 color="primary"
               />
             </Stack>
@@ -264,4 +291,4 @@ const FlightBookingAmd = () => {
   );
 };
 
-export default FlightBookingAmd;
+export default AmdAgentBooking;

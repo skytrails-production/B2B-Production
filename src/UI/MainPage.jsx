@@ -143,6 +143,9 @@ import CreateQuiz from "../Pages/Dashboard/Component/Table/CreateQuiz";
 import CreateBlog from "../Pages/Dashboard/Component/Table/CreateBlog";
 import Controls from "../Pages/Account/Controls";
 import HotelTicketDB from "../Pages/grnpages/Hotel/guestdetail/HotelTicketDB";
+import Passengerdetailamd from "../Pages/Flight/flightresult/Passengerdetailamd";
+import FlightReviewbookingamd from "../Pages/Flight/flightreviewbooking/FlightReviewbookingamd";
+import Flightbookingconfirmationamd from "../Pages/Flight/flightbookingconfirmation/Flightbookingconfirmationamd";
 const MainPage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -199,7 +202,7 @@ const MainPage = () => {
   useEffect(() => {
     const pathname = location?.pathname?.split("/");
 
-    console.warn(reducerState);
+    // console.warn(reducerState);
     if (
       !reducerState?.logIn?.loginData?.data &&
       !location.pathname.includes("/Registration") &&
@@ -238,7 +241,7 @@ const MainPage = () => {
       navigate(location.pathname);
     } else if (location.pathname === "adminLogin") {
       if (reducerState?.adminAuth?.isLogin) {
-        console.log(reducerState?.adminAuth?.isLogin, "/admin/dashboard");
+        // console.log(reducerState?.adminAuth?.isLogin, "/admin/dashboard");
         navigate("/admin/dashboard");
       }
     } else if (location.pathname === "agentProfile/Login") {
@@ -595,6 +598,8 @@ const MainPage = () => {
                   path="/passengerdetail"
                   element={<Passengerdetail />}
                 />
+                <Route exact path="/Passengerdetailamd"
+                element={<Passengerdetailamd/>}/>
                 <Route
                   exact
                   path="/FlightresultReturn/Passengerdetail"
@@ -610,6 +615,19 @@ const MainPage = () => {
                   path="/Flightresult/passengerdetail/flightreviewbooking"
                   element={<FlightReviewbooking />}
                 />
+                <Route exact path="/Flightresult/passengerdetail/flightreviewbookingamd"
+                element={<FlightReviewbookingamd/>}/>
+                
+
+
+                <Route exact path="/bookedTicketSucess"
+                element={<Flightbookingconfirmationamd/>}/>
+
+
+
+
+
+
                 <Route
                   exact
                   path="/Flightresult/passengerdetail/flightReturnreviewbooking"

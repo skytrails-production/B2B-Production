@@ -22,9 +22,7 @@ const Flight = (props) => {
   const reducerState = useSelector((state) => state);
   // console.log("Props", props);
   const ResultIndex = sessionStorage.getItem("ResultIndex");
-  // console.log("reducerState", reducerState);
-  // console.log("resultIndex", ResultIndex);
-  // console.warn("reducerstate", reducerState);
+
   
   return (
     <div className="container bg-light">

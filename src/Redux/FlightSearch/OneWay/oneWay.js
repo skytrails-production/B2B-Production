@@ -3,7 +3,7 @@ import * as types from "./oneWayActionType";
 export const fetchOneWay = (data) => {
   return {
     type: types.ONE_WAY_SUCCESS,
-    payload: data,
+    payload: data,    
   };
 };
 

@@ -3,7 +3,7 @@ import FlightLoader from "./FlightLoader/FlightLoader";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import StyledTabs from "./FlightFormContainer";
-import { swalModal } from "../../utils/swal"
+import { swalModal } from "../../utils/swal";
 import Swal from "sweetalert2";
 import "./Flight.css";
 import { ClearAllActionReturn } from "../../Redux/FlightFareQuoteRule/actionFlightQuote";
@@ -16,24 +16,23 @@ const Flight = () => {
   const navigate = useNavigate();
   const reducerState = useSelector((state) => state);
   const [loader, setLoader] = useState(false);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   // console.log("reducerState", reducerState);
-   function AllFlightCLEAR_Function() {
-     dispatch(ClearAllActionReturn())
-     
-     dispatch(flightReducerClear())
+  function AllFlightCLEAR_Function() {
+    dispatch(ClearAllActionReturn());
 
+    dispatch(flightReducerClear());
 
-     dispatch(clearOneWayReducer())
+    dispatch(clearOneWayReducer());
     // await dispatch(clearOneWayEMTReducer())
-     dispatch(clearPassengersReducer())
-    sessionStorage.removeItem("infants")
-    sessionStorage.removeItem("ResultIndex")
-    sessionStorage.removeItem("childs")
-    sessionStorage.removeItem("adults")
-    sessionStorage.removeItem("flightDetailsONGo")
-    sessionStorage.removeItem("flightDetailsIncome")
+    dispatch(clearPassengersReducer());
+    sessionStorage.removeItem("infants");
+    sessionStorage.removeItem("ResultIndex");
+    sessionStorage.removeItem("childs");
+    sessionStorage.removeItem("adults");
+    sessionStorage.removeItem("flightDetailsONGo");
+    sessionStorage.removeItem("flightDetailsIncome");
 
     // sessionStorage.setItem("passengers")
     // sessionStorage.setItem("passengers", {
@@ -88,13 +87,12 @@ const Flight = () => {
     //   isLoadingQuoteDone: false,
     //   isError: false
     // })
-
   }
   useEffect(() => {
     // navigate("/flights")
-    AllFlightCLEAR_Function()
+    AllFlightCLEAR_Function();
     // console.warn("reducerState::::::::::::::::::::::::::::::::: Clear ALll Actionn", reducerState)
-  }, [])
+  }, []);
   useEffect(() => {
     if (
       reducerState?.oneWay?.isLoading ||
@@ -111,16 +109,17 @@ const Flight = () => {
   // }, [reducerState?.oneWay?.oneWayData?.data?.data?.Response?.Results||reducerState?.return?.returnData?.data?.data?.Response?.Results]);
 
   useEffect(() => {
-    const oneWayResults =
-      reducerState?.oneWay?.oneWayData?.data?.data?.Response?.Results;
-    const returnResults =
-      reducerState?.return?.returnData?.data?.data?.Response?.Results;
-      // console.log(returnResults,'result return')
 
-    if (oneWayResults) {
+    const oneWayResults = reducerState?.oneWay?.oneWayData?.data?.result;
+    const returnResults =  reducerState?.return?.returnData?.data?.data?.Response?.Results;
+    // console.log(reducerState?.oneWay?.oneWayData, "onewayresult");
+
+    // if (oneWayResults) {
+    //   navigate("/Flightresult");
+    // }
+    if (reducerState?.oneWay?.oneWayData?.status === 200) {
       navigate("/Flightresult");
-    }
-     else if (returnResults) {
+    } else if (returnResults) {
       // navigate("/FlightresultReturn");
       if (returnResults[1] !== undefined) {
         navigate("/FlightresultReturn");
@@ -133,47 +132,48 @@ const Flight = () => {
       setLoader(false);
     }
   }, [
-    reducerState?.oneWay?.oneWayData?.data?.data?.Response?.Results,
+    reducerState?.oneWay?.oneWayData?.data?.result,
     reducerState?.return?.returnData?.data?.data?.Response?.Results,
   ]);
-  const error =
-    reducerState?.oneWay?.isError;
+
   useEffect(() => {
     // console.log(reducerState?.oneWay?.oneWayData?.data?.data?.Response?.Error?.ErrorCode, reducerState, "reducerState?.oneWay?.oneWayData?.data?.data?.Response")
-    if (reducerState?.oneWay?.oneWayData?.data?.data?.Response?.Error?.ErrorCode !== 0 && reducerState?.oneWay?.oneWayData?.data?.data?.Response?.Error?.ErrorCode !== undefined) {
+    if (
+      reducerState?.oneWay?.oneWayData?.data?.result?.Response?.Error
+        ?.ErrorCode !== 0 &&
+      reducerState?.oneWay?.oneWayData?.data?.responseMessage !== undefined
+    ) {
       setLoader(false);
-      swalModal('flight', reducerState?.oneWay?.oneWayData?.data?.data?.Response?.Error?.ErrorMessage, false)
-      // Swal.fire({
-      //   title: "Hii Encountered Error Flight",
-      //   text: `${reducerState?.oneWay?.oneWayData?.data?.data?.Response?.Error?.ErrorMessage}`,
-      //   icon: "question",
-      //   timer: 5000,
-      //   showClass: {
-      //     popup: `
-      //       animate__animated
-      //       animate__fadeInUp
-      //       animate__faster
-      //     `
-      //   },
-      //   hideClass: {
-      //     popup: `
-      //       animate__animated
-      //       animate__fadeOutDown
-      //       animate__faster
-      //     `
-      //   }
-      // });
-      return
+      // swalModal(
+      //   "flight",
+      //   reducerState?.oneWay?.oneWayData?.data?.responseMessage,
+      //   false
+      // );
+      return;
+    } else if (
+      reducerState?.return?.returnData?.data?.data?.Response?.Error
+        ?.ErrorCode !== undefined &&
+      reducerState?.return?.returnData?.data?.data?.Response?.Error
+        ?.ErrorCode !== 0
+    ) {
+
+
+
+      swalModal(
+        "flight",
+        reducerState?.oneWay?.oneWayData?.data?.responseMessage
+          ,
+        false
+      );
+      swalModal(
+          "flight",
+          reducerState?.oneWay?.oneWayData?.data?.responseMessage,
+          false
+        );
+      navigate("/");
+      return;
     }
-    else if (reducerState?.return?.returnData?.data?.data?.Response?.
-      Error?.ErrorCode !== undefined && reducerState?.return?.returnData?.data?.data?.Response?.
-        Error?.ErrorCode !== 0) {
-      swalModal('flight', reducerState?.return?.returnData?.data?.data?.Response?.
-        Error?.ErrorMessage, false)
-      navigate('/')
-      return
-    }
-  }, [reducerState?.oneWay?.oneWayData?.data?.data?.Response,reducerState?.return?.returnData?.data?.data?.Response]);
+  },  [reducerState?.oneWay?.oneWayData?.data?.result,reducerState?.oneWay?.oneWayData?.data?.result]);
 
   if (loader) {
     return <FlightLoader />;

@@ -3,6 +3,8 @@ import { logInReducer } from "./Auth/logIn/logInReducer";
 import { signUpReducer } from "./Auth/SignUp/signUpReducer";
 import { ipReducer } from "./IP/ipReducer";
 import { oneWayReducer } from "./FlightSearch/OneWay/oneWayReducer";
+import {searchReducer} from "./FlightSearch/Searchflight/SearchReducer";
+import flightnameReducer from "./FlightSearch/Airline/flightnameReducer";
 import { returnReducer } from "./FlightSearch/Return/returnReducer";
 import { oneWayEMTReducer } from "./FlightSearch/OneWayEMT/oneWayEMTReducer";
 import storage from "redux-persist/lib/storage/session";
@@ -70,6 +72,8 @@ const appReducer = combineReducers({
   userData:UserDataReducer,
   subadminLogin:subadminReducer,
   adminLogin:adminReducer,
+  searchReducer:searchReducer,
+  flightnameReducer:flightnameReducer,
   agentProfileReducer:agentProfileReducer
 });
 

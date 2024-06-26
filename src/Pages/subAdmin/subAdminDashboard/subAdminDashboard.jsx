@@ -38,6 +38,7 @@ import {
 } from "@mui/material";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import FlightBookingAmd from "./FlightBookingAmd";
+//import AmdAgentBooking from "./AmdAgentBooking";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FlightIcon from "@mui/icons-material/Flight";
 import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
@@ -119,6 +120,7 @@ import AgentListRM from "./AgentListRM";
 import AgentWise from "./Addforms/AgentWise";
 import BlogForm from "./Addforms/BlogForm";
 import AllBlogs from "./AllBlogs";
+import AmdAgentBooking from "./AmdAgentBooking";
 const drawerWidth = 240;
 function ResponsiveDrawer(props) {
   const { window } = props;
@@ -149,7 +151,7 @@ function ResponsiveDrawer(props) {
   const [DocumentsCategorys, setDocumentsCategorys] = React.useState(false);
 
   const [requireDocuments, setrequireDocuments] = React.useState(false);
-  const [flightbookingAmds,setshowflightbookingAmd] = React.useState(false);
+  const [flightbookingAmds, setshowflightbookingAmd] = React.useState(false);
   const [webadvertisements, setwebadvertisement] = React.useState(false);
   const [addsubadmin, setaddSubadmins] = useState(false);
   const [addAgents, setaddAgents] = useState(false);
@@ -169,6 +171,8 @@ function ResponsiveDrawer(props) {
   const agentTableView = location.pathname === "/subAdmin/dashboard/Agenttable";
   const flightbookingAmd =
     location.pathname === "/subAdmin/dashboard/flightbookingAmd";
+  const agentflightbookingAmd =
+    location.pathname === "/subAdmin/dashboard/agentflightbookingAmd";
   const subadminTableView =
     location.pathname === "/subAdmin/dashboard/Subadmintable";
   const holidayPackage =
@@ -318,6 +322,13 @@ function ResponsiveDrawer(props) {
     setshowflightbookingAmd(true);
     navigate("./flightbookingAmd");
   };
+
+  const handleagentflightbookingAmd = () => {
+    setshowflightbookingAmd(true);
+    navigate("./agentflightbookingAmd");
+  };
+
+  // agentflightbookingAmd
   const handleAllBlogs = () => {
     navigate("./AllBlog");
   };
@@ -794,7 +805,7 @@ function ResponsiveDrawer(props) {
             </ListItemButton>
           </ListItem>
         )}
-         {access === "BOOKING_MANAGER" && (
+        {access === "BOOKING_MANAGER" && (
           <ListItem
             style={{
               display: "flex",
@@ -808,7 +819,27 @@ function ResponsiveDrawer(props) {
                 style={{ color: "white", fontSize: "10px", marginRight: "2px" }}
               />
               <ListItemText style={{ color: "white" }}>
-               Flight Booking Amadeus
+                Amadeus User Booking
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
+        )}
+
+        {access === "BOOKING_MANAGER" && (
+          <ListItem
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "-25px",
+              paddingLeft: "0px",
+            }}
+          >
+            <ListItemButton onClick={handleagentflightbookingAmd}>
+              <DomainIcon
+                style={{ color: "white", fontSize: "10px", marginRight: "2px" }}
+              />
+              <ListItemText style={{ color: "white" }}>
+                Amadeus Agent Booking
               </ListItemText>
             </ListItemButton>
           </ListItem>
@@ -1905,6 +1936,9 @@ function ResponsiveDrawer(props) {
         </Typography>
         <Typography paragraph>
           {flightbookingAmd && <FlightBookingAmd />}
+        </Typography>
+        <Typography paragraph>
+          {agentflightbookingAmd && <AmdAgentBooking />}
         </Typography>
 
         <Typography paragraph>

@@ -1449,7 +1449,7 @@ input[type="range"].win10-thumb {
 
 @media (prefers-color-scheme: dark) {
   html {
-    background-color: #000;
+    /* background-color: #000; */
   }
 
   html::before {

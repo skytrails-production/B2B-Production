@@ -6,6 +6,7 @@ const FlightLoader = () => {
     return (
         <div className='flightLoading'>
             <img src={flightLoading} alt="" />
+            
         </div>
     )
 }

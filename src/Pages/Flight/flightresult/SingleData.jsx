@@ -32,27 +32,25 @@ function SingleData(props) {
   const IsLCC = props.IsLCC;
   // console.log("flight single", flight);
   const results =
-    reducerState?.oneWay?.oneWayData?.data?.data?.Response?.Results ||
+    reducerState?.oneWay?.oneWayData?.data?.result ||
     reducerState?.return?.returnData?.data?.data?.Response?.Results;
   // console.log("Redux State", results);
   const indexKey = props.index;
   const fare =
     reducerState?.logIn?.loginData.length > 0
       ? `${Math.round(
-        Number(props.fare) +
-        Number(reducerState?.logIn?.loginData?.data?.data?.markup?.flight)
-      )}`
+          Number(props.fare) +
+            Number(reducerState?.logIn?.loginData?.data?.data?.markup?.flight)
+        )}`
       : Math.round(Number(props.fare));
 
   // console.log(fare);
   const img = flight?.Airline?.AirlineCode;
+  // console.log("reducerstate..........................................",reducerState);
 
-
-  const duration = `${Math.floor(flight?.Duration / 60)}hr ${flight.Duration % 60
-    }min`;
-
-
-
+  const duration = `${Math.floor(flight?.Duration / 60)}hr ${
+    flight.Duration % 60
+  }min`;
 
   const handleClick = (ResultIndex) => {
     setLoader(true);
@@ -60,14 +58,19 @@ function SingleData(props) {
     const payload = {
       EndUserIp: reducerState?.ip?.ipData,
       TokenId: reducerState?.ip?.tokenData,
-      TraceId: reducerState?.oneWay?.oneWayData?.data?.data?.Response?.TraceId,
+      TraceId: reducerState?.oneWay?.oneWayData?.data?.tvoTraceId,
       ResultIndex: ResultIndex,
     };
+    // console.log("payload", payload);
     dispatch(ruleAction(payload));
     dispatch(quoteAction(payload));
   };
 
-  // console.log("reducerrState", reducerState);
+  // console.log(
+  //   "reducerrState",
+  //   reducerState,
+  //   reducerState?.oneWay?.oneWayData?.data?.tvoTraceId
+  // );
 
   useEffect(() => {
     if (statusQuote && statusRule) {
@@ -77,12 +80,10 @@ function SingleData(props) {
       ) {
         // navigate("/Flightresult/passengerdetail");
         navigate("/passengerdetail");
-
-
         dispatch(setLoading("hjbb"));
+        // dispatch(setLoading("hjbb"));
         setLoader(false);
-      }
-      else if (
+      } else if (
         reducerState?.flightFare?.flightQuoteData?.Error?.ErrorCode !== 0 &&
         reducerState?.flightFare?.flightRuleData?.Error?.ErrorCode !== 0
       ) {
@@ -96,17 +97,17 @@ function SingleData(props) {
               animate__animated
               animate__fadeInUp
               animate__faster
-            `
+            `,
           },
           hideClass: {
             popup: `
               animate__animated
               animate__fadeOutDown
               animate__faster
-            `
-          }
+            `,
+          },
         });
-        navigate("/flights")
+        navigate("/flights");
       }
     }
   }, [statusQuote, statusRule]);
@@ -116,10 +117,13 @@ function SingleData(props) {
     return <FlightLoader />;
   }
   return (
-    <div className="singleFlightBox">
+    <div className="singleFlightBox" key={indexKey}>
       <div className="singleFlightBoxOne">
         <div>
-          <img src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${img}.png`} alt="flightImg" />{" "}
+          <img
+            src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${img}.png`}
+            alt="flightImg"
+          />{" "}
         </div>
         <span>{flight?.Airline?.AirlineName}</span>
         <p>
@@ -129,13 +133,15 @@ function SingleData(props) {
       <div className="singleFlightBoxTwo">
         <span>{flight?.Origin?.Airport?.CityName}</span>
         <p>{dayjs(flight?.Origin?.DepTime).format("DD MMM, YY")}</p>
-        <p style={{ fontSize: "14px" }}>{dayjs(flight?.Origin?.DepTime).format("h:mm A")}</p>
-
+        <p style={{ fontSize: "14px" }}>
+          {dayjs(flight?.Origin?.DepTime).format("h:mm A")}
+        </p>
       </div>
       <div className="singleFlightBoxThree">
-
         <h4>{duration}</h4>
-        <div><img src={flightdir} /></div>
+        <div>
+          <img src={flightdir} />
+        </div>
 
         <p>Direct Flight</p>
         <span>{flight?.NoOfSeatAvailable} Seats Left</span>
@@ -144,7 +150,9 @@ function SingleData(props) {
         <span>{flight?.Destination?.Airport?.CityName}</span>
         {/* <p>{desiredFormat1.slice(0, 12)}</p> */}
         <p>{dayjs(flight?.Destination?.ArrTime).format("DD MMM, YY")}</p>
-        <p style={{ fontSize: "14px" }}>{dayjs(flight?.Destination?.ArrTime).format("h:mm A")}</p>
+        <p style={{ fontSize: "14px" }}>
+          {dayjs(flight?.Destination?.ArrTime).format("h:mm A")}
+        </p>
       </div>
       <div className="singleFlightBoxFive">
         <span>₹{fare}</span>
@@ -181,7 +189,6 @@ function SingleData(props) {
             const timeReturn = `${Math.floor(
               results[1][0]?.Segments[0][0]?.Duration / 60
             )}hr ${results[1][0]?.Segments[0][0]?.Duration % 60}min`;
-
 
             const dateStringReturn =
               results[1][0]?.Segments[0][0]?.Origin?.DepTime;
@@ -287,10 +294,14 @@ function SingleData(props) {
                     <Box px={1}>
                       <Typography className="flight_name">
                         <span style={{ fontSize: "11px" }}>
-                          {dayjs(results[1][0]?.Segments[0][0]?.Origin?.DepTime).format("DD MMM, YY")}
+                          {dayjs(
+                            results[1][0]?.Segments[0][0]?.Origin?.DepTime
+                          ).format("DD MMM, YY")}
                         </span>
                         <p style={{ paddingBottom: "5px", margin: 0 }}>
-                          {dayjs(results[1][0]?.Segments[0][0]?.Origin?.DepTime).format("h:mm A")}
+                          {dayjs(
+                            results[1][0]?.Segments[0][0]?.Origin?.DepTime
+                          ).format("h:mm A")}
                         </p>
 
                         {/* <p>{dayjs(flight?.Destination?.ArrTime).format("DD MMM, YY")}</p> */}
@@ -325,12 +336,17 @@ function SingleData(props) {
                       <Typography className="flight_name">
                         {" "}
                         <Typography className="flight_name">
-
                           <span style={{ fontSize: "11px" }}>
-                            {dayjs(results[1][0]?.Segments[0][0]?.Destination?.ArrTime).format("DD MMM, YY")}
+                            {dayjs(
+                              results[1][0]?.Segments[0][0]?.Destination
+                                ?.ArrTime
+                            ).format("DD MMM, YY")}
                           </span>
                           <p style={{ paddingBottom: "5px", margin: 0 }}>
-                            {dayjs(results[1][0]?.Segments[0][0]?.Destination?.ArrTime).format("h:mm A")}
+                            {dayjs(
+                              results[1][0]?.Segments[0][0]?.Destination
+                                ?.ArrTime
+                            ).format("h:mm A")}
                           </p>
                         </Typography>
                       </Typography>

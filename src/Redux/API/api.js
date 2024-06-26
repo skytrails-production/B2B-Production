@@ -144,7 +144,7 @@ function api() {
     try {
       const response = await axios({
         method: "POST",
-        url: "/skyTrails/flight/search/oneway",
+        url: "/skyTrails/api/combined/combineTVOAMADEUSPriceSort",
         baseURL: `${apiURL.baseURL}`,
         data: payload,
         headers: {
@@ -164,10 +164,26 @@ function api() {
       // Handle the error here
       // console.error("An error occurred during the request:", error);
 
-      alert(error);
+
+      // alert(error)
+
       throw error; // Re-throw the error to propagate it to the caller
     }
   };
+
+  // const oneWaySearch = (payload) => {
+  //   return axios({
+  //     method: "POST",
+  //     url: "/skytrails/api/combined/combineTVOAMADEUSPriceSort",
+
+  //     // url: "/skyTrails/flight/search/oneway",
+  //     baseURL: `${apiURL.baseURL}`,
+  //     data: payload,
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+  // };
 
   //flight return api
 
@@ -259,6 +275,29 @@ function api() {
       },
     });
   };
+
+
+
+  // ///////////////////////////////////////////////////////////////////////////////////////////
+
+  const fligtname = () => {
+    return axios({
+      method: "GET",
+      url: "/skyTrails/airline",
+      baseURL: `${apiURL.baseURL}`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
+  // const fligtname = () => {
+  //   return axios.get(`${apiURL.baseURL}/skyTrails/airline`);
+  // };
+
+
+  // ///////////////////////////////////////////////////////////////////////////////////////////
+
 
   const flightBookGDS = (payload) => {
     return axios({
@@ -648,6 +687,17 @@ function api() {
       },
     });
   };
+  const flightbookingamedius = (payload) => {
+    return axios({
+      method:"POST",
+      url:"/skyTrails/flightBooking/amadeus/addflightbooking",
+      baseURL: `${apiURL.baseURL}`,
+      data: payload,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+  }
   const hotelBookingDataSave = (payload) => {
     return axios({
       method: "POST",
@@ -708,6 +758,7 @@ function api() {
         url: "/skyTrails/updateFixDepartureData",
         baseURL: `${apiURL.baseURL}`,
         data: data,
+
         headers: {
           "Content-Type": "application/json",
         },
@@ -722,6 +773,9 @@ function api() {
       throw error; // You can choose to throw the error again or handle it differently
     }
   };
+
+  
+
 
   /// userDetails by Id
 
@@ -762,6 +816,7 @@ function api() {
     oneWayEMTSearch,
     userB2BLogin,
     agentProfileLogin,
+    flightbookingamedius,
     flightRuleSearch,
     flightQuoteSearch,
     flightBookGDS,
@@ -806,6 +861,7 @@ function api() {
     fixedDepartureBooking,
     updateFlightBookingSeat,
     Ssr,
+    fligtname,
     forgetPasswordLink
   };
 }

@@ -7,7 +7,7 @@ import Nonrefundable from "./Nonrefundable";
 import { useDispatch, useSelector, useReducer } from "react-redux";
 import LuggageIcon from "@mui/icons-material/Luggage";
 import Luggage from "./Luggage";
-import flightdir from "../../../Images/flgihtdir.png"
+import flightdir from "../../../Images/flgihtdir.png";
 import dayjs from "dayjs";
 import {
   quoteAction,
@@ -16,7 +16,7 @@ import {
 } from "../../../Redux/FlightFareQuoteRule/actionFlightQuote";
 import FlightLoader from "../FlightLoader/FlightLoader";
 import Swal from "sweetalert2";
-import { swalModal } from "../../../utils/swal"
+import { swalModal } from "../../../utils/swal";
 
 const MultipleData = (props) => {
   const navigate = useNavigate();
@@ -39,9 +39,9 @@ const MultipleData = (props) => {
   const fare =
     reducerState?.logIn?.loginData.length > 0
       ? `${Math.round(
-        Number(props.fare) +
-        Number(reducerState?.logIn?.loginData?.data?.data?.markup?.flight)
-      )}`
+          Number(props.fare) +
+            Number(reducerState?.logIn?.loginData?.data?.data?.markup?.flight)
+        )}`
       : Math.round(Number(props.fare));
   // const fare = `${Math.round(
   //   props.fare + reducerState?.logIn?.loginData?.data?.data?.markup?.flight
@@ -59,7 +59,7 @@ const MultipleData = (props) => {
     const payload = {
       EndUserIp: reducerState?.ip?.ipData,
       TokenId: reducerState?.ip?.tokenData,
-      TraceId: reducerState?.oneWay?.oneWayData?.data?.data?.Response?.TraceId,
+      TraceId: reducerState?.oneWay?.oneWayData?.data?.tvoTraceId,
       ResultIndex: ResultIndex,
     };
     dispatch(ruleAction(payload));
@@ -79,7 +79,11 @@ const MultipleData = (props) => {
         reducerState?.flightFare?.flightRuleData?.Error?.ErrorCode !== 0
       ) {
         // swalModal('flight',reducerState?.flightFare?.flightQuoteData?.Error?.ErrorMessage,false);
-        swalModal('flight', 'Something went wrong with your flight booking. ', false);
+        swalModal(
+          "flight",
+          "Something went wrong with your flight booking. ",
+          false
+        );
         // Swal.fire({
         //   title: "Hii Encountered an Error",
         //   text: `${reducerState?.flightFare?.flightQuoteData?.Error?.ErrorMessage}`,
@@ -105,15 +109,15 @@ const MultipleData = (props) => {
     }
   }, [statusQuote, statusRule]);
 
-  const time = `${Math.floor(flight[0]?.Duration / 60)}hr ${flight[0].Duration % 60
-    }min`;
+  const time = `${Math.floor(flight[0]?.Duration / 60)}hr ${
+    flight[0].Duration % 60
+  }min`;
 
-  const time3 = `${Math.floor(flight[1]?.Duration / 60)}hr ${flight[1].Duration % 60
-    }min`;
-
+  const time3 = `${Math.floor(flight[1]?.Duration / 60)}hr ${
+    flight[1].Duration % 60
+  }min`;
 
   // console.log("flightData", flight)
-
 
   const dateString = flight[0]?.Origin?.DepTime;
   const dateString1 = flight[1]?.Destination?.ArrTime;
@@ -141,7 +145,6 @@ const MultipleData = (props) => {
   const [month, day, year, tim, ampm] = formattedDate.split(" ");
   const desiredFormat = `${day}${month}-${year} ${tim} ${ampm}`;
 
-
   const date1 = new Date(dateString1);
   const options1 = {
     year: "numeric",
@@ -152,11 +155,8 @@ const MultipleData = (props) => {
     hour12: true,
   };
   const formattedDate1 = date1.toLocaleString("en-US", options1);
-  const [month1, day1, year1, time1, ampm1] =
-    formattedDate1.split(" ");
+  const [month1, day1, year1, time1, ampm1] = formattedDate1.split(" ");
   const desiredFormat1 = `${day1}${month1}-${year1} ${time1} ${ampm1}`;
-
-
 
   if (loader) {
     return <FlightLoader />;
@@ -164,25 +164,50 @@ const MultipleData = (props) => {
   return (
     <div key={indexKey} className="singleFlightBox">
       <div className="singleFlightBoxOne">
-        <div><img src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${img}.png`} alt="flightImage"/> </div>
+        <div>
+          <img
+            src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${img}.png`}
+            alt="flightImage"
+          />{" "}
+        </div>
         <span>{flight[0]?.Airline?.AirlineName}</span>
-        <p>{flight[0]?.Airline?.AirlineCode}{" "}{flight[0]?.Airline?.FlightNumber}</p>
+        <p>
+          {flight[0]?.Airline?.AirlineCode} {flight[0]?.Airline?.FlightNumber}
+        </p>
       </div>
       <div className="singleFlightBoxTwo">
         <span>{flight[0]?.Origin?.Airport?.CityName}</span>
         <p>{dayjs(flight[0]?.Origin?.DepTime).format("DD MMM, YY")}</p>
-        <p style={{ fontSize: "14px" }}>{dayjs(flight[0]?.Origin?.DepTime).format("h:mm A")}</p>
+        <p style={{ fontSize: "14px" }}>
+          {dayjs(flight[0]?.Origin?.DepTime).format("h:mm A")}
+        </p>
       </div>
       <div className="singleFlightBoxThree">
-        <h4>{time}{" - "}{time3}</h4>
-        <div><img src={flightdir} /></div>
-        <p>{`${flight.length - 1} stop via ${flight[0]?.Destination?.Airport?.CityName}`}</p>
+        <h4>
+          {time}
+          {" - "}
+          {time3}
+        </h4>
+        <div>
+          <img src={flightdir} />
+        </div>
+        <p>{`${flight.length - 1} stop via ${
+          flight[0]?.Destination?.Airport?.CityName
+        }`}</p>
         {/* <span>{flight?.NoOfSeatAvailable} Seats Left</span> */}
       </div>
       <div className="singleFlightBoxFour">
         <span>{flight[flight.length - 1]?.Destination?.Airport?.CityName}</span>
-        <p>{dayjs(flight[flight.length - 1]?.Destination?.ArrTime).format("DD MMM, YY")}</p>
-        <p style={{ fontSize: "14px" }}>{dayjs(flight[flight.length - 1]?.Destination?.ArrTime).format("h:mm A")}</p>
+        <p>
+          {dayjs(flight[flight.length - 1]?.Destination?.ArrTime).format(
+            "DD MMM, YY"
+          )}
+        </p>
+        <p style={{ fontSize: "14px" }}>
+          {dayjs(flight[flight.length - 1]?.Destination?.ArrTime).format(
+            "h:mm A"
+          )}
+        </p>
       </div>
       <div className="singleFlightBoxFive">
         <span>₹{fare}</span>
@@ -192,7 +217,7 @@ const MultipleData = (props) => {
         <Luggage
           destination={flight?.Destination?.Airport?.AirportCode}
           origin={flight?.Origin?.Airport?.AirportCode}
-          cabin={flight?.CabinBaggage}
+          cabin="7KG"
           checkin={flight?.Baggage}
           fareClass={flight?.Airline?.FareClass}
         />
@@ -200,14 +225,16 @@ const MultipleData = (props) => {
         <Nonrefundable />
       </div>
       <div className="singleFlightBoxSeven">
-        <button onClick={() => { handleClick(indexKey) }}>Book</button>
+        <button
+          onClick={() => {
+            handleClick(indexKey);
+          }}
+        >
+          Book
+        </button>
       </div>
-
     </div>
   );
 };
 
 export default MultipleData;
-
-
-

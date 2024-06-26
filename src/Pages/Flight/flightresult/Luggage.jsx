@@ -97,22 +97,22 @@ export default function BasicPopover(props) {
                 <TableHead>
                   <TableRow>
                     <StyledTableCell>
-                      <Typography sx={{ fontSize: "14px", fontWeight: "bold" }}>
+                      <Typography sx={{ fontSize: "14px", fontWeight: "bold",textAlign: "center" }}>
                         Sector
                       </Typography>
                     </StyledTableCell>
                     <StyledTableCell align="right">
-                      <Typography sx={{ fontSize: "14px", fontWeight: "bold" }}>
+                      <Typography sx={{ fontSize: "14px", fontWeight: "bold",textAlign: "center" }}>
                         Cabin
                       </Typography>
                     </StyledTableCell>
                     <StyledTableCell align="right">
-                      <Typography sx={{ fontSize: "14px", fontWeight: "bold" }}>
+                      <Typography sx={{ fontSize: "14px", fontWeight: "bold",textAlign: "center" }}>
                         Check-In
                       </Typography>
                     </StyledTableCell>
                     <StyledTableCell align="right">
-                      <Typography sx={{ fontSize: "14px", fontWeight: "bold" }}>
+                      <Typography sx={{ fontSize: "14px", fontWeight: "bold" , textAlign: "center",display:"flex",justifyContent:"center",alignItems:"center", textAlign:"center"}}>
                         Fare Class
                       </Typography>
                     </StyledTableCell>

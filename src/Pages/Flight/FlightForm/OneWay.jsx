@@ -7,6 +7,10 @@ import {
   oneWayAction,
 } from "../../../Redux/FlightSearch/OneWay/oneWay";
 import {
+  fetchSearch,
+  clearSearch,
+} from "../../../Redux/FlightSearch/Searchflight/flightsearch";
+import {
   clearOneWayEMTReducer,
   oneWayEMTAction,
 } from "../../../Redux/FlightSearch/OneWayEMT/oneWayEMT";
@@ -17,7 +21,9 @@ import { clearPassengersReducer } from "../../../Redux/Passengers/passenger";
 import "./OneWay.css";
 import { motion, useAnimation } from "framer-motion";
 import DatePicker from "react-datepicker";
-
+import userApi from "../../../Redux/API/api";
+import { fetchFlightnameRequest, fetchFlightnameSuccess, clearSearch1 } from "../../../Redux/FlightSearch/Airline/Airlinename";
+// import { FETCH_FLIGHTNAME_CLEAR } from "../../../Redux/FlightSearch/Airline/AirlinenameActionType";
 
 const variants = {
   initial: {
@@ -33,7 +39,6 @@ const variants = {
     },
   },
 };
-
 
 const OneWay = () => {
   const dispatch = useDispatch();
@@ -54,6 +59,7 @@ const OneWay = () => {
   const [fromQuery, setFromQuery] = useState("");
   const [toQuery, setToQuery] = useState("");
   const [from, setFrom] = useState("");
+  const moment = require("moment");
   const [selectedFrom, setSelectedFrom] = useState(null);
   const [to, setTO] = useState("");
   const [selectedTo, setSelectedTo] = useState(null);
@@ -65,8 +71,9 @@ const OneWay = () => {
   const [fromError, setFromError] = useState("");
   const [toError, setToError] = useState("");
   const [dateError, setDateError] = useState("");
-  const [toggleFrom, setToggleFrom] = useState(false)
-  const [toggleTo, setToggleTo] = useState(false)
+  const [toggleFrom, setToggleFrom] = useState(false);
+  const [toggleTo, setToggleTo] = useState(false);
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (listToRef.current && !listToRef.current.contains(event.target)) {
@@ -76,11 +83,11 @@ const OneWay = () => {
     };
 
     // Attach the event listener when the component mounts
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
     // Detach the event listener when the component unmounts
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [listToRef]);
   useEffect(() => {
@@ -88,12 +95,15 @@ const OneWay = () => {
       if (listFromRef.current && !listFromRef.current.contains(event.target)) {
         setToggleFrom(false);
       }
-    }
-    document.addEventListener("mousedown", handleOutsideClick)
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
     return () => {
-      document.removeEventListener("mousedown", handleOutsideClick)
-    }
-  }, [listFromRef])
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [listFromRef]);
+  // useState(() => {
+  // console.log(reducerState, "reducerstateonewayyyyyyyyyyy");
+  // }, [reducerState]);
 
   // useEffect(() => {
   //   clearPassengersReducer();
@@ -113,13 +123,10 @@ const OneWay = () => {
   //     }
   //   };
 
-
   //   return () => {
   //     mounted = false;
   //   };
   // }, [fromQuery]);
-
-
 
   const ClassItems = [
     { id: 1, label: "All" },
@@ -130,39 +137,38 @@ const OneWay = () => {
     { id: 6, label: "First" },
   ];
 
-
   useEffect(() => {
     const fetchSearchResults = async () => {
       // make an API call to get search results
       const results = await axios.get(
-        `${apiURL.baseURL}/skyTrails/city/searchCityData?keyword=${fromQuery}`);
+        `${apiURL.baseURL}/skyTrails/city/searchCityData?keyword=${fromQuery}`
+      );
       setFromSearchResults(results?.data?.data);
-
-    }
+    };
     const getData = setTimeout(() => {
       if (fromQuery.length >= 2) {
         fetchSearchResults();
       }
-    }, 500)
+    }, 500);
 
-    return () => clearTimeout(getData)
-  }, [fromQuery])
+    return () => clearTimeout(getData);
+  }, [fromQuery]);
 
   useEffect(() => {
     const fetchSearchResults = async () => {
       // make an API call to get search results
       const results = await axios.get(
-        `${apiURL.baseURL}/skyTrails/city/searchCityData?keyword=${toQuery}`);
+        `${apiURL.baseURL}/skyTrails/city/searchCityData?keyword=${toQuery}`
+      );
       setToSearchResults(results?.data?.data);
-
-    }
+    };
     const getData = setTimeout(() => {
       if (toQuery.length >= 2) {
         fetchSearchResults();
       }
-    }, 500)
+    }, 500);
 
-    return () => clearTimeout(getData)
+    return () => clearTimeout(getData);
   }, [toQuery]);
 
   // Get the current date in the format "YYYY-MM-DD"
@@ -181,8 +187,8 @@ const OneWay = () => {
   const handleFromClick = (result) => {
     setFrom(result.AirportCode);
     setSelectedFrom(result);
-    setToggleFrom(false)
-  }
+    setToggleFrom(false);
+  };
 
   const handleToClick = (result) => {
     setTO(result.AirportCode);
@@ -219,27 +225,34 @@ const OneWay = () => {
     setToQuery(e);
   };
   const validateDeparture = (departure) => {
-    const result1 = fromSearchResults.filter((item) => item.id === departure)
-    const result2 = toSearchResults.filter((item) => item.id === departure)
-    const result = (result1.length > 0 || result2.length > 0) ? true : false;
+    const result1 = fromSearchResults.filter((item) => item.id === departure);
+    const result2 = toSearchResults.filter((item) => item.id === departure);
+    const result = result1.length > 0 || result2.length > 0 ? true : false;
     // console.log(result1.length, "result1.....")
 
-    return result
-
-  }
+    return result;
+  };
   const validateArival = (departure) => {
-    const result1 = toSearchResults.filter((item) => item.id === departure)
-    const result2 = fromSearchResults.filter((item) => item.id === departure)
-    const result = (result1.length > 0 || result2.length > 0) ? true : false;
+    const result1 = toSearchResults.filter((item) => item.id === departure);
+    const result2 = fromSearchResults.filter((item) => item.id === departure);
+    const result = result1.length > 0 || result2.length > 0 ? true : false;
     // console.log(result1.length, "result2.....")
 
-    return result
+    return result;
+  };
 
-  }
+  const [data2, setData] = useState({
+    adult: 0,
+    child: 0,
+    infants: 0,
+    class: "1",
+  });
+
+  const sendTravelClass = (data2) => {
+    setData(data2);
+  };
 
   function handleSubmit(event) {
-
-
     event.preventDefault();
     const formData = new FormData(event.target);
     // console.log(formData, "event")
@@ -248,7 +261,7 @@ const OneWay = () => {
     const childCount = formData.get("child");
     // console.log(+adultCount + +infantCount + +childCount, "check")
     if (Number(adultCount) + Number(childCount) > 9) {
-      alert(adultCount + childCount)
+      alert(adultCount + childCount);
       setValidationError("Total Number of passenger should be less then 9");
       return;
     }
@@ -257,7 +270,10 @@ const OneWay = () => {
       return;
     }
 
-    if (!validateDeparture(formData.get("from")) || formData.get("from") === "") {
+    if (
+      !validateDeparture(formData.get("from")) ||
+      formData.get("from") === ""
+    ) {
       setFromError("Enter A Valid Destination City");
 
       return;
@@ -268,7 +284,6 @@ const OneWay = () => {
     }
     // validateDeparture(formData.get("from"))
 
-
     if (!formData.get("to")) {
       setToError("Enter Arrival City");
       return;
@@ -278,27 +293,59 @@ const OneWay = () => {
       return;
     }
 
+    // const payload = {
+    //   EndUserIp: reducerState?.ip?.ipData,
+    //   TokenId: reducerState?.ip?.tokenData,
+    //   AdultCount: formData.get("adult"),
+    //   ChildCount: formData.get("child"),
+    //   InfantCount: formData.get("infant"),
+    //   DirectFlight: "false",
+    //   OneStopFlight: "false",
+    //   JourneyType: activeIdClass,
+    //   PreferredAirlines: null,
+    //   Segments: [
+    //     {
+    //       Origin: formData.get("from"),
+    //       Destination: formData.get("to"),
+    //       FlightCabinClass: formData.get("class"),
+    //       PreferredDepartureTime: formData.get("departure"),
+    //       PreferredArrivalTime: formData.get("departure"),
+    //     },
+    //   ],
+    //   Sources: null,
+    // };
+
     const payload = {
       EndUserIp: reducerState?.ip?.ipData,
       TokenId: reducerState?.ip?.tokenData,
-      AdultCount: formData.get("adult"),
-      ChildCount: formData.get("child"),
-      InfantCount: formData.get("infant"),
+      AdultCount: adultCount,
+      ChildCount: childCount,
+      InfantCount: infantCount,
       DirectFlight: "false",
       OneStopFlight: "false",
-      JourneyType: activeIdClass,
+      JourneyType: data2.class || "1",
       PreferredAirlines: null,
       Segments: [
         {
-          Origin: formData.get("from"),
-          Destination: formData.get("to"),
-          FlightCabinClass: formData.get("class"),
-          PreferredDepartureTime: formData.get("departure"),
-          PreferredArrivalTime: formData.get("departure"),
+          Origin: selectedFrom.AirportCode,
+          Destination: selectedTo.AirportCode,
+          FlightCabinClass: activeIdClass,
+          PreferredDepartureTime: moment(formData.get("departure")).format(
+            "DD MMM YY"
+          ),
+          PreferredArrivalTime: moment(formData.get("departure")).format(
+            "DD MMM YY"
+          ),
         },
       ],
       Sources: null,
+      to: selectedTo.AirportCode,
+      from: selectedFrom.AirportCode,
+      date: moment(formData.get("departure")).format("DD MMM YY"),
+      // px: activeIdAdult + activeIdChild + activeIdInfant,
+      px: adultCount,
     };
+
     const emtPayload = {
       Adults: formData.get("adult"),
       Authentication: {
@@ -324,17 +371,27 @@ const OneWay = () => {
     sessionStorage.setItem("infants", formData.get("infant"));
 
     dispatch(oneWayAction(payload));
-
+    dispatch(fetchFlightnameRequest());
+    userApi.fligtname()
+      .then(response => {
+        dispatch(fetchFlightnameSuccess(response.data));
+      })
+      .catch(error => {
+       console.log("error in loading ");
+      });
+    dispatch(fetchSearch([selectedFrom,selectedTo]));
   }
 
+  useEffect(() => {
+    dispatch(clearSearch());
+    // dispatch(clearSearch1());
+  },[])
 
   const handleRoundClick = async () => {
-    const temp = await [from]
-    await setFrom(to)
-    await setTO(temp)
-  }
-
-
+    const temp = await [from];
+    await setFrom(to);
+    await setTO(temp);
+  };
 
   const [startDate, setStartDate] = useState(new Date());
   const handleDateChange = (date) => setStartDate(date);
@@ -342,20 +399,28 @@ const OneWay = () => {
 
   return (
     <div className="">
-      <form onSubmit={handleSubmit} className="formFlightSearchOneWay" >
+      <form onSubmit={handleSubmit} className="formFlightSearchOneWay">
         <div className="container">
-
-          <motion.div className="row rowcon" variants={variants} initial="initial"
-            whileInView="animate">
-            <motion.div variants={variants} className="col-xs-12 col-md-4 ps-0 mb-3 ">
-              <div className="form_input " >
-
+          <motion.div
+            className="row rowcon"
+            variants={variants}
+            initial="initial"
+            whileInView="animate"
+          >
+            <motion.div
+              variants={variants}
+              className="col-xs-12 col-md-4 ps-0 mb-3 "
+            >
+              <div className="form_input ">
                 <label className="form_lable">Departure</label>
                 <input
                   name="from"
                   placeholder="Enter city or airport"
                   value={from}
-                  onClick={() => { setToggleFrom(true); setToggleTo(false) }}
+                  onClick={() => {
+                    setToggleFrom(true);
+                    setToggleTo(false);
+                  }}
                   onChange={(event) => {
                     handleFromInputChange(event);
                     handleFromSearch(event.target.value);
@@ -371,7 +436,6 @@ const OneWay = () => {
                     style={{ display: "block" }}
                     ref={listFromRef}
                   >
-                    
                     <ul>
                       <div className="chooseAbs">
                         {fromSearchResults.map((result) => (
@@ -379,8 +443,8 @@ const OneWay = () => {
                             key={result._id}
                             onClick={() => handleFromClick(result)}
                           >
-                            <strong>{result.AirportCode}</strong>{" "}
-                            {result.name} {result.code}
+                            <strong>{result.AirportCode}</strong> {result.name}{" "}
+                            {result.code}
                           </li>
                         ))}
                       </div>
@@ -389,19 +453,27 @@ const OneWay = () => {
                 )}
               </div>
             </motion.div>
-            <motion.div onClick={() => handleRoundClick()} variants={variants} className="col-md-1 d-flex justify-content-center interchange ps-0 ">
+            <motion.div
+              onClick={() => handleRoundClick()}
+              variants={variants}
+              className="col-md-1 d-flex justify-content-center interchange ps-0 "
+            >
               <img src={interchange} alt="name" className="align-self-center" />
-
             </motion.div>
-            <motion.div variants={variants} className="col-xs-12 col-md-4 ps-0 mb-3">
-              <div className="form_input " style={{ zIndex: 10, position: "relative" }}>
-
+            <motion.div
+              variants={variants}
+              className="col-xs-12 col-md-4 ps-0 mb-3"
+            >
+              <div
+                className="form_input "
+                style={{ zIndex: 10, position: "relative" }}
+              >
                 <label className="form_lable">Arrival</label>
                 <input
                   name="to"
                   placeholder="Enter city or airport"
                   value={to}
-                  onClick={() => (setToggleTo(true))}
+                  onClick={() => setToggleTo(true)}
                   // onMouseLeave={() => (
                   //   setdisplayFrom(false),
                   //   setdisplayTo(false)
@@ -428,8 +500,8 @@ const OneWay = () => {
                             key={result._id}
                             onClick={() => handleToClick(result)}
                           >
-                            <strong>{result.AirportCode}</strong>{" "}
-                            {result.name} {result.code}
+                            <strong>{result.AirportCode}</strong> {result.name}{" "}
+                            {result.code}
                           </li>
                         ))}
                       </div>
@@ -439,7 +511,10 @@ const OneWay = () => {
               </div>
             </motion.div>
 
-            <motion.div variants={variants} className="col-xs-12 col-md-3 ps-0 mb-3">
+            <motion.div
+              variants={variants}
+              className="col-xs-12 col-md-3 ps-0 mb-3"
+            >
               <div className="form_input" onClick={handleClick}>
                 <label className="form_lable">Departure Date</label>
                 <DatePicker
@@ -448,23 +523,27 @@ const OneWay = () => {
                   id="departure"
                   selected={startDate}
                   onChange={handleDateChange}
-
                   ref={inputRef}
                   className="deaprture_input"
                   dateFormat="dd MMM, yy"
                   minDate={startDate}
-                // Use defaultValue to set the initial value
-
+                  // Use defaultValue to set the initial value
                 />
                 {dateError !== "" && <span className="error">{dateError}</span>}
               </div>
             </motion.div>
           </motion.div>
 
-
-          <motion.div className="row" variants={variants} initial="initial"
-            whileInView="animate">
-            <motion.div variants={variants} className=" col-md-3 col-lg-4 col-sm-12 col-12 mb-3 ps-0">
+          <motion.div
+            className="row"
+            variants={variants}
+            initial="initial"
+            whileInView="animate"
+          >
+            <motion.div
+              variants={variants}
+              className=" col-md-3 col-lg-4 col-sm-12 col-12 mb-3 ps-0"
+            >
               <div className="form_input">
                 <label className="form_lable">Adult(12+ Yrs)</label>
                 <select name="adult" id="" className="form_input_select">
@@ -481,7 +560,10 @@ const OneWay = () => {
               </div>
             </motion.div>
 
-            <motion.div variants={variants} className=" col-md-3 col-lg-4 col-sm-12 col-12 mb-3 ps-0">
+            <motion.div
+              variants={variants}
+              className=" col-md-3 col-lg-4 col-sm-12 col-12 mb-3 ps-0"
+            >
               <div className="form_input">
                 <label className="form_lable">Child(2-12 Yrs)</label>
                 <select name="child" id="" className="form_input_select">
@@ -497,7 +579,10 @@ const OneWay = () => {
                 </select>
               </div>
             </motion.div>
-            <motion.div variants={variants} className=" col-md-3 col-lg-4 col-sm-12 col-12 mb-3 ps-0">
+            <motion.div
+              variants={variants}
+              className=" col-md-3 col-lg-4 col-sm-12 col-12 mb-3 ps-0"
+            >
               <div className="form_input">
                 <label className="form_lable">Infant({"<"} 2 Yrs)</label>
                 <select name="infant" id="" className="form_input_select">
@@ -514,7 +599,10 @@ const OneWay = () => {
               </div>
             </motion.div>
 
-            <motion.div variants={variants} className=" col-md-3 col-lg-3 col-sm-12 col-12 mb-3 ps-0">
+            <motion.div
+              variants={variants}
+              className=" col-md-3 col-lg-3 col-sm-12 col-12 mb-3 ps-0"
+            >
               <div className="form_input">
                 <label className="form_lable">Class</label>
                 <select
@@ -532,8 +620,6 @@ const OneWay = () => {
                 </select>
               </div>
             </motion.div>
-
-
 
             <div className="col-xs-12">
               <div className="row bottom-row">
@@ -554,18 +640,32 @@ const OneWay = () => {
                   </div>
                 </div> */}
 
-
-                <div variants={variants} className="col-md-6 col-lg-6 col-12 col-sm-12 mb-3 ps-0" style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <div
+                  variants={variants}
+                  className="col-md-6 col-lg-6 col-12 col-sm-12 mb-3 ps-0"
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <button
                     type="submit"
-                    className="flightFormSubmit-new" style={{ display: "flex", justifyContent: "center", border: "none" }}>Search Flight <FlightIcon /></button>
-
+                    className="flightFormSubmit-new"
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      border: "none",
+                    }}
+                  >
+                    Search Flight <FlightIcon />
+                  </button>
                 </div>
               </div>
             </div>
             <p class="validationError">{validationError}</p>
           </motion.div>
-
 
           {/* <label
       style={{
@@ -641,3 +741,10 @@ const OneWay = () => {
 };
 
 export default OneWay;
+
+
+
+
+
+
+
