@@ -37,12 +37,7 @@ export default function HoverRating(props) {
         value={props.value}
         precision={props.value}
         getLabelText={getLabelText}
-        // onChange={(event, newValue) => {
-        //   setValue(newValue);
-        // }}
-        // onChangeActive={(event, newHover) => {
-        //   setHover(newHover);
-        // }}
+        
         emptyIcon={<StarIcon style={{ opacity: 3.55 }} fontSize="inherit" />}
       />
       {value !== null && (

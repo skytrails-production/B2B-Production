@@ -107,6 +107,14 @@ export default function Rightdetailamd({ amdata }) {
       "DDMMYYYY"
     ).format("DD MMM, YY");
 
+    const citynames = reducerState?.CitynameReducer?.data?.data;
+
+    function findAirportByCode(code) {
+      const data = citynames?.find(citynames => citynames?.AirportCode === code)
+    
+      return data.name;
+      }
+
     // console.log("amdata?.flightDetails",amdata?.flightDetails)
 
      const airlinenumber =
@@ -151,10 +159,10 @@ export default function Rightdetailamd({ amdata }) {
          <div>
          <p style={{fontWeight:"bold"}}>
          From</p>
-          <p style={{ color: "black" }}>{departure}</p>
+          <p style={{ color: "black" }}>{findAirportByCode(departure)}</p>
           </div>
  <div> <p style={{fontWeight:"bold"}}>To</p>
-  <p style={{ color: "black" }}>{arrival}</p></div> 
+  <p style={{ color: "black" }}>{findAirportByCode(arrival)}</p></div> 
 
         </div>
         </> : 
@@ -175,7 +183,7 @@ export default function Rightdetailamd({ amdata }) {
             <div>
               <p style={{ fontWeight: "bold" }}>From</p>
               <p style={{ color: "black" }}>
-                {flight.flightInformation.location[0].locationId}
+                {findAirportByCode(flight.flightInformation.location[0].locationId)}
               </p>
               <p style={{ color: "black" }}>
                 {/* Terminal: {flight.flightInformation.location[0].terminal} */}
@@ -184,7 +192,7 @@ export default function Rightdetailamd({ amdata }) {
             <div>
               <p style={{ fontWeight: "bold" }}>To</p>
               <p style={{ color: "black"}}>
-                {flight.flightInformation.location[1].locationId}
+                {findAirportByCode(flight.flightInformation.location[1].locationId)}
               </p>
               <p style={{ color: "black" }}>
                 {/* Terminal: {flight.flightInformation.location[1].terminal} */}

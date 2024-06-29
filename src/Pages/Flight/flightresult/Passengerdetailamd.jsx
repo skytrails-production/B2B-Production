@@ -31,8 +31,7 @@ function Passengerdetailamd() {
   const xmldataconverter = () => {
     const parser = new XMLParser();
     const result = parser.parse(xmlData);
-    // console.log("result", result);
-
+   
     let valueconvert;
     // Check if xmlData is not empty and if the expected property exists in the parsed result
     if (xmlData !== "") {

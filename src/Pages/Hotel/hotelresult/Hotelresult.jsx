@@ -77,14 +77,12 @@ export default function Popularfilter() {
     dispatch(clearHotelReducer());
     sessionStorage.removeItem("hotelFormData");
   }
-  const handleModifySearchClick = async () => {
-    await All_Hotel_Reducer_Clear();
-    navigate("/hotel");
-  };
+  
   useEffect(() => {
     sessionStorage.removeItem("ResultIndex");
     sessionStorage.removeItem("HotelCode");
   }, []);
+
   useEffect(() => {
     if (result?.length === 0 || result === undefined) {
       All_Hotel_Reducer_Clear();

@@ -34,6 +34,9 @@ function Multidataamd(props) {
   const navigate = useNavigate();
   const amdresponse = props?.flight?.flightDetails;
 
+  const [departurename, setdeparturename] = useState("");
+const [arrivalname, setarrivalnamename] = useState("");
+
   // const amdresult = props?.flight?.fareDetails?.groupOfFares  ;
 
   // amdresult?.map((fare, index) => {
@@ -117,14 +120,58 @@ function Multidataamd(props) {
     }
   }, []);
 
-  // console.log("getairlineName",getairlineName);
-
-  const flightnumber = amdresponse?.[0]?.flightInformation?.flightOrtrainNumber;
-  // console.log("flightnumber",amdresponse?.[0]?.flightInformation?.flightOrtrainNumber);
   const locationarrival =
     amdresponse?.[0]?.flightInformation?.location?.[0]?.locationId;
   const locationdeparture =
-    amdresponse?.[1]?.flightInformation?.location?.[1]?.locationId;
+  props?.flight?.flightDetails?.[
+    props.flight.flightDetails.length - 1
+  ]?.flightInformation?.location?.[1]?.locationId;
+  const citynames = reducerState?.CitynameReducer?.data?.data;
+
+  useEffect(() => {
+    const cityAirline = citynames.find(
+      cityairline => cityairline.id === locationdeparture,
+    );
+
+
+    const arrivalAirline = citynames.find(
+      cityairlinearrival => cityairlinearrival.id === locationarrival,
+    );
+
+    console.log("cityAirline",arrivalAirline)
+
+    if (cityAirline) {
+      setdeparturename(cityAirline.name);
+    } else {
+      setdeparturename('No matching airline found');
+    }
+
+
+    if (arrivalAirline) {
+      setarrivalnamename(arrivalAirline.name);
+    } else {
+      setarrivalnamename('No matching airline found');
+    }
+  }, []);
+
+
+
+  function findAirlineByCode(code) {
+    const data = citynames?.find(citynames => citynames?.airlineCode === code)
+  
+    return data?.airlineName;
+  }
+  function findAirportByCode(code) {
+    const data = citynames?.find(citynames => citynames?.AirportCode === code)
+  
+    return data?.name;
+  }
+
+
+
+  const flightnumber = amdresponse?.[0]?.flightInformation?.flightOrtrainNumber;
+  // console.log("flightnumber",amdresponse?.[0]?.flightInformation?.flightOrtrainNumber);
+
   const fare = props?.flight?.TotalPublishFare;
   const fareamount = props?.flight?.monetaryDetail?.[0]?.amount;
 
@@ -225,6 +272,7 @@ function Multidataamd(props) {
     props?.flight?.flightDetails?.[props.flight.flightDetails.length - 1]
       ?.flightInformation?.location?.[1]?.locationId;
 
+
   return (
     <div className="singleFlightBox">
       <div className="singleFlightBoxOne" style={{ alignItems: "flex-start" }}>
@@ -242,7 +290,8 @@ function Multidataamd(props) {
         <p style={{ color: "green", fontSize: "8px" }}>{renderDescription}</p>
       </div>
       <div className="singleFlightBoxTwo">
-        <span> {locationarrival} </span>
+        {/* <span> {locationarrival} </span> */}
+        <span>{arrivalname}</span>
         <p>{datedeparture} </p>
         <p style={{ fontSize: "14px" }}>{departuretime}</p>
       </div>
@@ -278,11 +327,12 @@ function Multidataamd(props) {
       </div>
       <div className="singleFlightBoxFour">
         <span>
-          {
+          {/* {
             props?.flight?.flightDetails?.[
               props.flight.flightDetails.length - 1
             ]?.flightInformation?.location?.[1]?.locationId
-          }
+          } */}
+          <span>{departurename}</span>
         </span>
 
         <p>{datearrival}</p>
@@ -918,7 +968,7 @@ function Multidataamd(props) {
                       }}
                     >
                       <p>{departuretime1}</p>
-                      <p>{locationarrival}</p>
+                      <p>{findAirportByCode(locationarrival)}</p>
                     </div>
                     <div
                       style={{
@@ -941,7 +991,7 @@ function Multidataamd(props) {
                       }}
                     >
                       <p>{amdarrival}</p>
-                      <p>{departtime}</p>
+                      <p>{findAirportByCode(departtime)}</p>
                     </div>
                   </div>
                   <div>

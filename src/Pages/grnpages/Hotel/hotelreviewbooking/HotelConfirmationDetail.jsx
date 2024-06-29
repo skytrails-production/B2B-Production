@@ -3,11 +3,7 @@ import { Grid, Box, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Rating from "../hotelresult/Rating";
 import Divider from "@mui/material/Divider";
-import FormControl from "@mui/material/FormControl";
-import NativeSelect from "@mui/material/NativeSelect";
-import Input from "@mui/material/Input";
-import Radio from "@mui/material/Radio";
-import Link from "@mui/material/Link";
+
 import "./review.css";
 const HotelConfirmationDetail = () => {
   return (

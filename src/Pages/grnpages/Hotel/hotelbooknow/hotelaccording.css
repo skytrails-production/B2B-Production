@@ -14,6 +14,17 @@
   width: "150px";
 }
 
+
+.offer_area .insideOffer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.offer_area .insideOffer .insideOfferText {
+  font-size: 16px;
+  font-weight: 600;
+}
 .ratigText {
   font-size: 16px;
   font-weight: 700;

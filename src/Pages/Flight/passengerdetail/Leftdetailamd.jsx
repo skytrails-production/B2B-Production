@@ -457,6 +457,11 @@ const Leftdetail = ({ amdata, airesellRes }) => {
   const maxDateChild = formatDate(maxDateValueChild);
   const minDateInfer = formatDate(maxDateValueChild);
 
+
+
+
+  // console.log("reducerstate//////////////////////////////////////",reducerState);
+
   const fareQuoteData = reducerState?.flightFare?.flightQuoteData?.Results;
   // console.log("reducerState", reducerState);
 
@@ -499,6 +504,57 @@ const Leftdetail = ({ amdata, airesellRes }) => {
         ?.flightInformation?.productDateTime?.timeOfArrival,
     "HHmm"
   ).format("h:mm A");
+
+  // ///////////////////////////////////////////////////////////////////////////////////////////
+
+
+  const citynames = reducerState?.CitynameReducer?.data?.data;
+
+  const [departurename, setdeparturename] = useState("");
+const [arrivalname, setarrivalnamename] = useState("");
+
+
+  useEffect(() => {
+    const cityAirline = citynames.find(
+      cityairline => cityairline.id ===  arrival,
+    );
+
+
+    const arrivalAirline = citynames.find(
+      cityairlinearrival => cityairlinearrival.id === departure,
+    );
+
+    // console.log("cityAirline",arrivalAirline)
+
+    if (cityAirline) {
+      setdeparturename(cityAirline.name);
+    } else {
+      setdeparturename('No matching airline found');
+    }
+
+
+    if (arrivalAirline) {
+      setarrivalnamename(arrivalAirline.name);
+    } else {
+      setarrivalnamename('No matching airline found');
+    }
+  }, []);
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // ///////////////////////////////////////////////////////////////////
 
   const departuretime = moment(
     amdata?.flightDetails?.flightInformation?.productDateTime
@@ -600,7 +656,8 @@ const Leftdetail = ({ amdata, airesellRes }) => {
           </p>
         </div>
         <div className="singleFlightBoxTwo">
-          <span>{arrival}</span>
+          {/* <span>{arrival}</span> */}
+          <span>{departurename}</span>
           {/* <p>{time1.substr(0, 5)}</p> */}
           <p>{datedeparture}</p>
           <p>{departuretime}</p>
@@ -630,7 +687,8 @@ const Leftdetail = ({ amdata, airesellRes }) => {
         </div>
         <div className="singleFlightBoxFour">
           <>
-            <span>{departure}</span>
+            {/* <span>{departure}</span> */}
+            <span>{arrivalname}</span>
             <p>{datearrival}</p>
             <p>{arrivaltime}</p>
             <p>

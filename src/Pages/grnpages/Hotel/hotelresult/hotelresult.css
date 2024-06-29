@@ -1656,3 +1656,22 @@ input[type="range"]:disabled::-moz-range-thumb {
   background-color: #d90429;
   color: #fff;
 }
+
+.breakCancel {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  /* width: ; */
+}
+
+.breakCancel .brcl1 {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgb(19, 94, 19);
+}
+
+.breakCancel .brcl2 {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgb(155, 14, 14);
+}

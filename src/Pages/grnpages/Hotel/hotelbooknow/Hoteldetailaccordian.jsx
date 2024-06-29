@@ -10,7 +10,7 @@ import map from "../../../../Images/map.png";
 import picture from "../../../../Images/picture.png";
 import file from "../../../../Images/file.png";
 import Box from "@mui/material/Box";
-
+import dayjs from "dayjs";
 import bed from "../../../../Images/bed.png";
 import { Grid, Button } from "@mui/material";
 import Link from "@mui/material/Link";
@@ -30,6 +30,15 @@ import hotelDetails from "../../../../Images/Hotel/hotelDetails.png";
 import imageGallery from "../../../../Images/Hotel/imageGallery.png";
 import HotelLoading from "../hotelLoading/HotelLoading";
 import chevrondown from "../../../../Images/loading/chevrondown.svg";
+import freeWifi from "../SVGs/freeWifi.svg"
+import freeBreakfast from "../SVGs/freeBreakfast.svg"
+import Bed from "../SVGs/Bed.svg"
+import freeParking from "../SVGs/freeParking.svg"
+import drinkingWater from "../SVGs/DrinkingWater.svg"
+import expressCheckin from "../SVGs/expressCheckin.svg"
+import welcomeDrink from "../SVGs/welcomeDrink.svg"
+import freeGym from "../SVGs/freeGym.svg"
+import Food from "../SVGs/Food.svg"
 import "./hotelaccording.css";
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -69,10 +78,11 @@ export default function CustomizedAccordions() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const reducerState = useSelector((state) => state);
-  // console.log("State Data", reducerState);
+  
   const ResultIndex = sessionStorage.getItem("ResultIndex");
   const HotelCode = sessionStorage.getItem("HotelCode");
   const [expanded, setExpanded] = useState("panel1");
+  const [showRooms, setShowRooms] = useState(10);
   const [loader, setLoader] = useState(false);
   const hotelRoom =
     reducerState?.hotelSearchResult?.hotelRoom?.GetHotelRoomResult;
@@ -81,8 +91,7 @@ export default function CustomizedAccordions() {
     reducerState?.hotelSearchResult?.hotelRoom?.GetHotelRoomResult
       ?.RoomCombinations?.RoomCombination[0]?.RoomIndex
   );
-  // console.log("initialDisabledOption", disabledOption);
-
+  
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
@@ -98,7 +107,7 @@ export default function CustomizedAccordions() {
     reducerState?.hotelSearchResultGRN?.ticketData?.data?.data?.search_id;
 
   const handleClickSaveRoom = async () => {
-    setLoader(true);
+    // setLoader(true);
 
     const payload = {
       data: {
@@ -108,8 +117,6 @@ export default function CustomizedAccordions() {
       searchID: searchId,
     };
 
-    console.log(payload, "payload");
-
     dispatch(HotelRoomSelectReqGRN(payload));
     navigate("/hotels/hotelsearchs/guestDetails");
   };
@@ -118,28 +125,22 @@ export default function CustomizedAccordions() {
   const hotelinfoGRN =
     reducerState?.hotelSearchResultGRN?.hotelDetails?.data?.data?.hotel;
 
-  const hotelinfoGRNs = reducerState?.hotelSearchResultGRN?.hotelRoom?.hotel;
-
-  console.log(hotelinfoGRN, "====================hotelinfooooooooooooogrn");
-  const hotelMainReducer =
-    reducerState?.hotelSearchResultGRN?.ticketData?.data?.data;
+  
   const hotelGallery =
     reducerState?.hotelSearchResultGRN?.hotelGallery?.data?.data?.images
       ?.regular;
 
-  console.log(hotelGallery, "galleritmessssssssss");
   const [selectedRoomIndex, setSelectedRoomIndex] = useState(0);
   const [selectedRoom, setSelectedRoom] = useState(
     hotelinfoGRN?.rates?.[selectedRoomIndex]
   );
 
-  console.log(hotelinfoGRN, "hotelinfoGRN room");
-  console.log(selectedRoom, "selected room");
-
   const handleRoomSelection = (index) => {
     setSelectedRoomIndex(index);
   };
-
+  const handleShowMore = () => {
+    setShowRooms((prev) => prev + 10);
+  };
   useEffect(() => {
     setSelectedRoom(hotelinfoGRN?.rates?.[selectedRoomIndex]);
   }, [selectedRoomIndex]);
@@ -190,116 +191,327 @@ export default function CustomizedAccordions() {
                   marginTop: "20px",
                 }}
               >
-                {/* {hotelinfoGRN?.rates?.map(
-                  (item1, index1) => {
-                    return (
-                      <div className="container">
-                        <div className="roomCompo-new">
-                          {item1?.rooms.map((room, index2) => (
+               
+               
+                  <div>
+                    <div>
+                      {hotelinfoGRN?.rates
+                        ?.slice(0, showRooms)
+                        .map((item, index) => (
+                          <div className="roomCompo" key={index}>
                             <div
-                              className=""
-                              key={index2}
-                              style={{ width: "100%" }}
-                            >
-                                <p className="first">{room?.room_type}</p>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    );
-                  }
-                )} */}
-                <div>
-                  {hotelinfoGRN?.rates?.map((item, index) => (
-                    <div className="roomCompo" key={index}>
-                      <div className="offer_area">
-                        <div
-                          style={{
-                            display: "flex",
-                            gap: "20px",
-                          }}
-                        >
-                          <div>
-                            <input
-                              className="form-check-input"
-                              type="checkbox"
+                              className="offer_area "
+                              onClick={() => handleRoomSelection(index)}
                               style={{
-                                width: "20px",
-                                height: "20px",
-                                marginTop: "1rem",
+                                cursor: "pointer",
+                                border:
+                                  selectedRoomIndex === index
+                                    ? "0.5px solid #e73c34"
+                                    : "",
                               }}
-                              value=""
-                              checked={selectedRoomIndex === index}
-                              onChange={() => handleRoomSelection(index)}
-                            />
-                          </div>
+                            >
+                              <div>
+                                <div className="insideOffer">
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    style={{ width: "25px", height: "25px" }}
+                                    value=""
+                                    checked={selectedRoomIndex === index}
+                                    onChange={() => handleRoomSelection(index)}
+                                  />
+                                  <div className="inneraccorHotel">
+                                    {item?.rooms.map((room, e) => (
+                                      <div className="ratePlan" key={e}>
+                                        <p className="insideOfferText">
+                                          {room?.room_type}
+                                        </p>
+                                      </div>
+                                    ))}
 
-                          <div className="inneraccorHotel">
-                            {item?.rooms.map((room, e) => (
-                              <div className="ratePlans" key={e}>
-                                <p className="first">{room?.room_type}</p>
+                                    {item?.boarding_details?.[0] ===
+                                    "Room Only" ? (
+                                      <div className="othIncInner">
+                                        <div className="d-flex justify-content-start align-items-center gap-2">
+                                          <img src={Bed} alt="wifi" />
+                                          <p
+                                            style={{
+                                              fontSize: "13px",
+                                              fontWeight: "600",
+                                            }}
+                                          >
+                                            Room Only
+                                          </p>
+                                        </div>
+                                      </div>
+                                    ) : item?.boarding_details?.[0] ===
+                                      "Bed and Breakfast" ? (
+                                      <div className="othIncInner">
+                                        <div className="d-flex justify-content-start align-items-center gap-2">
+                                          <img src={freeBreakfast} alt="wifi" />
+                                          <p
+                                            style={{
+                                              fontSize: "13px",
+                                              fontWeight: "600",
+                                            }}
+                                          >
+                                            Free Breakfast
+                                          </p>
+                                        </div>
+                                      </div>
+                                    ) : (
+                                      <div className="othIncInner">
+                                        <div className="d-flex justify-content-start align-items-center gap-2">
+                                          <img src={Food} alt="wifi" />
+                                          <p
+                                            style={{
+                                              fontSize: "13px",
+                                              fontWeight: "600",
+                                            }}
+                                          >
+                                            {item?.boarding_details?.[0]}
+                                          </p>
+                                        </div>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                                <div className="othInc">
+                                  {item?.pan_required && (
+                                    <div className="othIncInner">
+                                      <div className="d-flex justify-content-start align-items-center gap-2">
+                                        <p className="panDesign">
+                                          Pan Required
+                                        </p>
+                                      </div>
+                                    </div>
+                                  )}
+                                  {item?.non_refundable && (
+                                    <div className="othIncInner">
+                                      <div className="d-flex justify-content-start align-items-center gap-2">
+                                        <p className="panDesign2">
+                                          Non Refundable
+                                        </p>
+                                      </div>
+                                    </div>
+                                  )}
+                                  {item?.cancellation_policy && (
+                                    <div className="othIncInner">
+                                      <div className="d-flex justify-content-start align-items-center gap-2">
+                                        <p className="panDesign3">
+                                          Refundable (Cancel Before{" "}
+                                          {dayjs(
+                                            item?.cancellation_policy
+                                              ?.cancel_by_date
+                                          ).format("DD MMM, YY")}
+                                          )
+                                        </p>
+                                      </div>
+                                    </div>
+                                  )}
+                                </div>
+                                <div className="othInc">
+                                  {item?.other_inclusions?.map(
+                                    (inclusion, e) => (
+                                      <div className="othIncInner" key={e}>
+                                        <div className="d-flex justify-content-start align-items-center gap-2">
+                                          {inclusion.toLowerCase() ===
+                                            "free wifi" && (
+                                            <>
+                                              <img src={freeWifi} alt="wifi" />
+                                              <p className="panDesign3">
+                                                Free WiFi
+                                              </p>
+                                            </>
+                                          )}
+                                          {inclusion.toLowerCase() ===
+                                            "free internet" && (
+                                            <>
+                                              <img src={freeWifi} alt="wifi" />
+                                              <p className="panDesign3">
+                                                Free internet
+                                              </p>
+                                            </>
+                                          )}
+                                          {inclusion.toLowerCase() ===
+                                            "free breakfast" && (
+                                            <>
+                                              <img
+                                                src={freeBreakfast}
+                                                alt="wifi"
+                                              />
+                                              <p className="panDesign3">
+                                                Free Breakfast
+                                              </p>
+                                            </>
+                                          )}
+                                          {inclusion.toLowerCase() ===
+                                            "breakfast" && (
+                                            <>
+                                              <img
+                                                src={freeBreakfast}
+                                                alt="wifi"
+                                              />
+                                              <p className="panDesign3">
+                                                Breakfast
+                                              </p>
+                                            </>
+                                          )}
+                                          {inclusion.toLowerCase() ===
+                                            "continental breakfast" && (
+                                            <>
+                                              <img
+                                                src={freeBreakfast}
+                                                alt="wifi"
+                                              />
+                                              <p className="panDesign3">
+                                                Continental breakfast
+                                              </p>
+                                            </>
+                                          )}
+                                          {inclusion.toLowerCase() ===
+                                            "free self parking" && (
+                                            <>
+                                              <img
+                                                src={freeParking}
+                                                alt="wifi"
+                                              />
+                                              <p className="panDesign3">
+                                                Free self parking
+                                              </p>
+                                            </>
+                                          )}
+                                          {inclusion.toLowerCase() ===
+                                            "parking" && (
+                                            <>
+                                              <img
+                                                src={freeParking}
+                                                alt="wifi"
+                                              />
+                                              <p className="panDesign3">
+                                                Free Parking
+                                              </p>
+                                            </>
+                                          )}
+                                          {inclusion.toLowerCase() ===
+                                            "free parking" && (
+                                            <>
+                                              <img
+                                                src={freeParking}
+                                                alt="wifi"
+                                              />
+                                              <p className="panDesign3">
+                                                Free Parking
+                                              </p>
+                                            </>
+                                          )}
+                                          {inclusion.toLowerCase() ===
+                                            "free valet parking" && (
+                                            <>
+                                              <img
+                                                src={freeParking}
+                                                alt="wifi"
+                                              />
+                                              <p className="panDesign3">
+                                                Free Valet Parking
+                                              </p>
+                                            </>
+                                          )}
+                                          {inclusion.toLowerCase() ===
+                                            "drinking water" && (
+                                            <>
+                                              <img
+                                                src={drinkingWater}
+                                                alt="wifi"
+                                              />
+                                              <p className="panDesign3">
+                                                Drinking water
+                                              </p>
+                                            </>
+                                          )}
+                                          {inclusion.toLowerCase() ===
+                                            "express check-in" && (
+                                            <>
+                                              <img
+                                                src={expressCheckin}
+                                                alt="wifi"
+                                              />
+                                              <p className="panDesign3">
+                                                Express check-in
+                                              </p>
+                                            </>
+                                          )}
+                                          {inclusion.toLowerCase() ===
+                                            "welcome drink" && (
+                                            <>
+                                              <img
+                                                src={welcomeDrink}
+                                                alt="wifi"
+                                              />
+                                              <p className="panDesign3">
+                                                Welcome drink
+                                              </p>
+                                            </>
+                                          )}
+                                          {inclusion.toLowerCase() ===
+                                            "free fitness center access" && (
+                                            <>
+                                              <img src={freeGym} alt="wifi" />
+                                              <p className="panDesign3">
+                                                Free Gym
+                                              </p>
+                                            </>
+                                          )}
+                                        </div>
+                                      </div>
+                                    )
+                                  )}
+                                </div>
                               </div>
-                            ))}
-                          </div>
-                          <div className="priceCheck">
-                            {/* //<p className="cancelpolicey">Cancellation Policy</p> */}
-                          </div>
-                          <div className="priceCheck">
-                            <div
-                              style={{
-                                display: "flex",
-                                gap: "10px",
-                                justifyContent: "center",
-                                alignItems: "center",
-                              }}
-                            >
-                              <p className="offerprice">Offer Price</p>
-                              <p className="price">₹ {item?.price}</p>
+                              <div className="priceCheck">
+                                <p className="price">₹ {item?.price}</p>
+                                <div>
+                                  <h3>Select Room</h3>
+                                </div>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <div
-                          style={{
-                            width: "auto",
-
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "left",
-                            flexWrap: "wrap", // Wrap the content to the next line if needed
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              gap: "10px",
-                            }}
-                          >
-                            {hotelinfoGRN?.facilities
-                              .split(";")
-                              .slice(0, 4) // Slice the array to get only the first four items
-                              .map((facility, index) => (
-                                <p key={index} style={{ whiteSpace: "nowrap" }}>
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="25"
-                                    height="25"
-                                    viewBox="0 0 25 25"
-                                    fill="none"
-                                  >
-                                    <path
-                                      d="M12.2734 7.77771C12.8906 7.77771 13.4727 7.8949 14.0195 8.12927C14.5664 8.36365 15.043 8.68396 15.4492 9.09021C15.8555 9.49646 16.1797 9.97693 16.4219 10.5316C16.6641 11.0863 16.7812 11.6683 16.7734 12.2777C16.7734 12.9027 16.6562 13.4847 16.4219 14.0238C16.1875 14.5629 15.8672 15.0394 15.4609 15.4535C15.0547 15.8676 14.5742 16.1918 14.0195 16.4261C13.4648 16.6605 12.8828 16.7777 12.2734 16.7777C11.6484 16.7777 11.0664 16.6605 10.5273 16.4261C9.98828 16.1918 9.51172 15.8715 9.09766 15.4652C8.68359 15.059 8.35938 14.5824 8.125 14.0355C7.89062 13.4886 7.77344 12.9027 7.77344 12.2777C7.77344 11.6605 7.89062 11.0785 8.125 10.5316C8.35938 9.98474 8.67969 9.50818 9.08594 9.10193C9.49219 8.69568 9.96875 8.37146 10.5156 8.12927C11.0625 7.88708 11.6484 7.7699 12.2734 7.77771Z"
-                                      fill="#E73C34"
-                                    />
-                                  </svg>
-                                  {facility.trim()}
-                                </p>
-                              ))}
-                          </div>
-                        </div>
-                      </div>
+                        ))}
                     </div>
-                  ))}
-                </div>
+                    {hotelinfoGRN?.rates?.length > showRooms && (
+                      <div className="mt-3 text-left">
+                        <p
+                          className="text-bold "
+                          style={{ cursor: "pointer" }}
+                          onClick={handleShowMore}
+                        >
+                          Show More Rooms
+                          <svg
+                            id="fi_3550091"
+                            enable-background="new 0 0 1560 1560"
+                            height="15"
+                            viewBox="0 0 1560 1560"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <g>
+                              <g>
+                                <g>
+                                  <g>
+                                    <path d="m1524 811.8h-1488c-17.7 0-32-14.3-32-32s14.3-32 32-32h1410.7l-194.2-194.2c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l248.9 248.9c9.2 9.2 11.9 22.9 6.9 34.9-5 11.9-16.7 19.7-29.6 19.7z"></path>
+                                  </g>
+                                  <g>
+                                    <path d="m1274.8 1061c-8.2 0-16.4-3.1-22.6-9.4-12.5-12.5-12.5-32.8 0-45.3l249.2-249.2c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3l-249.2 249.2c-6.3 6.3-14.5 9.4-22.7 9.4z"></path>
+                                  </g>
+                                </g>
+                              </g>
+                            </g>
+                          </svg>
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                
 
                 <Box></Box>
               </AccordionDetails>
@@ -402,9 +614,7 @@ export default function CustomizedAccordions() {
                   border: "0.5px solid  #E73C34",
                   backgroundColor: "var(--white, #FFF)",
 
-                  // border-radius: "10.705px",
-                  //    border:"0.5px solid #E73C34",
-                  //   background: "var(--white, #FFF)",
+                 
                 }}
               >
                 <Box display="flex" justifyContent="left">
@@ -496,6 +706,7 @@ export default function CustomizedAccordions() {
                   <a
                     href={`https://www.google.com/maps?q=${hotelinfoGRN?.geolocation?.latitude},${hotelinfoGRN?.geolocation?.longitude}`}
                     target="_blank"
+                    style={{textDecoration:"none"}}
                   >
                     <svg
                       id="fi_2642502"

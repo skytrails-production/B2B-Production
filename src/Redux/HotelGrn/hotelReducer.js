@@ -128,8 +128,18 @@ export const hotelReducerGRN = (state = initState, action) => {
         ...state,
         blockRoom: [],
       };
-    case types.CLEAR_HOTEL_REDUCERGRN:
-      return {
+
+
+
+      case types.CLEAR_HOTEL_SELECTED_ROOM:
+        return {
+          ...state,
+          hotelRoom: [],
+        };
+
+
+      case types.CLEAR_HOTEL_BLOCK_ROOMTYR:
+      return  {
         ticketData: [],
         hotelInfo: [],
         hotelRoom: [],
@@ -145,6 +155,37 @@ export const hotelReducerGRN = (state = initState, action) => {
         isError: false,
         hasMore: true,
         showSuccessMessage: false,
+        try:"tryyyyyyyyyyyyyyyyyyyy"
+      };
+
+    case types.CLEAR_ONLYHOTEL_GRN:
+      return {
+        hotels: [],
+      };
+
+    case types.CLEAR_HOTEL_REDUCERGRN:
+      return {
+        ticketData: [],
+        hotelInfo: [],
+        hotelRoom: [],
+        hotelGallery: [],
+        bookRoom: [],
+        hotelDetails: [],
+        hotels: [],
+        isLoading: false,
+        isLoadingHotelInfo: false,
+        isLoadingHotelRoom: false,
+        isLoadingBlockRoom: false,
+        isLoadingBookRoom: false,
+        isError: false,
+        hasMore: false,
+        showSuccessMessage: false,
+      };
+    case types.CLEAR_HOTEL_ROOMGALLERY_GRN:
+      return {
+        ...state,
+        hotelGallery: [],
+        hotelDetails: [],
       };
 
     default:

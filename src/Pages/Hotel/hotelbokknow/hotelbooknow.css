@@ -286,8 +286,8 @@ Input {
   justify-content: flex-start;
   align-items: center;
   flex-direction: row;
-  gap: 33px;
-  border: 2px solid red;
+  
+ 
 }
 
 .priceCheck {
@@ -353,9 +353,9 @@ background: #E73C34;
   height: 10px;
 }
 
-.roomCompo div > div {
+/* .roomCompo div > div {
   width: 400px;
-}
+} */
 
 .roomCompo-new {
   display: flex;

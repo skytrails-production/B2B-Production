@@ -11,9 +11,9 @@ import {
 function* userLoginRequest(action) {
   try {
     const user = yield call(userApi.userB2BLogin, action.payload);
-    console.log(user);
+    // console.log(user);
     yield put(fetchLogIn(user));
-    console.log("hshshsh", user)
+    // console.log("hshshsh", user)
   } catch (error) {
     yield put(loginFaliAction({error:true,errormessage:error}));
   }

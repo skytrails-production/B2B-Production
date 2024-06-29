@@ -9,46 +9,67 @@ import availableRooms from "../../../../Images/Hotel/availableRooms.png";
 import hotelMap from "../../../../Images/Hotel/hotelMap.png";
 import hotelDetails from "../../../../Images/Hotel/hotelDetails.png";
 import imageGallery from "../../../../Images/Hotel/imageGallery.png";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import Input from "@mui/material/Input";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import NativeSelect from "@mui/material/NativeSelect";
-import Checkbox from "@mui/material/Checkbox";
-import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
-import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
-import Link from "@mui/material/Link";
-import Rating from "../hotelresult/Rating";
+
 import Hoteldetailaccordian from "./Hoteldetailaccordian";
 import StarIcon from "@mui/icons-material/Star";
-import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
-import Loader from "../../../Loader/Loader";
+
 import { useDispatch, useSelector, useReducer } from "react-redux";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 import {
-  hotelBlockRoomAction,
-  hotelBookRoomActionGRN,
-  singleHotelGRN,
+  clearHotelSelectedRoom,
+ 
 } from "../../../../Redux/HotelGrn/hotel";
+
 import HotelLoading from "../hotelLoading/HotelLoading";
 import Swal from "sweetalert2";
 import { swalModal } from "../../../../utils/swal";
 import axios from "axios";
 import { apiURL } from "../../../../Constants/constant";
-
+import CustomModal from "../swal/model";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const HotelBooknowGrm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const reducerState = useSelector((state) => state);
-  // console.log("State Data ????????????????????", reducerState);
-  const [loader, setLoader] = useState(false);
-
+  console.log("State Data ????????????????????", reducerState);
+  const [loader, setLoader] = useState(true);
+  const [showRooms, setShowRooms] = useState(10);
   const ResultIndex = sessionStorage.getItem("ResultIndex");
   const HotelCode = sessionStorage.getItem("HotelCode");
+
+  useEffect(() => {
+    if (
+      reducerState?.hotelSearchResultGRN?.hotelDetails?.data?.data?.errors
+        ?.length > 0
+    ) {
+      swalModal("hotel", "room not found", false);
+      <CustomModal />
+      navigate("/hotels/hotelsearchs");
+    }
+  }, [reducerState?.hotelSearchResultGRN?.hotelDetails?.data?.data?.errors]);
+
+  useEffect(() => {
+    if (
+      reducerState?.hotelSearchResultGRN?.hotelDetails?.status === 200 &&
+      reducerState?.hotelSearchResultGRN?.hotelGallery?.data?.data?.images
+        ?.regular?.length > 0
+    ) {
+      // navigate("/hotels/hotelsearchs/HotelBooknowgrm");
+      setLoader(false);
+    }
+  }, [
+    reducerState?.hotelSearchResultGRN?.hotelDetails?.status ||
+      reducerState?.hotelSearchResultGRN?.hotelGallery?.data?.data?.images,
+  ]);
+
+  useEffect(() => {
+    dispatch(clearHotelSelectedRoom());
+  }, []);
+
+  
+
   useEffect(() => {
     if (
       reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult?.Error
@@ -72,7 +93,7 @@ const HotelBooknowGrm = () => {
       ?.ErrorCode,
   ]);
 
-  console.warn(ResultIndex, HotelCode, "ResultIndex,HotelCode");
+  console.log(reducerState, "reducer steate in hotel book now pge");
 
   useEffect(() => {
     if (reducerState?.hotelSearchResult?.isLoadingHotelRoom == true) {
@@ -92,18 +113,9 @@ const HotelBooknowGrm = () => {
       ?.HotelRoomsDetails,
   ]);
 
-  useEffect(() => {
-    if (reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult) {
-      navigate("Reviewbookinggrn");
-    }
-  });
+  
 
-  const hotelll = reducerState?.hotelSearchResult;
-  // console.log(hotelll, "hotelll");
-
-  const hotelInfo = reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult;
-  const hotelRoom =
-    reducerState?.hotelSearchResult?.hotelRoom?.GetHotelRoomResult;
+  
 
   const star = (data) => {
     const stars = [];
@@ -126,11 +138,11 @@ const HotelBooknowGrm = () => {
 
   const storedFormData = JSON.parse(sessionStorage.getItem("hotelFormData"));
 
-  console.log(storedFormData?.city, "000000000000000000");
-
+ 
   const hotelMainReducer =
     reducerState?.hotelSearchResultGRN?.ticketData?.data?.data;
-
+  
+ 
   return (
     <>
       {loader ? (

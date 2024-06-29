@@ -90,16 +90,46 @@ export const hotelBookRoomActionGRN = (data) => {
 };
 
 // Hotel bookin
-
-
-export const clearHotelReducer = () => {
+export const clearonlyHotelsGRN = () => {
   return {
     type: types.CLEAR_HOTEL_REDUCERGRN,
   };
 }
+
+export const clearHotelReducerGrn = () => {
+  return {
+    type: types.CLEAR_HOTEL_REDUCERGRN,
+  };
+}
+export const clearHotelBlockRoomtry = () => {
+  return {
+    type: types.CLEAR_HOTEL_BLOCK_ROOMTYR,
+  };
+};
+
 export const clearHotelBlockRoom = () => {
   return {
     type: types.CLEAR_HOTEL_BLOCK_ROOM,
   };
 };
 
+export const clearHotelRoomAndGallery = () => {
+  return {
+    type: types.CLEAR_HOTEL_ROOMGALLERY_GRN,
+  };
+}
+
+
+
+
+export const clearHotelSelectedRoom = () => {
+  return {
+    type: types.CLEAR_HOTEL_SELECTED_ROOM,
+  };
+};
+
+export const clearHotelRoomSelect = () => {
+  return {
+    type: types.CLEAR_HOTEL_ROOM_SELECT,
+  };
+};

@@ -1,25 +1,15 @@
 import React, { useEffect } from "react";
-import Grid from "@mui/material/Grid";
-import { Typography, Modal } from "@mui/material";
-import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
-import FlightLandIcon from "@mui/icons-material/FlightLand";
-import Box from "@mui/material/Box";
-import Link from "@mui/material/Link";
-import { useNavigate } from "react-router-dom";
-import { Flex, Spacer, Text } from "@chakra-ui/react";
-// import Popularfilter from '../flightresult/Popularfilter';
+
 import Sailsummary from "./Sailsummary";
 import { useDispatch, useSelector, useReducer } from "react-redux";
 import Hoteldescription from "./Hoteldescription";
-//import successGif from "../../../Images/successGif.png";
-// import { clearHotelReducer } from "../../Redux/Hotel/hotel";
+
 import Swal from "sweetalert2";
 
-//import { balanceSubtractRequest } from "../../../Redux/Auth/balaceSubtract/actionBalnceSubtract";
 import { getUserDataAction } from "../../../../Redux/Auth/UserDataById/actionUserData";
 
 import "./guestdetail.css";
-//import { clearHotelReducer } from "../../../Redux/Hotel/hotel";
+
 const GuestdetailGrm = () => {
   const style = {
     position: "absolute",
@@ -37,20 +27,8 @@ const GuestdetailGrm = () => {
   };
   const reducerState = useSelector((state) => state);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  let bookingStatus =
-    reducerState?.hotelSearchResult?.bookRoom?.BookResult?.Status || false;
-
-  const getBookingDetails = reducerState?.hotelSearchResult;
 
   const userId = reducerState?.logIn?.loginData?.data?.data?.id;
-  const markUpamount =
-    reducerState?.userData?.userData?.data?.data?.markup?.hotel;
-  const userBalance = reducerState?.userData?.userData?.data?.data?.balance;
-
-
-
-
 
   useEffect(() => {
     if (
@@ -63,7 +41,7 @@ const GuestdetailGrm = () => {
           dispatch(getUserDataAction(payload));
         }
         // navigate("/")
-      }, 2000)
+      }, 2000);
     }
   }, [
     reducerState?.hotelSearchResult?.hotelDetails?.data?.data
@@ -71,49 +49,17 @@ const GuestdetailGrm = () => {
   ]);
 
   return (
-
-
     <div className="container-fluid margin-pecentage">
       <div className="row">
         <div className="col-lg-9">
-
           <Hoteldescription />
-
         </div>
         <div className="col-lg-3">
-
           <Sailsummary />
         </div>
       </div>
     </div>
-
-
-
   );
 };
 
-export default  GuestdetailGrm;
-
-
-
-{/* <Modal
-            open={bookingStatus == 1 ? true : false}
-            aria-labelledby="child-modal-title"
-            aria-describedby="child-modal-description"
-          >
-            <Box sx={{ ...style, width: 350 }}>
-              <img
-                src={successGif}
-                alt="sucess gif"
-                style={{ width: "100%" }}
-              />
-              <Typography
-                textAlign="center"
-                paddingLeft={3}
-                paddingTop={2}
-                fontWeight="bold"
-              >
-                Thanku!!Your booking is done..
-              </Typography>
-            </Box>
-          </Modal> */}
+export default GuestdetailGrm;

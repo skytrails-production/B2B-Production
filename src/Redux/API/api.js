@@ -291,6 +291,22 @@ function api() {
     });
   };
 
+
+
+
+
+  const cityname = () => {
+    return axios({
+      method: "GET",
+      url: "/skyTrails/searchCity",
+      baseURL: `${apiURL.baseURL}`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
+
   // const fligtname = () => {
   //   return axios.get(`${apiURL.baseURL}/skyTrails/airline`);
   // };
@@ -862,7 +878,8 @@ function api() {
     updateFlightBookingSeat,
     Ssr,
     fligtname,
-    forgetPasswordLink
+    forgetPasswordLink,
+    cityname
   };
 }
 

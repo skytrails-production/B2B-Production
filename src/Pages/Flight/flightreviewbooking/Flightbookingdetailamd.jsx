@@ -27,6 +27,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import userApi from "../../../Redux/API/api";
 import Swal from "sweetalert2";
+
 import { swalModal } from "../../../utils/swal";
 import { balanceSubtractRequest } from "../../../Redux/Auth/balaceSubtract/actionBalnceSubtract";
 import { clearPassengersReducer } from "../../../Redux/Passengers/passenger";
@@ -72,8 +73,7 @@ const Flightbookingdetailamd = ({ amdata, airesellRes }) => {
     sessionStorage.getItem("6989_n578j_j848433")
   );
   // console.log(dummyPnrCheck,"hdhdhd")
-  
-  
+
   const isPassportRequired =
     reducerState?.flightFare?.flightQuoteData?.Results
       ?.IsPassportRequiredAtTicket;
@@ -116,62 +116,61 @@ const Flightbookingdetailamd = ({ amdata, airesellRes }) => {
   const userId = reducerState?.logIn?.loginData?.data?.data?.id;
   const currentBalance = reducerState?.userData?.userData?.data?.data?.balance;
   const imgvalue =
-  amdata?.flightDetails?.flightInformation?.companyId?.marketingCarrier ||
-  amdata?.flightDetails?.[0]?.flightInformation?.companyId?.marketingCarrier;
-// console.log("amdata", amdata);
-const airlinenumber =
-  amdata?.flightDetails?.flightInformation?.flightOrtrainNumber ||
-  amdata?.flightDetails?.[0]?.flightInformation?.flightOrtrainNumber;
-const departure =
-  amdata?.flightDetails?.flightInformation?.location?.[1]?.locationId ||
-  amdata?.flightDetails?.[amdata?.flightDetails.length-1]?.flightInformation?.location?.[1]?.locationId;
-const arrival =
-  amdata?.flightDetails?.flightInformation?.location?.[0]?.locationId ||
-  amdata?.flightDetails?.[0]?.flightInformation?.location?.[0]?.locationId;
-const arrivaltime = moment(
-  amdata?.flightDetails?.flightInformation?.productDateTime?.timeOfArrival ||
-    amdata?.flightDetails?.[amdata?.flightDetails.length-1]?.flightInformation?.productDateTime
-      ?.timeOfArrival,
-  "HHmm"
-).format("h:mm A");
+    amdata?.flightDetails?.flightInformation?.companyId?.marketingCarrier ||
+    amdata?.flightDetails?.[0]?.flightInformation?.companyId?.marketingCarrier;
+  // console.log("amdata", amdata);
+  const airlinenumber =
+    amdata?.flightDetails?.flightInformation?.flightOrtrainNumber ||
+    amdata?.flightDetails?.[0]?.flightInformation?.flightOrtrainNumber;
+  const departure =
+    amdata?.flightDetails?.flightInformation?.location?.[1]?.locationId ||
+    amdata?.flightDetails?.[amdata?.flightDetails.length - 1]?.flightInformation
+      ?.location?.[1]?.locationId;
+  const arrival =
+    amdata?.flightDetails?.flightInformation?.location?.[0]?.locationId ||
+    amdata?.flightDetails?.[0]?.flightInformation?.location?.[0]?.locationId;
+  const arrivaltime = moment(
+    amdata?.flightDetails?.flightInformation?.productDateTime?.timeOfArrival ||
+      amdata?.flightDetails?.[amdata?.flightDetails.length - 1]
+        ?.flightInformation?.productDateTime?.timeOfArrival,
+    "HHmm"
+  ).format("h:mm A");
 
-// console.log( amdata?.flightDetails?.[amdata?.flightDetails.length-1]?.flightInformation?.productDateTime
-//   ?.timeOfArrival," amdata?.flightDetails?.[amdata?.flightDetails.length-1]?.flightInformation?.productDateTime.timeOfArrival");
+  // console.log( amdata?.flightDetails?.[amdata?.flightDetails.length-1]?.flightInformation?.productDateTime
+  //   ?.timeOfArrival," amdata?.flightDetails?.[amdata?.flightDetails.length-1]?.flightInformation?.productDateTime.timeOfArrival");
 
-// console.log(
-//   "bookingDataLcc?.FlightItinerary?.Passenger",
-//   reducerState?.flightBook
-// );
+  // console.log(
+  //   "bookingDataLcc?.FlightItinerary?.Passenger",
+  //   reducerState?.flightBook
+  // );
 
-const departuretime = moment(
-  amdata?.flightDetails?.flightInformation?.productDateTime
-    ?.timeOfDeparture ||
-    amdata?.flightDetails?.[0]?.flightInformation?.productDateTime
-      ?.timeOfDeparture,
-  "HHmm"
-).format("h:mm A");
+  const departuretime = moment(
+    amdata?.flightDetails?.flightInformation?.productDateTime
+      ?.timeOfDeparture ||
+      amdata?.flightDetails?.[0]?.flightInformation?.productDateTime
+        ?.timeOfDeparture,
+    "HHmm"
+  ).format("h:mm A");
 
-const datedeparture = moment(
-  amdata?.flightDetails?.flightInformation?.productDateTime
-    ?.dateOfDeparture ||
-    amdata?.flightDetails?.[0]?.flightInformation?.productDateTime
-      ?.dateOfDeparture,
-  "DDMMYYYY"
-).format("DD MMM, YY");
+  const datedeparture = moment(
+    amdata?.flightDetails?.flightInformation?.productDateTime
+      ?.dateOfDeparture ||
+      amdata?.flightDetails?.[0]?.flightInformation?.productDateTime
+        ?.dateOfDeparture,
+    "DDMMYYYY"
+  ).format("DD MMM, YY");
 
-const datearrival = moment(
-  amdata?.flightDetails?.flightInformation?.productDateTime?.dateOfArrival ||
-    amdata?.flightDetails?.[amdata?.flightDetails.length-1]?.flightInformation?.productDateTime
-      ?.dateOfArrival,
-  "DDMMYYYY"
-).format("DD MMM, YY");
+  const datearrival = moment(
+    amdata?.flightDetails?.flightInformation?.productDateTime?.dateOfArrival ||
+      amdata?.flightDetails?.[amdata?.flightDetails.length - 1]
+        ?.flightInformation?.productDateTime?.dateOfArrival,
+    "DDMMYYYY"
+  ).format("DD MMM, YY");
 
-const seats =
-  amdata?.fareDetails?.groupOfFares?.productInformation?.cabinProduct
-    ?.avlStatus;
-// console.log("imgvalue", seats);
-
-
+  const seats =
+    amdata?.fareDetails?.groupOfFares?.productInformation?.cabinProduct
+      ?.avlStatus;
+  // console.log("imgvalue", seats);
 
   function createMarkup(data) {
     return { __html: data };
@@ -180,7 +179,6 @@ const seats =
   // useState(() => {
   //   console.log(reducerState, "reducerstate");
   // }, [reducerState]);
-
 
   function convertDateFormatAmd(originalDate) {
     // Convert to Date object
@@ -203,14 +201,12 @@ const seats =
 
   // console.log("passengerData",passengerData);
 
-  
   // const userId = reducerState?.logIn?.loginData?.data?.data?.id;
-
 
   // ////////////////////////
   // const statusaircelldata = sessionStorage.getItem("statusaircell");
   const xmlpassengerData = async () => {
-  // setLoading(true);
+    // setLoading(true);
     for (let i = 0; i < Number(adultCount) + Number(childCount); i++) {
       // console.log(passengerData[i], i, "iiiiiiiiiiiiii");
 
@@ -226,15 +222,14 @@ const seats =
             <travellerInformation>
                 <traveller>
                     <surname>${passengerData[i]?.LastName}</surname>
-                    <quantity>${i + 1}</quantity>
+                    <quantity>${
+                      passengerData[i]?.PaxType === 1 ? adultCount : childCount
+                    }</quantity>
                 </traveller>
                 <passenger>
                     <firstName>${passengerData[i]?.FirstName}</firstName>
                     <type>${
                       passengerData[i]?.PaxType === 1 ? "ADT" : "CHD"
-                      // : passengerData[i]?.PaxType === 2
-                      // ? "CHD"
-                      // :
                     }</type>
                 </passenger>
                 </travellerInformation>
@@ -261,7 +256,7 @@ const seats =
                       passengerData[Number(adultCount) + Number(childCount) + i]
                         ?.LastName
                     }</surname>
-                    <quantity>${i + 1}</quantity>
+                    <quantity>${infantCount}</quantity>
                 </traveller>
                 <passenger>
                     <firstName>${
@@ -475,7 +470,6 @@ const seats =
     }
   };
 
-
   const fetchDataSavepnr = async (ress) => {
     try {
       const res = await axios({
@@ -493,20 +487,17 @@ const seats =
         },
       });
 
-      if (res?.data?.status === 200) {
-        const pnr = res?.data?.data?.headers?.Pnr;
+      const pnr = res?.data?.data?.headers?.Pnr;
+      if (res?.data?.status === 200 && res?.data?.data?.headers?.Pnr) {
         sessionStorage.setItem("PNR", pnr);
-        // console.log(
-        //   pnr,
-        //   "/skyTrails/amadeus/savepnr/skyTrails/amadeus/savepnr"
-        // );
-
-        // Update state and handle parsing logic in useEffect
         setXmlData(res?.data?.data?.data);
         setLoader(false);
+      } else {
+        setLoader(false);
+        Swal.fire("Booking Failed");
+        navigate("/flights");
       }
     } catch (error) {
-      // console.error("Error in fetchDataSavepnr:", error);
       setLoader(false);
     }
   };
@@ -537,26 +528,21 @@ const seats =
     parseXmlData();
   }, [xmlData]);
 
-
-
   useEffect(() => {
     if (jsonData?.pnrHeader?.reservationInfo?.reservation?.controlNumber) {
-     
       api.flightbookingamedius(amdpayload);
       balanceSubtractOneWay();
       if (userId) {
         const payload = userId;
-  
+
         // console.log(payload,'userIdiii');
         dispatch(getUserDataAction(payload));
       }
-      
+
       navigate("/bookedTicketSucess");
       // setLoading(false);
     }
   }, [jsonData]);
-
-
 
   const fetchDataAmadesContinue = async (amadiesPayload) => {
     // console.log("airesellRes", airesellRes);
@@ -581,229 +567,351 @@ const seats =
       farepricepnrwithbookingclass(res?.data?.data?.headers);
     }
   };
-   
+
   const amdsubtractcheck = async () => {
-    if (Number(amdata?.monetaryDetail?.[0]?.amount) + Number(markUpamount) >= currentBalance) {
+    if (
+      Number(amdata?.monetaryDetail?.[0]?.amount) + Number(markUpamount) >=
+      currentBalance
+    ) {
       // console.log("Recharge your wallet");
       Swal.fire("Recharge Your Wallet");
-      // xmlpassengerData();
-      // alert("Reacharge your wallet");
     } else {
-      xmlpassengerData(); 
+      xmlpassengerData();
     }
   };
 
+  // //////////////////////////////////////////////////////////////////////////////////////////////////
+  const citynames = reducerState?.CitynameReducer?.data?.data;
+  const [departurename, setdeparturename] = useState("");
+  const [arrivalname, setarrivalnamename] = useState("");
 
-  let depTimeString = String(jsonData?.originDestinationDetails?.itineraryInfo?.travelProduct?.product?.depTime)  ;
-  let depDateString = String(jsonData?.originDestinationDetails?.itineraryInfo?.travelProduct?.product?.depDate) ;
-  let arrTimeString1 = String(jsonData?.originDestinationDetails?.itineraryInfo?.travelProduct?.product?.arrTime) ;
-  let arrDateString = String(jsonData?.originDestinationDetails?.itineraryInfo?.travelProduct?.product?.arrDate) ;
+  useEffect(() => {
+    const cityAirline = citynames.find(
+      (cityairline) => cityairline.id === arrival
+    );
+
+    const arrivalAirline = citynames.find(
+      (cityairlinearrival) => cityairlinearrival.id === departure
+    );
+
+    // console.log("cityAirline",arrivalAirline)
+
+    if (cityAirline) {
+      setdeparturename(cityAirline.name);
+    } else {
+      setdeparturename("No matching airline found");
+    }
+
+    if (arrivalAirline) {
+      setarrivalnamename(arrivalAirline.name);
+    } else {
+      setarrivalnamename("No matching airline found");
+    }
+  }, []);
+
+  function findAirportByCode(code) {
+    const data = citynames?.find(citynames => citynames?.AirportCode === code)
   
+    return data;
+    }
+
+
+  const flightname = reducerState?.flightnameReducer?.data?.data;
+  function findAirlineByCode(code) {
+    const data = flightname?.find(flightname => flightname?.airlineCode === code)
+
+    return data?.airlineName;
+  }
+
+
+  // ////////////////////////////////////////////////////////////////////////////////////////
+
+  let depTimeString = String(
+    jsonData?.originDestinationDetails?.itineraryInfo?.travelProduct?.product
+      ?.depTime
+  );
+  let depDateString = String(
+    jsonData?.originDestinationDetails?.itineraryInfo?.travelProduct?.product
+      ?.depDate
+  );
+  let arrTimeString1 = String(
+    jsonData?.originDestinationDetails?.itineraryInfo?.travelProduct?.product
+      ?.arrTime
+  );
+  let arrDateString = String(
+    jsonData?.originDestinationDetails?.itineraryInfo?.travelProduct?.product
+      ?.arrDate
+  );
+
   const passengerDataa = passengerData.length;
   // console.log("passengerDataa//////////",parseInt(amdata?.TotalPublishFare) / passengerDataa);
 
-  
   if (depTimeString && depTimeString.length === 2) {
-    depTimeString = '00' + depTimeString;
+    depTimeString = "00" + depTimeString;
   }
   if (arrTimeString1 && arrTimeString1.length === 2) {
-    arrTimeString1 = '00' + arrTimeString1;
+    arrTimeString1 = "00" + arrTimeString1;
   }
   if (depTimeString && depTimeString.length === 3) {
-    depTimeString = '0' + depTimeString;
+    depTimeString = "0" + depTimeString;
   }
   if (arrTimeString1 && arrTimeString1.length === 3) {
-    arrTimeString1 = '0' + arrTimeString1;
+    arrTimeString1 = "0" + arrTimeString1;
   }
   if (depDateString && depDateString.length === 5) {
-    depDateString = '0' + depDateString;
+    depDateString = "0" + depDateString;
   }
   if (depDateString && depDateString.length === 4) {
-    depDateString = '00' + depDateString;
+    depDateString = "00" + depDateString;
   }
   if (arrDateString && arrDateString.length === 4) {
-    arrDateString = '00' + arrDateString;
+    arrDateString = "00" + arrDateString;
   }
   if (arrDateString && arrDateString.length === 5) {
-    arrDateString = '0' + arrDateString;
+    arrDateString = "0" + arrDateString;
   }
 
-
-
-  const departureMoment = moment(`${depDateString} ${depTimeString}`, "DDMMYYYY HHmm");
+  const departureMoment = moment(
+    `${depDateString} ${depTimeString}`,
+    "DDMMYYYY HHmm"
+  );
   const depTimeISO1 = departureMoment.toISOString();
   // console.log("jsonData////////",jsonData)
   // console.log("`Departure ISO:",arrTimeString1,arrDateString);  // Output: "2024-09-26T10:15:00.000Z"
-  
+
   // Parse and format the arrival time and date
-  const arrivalMoment = moment(`${arrDateString} ${arrTimeString1}`, "DDMMYYYY HHmm");
+  const arrivalMoment = moment(
+    `${arrDateString} ${arrTimeString1}`,
+    "DDMMYYYY HHmm"
+  );
   const arrTimeISO1 = arrivalMoment.toISOString();
 
   const PassportRequired =
-  (reducerState?.searchReducer?.search[0]?.CountryCode !== 'IN ') ||
-  (reducerState?.searchReducer?.search[1]?.CountryCode !== 'IN ');
-  
+    reducerState?.searchReducer?.search[0]?.CountryCode !== "IN " ||
+    reducerState?.searchReducer?.search[1]?.CountryCode !== "IN ";
+
   // console.log(`Arrival ISO: ${arrTimeISO1}`);
 
   // console.log("amdata?.flight",reducerState);
 
- 
-  let nonStop=   [
-      {
-        Airline: {
-          AirlineCode:
-            jsonData?.originDestinationDetails?.itineraryInfo?.travelProduct
-              ?.companyDetail?.identification,
-          AirlineName:
-            jsonData?.originDestinationDetails?.itineraryInfo?.travelProduct
-              ?.companyDetail?.identification,
-          FlightNumber:
-            jsonData?.originDestinationDetails?.itineraryInfo?.travelProduct
-              ?.productDetails?.identification,
-          FareClass:
-            jsonData?.originDestinationDetails?.itineraryInfo?.travelProduct?.productDetails?.classOfService,
-        },
-        Origin: {
-          AirportCode:
-            jsonData?.originDestinationDetails?.itineraryInfo?.travelProduct
-              ?.boardpointDetail?.cityCode,
-          AirportName: reducerState?.searchReducer?.search?.[0]?.code,
-          CityName: reducerState?.searchReducer?.search?.[0]?.name,
-          Terminal:
-            jsonData?.originDestinationDetails?.itineraryInfo?.flightDetail
-              ?.arrivalStationInfo?.terminal,
-          DepTime: depTimeISO1,
-        },
-        Destination: {
-          AirportCode:
-            jsonData?.originDestinationDetails?.itineraryInfo?.travelProduct
-              ?.offpointDetail?.cityCode,
-          AirportName: reducerState?.searchReducer?.search?.[1]?.code,
-          CityName: reducerState?.searchReducer?.search?.[1]?.name,
-          Terminal:
-            jsonData?.originDestinationDetails?.itineraryInfo?.flightDetail
-              ?.departureInformation?.departTerminal,
-          ArrTime: arrTimeISO1,
-        },
-        Baggage:
-        (amdata?.flight?.baggage?.freeBagAllownceInfo?.baggageDetails?.quantityCode || amdata?.baggage?.freeBagAllownceInfo?.baggageDetails?.quantityCode)
-        === "W" ? `${amdata?.flight?.baggage?.freeBagAllownceInfo?.baggageDetails?.freeAllowance || amdata?.baggage?.freeBagAllownceInfo?.baggageDetails?.freeAllowance} ${ amdata?.flight?.baggage?.freeBagAllownceInfo?.baggageDetails?.unitQualifier || amdata?.baggage?.freeBagAllownceInfo?.baggageDetails?.unitQualifier === "K" ? "KG" : `${amdata?.flight?.baggage?.freeBagAllownceInfo?.baggageDetails?.unitQualifier || amdata?.flight?.baggage?.freeBagAllownceInfo?.baggageDetails?.unitQualifier}`}` : `(${(amdata?.baggage?.freeBagAllownceInfo?.baggageDetails?.freeAllowance || amdata?.flight?.baggage?.freeBagAllownceInfo?.baggageDetails?.freeAllowance)} × 23KG)`,
+  let nonStop = [
+    {
+      Airline: {
+        AirlineCode:
+          jsonData?.originDestinationDetails?.itineraryInfo?.travelProduct
+            ?.companyDetail?.identification,
+        AirlineName:
+        findAirlineByCode(jsonData?.originDestinationDetails?.itineraryInfo?.travelProduct
+            ?.companyDetail?.identification),
+        FlightNumber:
+          jsonData?.originDestinationDetails?.itineraryInfo?.travelProduct
+            ?.productDetails?.identification,
+        FareClass:
+          jsonData?.originDestinationDetails?.itineraryInfo?.travelProduct
+            ?.productDetails?.classOfService,
       },
-    ]
+      Origin: {
+        AirportCode:
+          jsonData?.originDestinationDetails?.itineraryInfo?.travelProduct
+            ?.boardpointDetail?.cityCode,
+        AirportName: reducerState?.searchReducer?.search?.[0]?.code,
+        CityName: reducerState?.searchReducer?.search?.[0]?.name,
+        Terminal:
+          jsonData?.originDestinationDetails?.itineraryInfo?.flightDetail
+            ?.arrivalStationInfo?.terminal,
+        DepTime: depTimeISO1,
+      },
+      Destination: {
+        AirportCode:
+          jsonData?.originDestinationDetails?.itineraryInfo?.travelProduct
+            ?.offpointDetail?.cityCode,
+        AirportName: reducerState?.searchReducer?.search?.[1]?.code,
+        CityName: reducerState?.searchReducer?.search?.[1]?.name,
+        Terminal:
+          jsonData?.originDestinationDetails?.itineraryInfo?.flightDetail
+            ?.departureInformation?.departTerminal,
+        ArrTime: arrTimeISO1,
+      },
+      Baggage:
+        (amdata?.flight?.baggage?.freeBagAllownceInfo?.baggageDetails
+          ?.quantityCode ||
+          amdata?.baggage?.freeBagAllownceInfo?.baggageDetails
+            ?.quantityCode) === "W"
+          ? `${
+              amdata?.flight?.baggage?.freeBagAllownceInfo?.baggageDetails
+                ?.freeAllowance ||
+              amdata?.baggage?.freeBagAllownceInfo?.baggageDetails
+                ?.freeAllowance
+            } ${
+              amdata?.flight?.baggage?.freeBagAllownceInfo?.baggageDetails
+                ?.unitQualifier ||
+              amdata?.baggage?.freeBagAllownceInfo?.baggageDetails
+                ?.unitQualifier === "K"
+                ? "KG"
+                : `${
+                    amdata?.flight?.baggage?.freeBagAllownceInfo?.baggageDetails
+                      ?.unitQualifier ||
+                    amdata?.flight?.baggage?.freeBagAllownceInfo?.baggageDetails
+                      ?.unitQualifier
+                  }`
+            }`
+          : `(${
+              amdata?.baggage?.freeBagAllownceInfo?.baggageDetails
+                ?.freeAllowance ||
+              amdata?.flight?.baggage?.freeBagAllownceInfo?.baggageDetails
+                ?.freeAllowance
+            } × 23KG)`,
+    },
+  ];
 
-    let times = (jsonData?.originDestinationDetails?.itineraryInfo?.elementManagementItinerary) ? nonStop : jsonData?.originDestinationDetails?.itineraryInfo.map((itinerary, index) => {
-      let depTime = String(itinerary?.travelProduct?.product?.depTime);
-      let depDate = String(itinerary?.travelProduct?.product?.depDate);
-      let arrTime = String(itinerary?.travelProduct?.product?.arrTime);
-      let arrDate = String(itinerary?.travelProduct?.product?.arrDate);
-    
-      if (depTime && depTime.length === 2) {
-        depTime = '00' + depTime;
-      }
-      if (arrTime && arrTime.length === 2) {
-        arrTime = '00' + arrTime;
-      }
-      if (depTime && depTime.length === 3) {
-        depTime = '0' + depTime;
-      }
-      if (arrTime && arrTime.length === 3) {
-        arrTime = '0' + arrTime;
-      }
-      if (depDate && depDate.length === 5) {
-        depDate = '0' + depDate;
-      }
-      if (depDate && depDate.length === 4) {
-        depDate = '00' + depDate;
-      }
-      if (arrDate && arrDate.length === 4) {
-        arrDate = '00' + arrDate;
-      }
-      if (arrDate && arrDate.length === 5) {
-        arrDate = '0' + arrDate;
-      }
-    
-      const depDateTimeString = `${depDate}${depTime}`;
-      
-        const departureMoment = moment(`${depDate} ${depTime}`, "DDMMYYYY HHmm");
-  const depTimeISO = departureMoment.toISOString();
-    
-      // Parse arrDate and arrTime into ISO format for arrival
-      const arrDateTimeString = `${arrDate}${arrTime}`;
-      
-      const arrivalMoment = moment(`${arrDate} ${arrTime}`, "DDMMYYYY HHmm");
-      const arrTimeISO = arrivalMoment.toISOString();
-    
-      return {
-        depTime: depTimeISO,
-        depDate,
-        arrTime: arrTimeISO,
-        arrDate
-      };
-    });
-  
-const passport = reducerState?.passengersData?.[0]?.PassportNo;
-const pnrvalue = jsonData?.pnrHeader?.reservationInfo?.reservation?.controlNumber;
-// passportExpiry
-  // console.log("passport",passport);
+  let times = jsonData?.originDestinationDetails?.itineraryInfo
+    ?.elementManagementItinerary
+    ? nonStop
+    : jsonData?.originDestinationDetails?.itineraryInfo.map(
+        (itinerary, index) => {
+          let depTime = String(itinerary?.travelProduct?.product?.depTime);
+          let depDate = String(itinerary?.travelProduct?.product?.depDate);
+          let arrTime = String(itinerary?.travelProduct?.product?.arrTime);
+          let arrDate = String(itinerary?.travelProduct?.product?.arrDate);
+
+          if (depTime && depTime.length === 2) {
+            depTime = "00" + depTime;
+          }
+          if (arrTime && arrTime.length === 2) {
+            arrTime = "00" + arrTime;
+          }
+          if (depTime && depTime.length === 3) {
+            depTime = "0" + depTime;
+          }
+          if (arrTime && arrTime.length === 3) {
+            arrTime = "0" + arrTime;
+          }
+          if (depDate && depDate.length === 5) {
+            depDate = "0" + depDate;
+          }
+          if (depDate && depDate.length === 4) {
+            depDate = "00" + depDate;
+          }
+          if (arrDate && arrDate.length === 4) {
+            arrDate = "00" + arrDate;
+          }
+          if (arrDate && arrDate.length === 5) {
+            arrDate = "0" + arrDate;
+          }
+
+          const depDateTimeString = `${depDate}${depTime}`;
+
+          const departureMoment = moment(
+            `${depDate} ${depTime}`,
+            "DDMMYYYY HHmm"
+          );
+          const depTimeISO = departureMoment.toISOString();
+
+          // Parse arrDate and arrTime into ISO format for arrival
+          const arrDateTimeString = `${arrDate}${arrTime}`;
+
+          const arrivalMoment = moment(
+            `${arrDate} ${arrTime}`,
+            "DDMMYYYY HHmm"
+          );
+          const arrTimeISO = arrivalMoment.toISOString();
+
+          return {
+            depTime: depTimeISO,
+            depDate,
+            arrTime: arrTimeISO,
+            arrDate,
+          };
+        }
+      );
+
+  const passport = reducerState?.passengersData?.[0]?.PassportNo;
+  const pnrvalue =
+    jsonData?.pnrHeader?.reservationInfo?.reservation?.controlNumber;
   const amdpayload = {
-
     userId: userId,
     bookingId: `Sky${jsonData?.pnrHeader?.reservationInfo?.reservation?.controlNumber}`,
     oneWay: true,
     ticketType: "Original Ticket",
     pnr: jsonData?.pnrHeader?.reservationInfo?.reservation?.controlNumber,
-    origin:
-     reducerState?.searchReducer?.search?.[0]?.name,
+    origin: reducerState?.searchReducer?.search?.[0]?.name,
     destination: reducerState?.searchReducer?.search?.[1]?.name,
     paymentStatus: "success",
-    totalAmount: Number(amdata?.monetaryDetail?.[0]?.amount) + Number(markUpamount),
-    
+    totalAmount:
+      Number(amdata?.monetaryDetail?.[0]?.amount) + Number(markUpamount),
 
-   airlineDetails :(jsonData?.originDestinationDetails?.itineraryInfo?.elementManagementItinerary) ? 
-   nonStop:  jsonData?.originDestinationDetails?.itineraryInfo.map((stopss, index) => {
-    const depTimeISO = times[index]?.depTime;
-    const arrTimeISO = times[index]?.arrTime;
+    airlineDetails: jsonData?.originDestinationDetails?.itineraryInfo
+      ?.elementManagementItinerary
+      ? nonStop
+      : jsonData?.originDestinationDetails?.itineraryInfo.map(
+          (stopss, index) => {
+            const depTimeISO = times[index]?.depTime;
+            const arrTimeISO = times[index]?.arrTime;
 
-    // console.log("..............................",depTimeISO,arrTimeISO);
-  
-    return {
-      Airline: {
-        AirlineCode: stopss?.travelProduct?.companyDetail?.identification,
-        AirlineName: stopss?.travelProduct?.companyDetail?.identification,
-        FlightNumber: stopss?.travelProduct?.productDetails?.identification,
-        FareClass: stopss?.travelProduct?.productDetails?.classOfService,
-      },
-      Origin: {
-        AirportCode: stopss?.travelProduct?.boardpointDetail?.cityCode,
-        // AirportName: reducerState?.searchReducer?.search?.[0]?.code,
-        // CityName: reducerState?.searchReducer?.search?.[0]?.name,
-        AirportName:stopss?.travelProduct?.boardpointDetail?.cityCode,
-        CityName:stopss?.travelProduct?.boardpointDetail?.cityCode,
-        Terminal: stopss?.flightDetail?.arrivalStationInfo?.terminal,
-        DepTime: depTimeISO,
-      },
-      Destination: {
-        AirportCode: stopss?.travelProduct?.offpointDetail?.cityCode,
-        // AirportName: reducerState?.searchReducer?.search?.[1]?.code,
-        // CityName: reducerState?.searchReducer?.search?.[1]?.name,
-        AirportName:stopss?.travelProduct?.offpointDetail?.cityCode,
-        CityName:stopss?.travelProduct?.offpointDetail?.cityCode,
-        Terminal: stopss?.flightDetail?.departureInformation?.departTerminal,
-        ArrTime: arrTimeISO,
-      },
-      Baggage: (
-        amdata?.flight?.baggage?.freeBagAllownceInfo?.baggageDetails?.quantityCode ||
-        amdata?.baggage?.freeBagAllownceInfo?.baggageDetails?.quantityCode
-      ) === "W" 
-        ? `${amdata?.flight?.baggage?.freeBagAllownceInfo?.baggageDetails?.freeAllowance || amdata?.baggage?.freeBagAllownceInfo?.baggageDetails?.freeAllowance} ${
-            amdata?.flight?.baggage?.freeBagAllownceInfo?.baggageDetails?.unitQualifier || amdata?.baggage?.freeBagAllownceInfo?.baggageDetails?.unitQualifier === "K" ? "KG" : `${amdata?.flight?.baggage?.freeBagAllownceInfo?.baggageDetails?.unitQualifier || amdata?.flight?.baggage?.freeBagAllownceInfo?.baggageDetails?.unitQualifier}`
-          }`
-        : `(${amdata?.baggage?.freeBagAllownceInfo?.baggageDetails?.freeAllowance || amdata?.flight?.baggage?.freeBagAllownceInfo?.baggageDetails?.freeAllowance} × 23KG)`,
-    };
-  }),
-  
-  
-     
+            const originname =
+              stopss?.travelProduct?.boardpointDetail?.cityCode;
+
+            return {
+              Airline: {
+                AirlineCode:
+                  stopss?.travelProduct?.companyDetail?.identification,
+                AirlineName:
+                findAirlineByCode(stopss?.travelProduct?.companyDetail?.identification),
+                FlightNumber:
+                  stopss?.travelProduct?.productDetails?.identification,
+                FareClass:
+                  stopss?.travelProduct?.productDetails?.classOfService,
+              },
+              Origin: {
+                AirportCode: stopss?.travelProduct?.boardpointDetail?.cityCode,
+                AirportName: findAirportByCode(stopss?.travelProduct?.boardpointDetail?.cityCode)?.code,
+                CityName: findAirportByCode(stopss?.travelProduct?.boardpointDetail?.cityCode)?.name,
+                Terminal: stopss?.flightDetail?.arrivalStationInfo?.terminal,
+                DepTime: depTimeISO,
+              },
+              Destination: {
+                AirportCode: stopss?.travelProduct?.offpointDetail?.cityCode,
+                // AirportName: reducerState?.searchReducer?.search?.[1]?.code,
+                // CityName: reducerState?.searchReducer?.search?.[1]?.name,
+                AirportName:findAirportByCode( stopss?.travelProduct?.offpointDetail?.cityCode)?.code,
+                CityName: findAirportByCode(stopss?.travelProduct?.offpointDetail?.cityCode)?.name,
+                Terminal:
+                  stopss?.flightDetail?.departureInformation?.departTerminal,
+                ArrTime: arrTimeISO,
+              },
+              Baggage:
+                (amdata?.flight?.baggage?.freeBagAllownceInfo?.baggageDetails
+                  ?.quantityCode ||
+                  amdata?.baggage?.freeBagAllownceInfo?.baggageDetails
+                    ?.quantityCode) === "W"
+                  ? `${
+                      amdata?.flight?.baggage?.freeBagAllownceInfo
+                        ?.baggageDetails?.freeAllowance ||
+                      amdata?.baggage?.freeBagAllownceInfo?.baggageDetails
+                        ?.freeAllowance
+                    } ${
+                      amdata?.flight?.baggage?.freeBagAllownceInfo
+                        ?.baggageDetails?.unitQualifier ||
+                      amdata?.baggage?.freeBagAllownceInfo?.baggageDetails
+                        ?.unitQualifier === "K"
+                        ? "KG"
+                        : `${
+                            amdata?.flight?.baggage?.freeBagAllownceInfo
+                              ?.baggageDetails?.unitQualifier ||
+                            amdata?.flight?.baggage?.freeBagAllownceInfo
+                              ?.baggageDetails?.unitQualifier
+                          }`
+                    }`
+                  : `(${
+                      amdata?.baggage?.freeBagAllownceInfo?.baggageDetails
+                        ?.freeAllowance ||
+                      amdata?.flight?.baggage?.freeBagAllownceInfo
+                        ?.baggageDetails?.freeAllowance
+                    } × 23KG)`,
+            };
+          }
+        ),
+
     passengerDetails: passengerData.map((passenger) => ({
       title: passenger.Title,
       firstName: passenger.FirstName,
@@ -812,13 +920,12 @@ const pnrvalue = jsonData?.pnrHeader?.reservationInfo?.reservation?.controlNumbe
       ContactNo: passenger.ContactNo,
       DateOfBirth: passenger.DateOfBirth,
       email: passenger.Email,
-      passportNo:PassportRequired? passenger.PassportNo : '',
-    passportExpiry: PassportRequired?  passenger.PassportExpiry : '',
+      passportNo: PassportRequired ? passenger.PassportNo : "",
+      passportExpiry: PassportRequired ? passenger.PassportExpiry : "",
       city: passenger.City,
       TicketNumber: "hold",
       // amount: amdata?.TotalPublishFare,
-      amount:parseInt(amdata?.monetaryDetail?.[0]?.amount) / passengerDataa ,
-      
+      amount: parseInt(amdata?.monetaryDetail?.[0]?.amount) / passengerDataa,
     })),
     // ],
     baggage: [],
@@ -844,13 +951,12 @@ const pnrvalue = jsonData?.pnrHeader?.reservationInfo?.reservation?.controlNumbe
 
   let sesstioResultIndex = amdata;
 
-
-
   const balanceSubtractOneWay = () => {
     if (userId) {
       const balancePayload = {
         _id: userId,
-        amount: Number(amdata?.monetaryDetail?.[0]?.amount) + Number(markUpamount),
+        amount:
+          Number(amdata?.monetaryDetail?.[0]?.amount) + Number(markUpamount),
         bookingType: "Flight booking",
       };
 
@@ -873,8 +979,6 @@ const pnrvalue = jsonData?.pnrHeader?.reservationInfo?.reservation?.controlNumbe
   //     dispatch(balanceSubtractRequest(balancePayload));
   //   }
   // };
-
-
 
   if (loader) {
     return (
@@ -971,7 +1075,8 @@ const pnrvalue = jsonData?.pnrHeader?.reservationInfo?.reservation?.controlNumbe
           </p>
         </div>
         <div className="singleFlightBoxTwo">
-          <span>{arrival}</span>
+          {/* <span>{arrival}</span> */}
+          <span>{departurename}</span>
 
           {/* <p>{time1.substr(0, 5)}</p> */}
           <p>
@@ -1013,15 +1118,10 @@ const pnrvalue = jsonData?.pnrHeader?.reservationInfo?.reservation?.controlNumbe
           {/* <span>Refundable</span> */}
         </div>
         <div className="singleFlightBoxFour">
-          <span>{departure}</span>
-          <p>
-           
-            {datearrival}
-          </p>
-          <p>
-            
-            {arrivaltime}
-          </p>
+          {/* <span>{departure}</span> */}
+          <span>{arrivalname}</span>
+          <p>{datearrival}</p>
+          <p>{arrivaltime}</p>
           {/* <p>
             Terminal
             
@@ -1103,8 +1203,6 @@ const pnrvalue = jsonData?.pnrHeader?.reservationInfo?.reservation?.controlNumbe
         })}
       </div>
 
-     
-
       <div className="col-lg-12 my-3">
         <div class="headingflightPassenger-new">
           <p>Term & Condition</p>
@@ -1175,23 +1273,23 @@ const pnrvalue = jsonData?.pnrHeader?.reservationInfo?.reservation?.controlNumbe
           // onSubmit={handleSubmit}
           onSubmit={() => amdsubtractcheck()}
         > */}
-          <div className="flightDetButton" style={{ fontSize: "16px" }}>
-            <button
-              style={{ fontSize: "16px" }}
-              onClick={() => amdsubtractcheck()}
-              type="submit"
-              disabled={
-                !passengerAgreement || !paymentOption
-                  ? true
-                  : loading
-                    ? true
-                    : false
-              }
-            >
-              {" "}ticket
-              
-            </button>
-          </div>
+        <div className="flightDetButton" style={{ fontSize: "16px" }}>
+          <button
+            style={{ fontSize: "16px" }}
+            onClick={() => amdsubtractcheck()}
+            type="submit"
+            disabled={
+              !passengerAgreement || !paymentOption
+                ? true
+                : loading
+                ? true
+                : false
+            }
+          >
+            {" "}
+            ticket
+          </button>
+        </div>
         {/* </form> */}
         {/* <button onClick={() => amdsubtractcheck()}>ticket</button> */}
       </div>

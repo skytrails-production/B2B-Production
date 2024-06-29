@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Box, Typography, Button, Modal } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import Rating from "../hotelresult/Rating";
-import Divider from "@mui/material/Divider";
+
 import { useDispatch, useSelector, useReducer } from "react-redux";
 import moment from "moment";
 import {
@@ -26,6 +25,7 @@ const Hoteldescription = () => {
   const navigate = useNavigate();
   const [loader, setLoader] = useState(false);
   const reducerState = useSelector((state) => state);
+  const [open, setOpen] = useState(false); // State to control modal visibility
 
   let bookingStatus =
     reducerState?.hotelSearchResult?.bookRoom?.BookResult?.Status || false;
@@ -36,12 +36,9 @@ const Hoteldescription = () => {
   const hotelinfoGRN = reducerState?.hotelSearchResultGRN?.hotelRoom?.hotel;
   const hotelMainReducer =
     reducerState?.hotelSearchResultGRN?.ticketData?.data?.data;
-  // console.log(hotelMainReducer, "hotel============================");
+  
   const passenger = reducerState?.passengers?.passengersData;
-  const [isDisableScroll, setIsDisableScroll] = useState(false);
-  // const [sub, setSub] = useState(false);
-  //const emailRef = useRef();
-
+ 
   const star = (data) => {
     const stars = [];
     for (let i = 0; i < data; i++) {
@@ -64,23 +61,19 @@ const Hoteldescription = () => {
 
   const getBookingDetails = reducerState?.hotelSearchResultGRN?.bookRoom;
 
-  // const totalAmount = getBookingDetails?.reduce((accumulator, item) => {
-  //   return accumulator + item?.Price?.PublishedPriceRoundedOff;
-  // }, 0);
+  
 
   const markUpamount =
     reducerState?.userData?.userData?.data?.data?.markup?.hotel;
   const userBalance = reducerState?.userData?.userData?.data?.data?.balance;
 
   const userId = reducerState?.logIn?.loginData?.data?.data?.id;
-  // console.log(userId, "---------------userid");
-  // const bookingResonse=reducerState?.hotelSearchResult?.bookRoom?.BookResult?.Error?.ErrorCode;
+  
   const nonRefundable =
     getBookingDetails?.hotel?.booking_items?.[0]?.non_refundable;
   const cancelDetails =
     getBookingDetails?.hotel?.booking_items?.[0]?.cancellation_policy;
-  const grandTotal = Number(hotelinfoGRN?.rate?.price)+ Number(markUpamount);
-  // console.log(Number(hotelinfoGRN?.rate?.price),"login")
+  const grandTotal = Number(hotelinfoGRN?.rate?.price) + Number(markUpamount);
   
   // const grandTotal = 1;
   useEffect(() => {
@@ -88,7 +81,6 @@ const Hoteldescription = () => {
       userId &&
       reducerState?.hotelSearchResultGRN?.bookRoom?.status === "confirmed"
     ) {
-     
       const payload = {
         userId: reducerState?.logIn?.loginData?.data?.result?._id,
         agnet_reference: getBookingDetails?.agent_reference,
@@ -171,10 +163,8 @@ const Hoteldescription = () => {
   const mixedString = generateMixedString();
 
   const handleClickBooking = async () => {
-    // console.log(userBalance,"userbalance", grandTotal, "grandTotal")
-
+    
     if (userBalance >= grandTotal) {
-
       const payload = {
         search_id:
           reducerState?.hotelSearchResultGRN?.hotelDetails?.data?.data
@@ -232,13 +222,13 @@ const Hoteldescription = () => {
 
       dispatch(balanceSubtractRequest(balancePayload));
       Swal.fire({
-        title: 'Booking Successful',
-        text: 'Your booking was successful! Thank you for booking with us.',
-        icon: 'success',
-        confirmButtonText: 'OK'
+        title: "Booking Successful",
+        text: "Your booking was successful! Thank you for booking with us.",
+        icon: "success",
+        confirmButtonText: "OK",
       }).then((result) => {
         if (result.isConfirmed) {
-          navigate('/');
+          navigate("/");
         }
       });
     } else {
@@ -250,9 +240,7 @@ const Hoteldescription = () => {
     }
   };
 
-  const storedFormData = JSON.parse(sessionStorage.getItem("hotelFormData"));
-  //const data = storedFormData?.dynamicFormData[0]; // Assuming dynamicFormData is an array with at least one element
-  // console.log(reducerState, "reducer state");
+  
   const hotelCancellationPolicies = reducerState?.hotelSearchResult?.blockRoom
     ?.BlockRoomResult?.HotelRoomsDetails
     ? reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult
@@ -262,19 +250,16 @@ const Hoteldescription = () => {
     hotelCancellationPolicies?.CancellationPolicies
       ? hotelCancellationPolicies?.CancellationPolicies[0]?.FromDate
       : [];
-  const cancellationFormattedStartingDate = moment(
-    cancellationStartingDate
-  ).format("MMMM DD, YYYY");
+  
   const cancellationEndingDate = hotelCancellationPolicies?.CancellationPolicies
     ? hotelCancellationPolicies?.CancellationPolicies[0]?.ToDate
     : "";
-  const cancellationFormattedEndingDate = moment(cancellationEndingDate).format(
-    "MMMM DD, YYYY"
-  );
+  
 
-  const cancellationCharge = hotelCancellationPolicies?.CancellationPolicies
-    ? hotelCancellationPolicies?.CancellationPolicies[0]?.Charge
-    : null;
+  
+
+  const handleOpen = () => setOpen(true); // Function to open modal
+  const handleClose = () => setOpen(false); // Function to close modal
 
   return (
     <>
@@ -547,13 +532,67 @@ const Hoteldescription = () => {
       >
         <button
           type="submit"
-          onClick={handleClickBooking}
+          // onClick={handleClickBooking}
+          onClick={handleOpen} // Open modal on button click
           style={{ border: "none" }}
           className="viewinvoice"
         >
           Pay Now
         </button>
       </div>
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="confirmation-modal-title"
+        aria-describedby="confirmation-modal-description"
+        sx={{
+          display:"flex",
+          justifyContent: "center",
+          alignItems:"center",
+          margin:"auto"
+        }}
+      >
+        <Box
+          className="modalStyle"
+          sx={{
+            width: 400,
+            p: 4,
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            borderRadius: 2,
+            outline: "none",
+           
+          }}
+        >
+          <Typography
+            id="confirmation-modal-title"
+            variant="h6"
+            component="h2"
+            gutterBottom
+          >
+            Confirm Booking
+          </Typography>
+          <Typography id="confirmation-modal-description" sx={{ mt: 2, mb: 3 }}>
+            Are you sure you want to confirm the booking?
+          </Typography>
+          <Box display="flex" justifyContent="space-between">
+            <Button
+              onClick={() => {
+                handleClickBooking();
+                handleClose();
+              }}
+              variant="contained"
+              sx={{backgroundColor:"#21325D"}}
+            >
+              Confirm
+            </Button>
+            <Button   sx={{backgroundColor:"rgb(231,60,52)"}} onClick={handleClose} variant="contained" color="secondary">
+              Cancel
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
     </>
   );
 };

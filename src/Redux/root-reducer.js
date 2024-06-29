@@ -5,6 +5,7 @@ import { ipReducer } from "./IP/ipReducer";
 import { oneWayReducer } from "./FlightSearch/OneWay/oneWayReducer";
 import {searchReducer} from "./FlightSearch/Searchflight/SearchReducer";
 import flightnameReducer from "./FlightSearch/Airline/flightnameReducer";
+import CitynameReducer from "./FlightSearch/Cityname/CitynameReducer"
 import { returnReducer } from "./FlightSearch/Return/returnReducer";
 import { oneWayEMTReducer } from "./FlightSearch/OneWayEMT/oneWayEMTReducer";
 import storage from "redux-persist/lib/storage/session";
@@ -72,6 +73,7 @@ const appReducer = combineReducers({
   userData:UserDataReducer,
   subadminLogin:subadminReducer,
   adminLogin:adminReducer,
+  CitynameReducer:CitynameReducer,
   searchReducer:searchReducer,
   flightnameReducer:flightnameReducer,
   agentProfileReducer:agentProfileReducer

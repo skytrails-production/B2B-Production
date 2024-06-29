@@ -1,6 +1,8 @@
 import { takeLatest, call, put } from "redux-saga/effects";
 import userApi from "../API/api";
 import {
+ clearHotelRoomAndGallery ,
+
     // HotelDetails,
     // fetchBlockRoomHotel,
     fetchBookRoomHotelGRN,

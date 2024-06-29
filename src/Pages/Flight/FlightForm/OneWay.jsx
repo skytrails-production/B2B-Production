@@ -23,6 +23,7 @@ import { motion, useAnimation } from "framer-motion";
 import DatePicker from "react-datepicker";
 import userApi from "../../../Redux/API/api";
 import { fetchFlightnameRequest, fetchFlightnameSuccess, clearSearch1 } from "../../../Redux/FlightSearch/Airline/Airlinename";
+import { fetchCitynameSuccess } from "../../../Redux/FlightSearch/Cityname/Cityname";
 // import { FETCH_FLIGHTNAME_CLEAR } from "../../../Redux/FlightSearch/Airline/AirlinenameActionType";
 
 const variants = {
@@ -375,6 +376,14 @@ const OneWay = () => {
     userApi.fligtname()
       .then(response => {
         dispatch(fetchFlightnameSuccess(response.data));
+      })
+      .catch(error => {
+       console.log("error in loading ");
+      });
+
+    userApi.cityname()
+      .then(response => {
+        dispatch(fetchCitynameSuccess(response.data));
       })
       .catch(error => {
        console.log("error in loading ");

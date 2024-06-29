@@ -53,7 +53,8 @@ const reducerState = useSelector((state) => state);
 // console.log("reducerState//////singledata////////////////////",reducerState)
 
 const flightname = reducerState?.flightnameReducer?.data?.data;
-// console.log("flightname",flightname);
+
+// console.log("citynames",citynames[0],flightname[0]);
 
 
 
@@ -81,18 +82,31 @@ if (Array.isArray(description)) {
 }
 
 
+const locationdeparture =
+amdresponse?.flightInformation?.location?.[1]?.locationId;
+
+const locationarrival =
+amdresponse?.flightInformation?.location?.[0]?.locationId;
+
 
 
 const [getairlineName, setGetAirlineName] = useState('');
+const [departurename, setdeparturename] = useState("");
+const [arrivalname, setarrivalnamename] = useState("");
 
     useEffect(() => {
       // Extract the marketing carrier code from the amadeusItem object
       const marketingCarrier = img;
+      // const cityname = img;
 
       // Find the airline object that matches the marketing carrier code
       const matchedAirline = flightname.find(
         airline => airline.airlineCode === marketingCarrier,
       );
+
+      // console.log("matchedAirline",matchedAirline)
+
+      // const citynamevalue = 
 
       // Set the airline name if a match is found
       if (matchedAirline) {
@@ -102,13 +116,49 @@ const [getairlineName, setGetAirlineName] = useState('');
       }
     }, []);
 
+    useEffect(() => {
+      const cityAirline = citynames.find(
+        cityairline => cityairline.id === locationdeparture,
+      );
 
+
+      const arrivalAirline = citynames.find(
+        cityairlinearrival => cityairlinearrival.id === locationarrival,
+      );
+
+      // console.log("cityAirline",arrivalAirline)
+
+      if (cityAirline) {
+        setdeparturename(cityAirline.name);
+      } else {
+        setdeparturename('No matching airline found');
+      }
+
+
+      if (arrivalAirline) {
+        setarrivalnamename(arrivalAirline.name);
+      } else {
+        setarrivalnamename('No matching airline found');
+      }
+    }, []);
+
+
+    // console.log("cityname",cityname)
 
 // console.log("getairlineName",getairlineName);
 
 
+const citynames = reducerState?.CitynameReducer?.data?.data;
+function findAirlineByCode(code) {
+  const data = citynames?.find(citynames => citynames?.airlineCode === code)
 
+  return data?.airlineName;
+}
+function findAirportByCode(code) {
+  const data = citynames?.find(citynames => citynames?.AirportCode === code)
 
+  return data?.name;
+  }
 
 
 
@@ -133,10 +183,8 @@ const [getairlineName, setGetAirlineName] = useState('');
 // console.log("flightclass",flightclass, props)
   
   const flightnumber = amdresponse?.flightInformation?.flightOrtrainNumber;
-  const locationarrival =
-    amdresponse?.flightInformation?.location?.[0]?.locationId;
-  const locationdeparture =
-    amdresponse?.flightInformation?.location?.[1]?.locationId;
+
+ 
 
   const fare = props?.flight?.TotalPublishFare;
   const faredata = props?.flight?.monetaryDetail?.[0]?.amount;
@@ -215,7 +263,8 @@ const hours = Math.floor(overallduration / 100); // Get the first two digits
         <p style={{color:"green",fontSize:"8px"}}>{renderDescription}</p>
       </div>
       <div className="singleFlightBoxTwo">
-        <span> {locationarrival} </span>
+        {/* <span> {locationarrival} </span> */}
+        <span>{arrivalname}</span>
         <p>{datedeparture} </p>
         <p style={{ fontSize: "14px" }}>{departuretime}</p>
       </div>
@@ -229,7 +278,9 @@ const hours = Math.floor(overallduration / 100); // Get the first two digits
         {/* <span> {seats} Seats Left</span> */}
       </div>
       <div className="singleFlightBoxFour">
-        <span>{locationdeparture}</span>
+        {/* <span>{locationdeparture}</span> */}
+       
+        <span>{departurename}</span>
 
         <p>{datearrival}</p>
         <p style={{ fontSize: "14px" }}>{arrivaltime}</p>
@@ -263,100 +314,7 @@ const hours = Math.floor(overallduration / 100); // Get the first two digits
       </div>
 
 
-      {/* <div>
-        <button style={{color:"#E73C34",border:"none"}} onClick={handleClick1}>View details <FaArrowRight/></button>
-
-        {showModal && (
-        <div className="modal1" style={{position:"fixed"}}>
-          <div className="modal-content1" >
-          <div>
-          <span style={{fontSize:"20px",fontWeight:"bold"}}>Flight Details</span>
-            <span className="close1" onClick={handleClose}>&times;</span>
-            </div>
-            <div style={{display:"flex",flexDirection:"column",gap:"12px"}}>
-            <div>
-            <div style={{display:"flex",flexDirection:"row",gap:"20px", color:"red", fontSize:"25px"}}>
-            <p>{namestate}</p> 
-            <p style={{color:"black"}}><FaArrowRight/></p>
-            <p>{namedestnation}</p>
-            <div style={{fontSize:"18px",color:"black", display:"flex", gap:"12px",textAlign:"center",justifyContent:"center",alignItems:"center"}}>
-            <p>{datedeparture},</p>
-            <p>{formattedTime}</p>
-          
-            </div>
-
-            </div>
-
-          
-
-            <div>
-            <div style={{display:"flex",gap:"12px"}}>
-            <div  style={{height:"50px",width:"50px",borderRadius:"33%"}}>
-
-           
-          <img
-           style={{height:"50px",width:"50px",borderRadius:"33%"}}
-            src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${img}.png`}
-            alt="flightImg"
-          />{" "}
-           </div>
-          <p style={{display:"flex",justifyContent:"center",alignItems:"center", fontSize:"18px"}}>{getairlineName}</p>
-          </div>
-        </div>
-
-
-
-        
-        <div style={{margin:"12px", backgroundColor:"#E73D3487"}}>
-        <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between",padding:"12px"}}>
-           <div style={{}}>
-           <div>
-           
-           <div style={{display:"flex",flexDirection:"row",padding:"12px",gap:"12px"}}>
-            <p> {departuretime}</p>
-           <p>{locationarrival}</p>
-           </div>
-
-            <div style={{display:"flex",flexDirection:"row",padding:"12px",gap:"12px"}}>
-            <p> {arrivaltime}</p>
-           <p>{ locationdeparture}</p>
-           </div>
-
-           </div>
-
-           <div>
-
-           </div>
-          
-          
-           </div>
-           <div>
-          <div style={{display:"flex",flexDirection:"row",gap:"25px"}}>
-          <div><p>Checkin </p>  <p>{baggage}</p></div>
-          
-          <div><p>FareClass </p>  <p>{flightclass}</p></div>
-          </div>
-           </div>
-        
-        </div>
-          
-        </div>
-      
-        
-            </div>
-            <div style={{display:"flex",justifyContent:"space-between"}}>
-            <div style={{fontSize:"20px",fontWeight:"bold"}}> ₹{faredata}</div>
-            <div className="singleFlightBoxSeven"><button  onClick={() => {
-            handleClick();
-          }}>Book</button></div>
-            </div>
-
-            </div>
-            
-          </div>
-        </div>
-      )}
-        </div> */}
+     
 
 
         <div>
@@ -387,9 +345,10 @@ const hours = Math.floor(overallduration / 100); // Get the first two digits
             <div style={{display:"flex",flexDirection:"column",gap:"12px"}}>
               <div>
                 <div style={{display:"flex",flexDirection:"row",gap:"20px", color:"red", fontSize:"25px"}}>
-                  <p>{namestate}</p> 
+                  {/* <p>{namestate}</p>  */}
+                  <p>{findAirportByCode(locationarrival)}</p>
                   <p style={{color:"black"}}><FaArrowRight/></p>
-                  <p>{namedestnation}</p>
+                  <p>{findAirportByCode(locationdeparture)}</p>
                   <div style={{fontSize:"18px",color:"black", display:"flex", gap:"12px",textAlign:"center",justifyContent:"center",alignItems:"center"}}>
                     <p>{datedeparture},</p>
                     <p>{formattedTime}</p>
@@ -413,14 +372,14 @@ const hours = Math.floor(overallduration / 100); // Get the first two digits
                   <div>
                     <div style={{display:"flex",flexDirection:"row",padding:"12px",gap:"12px"}}>
                       <p>{departuretime}</p>
-                      <p>{locationarrival}</p>
+                      <p>{findAirportByCode(locationarrival)}</p>
                     </div>
                     <div style={{display:"flex",alignItems:"center",justifyContent:"center"}}>
                     <IoEllipsisVerticalOutline />
                     </div>
                     <div style={{display:"flex",flexDirection:"row",padding:"12px",gap:"12px"}}>
                       <p>{arrivaltime}</p>
-                      <p>{locationdeparture}</p>
+                      <p>{findAirportByCode(locationdeparture)}</p>
                     </div>
                   </div>
                   {/* <div>
