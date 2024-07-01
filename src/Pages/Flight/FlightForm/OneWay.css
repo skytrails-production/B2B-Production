@@ -385,7 +385,8 @@ className="chooseAbs" */
 .chooseAbsBox ul li {
   padding: 7px;
   border-bottom: 1px solid #999;
-  white-space: nowrap;
+  /* white-space: nowrap; */
+  flex-wrap: wrap;
   overflow: hidden;
   text-overflow: ellipsis;
   box-sizing: border-box !important;

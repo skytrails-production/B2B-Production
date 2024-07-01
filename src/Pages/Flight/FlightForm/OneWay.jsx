@@ -22,7 +22,11 @@ import "./OneWay.css";
 import { motion, useAnimation } from "framer-motion";
 import DatePicker from "react-datepicker";
 import userApi from "../../../Redux/API/api";
-import { fetchFlightnameRequest, fetchFlightnameSuccess, clearSearch1 } from "../../../Redux/FlightSearch/Airline/Airlinename";
+import {
+  fetchFlightnameRequest,
+  fetchFlightnameSuccess,
+  clearSearch1,
+} from "../../../Redux/FlightSearch/Airline/Airlinename";
 import { fetchCitynameSuccess } from "../../../Redux/FlightSearch/Cityname/Cityname";
 // import { FETCH_FLIGHTNAME_CLEAR } from "../../../Redux/FlightSearch/Airline/AirlinenameActionType";
 
@@ -373,28 +377,30 @@ const OneWay = () => {
 
     dispatch(oneWayAction(payload));
     dispatch(fetchFlightnameRequest());
-    userApi.fligtname()
-      .then(response => {
+    userApi
+      .fligtname()
+      .then((response) => {
         dispatch(fetchFlightnameSuccess(response.data));
       })
-      .catch(error => {
-       console.log("error in loading ");
+      .catch((error) => {
+        console.log("error in loading ");
       });
 
-    userApi.cityname()
-      .then(response => {
+    userApi
+      .cityname()
+      .then((response) => {
         dispatch(fetchCitynameSuccess(response.data));
       })
-      .catch(error => {
-       console.log("error in loading ");
+      .catch((error) => {
+        console.log("error in loading ");
       });
-    dispatch(fetchSearch([selectedFrom,selectedTo]));
+    dispatch(fetchSearch([selectedFrom, selectedTo]));
   }
 
   useEffect(() => {
     dispatch(clearSearch());
     // dispatch(clearSearch1());
-  },[])
+  }, []);
 
   const handleRoundClick = async () => {
     const temp = await [from];
@@ -452,8 +458,8 @@ const OneWay = () => {
                             key={result._id}
                             onClick={() => handleFromClick(result)}
                           >
-                            <strong>{result.AirportCode}</strong> {result.name}{" "}
-                            {result.code}
+                            <strong> {result.code}, </strong>
+                            {result.name} ({result.AirportCode})
                           </li>
                         ))}
                       </div>
@@ -509,8 +515,8 @@ const OneWay = () => {
                             key={result._id}
                             onClick={() => handleToClick(result)}
                           >
-                            <strong>{result.AirportCode}</strong> {result.name}{" "}
-                            {result.code}
+                            <strong> {result.code}</strong> {result.name}{" "}
+                            ({result.AirportCode})
                           </li>
                         ))}
                       </div>
@@ -750,10 +756,3 @@ const OneWay = () => {
 };
 
 export default OneWay;
-
-
-
-
-
-
-

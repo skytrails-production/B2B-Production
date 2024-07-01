@@ -56,7 +56,11 @@ const HotelForm = () => {
   }, []);
 
   // error manage
-  const [cityError, setCityError] = useState("");
+  const [errors, setErrors] = useState({
+    cityError: "",
+    checkInError: "",
+    checkOutError: "",
+  });
 
   const [condition, setCondition] = useState(1);
   const [formDataDynamic, setFormData] = useState([
@@ -80,7 +84,6 @@ const HotelForm = () => {
 
   const [searchTermLast, setSearchTermLast] = useState(initialSelectedCityData);
   const reducerState = useSelector((state) => state);
-  
 
   useEffect(() => {
     const storedData = SecureStorage.getItem("revisitHotelDataGRN");
@@ -95,6 +98,8 @@ const HotelForm = () => {
     City: "",
     nationality: "IN",
     star: 5,
+    departure: "",
+    checkOutDeparture: "",
   };
   const [open, setOpen] = useState(false);
   const [loader, setLoader] = useState(false);
@@ -105,8 +110,6 @@ const HotelForm = () => {
   });
   const [sub, setSub] = useState(false);
   const listRef = useRef(null);
-
- 
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -149,7 +152,7 @@ const HotelForm = () => {
         `${apiURL.baseURL}/skyTrails/grnconnect/getcityList?keyword=${searchTerm} `
       );
       setResults(response.data.data);
-      
+
       setLoading(false);
     } catch (error) {
       console.error("Error fetching cities:", error);
@@ -202,7 +205,7 @@ const HotelForm = () => {
     setCountryCode(city.countrycode);
     // setResults([]); // Clear the results
     setToggleSearch(false);
-    setCityError("");
+    // setErrors("");
   };
 
   const handleClose = (event, reason) => {
@@ -243,9 +246,12 @@ const HotelForm = () => {
   };
 
   const handleStartDateChange = async (date) => {
-    await setValues({ ...values, departure: date }); // Update the departure date
+    setValues({ ...values, departure: date });
+    // Update the departure date
     // setCheckInError("");
     // setMinReturnDate(date);
+    setErrors((pre) => ({ ...pre, departure: "" }));
+
     if (values?.checkOutDeparture && values?.checkOutDeparture <= date) {
       const increasedDate = new Date(date);
       increasedDate.setDate(increasedDate.getDate() + 1);
@@ -257,11 +263,12 @@ const HotelForm = () => {
       // Update the checkOutDeparture
       // console.warn(values.checkOutDeparture - date, "values.checkOutDeparture<values.departure")
     }
-    
   };
 
   const handleEndDateChange = (date) => {
-    setValues({ ...values, checkOutDeparture: date }); // Update the checkOutDeparture date
+    setValues({ ...values, checkOutDeparture: date });
+    setErrors((pre) => ({ ...pre, checkOutDeparture: "" }));
+    // Update the checkOutDeparture date
     // setCheckOutError("");
   };
 
@@ -270,78 +277,98 @@ const HotelForm = () => {
   const timeDifference = toDate.getTime() - currentDate.getTime();
   const nightdays = Math.ceil(timeDifference / (1000 * 3600 * 24));
 
-  // useEffect(() => {
-  //   if (
-  //     reducerState?.hotelSearchResultGRN?.ticketData?.data?.data?.hotels
-  //       ?.length >= 0
-  //   ) {
-  //     setLoader(false);
-  //     // navigate("/hotels/hotelsearchs");
-  //   }
-  // }, [reducerState?.hotelSearchResultGRN?.ticketData?.data?.data?.hotels]);
+ 
 
   function handleSubmit(event) {
     event.preventDefault();
+   
+    let hasError = false;
 
-    sessionStorage.setItem("SessionExpireTime", new Date());
+    if (
+      searchTerm === "" ||
+      values?.departure === "" ||
+      values?.checkOutDeparture === ""
+    ) {
+      searchTerm === ""
+        ? setErrors((prev) => ({
+            ...prev,
+            cityError: "Please enter a city name",
+          }))
+        : setErrors((prev) => ({ ...prev, cityError: "" }));
+      values?.departure === ""
+        ? setErrors((prev) => ({
+            ...prev,
+            departure: "Please enter a city name",
+          }))
+        : setErrors((prev) => ({ ...prev, departure: "" }));
+      values?.checkOutDeparture === ""
+        ? setErrors((prev) => ({
+            ...prev,
+            checkOutDeparture: "Please enter a city name",
+          }))
+        : setErrors((prev) => ({ ...prev, checkOutDeparture: "" }));
+      hasError = true;
+    } else {
+      sessionStorage.setItem("SessionExpireTime", new Date());
 
-    const dynamicFormData = formDataDynamic.map((data) => ({
-      adults: data.NoOfAdults || 0,
-      children_ages: data.ChildAge || [],
-    }));
+      const dynamicFormData = formDataDynamic.map((data) => ({
+        adults: data.NoOfAdults || 0,
+        children_ages: data.ChildAge || [],
+      }));
 
-    sessionStorage.setItem("searchLastterm", JSON.stringify(searchTermLast));
+      sessionStorage.setItem("searchLastterm", JSON.stringify(searchTermLast));
 
-    const payload = {
-      rooms: [...dynamicFormData],
-      rates: "concise",
-      cityCode: searchTermLast.cityCode,
-      currency: "INR",
-      client_nationality: "IN",
-      checkin: dayjs(values?.departure).format("YYYY-MM-DD"),
-      checkout: dayjs(values?.checkOutDeparture).format("YYYY-MM-DD"),
-      cutoff_time: 30000,
-      version: "2.0",
-    };
-    sessionStorage.setItem("Payload", JSON.stringify(payload));
+      const payload = {
+        rooms: [...dynamicFormData],
+        rates: "concise",
+        cityCode: searchTermLast.cityCode,
+        currency: "INR",
+        client_nationality: "IN",
+        checkin: dayjs(values?.departure).format("YYYY-MM-DD"),
+        checkout: dayjs(values?.checkOutDeparture).format("YYYY-MM-DD"),
+        cutoff_time: 30000,
+        version: "2.0",
+      };
+      sessionStorage.setItem("Payload", JSON.stringify(payload));
 
-    SecureStorage.setItem(
-      "revisitHotelDataGRN",
-      JSON.stringify([
-        {
-          cityCode: searchTermLast.cityCode,
-          cityName: searchTermLast.cityName,
-          countryCode: searchTermLast.countryCode,
-          countryName: searchTermLast.countryName,
-          checkin: dayjs(values?.departure).format("YYYY-MM-DD"),
-          checkout: dayjs(values?.checkOutDeparture).format("YYYY-MM-DD"),
-          rooms: [...dynamicFormData],
-        },
-      ])
-    );
+      SecureStorage.setItem(
+        "revisitHotelDataGRN",
+        JSON.stringify([
+          {
+            cityCode: searchTermLast.cityCode,
+            cityName: searchTermLast.cityName,
+            countryCode: searchTermLast.countryCode,
+            countryName: searchTermLast.countryName,
+            checkin: dayjs(values?.departure).format("YYYY-MM-DD"),
+            checkout: dayjs(values?.checkOutDeparture).format("YYYY-MM-DD"),
+            rooms: [...dynamicFormData],
+          },
+        ])
+      );
 
-    const formFields = {
-      city: searchTermLast.cityName,
-      checkIn: dayjs(checkIn).format("YYYY-MM-DD"),
-      checkOut: dayjs(checkOut).format("YYYY-MM-DD"),
-      room: condition,
-      star,
-      night: nightdays,
-      nationality,
-      dynamicFormData,
-      noOfAdults: formDataDynamic[0]?.NoOfAdults || 1,
-      noOfChild: formDataDynamic[0]?.NoOfChild || 0,
-    };
-    const pageNumber = 1;
+      const formFields = {
+        city: searchTermLast.cityName,
+        checkIn: dayjs(checkIn).format("YYYY-MM-DD"),
+        checkOut: dayjs(checkOut).format("YYYY-MM-DD"),
+        room: condition,
+        star,
+        night: nightdays,
+        nationality,
+        dynamicFormData,
+        noOfAdults: formDataDynamic[0]?.NoOfAdults || 1,
+        noOfChild: formDataDynamic[0]?.NoOfChild || 0,
+      };
+      const pageNumber = 1;
 
-    sessionStorage.setItem("hotelFormData", JSON.stringify(formFields));
-    dispatch(hotelActionGrn(payload, pageNumber));
-    navigate("/hotels/hotelsearchs");
+      sessionStorage.setItem("hotelFormData", JSON.stringify(formFields));
+      dispatch(hotelActionGrn(payload, pageNumber));
+      navigate("/hotels/hotelsearchs");
 
-    if (reducerState?.hotelSearchResultGRN?.ticketData?.data?.data?.hotels) {
-      setOpen(false);
+      if (reducerState?.hotelSearchResultGRN?.ticketData?.data?.data?.hotels) {
+        setOpen(false);
+      }
+      setOpen(true);
     }
-    setOpen(true);
   }
 
   const sessionData = new FormData();
@@ -355,7 +382,6 @@ const HotelForm = () => {
   const night = sessionData.get("night");
   const nationality = sessionData.get("nationality");
 
-  
   return (
     <>
       {/* {loader ? (
@@ -378,15 +404,19 @@ const HotelForm = () => {
                 name="City"
                 id="CitySearchID"
                 type="text"
-                required
                 placeholder="Search for a city..."
                 value={searchTerm}
                 onClick={() => setToggleSearch(true)}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                  setErrors((pre) => ({ ...pre, cityError: "" }));
+                }}
                 style={{ position: "relative" }}
                 autoComplete="off"
               />
-              {cityError !== "" && <span className="error">{cityError}</span>}
+              {errors?.cityError !== "" && (
+                <span className="error">{errors?.cityError}</span>
+              )}
 
               {/* {loading && <div>Loading...</div>} */}
               {toggleSearch && (
@@ -397,6 +427,7 @@ const HotelForm = () => {
                       onClick={(e) => {
                         handleResultClick(city);
                         setSearchTermLast(city);
+                        setErrors((pre) => ({ ...pre, cityError: "" }));
                       }}
                     >
                       {city.cityName}
@@ -414,19 +445,18 @@ const HotelForm = () => {
             <div className="hotel_form_input">
               <label className="form_label">Check In Date</label>
               <DatePicker
-                selected={values.departure}
+                selected={values?.departure}
                 onChange={handleStartDateChange}
                 name="checkIn"
                 dateFormat="dd MMMyy"
-                required
                 placeholderText="Select Check-In Date"
                 isClearable
                 // id="datepic"
                 minDate={new Date()}
                 autoComplete="off"
               />
-              {sub && values.departure === ("" || undefined) && (
-                <span className="error">Enter Check-In Date </span>
+              {errors?.departure !== "" && (
+                <span className="error">{errors?.departure}</span>
               )}
             </div>
           </motion.div>
@@ -438,19 +468,18 @@ const HotelForm = () => {
             <div className="hotel_form_input">
               <label className="form_label">Check Out Date</label>
               <DatePicker
-                selected={values.checkOutDeparture}
+                selected={values?.checkOutDeparture}
                 onChange={handleEndDateChange}
-                required
                 name="checkOut"
                 dateFormat="dd MMMyy"
                 placeholderText="Select Check-Out Date"
-                minDate={values.departure || new Date()} // Disable dates before Check-In date
+                minDate={values?.departure || new Date()} // Disable dates before Check-In date
                 isClearable
                 // id="datepic"
                 autoComplete="off"
               />
-              {sub && values.checkOutDeparture === ("" || undefined) && (
-                <span className="error">Enter Check-Out Date </span>
+              {errors?.checkOutDeparture !== "" && (
+                <span className="error">{errors?.checkOutDeparture}</span>
               )}
             </div>
           </motion.div>
@@ -685,5 +714,3 @@ const HotelForm = () => {
 };
 
 export default HotelForm;
-
-

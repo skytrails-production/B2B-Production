@@ -424,8 +424,8 @@ const Return = () => {
                             key={result._id}
                             onClick={() => handleFromClick(result)}
                           >
-                            <strong>{result.AirportCode}</strong> {result.name}{" "}
-                            {result.code}
+                            <strong>{result.code}</strong> {result.name}{" "}
+                            ({result.AirportCode})
                           </li>
                         ))}
                       </div>
@@ -467,8 +467,8 @@ const Return = () => {
                             key={result._id}
                             onClick={() => handleToClick(result)}
                           >
-                            <strong>{result.AirportCode}</strong> {result.name}{" "}
-                            {result.code}
+                            <strong>{result.code}</strong> {result.name}{" "}
+                            ({result.AirportCode})
                           </li>
                         ))}
                       </div>

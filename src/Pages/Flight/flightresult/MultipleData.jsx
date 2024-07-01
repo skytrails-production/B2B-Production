@@ -184,6 +184,8 @@ const MultipleData = (props) => {
   const [month1, day1, year1, time1, ampm1] = formattedDate1.split(" ");
   const desiredFormat1 = `${day1}${month1}-${year1} ${time1} ${ampm1}`;
 
+  // console.log("flight?.Airline?.FareClass",flight)
+
   if (loader) {
     return <FlightLoader />;
   }
@@ -241,11 +243,11 @@ const MultipleData = (props) => {
       </div>
       <div className="singleFlightBoxSix">
         <Luggage
-          destination={flight?.Destination?.Airport?.AirportCode}
-          origin={flight?.Origin?.Airport?.AirportCode}
+          destination={flight?.[flight.length-1]?.Destination?.Airport?.AirportCode}
+          origin={flight?.[0]?.Origin?.Airport?.AirportCode}
           cabin="7KG"
-          checkin={flight?.Baggage}
-          fareClass={flight?.Airline?.FareClass}
+          checkin={flight?.[0]?.Baggage}
+          fareClass={flight?.[0]?.Airline?.FareClass}
         />
 
         <Nonrefundable />
