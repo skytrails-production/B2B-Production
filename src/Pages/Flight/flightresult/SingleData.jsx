@@ -3,11 +3,16 @@ import { Grid, Box, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Fairrule from "./Fairrule";
 import "./SingleData.css";
+import { FaArrowRight } from "react-icons/fa";
+import Modal from "@mui/material/Modal";
 import Nonrefundable from "./Nonrefundable";
 import LuggageIcon from "@mui/icons-material/Luggage";
 import { useDispatch, useSelector, useReducer } from "react-redux";
 import { tokenAction } from "../../../Redux/ResultIndex/resultIndex";
 import Luggage from "./Luggage";
+import { IoEllipsisVerticalOutline } from "react-icons/io5";
+// import Typography from "@mui/material/Typography";
+import Backdrop from "@mui/material/Backdrop";
 import { filterProps } from "framer-motion";
 import flightdir from "../../../Images/flgihtdir.png";
 import {
@@ -18,6 +23,38 @@ import {
 import FlightLoader from "../FlightLoader/FlightLoader";
 import Swal from "sweetalert2";
 import dayjs from "dayjs";
+
+
+
+
+
+
+
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 900,
+  bgcolor: "background.paper",
+  // border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
 function SingleData(props) {
   // console.log("Props", props);
   const [loader, setLoader] = useState(false);
@@ -44,6 +81,11 @@ function SingleData(props) {
         )}`
       : Math.round(Number(props.fare));
 
+
+      const [open, setOpen] = React.useState(false);
+      const handleOpen = () => setOpen(true);
+      const handleClose = () => setOpen(false);
+
   // console.log(fare);
   const img = flight?.Airline?.AirlineCode;
   // console.log("reducerstate..........................................",reducerState);
@@ -51,6 +93,8 @@ function SingleData(props) {
   const duration = `${Math.floor(flight?.Duration / 60)}hr ${
     flight.Duration % 60
   }min`;
+
+  // console.log("reducerState",reducerState);
 
   const handleClick = (ResultIndex) => {
     setLoader(true);
@@ -121,6 +165,9 @@ function SingleData(props) {
       <div className="singleFlightBoxOne">
         <div>
           <img
+          style={{
+            height:"50px",width:"50px",borderRadius:"33%"
+          }}
             src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${img}.png`}
             alt="flightImg"
           />{" "}
@@ -143,7 +190,7 @@ function SingleData(props) {
           <img src={flightdir} />
         </div>
 
-        <p>Direct Flight</p>
+        {/* <p>Direct Flight</p> */}
         <span>{flight?.NoOfSeatAvailable} Seats Left</span>
       </div>
       <div className="singleFlightBoxFour">
@@ -168,6 +215,7 @@ function SingleData(props) {
         />
         <Nonrefundable />
       </div>
+      <div>
       <div className="singleFlightBoxSeven">
         <button
           onClick={() => {
@@ -176,6 +224,159 @@ function SingleData(props) {
         >
           Book
         </button>
+      </div>
+
+
+
+
+
+      <div>
+          <Button
+            style={{ color: "#E73C34", border: "none" }}
+            onClick={handleOpen}
+          >
+            {" "}
+            View details <FaArrowRight />
+          </Button>
+          <Modal
+            aria-labelledby="flight-details-modal-title"
+            aria-describedby="flight-details-modal-description"
+            open={open}
+            className="modalcolor rmvBG"
+            onClose={handleClose}
+            closeAfterTransition
+            slots={{ backdrop: Backdrop }}
+            slotProps={{
+              backdrop: {
+                timeout: 500,
+              },
+            }}
+          >
+           
+
+            <Box sx={style} className="modalcolor">
+  <div>
+    <span style={{ fontSize: "20px", fontWeight: "bold" }}>Flight Details</span>
+    <span className="close1" onClick={handleClose}>&times;</span>
+  </div>
+  <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        gap: "20px",
+        color: "red",
+        fontSize: "25px",
+      }}
+    >
+      <p>{flight?.Origin?.Airport?.CityName}</p>
+      <p style={{ color: "black" }}>
+        <FaArrowRight />
+      </p>
+      <p>{flight?.Destination?.Airport?.CityName}</p>
+      <div
+        style={{
+          fontSize: "18px",
+          color: "black",
+          display: "flex",
+          gap: "12px",
+          textAlign: "center",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <p>{dayjs(flight?.Origin?.DepTime).format("DD MMM, YY")}</p>
+        <p> {dayjs(flight?.Origin?.DepTime).format("h:mm A")}</p>
+      </div>
+    </div>
+    <div>
+      <div style={{ display: "flex", gap: "12px" }}>
+        <div
+          style={{
+            height: "50px",
+            width: "50px",
+            borderRadius: "33%",
+          }}
+        >
+          <img
+            style={{
+              height: "50px",
+              width: "50px",
+              borderRadius: "33%",
+            }}
+             src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${img}.png`}
+            alt="flightImg"
+          />
+        </div>
+        <p
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: "18px",
+          }}
+        >
+         {flight?.Airline?.AirlineName}
+        </p>
+      </div>
+    </div>
+    <div style={{margin:"12px", backgroundColor:"#E73D3487"}}>
+                <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between",padding:"12px"}}>
+                  <div>
+                    <div style={{display:"flex",flexDirection:"row",padding:"12px",gap:"12px"}}>
+                      <p>{dayjs(flight?.Origin?.DepTime).format("h:mm A")}</p>
+                      <p>{flight?.Origin?.Airport?.CityName}</p>
+                    </div>
+                    <div style={{display:"flex",alignItems:"center",justifyContent:"center"}}>
+                    <IoEllipsisVerticalOutline />
+                    </div>
+                    <div style={{display:"flex",flexDirection:"row",padding:"12px",gap:"12px"}}>
+                      <p>{dayjs(flight?.Destination?.ArrTime).format("h:mm A")}</p>
+                      <p>{flight?.Destination?.Airport?.CityName}</p>
+                    </div>
+                  </div>
+                 
+                  <div>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: "25px",
+                      }}
+                    >
+                      <div>
+                        <p>Baggage</p>
+                        <p>Adult</p>
+                      </div>
+                      <div>
+                        <p>Checkin</p>
+                        <p>{flight?.Baggage}</p>
+                      </div>
+                      <div>
+                        <p>Cabin</p>
+                        <p>7 kg</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+    <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <div style={{ fontSize: "20px", fontWeight: "bold" }}> ₹{fare}</div>
+      <div className="singleFlightBoxSeven">
+        <button  onClick={() => {
+            handleClick(indexKey);
+          }}>Book</button>
+      </div>
+    </div>
+  </div>
+</Box>
+
+          </Modal>
+        </div>
+
+
+
       </div>
 
       {reducerState?.return?.returnData?.data?.data?.Response?.Results[1] ? (

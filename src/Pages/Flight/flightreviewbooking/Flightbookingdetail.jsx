@@ -225,9 +225,13 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
           ResultIndex: ResultIndexReturn,
           EndUserIp: reducerState?.ip?.ipData,
           TokenId: reducerState?.ip?.tokenData,
+          // TraceId:
+          //   reducerState?.oneWay?.oneWayData?.data?.data?.Response?.TraceId ||
+          //   reducerState?.return?.returnData?.data?.data?.Response?.TraceId,
+
           TraceId:
-            reducerState?.oneWay?.oneWayData?.data?.data?.Response?.TraceId ||
-            reducerState?.return?.returnData?.data?.data?.Response?.TraceId,
+          reducerState?.oneWay?.oneWayData?.data?.tvoTraceId ||
+          reducerState?.return?.returnData?.data?.data?.Response?.TraceId,
 
           // Passengers: PassengersReturn.map((item, index) => {
           //   return {
@@ -308,11 +312,14 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
     ) {
       setLoading(true);
       // swalModal("flight",reducerState?.flightBook?.flightBookData?.Error?.ErrorMessage,true);
-      swalModal(
-        "flight",
-        "Something went wrong with your flight booking. Please check your details and try again.",
-        true
-      );
+      // swalModal(
+      //   "flight",
+      //   "Something went wrong with your flight booking. Please check your details and try again.",
+        
+      // );
+      Swal.fire("Something went wrong with your flight booking. Please check your details and try again.");
+        navigate("/flights");
+      // navigate("/flights");
 
       // Swal.fire({
       //   title: "Hii Encounter An Error",
@@ -433,8 +440,11 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
           ResultIndex: ResultIndexReturn,
           EndUserIp: reducerState?.ip?.ipData,
           TokenId: reducerState?.ip?.tokenData,
-          TraceId:
-            reducerState?.oneWay?.oneWayData?.data?.data?.Response?.TraceId ||
+          // TraceId:
+          //   reducerState?.oneWay?.oneWayData?.data?.data?.Response?.TraceId ||
+          //   reducerState?.return?.returnData?.data?.data?.Response?.TraceId,
+                 TraceId:
+                 reducerState?.oneWay?.oneWayData?.data?.tvoTraceId ||
             reducerState?.return?.returnData?.data?.data?.Response?.TraceId,
           // Passengers: PassengersReturn.map((item, index) => {
           //   return {
@@ -503,8 +513,11 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
           ResultIndex: ResultIndex,
           EndUserIp: reducerState?.ip?.ipData,
           TokenId: reducerState?.ip?.tokenData,
+          // TraceId:
+          //   reducerState?.oneWay?.oneWayData?.data?.data?.Response?.TraceId ||
+          //   reducerState?.return?.returnData?.data?.data?.Response?.TraceId,
           TraceId:
-            reducerState?.oneWay?.oneWayData?.data?.data?.Response?.TraceId ||
+          reducerState?.oneWay?.oneWayData?.data?.tvoTraceId ||
             reducerState?.return?.returnData?.data?.data?.Response?.TraceId,
           // Passengers: Passengers.map((item, index) => {
           //   return {
@@ -566,8 +579,9 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
         swalModal(
           "py",
           "Insufficeint balance!! Please Recharge your Wallet",
-          true
+          
         );
+        navigate("/flights");
         // Swal.fire({
         //   title: "An Error Occured",
         //   text: "Insufficeint balance!! Please Recharge your Wallet",
@@ -604,8 +618,11 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
           ResultIndex: ResultIndex,
           EndUserIp: reducerState?.ip?.ipData,
           TokenId: reducerState?.ip?.tokenData,
+          // TraceId:
+          //   reducerState?.oneWay?.oneWayData?.data?.data?.Response?.TraceId ||
+          //   reducerState?.return?.returnData?.data?.data?.Response?.TraceId,
           TraceId:
-            reducerState?.oneWay?.oneWayData?.data?.data?.Response?.TraceId ||
+          reducerState?.oneWay?.oneWayData?.data?.tvoTraceId ||
             reducerState?.return?.returnData?.data?.data?.Response?.TraceId,
           // Passengers: Passengers.map((item, index) => {
           //   return {
@@ -663,7 +680,7 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
         swalModal(
           "py",
           "Insufficeint balance!! Please Recharge your Wallet",
-          true
+          
         );
         // Swal.fire({
         //   title: "An Error Occured",
@@ -686,7 +703,8 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
         //   },
         // });
         // alert("Insufficeint balance!! Please Recharge your Wallet");
-        navigate("/");
+        // navigate("/");
+        navigate("/flights");
       }
     }
   };
@@ -695,7 +713,8 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
     const payLoadDomestic = {
       EndUserIp: reducerState?.ip?.ipData,
       TokenId: reducerState?.ip?.tokenData,
-      TraceId: reducerState?.oneWay?.oneWayData?.data?.data?.Response?.TraceId,
+      // TraceId: reducerState?.oneWay?.oneWayData?.data?.data?.Response?.TraceId,
+      TraceId: reducerState?.oneWay?.oneWayData?.data?.tvoTraceId,
       PNR: reducerState?.flightBook?.flightBookDataGDS?.Response?.PNR,
       BookingId:
         reducerState?.flightBook?.flightBookDataGDS?.Response?.BookingId,
@@ -703,7 +722,8 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
     const payLoadInternational = {
       EndUserIp: reducerState?.ip?.ipData,
       TokenId: reducerState?.ip?.tokenData,
-      TraceId: reducerState?.oneWay?.oneWayData?.data?.data?.Response?.TraceId,
+      // TraceId: reducerState?.oneWay?.oneWayData?.data?.data?.Response?.TraceId,
+      TraceId:  reducerState?.oneWay?.oneWayData?.data?.tvoTraceId,
       PNR: reducerState?.flightBook?.flightBookDataGDS?.Response?.PNR,
       BookingId:
         reducerState?.flightBook?.flightBookDataGDS?.Response?.BookingId,
@@ -725,7 +745,8 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
     const payLoadDomestic = {
       EndUserIp: reducerState?.ip?.ipData,
       TokenId: reducerState?.ip?.tokenData,
-      TraceId: reducerState?.oneWay?.oneWayData?.data?.data?.Response?.TraceId,
+      // TraceId: reducerState?.oneWay?.oneWayData?.data?.data?.Response?.TraceId,
+      TraceId: reducerState?.oneWay?.oneWayData?.data?.tvoTraceId,
       PNR: reducerState?.flightBook?.flightBookDataGDSReturn?.Response?.PNR,
       BookingId:
         reducerState?.flightBook?.flightBookDataGDSReturn?.Response?.BookingId,
@@ -733,7 +754,8 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
     const payLoadInternational = {
       EndUserIp: reducerState?.ip?.ipData,
       TokenId: reducerState?.ip?.tokenData,
-      TraceId: reducerState?.oneWay?.oneWayData?.data?.data?.Response?.TraceId,
+      // TraceId: reducerState?.oneWay?.oneWayData?.data?.data?.Response?.TraceId,
+      TraceId:  reducerState?.oneWay?.oneWayData?.data?.tvoTraceId,
       PNR: reducerState?.flightBook?.flightBookDataGDSReturn?.Response?.PNR,
       BookingId:
         reducerState?.flightBook?.flightBookDataGDSReturn?.Response?.BookingId,
@@ -759,7 +781,7 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
       TokenId: reducerState?.ip?.tokenData,
       TraceId:
         reducerState?.oneWay?.oneWayData?.data?.tvoTraceId ||
-        reducerState?.return?.returnData?.data?.tvoTraceId,
+        reducerState?.return?.returnData?.data?.data?.Response?.TraceId,
       // Passengers: Passengers.map((item, index) => {
       //   return {
       //     ...item,

@@ -29,15 +29,19 @@ const Flightdetail = () => {
     reducerState?.oneWay?.oneWayData?.data?.result ||
     reducerState?.return?.returnData?.data?.data?.Response?.Results;
 
-  // console.log("results", results?.[0]?.AirlineCode);
-  // console.log("reducerState",reducerState)
+
+    // console.log(" reducerState?.oneWay?.oneWayData?.data?.result", reducerState?.oneWay?.oneWayData?.data?.result)
+
+
   useEffect(() => {
-    // console.log(results,"results");
     if (results === undefined || results?.length === 0) {
       navigate("/flights");
     }
   }, [results]);
 // ///////////////////////////////////////////////////layover time/////////////////////////////////////////////////////////////////
+
+
+
 
 function parseTime(isoString) {
   return new Date(isoString);
@@ -242,60 +246,6 @@ const durationflight = reducerState?.oneWay?.oneWayData?.data?.result;
 
 // ///////////////////////////////////////////////////////
 
-// const convertTimeToMinutes = (timeStr) => {
-//   const [hours, minutes] = timeStr.split('hr').map(part => part.trim().replace('min', ''));
-//   return parseInt(hours) * 60 + parseInt(minutes);
-// };
-
-// const maxTime = results?.reduce((max, item) => {
-//   let maxTimeForItem = 0;
-
-//   if (Array.isArray(item?.flightDetails)) {
-//       item.flightDetails.forEach(flight => {
-//           const traveltime = flight.flightInformation.attributeDetails.attributeDescription;
-//           const hours = Math.floor(parseInt(traveltime) / 100); // Get the first two digits as hours
-//           const minutes = parseInt(traveltime) % 100; // Get the last two digits as minutes
-
-//           const totalMinutes = hours * 60 + minutes;
-//           maxTimeForItem = Math.max(maxTimeForItem, totalMinutes);
-//       });
-//   }
-
-//   return Math.max(max, maxTimeForItem);
-// }, 0);
-
-// const minTime = results?.reduce((min, item) => {
-//   let minTimeForItem = Infinity;
-
-//   if (Array.isArray(item?.flightDetails)) {
-//       item.flightDetails.forEach(flight => {
-//           const traveltime = flight.flightInformation.attributeDetails.attributeDescription;
-//           const hours = Math.floor(parseInt(traveltime) / 100); // Get the first two digits as hours
-//           const minutes = parseInt(traveltime) % 100; // Get the last two digits as minutes
-
-//           const totalMinutes = hours * 60 + minutes;
-//           minTimeForItem = Math.min(minTimeForItem, totalMinutes);
-//       });
-//   }
-
-//   return Math.min(min, minTimeForItem);
-// }, Infinity);
-
-// const formatMinutesToTime = (totalMinutes) => {
-//   const hours = Math.floor(totalMinutes / 60);
-//   const minutes = totalMinutes % 60;
-//   return `${hours}hr ${minutes < 10 ? '0' : ''}${minutes}min`;
-// };
-
-// const maxTimeFormatted = formatMinutesToTime(maxTime);
-// const minTimeFormatted = formatMinutesToTime(minTime);
-
-// console.log("Max Time///////////////////////////////////:", maxTimeFormatted);
-// console.log("Min Time:////////////////////////////////////////////////////////////////////////////", minTimeFormatted);
-
-
-
-// const [maxtime, mintime ] = useState()
 
 
 
@@ -334,63 +284,7 @@ const [maxTime, setMaxTime] = useState(0);
         setTimeRangeValue(formatMinutesToTime(maxTimeInMinutes)); // Set timeRangeValue with maxTimeFormatted
     }, [results]);
 
-    // const formatMinutesToTime = (totalMinutes) => {
-    //     const hours = Math.floor(totalMinutes / 60);
-    //     const minutes = totalMinutes % 60;
-    //     return `${hours}hr ${minutes < 10 ? '0' : ''}${minutes}min`;
-    // };
 
-
-
-
-
-
-
-
-
-
-// const maxtime = results?.reduce((max,item) => {
-//   const durationmax = item?.propFlightGrDetail?.flightProposal[1]?.ref;
-//   const currentmax = Math.max(max, durationmax);     
-// return currentmax;
-// },0)
-
-// const mintime = results?.reduce((min, item) => {
-//   const durationmin = item?.propFlightGrDetail?.flightProposal[1]?.ref;
-//   const currentmin = Math.min(min, durationmin); 
-
-//  return currentmin;
-// },Infinity);
-
-
-// const convertMinutesToHoursAndMinutes = (totalMinutes) => {
-//   const hours = Math.floor(totalMinutes / 60);
-//   const minutes = totalMinutes % 60;
-//   return `${hours}hr ${minutes < 10 ? '0' : ''}${minutes}min`;
-// };
-
-// const maxFormattedTime = convertMinutesToHoursAndMinutes(maxtime);
-// const minFormattedTime = convertMinutesToHoursAndMinutes(mintime);
-
-// console.log("Minimum Time:", minFormattedTime);
-// console.log("Maximum Time:", maxFormattedTime);
-
-// console.log("currentmin//////////////////",mintime,maxtime);
-
-
-// const [timeduration, setTimeduration] = useState('0hr 00min');
-
-// useEffect(() => {
-//   setTimeduration(maxtime);
-// }, [maxtime]);
-
-// console.log("timeduration",timeduration);
-
-// const handledurationValueChange = (event) => {
-//   const newValue = parseInt(event.target.value);
-//   setTimeduration(newValue);
-//   // You can perform additional actions based on the new value of the slider
-// };
 
 
 
@@ -413,77 +307,165 @@ const formatMinutesToTime = (totalMinutes) => {
 const minPriceeeeeeee = results?.reduce((min, item) => {
   const durationmin = item?.propFlightGrDetail?.flightProposal[1]?.ref;
   const currentmin = Math.min(min, durationmin); 
-  
-    // console.log(    durationmin,"durationminnnnnnnnnnnnnnnnn")
   const currentMin = Math.min(min, Number(currentmin));
 
   return currentMin;
 }, Infinity);
-const maxtime = results?.reduce((max,item) => {
-const durationmax = item?.propFlightGrDetail?.flightProposal[1]?.ref;
-const currentmax = Math.max(max, durationmax);   
-// console.log(    durationmax,"kkkkkkkk")
+// const maxtime = results?.reduce((max,item) => {
+// const durationmax = item?.propFlightGrDetail?.flightProposal[1]?.ref;
+// const currentmax = Math.max(max, durationmax);   
+// // console.log(    durationmax,"kkkkkkkk")
 
-return currentmax;
-},0)
+// return currentmax;
+// },0)
+
+
+// const mintime = results?.reduce((min, item) => {
+// const durationmin = item?.propFlightGrDetail?.flightProposal[1]?.ref;
+// const currentmin = Math.min(min, durationmin); 
+// // console.log(    durationmin,"llllllllllllllllllllll")
+
+// return currentmin;
+// },Infinity);
+
+
+// const convertMinutesToHoursAndMinutes = (totalMinutes) => {
+// const hours = Math.floor(totalMinutes / 60);
+// const minutes = totalMinutes % 60;
+// // return ${hours}hr ${minutes < 10 ? '0' : ''}${minutes}min;
+// return hours;
+// };
+
+// const maxFormattedTime = convertMinutesToHoursAndMinutes(maxtime);
+// const minFormattedTime = convertMinutesToHoursAndMinutes(mintime);
+
+
+
+// const [timeduration, setTimeduration] = useState('0hr 00min');
+
+// useEffect(() => {
+// setTimeduration(maxtime);
+// }, [maxtime]);
+
+// console.log("timeduration",timeduration);
+
+
+// ////////////////////////////////////////////////time layover//////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+function getDifferenceInHoursTVO(startTime, endTime) {
+  const start = new Date(startTime);
+  const end = new Date(endTime);
+
+  const differenceInMilliseconds = end - start;
+  const differenceInHours = differenceInMilliseconds / (1000 * 60 * 60);
+
+  return differenceInHours;
+}
+function convertToHoursAMD(time) {
+// Convert time to string and pad with leading zeros if necessary
+const timeString = time.toString().padStart(4, '0');
+
+// Extract hours and minutes
+const hours = parseInt(timeString.substring(0, 2), 10);
+const minutes = parseInt(timeString.substring(2), 10);
+
+// Calculate total hours
+const totalHours = hours + minutes / 60;
+return totalHours;
+}
+
+// const time = '0115'; // Time represented as a string
+// console.log(convertToHours(time));
+
+
+
+
+const maxtime = results?.reduce((max, item) => {
+  // const durationmax = convertToHoursAMD(item?.propFlightGrDetail?.flightProposal[1]?.ref);
+  const tvoDepTime=item?.Segments?.[0]?.[0]?.Origin?.DepTime
+  const tvoArrTime= item?.Segments?.[0]?.length===1?item?.Segments?.[0]?.[0]?.Destination?.ArrTime:item?.Segments?.[0]?.[item?.Segments?.[0]?.length-1]?.Destination?.ArrTime
+  const durationItemFormattedTime =tvoDepTime?getDifferenceInHoursTVO(tvoDepTime,tvoArrTime):convertToHoursAMD(item?.propFlightGrDetail?.flightProposal[1]?.ref)
+  const currentmax = Math.max(max, durationItemFormattedTime);
+  return Math.ceil(currentmax);
+}, 0)
+
+const [layoverRangeValue, setLayoverRangeValue] = useState(maxtime || 24);
+
+const handleLayoverRangeChange = (event) => {
+  setLayoverRangeValue(event.target.value);
+  };
 
 
 const mintime = results?.reduce((min, item) => {
-const durationmin = item?.propFlightGrDetail?.flightProposal[1]?.ref;
-const currentmin = Math.min(min, durationmin); 
-// console.log(    durationmin,"llllllllllllllllllllll")
+  const tvoDepTime=item?.Segments?.[0]?.[0]?.Origin?.DepTime
+  const tvoArrTime= item?.Segments?.[0]?.length===1?item?.Segments?.[0]?.[0]?.Destination?.ArrTime:item?.Segments?.[0]?.[item?.Segments?.[0]?.length-1]?.Destination?.ArrTime
+  const durationmin = tvoDepTime?getDifferenceInHoursTVO(tvoDepTime,tvoArrTime):convertToHoursAMD(item?.propFlightGrDetail?.flightProposal[1]?.ref);
+  const currentmin = Math.min(min, durationmin);
+  
 
-return currentmin;
-},Infinity);
+  return Math.ceil(currentmin);
+}, Infinity);
 
 
 const convertMinutesToHoursAndMinutes = (totalMinutes) => {
-const hours = Math.floor(totalMinutes / 60);
-const minutes = totalMinutes % 60;
-// return ${hours}hr ${minutes < 10 ? '0' : ''}${minutes}min;
-return hours;
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  // return ${hours}hr ${minutes < 10 ? '0' : ''}${minutes}min;
+  return hours;
 };
 
-const maxFormattedTime = convertMinutesToHoursAndMinutes(maxtime);
-const minFormattedTime = convertMinutesToHoursAndMinutes(mintime);
-
-// console.log("Minimum Time:", minFormattedTime);
-// console.log("Maximum Time:", maxFormattedTime);
-
-// console.log("currentmin//////////////////",mintime,maxtime);
 
 
-const [timeduration, setTimeduration] = useState('0hr 00min');
 
-useEffect(() => {
-setTimeduration(maxtime);
-}, [maxtime]);
 
-// console.log("timeduration",timeduration);
-const [layoverRangeValue, setLayoverRangeValue] = useState(maxFormattedTime + 10);
-const handleLayoverRangeChange = (event) => {
-  setLayoverRangeValue(event.target.value);
-};
 
-const handledurationValueChange = (event) => {
-const newValue = parseInt(event.target.value);
-setTimeduration(newValue);
-// You can perform additional actions based on the new value of the slider
-};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// const handledurationValueChange = (event) => {
+// const newValue = parseInt(event.target.value);
+// setTimeduration(newValue);
+// // You can perform additional actions based on the new value of the slider
+// };
 
 
 // //////////////////////////////////
 
   const maxPrice = results?.reduce((max, item) => {
-    const pricefrompublishfare = item?.Fare?.PublishedFare || item?.monetaryDetail?.[0]?.amount
+    const pricefrompublishfare = (item?.Fare?.PublishedFare || item?.monetaryDetail?.[0]?.amount);
    const currentmax = Math.max(max, pricefrompublishfare);
-
    return currentmax
   }, 0);
 
+  // console.log("maxPrice",maxPrice);
+
+
+  
   
   const minPrice = results?.reduce((min, item) => {
-    const pricefrompublishfare = item?.Fare?.PublishedFare || item?.monetaryDetail?.[0]?.amount
+    const pricefrompublishfare = (item?.Fare?.PublishedFare || item?.monetaryDetail?.[0]?.amount);
    const currentmin = Math.min(min, pricefrompublishfare);
 
    return currentmin;
@@ -517,14 +499,7 @@ setTimeduration(newValue);
     };
   }, []);
 
-  if (results === undefined || results.length === 0) {
-    return (
-      <div>
-        <FlightLoader />
-      </div>
-    );
-  }
-
+ 
 
 
   const handleRadioChange = (event) => {
@@ -567,12 +542,7 @@ setTimeduration(newValue);
   //   setTimeRangeValue()
   // }
   // console.log(results, "resultsfilterdata");
-  const depTime =
-    new Date(results[0]?.Segments?.[0][0]?.Origin?.DepTime).getHours() ||
-    moment(
-      results[0]?.flightInformation?.productDateTime?.timeOfDeparture,
-      "HHmm"
-    ).format("h:mm A");
+  // const depTime = new Date(results[0]?.Segments?.[0][0]?.Origin?.DepTime).getHours() || moment(results[0]?.flightInformation?.productDateTime?.timeOfDeparture,"HHmm").format("h:mm A");
 
     
 
@@ -665,27 +635,10 @@ const handleTimeValueChange = (event) => {
   const filterdata = results?.filter((item) => {
      let segmentLength = 0 ;
      let totalTimeDifference = 0;
-     let formattedTimeDifference = " ";
     
-    //  console.log("item",item)
-
-//      const totaltime = item?.propFlightGrDetail?.flightProposal[1]?.ref;     
-
-//      const hours = Math.floor(totaltime / 100); // Get the first two digits
-//      const minutes = totaltime % 100;
-
-//     const formattedTime = `${hours}hr ${minutes < 10 ? '0' : ''}${minutes}min`;
-
-  
-// console.log("totaltime",formattedTime)
 const durationItem = item?.propFlightGrDetail?.flightProposal[1]?.ref
-const durationItemFormattedTime = convertMinutesToHoursAndMinutes(durationItem);
+// const durationItemFormattedTime = convertMinutesToHoursAndMinutes(durationItem);
 
-
-
-
-
-  
     const depTime =
       new Date(item?.Segments?.[0][0]?.Origin?.DepTime).getHours() ||
       moment(
@@ -693,26 +646,15 @@ const durationItemFormattedTime = convertMinutesToHoursAndMinutes(durationItem);
         "HHmm"
       ).format("h");
       
-
-
-
-
-
-
       const ArrTime = (new Date( item?.Segments?.[0][item?.Segments[0].length - 1]?.Destination?.ArrTime
           )).getHours()||  moment(
             item?.flightDetails?.flightInformation?.productDateTime?.timeOfArrival ||  item?.flightDetails?.[item?.flightDetails.length-1]?.flightInformation?.productDateTime?.timeOfArrival,
             "HHmm"
           ).format("HH");
-          // console.log("ArrTime.......................................................",item);
+         
     const airlineName =
       item?.Segments?.[0][0]?.Airline?.AirlineCode ||
       item?.flightDetails?.flightInformation?.companyId?.marketingCarrier || item?.flightDetails?.[0]?.flightInformation?.companyId?.marketingCarrier ;
-      // console.log("item?.flightDetails",item?.flightDetails);
-
-
-
-
 
       // ///////////////////////////////////layover /////////////////////////////////////////
    
@@ -723,28 +665,11 @@ const durationItemFormattedTime = convertMinutesToHoursAndMinutes(durationItem);
         // console.log('Total time difference (HH:mm):', formattedTimeDifference,item);
     }
 
-    // console.log("formattedTimeDifference",formattedTimeDifference)
 
 
-    // //////////////////////segment///////////////////////////////////////////
-
-  //   if (item?.Segments && Array.isArray(item?.Segments[0])) {
-  //     totalTimeDifference = calculateTotalTimeDifferenceForSegments(item.Segments[0]);
-  //     formattedTimeDifference = formatTimeDifference(totalTimeDifference);
-  //     // console.log('Total segment time difference (HH)////////////////////////////////////////////////////////:', formattedTimeDifference, item?.Segments);
-  // }
-
-
-  // let formattedTimeDifference = '';
-    // if (item?.propFlightGrDetail?.flightProposal) {
-    //     formattedTimeDifference = totaltimecalculated;
-    // } else if (item?.Segments && Array.isArray(item?.Segments[0])) {
-    //     const totalTimeDifference = calculateTotalTimeDifferenceForSegments(item.Segments[0]);
-    //     formattedTimeDifference = formatTimeDifference(totalTimeDifference);
-    // }
-    // console.log("formhbjhjbjbjbattedTimeDifference",formattedTimeDifference,totaltimecalculated);
-
-
+    const tvoDepTime=item?.Segments?.[0]?.[0]?.Origin?.DepTime
+      const tvoArrTime= item?.Segments?.[0]?.length===1?item?.Segments?.[0]?.[0]?.Destination?.ArrTime:item?.Segments?.[0]?.[item?.Segments?.[0]?.length-1]?.Destination?.ArrTime
+      const durationItemFormattedTime = tvoDepTime? getDifferenceInHoursTVO(tvoDepTime,tvoArrTime) : convertToHoursAMD(item?.propFlightGrDetail?.flightProposal[1]?.ref)
 
 
     // //////////////////////////////////////////////////////////////////////////layover
@@ -818,14 +743,21 @@ const durationItemFormattedTime = convertMinutesToHoursAndMinutes(durationItem);
         });
 
 
-        const layoverTime = durationItemFormattedTime <= layoverRangeValue;
-
-        const priceInRange = (item?.Fare?.PublishedFare || item?.monetaryDetail?.[0]?.amount) <= priceRangeValue;
-        
+        const layoverTime = durationItemFormattedTime && layoverRangeValue ? durationItemFormattedTime <= layoverRangeValue : true;      
+        const priceInRange = (item?.Fare?.PublishedFare || item?.monetaryDetail?.[0]?.amount) <= priceRangeValue ;
+        // console.log('Filters:', categoryFilters, 'Price in Range:', priceInRange, 'Layover Time:', layoverTime);
+        // return categoryFilters.every((filter) => filter) && priceInRange ;
         return categoryFilters.every((filter) => filter) && priceInRange && layoverTime;
   });
 
-// console.log("reducerState",reducerState);
+
+  if (results === undefined || results.length === 0) {
+    return (
+      <div>
+        <FlightLoader />
+      </div>
+    );
+  }
 
   return (
     <div div className="row">
@@ -903,9 +835,7 @@ const durationItemFormattedTime = convertMinutesToHoursAndMinutes(durationItem);
                         </span>
                       </label>
                     </div>
-                    {/* <Divider
-                    sx={{ marginBottom: "15px", backgroundColor: "gray" }}
-                  /> */}
+                    
                   </div>
 
                   <div className="busDepartureMain">
@@ -913,7 +843,7 @@ const durationItemFormattedTime = convertMinutesToHoursAndMinutes(durationItem);
 
                     <div>
                       <label className="sidebar-label-container  ps-0">
-                        {/* <span className="checkmark"></span> */}
+                      
 
                         <div className="svgBOx">
                           <input
@@ -1035,7 +965,7 @@ const durationItemFormattedTime = convertMinutesToHoursAndMinutes(durationItem);
                       <input
                         type="range"
                         min={minPrice + 1}
-                        max={maxPrice + 5001}
+                        max={maxPrice + 1}
                         step="5000"
                         value={priceRangeValue}
                         onChange={handlePriceRangeChange}
@@ -1112,12 +1042,13 @@ const durationItemFormattedTime = convertMinutesToHoursAndMinutes(durationItem);
                     <input
                     type="range"
                     id="layover"
-                    min={minFormattedTime}
-                    max={maxFormattedTime}
+                    min={mintime}
+                    max={maxtime}
                     step="1"
                     value={layoverRangeValue}
                     onChange={handleLayoverRangeChange}
-                  />
+                  />
+
             <p>Layover : {layoverRangeValue}h</p>
                     </div>
                     <Divider
@@ -1536,9 +1467,7 @@ const durationItemFormattedTime = convertMinutesToHoursAndMinutes(durationItem);
             Best
           </div>
         </div>
-        {/* {results?.map((filter) => { */}
-        {/* <div style={{ background: "red" }}>{results?.[0]?.AirlineCode}</div> */}
-        {/* })} */}
+      
 
         {filterdata?.map((flight1) => {
           {/* console.log(filterdata,"filterdata................"); */}

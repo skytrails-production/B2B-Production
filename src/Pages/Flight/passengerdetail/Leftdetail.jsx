@@ -56,7 +56,7 @@ const Leftdetail = ({ totalAmount, setamount, mealamount, setmeal }) => {
   const childs = sessionStorage.getItem("childs");
   const infants = sessionStorage.getItem("infants");
   const reducerState = useSelector((state) => state);
-  // console.log("reducerState", reducerState);
+  // ].log("reducerState", reducerState);
   const ResultIndex = sessionStorage.getItem("ResultIndex");
   const [farePrice, setFarePrice] = useState("");
 
@@ -662,7 +662,7 @@ const Leftdetail = ({ totalAmount, setamount, mealamount, setmeal }) => {
         EndUserIp: reducerState?.ip?.ipData,
         TokenId: reducerState?.ip?.tokenData,
         TraceId:
-          reducerState?.oneWay?.oneWayData?.data?.data?.Response?.TraceId,
+        reducerState?.oneWay?.oneWayData?.data?.tvoTraceId,
         ResultIndex: ResultIndex,
       };
 
@@ -1457,7 +1457,7 @@ const Leftdetail = ({ totalAmount, setamount, mealamount, setmeal }) => {
                                           <DinnerDiningIcon />
                                         </span>
                                         <span>
-                                          Additional {meal.AirlineDescription} kg
+                                          Additional {meal.AirlineDescription} 
                                         </span>
                                       </p>
                                       <div

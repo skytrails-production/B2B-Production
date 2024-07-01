@@ -382,12 +382,7 @@ const hours = Math.floor(overallduration / 100); // Get the first two digits
                       <p>{findAirportByCode(locationdeparture)}</p>
                     </div>
                   </div>
-                  {/* <div>
-                    <div style={{display:"flex",flexDirection:"row",gap:"25px"}}>
-                      <div><p>Checkin </p>  <p>{baggage}</p></div>
-                      <div><p>FareClass </p>  <p>{flightclass}</p></div>
-                    </div>
-                  </div> */}
+                 
                   <div>
                     <div
                       style={{
