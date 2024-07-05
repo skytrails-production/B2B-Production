@@ -459,37 +459,50 @@ const [arrivalname, setarrivalnamename] = useState("");
     <div style={{ overflow: "scroll", height: "400px" }}>
       {amdresponse?.map((flight, item, flightsArray) => {
         const departuretime1 = moment(
-          flight?.flightInformation?.productDateTime?.timeOfDeparture,
-          "HHmm"
-        ).format("h:mm A");
-        const amdarrival = moment(
-          flight?.flightInformation?.productDateTime?.timeOfArrival,
-          "HHmm"
-        ).format("h:mm A");
-        const departtime = flight?.flightInformation?.location?.[1]?.locationId;
-        const locationarrival = flight?.flightInformation?.location?.[0]?.locationId;
-        const durationtime = flight?.flightInformation?.attributeDetails?.attributeDescription;
-        const hours = Math.floor(durationtime / 100);
-        const minutes = durationtime % 100;
-        const formattedTime = `${hours}hr ${minutes < 10 ? "0" : ""}${minutes}min`;
+    flight?.flightInformation?.productDateTime?.timeOfDeparture,
+    "HHmm"
+  ).format("h:mm A");
+  const amdarrival = moment(
+    flight?.flightInformation?.productDateTime?.timeOfArrival,
+    "HHmm"
+  ).format("h:mm A");
+  const departtime = flight?.flightInformation?.location?.[1]?.locationId;
+  const locationarrival = flight?.flightInformation?.location?.[0]?.locationId;
+  const durationtime = flight?.flightInformation?.attributeDetails?.attributeDescription;
+  const hours = Math.floor(durationtime / 100);
+  const minutes = durationtime % 100;
+  const formattedTime = `${hours}hr ${minutes < 10 ? "0" : ""}${minutes}min`;
 
-        let layoverTime = null;
-        if (item > 0) {
-          const previousFlight = flightsArray[item - 1];
-          const previousArrivalTime = moment(
-            previousFlight?.flightInformation?.productDateTime?.timeOfArrival,
-            "HHmm"
-          );
-          const currentDepartureTime = moment(
-            flight?.flightInformation?.productDateTime?.timeOfDeparture,
-            "HHmm"
-          );
+  let layoverTime = null;
+  if (item > 0) {
+    const previousFlight = flightsArray[item - 1];
+    const previousArrivalDate = previousFlight?.flightInformation?.productDateTime?.dateOfArrival;
+    const previousArrivalTime = previousFlight?.flightInformation?.productDateTime?.timeOfArrival;
+    const currentDepartureDate = flight?.flightInformation?.productDateTime?.dateOfDeparture;
+    const currentDepartureTime = flight?.flightInformation?.productDateTime?.timeOfDeparture;
 
-          const layoverDuration = moment.duration(currentDepartureTime.diff(previousArrivalTime));
-          const layoverHours = Math.floor(layoverDuration.asHours());
-          const layoverMinutes = layoverDuration.minutes();
-          layoverTime = `${layoverHours}hr ${layoverMinutes < 10 ? "0" : ""}${layoverMinutes}min`;
-        }
+    // Parse the previous arrival datetime
+    const prevArrivalDateTime = moment(
+      `20${previousArrivalDate.slice(4, 6)}-${previousArrivalDate.slice(2, 4)}-${previousArrivalDate.slice(0, 2)} ${previousArrivalTime.slice(0, 2)}:${previousArrivalTime.slice(2, 4)}`,
+      "YYYY-MM-DD HH:mm"
+    );
+
+    // Parse the current departure datetime
+    const currDepartureDateTime = moment(
+      `20${currentDepartureDate.slice(4, 6)}-${currentDepartureDate.slice(2, 4)}-${currentDepartureDate.slice(0, 2)} ${currentDepartureTime.slice(0, 2)}:${currentDepartureTime.slice(2, 4)}`,
+      "YYYY-MM-DD HH:mm"
+    );
+
+    // Calculate the difference in milliseconds
+    const layoverDuration = moment.duration(currDepartureDateTime.diff(prevArrivalDateTime));
+    const layoverHours = Math.floor(layoverDuration.asHours());
+    const layoverMinutes = layoverDuration.minutes();
+
+    layoverTime = `${layoverHours}hr ${layoverMinutes < 10 ? "0" : ""}${layoverMinutes}min`;
+  }
+
+  // Output layoverTime
+  {/* console.log(`Layover Time for flight ${item}: ${layoverTime}`); */}
 
         return (
           <React.Fragment key={item}>

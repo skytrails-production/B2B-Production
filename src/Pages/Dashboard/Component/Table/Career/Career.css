@@ -1,0 +1,14 @@
+/* 
+  .custom-row:hover {
+    background-color: transparent !important;
+  } */
+
+:where(.css-dev-only-do-not-override-f7vrd6)
+  .ant-table-wrapper
+  .ant-table-tbody
+  .ant-table-row
+  > .ant-table-cell-row-hover{
+  background: #21325d !important ;
+}
+
+

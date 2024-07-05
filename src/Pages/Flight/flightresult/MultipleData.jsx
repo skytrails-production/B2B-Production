@@ -184,7 +184,7 @@ const MultipleData = (props) => {
   const [month1, day1, year1, time1, ampm1] = formattedDate1.split(" ");
   const desiredFormat1 = `${day1}${month1}-${year1} ${time1} ${ampm1}`;
 
-  // console.log("flight?.Airline?.FareClass",flight)
+
 
   if (loader) {
     return <FlightLoader />;
@@ -194,6 +194,9 @@ const MultipleData = (props) => {
       <div className="singleFlightBoxOne">
         <div>
           <img
+          style={{
+            height:"50px",width:"50px",borderRadius:"33%"
+          }}
             src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${img}.png`}
             alt="flightImage"
           />{" "}
@@ -354,40 +357,44 @@ const MultipleData = (props) => {
     </div>
     <div style={{ overflow: "scroll", height: "400px" }}>
       {flight?.map((flight, item, flightsArray) => {
+        const arrivaldate1 = dayjs(flight?.Origin?.DepTime).format("DD MMM YY");
+  const deptime = dayjs(flight?.Origin?.DepTime).format("DD MMM, YY");
+  const arrivaldate = dayjs(flight?.Origin?.DepTime).format("h:mm A");
+  const aarivaltime = dayjs(flight?.Destination?.ArrTime).format("h:mm A");
+
+  const originname = flight?.Origin?.Airport?.CityName;
+  const destinationname = flight?.Destination?.Airport?.CityName;
+  const departtime = flight?.flightInformation?.location?.[1]?.locationId;
+  const locationarrival = flight?.flightInformation?.location?.[0]?.locationId;
+  const durationtime = flight?.flightInformation?.attributeDetails?.attributeDescription;
+  const hours = Math.floor(durationtime / 100);
+  const arrivaltime = dayjs(flight?.Destination?.ArrTime).format("h:mm A");
+  const minutes = durationtime % 100;
+  const baggage = flight?.Baggage;
+
+  let layoverTime = null;
+
+  if (item > 0) {
+    const previousFlight = flightsArray[item - 1];
+    const previousArrivalDate = previousFlight?.Destination?.ArrTime;
+    const previousArrivalTime = dayjs(previousFlight?.Destination?.ArrTime);
+    const currentDepartureDate = flight?.Origin?.DepTime;
+    const currentDepartureTime = dayjs(flight?.Origin?.DepTime);
+
+    const prevArrivalDateTime = dayjs(previousArrivalDate);
+    const currDepartureDateTime = dayjs(currentDepartureDate);
+
+    const layoverDuration = currDepartureDateTime.diff(prevArrivalDateTime, 'minute');
+    const layoverHours = Math.floor(layoverDuration / 60);
+    const layoverMinutes = layoverDuration % 60;
+
+    layoverTime = `${layoverHours}hr ${layoverMinutes < 10 ? "0" : ""}${layoverMinutes}min`;
+  }
+
+  // Output layoverTime
+  {/* console.log(`Layover Time for flight ${item}: ${layoverTime}`); */}
 
 
-      const deptime =  dayjs(flight?.Origin?.DepTime).format("DD MMM, YY");
-       const arrivaldate = dayjs(flight?.Origin?.DepTime).format("h:mm A");
-       const aarivaltime = dayjs(flight?.Destination?.ArrTime).format("h:mm A");
-
-
-
-       {/* console.log("aarivaltime",aarivaltime); */}
-       const originname = flight?.Origin?.Airport?.CityName;
-       const destinationname = flight?.Destination?.Airport?.CityName
-        const departtime = flight?.flightInformation?.location?.[1]?.locationId;
-        const locationarrival = flight?.flightInformation?.location?.[0]?.locationId;
-        const durationtime = flight?.flightInformation?.attributeDetails?.attributeDescription;
-        const hours = Math.floor(durationtime / 100);
-       const arrivaltime = dayjs(flight?.Destination?.ArrTime).format(
-            "h:mm A"
-          );
-        const minutes = durationtime % 100;
-        const baggage = flight?.Baggage;
-        {/* console.log("baggage",baggage); */}
-       
-        let layoverTime = null;
-
-if (item > 0) {
-  const previousFlight = flightsArray[item - 1];
-  const previousArrivalTime = dayjs(previousFlight?.Destination?.ArrTime, "HHmm");
-  const currentDepartureTime = dayjs(flight?.Origin?.DepTime, "HHmm");
-
-  const layoverDuration = currentDepartureTime.diff(previousArrivalTime, 'minute');
-  const layoverHours = Math.floor(layoverDuration / 60);
-  const layoverMinutes = layoverDuration % 60;
-  layoverTime = `${layoverHours}hr ${layoverMinutes < 10 ? "0" : ""}${layoverMinutes}min`;
-}
 
         
 

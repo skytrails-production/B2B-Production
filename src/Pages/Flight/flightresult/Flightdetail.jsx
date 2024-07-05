@@ -744,9 +744,9 @@ const durationItem = item?.propFlightGrDetail?.flightProposal[1]?.ref
 
 
         const layoverTime = durationItemFormattedTime && layoverRangeValue ? durationItemFormattedTime <= layoverRangeValue : true;      
-        const priceInRange = (item?.Fare?.PublishedFare || item?.monetaryDetail?.[0]?.amount) <= priceRangeValue ;
+        const priceInRange = Number(item?.Fare?.PublishedFare || item?.monetaryDetail?.[0]?.amount) <= priceRangeValue ;
         // console.log('Filters:', categoryFilters, 'Price in Range:', priceInRange, 'Layover Time:', layoverTime);
-        // return categoryFilters.every((filter) => filter) && priceInRange ;
+        // return categoryFilters.every((filter) => filter) && priceInRange;
         return categoryFilters.every((filter) => filter) && priceInRange && layoverTime;
   });
 

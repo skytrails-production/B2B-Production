@@ -6,7 +6,7 @@ import Accordion from "react-bootstrap/Accordion";
 import "./passenger.css";
 import { Typography, Button } from "@mui/material";
 import { useDispatch, useSelector, useReducer } from "react-redux";
-import DinnerDiningIcon from '@mui/icons-material/DinnerDining';
+import DinnerDiningIcon from "@mui/icons-material/DinnerDining";
 import { useNavigate } from "react-router-dom";
 import flightdir from "../../../Images/flgihtdir.png";
 import groupimg from "../../../Images/Groupl.png";
@@ -105,7 +105,7 @@ const Leftdetail = ({ totalAmount, setamount, mealamount, setmeal }) => {
     Fare: farePrice,
     City: "gurgaon",
     CountryCode: "IN",
-    CountryName:"India",
+    CountryName: "India",
     CellCountryCode: "+91-",
     ContactNo: "",
     Nationality: "IN",
@@ -371,19 +371,19 @@ const Leftdetail = ({ totalAmount, setamount, mealamount, setmeal }) => {
           state: {
             baggageDetails: baggageData,
             ssramount: baggageFare,
-            mealdetails:mealData , 
-            ssrmeal: mealFare
+            mealdetails: mealData,
+            ssrmeal: mealFare,
           },
         });
       } else {
         dispatch(PassengersAction(passengerData));
         navigate("/Flightresult/passengerdetail/flightreviewbooking", {
-          state: { 
-              baggageDetails: baggageData,
-              ssramount: baggageFare,
-              mealdetails:mealData , 
-              ssrmeal: mealFare
-            },
+          state: {
+            baggageDetails: baggageData,
+            ssramount: baggageFare,
+            mealdetails: mealData,
+            ssrmeal: mealFare,
+          },
         });
       }
     } else {
@@ -466,8 +466,6 @@ const Leftdetail = ({ totalAmount, setamount, mealamount, setmeal }) => {
     const optionsTime = { hour: "numeric", minute: "numeric", hour12: true };
     var formattedTimeStop = dateTime.toLocaleTimeString("en-US", optionsTime);
   }
-
-
 
   // ////////////////////////////////baggage/////////////////////////////////////////////////////////////////////////////
 
@@ -577,8 +575,7 @@ const Leftdetail = ({ totalAmount, setamount, mealamount, setmeal }) => {
     setOpen(false);
   };
 
-
-// /////////////////////////////////////////SSRCMeal//////////////////////////////////////////////
+  // /////////////////////////////////////////SSRCMeal//////////////////////////////////////////////
   const [mealssr, setMealssr] = useState([]);
   const [isLoading1, setIsLoading1] = useState(true);
   const [isMealAdded, setIsMealAdded] = useState(false);
@@ -638,12 +635,11 @@ const Leftdetail = ({ totalAmount, setamount, mealamount, setmeal }) => {
 
   const updateTotalAmount1 = (price) => {
     const newAmount = mealamount + price;
-    // Prevent the total amount from going negative
     const updatedAmount1 = newAmount < 0 ? 0 : newAmount;
     setmeal(updatedAmount1);
   };
 
-  // Function to calculate the total number of selected baggages
+
   const getTotalSelectedBaggages1 = () => {
     return Object.values(mealBaggages).reduce((acc, curr) => acc + curr, 0);
   };
@@ -656,13 +652,11 @@ const Leftdetail = ({ totalAmount, setamount, mealamount, setmeal }) => {
   const handleAddBaggageClick1 = async () => {
     setOpen1(true);
     setIsLoading1(true);
-    // console.log("reducerstate", reducerState);
     try {
       const payload = {
         EndUserIp: reducerState?.ip?.ipData,
         TokenId: reducerState?.ip?.tokenData,
-        TraceId:
-        reducerState?.oneWay?.oneWayData?.data?.tvoTraceId,
+        TraceId: reducerState?.oneWay?.oneWayData?.data?.tvoTraceId,
         ResultIndex: ResultIndex,
       };
 
@@ -684,10 +678,6 @@ const Leftdetail = ({ totalAmount, setamount, mealamount, setmeal }) => {
   const handlecloseicon1 = () => {
     setOpen1(false);
   };
-
-
-
-
 
   return (
     <div>
@@ -1339,7 +1329,7 @@ const Leftdetail = ({ totalAmount, setamount, mealamount, setmeal }) => {
               <LuggageIcon /> Add Luggage{" "}
             </div> */}
             <div>
-            <Button
+              <Button
                 onClick={handleAddBaggageClick1}
                 style={{
                   // border: "1px solid red",
@@ -1417,7 +1407,6 @@ const Leftdetail = ({ totalAmount, setamount, mealamount, setmeal }) => {
                     >
                       <div className="appendBottomssrcheading">
                         Included Check-in Meal per person{" "}
-                       
                       </div>
 
                       <div className="baggagelist">
@@ -1436,73 +1425,80 @@ const Leftdetail = ({ totalAmount, setamount, mealamount, setmeal }) => {
                             <div>
                               <div>
                                 {/* {baggagessr?.data?.Response?.Err} */}
-                                {!baggagessr?.data?.Response?.MealDynamic || baggagessr?.data?.Response?.MealDynamic.length === 0 ? (
-  <div
-    style={{
-      fontSize: "24px",
-      textAlign: "center",
-      color: "red",
-    }}
-  >
-    {baggagessr?.data?.Response?.Error?.ErrorMessage || "No meal Found"}
-  </div>
-) : (
-  <>
-                                {mealssr?.data?.Response?.MealDynamic?.[0]
-                                  ?.slice(1)
-                                  .map((meal, index1) => (
-                                    <div className="baglistItem" key={index1}>
-                                      <p className="paravaluessrc">
-                                        <span>
-                                          <DinnerDiningIcon />
-                                        </span>
-                                        <span>
-                                          Additional {meal.AirlineDescription} 
-                                        </span>
-                                      </p>
-                                      <div
-                                        className="paravaluessrc"
-                                        style={{ position: "relative" }}
-                                      >
-                                        <div className="finalrpicessrc">
-                                          ₹ {meal.Price}
-                                        </div>
+                                {!mealssr?.data?.Response?.MealDynamic ||
+                                  mealssr?.data?.Response?.MealDynamic
+                                  .length === 0 ? (
+                                  <div
+                                    style={{
+                                      fontSize: "24px",
+                                      textAlign: "center",
+                                      color: "red",
+                                    }}
+                                  >
+                                    {mealssr?.data?.Response?.Error
+                                      ?.ErrorMessage || "No meal Found"}
+                                  </div>
+                                ) : (
+                                  <>
+                                    {mealssr?.data?.Response?.MealDynamic?.[0]
+                                      ?.slice(1)
+                                      .map((meal, index1) => (
                                         <div
-                                          className="plusaddssr"
-                                          onClick={() =>
-                                            handleBaggageChange1(
-                                              meal.Price,
-                                              "-",
-                                              index1,
-                                              meal,
-                                            )
-                                          }
+                                          className="baglistItem"
+                                          key={index1}
                                         >
-                                          -
-                                        </div>
-                                        <div className="finalrpicessrc">
-                                          <div className="finalrpicessrc">
-                                            {mealBaggages[index1] || 0}
+                                          <p className="paravaluessrc">
+                                            <span>
+                                              <DinnerDiningIcon />
+                                            </span>
+                                            <span>
+                                              Additional{" "}
+                                              {meal.AirlineDescription}
+                                            </span>
+                                          </p>
+                                          <div
+                                            className="paravaluessrc"
+                                            style={{ position: "relative" }}
+                                          >
+                                            <div className="finalrpicessrc">
+                                              ₹ {meal.Price}
+                                            </div>
+                                            <div
+                                              className="plusaddssr"
+                                              onClick={() =>
+                                                handleBaggageChange1(
+                                                  meal.Price,
+                                                  "-",
+                                                  index1,
+                                                  meal
+                                                )
+                                              }
+                                            >
+                                              -
+                                            </div>
+                                            <div className="finalrpicessrc">
+                                              <div className="finalrpicessrc">
+                                                {mealBaggages[index1] || 0}
+                                              </div>
+                                            </div>
+                                            <div
+                                              className="plusaddssr"
+                                              onClick={() =>
+                                                handleBaggageChange1(
+                                                  meal.Price,
+                                                  "+",
+                                                  index1,
+                                                  meal
+                                                )
+                                              }
+                                            >
+                                              +
+                                            </div>
                                           </div>
                                         </div>
-                                        <div
-                                          className="plusaddssr"
-                                          onClick={() =>
-                                            handleBaggageChange1(
-                                              meal.Price,
-                                              "+",
-                                              index1,
-                                              meal,
-                                            )
-                                          }
-                                        >
-                                          +
-                                        </div>
-                                      </div>
-                                    </div>
-                                  ))}
-                                </>
-)}
+                                      ))}
+                                  </>
+                                )}
                               </div>
                             </div>
                           </div>
@@ -1533,22 +1529,6 @@ const Leftdetail = ({ totalAmount, setamount, mealamount, setmeal }) => {
                   </div>
                 </Box>
               </Modal>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
               {/* /////////////////////////////////baggage////////////////////////// */}
               <Button
@@ -1648,73 +1628,79 @@ const Leftdetail = ({ totalAmount, setamount, mealamount, setmeal }) => {
                             <div>
                               <div>
                                 {/* {baggagessr?.data?.Response?.Err} */}
-                                 {!baggagessr?.data?.Response?.Baggage || baggagessr?.data?.Response?.Baggage.length === 0  ? (
-  <div
-    style={{
-      fontSize: "24px",
-      textAlign: "center",
-      color: "red",
-    }}
-  >
-    {baggagessr?.data?.Response?.Error?.ErrorMessage || "No SSR Detail Found"}
-  </div>
-) : (
-  <>
-                                {baggagessr?.data?.Response?.Baggage?.[0]
-                                  ?.slice(1)
-                                  .map((baggage, index) => (
-                                    <div className="baglistItem" key={index}>
-                                      <p className="paravaluessrc">
-                                        <span>
-                                          <LuggageIcon />
-                                        </span>
-                                        <span>
-                                          Additional {baggage.Weight} kg
-                                        </span>
-                                      </p>
-                                      <div
-                                        className="paravaluessrc"
-                                        style={{ position: "relative" }}
-                                      >
-                                        <div className="finalrpicessrc">
-                                          ₹ {baggage.Price}
-                                        </div>
+                                {!baggagessr?.data?.Response?.Baggage ||
+                                baggagessr?.data?.Response?.Baggage.length ===
+                                  0 ? (
+                                  <div
+                                    style={{
+                                      fontSize: "24px",
+                                      textAlign: "center",
+                                      color: "red",
+                                    }}
+                                  >
+                                    {baggagessr?.data?.Response?.Error
+                                      ?.ErrorMessage || "No SSR Detail Found"}
+                                  </div>
+                                ) : (
+                                  <>
+                                    {baggagessr?.data?.Response?.Baggage?.[0]
+                                      ?.slice(1)
+                                      .map((baggage, index) => (
                                         <div
-                                          className="plusaddssr"
-                                          onClick={() =>
-                                            handleBaggageChange(
-                                              baggage.Price,
-                                              "-",
-                                              index,
-                                              baggage
-                                            )
-                                          }
+                                          className="baglistItem"
+                                          key={index}
                                         >
-                                          -
-                                        </div>
-                                        <div className="finalrpicessrc">
-                                          <div className="finalrpicessrc">
-                                            {selectedBaggages[index] || 0}
+                                          <p className="paravaluessrc">
+                                            <span>
+                                              <LuggageIcon />
+                                            </span>
+                                            <span>
+                                              Additional {baggage.Weight} kg
+                                            </span>
+                                          </p>
+                                          <div
+                                            className="paravaluessrc"
+                                            style={{ position: "relative" }}
+                                          >
+                                            <div className="finalrpicessrc">
+                                              ₹ {baggage.Price}
+                                            </div>
+                                            <div
+                                              className="plusaddssr"
+                                              onClick={() =>
+                                                handleBaggageChange(
+                                                  baggage.Price,
+                                                  "-",
+                                                  index,
+                                                  baggage
+                                                )
+                                              }
+                                            >
+                                              -
+                                            </div>
+                                            <div className="finalrpicessrc">
+                                              <div className="finalrpicessrc">
+                                                {selectedBaggages[index] || 0}
+                                              </div>
+                                            </div>
+                                            <div
+                                              className="plusaddssr"
+                                              onClick={() =>
+                                                handleBaggageChange(
+                                                  baggage.Price,
+                                                  "+",
+                                                  index,
+                                                  baggage
+                                                )
+                                              }
+                                            >
+                                              +
+                                            </div>
                                           </div>
                                         </div>
-                                        <div
-                                          className="plusaddssr"
-                                          onClick={() =>
-                                            handleBaggageChange(
-                                              baggage.Price,
-                                              "+",
-                                              index,
-                                              baggage
-                                            )
-                                          }
-                                        >
-                                          +
-                                        </div>
-                                      </div>
-                                    </div>
-                                  ))}
-                                </>
-                        )}
+                                      ))}
+                                  </>
+                                )}
                               </div>
                             </div>
                           </div>

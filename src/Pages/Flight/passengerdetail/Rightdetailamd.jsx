@@ -261,13 +261,13 @@ export default function Rightdetailamd({ amdata }) {
             <p>
               Adult(s) ({adult} × {adultamount})
             </p>
-            <p>  {"₹"}{multiplydata}</p>
+            <p>{"₹"} {multiplydata} </p>
           </div>
           <div style={{ borderBottom: "none" }}>
             {child > 0 && (
               <>
                 <p>Child(s) ({child} × {chilsamount})</p>
-                <p>{childmultiply}</p>
+                <p>{"₹"} {childmultiply}</p>
               </>
             )}
           </div>
@@ -275,7 +275,7 @@ export default function Rightdetailamd({ amdata }) {
             {infant > 0 && (
               <>
                 <p>Infant(s) ({infant} × {infantamount})</p>
-                <p>{infantmultiplicity}</p>
+                <p>{"₹"} {infantmultiplicity}</p>
               </>
             )}
           </div>

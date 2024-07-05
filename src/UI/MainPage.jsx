@@ -146,6 +146,7 @@ import HotelTicketDB from "../Pages/grnpages/Hotel/guestdetail/HotelTicketDB";
 import Passengerdetailamd from "../Pages/Flight/flightresult/Passengerdetailamd";
 import FlightReviewbookingamd from "../Pages/Flight/flightreviewbooking/FlightReviewbookingamd";
 import Flightbookingconfirmationamd from "../Pages/Flight/flightbookingconfirmation/Flightbookingconfirmationamd";
+// import Carrerform from "../Pages/Dashboard/Component/Table/Careerform";
 const MainPage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -264,7 +265,6 @@ const MainPage = () => {
     } else if (location.pathname === "SubAdminforgetPassword") {
       navigate("SubAdminforgetPassword");
     }
-    
   }, []);
 
   useEffect(() => {
@@ -598,8 +598,11 @@ const MainPage = () => {
                   path="/passengerdetail"
                   element={<Passengerdetail />}
                 />
-                <Route exact path="/Passengerdetailamd"
-                element={<Passengerdetailamd/>}/>
+                <Route
+                  exact
+                  path="/Passengerdetailamd"
+                  element={<Passengerdetailamd />}
+                />
                 <Route
                   exact
                   path="/FlightresultReturn/Passengerdetail"
@@ -615,18 +618,17 @@ const MainPage = () => {
                   path="/Flightresult/passengerdetail/flightreviewbooking"
                   element={<FlightReviewbooking />}
                 />
-                <Route exact path="/Flightresult/passengerdetail/flightreviewbookingamd"
-                element={<FlightReviewbookingamd/>}/>
-                
+                <Route
+                  exact
+                  path="/Flightresult/passengerdetail/flightreviewbookingamd"
+                  element={<FlightReviewbookingamd />}
+                />
 
-
-                <Route exact path="/bookedTicketSucess"
-                element={<Flightbookingconfirmationamd/>}/>
-
-
-
-
-
+                <Route
+                  exact
+                  path="/bookedTicketSucess"
+                  element={<Flightbookingconfirmationamd />}
+                />
 
                 <Route
                   exact
@@ -841,6 +843,13 @@ const MainPage = () => {
                   path="/admin/addPopulardestination"
                   element={<Popular />}
                 />
+
+                {/* <Route
+                  exact
+                  path="/admin/carrerPage"
+                  element={<Carrerform />}
+                /> */}
+
                 <Route
                   exact
                   path="/admin/createPackageCategory"
@@ -933,10 +942,7 @@ const MainPage = () => {
             path="subAdminforgetPassword"
             element={<SubadminForgetPassword />}
           />
-           <Route
-            path="RMforgetPassword" 
-            element={<RMforgotpassword />}
-          />
+          <Route path="RMforgetPassword" element={<RMforgotpassword />} />
 
           <Route path="registration" element={<Registration />} />
           <Route

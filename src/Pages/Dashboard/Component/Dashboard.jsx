@@ -12,12 +12,14 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
+import Careerform from "./Table/Career/Careerform";
 import Logout from "@mui/icons-material/Logout";
 import profilePicUrl from "../../../Images/Admin.svg";
 // import profilePicUrl from '../../../Images/Admin.svg'
 import WebIcon from "@mui/icons-material/Web";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+import Carrertable from "./Table/Career/Carrertable"
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 import {
   ListItem,
@@ -153,6 +155,10 @@ import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import Downloadcsv from "../../Historytable/Downloadcsv";
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import BlogData from "../../Historytable/BlogData";
+import Careercategory from "./Table/Career/Careercategory";
+import Careercategoryvalue from "./Table/Career/Careercategoryvalue";
+
+
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -324,6 +330,28 @@ export default function VerticalTabs() {
     navigate("/addEvents");
   };
 
+
+
+// //////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   const createMarkup = () => {
     navigate("/addMarkup");
   };
@@ -353,6 +381,10 @@ export default function VerticalTabs() {
    const addPopular=()=>{
     navigate("/admin/addPopulardestination")
    }
+
+  //  const carrerPage =() => {
+  //   navigate("/admin/carrerPage");
+  // }
   const createNotification = () => {
     navigate("/admin/addnotification")
   }
@@ -468,6 +500,12 @@ export default function VerticalTabs() {
 
   const handleButtonClickFour = () => {
     setOpenCollapseFour(!openCollapseFour);
+  };
+
+  const [openCollapseTen, setOpenCollapseTen] = useState(false);
+
+  const handleButtonClickTen = () => {
+    setOpenCollapseTen(!openCollapseTen);
   };
 
   const [openCollapseFive, setOpenCollapseFive] = useState(false);
@@ -904,6 +942,12 @@ export default function VerticalTabs() {
                   </ListItemIcon>
                   Add Popular Destination
                 </MenuItem>
+                {/* <MenuItem onClick={() => { handleClose(); carrerPage(); }}>
+                  <ListItemIcon>
+                    <PersonAdd fontSize="small" />
+                  </ListItemIcon>
+                  Carrer Page
+                </MenuItem> */}
                 <MenuItem onClick={() => { handleClose(); addPackCat(); }}>
                   <ListItemIcon>
                     <PersonAdd fontSize="small" />
@@ -2206,6 +2250,7 @@ export default function VerticalTabs() {
                 </ListItem>
               </Collapse>
             </ListItem>
+
             <ListItem disablePadding sx={{ display: "block" }}>
               <ListItemButton
                 sx={{
@@ -2633,6 +2678,277 @@ export default function VerticalTabs() {
                 />
               </ListItemButton>
             </ListItem>
+
+
+
+
+
+            {/* <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => handleMenuItemClick("Careerform")}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                  ...((menuData === "Careerform"
+                    ? activeMenuItemClass
+                    : inactiveMenuItemClass) || {}),
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <AirplanemodeActiveIcon sx={{ color: "white" }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Careerform"
+                  sx={{ opacity: open ? 1 : 0, color: "white" }}
+                />
+              </ListItemButton>
+            </ListItem> */}
+
+
+
+            {/* ////////////////////////////////////////////////////////////////////// */}
+
+
+
+
+
+
+
+
+            <ListItem disablePadding sx={{ display: "block" }}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "center" : "center",
+                  px: 2.5,
+                  ...((menuData === "AGENT Bookings"
+                    ? activeMenuItemClass
+                    : inactiveMenuItemClass) || {}),
+                }}
+                onClick={handleButtonClickTen}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: openCollapse ? 3 : "3",
+                    justifyContent: "center",
+                  }}
+                >
+                  <ArticleIcon sx={{ color: "white" }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Career"
+                  sx={{ opacity: open ? 1 : 0, color: "white", marginLeft: "20px" }}
+                />
+              </ListItemButton>
+              <Collapse in={openCollapseTen} timeout="auto" unmountOnExit>
+                <ListItem
+                  disablePadding
+                  sx={{ display: "block" }}
+                  onClick={() => handleMenuItemClick("CareerCategory")}
+                >
+                  <ListItemButton
+                    sx={{
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
+                      ...((menuData === "CareerCategory"
+                        ? activeMenuItemClass
+                        : inactiveMenuItemClass) || {}),
+                    }}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <ArticleIcon sx={{ color: "white", marginLeft: "20px" }} />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary="Career Department"
+                      sx={{ opacity: open ? 1 : 0, color: "white" }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+
+                <ListItem
+                  disablePadding
+                  sx={{ display: "block" }}
+                  onClick={() => handleMenuItemClick("Carrer value")}
+                >
+                  <ListItemButton
+                    sx={{
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
+                      ...((menuData === "Carrer value"
+                        ? activeMenuItemClass
+                        : inactiveMenuItemClass) || {}),
+                    }}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <ArticleIcon sx={{ color: "white", marginLeft: "20px" }} />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary="Job Category"
+                      sx={{ opacity: open ? 1 : 0, color: "white" }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+
+                <ListItem
+                  disablePadding
+                  sx={{ display: "block" }}
+                  onClick={() => handleMenuItemClick("Careerform")}
+                >
+                  <ListItemButton
+                    sx={{
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
+                      ...((menuData === "Careerform"
+                        ? activeMenuItemClass
+                        : inactiveMenuItemClass) || {}),
+                    }}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <ArticleIcon sx={{ color: "white", marginLeft: "20px" }} />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary="Career Form"
+                      sx={{ opacity: open ? 1 : 0, color: "white" }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+
+                <ListItem
+                  disablePadding
+                  sx={{ display: "block" }}
+                  onClick={() => handleMenuItemClick("Carrer Data")}
+                >
+                  <ListItemButton
+                    sx={{
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
+                      ...((menuData === "Carrer Data"
+                        ? activeMenuItemClass
+                        : inactiveMenuItemClass) || {}),
+                    }}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      < ArticleIcon sx={{ color: "white", marginLeft: "20px" }} />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary="Carrer Data"
+                      sx={{ opacity: open ? 1 : 0, color: "white" }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+
+                {/* <ListItem
+                  disablePadding
+                  sx={{ display: "block" }}
+                  onClick={() => handleMenuItemClick("RequireDocument")}
+                >
+                  <ListItemButton
+                    sx={{
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
+                      ...((menuData === "RequireDocument"
+                        ? activeMenuItemClass
+                        : inactiveMenuItemClass) || {}),
+                    }}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <ArticleIcon sx={{ color: "white", marginLeft: "20px" }} />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary="Require Document"
+                      sx={{ opacity: open ? 1 : 0, color: "white", }}
+                    />
+                  </ListItemButton>
+                </ListItem> */}
+              </Collapse>
+            </ListItem>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <ListItem
               disablePadding
               sx={{ display: "block" }}
@@ -2836,7 +3152,7 @@ export default function VerticalTabs() {
                     justifyContent: "center",
                   }}
                 >
-                  < ArticleIcon sx={{ color: "white" }} />
+                  <ArticleIcon sx={{ color: "white" }} />
                 </ListItemIcon>
                 <ListItemText
                   primary="Visa Booking"
@@ -3131,6 +3447,10 @@ export default function VerticalTabs() {
                 <AdminProfile />
               )}
               {menuData === "GRN Booking" &&<Grnuser/>}
+              {menuData === "Carrer Data" && <Carrertable/>}
+              {menuData === "Careerform" && <Careerform/>}
+              {menuData === "CareerCategory" && (<Careercategory/>)}
+              {menuData === "Carrer value" && <Careercategoryvalue/>}
               {menuData === "Downloadcsv" && <Downloadcsv/>}
               {menuData === "Packageenquiry" && <Package />}
               {menuData === "apppost" && <Apppost/>}
