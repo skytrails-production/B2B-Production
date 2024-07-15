@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import DynamicFeedIcon from '@mui/icons-material/DynamicFeed';
+import DynamicFeedIcon from "@mui/icons-material/DynamicFeed";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
 import List from "@mui/material/List";
@@ -77,7 +77,7 @@ import {
   Divider,
   InputBase,
   Badge,
-  CircularProgress
+  CircularProgress,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { FormControl, InputLabel, Select } from "@mui/material";
@@ -112,17 +112,17 @@ import Getevent from "../../Historytable/Getevent";
 import Package from "../../Historytable/Package";
 import newlogo from "../../../Images/whitelogo1.png";
 import PersonIcon from "@mui/icons-material/Person";
-import ImageIcon from '@mui/icons-material/Image'; // Import the Image icon
-import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
-import ChangeCircleOutlinedIcon from '@mui/icons-material/ChangeCircleOutlined';
+import ImageIcon from "@mui/icons-material/Image"; // Import the Image icon
+import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
+import ChangeCircleOutlinedIcon from "@mui/icons-material/ChangeCircleOutlined";
 import AdminProfile from "./Table/AdminProfile";
 import { apiURL } from "../../../Constants/constant";
 import EventList from "./Table/EventList";
-import HotelIcon from '@mui/icons-material/Hotel';
-import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
-import LocalOfferIcon from '@mui/icons-material/LocalOffer';
-import LanguageIcon from '@mui/icons-material/Language';
-import ArticleIcon from '@mui/icons-material/Article';
+import HotelIcon from "@mui/icons-material/Hotel";
+import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
+import LanguageIcon from "@mui/icons-material/Language";
+import ArticleIcon from "@mui/icons-material/Article";
 import Citypackage from "../../Historytable/Citypackage";
 import Apppost from "../../Historytable/Apppost";
 import Enquirylist from "../../Historytable/Enquirylist";
@@ -144,19 +144,22 @@ import {
   // Hotel as HotelIcon,
   CollectionsBookmark as TotalBookingsIcon,
   EmojiEvents as EmojiEventsIcon,
-
 } from "@mui/icons-material";
 import { Center } from "@chakra-ui/layout";
 import axios from "axios";
 import { PiBackpackThin } from "react-icons/pi";
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
-import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 import Downloadcsv from "../../Historytable/Downloadcsv";
-import UploadFileIcon from '@mui/icons-material/UploadFile';
+import UploadFileIcon from "@mui/icons-material/UploadFile";
 import BlogData from "../../Historytable/BlogData";
+
+import InventoryUser from "./Table/inventoryTable/InventoryUser";
+
 import Careercategory from "./Table/Career/Careercategory";
 import Careercategoryvalue from "./Table/Career/Careercategoryvalue";
+
 
 
 const drawerWidth = 240;
@@ -229,7 +232,6 @@ const Drawer = styled(MuiDrawer, {
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
-
   return (
     <div
       role="tabpanel"
@@ -269,7 +271,7 @@ export default function VerticalTabs() {
   const [showNotificationIcon, setSetShowNotificationIcon] = useState(false);
   const [passesBooked, setPassesBooked] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [passload,setPassload]=useState(false);
+  const [passload, setPassload] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const redirect = useNavigate();
@@ -308,7 +310,7 @@ export default function VerticalTabs() {
   const signOutAdmin = () => {
     dispatch(adminSignOut());
     navigate("/adminLogin");
-  }
+  };
 
   const createSubAdmin = () => {
     navigate("/addSubAdmin");
@@ -361,22 +363,22 @@ export default function VerticalTabs() {
     navigate("/addMarkup");
   };
 
-
   const createCoupon = () => {
     // Navigate to the desired route when the button is clicked
     navigate("/admin/addCoupons");
   };
-  const createupdateFeed=()=>{
-    navigate("/admin/updateFeed")
-  }
-   const createReward=()=>{
+  const createupdateFeed = () => {
+    navigate("/admin/updateFeed");
+  };
+  const createReward = () => {
     navigate("/admin/addReward");
-   }
-   const createQuiz=()=>{
+  };
+  const createQuiz = () => {
     navigate("/admin/createQuiz");
-   }
-   const addPackagebanner =()=>{
+  };
+  const addPackagebanner = () => {
     navigate("/admin/addPackagebanner");
+
    }
    const addPopular=()=>{
     navigate("/admin/addPopulardestination")
@@ -385,15 +387,16 @@ export default function VerticalTabs() {
   //  const carrerPage =() => {
   //   navigate("/admin/carrerPage");
   // }
+
   const createNotification = () => {
-    navigate("/admin/addnotification")
-  }
-  const addPackCat=()=>{
-    navigate("/admin/createPackageCategory")
-  }
-  const createBlog=()=>{
+    navigate("/admin/addnotification");
+  };
+  const addPackCat = () => {
+    navigate("/admin/createPackageCategory");
+  };
+  const createBlog = () => {
     navigate("/admin/createBlog");
-  }
+  };
   // /adminprofile
   // const AdminProfile = () => {
   //   // Navigate to the desired route when the button is clicked
@@ -415,21 +418,22 @@ export default function VerticalTabs() {
   const [notificationData, setNotificationData] = useState([]);
   useEffect(() => {
     async function getNotefication() {
-
-      await axios.get(`${apiURL.baseURL}/skyTrails/api/admin/getAllNotification/656ae08849c268401f98246b`)
+      await axios
+        .get(
+          `${apiURL.baseURL}/skyTrails/api/admin/getAllNotification/656ae08849c268401f98246b`
+        )
         .then(function (response) {
           // handle success
-          setNotificationData(response?.data?.result)
+          setNotificationData(response?.data?.result);
           // console.log(response?.data?.result, "ressssssssssssssssssssssssssssssssssssssssssssssssss");
         })
         .catch(function (error) {
           // handle error
           console.log(error, "error");
-        })
-
+        });
     }
     getNotefication();
-  }, [])
+  }, []);
   // let notificationCount = 0;
   // useEffect(() => {
   //   notificationCount = notificationData?.map((item) => (
@@ -455,40 +459,39 @@ export default function VerticalTabs() {
   const handleButtonClickTwo = () => {
     setOpenCollapseTwo(!openCollapseTwo);
   };
-   const handleClickNinetyNine = () => {
-     // Make a PUT request to the API endpoint
-     setPassload(true);
-     
+  const handleClickNinetyNine = () => {
+    // Make a PUT request to the API endpoint
+    setPassload(true);
+
     fetch(`${apiURL.baseURL}/skyTrails/api/user/event/sendPassesUpdate`, {
-      method: 'PUT',
+      method: "PUT",
       // Add any necessary headers or body data here
     })
-    .then(response => {
-      if (response.ok) {
-        // If the request is successful, set passesBooked to true
-        setPassesBooked(true);
-        setSnackbarOpen(true); // Open the Snackbar
-      } else {
-        // Handle errors if needed
-        console.error('Error:', response.statusText);
-      }
-    })
-    .catch(error => {
-      // Handle network errors
-      console.error('Network error:', error);
-    })
-    .finally(() => {
-      setPassload(false); 
-      
-    });
+      .then((response) => {
+        if (response.ok) {
+          // If the request is successful, set passesBooked to true
+          setPassesBooked(true);
+          setSnackbarOpen(true); // Open the Snackbar
+        } else {
+          // Handle errors if needed
+          console.error("Error:", response.statusText);
+        }
+      })
+      .catch((error) => {
+        // Handle network errors
+        console.error("Network error:", error);
+      })
+      .finally(() => {
+        setPassload(false);
+      });
   };
 
   const handleCloseSnackbar = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
     setSnackbarOpen(false);
-  };  
+  };
 
   const [openCollapseThree, setOpenCollapseThree] = useState(false);
 
@@ -539,7 +542,7 @@ export default function VerticalTabs() {
     setOpenCollapseEight(!openCollapseEight);
   };
 
-  const [selectedValue, setSelectedValue] = useState('option1');
+  const [selectedValue, setSelectedValue] = useState("option1");
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
@@ -547,18 +550,21 @@ export default function VerticalTabs() {
   const loop = [1, 2, 3, 4, 5, 6];
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (showNotificationRef?.current && !showNotificationRef?.current?.contains(event.target)) {
+      if (
+        showNotificationRef?.current &&
+        !showNotificationRef?.current?.contains(event.target)
+      ) {
         // Clicked outside the list, so close it
         setSetShowNotification(false);
       }
     };
 
     // Attach the event listener when the component mounts
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
     // Detach the event listener when the component unmounts
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -569,20 +575,19 @@ export default function VerticalTabs() {
     // console.log(apiURL.baseURL);
 
     // await axios.post(`${apiURL.baseURL}/skyTrails/api/admin/getNotificationById/${id}`);
-    await axios.get(`${apiURL.baseURL}/skyTrails/api/admin/getNotificationById/${id}`)
+    await axios
+      .get(`${apiURL.baseURL}/skyTrails/api/admin/getNotificationById/${id}`)
       .then(function (response) {
         // handle success
-        setNotificationData(response?.data?.result)
+        setNotificationData(response?.data?.result);
         // console.log(response?.data?.result, response?.data?.result?.length, "ressssssssssssssssssssssssssssssssssssssssssssssssss");
       })
       .catch(function (error) {
         // handle error
         console.log(error, "error");
-      })
+      });
     handleMenuItemClick("Packageenquiry");
     setSetShowNotification(false);
-
-
   };
   function timeAgo(uploadTime) {
     const currentTime = new Date().getTime();
@@ -593,28 +598,39 @@ export default function VerticalTabs() {
     const seconds = Math.floor(timeDifference / 1000);
 
     if (seconds < 60) {
-      return `${seconds} second${seconds !== 1 ? 's' : ''} ago`;
+      return `${seconds} second${seconds !== 1 ? "s" : ""} ago`;
     } else if (seconds < 3600) {
       const minutes = Math.floor(seconds / 60);
-      return `${minutes} minute${minutes !== 1 ? 's' : ''} ago`;
+      return `${minutes} minute${minutes !== 1 ? "s" : ""} ago`;
     } else if (seconds < 86400) {
       const hours = Math.floor(seconds / 3600);
-      return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
+      return `${hours} hour${hours !== 1 ? "s" : ""} ago`;
     } else if (seconds < 604800) {
       const days = Math.floor(seconds / 86400);
-      return `${days} day${days !== 1 ? 's' : ''} ago`;
+      return `${days} day${days !== 1 ? "s" : ""} ago`;
     } else {
       const weeks = Math.floor(seconds / 604800);
-      return `${weeks} week${weeks !== 1 ? 's' : ''} ago`;
+      return `${weeks} week${weeks !== 1 ? "s" : ""} ago`;
     }
   }
 
-
   return (
     <>
-    {passload?(
-      <div style={{ position: 'absolute', top: '-20%', left: '0', right: '0', width: '100%', height: '200%', backdropFilter: 'blur(4.5px)', backgroundColor: '#d8d5e663', zIndex:999 }}></div>
-    ):null}
+      {passload ? (
+        <div
+          style={{
+            position: "absolute",
+            top: "-20%",
+            left: "0",
+            right: "0",
+            width: "100%",
+            height: "200%",
+            backdropFilter: "blur(4.5px)",
+            backgroundColor: "#d8d5e663",
+            zIndex: 999,
+          }}
+        ></div>
+      ) : null}
       <Box sx={{ display: "flex", backgroundColor: "#f0f2f5" }}>
         <CssBaseline />
         <AppBar
@@ -707,7 +723,6 @@ export default function VerticalTabs() {
               </div>
             </div> */}
 
-
             <div
               style={{
                 display: "flex",
@@ -724,24 +739,36 @@ export default function VerticalTabs() {
               </InputLabel>
               <FormControl>
                 <Select
-                  style={{ width: "200px", height: "40px", color: "white", border: "1px solid white" }}
+                  style={{
+                    width: "200px",
+                    height: "40px",
+                    color: "white",
+                    border: "1px solid white",
+                  }}
                   labelId="dropdown-label"
                   id="dropdown"
                   value={selectedValue}
                   onChange={handleChange}
-                  MenuProps={{ // Use MenuProps to customize the menu
+                  MenuProps={{
+                    // Use MenuProps to customize the menu
                     anchorOrigin: {
                       vertical: "bottom",
-                      horizontal: "left"
+                      horizontal: "left",
                     },
                     transformOrigin: {
                       vertical: "top",
-                      horizontal: "left"
+                      horizontal: "left",
                     },
-                    getContentAnchorEl: null // This prevents the menu from being positioned incorrectly
+                    getContentAnchorEl: null, // This prevents the menu from being positioned incorrectly
                   }}
                   IconComponent={() => (
-                    <div style={{ color: "white", padding: "5px", borderRadius: "0 4px 4px 0" }}>
+                    <div
+                      style={{
+                        color: "white",
+                        padding: "5px",
+                        borderRadius: "0 4px 4px 0",
+                      }}
+                    >
                       &#9660; {/* Unicode character for down arrow */}
                     </div>
                   )}
@@ -802,38 +829,63 @@ export default function VerticalTabs() {
                 </IconButton>
               </Tooltip>
 
-{/* skyTrails/api/user/event/sendPassesUpdate */}
-              
-<Tooltip title="Pass Status">
-        <IconButton onClick={handleClickNinetyNine } size="small">
-          <ConfirmationNumberIcon sx={{ width: 32, height: 32, color: "white" }} />
-        </IconButton>
-      </Tooltip>
-      {passload && (
-         <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', marginTop: '200px', zIndex: 999, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-         <CircularProgress color="primary" size={80} thickness={4} style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />
-     </div>
-      )}
-     
-      
-      
-      <Snackbar 
-        open={snackbarOpen} 
-        autoHideDuration={5000} 
-        onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'center', horizontal:'center'}}
-        
-        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-      >
-        <MuiAlert 
-          onClose={handleCloseSnackbar} 
-          severity="success" 
-          sx={{ width: '100%', textAlign: 'center' }}
-        >
-          Congratulations!Pass Generated
-        </MuiAlert>
-      </Snackbar>
-   
+              {/* skyTrails/api/user/event/sendPassesUpdate */}
+
+              <Tooltip title="Pass Status">
+                <IconButton onClick={handleClickNinetyNine} size="small">
+                  <ConfirmationNumberIcon
+                    sx={{ width: 32, height: 32, color: "white" }}
+                  />
+                </IconButton>
+              </Tooltip>
+              {passload && (
+                <div
+                  style={{
+                    position: "fixed",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    marginTop: "200px",
+                    zIndex: 999,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <CircularProgress
+                    color="primary"
+                    size={80}
+                    thickness={4}
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                    }}
+                  />
+                </div>
+              )}
+
+              <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={5000}
+                onClose={handleCloseSnackbar}
+                anchorOrigin={{ vertical: "center", horizontal: "center" }}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <MuiAlert
+                  onClose={handleCloseSnackbar}
+                  severity="success"
+                  sx={{ width: "100%", textAlign: "center" }}
+                >
+                  Congratulations!Pass Generated
+                </MuiAlert>
+              </Snackbar>
+
               {/* ... rest of the menu items ... */}
               <Menu
                 anchorEl={anchorEl}
@@ -872,7 +924,7 @@ export default function VerticalTabs() {
                 {/* <MenuItem onClick={() => { handleClose(); AdminProfile(); }}>
                   <Avatar /> Profile
                 </MenuItem> */}
-                <MenuItem >
+                <MenuItem>
                   <Avatar /> My Account
                 </MenuItem>
                 <Divider />
@@ -882,66 +934,117 @@ export default function VerticalTabs() {
                   </ListItemIcon>
                   Add Another Account
                 </MenuItem> */}
-                <MenuItem onClick={() => { handleClose(); createSubAdmin(); }}>
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    createSubAdmin();
+                  }}
+                >
                   <ListItemIcon>
                     <PersonAdd fontSize="small" />
                   </ListItemIcon>
                   Add Subadmin
                 </MenuItem>
-                <MenuItem onClick={() => { handleClose(); createAgent(); }}>
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    createAgent();
+                  }}
+                >
                   <ListItemIcon>
                     <PersonAdd fontSize="small" />
                   </ListItemIcon>
                   Add Agent
                 </MenuItem>
-                <MenuItem onClick={() => { handleClose(); createAdvertisemnet(); }}>
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    createAdvertisemnet();
+                  }}
+                >
                   <ListItemIcon>
                     <PersonAdd fontSize="small" />
                   </ListItemIcon>
                   Add Advertisement
                 </MenuItem>
-                <MenuItem onClick={() => { handleClose(); createWebAdvertisemnet(); }}>
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    createWebAdvertisemnet();
+                  }}
+                >
                   <ListItemIcon>
                     <PersonAdd fontSize="small" />
                   </ListItemIcon>
                   Add Web Advertisement
                 </MenuItem>
-                <MenuItem onClick={() => { handleClose(); createEvents(); }}>
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    createEvents();
+                  }}
+                >
                   <ListItemIcon>
                     <PersonAdd fontSize="small" />
                   </ListItemIcon>
                   Add Events
                 </MenuItem>
-                <MenuItem onClick={() => { handleClose(); createMarkup(); }}>
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    createMarkup();
+                  }}
+                >
                   <ListItemIcon>
                     <PersonAdd fontSize="small" />
                   </ListItemIcon>
                   Add Markup
                 </MenuItem>
-                <MenuItem onClick={() => { handleClose(); createCoupon(); }}>
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    createCoupon();
+                  }}
+                >
                   <ListItemIcon>
                     <PersonAdd fontSize="small" />
                   </ListItemIcon>
                   Add Coupon
                 </MenuItem>
-                <MenuItem onClick={() => { handleClose(); createNotification(); }}>
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    createNotification();
+                  }}
+                >
                   <ListItemIcon>
                     <PersonAdd fontSize="small" />
                   </ListItemIcon>
                   Add Notification
                 </MenuItem>
-                <MenuItem onClick={() => { handleClose(); addPackagebanner(); }}>
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    addPackagebanner();
+                  }}
+                >
                   <ListItemIcon>
                     <PersonAdd fontSize="small" />
                   </ListItemIcon>
                   Add Package Banner
                 </MenuItem>
-                <MenuItem onClick={() => { handleClose(); addPopular(); }}>
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    addPopular();
+                  }}
+                >
                   <ListItemIcon>
                     <PersonAdd fontSize="small" />
                   </ListItemIcon>
                   Add Popular Destination
                 </MenuItem>
+
                 {/* <MenuItem onClick={() => { handleClose(); carrerPage(); }}>
                   <ListItemIcon>
                     <PersonAdd fontSize="small" />
@@ -949,36 +1052,57 @@ export default function VerticalTabs() {
                   Carrer Page
                 </MenuItem> */}
                 <MenuItem onClick={() => { handleClose(); addPackCat(); }}>
+
                   <ListItemIcon>
                     <PersonAdd fontSize="small" />
                   </ListItemIcon>
                   Create Package Category
                 </MenuItem>
-                <MenuItem onClick={()=>{handleClose(); createupdateFeed(); }}>
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    createupdateFeed();
+                  }}
+                >
                   <ListItemIcon>
-                    <DynamicFeedIcon fontSize="small"/>
+                    <DynamicFeedIcon fontSize="small" />
                   </ListItemIcon>
                   Update Version
                 </MenuItem>
 
-                <MenuItem onClick={()=>{handleClose(); createReward();}}>
-                <ListItemIcon>
-                <DynamicFeedIcon fontSize="small"/>
-                </ListItemIcon>
-                Referral Reward
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    createReward();
+                  }}
+                >
+                  <ListItemIcon>
+                    <DynamicFeedIcon fontSize="small" />
+                  </ListItemIcon>
+                  Referral Reward
                 </MenuItem>
 
-                <MenuItem onClick={()=>{handleClose(); createQuiz();}}>
-                <ListItemIcon>
-                <DynamicFeedIcon fontSize="small"/>
-                </ListItemIcon>
-                Create Quiz
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    createQuiz();
+                  }}
+                >
+                  <ListItemIcon>
+                    <DynamicFeedIcon fontSize="small" />
+                  </ListItemIcon>
+                  Create Quiz
                 </MenuItem>
-                <MenuItem onClick={()=>{handleClose(); createBlog();}}>
-                <ListItemIcon>
-                <DynamicFeedIcon fontSize="small"/>
-                </ListItemIcon>
-                Create Blog
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    createBlog();
+                  }}
+                >
+                  <ListItemIcon>
+                    <DynamicFeedIcon fontSize="small" />
+                  </ListItemIcon>
+                  Create Blog
                 </MenuItem>
 
                 {/* <MenuItem
@@ -997,13 +1121,17 @@ export default function VerticalTabs() {
                     handleClose();
                   }}
                 >
-
                   <ListItemIcon>
                     <Settings fontSize="small" />
                   </ListItemIcon>
                   Settings
                 </MenuItem>
-                <MenuItem onClick={() => { handleClose(); signOutAdmin(); }}>
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    signOutAdmin();
+                  }}
+                >
                   <ListItemIcon>
                     <Logout fontSize="small" />
                   </ListItemIcon>
@@ -1012,54 +1140,117 @@ export default function VerticalTabs() {
               </Menu>
             </div>
 
-            <div style={{ display: "flex", alignItems: "center", position: "relative" }}>
-              <div onClick={() => setSetShowNotification((pre) => !pre)} onMouseOver={() => setSetShowNotificationIcon(true)} onMouseLeave={() => setSetShowNotificationIcon(false)} >{showNotificationIcon ? <IoIosNotificationsOutline size='24px' color="white" /> : <IoIosNotifications size='24px' color="white" />}</div>
-              <div style={{
-                position: 'absolute',
-                color: '#f8f1f1fc',
-                background: "#21325d",
-                width: '17px',
-                height: '17px',
-                // fontWeight: 100;
-                fontSize: '12px',
-                textAlign: 'center',
-                borderRadius: '50%',
-                border: '1px solid white',
-                top: '-3px',
-                left: '10px'
-
-
-              }}>{notificationData?.length}</div>
-              {showNotification && <div ref={showNotificationRef} className="notification_Icon_Admin" style={{ position: "absolute", top: "25px", right: "0px", width: "300px", backgroundColor: '#ece6e6', padding: '5px', borderRadius: '4px', maxHeight: "500px", overflowY: "scroll" }} >
-                {notificationData?.length===0? <div>Stay in touch! You will find all the new updates here</div> : notificationData?.map((item) => (
-                  <div
-                    onClick={() => {
-                      handleNotificationClick(item._id)
-                    }}
-                    style={{
-                      display: "flex", backgroundColor: `${!item?.isRead ? "white" : "ffffff8c"}`, borderRadius: "4px", margin: '5px 7px', paddingBottom: "5px",
-                      // backgroundColor:"#ffffff8c"
-
-                    }}>
-                    <div >
-                      <div style={{ width: "30px", height: "30px", borderRadius: '2px', background: "#8080805e", display: "flex", justifyContent: "center", alignItems: "center", margin: '5px', marginTop: "20px" }}>
-                        <PiBackpackThin />
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                position: "relative",
+              }}
+            >
+              <div
+                onClick={() => setSetShowNotification((pre) => !pre)}
+                onMouseOver={() => setSetShowNotificationIcon(true)}
+                onMouseLeave={() => setSetShowNotificationIcon(false)}
+              >
+                {showNotificationIcon ? (
+                  <IoIosNotificationsOutline size="24px" color="white" />
+                ) : (
+                  <IoIosNotifications size="24px" color="white" />
+                )}
+              </div>
+              <div
+                style={{
+                  position: "absolute",
+                  color: "#f8f1f1fc",
+                  background: "#21325d",
+                  width: "17px",
+                  height: "17px",
+                  // fontWeight: 100;
+                  fontSize: "12px",
+                  textAlign: "center",
+                  borderRadius: "50%",
+                  border: "1px solid white",
+                  top: "-3px",
+                  left: "10px",
+                }}
+              >
+                {notificationData?.length}
+              </div>
+              {showNotification && (
+                <div
+                  ref={showNotificationRef}
+                  className="notification_Icon_Admin"
+                  style={{
+                    position: "absolute",
+                    top: "25px",
+                    right: "0px",
+                    width: "300px",
+                    backgroundColor: "#ece6e6",
+                    padding: "5px",
+                    borderRadius: "4px",
+                    maxHeight: "500px",
+                    overflowY: "scroll",
+                  }}
+                >
+                  {notificationData?.length === 0 ? (
+                    <div>
+                      Stay in touch! You will find all the new updates here
+                    </div>
+                  ) : (
+                    notificationData?.map((item) => (
+                      <div
+                        onClick={() => {
+                          handleNotificationClick(item._id);
+                        }}
+                        style={{
+                          display: "flex",
+                          backgroundColor: `${
+                            !item?.isRead ? "white" : "ffffff8c"
+                          }`,
+                          borderRadius: "4px",
+                          margin: "5px 7px",
+                          paddingBottom: "5px",
+                          // backgroundColor:"#ffffff8c"
+                        }}
+                      >
+                        <div>
+                          <div
+                            style={{
+                              width: "30px",
+                              height: "30px",
+                              borderRadius: "2px",
+                              background: "#8080805e",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              margin: "5px",
+                              marginTop: "20px",
+                            }}
+                          >
+                            <PiBackpackThin />
+                          </div>
+                        </div>
+                        <div style={{ paddingLeft: "3px" }}>
+                          <div style={{ fontSize: "12px", color: "#21325d96" }}>
+                            {timeAgo(item?.updatedAt)}
+                          </div>
+                          <div style={{ fontSize: "18px", color: "#21325d" }}>
+                            {item?.title}
+                          </div>
+                          <div
+                            style={{
+                              fontSize: "13px",
+                              color: "#rgb(33 50 93 / 71%)",
+                            }}
+                          >
+                            {item?.description}
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                    <div style={{ paddingLeft: "3px" }}>
-                      <div style={{ fontSize: "12px", color: "#21325d96" }} >{timeAgo(item?.updatedAt)}</div>
-                      <div style={{ fontSize: "18px", color: "#21325d" }}>{item?.title}</div>
-                      <div style={{ fontSize: "13px", color: "#rgb(33 50 93 / 71%)" }}>{item?.description}</div>
-
-                    </div>
-                  </div>
-                ))}
-
-
-
-
-              </div>}
-
+                    ))
+                  )}
+                </div>
+              )}
 
               {/*  */}
               {/* <InputLabel
@@ -1278,7 +1469,6 @@ export default function VerticalTabs() {
           </DrawerHeader>
           <Divider />
           <List style={{ backgroundColor: "#21325D" }}>
-
             <ListItem
               disablePadding
               sx={{ display: "block", color: "white" }}
@@ -1377,6 +1567,38 @@ export default function VerticalTabs() {
                 />
               </ListItemButton>
             </ListItem>
+
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => handleMenuItemClick("Inventory User")}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                  ...((menuData === "Inventory User"
+                    ? activeMenuItemClass
+                    : inactiveMenuItemClass) || {}),
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <PeopleOutlinedIcon sx={{ color: "white" }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Inventory User"
+                  sx={{ opacity: open ? 1 : 0, color: "white" }}
+                />
+              </ListItemButton>
+            </ListItem>
+
             <ListItem
               disablePadding
               sx={{ display: "block" }}
@@ -1468,7 +1690,6 @@ export default function VerticalTabs() {
               </ListItemButton>
             </ListItem>
 
-
             <ListItem disablePadding sx={{ display: "block" }}>
               <ListItemButton
                 sx={{
@@ -1492,7 +1713,11 @@ export default function VerticalTabs() {
                 </ListItemIcon>
                 <ListItemText
                   primary="Cancel Ticket"
-                  sx={{ opacity: open ? 1 : 0, color: "white" ,marginLeft:"20px"}}
+                  sx={{
+                    opacity: open ? 1 : 0,
+                    color: "white",
+                    marginLeft: "20px",
+                  }}
                 />
               </ListItemButton>
               <Collapse in={openCollapse} timeout="auto" unmountOnExit>
@@ -1512,11 +1737,13 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      <AccountBoxIcon sx={{ color: "white",marginLeft:"20px" }} />
+                      <AccountBoxIcon
+                        sx={{ color: "white", marginLeft: "20px" }}
+                      />
                     </ListItemIcon>
                     <ListItemText
                       primary="Agent  Bookings"
-                      sx={{ color: "white" , marginLeft:"10px"}}
+                      sx={{ color: "white", marginLeft: "10px" }}
                     />
                   </ListItemButton>
                   <Collapse in={openCollapseTwo} timeout="auto" unmountOnExit>
@@ -1639,11 +1866,13 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      <AccountBoxIcon sx={{ color: "white" ,marginLeft:"15px"}} />
+                      <AccountBoxIcon
+                        sx={{ color: "white", marginLeft: "15px" }}
+                      />
                     </ListItemIcon>
                     <ListItemText
                       primary="User Bookings"
-                      sx={{ color: "white" ,marginLeft:"10px"}}
+                      sx={{ color: "white", marginLeft: "10px" }}
                     />
                   </ListItemButton>
                   <Collapse in={openCollapseThree} timeout="auto" unmountOnExit>
@@ -1767,7 +1996,11 @@ export default function VerticalTabs() {
                 </ListItemIcon>
                 <ListItemText
                   primary="Change Request"
-                  sx={{ opacity: open ? 1 : 0, color: "white", marginLeft: "20px" }}
+                  sx={{
+                    opacity: open ? 1 : 0,
+                    color: "white",
+                    marginLeft: "20px",
+                  }}
                 />
               </ListItemButton>
               <Collapse in={openCollapseSix} timeout="auto" unmountOnExit>
@@ -1787,9 +2020,14 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      <AccountBoxIcon sx={{ color: "white" ,marginLeft:"15px"}} />
+                      <AccountBoxIcon
+                        sx={{ color: "white", marginLeft: "15px" }}
+                      />
                     </ListItemIcon>
-                    <ListItemText primary="Agent" sx={{ color: "white", marginLeft: "20px" }} />
+                    <ListItemText
+                      primary="Agent"
+                      sx={{ color: "white", marginLeft: "20px" }}
+                    />
                   </ListItemButton>
                   <Collapse in={openCollapseSeven} timeout="auto" unmountOnExit>
                     <ListItem
@@ -1814,7 +2052,9 @@ export default function VerticalTabs() {
                             justifyContent: "center",
                           }}
                         >
-                          <HotelIcon  sx={{ color: "white" ,marginLeft:"10px"}} />
+                          <HotelIcon
+                            sx={{ color: "white", marginLeft: "10px" }}
+                          />
                         </ListItemIcon>
                         <ListItemText
                           primary="Hotel Change Ticket"
@@ -1845,7 +2085,9 @@ export default function VerticalTabs() {
                             justifyContent: "center",
                           }}
                         >
-                          <AirplaneTicketIcon sx={{ color: "white",marginLeft:"10px" }} />
+                          <AirplaneTicketIcon
+                            sx={{ color: "white", marginLeft: "10px" }}
+                          />
                         </ListItemIcon>
                         <ListItemText
                           primary="Flight Change Ticket"
@@ -1876,7 +2118,9 @@ export default function VerticalTabs() {
                             justifyContent: "center",
                           }}
                         >
-                          <DirectionsBusIcon sx={{ color: "white" ,marginLeft:"10px" }} />
+                          <DirectionsBusIcon
+                            sx={{ color: "white", marginLeft: "10px" }}
+                          />
                         </ListItemIcon>
                         <ListItemText
                           primary="Bus ChangeTicket"
@@ -1903,9 +2147,14 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      <AccountBoxIcon sx={{ color: "white",marginLeft:"15px" }} />
+                      <AccountBoxIcon
+                        sx={{ color: "white", marginLeft: "15px" }}
+                      />
                     </ListItemIcon>
-                    <ListItemText primary="User" sx={{ color: "white", marginLeft: "20px" }} />
+                    <ListItemText
+                      primary="User"
+                      sx={{ color: "white", marginLeft: "20px" }}
+                    />
                   </ListItemButton>
                   <Collapse in={openCollapseEight} timeout="auto" unmountOnExit>
                     <ListItem
@@ -1930,7 +2179,9 @@ export default function VerticalTabs() {
                             justifyContent: "center",
                           }}
                         >
-                          <HotelIcon sx={{ color: "white",marginLeft:"10px" }} />
+                          <HotelIcon
+                            sx={{ color: "white", marginLeft: "10px" }}
+                          />
                         </ListItemIcon>
                         <ListItemText
                           primary="Hotel ChangeTickets"
@@ -1963,9 +2214,7 @@ export default function VerticalTabs() {
                             justifyContent: "center",
                           }}
                         >
-
                           <AirplanemodeActiveIcon sx={{ color: "white" }} />
-
                         </ListItemIcon>
                         <ListItemText
                           primary="Flight ChangeTickets"
@@ -1995,7 +2244,9 @@ export default function VerticalTabs() {
                             justifyContent: "center",
                           }}
                         >
-                          <DirectionsBusIcon sx={{ color: "white",marginLeft:"10px" }} />
+                          <DirectionsBusIcon
+                            sx={{ color: "white", marginLeft: "10px" }}
+                          />
                         </ListItemIcon>
                         <ListItemText
                           primary="Bus ChangeTickets"
@@ -2151,9 +2402,11 @@ export default function VerticalTabs() {
                 </ListItemIcon>
                 <ListItemText
                   primary="Agent Bookings"
-
-                  sx={{ opacity: open ? 1 : 0, color: "white", marginLeft: "20px" }}
-
+                  sx={{
+                    opacity: open ? 1 : 0,
+                    color: "white",
+                    marginLeft: "20px",
+                  }}
                 />
               </ListItemButton>
               <Collapse in={openCollapseFour} timeout="auto" unmountOnExit>
@@ -2274,7 +2527,11 @@ export default function VerticalTabs() {
                 </ListItemIcon>
                 <ListItemText
                   primary="User Bookings"
-                  sx={{ opacity: open ? 1 : 0, color: "white", marginLeft: "20px" }}
+                  sx={{
+                    opacity: open ? 1 : 0,
+                    color: "white",
+                    marginLeft: "20px",
+                  }}
                 />
               </ListItemButton>
               <Collapse in={openCollapseFive} timeout="auto" unmountOnExit>
@@ -3020,7 +3277,6 @@ export default function VerticalTabs() {
                 />
               </ListItemButton>
             </ListItem>
-            
 
             <ListItem
               disablePadding
@@ -3057,7 +3313,6 @@ export default function VerticalTabs() {
                 />
               </ListItemButton>
             </ListItem>
-
 
             {/* /////// */}
             <ListItem
@@ -3156,7 +3411,11 @@ export default function VerticalTabs() {
                 </ListItemIcon>
                 <ListItemText
                   primary="Visa Booking"
-                  sx={{ opacity: open ? 1 : 0, color: "white", marginLeft: "20px" }}
+                  sx={{
+                    opacity: open ? 1 : 0,
+                    color: "white",
+                    marginLeft: "20px",
+                  }}
                 />
               </ListItemButton>
               <Collapse in={openCollapsetwenty} timeout="auto" unmountOnExit>
@@ -3182,7 +3441,9 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      < ArticleIcon sx={{ color: "white", marginLeft: "20px" }} />
+                      <ArticleIcon
+                        sx={{ color: "white", marginLeft: "20px" }}
+                      />
                     </ListItemIcon>
                     <ListItemText
                       primary="Visa Category"
@@ -3213,7 +3474,9 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      < ArticleIcon sx={{ color: "white", marginLeft: "20px" }} />
+                      <ArticleIcon
+                        sx={{ color: "white", marginLeft: "20px" }}
+                      />
                     </ListItemIcon>
                     <ListItemText
                       primary="Visa Country"
@@ -3244,7 +3507,9 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      < ArticleIcon sx={{ color: "white", marginLeft: "20px" }} />
+                      <ArticleIcon
+                        sx={{ color: "white", marginLeft: "20px" }}
+                      />
                     </ListItemIcon>
                     <ListItemText
                       primary="Visa Document Type"
@@ -3275,7 +3540,9 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      < ArticleIcon sx={{ color: "white", marginLeft: "20px" }} />
+                      <ArticleIcon
+                        sx={{ color: "white", marginLeft: "20px" }}
+                      />
                     </ListItemIcon>
                     <ListItemText
                       primary="Visa Document Category"
@@ -3306,11 +3573,13 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      <ArticleIcon sx={{ color: "white", marginLeft: "20px" }} />
+                      <ArticleIcon
+                        sx={{ color: "white", marginLeft: "20px" }}
+                      />
                     </ListItemIcon>
                     <ListItemText
                       primary="Require Document"
-                      sx={{ opacity: open ? 1 : 0, color: "white", }}
+                      sx={{ opacity: open ? 1 : 0, color: "white" }}
                     />
                   </ListItemButton>
                 </ListItem>
@@ -3349,7 +3618,7 @@ export default function VerticalTabs() {
                 />
               </ListItemButton>
             </ListItem>
-{/* ////////////////////////////////////////////////////////////// */}
+            {/* ////////////////////////////////////////////////////////////// */}
             <ListItem
               disablePadding
               sx={{ display: "block" }}
@@ -3412,8 +3681,6 @@ export default function VerticalTabs() {
                 />
               </ListItemButton>
             </ListItem>
-
-
           </List>
           <Divider />
         </Drawer>
@@ -3440,6 +3707,7 @@ export default function VerticalTabs() {
             </div>
           ) : (
             <div>
+
               {menuData === "profile" && (
                 <AdminProfile />
               )}
@@ -3452,9 +3720,10 @@ export default function VerticalTabs() {
               {menuData === "CareerCategory" && (<Careercategory/>)}
               {menuData === "Carrer value" && <Careercategoryvalue/>}
               {menuData === "Downloadcsv" && <Downloadcsv/>}
+
               {menuData === "Packageenquiry" && <Package />}
-              {menuData === "apppost" && <Apppost/>}
-              {menuData==="Citypackage" && <Citypackage/>}
+              {menuData === "apppost" && <Apppost />}
+              {menuData === "Citypackage" && <Citypackage />}
               {menuData === "Getallevent" && <Getevent />}
               {menuData === "Searchdata" && <Searchtable />}
               {menuData === "RequireDocument" && <RequireDocument />}
@@ -3469,9 +3738,10 @@ export default function VerticalTabs() {
               {menuData === "Documenttype" && <Visacountry />}
               {menuData === "Home" && <AdminDashboard />}
               {menuData === "Agent Table" && <Tables />}
+              {menuData === "Inventory User" && <InventoryUser />}
               {menuData === "User Table" && <Usertables />}
               {menuData === "EventList" && <EventList />}
-              {menuData === "EnquiryList" && <Enquirylist/>}
+              {menuData === "EnquiryList" && <Enquirylist />}
               {menuData === "SubAdmin Table" && <SubAdminTable />}
               {menuData === "AgentRequest" && <AgentRequest />}
               {menuData === "Hotel CancelTicket" && <AgentCancelHotel />}
@@ -3503,15 +3773,15 @@ export default function VerticalTabs() {
               {menuData === "Flight Booking" && <FlightBookings />}
               {menuData === "Bus Booking" && <BusBookings />}
               {menuData === "OfferList" && <OfferList />}
-              {menuData === "packagebanner" && <PackageBannerAd/>}
-              {menuData === "popularDestination" && <PopularDest/>}
+              {menuData === "packagebanner" && <PackageBannerAd />}
+              {menuData === "popularDestination" && <PopularDest />}
               {menuData === "fixedDeparture" && <FixedDeparture />}
               {menuData === "fixedDepartureControl" && (
                 <FixedDepartureControl />
               )}
               {menuData === "Advertisment" && <AllAdvertisementTable />}
-              {menuData === "quiz" && <Quiz/>}
-            {menuData === "blog" && <BlogData/>}
+              {menuData === "quiz" && <Quiz />}
+              {menuData === "blog" && <BlogData />}
               {menuData === "Web Advertisment" && <AllWebAdvertisement />}
             </div>
           )}
@@ -3520,4 +3790,3 @@ export default function VerticalTabs() {
     </>
   );
 }
-

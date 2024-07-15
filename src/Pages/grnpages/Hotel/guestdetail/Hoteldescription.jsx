@@ -36,9 +36,9 @@ const Hoteldescription = () => {
   const hotelinfoGRN = reducerState?.hotelSearchResultGRN?.hotelRoom?.hotel;
   const hotelMainReducer =
     reducerState?.hotelSearchResultGRN?.ticketData?.data?.data;
-  
+
   const passenger = reducerState?.passengers?.passengersData;
- 
+
   const star = (data) => {
     const stars = [];
     for (let i = 0; i < data; i++) {
@@ -57,24 +57,23 @@ const Hoteldescription = () => {
 
   const hotelBlockDetails =
     reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult;
-  const hotelDetails = hotelBlockDetails?.HotelRoomsDetails;
+  const hotelDetails =
+    reducerState?.hotelSearchResultGRN?.hotelDetails?.data?.data?.hotel;
 
   const getBookingDetails = reducerState?.hotelSearchResultGRN?.bookRoom;
-
-  
 
   const markUpamount =
     reducerState?.userData?.userData?.data?.data?.markup?.hotel;
   const userBalance = reducerState?.userData?.userData?.data?.data?.balance;
 
   const userId = reducerState?.logIn?.loginData?.data?.data?.id;
-  
+
   const nonRefundable =
     getBookingDetails?.hotel?.booking_items?.[0]?.non_refundable;
   const cancelDetails =
     getBookingDetails?.hotel?.booking_items?.[0]?.cancellation_policy;
   const grandTotal = Number(hotelinfoGRN?.rate?.price) + Number(markUpamount);
-  
+
   // const grandTotal = 1;
   useEffect(() => {
     if (
@@ -82,7 +81,7 @@ const Hoteldescription = () => {
       reducerState?.hotelSearchResultGRN?.bookRoom?.status === "confirmed"
     ) {
       const payload = {
-        userId: reducerState?.logIn?.loginData?.data?.result?._id,
+        userId: userId,
         agnet_reference: getBookingDetails?.agent_reference,
         booking_date: getBookingDetails?.booking_date,
         booking_id: getBookingDetails?.booking_id,
@@ -144,6 +143,7 @@ const Hoteldescription = () => {
         },
         bookingType: "HOTELS",
       };
+
       userApi.hotelBookingDetailsSaveGRN(payload);
     }
   }, [reducerState?.hotelSearchResultGRN?.bookRoom]);
@@ -163,7 +163,6 @@ const Hoteldescription = () => {
   const mixedString = generateMixedString();
 
   const handleClickBooking = async () => {
-    
     if (userBalance >= grandTotal) {
       const payload = {
         search_id:
@@ -240,7 +239,6 @@ const Hoteldescription = () => {
     }
   };
 
-  
   const hotelCancellationPolicies = reducerState?.hotelSearchResult?.blockRoom
     ?.BlockRoomResult?.HotelRoomsDetails
     ? reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult
@@ -250,13 +248,10 @@ const Hoteldescription = () => {
     hotelCancellationPolicies?.CancellationPolicies
       ? hotelCancellationPolicies?.CancellationPolicies[0]?.FromDate
       : [];
-  
+
   const cancellationEndingDate = hotelCancellationPolicies?.CancellationPolicies
     ? hotelCancellationPolicies?.CancellationPolicies[0]?.ToDate
     : "";
-  
-
-  
 
   const handleOpen = () => setOpen(true); // Function to open modal
   const handleClose = () => setOpen(false); // Function to close modal
@@ -547,10 +542,10 @@ const Hoteldescription = () => {
         aria-labelledby="confirmation-modal-title"
         aria-describedby="confirmation-modal-description"
         sx={{
-          display:"flex",
+          display: "flex",
           justifyContent: "center",
-          alignItems:"center",
-          margin:"auto"
+          alignItems: "center",
+          margin: "auto",
         }}
       >
         <Box
@@ -562,7 +557,6 @@ const Hoteldescription = () => {
             boxShadow: 24,
             borderRadius: 2,
             outline: "none",
-           
           }}
         >
           <Typography
@@ -583,11 +577,16 @@ const Hoteldescription = () => {
                 handleClose();
               }}
               variant="contained"
-              sx={{backgroundColor:"#21325D"}}
+              sx={{ backgroundColor: "#21325D" }}
             >
               Confirm
             </Button>
-            <Button   sx={{backgroundColor:"rgb(231,60,52)"}} onClick={handleClose} variant="contained" color="secondary">
+            <Button
+              sx={{ backgroundColor: "rgb(231,60,52)" }}
+              onClick={handleClose}
+              variant="contained"
+              color="secondary"
+            >
               Cancel
             </Button>
           </Box>

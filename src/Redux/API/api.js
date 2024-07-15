@@ -9,7 +9,9 @@ function api() {
   };
 
   const usersTableData = () => {
-    return axios.get(`${apiURL.baseURL}/skyTrails/api/agent/getAgentTableWithRevenue`);
+    return axios.get(
+      `${apiURL.baseURL}/skyTrails/api/agent/getAgentTableWithRevenue`
+    );
   };
 
   const userB2BToken = (payload) => {
@@ -164,7 +166,6 @@ function api() {
       // Handle the error here
       // console.error("An error occurred during the request:", error);
 
-
       // alert(error)
 
       throw error; // Re-throw the error to propagate it to the caller
@@ -200,31 +201,30 @@ function api() {
       },
     });
   };
-  const forgetPasswordLink=async(payload)=>{
+  const forgetPasswordLink = async (payload) => {
     return axios({
-      method:"POST",
-      url:"/skyTrails/api/agent/forgetPassword",
+      method: "POST",
+      url: "/skyTrails/api/agent/forgetPassword",
       baseURL: `${apiURL.baseURL}`,
-      data:payload,
+      data: payload,
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-
-    })
-  }
-  const resetPassword=async(userID,payload)=>{
+    });
+  };
+  const resetPassword = async (userID, payload) => {
     return axios({
-      method:"PUT",
-      url:`/skyTrails/api/agent/resetPassword/${userID}`,
-      data:payload,
+      method: "PUT",
+      url: `/skyTrails/api/agent/resetPassword/${userID}`,
+      data: payload,
       baseURL: `${apiURL.baseURL}`,
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-    })
-  }
+    });
+  };
 
   const oneWayEMTSearch = (payload) => {
     // console.log("Paayload EMT Search", payload);
@@ -276,8 +276,6 @@ function api() {
     });
   };
 
-
-
   // ///////////////////////////////////////////////////////////////////////////////////////////
 
   const fligtname = () => {
@@ -291,10 +289,6 @@ function api() {
     });
   };
 
-
-
-
-
   const cityname = () => {
     return axios({
       method: "GET",
@@ -306,14 +300,11 @@ function api() {
     });
   };
 
-
   // const fligtname = () => {
   //   return axios.get(`${apiURL.baseURL}/skyTrails/airline`);
   // };
 
-
   // ///////////////////////////////////////////////////////////////////////////////////////////
-
 
   const flightBookGDS = (payload) => {
     return axios({
@@ -705,15 +696,15 @@ function api() {
   };
   const flightbookingamedius = (payload) => {
     return axios({
-      method:"POST",
-      url:"/skyTrails/flightBooking/amadeus/addflightbooking",
+      method: "POST",
+      url: "/skyTrails/flightBooking/amadeus/addflightbooking",
       baseURL: `${apiURL.baseURL}`,
       data: payload,
       headers: {
         "Content-Type": "application/json",
       },
-    })
-  }
+    });
+  };
   const hotelBookingDataSave = (payload) => {
     return axios({
       method: "POST",
@@ -789,9 +780,6 @@ function api() {
       throw error; // You can choose to throw the error again or handle it differently
     }
   };
-
-  
-
 
   /// userDetails by Id
 
@@ -879,7 +867,7 @@ function api() {
     Ssr,
     fligtname,
     forgetPasswordLink,
-    cityname
+    cityname,
   };
 }
 

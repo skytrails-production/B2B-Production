@@ -4,7 +4,14 @@ import axios from 'axios';
 import { apiURL } from '../../../../../Constants/constant';
 import Swal from "sweetalert2";
 import { Form, Input, Select, Button, Empty } from 'antd';
-import { Table, Spin } from 'antd';
+import {  Spin } from 'antd';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 import "./Career.css";
 
 function Careercategoryvalue() {
@@ -17,6 +24,7 @@ function Careercategoryvalue() {
   const { TextArea } = Input;
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -26,6 +34,7 @@ function Careercategoryvalue() {
         setCategories(response.data.data.result);
       } catch (error) {
         console.error('Error fetching categories:', error);
+        // setErrorMessage(response.data.responseMessage);
       } finally {
         setLoading(false);
       }
@@ -239,9 +248,51 @@ function Careercategoryvalue() {
             <h2>Job Category Table</h2>
           </div>
         </header>
-        <Spin spinning={!loaded}>
+        {/* <Spin spinning={!loaded}>
           <Table dataSource={jobtable} columns={columns} rowKey="_id" style={{color: "black" }} />
-        </Spin>
+        </Spin> */}
+        <Spin spinning={!loaded}>
+    <TableContainer component={Paper} className="career-table-container">
+      {errorMessage ? (
+        <p style={{ textAlign: 'center', marginTop: '20px' }}>{errorMessage}</p>
+      ) : (
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Serial Number</TableCell>
+              <TableCell align="center" >Category Name</TableCell>
+              <TableCell align="center" >Department Name</TableCell>
+              <TableCell align="center" >Description</TableCell>
+              <TableCell align="center" >Action</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {jobtable && jobtable.length > 0 ? (
+              jobtable.map((row, index) => (
+                <TableRow key={row._id}>
+                  <TableCell scope="row" style={{color:"white"}}>{index + 1}</TableCell>
+                  <TableCell align="center" style={{color:"white"}}>{row.categoryName}</TableCell>
+                  <TableCell align="center" style={{color:"white"}}>{row.parentCategory ? row.parentCategory.categoryName : 'N/A'}</TableCell>
+                  <TableCell align="center" style={{color:"white"}}>{row.description}</TableCell>
+                  <TableCell align="center">
+                    <Button type="primary" danger onClick={() => handleDelete(row)} style={
+                      {color:"red",border:"1px solid red"}
+                    }>
+                      Delete
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={5} align="center" style={{color:"white",fontSize:"18px"}}>No data available</TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      )}
+    </TableContainer>
+  </Spin>
       </div>
     </>
   );

@@ -30,15 +30,15 @@ import hotelDetails from "../../../../Images/Hotel/hotelDetails.png";
 import imageGallery from "../../../../Images/Hotel/imageGallery.png";
 import HotelLoading from "../hotelLoading/HotelLoading";
 import chevrondown from "../../../../Images/loading/chevrondown.svg";
-import freeWifi from "../SVGs/freeWifi.svg"
-import freeBreakfast from "../SVGs/freeBreakfast.svg"
-import Bed from "../SVGs/Bed.svg"
-import freeParking from "../SVGs/freeParking.svg"
-import drinkingWater from "../SVGs/DrinkingWater.svg"
-import expressCheckin from "../SVGs/expressCheckin.svg"
-import welcomeDrink from "../SVGs/welcomeDrink.svg"
-import freeGym from "../SVGs/freeGym.svg"
-import Food from "../SVGs/Food.svg"
+import freeWifi from "../SVGs/freeWifi.svg";
+import freeBreakfast from "../SVGs/freeBreakfast.svg";
+import Bed from "../SVGs/Bed.svg";
+import freeParking from "../SVGs/freeParking.svg";
+import drinkingWater from "../SVGs/DrinkingWater.svg";
+import expressCheckin from "../SVGs/expressCheckin.svg";
+import welcomeDrink from "../SVGs/welcomeDrink.svg";
+import freeGym from "../SVGs/freeGym.svg";
+import Food from "../SVGs/Food.svg";
 import "./hotelaccording.css";
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -78,7 +78,7 @@ export default function CustomizedAccordions() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const reducerState = useSelector((state) => state);
-  
+
   const ResultIndex = sessionStorage.getItem("ResultIndex");
   const HotelCode = sessionStorage.getItem("HotelCode");
   const [expanded, setExpanded] = useState("panel1");
@@ -91,7 +91,7 @@ export default function CustomizedAccordions() {
     reducerState?.hotelSearchResult?.hotelRoom?.GetHotelRoomResult
       ?.RoomCombinations?.RoomCombination[0]?.RoomIndex
   );
-  
+
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
@@ -114,9 +114,11 @@ export default function CustomizedAccordions() {
         rate_key: selectedRoom?.rate_key,
         group_code: selectedRoom?.group_code,
       },
+
       searchID: searchId,
     };
-
+    // Log the rate_key to the console
+    console.log("Rate Key:", selectedRoom?.rate_key);
     dispatch(HotelRoomSelectReqGRN(payload));
     navigate("/hotels/hotelsearchs/guestDetails");
   };
@@ -125,7 +127,6 @@ export default function CustomizedAccordions() {
   const hotelinfoGRN =
     reducerState?.hotelSearchResultGRN?.hotelDetails?.data?.data?.hotel;
 
-  
   const hotelGallery =
     reducerState?.hotelSearchResultGRN?.hotelGallery?.data?.data?.images
       ?.regular;
@@ -191,327 +192,291 @@ export default function CustomizedAccordions() {
                   marginTop: "20px",
                 }}
               >
-               
-               
+                <div>
                   <div>
-                    <div>
-                      {hotelinfoGRN?.rates
-                        ?.slice(0, showRooms)
-                        .map((item, index) => (
-                          <div className="roomCompo" key={index}>
-                            <div
-                              className="offer_area "
-                              onClick={() => handleRoomSelection(index)}
-                              style={{
-                                cursor: "pointer",
-                                border:
-                                  selectedRoomIndex === index
-                                    ? "0.5px solid #e73c34"
-                                    : "",
-                              }}
-                            >
-                              <div>
-                                <div className="insideOffer">
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    style={{ width: "25px", height: "25px" }}
-                                    value=""
-                                    checked={selectedRoomIndex === index}
-                                    onChange={() => handleRoomSelection(index)}
-                                  />
-                                  <div className="inneraccorHotel">
-                                    {item?.rooms.map((room, e) => (
-                                      <div className="ratePlan" key={e}>
-                                        <p className="insideOfferText">
-                                          {room?.room_type}
-                                        </p>
-                                      </div>
-                                    ))}
+                    {hotelinfoGRN?.rates
+                      ?.slice(0, showRooms)
+                      .map((item, index) => (
+                        <div className="roomCompo" key={index}>
+                          <div
+                            className="offer_area "
+                            onClick={() => handleRoomSelection(index)}
+                            style={{
+                              cursor: "pointer",
+                              border:
+                                selectedRoomIndex === index
+                                  ? "0.5px solid #e73c34"
+                                  : "",
+                            }}
+                          >
+                            <div>
+                              <div className="insideOffer">
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  style={{ width: "25px", height: "25px" }}
+                                  value=""
+                                  checked={selectedRoomIndex === index}
+                                  onChange={() => handleRoomSelection(index)}
+                                />
+                                <div className="inneraccorHotel">
+                                  {item?.rooms.map((room, e) => (
+                                    <div className="ratePlan" key={e}>
+                                      <p className="insideOfferText">
+                                        {room?.room_type}
+                                      </p>
+                                    </div>
+                                  ))}
 
-                                    {item?.boarding_details?.[0] ===
-                                    "Room Only" ? (
-                                      <div className="othIncInner">
-                                        <div className="d-flex justify-content-start align-items-center gap-2">
-                                          <img src={Bed} alt="wifi" />
-                                          <p
-                                            style={{
-                                              fontSize: "13px",
-                                              fontWeight: "600",
-                                            }}
-                                          >
-                                            Room Only
-                                          </p>
-                                        </div>
-                                      </div>
-                                    ) : item?.boarding_details?.[0] ===
-                                      "Bed and Breakfast" ? (
-                                      <div className="othIncInner">
-                                        <div className="d-flex justify-content-start align-items-center gap-2">
-                                          <img src={freeBreakfast} alt="wifi" />
-                                          <p
-                                            style={{
-                                              fontSize: "13px",
-                                              fontWeight: "600",
-                                            }}
-                                          >
-                                            Free Breakfast
-                                          </p>
-                                        </div>
-                                      </div>
-                                    ) : (
-                                      <div className="othIncInner">
-                                        <div className="d-flex justify-content-start align-items-center gap-2">
-                                          <img src={Food} alt="wifi" />
-                                          <p
-                                            style={{
-                                              fontSize: "13px",
-                                              fontWeight: "600",
-                                            }}
-                                          >
-                                            {item?.boarding_details?.[0]}
-                                          </p>
-                                        </div>
-                                      </div>
-                                    )}
-                                  </div>
-                                </div>
-                                <div className="othInc">
-                                  {item?.pan_required && (
+                                  {item?.boarding_details?.[0] ===
+                                  "Room Only" ? (
                                     <div className="othIncInner">
                                       <div className="d-flex justify-content-start align-items-center gap-2">
-                                        <p className="panDesign">
-                                          Pan Required
+                                        <img src={Bed} alt="wifi" />
+                                        <p
+                                          style={{
+                                            fontSize: "13px",
+                                            fontWeight: "600",
+                                          }}
+                                        >
+                                          Room Only
                                         </p>
                                       </div>
                                     </div>
-                                  )}
-                                  {item?.non_refundable && (
+                                  ) : item?.boarding_details?.[0] ===
+                                    "Bed and Breakfast" ? (
                                     <div className="othIncInner">
                                       <div className="d-flex justify-content-start align-items-center gap-2">
-                                        <p className="panDesign2">
-                                          Non Refundable
+                                        <img src={freeBreakfast} alt="wifi" />
+                                        <p
+                                          style={{
+                                            fontSize: "13px",
+                                            fontWeight: "600",
+                                          }}
+                                        >
+                                          Free Breakfast
                                         </p>
                                       </div>
                                     </div>
-                                  )}
-                                  {item?.cancellation_policy && (
+                                  ) : (
                                     <div className="othIncInner">
                                       <div className="d-flex justify-content-start align-items-center gap-2">
-                                        <p className="panDesign3">
-                                          Refundable (Cancel Before{" "}
-                                          {dayjs(
-                                            item?.cancellation_policy
-                                              ?.cancel_by_date
-                                          ).format("DD MMM, YY")}
-                                          )
+                                        <img src={Food} alt="wifi" />
+                                        <p
+                                          style={{
+                                            fontSize: "13px",
+                                            fontWeight: "600",
+                                          }}
+                                        >
+                                          {item?.boarding_details?.[0]}
                                         </p>
                                       </div>
                                     </div>
-                                  )}
-                                </div>
-                                <div className="othInc">
-                                  {item?.other_inclusions?.map(
-                                    (inclusion, e) => (
-                                      <div className="othIncInner" key={e}>
-                                        <div className="d-flex justify-content-start align-items-center gap-2">
-                                          {inclusion.toLowerCase() ===
-                                            "free wifi" && (
-                                            <>
-                                              <img src={freeWifi} alt="wifi" />
-                                              <p className="panDesign3">
-                                                Free WiFi
-                                              </p>
-                                            </>
-                                          )}
-                                          {inclusion.toLowerCase() ===
-                                            "free internet" && (
-                                            <>
-                                              <img src={freeWifi} alt="wifi" />
-                                              <p className="panDesign3">
-                                                Free internet
-                                              </p>
-                                            </>
-                                          )}
-                                          {inclusion.toLowerCase() ===
-                                            "free breakfast" && (
-                                            <>
-                                              <img
-                                                src={freeBreakfast}
-                                                alt="wifi"
-                                              />
-                                              <p className="panDesign3">
-                                                Free Breakfast
-                                              </p>
-                                            </>
-                                          )}
-                                          {inclusion.toLowerCase() ===
-                                            "breakfast" && (
-                                            <>
-                                              <img
-                                                src={freeBreakfast}
-                                                alt="wifi"
-                                              />
-                                              <p className="panDesign3">
-                                                Breakfast
-                                              </p>
-                                            </>
-                                          )}
-                                          {inclusion.toLowerCase() ===
-                                            "continental breakfast" && (
-                                            <>
-                                              <img
-                                                src={freeBreakfast}
-                                                alt="wifi"
-                                              />
-                                              <p className="panDesign3">
-                                                Continental breakfast
-                                              </p>
-                                            </>
-                                          )}
-                                          {inclusion.toLowerCase() ===
-                                            "free self parking" && (
-                                            <>
-                                              <img
-                                                src={freeParking}
-                                                alt="wifi"
-                                              />
-                                              <p className="panDesign3">
-                                                Free self parking
-                                              </p>
-                                            </>
-                                          )}
-                                          {inclusion.toLowerCase() ===
-                                            "parking" && (
-                                            <>
-                                              <img
-                                                src={freeParking}
-                                                alt="wifi"
-                                              />
-                                              <p className="panDesign3">
-                                                Free Parking
-                                              </p>
-                                            </>
-                                          )}
-                                          {inclusion.toLowerCase() ===
-                                            "free parking" && (
-                                            <>
-                                              <img
-                                                src={freeParking}
-                                                alt="wifi"
-                                              />
-                                              <p className="panDesign3">
-                                                Free Parking
-                                              </p>
-                                            </>
-                                          )}
-                                          {inclusion.toLowerCase() ===
-                                            "free valet parking" && (
-                                            <>
-                                              <img
-                                                src={freeParking}
-                                                alt="wifi"
-                                              />
-                                              <p className="panDesign3">
-                                                Free Valet Parking
-                                              </p>
-                                            </>
-                                          )}
-                                          {inclusion.toLowerCase() ===
-                                            "drinking water" && (
-                                            <>
-                                              <img
-                                                src={drinkingWater}
-                                                alt="wifi"
-                                              />
-                                              <p className="panDesign3">
-                                                Drinking water
-                                              </p>
-                                            </>
-                                          )}
-                                          {inclusion.toLowerCase() ===
-                                            "express check-in" && (
-                                            <>
-                                              <img
-                                                src={expressCheckin}
-                                                alt="wifi"
-                                              />
-                                              <p className="panDesign3">
-                                                Express check-in
-                                              </p>
-                                            </>
-                                          )}
-                                          {inclusion.toLowerCase() ===
-                                            "welcome drink" && (
-                                            <>
-                                              <img
-                                                src={welcomeDrink}
-                                                alt="wifi"
-                                              />
-                                              <p className="panDesign3">
-                                                Welcome drink
-                                              </p>
-                                            </>
-                                          )}
-                                          {inclusion.toLowerCase() ===
-                                            "free fitness center access" && (
-                                            <>
-                                              <img src={freeGym} alt="wifi" />
-                                              <p className="panDesign3">
-                                                Free Gym
-                                              </p>
-                                            </>
-                                          )}
-                                        </div>
-                                      </div>
-                                    )
                                   )}
                                 </div>
                               </div>
-                              <div className="priceCheck">
-                                <p className="price">₹ {item?.price}</p>
-                                <div>
-                                  <h3>Select Room</h3>
-                                </div>
+                              <div className="othInc">
+                                {item?.pan_required && (
+                                  <div className="othIncInner">
+                                    <div className="d-flex justify-content-start align-items-center gap-2">
+                                      <p className="panDesign">Pan Required</p>
+                                    </div>
+                                  </div>
+                                )}
+                                {item?.non_refundable && (
+                                  <div className="othIncInner">
+                                    <div className="d-flex justify-content-start align-items-center gap-2">
+                                      <p className="panDesign2">
+                                        Non Refundable
+                                      </p>
+                                    </div>
+                                  </div>
+                                )}
+                                {item?.cancellation_policy && (
+                                  <div className="othIncInner">
+                                    <div className="d-flex justify-content-start align-items-center gap-2">
+                                      <p className="panDesign3">
+                                        Refundable (Cancel Before{" "}
+                                        {dayjs(
+                                          item?.cancellation_policy
+                                            ?.cancel_by_date
+                                        ).format("DD MMM, YY")}
+                                        )
+                                      </p>
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                              <div className="othInc">
+                                {item?.other_inclusions?.map((inclusion, e) => (
+                                  <div className="othIncInner" key={e}>
+                                    <div className="d-flex justify-content-start align-items-center gap-2">
+                                      {inclusion.toLowerCase() ===
+                                        "free wifi" && (
+                                        <>
+                                          <img src={freeWifi} alt="wifi" />
+                                          <p className="panDesign3">
+                                            Free WiFi
+                                          </p>
+                                        </>
+                                      )}
+                                      {inclusion.toLowerCase() ===
+                                        "free internet" && (
+                                        <>
+                                          <img src={freeWifi} alt="wifi" />
+                                          <p className="panDesign3">
+                                            Free internet
+                                          </p>
+                                        </>
+                                      )}
+                                      {inclusion.toLowerCase() ===
+                                        "free breakfast" && (
+                                        <>
+                                          <img src={freeBreakfast} alt="wifi" />
+                                          <p className="panDesign3">
+                                            Free Breakfast
+                                          </p>
+                                        </>
+                                      )}
+                                      {inclusion.toLowerCase() ===
+                                        "breakfast" && (
+                                        <>
+                                          <img src={freeBreakfast} alt="wifi" />
+                                          <p className="panDesign3">
+                                            Breakfast
+                                          </p>
+                                        </>
+                                      )}
+                                      {inclusion.toLowerCase() ===
+                                        "continental breakfast" && (
+                                        <>
+                                          <img src={freeBreakfast} alt="wifi" />
+                                          <p className="panDesign3">
+                                            Continental breakfast
+                                          </p>
+                                        </>
+                                      )}
+                                      {inclusion.toLowerCase() ===
+                                        "free self parking" && (
+                                        <>
+                                          <img src={freeParking} alt="wifi" />
+                                          <p className="panDesign3">
+                                            Free self parking
+                                          </p>
+                                        </>
+                                      )}
+                                      {inclusion.toLowerCase() ===
+                                        "parking" && (
+                                        <>
+                                          <img src={freeParking} alt="wifi" />
+                                          <p className="panDesign3">
+                                            Free Parking
+                                          </p>
+                                        </>
+                                      )}
+                                      {inclusion.toLowerCase() ===
+                                        "free parking" && (
+                                        <>
+                                          <img src={freeParking} alt="wifi" />
+                                          <p className="panDesign3">
+                                            Free Parking
+                                          </p>
+                                        </>
+                                      )}
+                                      {inclusion.toLowerCase() ===
+                                        "free valet parking" && (
+                                        <>
+                                          <img src={freeParking} alt="wifi" />
+                                          <p className="panDesign3">
+                                            Free Valet Parking
+                                          </p>
+                                        </>
+                                      )}
+                                      {inclusion.toLowerCase() ===
+                                        "drinking water" && (
+                                        <>
+                                          <img src={drinkingWater} alt="wifi" />
+                                          <p className="panDesign3">
+                                            Drinking water
+                                          </p>
+                                        </>
+                                      )}
+                                      {inclusion.toLowerCase() ===
+                                        "express check-in" && (
+                                        <>
+                                          <img
+                                            src={expressCheckin}
+                                            alt="wifi"
+                                          />
+                                          <p className="panDesign3">
+                                            Express check-in
+                                          </p>
+                                        </>
+                                      )}
+                                      {inclusion.toLowerCase() ===
+                                        "welcome drink" && (
+                                        <>
+                                          <img src={welcomeDrink} alt="wifi" />
+                                          <p className="panDesign3">
+                                            Welcome drink
+                                          </p>
+                                        </>
+                                      )}
+                                      {inclusion.toLowerCase() ===
+                                        "free fitness center access" && (
+                                        <>
+                                          <img src={freeGym} alt="wifi" />
+                                          <p className="panDesign3">Free Gym</p>
+                                        </>
+                                      )}
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                            <div className="priceCheck">
+                              <p className="price">₹ {item?.price}</p>
+                              <div>
+                                <h3>Select Room</h3>
                               </div>
                             </div>
                           </div>
-                        ))}
-                    </div>
-                    {hotelinfoGRN?.rates?.length > showRooms && (
-                      <div className="mt-3 text-left">
-                        <p
-                          className="text-bold "
-                          style={{ cursor: "pointer" }}
-                          onClick={handleShowMore}
+                        </div>
+                      ))}
+                  </div>
+                  {hotelinfoGRN?.rates?.length > showRooms && (
+                    <div className="mt-3 text-left">
+                      <p
+                        className="text-bold "
+                        style={{ cursor: "pointer" }}
+                        onClick={handleShowMore}
+                      >
+                        Show More Rooms
+                        <svg
+                          id="fi_3550091"
+                          enable-background="new 0 0 1560 1560"
+                          height="15"
+                          viewBox="0 0 1560 1560"
+                          width="20"
+                          xmlns="http://www.w3.org/2000/svg"
                         >
-                          Show More Rooms
-                          <svg
-                            id="fi_3550091"
-                            enable-background="new 0 0 1560 1560"
-                            height="15"
-                            viewBox="0 0 1560 1560"
-                            width="20"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
+                          <g>
                             <g>
                               <g>
                                 <g>
-                                  <g>
-                                    <path d="m1524 811.8h-1488c-17.7 0-32-14.3-32-32s14.3-32 32-32h1410.7l-194.2-194.2c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l248.9 248.9c9.2 9.2 11.9 22.9 6.9 34.9-5 11.9-16.7 19.7-29.6 19.7z"></path>
-                                  </g>
-                                  <g>
-                                    <path d="m1274.8 1061c-8.2 0-16.4-3.1-22.6-9.4-12.5-12.5-12.5-32.8 0-45.3l249.2-249.2c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3l-249.2 249.2c-6.3 6.3-14.5 9.4-22.7 9.4z"></path>
-                                  </g>
+                                  <path d="m1524 811.8h-1488c-17.7 0-32-14.3-32-32s14.3-32 32-32h1410.7l-194.2-194.2c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l248.9 248.9c9.2 9.2 11.9 22.9 6.9 34.9-5 11.9-16.7 19.7-29.6 19.7z"></path>
+                                </g>
+                                <g>
+                                  <path d="m1274.8 1061c-8.2 0-16.4-3.1-22.6-9.4-12.5-12.5-12.5-32.8 0-45.3l249.2-249.2c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3l-249.2 249.2c-6.3 6.3-14.5 9.4-22.7 9.4z"></path>
                                 </g>
                               </g>
                             </g>
-                          </svg>
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                
+                          </g>
+                        </svg>
+                      </p>
+                    </div>
+                  )}
+                </div>
 
                 <Box></Box>
               </AccordionDetails>
@@ -613,8 +578,6 @@ export default function CustomizedAccordions() {
                   margin: " 20px 0px",
                   border: "0.5px solid  #E73C34",
                   backgroundColor: "var(--white, #FFF)",
-
-                 
                 }}
               >
                 <Box display="flex" justifyContent="left">
@@ -706,7 +669,7 @@ export default function CustomizedAccordions() {
                   <a
                     href={`https://www.google.com/maps?q=${hotelinfoGRN?.geolocation?.latitude},${hotelinfoGRN?.geolocation?.longitude}`}
                     target="_blank"
-                    style={{textDecoration:"none"}}
+                    style={{ textDecoration: "none" }}
                   >
                     <svg
                       id="fi_2642502"

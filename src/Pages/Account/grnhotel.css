@@ -1,0 +1,255 @@
+.skyLogoGrn {
+  width: 200px;
+}
+
+.containerGrnTicket {
+  /* max-width: 950px; */
+  margin: 30px auto;
+  /* padding: 20px; */
+  background-color: #fff;
+  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); */
+  border-radius: 10px;
+}
+
+.sectionGrnTicket {
+  margin-bottom: 37px;
+}
+
+.booking-passGrn {
+  background-color: rgba(255, 0, 0, 0.1);
+  /* Translucent red */
+  border: 2px dashed #00838f;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 30px;
+  /* display: flex; */
+  /* flex-wrap: wrap; */
+  align-items: center;
+  position: relative;
+}
+
+.booking-passGrn:before,
+.booking-passGrn:after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  border-radius: 50%;
+}
+
+.booking-passGrn:before {
+  top: -11px;
+  left: 10px;
+  border: 2px dashed #00838f;
+}
+
+.booking-passGrn:after {
+  bottom: -11px;
+  right: 10px;
+  border: 2px dashed #00838f;
+}
+
+.booking-passGrn h2 {
+  color: #333;
+  width: 100%;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.bookBoxGrn {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.booking-passGrn p {
+  margin: 5px 0;
+  font-size: 16px;
+}
+
+.booking-passGrn p strong {
+  display: inline-block;
+  width: 150px;
+  color: #e73c34;
+}
+
+.sectionGrnTicket img {
+  width: 100%;
+  height: 50vh;
+  /* 50% of the viewport height */
+  object-fit: cover;
+  /* Maintain aspect ratio */
+  display: block;
+  margin: 0 auto 20px;
+  border-radius: 10px;
+}
+
+.sectionGrnTicket p {
+  margin: 10px 0;
+  line-height: 1.6;
+}
+
+.sectionGrnTicket p strong {
+  display: inline-block;
+  width: 150px;
+  color: #e73c34;
+}
+
+.pax-infogrn ul {
+  list-style: none;
+  padding: 0;
+}
+
+.pax-infogrn ul li {
+  background: #f1f1f1;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.pax-infogrn ul li span {
+  display: inline-block;
+  width: 120px;
+  color: #e73c34;
+}
+
+.support-sectionGrn {
+  padding-left: 28px;
+  margin-top: 5px;
+  padding-right: 28px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  background: white;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  display: flex;
+}
+
+.support-titleGrn {
+  color: #e73c33;
+  font-size: 20px;
+  font-family: Montserrat;
+  font-weight: 700;
+  word-wrap: break-word;
+}
+
+.support-contactGrn {
+  width: 456px;
+  height: 48px;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 40px;
+  display: inline-flex;
+}
+
+.contact-boxGrn {
+  padding: 12px;
+  background: #e73c33;
+  border-radius: 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  display: flex;
+}
+
+.contact-boxGrn div {
+  color: white;
+  font-size: 20px;
+  font-family: Montserrat;
+  font-weight: 700;
+  word-wrap: break-word;
+}
+
+.contact-emailGrn {
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 8px;
+  display: flex;
+}
+
+.contact-emailGrn div {
+  color: #e73c33;
+  font-size: 16px;
+  font-family: Montserrat;
+  font-weight: 600;
+  word-wrap: break-word;
+}
+
+.footer-imgGrn {
+  width: 100%;
+  height: 60%;
+  margin-top: 15px;
+  border-radius: 15px;
+}
+
+.imgBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 35px;
+  margin-bottom: 30px;
+}
+
+.imgBox .hotel-imageGrn {
+  height: 200px;
+  width: 300px;
+}
+
+.imgBox .hotel-imageGrn img {
+  height: 100%;
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+#customersGrn {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customersGrn td,
+#customersGrn th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+#customersGrn th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  /* background-color: #04AA6D; */
+  color: black;
+}
+
+.roomandcancel {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.roomandcancel h2 {
+  text-align: left;
+}
+
+.roomh2 {
+  text-align: center;
+  color: #333;
+  margin-top: 0;
+  font-size: 20px;
+  font-weight: 400px;
+}
+
+.roomh2 {
+  margin-bottom: 10px;
+}
+
+.red-text {
+  color: rgb(231, 60, 52);
+}

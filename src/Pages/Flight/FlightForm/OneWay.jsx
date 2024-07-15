@@ -70,7 +70,8 @@ const OneWay = () => {
   const [selectedTo, setSelectedTo] = useState(null);
   const [displayFrom, setdisplayFrom] = useState(true);
   const [displayTo, setdisplayTo] = useState(true);
-  const [activeIdClass, setActiveIdClass] = useState(1);
+  const [activeIdClass, setActiveIdClass] = useState(2);
+  const[flightcabin, setFlightcabin] = useState("Y");
   // error show
 
   const [fromError, setFromError] = useState("");
@@ -134,12 +135,12 @@ const OneWay = () => {
   // }, [fromQuery]);
 
   const ClassItems = [
-    { id: 1, label: "All" },
-    { id: 2, label: "Economy" },
-    { id: 3, label: "Premium Economy" },
-    { id: 4, label: "Business" },
-    { id: 5, label: "Premium Business" },
-    { id: 6, label: "First" },
+    // { id: 1, label: "All" },
+    { id: 2, value1:"Y", label: "Economy" },
+    { id: 3, value1:"W", label: "Premium Economy" },
+    { id: 4, value1:"C", label: "Business" },
+    // { id: 5, label: "Premium Business" },
+    { id: 6, value1:"F", label: "First" },
   ];
 
   useEffect(() => {
@@ -330,6 +331,7 @@ const OneWay = () => {
       OneStopFlight: "false",
       JourneyType: data2.class || "1",
       PreferredAirlines: null,
+      cabinClass:flightcabin,
       Segments: [
         {
           Origin: selectedFrom.AirportCode,
@@ -625,10 +627,18 @@ const OneWay = () => {
                   id=""
                   className="form_input_select"
                   value={activeIdClass}
-                  onChange={(e) => setActiveIdClass(parseInt(e.target.value))}
+                  value1={flightcabin}
+                  // onChange={(e) => {setActiveIdClass(parseInt(e.target.value)) ; setFlightcabin(value1)}}
+                  onChange={(e) => {
+      const selectedOption = ClassItems.find(
+        (item) => item.id === parseInt(e.target.value)
+      );
+      setActiveIdClass(parseInt(e.target.value));
+      setFlightcabin(selectedOption.value1);
+    }}
                 >
                   {ClassItems.map((ele) => (
-                    <option key={ele.id} value={ele.id}>
+                    <option key={ele.id} value={ele.id} value1={ele.value1} >
                       {ele.label}
                     </option>
                   ))}

@@ -20,7 +20,6 @@ import {
   Hotel as HotelIcon,
   CollectionsBookmark as TotalBookingsIcon,
   EmojiEvents as EmojiEventsIcon,
-  
 } from "@mui/icons-material";
 
 import { apiURL } from "../../../Constants/constant";
@@ -35,9 +34,7 @@ import {
 import {
   Cancel as CancelledIcon, // Add the import for the Cancelled icon
 } from "@mui/icons-material";
-import {
-  RingLoader,
-} from "react-spinners";
+import { RingLoader } from "react-spinners";
 
 const AdminDashboardData = () => {
   const [dashboardData, setDashboardData] = useState({});
@@ -49,12 +46,11 @@ const AdminDashboardData = () => {
     TotalBookingsIcon,
     AdminIcon,
     AdminIcon,
-    
+
     Groups3Icon,
     CancelledIcon,
     ChangeRequestIcon,
     EmojiEventsIcon,
-    
   ];
   const headingsArray = [
     "Hotel",
@@ -66,7 +62,7 @@ const AdminDashboardData = () => {
     "Agent",
     "Cancelled",
     "Change Request",
-    "Event Booking"
+    "Event Booking",
   ];
 
   useEffect(() => {
@@ -86,7 +82,7 @@ const AdminDashboardData = () => {
     fetchDashboardData();
   }, []);
   // useEffect(()=>{
-    
+
   // })
 
   const handleCardClick = async (key) => {
@@ -106,94 +102,94 @@ const AdminDashboardData = () => {
 
   return (
     <div className="admin-dashboard-container">
-    <Grid container spacing={3}   className={`admin-dashboard-grid ${loading ? 'loading' : ''}`}>
-     
-      {loading ? (
-         <div className="admin-dashboard-loader">
-      
-        <RingLoader
-          loading={loading}
-          size={80}
-          sizeUnit={"px"}
-          color="#21325D"
-      
-         //  style={{ marginTop: "20px" }}
-        />
-        </div>
-      ) : (
+      <Grid
+        container
+        spacing={3}
+        className={`admin-dashboard-grid ${loading ? "loading" : ""}`}
+      >
+        {loading ? (
+          <div className="admin-dashboard-loader">
+            <RingLoader
+              loading={loading}
+              size={80}
+              sizeUnit={"px"}
+              color="#21325D"
 
-        Object.keys(dashboardData).map((key, index) => (
-          <Grid item xs={12} sm={6} md={4} key={index}>
-            <div
-              style={{
-                position: 'relative',
-                top: '8px',
-                left: '60px',
-                
-              }}
-            >
+              //  style={{ marginTop: "20px" }}
+            />
+          </div>
+        ) : (
+          Object.keys(dashboardData).map((key, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
               <div
-                className="icon-container"
                 style={{
-                  position: 'absolute',
-                  zIndex: '1',
-                  boxShadow: "0px 4px 8px rgba(33, 50, 93, 0.5)",
-                  transform: 'translateX(-50%)',
-                  width: "60px",
-                  height: "60px",
-                  backgroundColor: "#21325D",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  borderRadius: "8px",
+                  position: "relative",
+                  top: "8px",
+                  left: "60px",
                 }}
               >
-                {icons[index % icons.length] &&
-                  React.createElement(icons[index % icons.length], {
-                    fontSize: "large",
-                    style: { color: "white" },
-                  })}
+                <div
+                  className="icon-container"
+                  style={{
+                    position: "absolute",
+                    zIndex: "1",
+                    boxShadow: "0px 4px 8px rgba(33, 50, 93, 0.5)",
+                    transform: "translateX(-50%)",
+                    width: "60px",
+                    height: "60px",
+                    backgroundColor: "#21325D",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: "8px",
+                  }}
+                >
+                  {icons[index % icons.length] &&
+                    React.createElement(icons[index % icons.length], {
+                      fontSize: "large",
+                      style: { color: "white" },
+                    })}
+                </div>
               </div>
-            </div>
 
-            <Card
-              className={`admin-dashboard-card admin-dashboard-card-${index}`}
-              onClick={() => handleCardClick(key)}
-              style={{
-                borderRadius: 8,
-                zIndex: 0,
-                height: "110px",
-                // position: 'relative',
-              }}
-            >
-              <CardActionArea
+              <Card
+                className={`admin-dashboard-card admin-dashboard-card-${index}`}
+                onClick={() => handleCardClick(key)}
                 style={{
-                  display: "flex",
-                  justifyContent: "right",
-                  height: "100%",
+                  borderRadius: 8,
+                  zIndex: 0,
+                  height: "110px",
+                  // position: 'relative',
                 }}
               >
-                <CardContent>
-                  <Typography variant="body2" color="text.secondary">
-                    {headingsArray[index]}
-                  </Typography>
-                  <Typography variant="h5">{dashboardData[key]}</Typography>
-                  {key === "TotalBookings" && (
-                    <div className="progress-bar-container">
-                      <LinearProgress
-                        variant="determinate"
-                        value={50}
-                        sx={{ height: 10, borderRadius: 5 }}
-                      />
-                    </div>
-                  )}
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </Grid>
-        ))
-      )}
-    </Grid>
+                <CardActionArea
+                  style={{
+                    display: "flex",
+                    justifyContent: "right",
+                    height: "100%",
+                  }}
+                >
+                  <CardContent>
+                    <Typography variant="body2" color="text.secondary">
+                      {headingsArray[index]}
+                    </Typography>
+                    <Typography variant="h5">{dashboardData[key]}</Typography>
+                    {key === "TotalBookings" && (
+                      <div className="progress-bar-container">
+                        <LinearProgress
+                          variant="determinate"
+                          value={50}
+                          sx={{ height: 10, borderRadius: 5 }}
+                        />
+                      </div>
+                    )}
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Grid>
+          ))
+        )}
+      </Grid>
     </div>
   );
 };

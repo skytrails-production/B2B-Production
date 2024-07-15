@@ -6,6 +6,7 @@ import BusChangeReq from "./BusChangeReq";
 import HolidayChangeReq from "./HolidayChangeReq";
 import { GiTreasureMap } from "react-icons/gi";
 import FixDeparture from "./FixDeparture";
+import HotelGrnChangeReq from "./HotelGrnChangeReq";
 
 const FlightTicket = () => {
   const [showFlightChangeReq, setShowFlightChangeReq] = useState(true);
@@ -13,6 +14,7 @@ const FlightTicket = () => {
   const [showBusChangeReq, setShowBusChangeReq] = useState(false);
   const [showHolidayChangeReq, setShowHolidayChangeReq]=useState(false);
   const [showFixDeparture, setShowFixDeparture]=useState(false);
+  const [showHotelGrnChangeReq, setShowHotelGrnChangeReq] = useState(false);
 
   const handleFlightButtonClick = () => {
     setShowFlightChangeReq(true);
@@ -20,6 +22,7 @@ const FlightTicket = () => {
     setShowBusChangeReq(false);
     setShowHolidayChangeReq(false);
     setShowFixDeparture(false);
+    setShowHotelGrnChangeReq(false);
   };
 
   const handleHotelButtonClick = () => {
@@ -28,6 +31,7 @@ const FlightTicket = () => {
     setShowBusChangeReq(false);
     setShowHolidayChangeReq(false);
     setShowFixDeparture(false);
+    setShowHotelGrnChangeReq(false);
   };
 
   const handleBusButtonClick = () => {
@@ -36,6 +40,7 @@ const FlightTicket = () => {
     setShowBusChangeReq(true);
     setShowHolidayChangeReq(false);
     setShowFixDeparture(false);
+    setShowHotelGrnChangeReq(false);
   };
   const handleHolidayButtonClick = () => {
     setShowFlightChangeReq(false);
@@ -43,6 +48,7 @@ const FlightTicket = () => {
     setShowBusChangeReq(false);
     setShowHolidayChangeReq(true);
     setShowFixDeparture(false);
+    setShowHotelGrnChangeReq(false);
   };
   const handleFixDepartureButtonClick = () =>{    
       setShowFlightChangeReq(false);
@@ -50,19 +56,32 @@ const FlightTicket = () => {
       setShowBusChangeReq(false);
       setShowHolidayChangeReq(false);
       setShowFixDeparture(true);
+      setShowHotelGrnChangeReq(false);
   }
+
+  const handleHotelGrnButtonClick = () =>{    
+    setShowFlightChangeReq(false);
+    setShowHotelChangeReq(false);
+    setShowBusChangeReq(false);
+    setShowHolidayChangeReq(false);
+    setShowFixDeparture(false);
+    setShowHotelGrnChangeReq(true);
+}
 
   return (
     <div className="container">
       <div className="buttonBox-new">
         <button onClick={handleFlightButtonClick}>Flight</button>
-        <button onClick={handleHotelButtonClick}>Hotel</button>
+        {/* <button onClick={handleHotelButtonClick}>Hotel</button>
+         */}
+         <button onClick={handleHotelGrnButtonClick}>Hotel</button>
         <button onClick={handleBusButtonClick}>Bus</button>
         <button onClick={handleHolidayButtonClick}>Holiday</button>
         <button onClick={handleFixDepartureButtonClick}>FixDeparture</button>
       </div>
       {showFlightChangeReq && <FlightChangeReq />}
-      {showHotelChangeReq && <HotelChangeReq />}
+      {/* {showHotelChangeReq && <HotelChangeReq />} */}
+      {showHotelGrnChangeReq && <HotelGrnChangeReq />}
       {showBusChangeReq && <BusChangeReq />}
       {showHolidayChangeReq && <HolidayChangeReq />}
       {showFixDeparture && <FixDeparture /> }
