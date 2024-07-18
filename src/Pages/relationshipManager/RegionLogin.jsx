@@ -557,6 +557,7 @@ const RegionLogin = () => {
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
+
             <div className="forgot-password">
               <a
                 href="#!"
@@ -566,6 +567,7 @@ const RegionLogin = () => {
                 Forgot Password?
               </a>
             </div>
+            
             <button
               style={{
                 width: "70%",

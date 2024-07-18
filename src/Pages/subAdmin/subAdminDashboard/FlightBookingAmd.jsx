@@ -17,6 +17,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { apiURL } from "../../../Constants/constant";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
+import { toast, ToastContainer } from "react-toastify";
 import "./amdflight.css";
 
 const FlightBookingAmd = () => {
@@ -94,20 +95,33 @@ const FlightBookingAmd = () => {
 
       // Assuming a successful update, close the dialog and refresh data
       handleCloseDialog();
-      fetchFlightBookings(); // Reload data after update
-
+      fetchFlightBookings();
+      toast.success("Ticket updated successfully!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     } catch (error) {
       console.error("Error updating ticket:", error);
-      alert("Failed to update ticket. Please try again later.");
+      toast.error("Failed to update ticket. Please try again later.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     }
   };
-
   const columns = [
     {
       field: "userDetails.username",
       headerName: "Name",
       width: 150,
-      valueGetter: (params) => params?.row.userDetails?.username || "No Data",
+      valueGetter: (params) => params?.row?.userDetails?.username || "No Data",
     },
     {
       field: "userDetails.email",

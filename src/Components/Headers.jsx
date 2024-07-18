@@ -25,10 +25,12 @@ import { FormControl, FormLabel } from "@chakra-ui/react";
 import { useLocation } from "react-router-dom";
 import "./Headers.css";
 import { apiURL } from "../Constants/constant.js";
+import { ipAction, tokenAction } from "../Redux/IP/actionIp.js";
 
 function Headers() {
   const [scrollYvalue, setScrollYValue] = useState(0);
   const reducerState = useSelector((state) => state);
+  //console.log(reducerState,"++++++++++++++")
   const [openModal, setOpenModal] = React.useState(false);
   const [amount, setAmount] = React.useState("");
   const [mobileNumber, setMobileNumber] = useState("");
@@ -53,6 +55,9 @@ function Headers() {
   };
   const handleSubmit = () => {
     dispatch(logoutAction());
+    dispatch(ipAction());
+    const payload = {EndUserIp:reducerState?.ip?.ipData,};
+    dispatch(tokenAction(payload))
     navigate("/Login");
   };
 

@@ -332,37 +332,37 @@
 
 //   const adminCheck = reducerState?.adminAuth?.adminData?.data?.id;
 
-//   const updateVendorAmount = (id) => {
-//     // Check if id is undefined
-//     if (id === undefined) {
-//       console.error("Error: id is undefined.");
-//       return;
-//     }
+// const updateVendorAmount = (id) => {
+//   // Check if id is undefined
+//   if (id === undefined) {
+//     console.error("Error: id is undefined.");
+//     return;
+//   }
 
-//     // Fetch adminCheck
-//     const adminCheck = reducerState?.adminAuth?.adminData?.data?.id;
-//     // console.log("adminCheck", adminCheck);
+//   // Fetch adminCheck
+//   const adminCheck = reducerState?.adminAuth?.adminData?.data?.id;
+//   // console.log("adminCheck", adminCheck);
 
-//     // Check if adminCheck is undefined
-//     if (adminCheck === undefined) {
-//       console.error("Error: adminCheck is undefined.");
-//       return;
-//     }
+//   // Check if adminCheck is undefined
+//   if (adminCheck === undefined) {
+//     console.error("Error: adminCheck is undefined.");
+//     return;
+//   }
 
-//     // console.log("wallet id", id);
+//   // console.log("wallet id", id);
 
-//     const payload = {
-//       data: {
-//         isAdmin: adminCheck,
-//         balance: amount, // Assuming amount is defined elsewhere
-//         currency: "INR",
-//       },
-//       key: {
-//         walletid: id,
-//       },
-//     };
-//     dispatch(vendorAction(payload));
+//   const payload = {
+//     data: {
+//       isAdmin: adminCheck,
+//       balance: amount, // Assuming amount is defined elsewhere
+//       currency: "INR",
+//     },
+//     key: {
+//       walletid: id,
+//     },
 //   };
+//   dispatch(vendorAction(payload));
+// };
 
 //   // React - modal
 //   const [show, setShow] = useState(false);
@@ -380,17 +380,17 @@
 //   //  Img Modal POP Up
 //   const [showImg, setImgShow] = useState(false);
 //   const [documentImgUrl, setDocumentImgUrl] = useState("");
-//   const [bonus, setBonus] = useState("");
-//   const [selectedUserId, setSelectedUserId] = useState(null);
-//   // Define handleShowBonusModal function to control bonus modal visibility
-//   const [showBonusModal, setShowBonusModal] = useState(false);
+// const [bonus, setBonus] = useState("");
+// const [selectedUserId, setSelectedUserId] = useState(null);
+// // Define handleShowBonusModal function to control bonus modal visibility
+// const [showBonusModal, setShowBonusModal] = useState(false);
 
-//   const handleShowBonusModal = (userId) => {
-//     // console.log("User ID in handleShowBonusModal:", userId);
-//     // Logic to show bonus modal
-//     setSelectedUserId(userId);
-//     setShowBonusModal(true);
-//   };
+// const handleShowBonusModal = (userId) => {
+//   // console.log("User ID in handleShowBonusModal:", userId);
+//   // Logic to show bonus modal
+//   setSelectedUserId(userId);
+//   setShowBonusModal(true);
+// };
 
 //   const handleImgShow = (img) => {
 //     // console.log("imgUrl", img);
@@ -398,32 +398,32 @@
 //     setImgShow(true);
 //   };
 
-//   const handleSearch = (event) => {
-//     setSearchTerm(event.target.value);
-//   };
+// const handleSearch = (event) => {
+//   setSearchTerm(event.target.value);
+// };
 
-//   const handleAddBonus = async (userId) => {
-//     try {
-//       setLoad(true);
-//       //console.log("log",userId);
+// const handleAddBonus = async (userId) => {
+//   try {
+//     setLoad(true);
+//     //console.log("log",userId);
 
-//       const response = await axios.post(
-//         `${apiURL.baseURL}/skyTrails/api/admin/distributeReward`,
-//         {
-//           agentId: userId,
-//           rewardPercentage: parseFloat(bonus),
-//         }
-//       );
-//       // console.log("Bonus added successfully:", response.data);
+//     const response = await axios.post(
+//       `${apiURL.baseURL}/skyTrails/api/admin/distributeReward`,
+//       {
+//         agentId: userId,
+//         rewardPercentage: parseFloat(bonus),
+//       }
+//     );
+//     // console.log("Bonus added successfully:", response.data);
 
-//       setSuccessMessage(response.data.responseMessage);
-//       setShowBonusModal(false);
-//     } catch (error) {
-//       console.error("Error adding bonus:", error);
-//     } finally {
-//       setLoad(false);
-//     }
-//   };
+//     setSuccessMessage(response.data.responseMessage);
+//     setShowBonusModal(false);
+//   } catch (error) {
+//     console.error("Error adding bonus:", error);
+//   } finally {
+//     setLoad(false);
+//   }
+// };
 
 //   return (
 //     <>
@@ -441,25 +441,25 @@
 //           }}
 //         />
 //       )}
-//       <div className="user-table-container" style={{ marginTop: "100px" }}>
-//         <div className="adminseacrch">
-//           <TextField
-//             type="text"
-//             value={searchTerm}
-//             onChange={handleSearch}
-//             placeholder="Search by name, ID, etc."
-//             InputProps={{
-//               startAdornment: (
-//                 <InputAdornment position="start">
-//                   <SearchIcon />
-//                 </InputAdornment>
-//               ),
-//             }}
-//           />
-//           <Typography variant="h5" className="adtable-heading">
-//             Agent Table
-//           </Typography>
-//         </div>
+// <div className="user-table-container" style={{ marginTop: "100px" }}>
+//   <div className="adminseacrch">
+// <TextField
+//   type="text"
+//   value={searchTerm}
+//   onChange={handleSearch}
+//   placeholder="Search by name, ID, etc."
+//   InputProps={{
+//     startAdornment: (
+//       <InputAdornment position="start">
+//         <SearchIcon />
+//       </InputAdornment>
+//     ),
+//   }}
+// />
+//     <Typography variant="h5" className="adtable-heading">
+//       Agent Table
+//     </Typography>
+//   </div>
 
 //         <TableContainer component={Paper} style={{ border: "none" }}>
 //           <Table
@@ -655,7 +655,7 @@
 //                                   className="mark__Up__Input"
 //                                   placeholder={markUpValues.flight || "0"}
 //                                   defaultValue={
-//                                     markupData[index]?.flight || "0"
+//                                     [index]markupData?.flight || "0"
 //                                   }
 //                                   sx={{
 //                                     width: "108px",
@@ -940,17 +940,29 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserAction } from "../../../../Redux/Auth/UserData/actionUserData";
 //import { activeStatusAction } from "../../../../../Redux/Auth/activeStatus/actionActiveStatus";
 import { activeStatusAction } from "../../../../Redux/Auth/activeStatus/actionActiveStatus";
-import { Typography, TextField, CircularProgress } from "@mui/material";
+import {
+  Typography,
+  TextField,
+  CircularProgress,
+  InputAdornment,
+} from "@mui/material";
 import Modal from "react-bootstrap/Modal";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Slider from "@mui/material/Slider";
+import { apiURL } from "../../../../Constants/constant";
 import SortAscendingIcon from "@mui/icons-material/ArrowUpward";
 import SortDescendingIcon from "@mui/icons-material/ArrowDownward";
 import "./Table.css";
-
-const CustomToolbar = ({ handleSortAscending, handleSortDescending }) => {
+import axios from "axios";
+import SearchIcon from "@mui/icons-material/Search";
+import { vendorAction } from "../../../../Redux/Auth/VendorAmount/vendorAmountData";
+const CustomToolbar = ({ handleSortAscending, handleSortDescending,searchTerm, handleSearch }) => {
+  // const [searchTerm, setSearchTerm] = useState("");
+  // const handleSearch = (event) => {
+  //   setSearchTerm(event.target.value);
+  // };
   return (
     <GridToolbarContainer>
       <GridToolbarFilterButton />
@@ -985,6 +997,19 @@ const CustomToolbar = ({ handleSortAscending, handleSortDescending }) => {
       >
         Sort Descending
       </Button>
+      {/* <TextField
+        type="text"
+        value={searchTerm}
+        onChange={handleSearch}
+        placeholder="Search by name, ID, etc."
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          ),
+        }}
+      /> */}
     </GridToolbarContainer>
   );
 };
@@ -1022,7 +1047,11 @@ export default function Tables() {
   const [page, setPage] = useState(1);
   const [minRevenue, setMinRevenue] = useState(MIN_REVENUE);
   const [balanceRange, setBalanceRange] = useState([MIN_BALANCE, MAX_BALANCE]);
-
+  const [bonus, setBonus] = useState("");
+  const [selectedUserId, setSelectedUserId] = useState(null);
+  // Define handleShowBonusModal function to control bonus modal visibility
+  const [showBonusModal, setShowBonusModal] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
   const dispatch = useDispatch();
   const reducerState = useSelector((state) => state);
 
@@ -1039,6 +1068,68 @@ export default function Tables() {
   const [sortingOrder, setSortingOrder] = useState({ field: "", sort: "" });
   const [imageModalOpen, setImageModalOpen] = useState(false);
   const [modalImageUrl, setModalImageUrl] = useState("");
+  const [load, setLoad] = useState(false);
+  const updateVendorAmount = (id) => {
+    // Check if id is undefined
+    if (id === undefined) {
+      console.error("Error: id is undefined.");
+      return;
+    }
+
+    // Fetch adminCheck
+    const adminCheck = reducerState?.adminAuth?.adminData?.data?.id;
+    // console.log("adminCheck", adminCheck);
+
+    // Check if adminCheck is undefined
+    if (adminCheck === undefined) {
+      console.error("Error: adminCheck is undefined.");
+      return;
+    }
+
+    // console.log("wallet id", id);
+
+    const payload = {
+      data: {
+        isAdmin: adminCheck,
+        balance: amount, // Assuming amount is defined elsewhere
+        currency: "INR",
+      },
+      key: {
+        walletid: id,
+      },
+    };
+    dispatch(vendorAction(payload));
+  };
+
+  const handleShowBonusModal = (userId) => {
+    // console.log("User ID in handleShowBonusModal:", userId);
+    // Logic to show bonus modal
+    setSelectedUserId(userId);
+    setShowBonusModal(true);
+  };
+
+  const handleAddBonus = async (userId) => {
+    try {
+      setLoad(true);
+      //console.log("log",userId);
+
+      const response = await axios.post(
+        `${apiURL.baseURL}/skyTrails/api/admin/distributeReward`,
+        {
+          agentId: userId,
+          rewardPercentage: parseFloat(bonus),
+        }
+      );
+      // console.log("Bonus added successfully:", response.data);
+
+      setSuccessMessage(response.data.responseMessage);
+      setShowBonusModal(false);
+    } catch (error) {
+      console.error("Error adding bonus:", error);
+    } finally {
+      setLoad(false);
+    }
+  };
 
   const handleSortAscending = () => {
     setSortingOrder({ field: "firstName", sort: "asc" });
@@ -1064,6 +1155,10 @@ export default function Tables() {
     setModalImageUrl("");
   };
 
+  const markupData = reducerState?.userTableData?.userData?.data?.result?.map(
+    (ele) => ele.markup
+  );
+  console.log(markupData, "++++++++++++");
   useEffect(() => {
     dispatch(getUserAction());
   }, [dispatch]);
@@ -1076,6 +1171,9 @@ export default function Tables() {
           createdAt: ele?.createdAt || "No Data",
           balance: ele?.balance || 0,
           firstName: ele.personal_details?.first_name || "No Data",
+
+          email: ele.personal_details?.email || "No Data",
+
           agencyName: ele.agency_details?.agency_name || "No Data",
           agencyEmail: ele.agency_gst_details?.email || "No Data",
           agencyClassification:
@@ -1090,6 +1188,11 @@ export default function Tables() {
             ele.agency_details?.document_details?.pan_card_document ||
             "https://www.sarojhospital.com/images/testimonials/dummy-profile.png",
           totalRevenue: ele.totalRevenue || 0,
+          flight: ele.markup?.flight || 0,
+          hotel: ele.markup?.hotel || 0,
+          bus: ele.markup?.bus || 0,
+
+          holiday: ele.markup?.holiday || 0,
         };
       });
       setRows(formattedRows);
@@ -1125,6 +1228,10 @@ export default function Tables() {
     dispatch(getUserAction());
   };
 
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
   const handleRevenueChange = (event, newValue) => {
     setMinRevenue(newValue[0]);
   };
@@ -1132,12 +1239,25 @@ export default function Tables() {
     setBalanceRange(newValue);
   };
   //const filteredRows = rows.filter((row) => row.totalRevenue >= minRevenue);
-  const filteredRows = rows.filter(
-    (row) =>
-      row.totalRevenue >= minRevenue &&
-      row.balance >= balanceRange[0] &&
-      row.balance <= balanceRange[1]
-  );
+  // const filteredRows = rows.filter(
+  //   (row) =>
+  //     row.totalRevenue >= minRevenue &&
+  //     row.balance >= balanceRange[0] &&
+  //     row.balance <= balanceRange[1]
+  // );
+  const filteredRows = rows.filter((row) => {
+    const matchesSearch =
+      row.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      row.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      row.agencyName.toLowerCase().includes(searchTerm.toLowerCase());
+
+    const matchesRevenue = row.totalRevenue >= minRevenue;
+    const matchesBalance =
+      row.balance >= balanceRange[0] && row.balance <= balanceRange[1];
+
+    return matchesSearch && matchesRevenue && matchesBalance;
+  });
+
   const columns = [
     {
       field: "panCardDocument",
@@ -1182,6 +1302,11 @@ export default function Tables() {
       headerName: "Agency Name",
       width: 250,
     },
+    {
+      field: "email",
+      headerName: "Email",
+      width: 250,
+    },
 
     {
       field: "agencyClassification",
@@ -1197,6 +1322,156 @@ export default function Tables() {
 
       renderCell: (params) => <div>{params.value}</div>,
     },
+    {
+      field: "flight",
+      headerName: "Flight Amount",
+      width: 150,
+
+      renderCell: (params) => <div>{params.value}</div>,
+    },
+
+    {
+      field: "hotel",
+      headerName: "Hotel Amount",
+      width: 150,
+
+      renderCell: (params) => <div>{params.value}</div>,
+    },
+
+    {
+      field: "bus",
+      headerName: "Bus Amount",
+      width: 150,
+
+      renderCell: (params) => <div>{params.value}</div>,
+    },
+
+    {
+      field: "holiday",
+      headerName: "Holiday Amount",
+      width: 150,
+
+      renderCell: (params) => <div>{params.value}</div>,
+    },
+
+    {
+      field: "vendorAmount",
+      headerName: "Vendor Amount",
+      width: 200,
+      renderCell: (params) => (
+        <>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => handleShow(params.row.id)}
+          >
+            Add Amount
+          </Button>
+          <Modal show={show} onHide={handleClose} centered>
+            <Modal.Header closeButton>
+              <Modal.Title>Vendor Amount</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Box
+                sx={{
+                  width: 400,
+                  maxWidth: "100%",
+                  textAlign: "left",
+                  padding: "20px",
+                }}
+              >
+                <TextField
+                  size="large"
+                  placeholder="Vendor Amount"
+                  onChange={(e) => setAmount(e.target.value)}
+                  fullWidth
+                  sx={{ marginBottom: 2 }}
+                />
+                <Button
+                  variant="contained"
+                  color="success"
+                  onClick={() => updateVendorAmount(params.row.walletid)}
+                  fullWidth
+                >
+                  Add Amount
+                </Button>
+              </Box>
+            </Modal.Body>
+          </Modal>
+        </>
+      ),
+    },
+    {
+      field: "addBonus",
+      headerName: "Add Bonus",
+      width: 200,
+      renderCell: (params) => (
+        <>
+          <Button
+            variant="contained"
+            onClick={() => handleShowBonusModal(params.row.id)}
+            fullWidth
+          >
+            Add Bonus
+          </Button>
+          <Modal
+            show={showBonusModal}
+            onHide={() => setShowBonusModal(false)}
+            centered
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>Bonus Amount</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              {load && (
+                <div
+                  className="loader-overlay"
+                  style={{
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    background: "rgba(255, 255, 255, 0.5)",
+                    zIndex: 9999,
+                  }}
+                >
+                  <CircularProgress
+                    color="primary"
+                    size={50}
+                    thickness={3}
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                    }}
+                  />
+                </div>
+              )}
+              <TextField
+                size="large"
+                label="Bonus Amount"
+                placeholder="Enter bonus amount"
+                value={bonus}
+                onChange={(e) => setBonus(e.target.value)}
+                fullWidth
+                sx={{ marginBottom: 2 }}
+              />
+              <Button
+                variant="contained"
+                color="success"
+                onClick={() => handleAddBonus(params.row.id)}
+                fullWidth
+              >
+                Add Bonus
+              </Button>
+            </Modal.Body>
+          </Modal>
+        </>
+      ),
+    },
+
     {
       field: "isActive",
       headerName: "Is Active",

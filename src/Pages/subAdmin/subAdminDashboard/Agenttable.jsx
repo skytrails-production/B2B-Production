@@ -141,6 +141,7 @@ export default function Agenttable() {
     if (tableData) {
       const formattedRows = tableData.map((ele) => {
         return {
+
           id: ele._id,
           createdAt: ele?.createdAt || "No Data",
           balance: ele?.balance || 0,
