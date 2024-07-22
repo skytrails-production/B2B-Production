@@ -80,7 +80,8 @@ function SingleData(props) {
             Number(reducerState?.logIn?.loginData?.data?.data?.markup?.flight)
         )}`
       : Math.round(Number(props.fare));
-
+      
+// console.log(props);
 
       const [open, setOpen] = React.useState(false);
       const handleOpen = () => setOpen(true);

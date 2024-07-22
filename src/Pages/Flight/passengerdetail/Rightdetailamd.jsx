@@ -133,8 +133,12 @@ export default function Rightdetailamd({ amdata }) {
 
     const multiplydata =  adultamount*adult;
 
-    const baseamount = amdata?.monetaryDetail?.[0]?.amount;
-    const grandtotalamount =Number( baseamount) +Number( markUpamount);
+    const surchargevalue = (amdata?.monetaryDetail?.[1]?.amount);
+
+    const baseamount =  Number(amdata?.monetaryDetail?.[0]?.amount)-Number(amdata?.monetaryDetail?.[1]?.amount)
+
+    // const baseamount = amdata?.monetaryDetail?.[0]?.amount;
+    const grandtotalamount = Number( baseamount) + Number( markUpamount) + Number(surchargevalue);
     // console.log("adultamount",childtax,adulttaxtax, totalTax, amdata?.paxFareDetail?.totalTaxAmount);
     // console.log()
 
@@ -282,6 +286,15 @@ export default function Rightdetailamd({ amdata }) {
         </div>
       )}
     </div>
+          <div>
+            <span>Surcharge : </span>
+            {/* <p>{totalAmount}</p> */}
+            <p>
+              {"₹"}
+              {/* {markUpamount + totalTax} */}
+              {surchargevalue}
+            </p>
+          </div>
           <div>
             <span>Others Tax : </span>
             {/* <p>{totalAmount}</p> */}

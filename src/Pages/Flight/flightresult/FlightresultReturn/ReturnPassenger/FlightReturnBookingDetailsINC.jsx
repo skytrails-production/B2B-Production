@@ -287,7 +287,8 @@ const FlightReturnBookingDetails = () => {
                         return {
                             ...item,
                             Email: apiURL.flightEmail,
-                            ContactNo: apiURL.phoneNo,
+                            // ContactNo: apiURL.phoneNo,
+                            ContactNo: Passengers[0].ContactNo,
                             PassportExpiry: convertDateFormat(item.PassportExpiry),
                         };
                     }),
@@ -332,7 +333,8 @@ const FlightReturnBookingDetails = () => {
                             FirstName: "",
 
                             Email: apiURL.flightEmail,
-                            ContactNo: apiURL.phoneNo,
+                            // ContactNo: apiURL.phoneNo,
+                            ContactNo: Passengers[0].ContactNo,
                             PassportExpiry: convertDateFormat(item.PassportExpiry),
                         };
                     }),
@@ -385,7 +387,8 @@ const FlightReturnBookingDetails = () => {
                             return {
                                 ...item,
                                 Email: apiURL.flightEmail,
-                                ContactNo: apiURL.phoneNo,
+                                // ContactNo: apiURL.phoneNo,
+                                ContactNo: PassengersReturn[0].ContactNo,
                                 PassportExpiry: convertDateFormat(item.PassportExpiry),
                             };
                         }),
@@ -410,7 +413,8 @@ const FlightReturnBookingDetails = () => {
 
 
                             Email: apiURL.flightEmail,
-                            ContactNo: apiURL.phoneNo,
+                            // ContactNo: apiURL.phoneNo,
+                            ContactNo: Passengers[0].ContactNo,
                             PassportExpiry: convertDateFormat(item.PassportExpiry),
                         };
                     }),
@@ -453,7 +457,8 @@ const FlightReturnBookingDetails = () => {
                 return {
                     ...item,
                     Email: apiURL.flightEmail,
-                    ContactNo: apiURL.phoneNo,
+                    // ContactNo: apiURL.phoneNo,
+                    ContactNo: Passengers[0].ContactNo,
                     PassportExpiry: convertDateFormat(item.PassportExpiry),
                 };
             }),
@@ -475,7 +480,8 @@ const FlightReturnBookingDetails = () => {
                 return {
                     ...item,
                     Email: apiURL.flightEmail,
-                    ContactNo: apiURL.phoneNo,
+                    // ContactNo: apiURL.phoneNo,
+                    ContactNo: Passengers[0].ContactNo,
                     PassportExpiry: convertDateFormat(item.PassportExpiry),
                 };
             }),
@@ -493,7 +499,8 @@ const FlightReturnBookingDetails = () => {
                 return {
                     ...item,
                     Email: apiURL.flightEmail,
-                    ContactNo: apiURL.phoneNo,
+                    // ContactNo: apiURL.phoneNo,
+                    ContactNo: PassengersReturn[0].ContactNo,
                 };
             }),
         };

@@ -21,7 +21,7 @@ import dayjs from "dayjs";
 import busArrow from '../../../Images/busArrow.png'
 import { motion } from "framer-motion";
 import { apiURL } from "../../../Constants/constant";
-import {validateName,validateEmail,validatePhoneNumber} from  '../../../utils/validation'
+import {validateName,validateEmail,validatePhoneNumber,validateAge} from  '../../../utils/validation'
 
 
 const variants = {
@@ -71,12 +71,12 @@ const BusPassengerDetail = () => {
   const passengerTemplate = {
     LeadPassenger: true,
     PassengerId: 0,
-    Title: "Mr.",
+    Title: "",
     Address: "",
-    Age: 22,
+    Age: "",
     Email: "",
     FirstName: "",
-    Gender: 1,
+    Gender: "",
     IdNumber: null,
     IdType: null,
     LastName: "",
@@ -119,7 +119,7 @@ const BusPassengerDetail = () => {
   function validate() {
     if (
       (passengerData.filter((item) => (
-        !validateName( item.FirstName) || !validateName( item.LastName)|| item.Address === "" || !validateEmail(item.Email) || !validatePhoneNumber(item.Phoneno)
+        !validateName( item.FirstName) || !validateName( item.LastName)|| item.Address === "" || !validateEmail(item.Email) || !validatePhoneNumber(item.Phoneno) || !validateAge(item.Age)
       ))).length > 0) {
 
       return true;
@@ -138,7 +138,9 @@ const BusPassengerDetail = () => {
             ...item,
             Seat: parsedSeatData?.blockedSeatArray[index],
             Email: apiURL.flightEmail,
-            Phoneno:apiURL.phoneNo
+            // Phoneno:apiURL.phoneNo
+            Phoneno:passengerData[0].Phoneno,
+            Title: item?.Gender == "1" ? "Mr." : "Miss.",
           };
         }),
 
@@ -166,6 +168,8 @@ const BusPassengerDetail = () => {
   // Format the dates
   const departureFormattedDate = departureDate.format("DD MMM, YY");
   const arrivalFormattedDate = arrivalDate.format("DD MMM, YY");
+
+  // console.log("passengerData",passengerData);
   return (
     <div className="container-xxl margin-pecentage">
       <div className="row">
@@ -422,6 +426,84 @@ const BusPassengerDetail = () => {
                                     </div>
                                   </Box>
                                 </Grid>
+                                {/* <Grid item xs={12} sm={12} md={4}>
+                                  <Box>
+                                    <div className="form_input">
+                                      <label
+                                        hotel_form_input
+                                        className="form_lable"
+                                      >
+                                        Gender
+                                      </label>
+                                      <input
+                                        name="Gender"
+                                        type="text"
+                                        placeholder="Enter 10 digit number "
+                                        value={passengerData.Gender}
+                                        onChange={(e) =>
+                                          handleServiceChange(e, index)
+                                        }
+                                      />
+                                      {!validatePhoneNumber(passengerData[index].Gender) && sub &&
+                                        <span id="error1">Select the gender  </span>}
+
+                                    </div>
+                                  </Box>
+                                </Grid> */}
+                                <Grid item xs={12} sm={12} md={3} py={1}>
+                              <Box className="contact_input">
+                                <label  className="form_lable">
+                                  Gender
+                                </label>
+                                <select
+                                  className="select_class"
+                                  name="Gender"
+                                  value={passengerData.Gender}
+                                  onChange={(e) =>
+                                          handleServiceChange(e, index)
+                                        }
+                                >
+                                  {/* <option value="">Select you gender</option> */}
+                                  <option value="1">Male</option>
+                                  <option value="2">Female</option>
+                                </select>
+                                {/* {error && values.gender.length < 1 ? (
+                                  <label
+                                    style={{
+                                      color: "red",
+                                      fontSize: "12px",
+                                      textAlign: "left",
+                                    }}
+                                  >
+                                    Please Select gender{" "}
+                                  </label>
+                                ) : (
+                                  ""
+                                )} */}
+                              </Box>
+                            </Grid>
+
+                            <Grid item xs={12} sm={12} md={3}>
+                              <Box className="contact_input">
+                                <label  className="form_lable">
+                                  Age (In Year){" "}
+                                  <span className="star_color">*</span>
+                                </label>
+                                <input
+                                  type="text"
+                                  name="Age"
+                                  className="from_input"
+                                  placeholder="Enter your age"
+                                  value={passengerData.Age}
+                                  onChange={(e) =>
+                                          handleServiceChange(e, index)
+                                        }
+                                />
+                                  {!validateAge(passengerData[index].Age) && sub &&
+                                    <span id="error1">Enter Age  </span>}
+                               
+                              </Box>
+                            </Grid>
                               </Grid>
                             </Box>
                           </AccordionDetails>

@@ -173,7 +173,8 @@ const [arrivalname, setarrivalnamename] = useState("");
   // console.log("flightnumber",amdresponse?.[0]?.flightInformation?.flightOrtrainNumber);
 
   const fare = props?.flight?.TotalPublishFare;
-  const fareamount = props?.flight?.monetaryDetail?.[0]?.amount;
+  // const fareamount = props?.flight?.monetaryDetail?.[0]?.amount;
+  const fareamount= Number(props?.flight?.monetaryDetail?.[0]?.amount)-Number(props?.flight?.monetaryDetail?.[1]?.amount)
 
   // console.log("fareamountjhbjhbhjbjbjbjbjbhjbjbjhb",fareamount)
   const datearrival = moment(

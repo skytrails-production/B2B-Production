@@ -95,3 +95,9 @@ export function isValidPassportNumber(passportNumber) {
   // If all checks pass, consider it valid
   return true;
 }
+
+
+export function validateAge(Age) {
+  const ageNumber = Number(Age);
+  return !isNaN(ageNumber) && ageNumber > 0 && ageNumber <= 100;
+}

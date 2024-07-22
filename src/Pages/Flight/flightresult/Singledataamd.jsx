@@ -187,7 +187,7 @@ function findAirportByCode(code) {
  
 
   const fare = props?.flight?.TotalPublishFare;
-  const faredata = props?.flight?.monetaryDetail?.[0]?.amount;
+  const faredata = Number(props?.flight?.monetaryDetail?.[0]?.amount)-Number(props?.flight?.monetaryDetail?.[1]?.amount);
   const datearrival = moment(
     amdresponse?.flightInformation?.productDateTime?.dateOfArrival,
     "DDMMYYYY"

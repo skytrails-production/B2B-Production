@@ -100,6 +100,8 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
   const userId = reducerState?.logIn?.loginData?.data?.data?.id;
   const currentBalance = reducerState?.userData?.userData?.data?.data?.balance;
 
+  // console.log(" ContactNo:PassengersReturn[0]?.ContactNo,",Passengers[0]?.ContactNo,Passengers);
+
   useEffect(() => {
     if (reducerState?.flightBook?.flightBookDataGDS?.Response) {
       if (dummyPnrCheck) {
@@ -245,7 +247,8 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
               return {
                 ...item,
                 Email: apiURL.flightEmail,
-                ContactNo: apiURL.phoneNo,
+                // ContactNo: apiURL.phoneNo,
+                ContactNo:PassengersReturn[0]?.ContactNo,
 
                 Baggage: [baggageDetails[index]],
                 MealDynamic: [mealdetails[index]],
@@ -254,7 +257,8 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
               return {
                 ...item,
                 Email: apiURL.flightEmail,
-                ContactNo: apiURL.phoneNo,
+                // ContactNo: apiURL.phoneNo,
+                ContactNo:PassengersReturn[0]?.ContactNo,
 
                 Baggage: [baggageDetails[index]],
               };
@@ -262,7 +266,8 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
               return {
                 ...item,
                 Email: apiURL.flightEmail,
-                ContactNo: apiURL.phoneNo,
+                // ContactNo: apiURL.phoneNo,
+                ContactNo:PassengersReturn[0]?.ContactNo,
 
                 MealDynamic: [mealdetails[index]],
               };
@@ -270,7 +275,8 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
               return {
                 ...item,
                 Email: apiURL.flightEmail,
-                ContactNo: apiURL.phoneNo,
+                // ContactNo: apiURL.phoneNo,
+                ContactNo:PassengersReturn[0]?.ContactNo,
               };
             }
           }),
@@ -458,7 +464,8 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
               return {
                 ...item,
                 Email: apiURL.flightEmail,
-                ContactNo: apiURL.phoneNo,
+                // ContactNo: apiURL.phoneNo,
+                ContactNo:PassengersReturn[0]?.ContactNo,
 
                 Baggage: [baggageDetails[index]],
                 MealDynamic: [mealdetails[index]],
@@ -467,14 +474,16 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
               return {
                 ...item,
                 Email: apiURL.flightEmail,
-                ContactNo: apiURL.phoneNo,
+                // ContactNo: apiURL.phoneNo,
+                ContactNo:PassengersReturn[0]?.ContactNo,
                 Baggage: [baggageDetails[index]],
               };
             } else if (index < mealdetails.length) {
               return {
                 ...item,
                 Email: apiURL.flightEmail,
-                ContactNo: apiURL.phoneNo,
+                // ContactNo: apiURL.phoneNo,
+                ContactNo:PassengersReturn[0]?.ContactNo,
 
                 MealDynamic: [mealdetails[index]],
               };
@@ -482,7 +491,8 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
               return {
                 ...item,
                 Email: apiURL.flightEmail,
-                ContactNo: apiURL.phoneNo,
+                // ContactNo: apiURL.phoneNo,
+                ContactNo:PassengersReturn[0]?.ContactNo,
               };
             }
           }),
@@ -531,7 +541,8 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
               return {
                 ...item,
                 Email: apiURL.flightEmail,
-                ContactNo: apiURL.phoneNo,
+                // ContactNo: apiURL.phoneNo,
+                ContactNo:Passengers[0]?.ContactNo,
 
                 Baggage: [baggageDetails[index]],
                 MealDynamic: [mealdetails[index]],
@@ -541,7 +552,9 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
               return {
                 ...item,
                 Email: apiURL.flightEmail,
-                ContactNo: apiURL.phoneNo,
+                // ContactNo: apiURL.phoneNo,
+                ContactNo:Passengers[0]?.ContactNo,
+
 
                 Baggage: [baggageDetails[index]],
               };
@@ -550,7 +563,9 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
               return {
                 ...item,
                 Email: apiURL.flightEmail,
-                ContactNo: apiURL.phoneNo,
+                // ContactNo: apiURL.phoneNo,
+                ContactNo:Passengers[0]?.ContactNo,
+
 
                 MealDynamic: [mealdetails[index]],
               };
@@ -558,7 +573,9 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
               return {
                 ...item,
                 Email: apiURL.flightEmail,
-                ContactNo: apiURL.phoneNo,
+                // ContactNo: apiURL.phoneNo,
+                ContactNo:Passengers[0]?.ContactNo,
+
               };
             }
           }),
@@ -636,7 +653,9 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
               return {
                 ...item,
                 Email: apiURL.flightEmail,
-                ContactNo: apiURL.phoneNo,
+                // ContactNo: apiURL.phoneNo,
+                ContactNo:Passengers[0]?.ContactNo,
+
 
                 Baggage: [baggageDetails[index]],
                 MealDynamic: [mealdetails[index]],
@@ -645,7 +664,9 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
               return {
                 ...item,
                 Email: apiURL.flightEmail,
-                ContactNo: apiURL.phoneNo,
+                // ContactNo: apiURL.phoneNo,
+                ContactNo:Passengers[0]?.ContactNo,
+
 
                 Baggage: [baggageDetails[index]],
               };
@@ -653,7 +674,9 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
               return {
                 ...item,
                 Email: apiURL.flightEmail,
-                ContactNo: apiURL.phoneNo,
+                // ContactNo: apiURL.phoneNo,
+                ContactNo:Passengers[0]?.ContactNo,
+
 
                 MealDynamic: [mealdetails[index]],
               };
@@ -661,7 +684,9 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
               return {
                 ...item,
                 Email: apiURL.flightEmail,
-                ContactNo: apiURL.phoneNo,
+                // ContactNo: apiURL.phoneNo,
+                ContactNo:Passengers[0]?.ContactNo,
+
               };
             }
           }),
@@ -731,7 +756,9 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
         return {
           ...item,
           Email: apiURL.flightEmail,
-          ContactNo: apiURL.phoneNo,
+          // ContactNo: apiURL.phoneNo,
+          ContactNo:Passengers[0]?.ContactNo,
+
         };
       }),
     };
@@ -763,7 +790,9 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
         return {
           ...item,
           Email: apiURL.flightEmail,
-          ContactNo: apiURL.phoneNo,
+          // ContactNo: apiURL.phoneNo,
+          ContactNo:Passengers[0]?.ContactNo,
+
         };
       }),
     };
@@ -795,7 +824,9 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
           return {
             ...item,
             Email: apiURL.flightEmail,
-            ContactNo: apiURL.phoneNo,
+            // ContactNo: apiURL.phoneNo,
+            ContactNo:Passengers[0]?.ContactNo,
+
 
             Baggage: [baggageDetails[index]],
             MealDynamic: [mealdetails[index]],
@@ -804,7 +835,9 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
           return {
             ...item,
             Email: apiURL.flightEmail,
-            ContactNo: apiURL.phoneNo,
+            // ContactNo: apiURL.phoneNo,
+            ContactNo:Passengers[0]?.ContactNo,
+
 
             Baggage: [baggageDetails[index]],
           };
@@ -812,7 +845,9 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
           return {
             ...item,
             Email: apiURL.flightEmail,
-            ContactNo: apiURL.phoneNo,
+            // ContactNo: apiURL.phoneNo,
+            ContactNo:Passengers[0]?.ContactNo,
+
 
             MealDynamic: [mealdetails[index]],
           };
@@ -820,7 +855,9 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
           return {
             ...item,
             Email: apiURL.flightEmail,
-            ContactNo: apiURL.phoneNo,
+            // ContactNo: apiURL.phoneNo,
+            ContactNo:Passengers[0]?.ContactNo,
+
           };
         }
       }),
@@ -845,7 +882,9 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
           return {
             ...item,
             Email: apiURL.flightEmail,
-            ContactNo: apiURL.phoneNo,
+            // ContactNo: apiURL.phoneNo,
+            ContactNo:PassengersReturn[0]?.ContactNo,
+
 
             Baggage: [baggageDetails[index]],
             MealDynamic: [mealdetails[index]],
@@ -854,7 +893,8 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
           return {
             ...item,
             Email: apiURL.flightEmail,
-            ContactNo: apiURL.phoneNo,
+            // ContactNo: apiURL.phoneNo,
+            ContactNo:PassengersReturn[0]?.ContactNo,
 
             Baggage: [baggageDetails[index]],
           };
@@ -862,7 +902,8 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
           return {
             ...item,
             Email: apiURL.flightEmail,
-            ContactNo: apiURL.phoneNo,
+            // ContactNo: apiURL.phoneNo,
+            ContactNo:PassengersReturn[0]?.ContactNo,
 
             MealDynamic: [mealdetails[index]],
           };
@@ -870,7 +911,8 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
           return {
             ...item,
             Email: apiURL.flightEmail,
-            ContactNo: apiURL.phoneNo,
+            // ContactNo: apiURL.phoneNo,
+            ContactNo:PassengersReturn[0]?.ContactNo,
           };
         }
       }),
@@ -1017,6 +1059,9 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
 
     navigate("/");
   }
+
+  
+
 
   return (
     <div>
