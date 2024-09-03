@@ -55,7 +55,8 @@
   overflow: hidden;
   height: 8px; /* Set the height of the progress bar */
   border-radius: 4px; /* Add border-radius for a rounded appearance */
-  margin-top: 10px; /* Adjust margin for spacing */
+  margin-top: 30px; /* Adjust margin for spacing */
+  
 }
 
 .progress-bar {

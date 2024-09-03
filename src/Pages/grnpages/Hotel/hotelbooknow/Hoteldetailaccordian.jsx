@@ -104,7 +104,7 @@ export default function CustomizedAccordions() {
   }, []);
 
   const searchId =
-    reducerState?.hotelSearchResultGRN?.ticketData?.data?.data?.search_id;
+    reducerState?.hotelSearchResultGRN?.hotelDetails?.data?.data?.search_id;
 
   const handleClickSaveRoom = async () => {
     // setLoader(true);
@@ -117,8 +117,7 @@ export default function CustomizedAccordions() {
 
       searchID: searchId,
     };
-    // Log the rate_key to the console
-    console.log("Rate Key:", selectedRoom?.rate_key);
+
     dispatch(HotelRoomSelectReqGRN(payload));
     navigate("/hotels/hotelsearchs/guestDetails");
   };
@@ -597,23 +596,25 @@ export default function CustomizedAccordions() {
                   </Typography>
                 </Box>
                 <Typography className="acc_para">
-                  {hotelinfoGRN?.facilities.split(";").map((item, index) => (
-                    <p key={index}>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="25"
-                        height="25"
-                        viewBox="0 0 25 25"
-                        fill="none"
-                      >
-                        <path
-                          d="M12.2734 7.77771C12.8906 7.77771 13.4727 7.8949 14.0195 8.12927C14.5664 8.36365 15.043 8.68396 15.4492 9.09021C15.8555 9.49646 16.1797 9.97693 16.4219 10.5316C16.6641 11.0863 16.7812 11.6683 16.7734 12.2777C16.7734 12.9027 16.6562 13.4847 16.4219 14.0238C16.1875 14.5629 15.8672 15.0394 15.4609 15.4535C15.0547 15.8676 14.5742 16.1918 14.0195 16.4261C13.4648 16.6605 12.8828 16.7777 12.2734 16.7777C11.6484 16.7777 11.0664 16.6605 10.5273 16.4261C9.98828 16.1918 9.51172 15.8715 9.09766 15.4652C8.68359 15.059 8.35938 14.5824 8.125 14.0355C7.89062 13.4886 7.77344 12.9027 7.77344 12.2777C7.77344 11.6605 7.89062 11.0785 8.125 10.5316C8.35938 9.98474 8.67969 9.50818 9.08594 9.10193C9.49219 8.69568 9.96875 8.37146 10.5156 8.12927C11.0625 7.88708 11.6484 7.7699 12.2734 7.77771Z"
-                          fill="#E73C34"
-                        />
-                      </svg>
-                      {item.trim()}
-                    </p>
-                  ))}
+                  {hotelinfoGRN?.facilities
+                    ? hotelinfoGRN.facilities.split(";").map((item, index) => (
+                        <p key={index}>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="25"
+                            height="25"
+                            viewBox="0 0 25 25"
+                            fill="none"
+                          >
+                            <path
+                              d="M12.2734 7.77771C12.8906 7.77771 13.4727 7.8949 14.0195 8.12927C14.5664 8.36365 15.043 8.68396 15.4492 9.09021C15.8555 9.49646 16.1797 9.97693 16.4219 10.5316C16.6641 11.0863 16.7812 11.6683 16.7734 12.2777C16.7734 12.9027 16.6562 13.4847 16.4219 14.0238C16.1875 14.5629 15.8672 15.0394 15.4609 15.4535C15.0547 15.8676 14.5742 16.1918 14.0195 16.4261C13.4648 16.6605 12.8828 16.7777 12.2734 16.7777C11.6484 16.7777 11.0664 16.6605 10.5273 16.4261C9.98828 16.1918 9.51172 15.8715 9.09766 15.4652C8.68359 15.059 8.35938 14.5824 8.125 14.0355C7.89062 13.4886 7.77344 12.9027 7.77344 12.2777C7.77344 11.6605 7.89062 11.0785 8.125 10.5316C8.35938 9.98474 8.67969 9.50818 9.08594 9.10193C9.49219 8.69568 9.96875 8.37146 10.5156 8.12927C11.0625 7.88708 11.6484 7.7699 12.2734 7.77771Z"
+                              fill="#E73C34"
+                            />
+                          </svg>
+                          {item.trim()}
+                        </p>
+                      ))
+                    : null}
                 </Typography>
               </AccordionDetails>
             </Accordion>

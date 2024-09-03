@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
+import { Select } from "antd";
 import "./hotelstepper.css";
 import {
   clearHotelReducerGrn,
@@ -19,9 +20,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import { FaTrash } from "react-icons/fa";
 import { motion } from "framer-motion";
 
-import Swal from "sweetalert2";
-import { swalModal } from "../../../../utils/swal";
-import { clearPassengersReducer } from "../../../../Redux/Passengers/passenger";
 import SecureStorage from "react-secure-storage";
 import dayjs from "dayjs";
 const variants = {
@@ -38,18 +36,199 @@ const variants = {
     },
   },
 };
+let FromTimeout;
+let FromCurrentValue;
+
+const initialSelectedFromData = {
+  cityCode: "124054",
+  cityName: "New Delhi",
+  countryCode: "IN",
+  countryName: "India",
+};
+const initialSelectedToData = {
+  countryCode: "IN",
+  countryCode3: "IND",
+  countryName: "India",
+};
+
+// Select city data logic
+
+const fetchFromCity = (value, callback) => {
+  if (FromTimeout) {
+    clearTimeout(FromTimeout);
+    FromTimeout = null;
+  }
+  FromCurrentValue = value;
+
+  const cityData = () => {
+    axios
+      .get(
+        `${apiURL.baseURL}/skyTrails/grnconnect/searchcityandhotel?keyword=${value}`
+      )
+      .then((response) => {
+        if (FromCurrentValue === value) {
+          const { data } = response.data;
+          const cityList = data.cityList.map((item) => ({
+            value: `city-${item.cityCode}`,
+            name: item.cityName,
+            code: item.countryCode,
+            cityCode: item.countryName,
+            item,
+            type: "city",
+          }));
+
+          const hotelList = data.hotelList.map((item) => ({
+            value: `hotel-${item.hotelCode}`,
+            name: item.hotelName,
+            code: item.cityCode,
+            cityCode: item.countryCode,
+            address: item.address,
+            countryName: item.countryName,
+            // cityName: item.cityName,
+            item,
+            type: "hotel",
+          }));
+
+          const combinedList = [...cityList, ...hotelList];
+          callback(combinedList);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  };
+
+  if (value) {
+    FromTimeout = setTimeout(cityData, 300);
+  } else {
+    callback([]);
+  }
+};
+
+const FromSearchInput = (props) => {
+  const { onItemSelect } = props;
+  const [fromData, setFromData] = useState([]);
+  const [fromValue, setFromValue] = useState(initialSelectedFromData.cityName);
+  const [selectedItem, setSelectedItem] = useState(initialSelectedFromData);
+  const [FromPlaceholder, setFromPlaceholder] = useState("");
+  const [FromDisplayValue, setFromDisplayValue] = useState(
+    initialSelectedFromData.cityName
+  );
+  const [inputStyle, setInputStyle] = useState({});
+
+  useEffect(() => {
+    setFromData([
+      {
+        value: `city-${initialSelectedFromData.cityCode}`,
+        name: initialSelectedFromData.cityName,
+        code: initialSelectedFromData.countryCode,
+        cityCode: initialSelectedFromData.countryName,
+        item: initialSelectedFromData,
+        type: "city",
+      },
+    ]);
+  }, []);
+
+  const handleFromSearch = (newValue) => {
+    fetchFromCity(newValue, setFromData);
+  };
+
+  const handleFromChange = (newValue) => {
+    const selected = fromData.find((d) => d.value === newValue);
+    setFromValue(selected ? selected.name : newValue);
+    setFromDisplayValue(selected ? selected.name : newValue);
+    setSelectedItem(selected ? selected.item : null);
+    setInputStyle({ caretColor: "transparent" });
+    if (selected) {
+      onItemSelect(selected.item);
+    }
+  };
+
+  const handleFromFocus = () => {
+    setFromPlaceholder("From");
+    setFromDisplayValue("");
+    setInputStyle({});
+  };
+
+  const handleFromBlur = () => {
+    setFromPlaceholder("");
+    setFromDisplayValue(fromValue);
+    setInputStyle({ caretColor: "transparent" });
+  };
+
+  const renderFromOption = (option) => {
+    return (
+      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+        {option.type === "city" ? (
+          <i class="fa-solid fa-city"></i>
+        ) : (
+          <i class="fa-solid fa-bed"></i>
+        )}
+        <div>
+          {option.type === "city" ? (
+            <>
+              <div className="ellipsisHotelDropdown">
+                {option.name} ({option.code})
+              </div>
+              <div style={{ color: "gray" }}>{option.cityCode}</div>
+            </>
+          ) : (
+            <>
+              <div className="ellipsisHotelDropdown">
+                {option.name} - ({option.countryName})
+              </div>
+              <div className="ellipsisHotelDropdown" style={{ color: "gray" }}>
+                {option.address}
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <Select
+      showSearch
+      className="hotel_input_select"
+      style={inputStyle}
+      value={FromDisplayValue}
+      placeholder={FromPlaceholder || props.placeholder}
+      defaultActiveFirstOption={false}
+      suffixIcon={null}
+      filterOption={false}
+      onSearch={handleFromSearch}
+      onChange={handleFromChange}
+      onFocus={handleFromFocus}
+      onBlur={handleFromBlur}
+      notFoundContent={null}
+      options={fromData.map((d) => ({
+        value: d.value,
+        label: renderFromOption(d),
+      }))}
+    />
+  );
+};
+
+// select city data logic
 
 const HotelForm = () => {
+  const today = dayjs();
+
+  const [newDepartDate, setNewDepartDate] = useState(today);
+  const [newReturnDate, setNewReturnDate] = useState(today.add(1, "day"));
+
   const [searchTerm, setSearchTerm] = useState("");
   const [countryCode, setCountryCode] = useState("");
   const [cityid, setCityid] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const currentDates = new Date();
-
+  const [selectedFrom, setSelectedFrom] = useState(initialSelectedFromData);
   const [toggleSearch, setToggleSearch] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   useEffect(() => {
     // dispatch(clearHotelBlockRoomtry())
     dispatch(clearHotelReducerGrn());
@@ -76,6 +255,12 @@ const HotelForm = () => {
     countryCode: "IN",
     countryName: "India",
   };
+
+  const [selectNationality, setSelectNationality] = useState(
+    initialSelectedToData
+  );
+  const [isSingleHotelSearched, setIsSIngleHotelSerched] = useState(false);
+
   const futureDate = new Date(currentDates);
   futureDate.setDate(currentDates.getDate() + 1);
 
@@ -149,9 +334,9 @@ const HotelForm = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `${apiURL.baseURL}/skyTrails/grnconnect/getcityList?keyword=${searchTerm} `
+        `${apiURL.baseURL}/skyTrails/grnconnect/searchcityandhotel?keyword=${searchTerm}`
       );
-      setResults(response.data.data);
+      setResults(response.data);
 
       setLoading(false);
     } catch (error) {
@@ -247,9 +432,7 @@ const HotelForm = () => {
 
   const handleStartDateChange = async (date) => {
     setValues({ ...values, departure: date });
-    // Update the departure date
-    // setCheckInError("");
-    // setMinReturnDate(date);
+
     setErrors((pre) => ({ ...pre, departure: "" }));
 
     if (values?.checkOutDeparture && values?.checkOutDeparture <= date) {
@@ -260,16 +443,12 @@ const HotelForm = () => {
         checkOutDeparture: increasedDate,
         departure: date,
       });
-      // Update the checkOutDeparture
-      // console.warn(values.checkOutDeparture - date, "values.checkOutDeparture<values.departure")
     }
   };
 
   const handleEndDateChange = (date) => {
     setValues({ ...values, checkOutDeparture: date });
     setErrors((pre) => ({ ...pre, checkOutDeparture: "" }));
-    // Update the checkOutDeparture date
-    // setCheckOutError("");
   };
 
   const currentDate = new Date(values.departure);
@@ -277,18 +456,14 @@ const HotelForm = () => {
   const timeDifference = toDate.getTime() - currentDate.getTime();
   const nightdays = Math.ceil(timeDifference / (1000 * 3600 * 24));
 
- 
-
   function handleSubmit(event) {
+    setIsSIngleHotelSerched(true);
+
     event.preventDefault();
-   
+
     let hasError = false;
 
-    if (
-      searchTerm === "" ||
-      values?.departure === "" ||
-      values?.checkOutDeparture === ""
-    ) {
+    if (values?.departure === "" || values?.checkOutDeparture === "") {
       searchTerm === ""
         ? setErrors((prev) => ({
             ...prev,
@@ -318,18 +493,40 @@ const HotelForm = () => {
 
       sessionStorage.setItem("searchLastterm", JSON.stringify(searchTermLast));
 
-      const payload = {
-        rooms: [...dynamicFormData],
-        rates: "concise",
-        cityCode: searchTermLast.cityCode,
-        currency: "INR",
-        client_nationality: "IN",
-        checkin: dayjs(values?.departure).format("YYYY-MM-DD"),
-        checkout: dayjs(values?.checkOutDeparture).format("YYYY-MM-DD"),
-        cutoff_time: 30000,
-        version: "2.0",
-      };
-      sessionStorage.setItem("Payload", JSON.stringify(payload));
+      if (selectedFrom.hotelName) {
+        const payload = {
+          rooms: [...dynamicFormData],
+          rates: "concise",
+          hotel_codes: [`${selectedFrom.hotelCode}`],
+          currency: "INR",
+          client_nationality: selectNationality?.countryCode || "In",
+          checkin: dayjs(newDepartDate).format("YYYY-MM-DD"),
+          checkout: dayjs(newReturnDate).format("YYYY-MM-DD"),
+          cutoff_time: 30000,
+          version: "2.0",
+        };
+
+        sessionStorage.setItem("grnPayload", JSON.stringify(payload));
+        dispatch(hotelActionGrn(payload));
+        // navigate("/st-hotel/hotelresult");
+      } else {
+        const payload = {
+          rooms: [...dynamicFormData],
+          rates: "concise",
+          cityCode: selectedFrom.cityCode,
+          currency: "INR",
+          client_nationality: selectNationality?.countryCode || "In",
+          checkin: dayjs(newDepartDate).format("YYYY-MM-DD"),
+          checkout: dayjs(newReturnDate).format("YYYY-MM-DD"),
+          cutoff_time: 30000,
+          version: "2.0",
+        };
+
+        sessionStorage.setItem("grnPayload", JSON.stringify(payload));
+        dispatch(hotelActionGrn(payload));
+        navigate("/hotels/hotelsearchs");
+      }
+      // sessionStorage.setItem("Payload", JSON.stringify(payload));
 
       SecureStorage.setItem(
         "revisitHotelDataGRN",
@@ -361,7 +558,7 @@ const HotelForm = () => {
       const pageNumber = 1;
 
       sessionStorage.setItem("hotelFormData", JSON.stringify(formFields));
-      dispatch(hotelActionGrn(payload, pageNumber));
+      //dispatch(hotelActionGrn(payload, pageNumber));
       navigate("/hotels/hotelsearchs");
 
       if (reducerState?.hotelSearchResultGRN?.ticketData?.data?.data?.hotels) {
@@ -374,13 +571,14 @@ const HotelForm = () => {
   const sessionData = new FormData();
 
   //   // Extract specific fields
-  const city = sessionData.get("City");
-  const checkIndate = sessionData.get("checkIndate");
-  const checkOutdate = sessionData.get("checkOutdate");
-  const room = sessionData.get("room");
+
   const star = sessionData.get("star");
-  const night = sessionData.get("night");
+
   const nationality = sessionData.get("nationality");
+
+  const handleFromSelect = (item) => {
+    setSelectedFrom(item);
+  };
 
   return (
     <>
@@ -398,43 +596,14 @@ const HotelForm = () => {
             variants={variants}
             className=" col-md-12 col-lg-12 col-xs-12 ps-0 mb-3"
           >
-            <div className="hotel_form_input">
+            <div>
               <label className="form_label">City</label>
-              <input
-                name="City"
-                id="CitySearchID"
-                type="text"
-                placeholder="Search for a city..."
-                value={searchTerm}
-                onClick={() => setToggleSearch(true)}
-                onChange={(e) => {
-                  setSearchTerm(e.target.value);
-                  setErrors((pre) => ({ ...pre, cityError: "" }));
-                }}
-                style={{ position: "relative" }}
-                autoComplete="off"
+              <FromSearchInput
+                className="grnFrom"
+                placeholder="Search"
+                style={{ width: "100%" }}
+                onItemSelect={handleFromSelect}
               />
-              {errors?.cityError !== "" && (
-                <span className="error">{errors?.cityError}</span>
-              )}
-
-              {/* {loading && <div>Loading...</div>} */}
-              {toggleSearch && (
-                <ul id="citySearchId" ref={listRef}>
-                  {results.map((city, index) => (
-                    <li
-                      key={index}
-                      onClick={(e) => {
-                        handleResultClick(city);
-                        setSearchTermLast(city);
-                        setErrors((pre) => ({ ...pre, cityError: "" }));
-                      }}
-                    >
-                      {city.cityName}
-                    </li>
-                  ))}
-                </ul>
-              )}
             </div>
           </motion.div>
 

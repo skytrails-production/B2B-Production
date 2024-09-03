@@ -7,22 +7,20 @@ export const fetchHotel = (data) => {
   };
 };
 
-export const hotelActionGrn = (data,page) => {
+export const hotelActionGrn = (data, page) => {
   if (data) {
     return {
       type: types.HOTEL_REQUEST_GRN,
-      payload: {data,page},
+      payload: { data, page },
     };
   }
 };
-
 
 export const singleHotelSuccess = (data) => {
   return {
     type: types.HOTEL_SINGLE_SUCCESS,
     payload: data,
-  }
-
+  };
 };
 export const singleHotelGRN = (data) => {
   if (data) {
@@ -33,16 +31,14 @@ export const singleHotelGRN = (data) => {
   }
 };
 
-
-
-// gallery 
+// gallery
 export const HotelRoomSelectSuccessGRN = (data) => {
   return {
     type: types.HOTEL_ROOMSELECT_SUCCESS,
     payload: data,
-  }
-
+  };
 };
+
 export const HotelRoomSelectReqGRN = (data) => {
   if (data) {
     return {
@@ -61,17 +57,13 @@ export const hotelGallerySuccess = (data) => {
   }
 };
 
-
 export const hotelGalleryRequest = (data) => {
   return {
     type: types.HOTEL_GALLERY_REQUEST,
     payload: data,
-  }
-
+  };
 };
-// gallery 
-
-
+// gallery
 
 export const fetchBookRoomHotelGRN = (data) => {
   return {
@@ -81,7 +73,7 @@ export const fetchBookRoomHotelGRN = (data) => {
 };
 
 export const hotelBookRoomActionGRN = (data) => {
-  if (data) {  
+  if (data) {
     return {
       type: types.HOTEL_B0OKROOM_REQUESTGRN,
       payload: data,
@@ -94,13 +86,13 @@ export const clearonlyHotelsGRN = () => {
   return {
     type: types.CLEAR_HOTEL_REDUCERGRN,
   };
-}
+};
 
 export const clearHotelReducerGrn = () => {
   return {
     type: types.CLEAR_HOTEL_REDUCERGRN,
   };
-}
+};
 export const clearHotelBlockRoomtry = () => {
   return {
     type: types.CLEAR_HOTEL_BLOCK_ROOMTYR,
@@ -117,10 +109,7 @@ export const clearHotelRoomAndGallery = () => {
   return {
     type: types.CLEAR_HOTEL_ROOMGALLERY_GRN,
   };
-}
-
-
-
+};
 
 export const clearHotelSelectedRoom = () => {
   return {

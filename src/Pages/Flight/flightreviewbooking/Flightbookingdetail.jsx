@@ -1061,7 +1061,7 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
   }
 
   
-
+// console.log("Passengers",Passengers);
 
   return (
     <div>
@@ -1132,7 +1132,7 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
           <p>Terminal {destinationTerminal}</p>
         </div>
         <div className="singleFlightBoxFive">
-          <span>₹{flightFare}</span>
+          <span>₹{(flightFare).toFixed()}</span>
           <p>Publish</p>
         </div>
       </div>
@@ -1187,11 +1187,12 @@ const Flightbookingdetail = ({ passSsramount, passssrmeal }) => {
                     {passenger.Title} {passenger.FirstName} {passenger.LastName}
                   </span>
                   <span>
-                    {passenger.Gender === "2"
+                    {/* {passenger.Gender === "2"
                       ? "Male"
                       : passenger.Gender === "1"
                       ? "Transgender"
-                      : "Female"}
+                      : "Female"} */}
+                      {passenger.Gender === "1" ? "Male" : "Female"}
                   </span>
                   <span>{passenger.Email}</span>
                   {/* {passenger.AddressLine1 && (

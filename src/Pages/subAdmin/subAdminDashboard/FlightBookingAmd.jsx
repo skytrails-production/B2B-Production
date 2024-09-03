@@ -12,6 +12,7 @@ import {
   DialogContent,
   DialogActions,
   Button,
+  CircularProgress,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { apiURL } from "../../../Constants/constant";
@@ -27,6 +28,8 @@ const FlightBookingAmd = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+  const [updateLoading, setUpdateLoading] = useState(false); // State to manage loading status for update
+
   const reducerState = useSelector((state) => state);
   const access =
     reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
@@ -81,21 +84,48 @@ const FlightBookingAmd = () => {
     setSelectedBooking(null);
   };
 
+  // Handle update ticket number
   const handleUpdate = async () => {
     try {
+      setUpdateLoading(true);
       const apiUrl = `${apiURL.baseURL}/skyTrails/api/amadeus/user/UpdateTicket`;
+
+      // Prepare updated passenger details
+      const updatedPassengerDetails = selectedBooking.passengerDetails.map(
+        (passenger) => {
+          return {
+            title: passenger.title,
+            firstName: passenger.firstName,
+            lastName: passenger.lastName,
+            gender: passenger.gender,
+            ContactNo: passenger.ContactNo,
+            DateOfBirth: passenger.DateOfBirth,
+            passportNo: passenger.passportNo,
+            passportExpiry: passenger.passportExpiry,
+            email: passenger.email,
+            city: passenger.city,
+            ticketNumber:
+              passenger.firstName ===
+              selectedBooking.passengerDetails[0].firstName
+                ? ticketNumber
+                : passenger.ticketNumber,
+            amount: passenger.amount,
+          };
+        }
+      );
+
+      // Prepare payload for the API request
       const payload = {
         bookingId: selectedBooking._id,
-        ticketNumber: ticketNumber,
-        firstName: selectedBooking.passengerDetails[0].firstName,
+        firstName: updatedPassengerDetails,
       };
 
-      const response = await axios.put(apiUrl, payload);
+      const response = await axios.put(apiUrl, payload); // Make API request to update ticket
       console.log("Update successful", response.data);
 
       // Assuming a successful update, close the dialog and refresh data
       handleCloseDialog();
-      fetchFlightBookings();
+      fetchFlightBookings(); // Refresh flight bookings
       toast.success("Ticket updated successfully!", {
         position: "top-right",
         autoClose: 3000,
@@ -114,8 +144,11 @@ const FlightBookingAmd = () => {
         pauseOnHover: true,
         draggable: true,
       });
+    } finally {
+      setUpdateLoading(false); // Unset update loading state
     }
   };
+
   const columns = [
     {
       field: "userDetails.username",
@@ -267,8 +300,12 @@ const FlightBookingAmd = () => {
             </DialogContent>
             <DialogActions>
               <Button onClick={handleCloseDialog}>Cancel</Button>
-              <Button onClick={handleUpdate} color="primary">
-                Update
+              <Button
+                onClick={handleUpdate}
+                color="primary"
+                disabled={updateLoading}
+              >
+                {updateLoading ? <CircularProgress size={24} /> : "Update"}
               </Button>
             </DialogActions>
           </Dialog>

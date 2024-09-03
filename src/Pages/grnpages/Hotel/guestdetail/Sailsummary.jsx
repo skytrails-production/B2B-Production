@@ -20,9 +20,9 @@ export default function Popularfilter() {
   const reducerState = useSelector((state) => state);
 
   const hotelinfoGRN = reducerState?.hotelSearchResultGRN?.hotelRoom?.hotel;
-   
-    const markUpPrice = reducerState?.logIn?.loginData?.data?.data?.markup?.hotel;
-  
+
+  const markUpPrice = reducerState?.logIn?.loginData?.data?.data?.markup?.hotel;
+
   return (
     <>
       <div className="priceSummary">
@@ -33,7 +33,6 @@ export default function Popularfilter() {
         <div className="priceChart">
           <div>
             <span className="text-bold">Rate</span>
-           
           </div>
           <div>
             <span>Published</span>
@@ -53,9 +52,8 @@ export default function Popularfilter() {
             <p className="text-bold">{hotelinfoGRN?.rate?.rooms.length}</p>
           </div>
         </div>
-        
+
         <div className="TotGst">
-          
           <div>
             <span>Grand Total:</span>
             <p>

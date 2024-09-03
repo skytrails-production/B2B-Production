@@ -494,7 +494,8 @@ function api() {
   const hotelSearchGRN = (payload) => {
     return axios({
       method: "POST",
-      url: `/skyTrails/grnconnect/hotelSearchWithPagination?page=${payload.page}`,
+      //url: `/skyTrails/grnconnect/hotelSearchWithPagination?page=${payload.page}`,
+      url: `/skyTrails/grnconnect/searchmultihotel`,
       baseURL: `${apiURL.baseURL}`,
       data: payload.data,
       headers: {
@@ -517,10 +518,12 @@ function api() {
       },
     });
   };
+
   const hotelBookRoomGRN = (payload) => {
     // console.log("key")
     const { data } = payload;
     const searchId = payload.searchID;
+    console.log(searchId, "************************");
     const hcode = payload.hotel_code;
     return axios({
       method: "GET",

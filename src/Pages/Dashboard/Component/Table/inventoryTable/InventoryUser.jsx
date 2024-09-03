@@ -65,12 +65,6 @@ const InventoryUser = () => {
   };
 
   const handleApproveStatusChange = async () => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      message.error("No token found. Please login first.");
-      return;
-    }
-
     let newStatus = "";
     switch (newApproveStatus) {
       case "APPROVED":
@@ -91,19 +85,15 @@ const InventoryUser = () => {
           status: newStatus,
           approveStatus: newApproveStatus,
           reason: reason,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            token: token,
-          },
         }
       );
-      if (response.data.success) {
+      if (response.data.statusCode === 200) {
         message.success("Status updated successfully");
         setData((prevData) =>
           prevData.map((item) =>
-            item._id === selectedRow._id ? { ...item, approveStatus: newApproveStatus, status: newStatus } : item
+            item._id === selectedRow._id
+              ? { ...item, approveStatus: newApproveStatus, status: newStatus }
+              : item
           )
         );
       } else {

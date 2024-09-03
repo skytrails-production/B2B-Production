@@ -27,17 +27,19 @@ const AdminWelcome = () => {
         margin: "auto",
         textAlign: "center",
         width: "80%",
+        
       }}
     >
       <Box height={100} />
       <Box height={100} />
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={2}>
-          <Grid item xs={4}>
+          <Grid item xs={4}  >
             <Card
               sx={{
                 boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
                 transition: "transform 0.2s",
+               
                 "&:hover": {
                   transform: "scale(1.03)",
                 },
@@ -45,8 +47,8 @@ const AdminWelcome = () => {
             >
               <CardActionArea>
                 <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    Total Users
+                  <Typography gutterBottom variant="h5" component="div" >
+                    Total Usersddddd
                     <AccountBoxIcon sx={{ position: 'absolute', top: 1, right: 1 }} />
                   </Typography>
                   <Typography variant="body2" color="text.secondary">

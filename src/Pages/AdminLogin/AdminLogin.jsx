@@ -7,16 +7,24 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./AdminLogin.css";
 import bg from "../../Images/bg-cover.jpg";
 import { adminReducer } from "../../Redux/AdminLogin/adminReducer";
-import { styled } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
 
 import SubAdminAccess from "../subAdmin/subAdminDashboard/subAdminaccess";
-import { Grid, Card, CardHeader, CardContent, Typography, Divider, LinearProgress } from '@mui/material';
+import {
+  Grid,
+  Card,
+  CardHeader,
+  CardContent,
+  Typography,
+  Divider,
+  LinearProgress,
+} from "@mui/material";
 const MuiGridItem = styled(Grid)(({ theme }) => ({
   padding: theme.spacing(2),
 }));
 
 const CustomLinearProgress = styled(LinearProgress)(({ theme }) => ({
-  width: '100%',
+  width: "100%",
   borderRadius: theme.spacing(1),
 }));
 
@@ -30,20 +38,17 @@ const AdminLogin = () => {
   const reducerState = useSelector((state) => state);
   const dispatch = useDispatch();
 
-
   // console.log(reducerState,"reducerState")
-
-
   let adminData = reducerState?.adminAuth?.isLogin;
 
-  const error = useSelector(state => state?.adminAuth?.adminData?.error);
-  const errorMessage = useSelector(state => state?.adminAuth?.adminData?.
-    errorMessage);
-
+  const error = useSelector((state) => state?.adminAuth?.adminData?.error);
+  const errorMessage = useSelector(
+    (state) => state?.adminAuth?.adminData?.errorMessage
+  );
   useEffect(() => {
     //console.log(errorMessage,"adminData",error);
     if (adminData) {
-      navigate("/admin/dashboard")
+      navigate("/admin/dashboard");
     }
   }, [reducerState?.adminAuth]);
 
@@ -52,9 +57,7 @@ const AdminLogin = () => {
       setFormError(errorMessage);
       setLoading(false);
     }
-
   }, [error, errorMessage]);
-
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -68,15 +71,11 @@ const AdminLogin = () => {
       password: password,
     };
 
-
     // Dispatch the action and wait for the response
-
-
     try {
-      const response=await dispatch(adminAuthAction(payload));
-    
+      const response = await dispatch(adminAuthAction(payload));
+
       setFormError(""); // Clear any previous errors on success
-      
     } catch (error) {
       console.error("Error occurred while authenticating:", error);
       // Error handling is done in the useEffect
@@ -84,13 +83,12 @@ const AdminLogin = () => {
       // Set loading back to false regardless of success or failure
       setLoading(false);
     }
-
   };
 
   useEffect(() => {
     if (reducerState.adminAuth.isLogin) {
-      const id = reducerState.adminAuth.adminData.id; 
-      navigate("/admin/dashboard", { state: { adminId: id } }); 
+      const id = reducerState.adminAuth.adminData.id;
+      navigate("/admin/dashboard", { state: { adminId: id } });
     }
   }, [reducerState.adminAuth, navigate]);
 
@@ -102,26 +100,36 @@ const AdminLogin = () => {
     setEmail(event.target.value);
     setFormError("");
   };
-
+  
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
     setFormError("");
   };
- 
 
-if(adminData){
-  return <div><MuiGridItem item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
-  <CustomLinearProgress />
-</MuiGridItem></div>
-}
+  if (adminData) {
+    return (
+      <div>
+        <MuiGridItem
+          item
+          xs={12}
+          style={{ display: "flex", justifyContent: "center" }}
+        >
+          <CustomLinearProgress />
+        </MuiGridItem>
+      </div>
+    );
+  }
   return (
     <>
-      {reducerState?.logIn?.isLogin || reducerState?.subadminLogin?.isLogin ? <div><SubAdminAccess /></div> :
+      {reducerState?.logIn?.isLogin || reducerState?.subadminLogin?.isLogin ? (
+        <div>
+          <SubAdminAccess />
+        </div>
+      ) : (
         <div>
           <div
             className="coverletter"
             style={{
-
               // borderRadius: "15px",
               width: "100%",
               margin: "auto",
@@ -137,10 +145,15 @@ if(adminData){
           </div>
           <div className="Adminwrapper">
             {/* Cover Layout */}
-            <header className="sectionad headers" style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}>
+            <header
+              className="sectionad headers"
+              style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}
+            >
               <div className="headead">
                 <img src={newlogo} style={{ width: "80%" }} alt="Logo" />
-                <h2 style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}>Admin Login</h2>
+                <h2 style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}>
+                  Admin Login
+                </h2>
               </div>
             </header>
 
@@ -169,12 +182,20 @@ if(adminData){
                     className="admininput"
                   />
                 </div>
-                <button className="btnadmin" disabled={loading}> {loading ? "Loading..." : "Sign In"}</button>
+                <button className="btnadmin" disabled={loading}>
+                  {" "}
+                  {loading ? "Loading..." : "Sign In"}
+                </button>
               </form>
             </section>
-            {formError && <p style={{ color: "red", padding: "0px 0px 5px 50px" }}>{formError}</p>}
+            {formError && (
+              <p style={{ color: "red", padding: "0px 0px 5px 50px" }}>
+                {formError}
+              </p>
+            )}
           </div>
-        </div>}
+        </div>
+      )}
     </>
   );
 };

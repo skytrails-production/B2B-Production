@@ -30,35 +30,45 @@ export const hotelReducerGRN = (state = initState, action) => {
 
     case types.HOTEL_SUCCESS_GRN:
       console.log(payload, "pyload");
-      if (payload?.data?.data?.hotels) {
-        const search_id = payload?.data?.data?.search_id;
-        const updatedHotels = payload?.data?.data?.hotels.map((hotel) => ({
-          ...hotel,
-          search_id,
-        }));
-        let olddata = [...state?.hotels].concat(updatedHotels);
-        console.log(olddata, "olddata");
+      // if (payload?.data?.data?.hotels) {
+      //   const search_id = payload?.data?.data?.search_id;
+      //   const updatedHotels = payload?.data?.data?.hotels.map((hotel) => ({
+      //     ...hotel,
+      //     search_id,
+      //   }));
+      //   let olddata = [...state?.hotels].concat(updatedHotels);
+      //   console.log(olddata, "olddata");
 
-        return {
-          ...state,
-          ticketData: payload,
-          hotels: olddata,
-          isLoading: false,
-          isError: false,
-          showSuccessMessage: true,
-        };
-      } else if (payload?.data?.data?.errors) {
-        return {
-          ...state,
-          hasMore: false,
+      //   return {
+      //     ...state,
+      //     ticketData: payload,
+      //     hotels: olddata,
+      //     isLoading: false,
+      //     isError: false,
+      //     showSuccessMessage: true,
+      //   };
+      // } else if (payload?.data?.data?.errors) {
+      //   return {
+      //     ...state,
+      //     hasMore: false,
 
-          isLoading: false,
-          isError: false,
-          showSuccessMessage: true,
-        };
-      } else {
-        return { ...state };
-      }
+      //     isLoading: false,
+      //     isError: false,
+      //     showSuccessMessage: true,
+      //   };
+      // } else {
+      //   return { ...state };
+      // }
+
+      return {
+        ...state,
+        ticketData: payload,
+        // onlyHotels: payload,
+        isLoading: false,
+        isError: false,
+        showSuccessMessage: true,
+        hasMore: true,
+      };
 
     case types.HOTEL_SINGLE_DETAIL_REQUEST:
       return {

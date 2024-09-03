@@ -119,7 +119,7 @@ const BusPassengerDetail = () => {
   function validate() {
     if (
       (passengerData.filter((item) => (
-        !validateName( item.FirstName) || !validateName( item.LastName)|| item.Address === "" || !validateEmail(item.Email) || !validatePhoneNumber(item.Phoneno) || !validateAge(item.Age)
+        !validateName( item.FirstName) || !validateName( item.LastName)|| item.Address === "" || !validateEmail(item.Email) || !validatePhoneNumber(item.Phoneno) || !validateAge(item.Age) || item.Gender === ""
       ))).length > 0) {
 
       return true;
@@ -463,23 +463,12 @@ const BusPassengerDetail = () => {
                                           handleServiceChange(e, index)
                                         }
                                 >
-                                  {/* <option value="">Select you gender</option> */}
+                                  <option value="">Select you gender</option>
                                   <option value="1">Male</option>
                                   <option value="2">Female</option>
                                 </select>
-                                {/* {error && values.gender.length < 1 ? (
-                                  <label
-                                    style={{
-                                      color: "red",
-                                      fontSize: "12px",
-                                      textAlign: "left",
-                                    }}
-                                  >
-                                    Please Select gender{" "}
-                                  </label>
-                                ) : (
-                                  ""
-                                )} */}
+                                {passengerData[index].Gender === "" && sub &&
+                                  <span id="error1">Enter Gender</span>}
                               </Box>
                             </Grid>
 

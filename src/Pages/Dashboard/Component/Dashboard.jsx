@@ -37,6 +37,7 @@ import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import AirplanemodeActiveIcon from "@mui/icons-material/AirplanemodeActive";
+import FlightInventory from "./Table/FlightInventory/FlightInventory"
 import Tables from "./Table/Table";
 import Usertables from "./Table/UserTable";
 import SubAdminTable from "./Table/subAdmin";
@@ -2938,6 +2939,44 @@ export default function VerticalTabs() {
 
 
 
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => handleMenuItemClick("FlightInventory")}
+              className={
+                menuData === "FlightInventory"
+                  ? "active-menu-item"
+                  : "inactive-menu-item"
+              }
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                  ...((menuData === "FlightInventory"
+                    ? activeMenuItemClass
+                    : inactiveMenuItemClass) || {}),
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <WebIcon sx={{ color: "white" }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="FlightInventory"
+                  sx={{ opacity: open ? 1 : 0, color: "white" }}
+                />
+              </ListItemButton>
+            </ListItem>
+
+
+
 
 
             {/* <ListItem
@@ -3241,6 +3280,8 @@ export default function VerticalTabs() {
                 />
               </ListItemButton>
             </ListItem>
+
+            
 
             <ListItem
               disablePadding
@@ -3780,6 +3821,7 @@ export default function VerticalTabs() {
                 <FixedDepartureControl />
               )}
               {menuData === "Advertisment" && <AllAdvertisementTable />}
+              {menuData === "FlightInventory" && <FlightInventory />}
               {menuData === "quiz" && <Quiz />}
               {menuData === "blog" && <BlogData />}
               {menuData === "Web Advertisment" && <AllWebAdvertisement />}

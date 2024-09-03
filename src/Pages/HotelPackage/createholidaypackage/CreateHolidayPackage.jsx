@@ -60,7 +60,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 // import AddCircleIcon from "@mui/icons-material/AddCircle";
 
-import { createPackageAction, createPackageActionClear } from "../../../Redux/CreatePackage/actionCreatePackage";
+import {
+  createPackageAction,
+  createPackageActionClear,
+} from "../../../Redux/CreatePackage/actionCreatePackage";
 
 // import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import Accordion from "react-bootstrap/Accordion";
@@ -73,9 +76,6 @@ import { IoIosClose } from "react-icons/io";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const CreateHolidayPackage = () => {
-
-
-
   const dispatch = useDispatch();
   const reducerState = useSelector((state) => state);
   const userId = reducerState?.logIn?.loginData?.data?.data?.id;
@@ -94,19 +94,19 @@ const CreateHolidayPackage = () => {
   };
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const submitRef = useRef(null)
+  const submitRef = useRef(null);
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (submitRef.current && !submitRef.current.contains(event.target)) {
         setOpen(false);
         navigate("/");
       }
-    }
-    document.addEventListener("mousedown", handleOutsideClick)
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
     return () => {
-      document.removeEventListener("mousedown", handleOutsideClick)
-    }
-  }, [submitRef])
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [submitRef]);
   const handleClose = () => {
     setOpen(false);
     // setDisableButton(false);
@@ -119,7 +119,6 @@ const CreateHolidayPackage = () => {
     }
   };
   const inputList = chipData.map((item) => ({ addMore: item.addMore }));
-
 
   // console.log("inputList", inputList);
   //  console.log("chipdata", chipData);
@@ -158,8 +157,8 @@ const CreateHolidayPackage = () => {
     ) {
       setOpen(true);
       return;
-    }else{
-     setOpen(false);
+    } else {
+      setOpen(false);
     }
   };
   useEffect(() => {
@@ -206,11 +205,10 @@ const CreateHolidayPackage = () => {
     });
   };
 
-
   const [scheduleType, setScheduleType] = useState({
     flexible: false,
     fixed_departure: false,
-  })
+  });
 
   const handleScheduleChange = (event) => {
     const selectedScheduleType = event.target.value;
@@ -220,7 +218,6 @@ const CreateHolidayPackage = () => {
       [selectedScheduleType]: true,
     }));
   };
-
 
   const [checkedItem, setCheckedItem] = useState({
     flexibility: false,
@@ -298,10 +295,8 @@ const CreateHolidayPackage = () => {
   const [exclusion, setExclusion] = useState("");
   const [termAndCondition, setTermAndCondition] = useState("");
 
-  const [cancellation, setCancellation] = useState("")
-  const [overView, setOverView] = useState("")
-
-
+  const [cancellation, setCancellation] = useState("");
+  const [overView, setOverView] = useState("");
 
   const handleHotel = (e) => {
     setHotelDetails(e.target.value);
@@ -322,8 +317,7 @@ const CreateHolidayPackage = () => {
   };
   useEffect(() => {
     if (reducerState?.createPackage?.showSuccessMessage == true) {
-
-      setLoader(false)
+      setLoader(false);
 
       Swal.fire({
         icon: "success",
@@ -337,7 +331,6 @@ const CreateHolidayPackage = () => {
           dispatch(createPackageActionClear());
         }
       });
-
     }
   }, [reducerState?.createPackage]);
 
@@ -345,7 +338,7 @@ const CreateHolidayPackage = () => {
   const handleCreatePackage = (event) => {
     event.preventDefault();
 
-    setLoader(true)
+    setLoader(true);
 
     setSub(true);
     const file1 = document.getElementById("user_card_document").files;
@@ -455,21 +448,18 @@ const CreateHolidayPackage = () => {
         cancellation_Policy: cancellation,
       };
 
-
-
       const formData1 = new FormData();
 
       for (let i = 0; i < file1.length; i++) {
         formData1.append("files", file1[i]);
-    }
+      }
       // formData1.append("file", file1);
       formData1.append("data", JSON.stringify(payload));
       // console.log(payload, "payload")
 
       dispatch(createPackageAction(formData1));
-
+      console.log(createPackageAction(formData1));
     }
-
   };
   function validation(event) {
     const formData = new FormData(event.target);
@@ -664,78 +654,88 @@ const CreateHolidayPackage = () => {
                 </div>
 
                 <div class="mb-3">
-                <div style={{display:"flex",flexDirection:"row",gap:"12px"}}>
-                <label class="form-label" style={{display:"flex",alignItems:"center", justifyContent:"center"}}>
-                    What is the schedule?{" "}
-                    <span style={{ color: "red" }}>*</span>
-                  </label>
-                  <Box
-                    display="flex"
-                    gap="15px"
-                    justifyContent="center"
-                    alignItems="center"
+                  <div
                     style={{
-                      paddingTop: "20px",
-                      paddingBottom: "20px",
-                      borderRadius: "4px",
-                      padding: "5px",
-                    
-                      
-                      paddingLeft: "10px",
+                      display: "flex",
+                      flexDirection: "row",
+                      gap: "12px",
                     }}
                   >
-                    <Box display="flex" alignItems="center" gap="5px">
-                      <Box className="radio">
-                        <input
-                          type="radio"
-                          name="schedule"
-                          id="schedule"
-                          value="fixed departure"
-                          width="30px"
-                          onChange={handleScheduleChange}
-                        />
+                    <label
+                      class="form-label"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      What is the schedule?{" "}
+                      <span style={{ color: "red" }}>*</span>
+                    </label>
+                    <Box
+                      display="flex"
+                      gap="15px"
+                      justifyContent="center"
+                      alignItems="center"
+                      style={{
+                        paddingTop: "20px",
+                        paddingBottom: "20px",
+                        borderRadius: "4px",
+                        padding: "5px",
+
+                        paddingLeft: "10px",
+                      }}
+                    >
+                      <Box display="flex" alignItems="center" gap="5px">
+                        <Box className="radio">
+                          <input
+                            type="radio"
+                            name="schedule"
+                            id="schedule"
+                            value="fixed departure"
+                            width="30px"
+                            onChange={handleScheduleChange}
+                          />
+                        </Box>
+                        <Box>
+                          <Typography
+                            style={{
+                              fontSize: "18px",
+                              color: "#000",
+
+                              fontFamily: "Montserrat",
+                            }}
+                          >
+                            Fixed Departure
+                          </Typography>
+                        </Box>
                       </Box>
-                      <Box>
-                        <Typography
-                          style={{
-                            fontSize: "18px",
-                            color: "#000",
 
-                            fontFamily: "Montserrat",
-                          }}
-                        >
-                          Fixed Departure
-                        </Typography>
+                      <Box display="flex" alignItems="center" gap="5px">
+                        <Box className="radio">
+                          <input
+                            type="radio"
+                            name="schedule"
+                            id="schedule"
+                            value="flexible"
+                            onChange={handleScheduleChange}
+                          />
+                        </Box>
+                        <Box>
+                          <Typography
+                            style={{
+                              fontSize: "18px",
+                              color: "#000",
 
+                              fontFamily: "Montserrat",
+                            }}
+                          >
+                            Flexible
+                          </Typography>
+                        </Box>
                       </Box>
                     </Box>
-
-                    <Box display="flex" alignItems="center" gap="5px">
-                      <Box className="radio">
-                        <input
-                          type="radio"
-                          name="schedule"
-                          id="schedule"
-                          value="flexible"
-                          onChange={handleScheduleChange}
-                        />
-                      </Box>
-                      <Box>
-                        <Typography
-                          style={{
-                            fontSize: "18px",
-                            color: "#000",
-
-                            fontFamily: "Montserrat",
-                          }}
-                        >
-                          Flexible
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </Box>
-                </div>
-                 
+                  </div>
                 </div>
                 <div class="mb-3">
                   <label class="form-label">
@@ -2118,17 +2118,19 @@ const CreateHolidayPackage = () => {
                               type="text"
                               name="detailed_ltinerary"
                               placeholder={`Days ${i + 1}`}
-                            // value={daysDetailsValues[i] || ""}
-                            // onChange={(event) => handleDaysDetail(i, event)}
+                              // value={daysDetailsValues[i] || ""}
+                              // onChange={(event) => handleDaysDetail(i, event)}
                             >
                               <Editor
                                 name="detailed_ltinerary"
                                 value={daysDetailsValues[i]}
                                 onChange={(event) => handleDaysDetail(i, event)}
                                 containerProps={{
-
-                                  style: { resize: "vertical", height: "300px", overflow: "scroll" },
-
+                                  style: {
+                                    resize: "vertical",
+                                    height: "300px",
+                                    overflow: "scroll",
+                                  },
                                 }}
                               />
                             </span>
@@ -2416,12 +2418,11 @@ const CreateHolidayPackage = () => {
                         </div>
                         {sub &&
                           document.getElementById("term_Conditions").value ===
-                          "" && (
+                            "" && (
                             <span id="error1">EnterTerm & Conditions</span>
                           )}
                       </Box>
                     </div>
-
                   </div>
                 </div>
 
@@ -2456,11 +2457,11 @@ const CreateHolidayPackage = () => {
                 <div className="buttonBoxPackage-new">
                   {/* <button className="draft">Save As Draft</button> */}
                   <button type="submit" class="packageSubmit">
-                     {loader ? (
+                    {loader ? (
                       <div id="packageloadingdetails"></div>
-                    ) : 
-                    "Submit Request"
-                     } 
+                    ) : (
+                      "Submit Request"
+                    )}
                   </button>
                 </div>
               </div>
@@ -2483,12 +2484,10 @@ const CreateHolidayPackage = () => {
               className="packageModelimageContainerClose"
               onClick={() => {
                 setOpen(false);
-                navigate("/")
+                navigate("/");
               }}
             >
-
-              <IoIosClose size={"30px"}  color="#fff" />
-
+              <IoIosClose size={"30px"} color="#fff" />
             </div>
             <div className="packageModelimageContainer">
               <img src={loginOtp} alt="loginGif" />
@@ -2500,7 +2499,6 @@ const CreateHolidayPackage = () => {
               <div>
                 <button
                   className="packageModelBtnn"
-                  
                   onClick={() => navigate("/onbording")}
                 >
                   Continue

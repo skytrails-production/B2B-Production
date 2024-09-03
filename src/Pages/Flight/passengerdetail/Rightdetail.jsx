@@ -56,8 +56,7 @@ const KeyValue = ({ data, value }) => {
               wordWrap: "break-word",
               width: "100px",
               textAlign: "left",
-              marginLeft: "70px"
-
+              marginLeft: "70px",
             }}
           >
             Rs. {value}.00
@@ -68,7 +67,7 @@ const KeyValue = ({ data, value }) => {
   );
 };
 
-export default function Popularfilter({baggageamount, mealamount}) {
+export default function Popularfilter({ baggageamount, mealamount }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const reducerState = useSelector((state) => state);
@@ -83,16 +82,8 @@ export default function Popularfilter({baggageamount, mealamount}) {
 
   let total = 0;
 
-
-
-
-
-
-
-
   return (
     <>
-
       {fareQuote === 0 ? (
         <>
           <div className="priceSummary">
@@ -115,21 +106,24 @@ export default function Popularfilter({baggageamount, mealamount}) {
                       <p>hotel name</p>
                     </div> */}
                     <div className="totCOmm">
-                      <div >
+                      <div>
                         <span>{formattedDate}</span>
                         <p>{data1?.Airline?.FlightNumber}</p>
                         <p>{data1?.Airline?.FareClass} Class</p>
                       </div>
-
                     </div>
                     <div className="priceChart">
-                      <div >
+                      <div>
                         <span className="text-bold">From</span>
-                        <p className="text-bold">{data1?.Origin?.Airport?.AirportCode}</p>
+                        <p className="text-bold">
+                          {data1?.Origin?.Airport?.AirportCode}
+                        </p>
                       </div>
-                      <div >
+                      <div>
                         <span className="text-bold">To</span>
-                        <p className="text-bold">{data1?.Destination?.Airport?.AirportCode}</p>
+                        <p className="text-bold">
+                          {data1?.Destination?.Airport?.AirportCode}
+                        </p>
                       </div>
                       {/* <div >
                         <span>Other Tax</span>
@@ -140,7 +134,6 @@ export default function Popularfilter({baggageamount, mealamount}) {
                         <p className="text-bold">2</p>
                       </div> */}
                     </div>
-
                   </>
                 );
               });
@@ -152,42 +145,57 @@ export default function Popularfilter({baggageamount, mealamount}) {
                     {data?.PassengerType === 1 && (
                       <>
                         <span>Adult x {data?.PassengerCount}</span>
-                        <p>{'₹'}{data?.BaseFare + data?.Tax}</p>
-
+                        <p>
+                          {"₹"}
+                          {data?.BaseFare + data?.Tax}
+                        </p>
                       </>
                     )}
                     {data?.PassengerType === 2 && (
                       <>
                         <span>Child x {data?.PassengerCount}</span>
-                        <p>{'₹'}{data?.BaseFare + data?.Tax}</p>
+                        <p>
+                          {"₹"}
+                          {data?.BaseFare + data?.Tax}
+                        </p>
                       </>
                     )}
                     {data?.PassengerType === 3 && (
                       <>
                         <span>Infant x {data?.PassengerCount}</span>
-                        <p>{'₹'}{data?.BaseFare + data?.Tax}</p>
+                        <p>
+                          {"₹"}
+                          {data?.BaseFare + data?.Tax}
+                        </p>
                       </>
                     )}
-
-
                   </div>
                 );
               })}
-
             </div>
 
             <div className="TotGst">
               <div>
                 <span>Others : </span>
                 {/* <p>{totalAmount}</p> */}
-                <p>{'₹'}{markUpamount+baggageamount+mealamount}</p>
+                <p>
+                  {"₹"}
+                  {markUpamount + baggageamount + mealamount}
+                </p>
               </div>
-              <div >
+              <div>
                 <span>Grand Total:</span>
-                <p>{'₹'}{fareValue?.Fare?.BaseFare +
-                  fareValue?.Fare?.Tax +
-                  fareValue?.Fare?.OtherCharges +
-                  markUpamount + baggageamount+mealamount}</p>
+                <p>
+                  {"₹"}
+                  {(
+                    fareValue?.Fare?.BaseFare +
+                    fareValue?.Fare?.Tax +
+                    fareValue?.Fare?.OtherCharges +
+                    markUpamount +
+                    baggageamount +
+                    mealamount
+                  ).toFixed()}
+                </p>
               </div>
             </div>
           </div>
@@ -199,10 +207,6 @@ export default function Popularfilter({baggageamount, mealamount}) {
           </div>
         </>
       )}
-
     </>
   );
 }
-
-
-

@@ -97,7 +97,7 @@ const Leftdetail = ({ totalAmount, setamount, mealamount, setmeal }) => {
     LastName: "",
     PaxType: 1,
     DateOfBirth: "",
-    Gender: 1,
+    Gender: "",
     PassportNo: "",
     PassportExpiry: "",
     AddressLine1: "test",
@@ -125,7 +125,7 @@ const Leftdetail = ({ totalAmount, setamount, mealamount, setmeal }) => {
     LastName: "",
     PaxType: 2,
     DateOfBirth: "",
-    Gender: 1,
+    Gender: "",
     PassportNo: "",
     PassportExpiry: "",
     Fare: farePrice,
@@ -139,7 +139,7 @@ const Leftdetail = ({ totalAmount, setamount, mealamount, setmeal }) => {
     LastName: "",
     PaxType: 3,
     DateOfBirth: "",
-    Gender: 1,
+    Gender: "",
     PassportNo: "",
     PassportExpiry: "",
     Fare: farePrice,
@@ -354,7 +354,7 @@ const Leftdetail = ({ totalAmount, setamount, mealamount, setmeal }) => {
     // console.warn(passengerList, "passengerListemailValnooooooooooooooooooooooooooooo");
     const valid = await passengerData.filter(
       (item) =>
-        item.FirstName === "" || item.LastName === "" || item.DateOfBirth === ""
+        item.FirstName === "" || item.LastName === "" || item.DateOfBirth === "" || item.Gender === ""
     );
     // const res= isValidEmail(passengerList[0].Email)
     const emailVal = await passengerList.filter(
@@ -757,7 +757,7 @@ const Leftdetail = ({ totalAmount, setamount, mealamount, setmeal }) => {
         </div>
 
         <div className="singleFlightBoxFive">
-          <span>₹{flightFare}</span>
+          <span>₹{(flightFare).toFixed()}</span>
           <p>Publish</p>
         </div>
       </div>
@@ -869,10 +869,15 @@ const Leftdetail = ({ totalAmount, setamount, mealamount, setmeal }) => {
                               className="form_input_select"
                               onChange={(e) => handleServiceChange(e, i)}
                             >
-                              <option value="1">Female</option>
-                              <option value="2">Male</option>
-                              <option value="3">Other</option>
+                            <option value="">Select Gender</option>
+                            <option value="1">Male</option>
+                              <option value="2">Female</option>
+                              
+                              {/* <option value="3">Other</option> */}
                             </select>
+                            {passengerData[i].Gender == "" && sub && (
+                                <span id="error1">Enter Gender</span>
+                              )}
                           </div>
                         </div>
                         <div className="col-lg-4 col-md-6 col-sm-6">
@@ -1038,10 +1043,15 @@ const Leftdetail = ({ totalAmount, setamount, mealamount, setmeal }) => {
                                   handleServiceChange(e, i + Number(adults))
                                 }
                               >
-                                <option value="1">Female</option>
-                                <option value="2">Male</option>
-                                <option value="3">Other</option>
+                              <option value="">Select gender</option>
+                               <option value="1">Male</option>
+                                <option value="2">Female</option>
+                                {/* <option value="2">Male</option> */}
+                                {/* <option value="3">Other</option> */}
                               </select>
+                              {passengerData[Number(adults) + i].Gender == "" && sub && (
+                                <span id="error1">Enter Gender</span>
+                              )}
                             </div>
                           </div>
                           <div className="col-lg-4 col-md-6 col-sm-6">
@@ -1183,10 +1193,17 @@ const Leftdetail = ({ totalAmount, setamount, mealamount, setmeal }) => {
                                   )
                                 }
                               >
-                                <option value="1">Female</option>
-                                <option value="2">Male</option>
-                                <option value="3">Transgender</option>
+                              <option value="">Select gender</option>
+                                <option value="1">Male</option>
+                                <option value="2">Female</option>
+                              
+                                {/* <option value="3">other</option> */}
                               </select>
+                              {passengerData[
+                                i + Number(adults) + Number(childs)
+                              ].Gender == "" && sub && (
+                                <span id="error1">Enter Gender</span>
+                              )}
                             </div>
                           </div>
                           <div className="col-lg-4 col-md-6 col-sm-6">
