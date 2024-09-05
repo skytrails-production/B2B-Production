@@ -234,6 +234,7 @@ function PackageDetails() {
   }, [handleClose, handleDelete]);
 
   const columns = [
+    
     {
       field: "pakage_title",
       headerName: "Package Title",

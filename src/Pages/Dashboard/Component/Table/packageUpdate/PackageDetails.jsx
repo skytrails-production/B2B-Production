@@ -99,8 +99,9 @@ function PackageDetails() {
       const response = await axios.get(
         `${apiURL.baseURL}/skyTrails/international/getAllAdminPackage`
       );
-      // console.log(response.data, "----------------------");
-      setHolidayPackage(response.data.data.pakage);
+      const data = response.data.data.pakage;
+      const reversedData = data.reverse(); // Reverse the order of the data
+      setHolidayPackage(reversedData);
     } catch (error) {
       console.error("Error fetching holiday packages:", error);
     }
@@ -227,6 +228,23 @@ function PackageDetails() {
   }, [handleClose, handleDelete]);
 
   const columns = [
+    {
+      field: "createdAt",
+      headerName: "Created At",
+      width: 200,
+      headerClassName: "custom-header",
+      valueGetter: (params) => {
+        const createdAt = params.row.createdAt;
+        return createdAt
+          ? new Date(createdAt).toLocaleDateString("en-GB", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+            })
+          : "N/A";
+      },
+    },
+
     {
       field: "pakage_title",
       headerName: "Package Title",
