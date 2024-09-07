@@ -1,0 +1,20 @@
+.carouselContainer {
+    display: flex;
+    justify-content: center; /* Center the carousel horizontally */
+    width: 100%; /* Ensure the container takes full width */
+  }
+  
+  .carouselContainer .ant-carousel .slick-slide {
+    text-align: center; /* Center text (if any) in each slide */
+  }
+  
+  .PackageImg img {
+    width: 100%; /* Make sure images take full width of the slide */
+    height: auto; /* Maintain aspect ratio */
+  }
+  
+  /* Optional: To limit the maximum width of the carousel */
+  .carouselContainer .ant-carousel {
+    max-width: 800px; /* Adjust as needed */
+  }
+  

@@ -1298,7 +1298,7 @@ function ResponsiveDrawer(props) {
             <ListItemButton onClick={handleHolidayPackage}>
               <WebIcon sx={{ color: "white", fontSize: "15px" }} />
               <ListItemText style={{ color: "white", marginLeft: "5px" }}>
-                Edit Holiday Package
+                 Holiday Package
               </ListItemText>
             </ListItemButton>
           </ListItem>

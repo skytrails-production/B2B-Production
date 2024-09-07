@@ -11,12 +11,15 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import EditHolidayPackage from "./EditPackage";
 import ViewPackage from "./ViewPackage";
+import ViewPackageDetails from "./ViewPackageDetails";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { Alert } from "@mui/material";
+import { Spin } from "antd";
+import CloseIcon from "@mui/icons-material/Close"; // Import the Close icon
 function PackageDetails() {
   const reducerState = useSelector((state) => state);
   // const holidayPackage = reducerState?.searchResult?.packageSearchResult?.data?.data?.pakage;
@@ -30,6 +33,8 @@ function PackageDetails() {
   // }, []);
   const [holidayPackage, setHolidayPackage] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loadingApproval, setLoadingApproval] = useState({}); // Map for tracking loading states
+
   // const fetchHolidayPackages = async () => {
   //     try {
   //         const response = await axios.get(
@@ -93,6 +98,8 @@ function PackageDetails() {
   const [editPackageData, setEditPackageData] = useState(null);
   const [selectedPackageApprove, setSelectedPackageApprove] = useState("");
   const [selectedPackageDelete, setSelectedPackageDelete] = useState("");
+  const [packageDetails, setPackageDetails] = useState(null); // Store package details
+  const [isModalVisible, setIsModalVisible] = useState(false); // Control modal visibility
 
   const fetchHolidayPackages = async () => {
     try {
@@ -108,14 +115,67 @@ function PackageDetails() {
   };
   // view modal
   const [openView, setOpenView] = useState(false);
+  const [openViewDetails, setOpenViewDetails] = useState(false);
 
   const handleOpenView = (item) => {
     sessionStorage.setItem("selectedPackage", JSON.stringify(item));
     setOpenView(true);
   };
 
+  // const handleOpenViewDetails = (item) => {
+  //   sessionStorage.setItem("selectedPackage", JSON.stringify(item));
+  //   setOpenView(true);
+  // };
+
+  const handleOpenViewDetails = async (row) => {
+    const packageId = row._id;
+
+    // Set loading state for the specific package
+    setLoadingApproval((prevState) => ({ ...prevState, [packageId]: true }));
+
+    try {
+      // Fetch the package details using the provided GET API
+      const res = await axios.get(
+        `${apiURL.baseURL}/skyTrails/international/getone/${packageId}`
+      );
+
+      if (res.status === 200 && res.data) {
+        const packageDetails = res.data;
+
+        // Save the fetched package details in localStorage
+        localStorage.setItem("packageDetails", JSON.stringify(packageDetails));
+
+        // Retrieve and console the stored package details
+        const storedPackageDetails = JSON.parse(
+          localStorage.getItem("packageDetails")
+        );
+        console.log("Stored package details:", storedPackageDetails);
+
+        setOpenViewDetails(true);
+
+        // Handle the fetched package details (e.g., show in modal or console)
+        setPackageDetails(packageDetails);
+
+        // Open a modal to show the details
+        setIsModalVisible(true);
+      } else {
+        toast.error("Failed to fetch package details.");
+      }
+    } catch (error) {
+      console.error("Error fetching package details:", error);
+      toast.error("Error fetching package details. Please try again.");
+    } finally {
+      // Reset loading state for the specific package
+      setLoadingApproval((prevState) => ({ ...prevState, [packageId]: false }));
+    }
+  };
+
   const handleCloseView = () => {
     setOpenView(false);
+  };
+
+  const handleCloseViewDetails = () => {
+    setOpenViewDetails(false);
   };
 
   // view modal
@@ -128,9 +188,47 @@ function PackageDetails() {
 
   const handleCloseApprove = () => setOpenApprove(false);
 
+  // const handleApprove = async (event, row) => {
+  //   const packageId = row._id;
+  //   const activeStatus = event.target.value;
+  //   try {
+  //     const res = await axios({
+  //       method: "post",
+  //       url: `${apiURL.baseURL}/skyTrails/international/setactive`,
+  //       data: {
+  //         pakageId: packageId,
+  //         isAdmin: isAdmin,
+  //         activeStatus: activeStatus,
+  //       },
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //     if (res.status === 200) {
+  //       handleCloseApprove();
+  //       fetchHolidayPackages();
+  //       toast.success("Package approved successfully!", {
+  //         position: "top-right",
+  //         autoClose: 3000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.error("error while approving this package");
+  //   }
+  // };
+
+  // Handle the approval of a specific package
   const handleApprove = async (event, row) => {
     const packageId = row._id;
     const activeStatus = event.target.value;
+
+    // Set loading state for the specific package
+    setLoadingApproval((prevState) => ({ ...prevState, [packageId]: true }));
+
     try {
       const res = await axios({
         method: "post",
@@ -144,20 +242,20 @@ function PackageDetails() {
           "Content-Type": "application/json",
         },
       });
+
       if (res.status === 200) {
-        handleCloseApprove();
-        fetchHolidayPackages();
+        fetchHolidayPackages(); // Refresh packages
         toast.success("Package approved successfully!", {
           position: "top-right",
           autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
         });
       }
     } catch (error) {
-      console.error("error while approving this package");
+      console.error("Error while approving package:", error);
+      toast.error("Error approving package. Please try again.");
+    } finally {
+      // Reset loading state for the specific package
+      setLoadingApproval((prevState) => ({ ...prevState, [packageId]: false }));
     }
   };
 
@@ -225,7 +323,7 @@ function PackageDetails() {
 
   useEffect(() => {
     fetchHolidayPackages();
-  }, [handleClose, handleDelete]);
+  }, []);
 
   const columns = [
     {
@@ -343,25 +441,42 @@ function PackageDetails() {
       headerName: "Status",
       headerClassName: "custom-header",
       width: 200,
-      renderCell: (params) => (
-        <Select
-          value={params.row.is_active}
-          onChange={(event) => handleApprove(event, params.row)}
-          style={{ border: "none", width: "145px" }}
-        >
-          <MenuItem value={1}>
-            <span style={{ color: "green" }}>Approved</span>
-          </MenuItem>
-          <MenuItem value={0}>
-            <span style={{ color: "#21325D" }}>Not-approved</span>
-          </MenuItem>
-          <MenuItem value={2}>
-            <span style={{ color: "#FFA500" }}>Archive</span>
-          </MenuItem>
-        </Select>
-      ),
-    },
+      renderCell: (params) => {
+        const isLoading = loadingApproval[params.row._id]; // Check if the current package is loading
 
+        return (
+          <div>
+            {isLoading ? (
+              <div
+                style={{
+                  display: "flex",
+                  textAlign: "center",
+                  marginLeft: "40px",
+                }}
+              >
+                <Spin size="large" />
+              </div>
+            ) : (
+              <Select
+                value={params.row.is_active}
+                onChange={(event) => handleApprove(event, params.row)}
+                style={{ border: "none", width: "145px" }}
+              >
+                <MenuItem value={1}>
+                  <span style={{ color: "green" }}>Approved</span>
+                </MenuItem>
+                <MenuItem value={0}>
+                  <span style={{ color: "#21325D" }}>Not-approved</span>
+                </MenuItem>
+                <MenuItem value={2}>
+                  <span style={{ color: "#FFA500" }}>Archive</span>
+                </MenuItem>
+              </Select>
+            )}
+          </div>
+        );
+      },
+    },
     {
       field: "view",
       headerName: "View",
@@ -373,6 +488,20 @@ function PackageDetails() {
           onClick={() => handleOpenView(params.row)}
         >
           View
+        </Button>
+      ),
+    },
+    {
+      field: "viewDetails",
+      headerName: "View-Details",
+      headerClassName: "custom-header",
+      width: 150,
+      renderCell: (params) => (
+        <Button
+          style={{ color: "#21325D" }}
+          onClick={() => handleOpenViewDetails(params.row)}
+        >
+          View Details
         </Button>
       ),
     },
@@ -409,7 +538,7 @@ function PackageDetails() {
           }}
         >
           <Typography variant="h5" className="adtable-heading">
-            Edit Holiday Package
+            Holiday Packages
           </Typography>
         </div>
         <div style={{ width: "100%", backgroundColor: "#fff" }}>
@@ -633,6 +762,73 @@ function PackageDetails() {
                   width: "70px",
                   borderRadius: "5px",
                   boxShadow: "2px 5px grey",
+                }}
+              >
+                Close
+              </button>
+            </Box>
+          </Box>
+        </Modal>
+
+        <Modal
+          open={openViewDetails}
+          onClose={handleCloseViewDetails}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "100%",
+              maxWidth: "80%",
+              maxHeight: "90vh",
+              bgcolor: "background.paper",
+              border: "2px solid #000",
+              boxShadow: 24,
+              p: 4,
+              overflowY: "auto",
+              borderRadius: "8px", // Optional: Add border radius for rounded corners
+              position: "relative", // Add relative positioning for the close icon
+            }}
+          >
+            {/* Close Icon */}
+            <CloseIcon
+              onClick={handleCloseViewDetails}
+              sx={{
+                position: "absolute",
+                top: "10px",
+                right: "10px",
+                cursor: "pointer",
+                color: "#000",
+                fontSize: "1.5rem", // Adjust the font size as needed
+              }}
+            />
+            {/* Modal Content */}
+            <Box>
+              <ViewPackageDetails />
+            </Box>
+            {/* Optional: Close Button */}
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                mt: 2, // Margin top for spacing
+              }}
+            >
+              <button
+                onClick={handleCloseViewDetails}
+                style={{
+                  backgroundColor: "blue",
+                  color: "white",
+                  width: "70px",
+                  borderRadius: "5px",
+                  boxShadow: "2px 5px grey",
+                  border: "none",
+                  padding: "5px",
+                  cursor: "pointer",
                 }}
               >
                 Close

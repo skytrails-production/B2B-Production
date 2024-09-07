@@ -376,7 +376,7 @@ function PackageDetails() {
         }}
       >
         <Typography variant="h5" className="adtable-heading">
-          Edit Holiday Package
+           Holiday Package
         </Typography>
       </div>
       {access !== "PACKAGE_HANDLER" ? (

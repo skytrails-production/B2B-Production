@@ -2314,7 +2314,7 @@ export default function VerticalTabs() {
                   <ReceiptOutlinedIcon sx={{ color: "white" }} />
                 </ListItemIcon>
                 <ListItemText
-                  primary="Edit Holiday Package"
+                  primary="Holiday Package"
                   sx={{ opacity: open ? 1 : 0, color: "white" }}
                 />
               </ListItemButton>
