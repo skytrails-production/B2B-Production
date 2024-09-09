@@ -76,10 +76,10 @@ const ViewPackageDetails = () => {
   const storedPackageDetails = JSON.parse(
     localStorage.getItem("packageDetails")
   );
-  console.log("Stored package details:", storedPackageDetails);
+
   console.log(
-    "Stored package details",
-    storedPackageDetails?.data.pakage_title
+    storedPackageDetails?.data?.package_img,
+    "(((((((((()))))))))))))"
   );
 
   return (
@@ -102,11 +102,13 @@ const ViewPackageDetails = () => {
               </span>
             </div>
           </div>
+          {/* <div>
+          //<img src={storedPackageDetails?.data?.package_img} alt="" />
+          </div> */}
           <div className="carouselContainer">
             <Carousel autoplay>
-              {storedPackageDetails?.data?.package_img &&
-              Array.isArray(storedPackageDetails?.data?.package_img) ? (
-                storedPackageDetails?.data?.package_img.map((imgUrl, index) => (
+              {storedPackageDetails?.data?.package_img?.length ? (
+                storedPackageDetails.data.package_img.map((imgUrl, index) => (
                   <div key={index} className="PackageImg">
                     <img
                       src={imgUrl}
@@ -117,7 +119,11 @@ const ViewPackageDetails = () => {
                 ))
               ) : (
                 <div>
-                  <p>No images available</p>
+                  <img
+                    src={storedPackageDetails?.data?.pakage_img}
+                    alt="Fallback"
+                    style={{ width: "100%", height: "auto" }} // Adjust width and height
+                  />
                 </div>
               )}
             </Carousel>
