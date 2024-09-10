@@ -51,7 +51,7 @@ function Apppost() {
       const response = await axios.get(
         `${apiURL.baseURL}/skyTrails/api/admin/forumPost/getPost?page=${pageNumber}&searchTerm=${searchTerm}`
       );
-    
+
       const val = response.data.result.post;
       setPosts(val);
       const totalCount = response.data.result.totalCount;
@@ -71,7 +71,7 @@ function Apppost() {
 
   const handleSearch = (event) => {
     const newSearchTerm = event.target.value;
-   
+
     setSearchTerm(newSearchTerm);
     setCurrentPage(1);
   };
@@ -102,7 +102,7 @@ function Apppost() {
   const handleApprove = async (storyId) => {
     try {
       setAp(storyId);
-     
+
       const response = await axios.put(
         `${apiURL.baseURL}/skyTrails/api/admin/approvePost`, // URL endpoint
         { storyId: storyId } // Data to be sent in the request body
@@ -114,7 +114,6 @@ function Apppost() {
 
       setPosts(updatedPosts);
 
-    
       fetchData(currentPage);
     } catch (error) {
       console.error("Error approving post:", error);
@@ -129,16 +128,15 @@ function Apppost() {
         `${apiURL.baseURL}/skyTrails/api/admin/addOnTrending`,
         { storyId: storyId }
       );
-     
+
       fetchData(currentPage);
-      
     } catch (error) {
       console.error("Error marking post as trending:", error);
     } finally {
       setLove(null);
     }
   };
-  
+
   const handleApproveMultiple = async () => {
     try {
       if (selectedPostIds.length === 0) {
@@ -179,7 +177,6 @@ function Apppost() {
     );
   });
 
- 
   const columns = [
     {
       field: "checkbox",
@@ -516,4 +513,3 @@ function Apppost() {
 }
 
 export default Apppost;
-

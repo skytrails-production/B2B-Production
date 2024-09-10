@@ -9,8 +9,9 @@ import {
   Pagination,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { DataGrid,GridToolbar } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { apiURL } from "../../Constants/constant";
+
 const AllEventsTable = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,7 +19,7 @@ const AllEventsTable = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
-  const [locationNames, setLocationNames] = useState({});
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -59,42 +60,40 @@ const AllEventsTable = () => {
       headerName: "Title",
       width: 400,
       renderCell: (params) => (
-        <div style={{ whiteSpace: 'pre-line' }}>{params.row.title}</div>
+        <div style={{ whiteSpace: "pre-line" }}>{params.row.title}</div>
       ),
     },
-    { 
-      field: "content", 
-      headerName: "Content", 
+    {
+      field: "content",
+      headerName: "Content",
       width: 220,
       renderCell: (params) => (
-        // <div style={{ padding: '8px' }}>
-          <textarea
-            style={{
-              width: '100%',
-              height: '100%',
-              border: '1px solid #ccc',
-              borderRadius: '4px',
-              padding: '4px',
-              resize: 'none',
-              boxSizing: 'border-box',
-            }}
-            readOnly
-            value={params.row.content}
-          />
-        // </div>
+        <textarea
+          style={{
+            width: "100%",
+            height: "100%",
+            border: "1px solid #ccc",
+            borderRadius: "4px",
+            padding: "4px",
+            resize: "none",
+            boxSizing: "border-box",
+          }}
+          readOnly
+          value={params.row.content}
+        />
       ),
     },
-    { 
-      field: "startDate", 
-      headerName: "Start Date", 
+    {
+      field: "startDate",
+      headerName: "Start Date",
       width: 220,
       renderCell: (params) => (
         <div>{new Date(params.value).toLocaleDateString()}</div>
       ),
     },
-    { 
-      field: "endDate", 
-      headerName: "End Date", 
+    {
+      field: "endDate",
+      headerName: "End Date",
       width: 220,
       renderCell: (params) => (
         <div>{new Date(params.value).toLocaleDateString()}</div>
@@ -126,7 +125,6 @@ const AllEventsTable = () => {
       ),
     },
   ];
-
 
   return (
     <Paper
@@ -164,29 +162,45 @@ const AllEventsTable = () => {
             ),
           }}
         />
-        <Typography variant="h5" className="adtable-heading" style={{ marginLeft: "20px" }}>
+        <Typography
+          variant="h5"
+          className="adtable-heading"
+          style={{ marginLeft: "20px" }}
+        >
           All Events
         </Typography>
       </div>
-      <div style={{ width: "100%" }}>
-        <DataGrid
-          rows={data}
-          columns={columns}
-          pageSize={pageSize}
-          pagination
-          page={page}
-          onPageChange={(newPage) => handlePageChange(newPage)}
-          getRowId={(row) => row._id}
-          components={{
-            Toolbar: () => (
-              <div style={{ marginTop: '10px' }}>
-                <GridToolbar />
-              </div>
-            ),
-            Pagination:()=>null,
-          }}
-        />
-      </div>
+
+      {loading ? (
+        <Typography variant="h6" align="center" style={{ marginTop: 20 }}>
+          Loading...
+        </Typography>
+      ) : data.length === 0 ? (
+        <Typography variant="h6" align="center" style={{ marginTop: 20 }}>
+          No data available
+        </Typography>
+      ) : (
+        <div style={{ width: "100%" }}>
+          <DataGrid
+            rows={data}
+            columns={columns}
+            pageSize={pageSize}
+            pagination
+            page={page}
+            onPageChange={(newPage) => handlePageChange(newPage)}
+            getRowId={(row) => row._id}
+            components={{
+              Toolbar: () => (
+                <div style={{ marginTop: "10px" }}>
+                  <GridToolbar />
+                </div>
+              ),
+              Pagination: () => null,
+            }}
+          />
+        </div>
+      )}
+
       <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
         <Pagination
           count={totalPages}

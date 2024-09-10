@@ -8,11 +8,9 @@ import {
   Typography,
   Paper,
   Button,
-
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import userApi from "../../../../../Redux/API/api";
-
 
 // const useStyles = makeStyles((theme) => ({
 //   toolbar: {
@@ -24,7 +22,6 @@ import userApi from "../../../../../Redux/API/api";
 //     marginLeft: theme.spacing(2),
 //   },
 // }));
-
 
 const FixedDepartureControl = () => {
   // const classes = useStyles();
@@ -80,7 +77,6 @@ const FixedDepartureControl = () => {
     (item) =>
       item.loginName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.numberOfSeats.toString().includes(searchTerm.toLowerCase()) ||
-      item.phoneNo.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.soldTo.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.emailId.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -91,18 +87,20 @@ const FixedDepartureControl = () => {
           itemName.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
           itemName.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
           itemName.passport.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          itemName.passportExpiry.toLowerCase().includes(searchTerm.toLowerCase())
+          itemName.passportExpiry
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase())
       )
   );
 
   const columns = [
-    { field: "loginName", headerName: "Login Name", width: 220, },
-    { field: "numberOfSeats", headerName: "Number Of Seat", width: 220, },
-    { field: "phoneNo", headerName: "Phone Number", width: 220, },
-    { field: "soldTo", headerName: "Sold To", width: 220, },
-    { field: "emailId", headerName: "Email", width: 220, },
-    { field: "status", headerName: "Status", width: 220, },
-    { field: "finalSalePrice", headerName: "Final Sale Price", width: 220, },
+    { field: "loginName", headerName: "Login Name", width: 220 },
+    { field: "numberOfSeats", headerName: "Number Of Seat", width: 220 },
+    { field: "phoneNo", headerName: "Phone Number", width: 220 },
+    { field: "soldTo", headerName: "Sold To", width: 220 },
+    { field: "emailId", headerName: "Email", width: 220 },
+    { field: "status", headerName: "Status", width: 220 },
+    { field: "finalSalePrice", headerName: "Final Sale Price", width: 220 },
     {
       field: "names",
       headerName: "Passenger",
@@ -125,7 +123,9 @@ const FixedDepartureControl = () => {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => handleUpdate(params.row.flightId, params.row.numberOfSeats)}
+          onClick={() =>
+            handleUpdate(params.row.flightId, params.row.numberOfSeats)
+          }
         >
           Update
         </Button>
@@ -134,8 +134,98 @@ const FixedDepartureControl = () => {
   ];
 
   return (
-    <Paper className="subada-table-container" elevation={3} style={{ position: "relative", width: "100%", backgroundColor: "white", padding: "20px", boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)" }}>
-      <div className="adsearch-bar" style={{ position: "absolute", top: 10, zIndex: 1, fontWeight: "bold", display: "flex", alignItems: "center" }}>
+    // <Paper
+    //   className="subada-table-container"
+    //   elevation={3}
+    //   style={{
+    //     position: "relative",
+    //     width: "100%",
+    //     backgroundColor: "white",
+    //     padding: "20px",
+    //     boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+    //   }}
+    // >
+    //   <div
+    //     className="adsearch-bar"
+    //     style={{
+    //       position: "absolute",
+    //       top: 10,
+    //       zIndex: 1,
+    //       fontWeight: "bold",
+    //       display: "flex",
+    //       alignItems: "center",
+    //     }}
+    //   >
+    //     <TextField
+    //       type="text"
+    //       value={searchTerm}
+    //       onChange={(e) => handleSearch(e)}
+    //       placeholder="Search by name, ID, etc."
+    //       InputProps={{
+    //         startAdornment: (
+    //           <InputAdornment position="start">
+    //             <SearchIcon />
+    //           </InputAdornment>
+    //         ),
+    //       }}
+    //     />
+    //     <Typography
+    //       variant="h5"
+    //       className="adtable-heading"
+    //       style={{ marginLeft: "20px" }}
+    //     >
+    //       Fixed Departure Control
+    //     </Typography>
+    //   </div>
+    //   <div style={{ width: "100%", marginTop: "25px", marginLeft: "20px" }}>
+    //     {filteredData.length === 0 ? (
+    //       <Typography>No data available</Typography>
+    //     ) : (
+    //       <DataGrid
+    //         rows={filteredData}
+    //         columns={columns}
+    //         pageSize={pageSize}
+    //         pagination
+    //         page={currentPage}
+    //         onPageChange={handlePageChange}
+    //         rowsPerPageOptions={[5, 10, 20]}
+    //         onPageSizeChange={handlePageSizeChange}
+    //         disableSelectionOnClick
+    //         getRowId={(row) => row._id}
+    //         components={{
+    //           Toolbar: () => (
+    //             <div style={{ marginTop: "10px" }}>
+    //               <GridToolbar />
+    //             </div>
+    //           ),
+    //           Pagination: () => null,
+    //         }}
+    //       />
+    //     )}
+    //   </div>
+    // </Paper>
+    <Paper
+      className="subada-table-container"
+      elevation={3}
+      style={{
+        position: "relative",
+        width: "100%",
+        backgroundColor: "white",
+        padding: "20px",
+        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+      }}
+    >
+      <div
+        className="adsearch-bar"
+        style={{
+          position: "absolute",
+          top: 10,
+          zIndex: 1,
+          fontWeight: "bold",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
         <TextField
           type="text"
           value={searchTerm}
@@ -149,13 +239,29 @@ const FixedDepartureControl = () => {
             ),
           }}
         />
-        <Typography variant="h5" className="adtable-heading" style={{ marginLeft: "20px" }}>
+        <Typography
+          variant="h5"
+          className="adtable-heading"
+          style={{ marginLeft: "20px" }}
+        >
           Fixed Departure Control
         </Typography>
       </div>
-      <div style={{ width: "100%" ,marginTop:'25px',marginLeft:'20px'}}>
-        {filteredData.length === 0 ? (
-          <Typography>No data available</Typography>
+      <div style={{ width: "100%", marginTop: "25px", marginLeft: "20px" }}>
+        {loading ? (
+          <Typography
+            variant="h6"
+            style={{ textAlign: "center", marginTop: "20px" }}
+          >
+            Loading...
+          </Typography>
+        ) : filteredData.length === 0 ? (
+          <Typography
+            variant="h6"
+            style={{ textAlign: "center", marginTop: "20px" }}
+          >
+            No data available.
+          </Typography>
         ) : (
           <DataGrid
             rows={filteredData}
@@ -170,19 +276,17 @@ const FixedDepartureControl = () => {
             getRowId={(row) => row._id}
             components={{
               Toolbar: () => (
-                <div style={{ marginTop: '10px' }}>
+                <div style={{ marginTop: "10px" }}>
                   <GridToolbar />
                 </div>
               ),
-              Pagination:()=>null,
+              Pagination: () => null,
             }}
           />
         )}
       </div>
     </Paper>
   );
-
-
 };
 
 export default FixedDepartureControl;
