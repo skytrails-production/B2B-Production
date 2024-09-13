@@ -33,7 +33,7 @@ import LocationCityIcon from "@mui/icons-material/LocationCity";
 import WifiPasswordIcon from "@mui/icons-material/WifiPassword";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import information from "../../../Images/information.png";
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Box as MuiBox, Typography } from "@mui/material";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -43,20 +43,20 @@ import {
   searchOnePackageAction,
 } from "../../../Redux/OnePackageSearchResult/actionOneSearchPackage";
 import { useEffect } from "react";
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
 import Divider from "@mui/material/Divider";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { Link, useNavigate } from "react-router-dom";
-import goa from '../../../Images/goa.jpg'
+import goa from "../../../Images/goa.jpg";
 
 const HolidayPackageResult = () => {
   const reducerState = useSelector((state) => state);
   const dispatch = useDispatch();
-  const navigate = useNavigate()
-  const [expanded, setExpanded] = React.useState('panel1');
+  const navigate = useNavigate();
+  const [expanded, setExpanded] = React.useState("panel1");
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
@@ -65,12 +65,16 @@ const HolidayPackageResult = () => {
     reducerState?.searchResult?.packageSearchResult?.data?.data?.pakage;
   useEffect(() => {
     // console.warn(reducerState?.searchResult?.packageSearchResult?.data?.data?.pakage, "reducerState?.searchResult?.packageSearchResult?.data?.data?.pakage")
-    if (reducerState?.searchResult?.packageSearchResult?.data?.data?.pakage === undefined || reducerState?.searchResult?.packageSearchResult?.data?.data?.pakage.length === 0) {
-      navigate("/holidayPackage")
+    if (
+      reducerState?.searchResult?.packageSearchResult?.data?.data?.pakage ===
+        undefined ||
+      reducerState?.searchResult?.packageSearchResult?.data?.data?.pakage
+        .length === 0
+    ) {
+      navigate("/holidayPackage");
       return;
     }
-  }, [])
-
+  }, []);
 
   const searchOneHoliday = (id) => {
     const payload = {
@@ -82,12 +86,10 @@ const HolidayPackageResult = () => {
     navigate("/holidaypackage/Holidaybooknow");
   };
 
-
   const savedDataString = sessionStorage.getItem("searchPackageData");
   const savedData = JSON.parse(savedDataString);
   const savedDestination = savedData?.destination;
   const savedDays = savedData?.days;
-
 
   const accordionRef = useRef(null);
   useEffect(() => {
@@ -95,19 +97,15 @@ const HolidayPackageResult = () => {
       if (window.innerWidth <= 991) {
         setExpanded(false);
       } else {
-        setExpanded('panel1');
+        setExpanded("panel1");
       }
     };
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
     handleResize();
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
- 
-
-
-
 
   const [sortOption, setSortOption] = useState("lowToHigh");
 
@@ -115,12 +113,9 @@ const HolidayPackageResult = () => {
     setSortOption(event.target.value);
   };
 
-
-
   const [selectedCategory, setSelectedCategory] = useState([]);
 
-  const [searchInput, setSearchInput] = useState('');
-
+  const [searchInput, setSearchInput] = useState("");
 
   const maxPrice = filteredPackage?.reduce((max, hotel) => {
     return Math.max(max, hotel?.pakage_amount?.amount || 0);
@@ -130,25 +125,22 @@ const HolidayPackageResult = () => {
   }, Infinity);
 
   // console.log(maxPrice, "max pric")
-  const [priceRangeValue, setPriceRangeValue] = useState(maxPrice + 5001)
+  const [priceRangeValue, setPriceRangeValue] = useState(maxPrice + 5001);
 
   const handlePriceRangeChange = (event) => {
     setPriceRangeValue(event.target.value);
   };
 
-
   useEffect(() => {
     setPriceRangeValue(maxPrice + 5001);
-  }, [maxPrice])
-
-
+  }, [maxPrice]);
 
   const handleSearchChange = (event) => {
     setSearchInput(event.target.value);
   };
 
   const handleRadioChange = (event) => {
-    setSearchInput('');
+    setSearchInput("");
     const selectedValue = event.target.value;
     const radioGroupName = event.target.name;
 
@@ -157,7 +149,7 @@ const HolidayPackageResult = () => {
       document.querySelectorAll('input[type="checkbox"]').forEach((radio) => {
         radio.checked = false;
       });
-      return
+      return;
     }
 
     setSelectedCategory((prevSelectedCategory) => {
@@ -167,14 +159,14 @@ const HolidayPackageResult = () => {
       );
       updatedCategory = isValueSelected
         ? updatedCategory.filter(
-          (category) => category !== `${radioGroupName}:${selectedValue}`
-        )
+            (category) => category !== `${radioGroupName}:${selectedValue}`
+          )
         : [
-          ...updatedCategory.filter(
-            (category) => !category.startsWith(`${radioGroupName}:`)
-          ),
-          `${radioGroupName}:${selectedValue}`,
-        ];
+            ...updatedCategory.filter(
+              (category) => !category.startsWith(`${radioGroupName}:`)
+            ),
+            `${radioGroupName}:${selectedValue}`,
+          ];
 
       return updatedCategory;
     });
@@ -198,8 +190,6 @@ const HolidayPackageResult = () => {
   //     });
   //   }
   // };
-
-
 
   // console.log(filteredPackage, "filtered package");
   // const sortedAndFilteredResults = filteredPackage?.filter((item) => {
@@ -241,105 +231,124 @@ const HolidayPackageResult = () => {
   //     : b?.pakage_amount.amount - a?.pakage_amount.amount
   // );
 
-  const sortedAndFilteredResults = filteredPackage?.filter((item) => {
-    const packageName = item?.pakage_title?.toLowerCase();
-    const filteredDestinations = item?.destination?.map(destinationItem =>
-      destinationItem?.addMore.toLowerCase()
+  const sortedAndFilteredResults = filteredPackage
+    ?.filter((item) => {
+      const packageName = item?.pakage_title?.toLowerCase();
+      const filteredDestinations = item?.destination?.map((destinationItem) =>
+        destinationItem?.addMore.toLowerCase()
+      );
+
+      // const publishedPrice = item?.pakage_amount?.amount;
+      const noOfDays = item?.days;
+      // const starRating = item?.StarRating;
+      const categoryFilters = selectedCategory?.map((category) => {
+        const [groupName, value] = category.split(":");
+        switch (groupName) {
+          case "days":
+            switch (value) {
+              case "0-3Days":
+                return noOfDays >= 0 && noOfDays <= 3;
+              case "4-7Days":
+                return noOfDays >= 4 && noOfDays <= 7;
+              case "7-12Days":
+                return noOfDays >= 7 && noOfDays <= 12;
+              case "12-20Days":
+                return noOfDays >= 12 && noOfDays <= 20;
+              case "20-30Days":
+                return noOfDays >= 20 && noOfDays <= 30;
+            }
+          // case "price":
+          //   switch (value) {
+          //     case "25000":
+          //       return publishedPrice <= 25000;
+          //     case "25001":
+          //       return publishedPrice > 25001 && publishedPrice <= 50000;
+          //     case "50001":
+          //       return publishedPrice > 50001 && publishedPrice <= 75000;
+          //     case "75001":
+          //       return publishedPrice > 75001 && publishedPrice <= 100000;
+          //     case "100000":
+          //       return publishedPrice > 100000;
+          //   }
+
+          default:
+            return false;
+        }
+      });
+
+      const searchInputLower = searchInput?.toLowerCase();
+      const packageNameMatch = packageName?.includes(searchInputLower);
+      const destinationMatch = filteredDestinations?.some((dest) =>
+        dest.includes(searchInputLower)
+      );
+      const priceInRange = item?.pakage_amount?.amount <= priceRangeValue;
+      return (
+        categoryFilters?.every((filter) => filter) &&
+        (packageNameMatch || destinationMatch) &&
+        priceInRange
+      );
+    })
+    ?.sort((a, b) =>
+      sortOption === "lowToHigh"
+        ? a?.pakage_amount.amount - b?.pakage_amount.amount
+        : b?.pakage_amount.amount - a?.pakage_amount.amount
     );
-
-    // const publishedPrice = item?.pakage_amount?.amount;
-    const noOfDays = item?.days;
-    // const starRating = item?.StarRating;
-    const categoryFilters = selectedCategory?.map((category) => {
-      const [groupName, value] = category.split(':');
-      switch (groupName) {
-        case "days":
-          switch (value) {
-            case "0-3Days":
-              return noOfDays >= 0 && noOfDays <= 3;
-            case "4-7Days":
-              return noOfDays >= 4 && noOfDays <= 7;
-            case "7-12Days":
-              return noOfDays >= 7 && noOfDays <= 12;
-            case "12-20Days":
-              return noOfDays >= 12 && noOfDays <= 20;
-            case "20-30Days":
-              return noOfDays >= 20 && noOfDays <= 30;
-          }
-        // case "price":
-        //   switch (value) {
-        //     case "25000":
-        //       return publishedPrice <= 25000;
-        //     case "25001":
-        //       return publishedPrice > 25001 && publishedPrice <= 50000;
-        //     case "50001":
-        //       return publishedPrice > 50001 && publishedPrice <= 75000;
-        //     case "75001":
-        //       return publishedPrice > 75001 && publishedPrice <= 100000;
-        //     case "100000":
-        //       return publishedPrice > 100000;
-        //   }
-
-        default:
-          return false;
-      }
-    });
-
-    const searchInputLower = searchInput?.toLowerCase();
-    const packageNameMatch = packageName?.includes(searchInputLower);
-    const destinationMatch = filteredDestinations?.some(dest => dest.includes(searchInputLower));
-    const priceInRange = item?.pakage_amount?.amount <= priceRangeValue;
-    return categoryFilters?.every((filter) => filter) && (packageNameMatch || destinationMatch) && priceInRange;
-  })?.sort((a, b) =>
-    sortOption === "lowToHigh"
-      ? a?.pakage_amount.amount - b?.pakage_amount.amount
-      : b?.pakage_amount.amount - a?.pakage_amount.amount
-  );
-
-
+  console.log(sortedAndFilteredResults, "resultsssssss");
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [sortedAndFilteredResults])
+  }, [sortedAndFilteredResults]);
 
-
-// console.log("sortedAndFilteredResults",sortedAndFilteredResults);
-
-
-
+  // console.log("sortedAndFilteredResults",sortedAndFilteredResults);
 
   if (savedDataString === null || savedDataString === undefined) {
-    navigate("/holidayPackage")
+    navigate("/holidayPackage");
   }
 
   return (
-
     <div className="container-fluid margin-pecentage">
       <div className="row">
         <div className="col-lg-3">
-
-          <div className="packResFilterBox" >
-            <Accordion ref={accordionRef} expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+          <div className="packResFilterBox">
+            <Accordion
+              ref={accordionRef}
+              expanded={expanded === "panel1"}
+              onChange={handleChange("panel1")}
+            >
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
-                style={{ width: '100%', border: "none" }}
+                style={{ width: "100%", border: "none" }}
               >
-                <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
-
-                  <Typography style={{
-                    fontFamily: 'Montserrat',
-                    fontSize: '14px',
-                    fontWeight: '400',
-                    textAlign: 'center'
-
-                  }} ><FilterAltIcon style={{ fontWeight: "600", fontFamily: "Montserrat", fontSize: '14px' }} /> Filter</Typography>
+                <div
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Typography
+                    style={{
+                      fontFamily: "Montserrat",
+                      fontSize: "14px",
+                      fontWeight: "400",
+                      textAlign: "center",
+                    }}
+                  >
+                    <FilterAltIcon
+                      style={{
+                        fontWeight: "600",
+                        fontFamily: "Montserrat",
+                        fontSize: "14px",
+                      }}
+                    />{" "}
+                    Filter
+                  </Typography>
                   {/* <Typography style={{ color: '#0048FF', textDecoration: 'underline' }}>clear all</Typography> */}
                 </div>
               </AccordionSummary>
               <AccordionDetails>
                 <div className="flightFilterBox">
-                 
                   {/* <div className="innerFilter">
 
 
@@ -420,37 +429,46 @@ const HolidayPackageResult = () => {
 
                   </div> */}
 
-
-
                   <div className="innerFilter">
+                    <div style={{ display: "flex", justifyContent: "end" }}>
+                      <label
+                        className="sidebar-label-container ps-0"
+                        style={{
+                          paddingLeft: "35px",
+                          display: "flex",
+                          justifyContent: "end",
+                        }}
+                      >
+                        <input
+                          type="checkbox"
+                          onChange={handleRadioChange}
+                          value="All"
+                          name="test"
+                          checked={selectedCategory.includes("test:All")}
+                        />
+                        {/* <span className="checkmark"></span> */}
+                        <span
+                          style={{
+                            color: selectedCategory.length > 0 ? "red" : "gray",
+                          }}
+                        >
+                          Clear Filter
+                        </span>
+                      </label>
+                    </div>
 
-                <div style={{ display:"flex", justifyContent:"end"}}>
-                  <label className="sidebar-label-container ps-0" style={{paddingLeft:"35px", display:"flex", justifyContent:"end"}}>
-                    <input
-                      type="checkbox"
-                      onChange={handleRadioChange}
-                      value="All"
-                      name="test"
-                      checked={selectedCategory.includes("test:All")}
-                    />
-                    {/* <span className="checkmark"></span> */}
-                    <span style={{ color: selectedCategory.length > 0 ? "red" : "gray" }}>Clear Filter</span>
-                  </label>
+                    <div className="searchBarPackageFOrm">
+                      <input
+                        type="text"
+                        placeholder="Search by Name or Destination"
+                        className="inputSearch searchBarPackageFOrm"
+                        value={searchInput}
+                        style={{ width: "100%" }}
+                        onChange={handleSearchChange}
+                      />
+                    </div>
 
-                </div>
-
-                <div className="searchBarPackageFOrm">
-                  <input
-                    type="text"
-                    placeholder="Search by Name or Destination"
-                    className="inputSearch searchBarPackageFOrm"
-                    value={searchInput}
-                    style={{width:"100%"}}
-                    onChange={handleSearchChange}
-                  />
-                </div>
-
-                {/* <div>
+                    {/* <div>
                   <h2 className="sidebar-title">Sort By</h2>
                   <select className="highSelect"
                     value={sortOption}
@@ -460,83 +478,96 @@ const HolidayPackageResult = () => {
                   </select>
                 </div> */}
 
-                <div className="busDepartureMain">
-                  <h2 className="sidebar-title">Sort By</h2>
-                  <select
-                    className="highSelect"
-                    style={{width:"100%"}}
-                    value={sortOption}
-                    onChange={handleSortChange}
-                  >
-                    <option value="lowToHigh">Low to High</option>
-                    <option value="highToLow">High to Low</option>
-                  </select>
-                </div>
+                    <div className="busDepartureMain">
+                      <h2 className="sidebar-title">Sort By</h2>
+                      <select
+                        className="highSelect"
+                        style={{ width: "100%" }}
+                        value={sortOption}
+                        onChange={handleSortChange}
+                      >
+                        <option value="lowToHigh">Low to High</option>
+                        <option value="highToLow">High to Low</option>
+                      </select>
+                    </div>
 
+                    <div className="PackageDepartureMain">
+                      <h2 className="sidebar-title">By Price</h2>
+                      <div>
+                        <input
+                          type="range"
+                          min={minPrice + 1}
+                          max={maxPrice + 5001}
+                          step="5000"
+                          value={priceRangeValue}
+                          onChange={handlePriceRangeChange}
+                        />
+                        <span>
+                          Max price ₹{""}
+                          {priceRangeValue}
+                        </span>
+                      </div>
+                      <Divider
+                        sx={{ marginBottom: "15px", backgroundColor: "gray" }}
+                      />
+                    </div>
 
-                <div className="PackageDepartureMain">
-                  <h2 className="sidebar-title">By Price</h2>
-                  <div>
-                    <input
-                      type="range"
-                      min={minPrice + 1}
-                      max={maxPrice + 5001}
-                      step="5000"
-                      value={priceRangeValue}
-                      onChange={handlePriceRangeChange}
-                    />
-                    <span>Max price ₹{""}{priceRangeValue}</span>
-                  </div>
-                  <Divider sx={{ marginBottom: "15px", backgroundColor: "gray" }} />
-                </div>
+                    <div>
+                      <h2 className="sidebar-title">By Days</h2>
+                      <div>
+                        {[
+                          { value: "0-3Days", label: "0-3 Days" },
+                          { value: "4-7Days", label: "4-7 Days" },
+                          { value: "7-12Days", label: "7-12 Days" },
+                          { value: "12-20Days", label: "12-20 Days" },
+                          { value: "20-30Days", label: "20-30 Days" },
+                        ].map((duration, index) => {
+                          const itemCount = filteredPackage?.filter((item) => {
+                            const noOfDays = item?.days;
+                            switch (duration.value) {
+                              case "0-3Days":
+                                return noOfDays >= 0 && noOfDays <= 3;
+                              case "4-7Days":
+                                return noOfDays >= 4 && noOfDays <= 7;
+                              case "7-12Days":
+                                return noOfDays >= 7 && noOfDays <= 12;
+                              case "12-20Days":
+                                return noOfDays >= 12 && noOfDays <= 20;
+                              case "20-30Days":
+                                return noOfDays >= 20 && noOfDays <= 30;
+                              default:
+                                return false;
+                            }
+                          }).length;
 
-                <div>
-                  <h2 className="sidebar-title">By Days</h2>
-                  <div>
-                    {[
-                      { value: "0-3Days", label: "0-3 Days" },
-                      { value: "4-7Days", label: "4-7 Days" },
-                      { value: "7-12Days", label: "7-12 Days" },
-                      { value: "12-20Days", label: "12-20 Days" },
-                      { value: "20-30Days", label: "20-30 Days" }
-                    ].map((duration, index) => {
-                      const itemCount = filteredPackage?.filter(item => {
-                        const noOfDays = item?.days;
-                        switch (duration.value) {
-                          case "0-3Days":
-                            return noOfDays >= 0 && noOfDays <= 3;
-                          case "4-7Days":
-                            return noOfDays >= 4 && noOfDays <= 7;
-                          case "7-12Days":
-                            return noOfDays >= 7 && noOfDays <= 12;
-                          case "12-20Days":
-                            return noOfDays >= 12 && noOfDays <= 20;
-                          case "20-30Days":
-                            return noOfDays >= 20 && noOfDays <= 30;
-                          default:
-                            return false;
-                        }
-                      }).length;
+                          return (
+                            <label
+                              className="sidebar-label-container exceptionalFlex"
+                              key={index}
+                              style={{ paddingLeft: "35px" }}
+                            >
+                              <input
+                                type="checkbox"
+                                onChange={handleRadioChange}
+                                value={duration.value}
+                                name="days"
+                                checked={selectedCategory.includes(
+                                  `days:${duration.value}`
+                                )}
+                              />
+                              <span>({itemCount})</span>
+                              <span className="checkmark"></span>
+                              {duration.label}
+                            </label>
+                          );
+                        })}
+                      </div>
+                      <Divider
+                        sx={{ marginBottom: "15px", backgroundColor: "gray" }}
+                      />
+                    </div>
 
-                      return (
-                        <label className="sidebar-label-container exceptionalFlex" key={index} style={{paddingLeft:"35px"}}>
-                          <input
-                            type="checkbox"
-                            onChange={handleRadioChange}
-                            value={duration.value}
-                            name="days"
-                            checked={selectedCategory.includes(`days:${duration.value}`)}
-                          />
-                          <span>({itemCount})</span>
-                          <span className="checkmark"></span>{duration.label}
-                        </label>
-                      );
-                    })}
-                  </div>
-                  <Divider sx={{ marginBottom: "15px", backgroundColor: "gray" }} />
-                </div>
-
-                {/* <div>
+                    {/* <div>
                   <h2 className="sidebar-title">By Price</h2>
                   <div>
                     {[
@@ -567,19 +598,13 @@ const HolidayPackageResult = () => {
                   </div>
                   <Divider sx={{ marginBottom: "15px", backgroundColor: "gray" }} />
                 </div> */}
-              </div>
-
-
-
-
+                  </div>
                 </div>
               </AccordionDetails>
             </Accordion>
-
           </div>
         </div>
         <div className="col-lg-9">
-
           {/* <div className="col-lg-12">
             <div className="outerFilterBox">
               <div className="filterBox">
@@ -600,279 +625,342 @@ const HolidayPackageResult = () => {
           </div> */}
 
           {sortedAndFilteredResults && sortedAndFilteredResults.length > 0 ? (
-            sortedAndFilteredResults
-              ?.map((item, index) => {
-                return (
-                  <div className="col-lg-12">
+            sortedAndFilteredResults?.map((item, index) => {
+              return (
+                <div className="col-lg-12">
+                  <div
+                    onClick={(e) => searchOneHoliday(item?._id)}
+                    className="packageResultBox"
+                    key={index}
+                  >
+                    <div className="packageImage">
+                      <img
+                        src={item?.pakage_img || item?.package_img[0]}
+                        alt="package-img"
+                      />
+                    </div>
 
-                    <div onClick={(e) => searchOneHoliday(item?._id)} className="packageResultBox" key={index}>
-                      <div className="packageImage">
-                        <img src={item?.pakage_img} alt="package-img" />
+                    <div className="packageResultDetails">
+                      <div className="packageTitle">
+                        <p>{item?.pakage_title}</p>
                       </div>
-                      <div className="packageResultDetails">
-                        <div className="packageTitle">
-                          <p>{item?.pakage_title}</p>
-                        </div>
-                        <div>
-                          <p className="customize-new">{`${item?.days - 1}N`} / {`${item?.days}D`}</p>
-                          <p className="departure">
-                            {item?.schedule?.flexible ? 'Flexible' : item?.schedule?.fixed_departure ? 'Fixed Departure' : ''}
-                          </p>
-                        </div>
+                      <div>
+                        <p className="customize-new">
+                          {`${item?.days - 1}N`} / {`${item?.days}D`}
+                        </p>
+                        <p className="departure">
+                          {item?.schedule?.flexible
+                            ? "Flexible"
+                            : item?.schedule?.fixed_departure
+                            ? "Fixed Departure"
+                            : ""}
+                        </p>
+                      </div>
 
-                        <div className="icon-box">
-                          {item?.insclusions?.slice(0, 6).map((ele, index) => {
-                            return (
-                              <div key={index} className="icon-box-inner">
-                                {ele?.flexibility && (
-                                  <div>
-                                    <span><CommitIcon />
-                                    </span>
-                                    <p>Flexibility</p>
-                                  </div>
-                                )}
-                                {ele?.train && (
-                                  <div>
-                                    <span><TramIcon /></span>
-                                    <p>Train</p>
-                                  </div>
-                                )}
-                                {ele?.bus && (
-                                  <div>
-                                    <span><DirectionsBusIcon /></span>
-                                    <p>Bus</p>
-                                  </div>
-                                )}
-                                {ele?.cab && (
-                                  <div>
-                                    <span><DirectionsCarIcon /></span>
-                                    <p>Cab</p>
-                                  </div>
-                                )}
-                                {ele?.moterBike && (
-                                  <div>
-                                    <span><TwoWheelerIcon /></span>
-                                    <p>Moterbike</p>
-                                  </div>
-                                )}
-                                {ele?.hotel && (
-                                  <div>
-                                    <span><ApartmentIcon /></span>
-                                    <p>Hotel</p>
-                                  </div>
-                                )}
-                                {ele?.homeStays && (
-                                  <div>
-                                    <span><HolidayVillageIcon /></span>
-                                    <p>Homestays</p>
-                                  </div>
-                                )}
-                                {ele?.guestHouse && (
-                                  <div>
-                                    <span><LocationCityIcon /></span>
-                                    <p>Guesthouse</p>
-                                  </div>
-                                )}
-                                {ele?.camp && (
-                                  <div>
-                                    <span><CabinIcon /></span>
-                                    <p>Camp</p>
-                                  </div>
-                                )}
-                                {ele?.cruise && (
-                                  <div>
-                                    <span><BlurOnIcon /></span>
-                                    <p>Cruise</p>
-                                  </div>
-                                )}
-                                {ele?.sightSeeing && (
-                                  <div>
-                                    <span><DeckIcon /></span>
-                                    <p>Sightseeing</p>
-                                  </div>
-                                )}
-                                {ele?.guide && (
-                                  <div>
-                                    <span><EngineeringIcon /></span>
-                                    <p>Guide</p>
-                                  </div>
-                                )}
-                                {ele?.meals && (
-                                  <div>
-                                    <span><FastfoodIcon /></span>
-                                    <p>Meals</p>
-                                  </div>
-                                )}
-                                {ele?.breakfast && (
-                                  <div>
-                                    <span><DinnerDiningIcon /></span>
-                                    <p>Daily Breakfast</p>
-                                  </div>
-                                )}
-                                {ele?.drink && (
-                                  <div>
-                                    <span><LiquorIcon /></span>
-                                    <p>Complimentary Drink</p>
-                                  </div>
-                                )}
-                                {ele?.visa && (
-                                  <div>
-                                    <span><ArticleIcon /></span>
-                                    <p>Visa</p>
-                                  </div>
-                                )}
-                                {ele?.travelInsurance && (
-                                  <div>
-                                    <span><AccountBalanceIcon /></span>
-                                    <p>Travel Insurance</p>
-                                  </div>
-                                )}
-                                {ele?.safeTravel && (
-                                  <div>
-                                    <span><ParaglidingIcon /></span>
-                                    <p>Safe to Travel</p>
-                                  </div>
-                                )}
-                                {ele?.wildlife && (
-                                  <div>
-                                    <span><NaturePeopleIcon /></span>
-                                    <p>Wildlife</p>
-                                  </div>
-                                )}
-                                {ele?.heritage && (
-                                  <div>
-                                    <span><LandslideIcon /></span>
-                                    <p>Heritage</p>
-                                  </div>
-                                )}
-                                {ele?.adventure && (
-                                  <div>
-                                    <span><KitesurfingIcon /></span>
-                                    <p>Adventure</p>
-                                  </div>
-                                )}
-                                {ele?.beach && (
-                                  <div>
-                                    <span><PoolIcon /></span>
-                                    <p>Beach</p>
-                                  </div>
-                                )}
-                                {ele?.hillStation && (
-                                  <div>
-                                    <span><DownhillSkiingIcon /></span>
-                                    <p>Hill Station</p>
-                                  </div>
-                                )}
-                                {ele?.nature && (
-                                  <div>
-                                    <span><ForestIcon /></span>
-                                    <p>Nature</p>
-                                  </div>
-                                )}
-                                {ele?.wellness && (
-                                  <div>
-                                    <span><SelfImprovementIcon /></span>
-                                    <p>Wellness</p>
-                                  </div>
-                                )}
-                                {ele?.hiddenGem && (
-                                  <div>
-                                    <span><FitnessCenterIcon /></span>
-                                    <p>Hidden Gem</p>
-                                  </div>
-                                )}
-                                {ele?.tax && (
-                                  <div>
-                                    <span><FolderDeleteIcon /></span>
-                                    <p>Price Inclusive Tax</p>
-                                  </div>
-                                )}
-                                {ele?.discount && (
-                                  <div>
-                                    <span><LocalOfferIcon /></span>
-                                    <p>50% Off</p>
-                                  </div>
-                                )}
-                                {ele?.waterActivities && (
-                                  <div>
-                                    <span><KayakingIcon /></span>
-                                    <p>Water Activities</p>
-                                  </div>
-                                )}
-                                {ele?.optionalActivities && (
-                                  <div>
-                                    <span><SportsKabaddiIcon /></span>
-                                    <p>Optional Activities</p>
-                                  </div>
-                                )}
-                                {ele?.flexibleBooking && (
-                                  <div>
-                                    <span><BookmarkAddIcon /></span>
-                                    <p>Flexible Booking</p>
-                                  </div>
-                                )}
-                                {ele?.wifi && (
-                                  <div>
-                                    <span><WifiPasswordIcon /></span>
-                                    <p>WIFI</p>
-                                  </div>
-                                )}
-                              </div>
-                            );
-                          })}
-                        </div>
+                      <div className="icon-box">
+                        {item?.insclusions?.slice(0, 6).map((ele, index) => {
+                          return (
+                            <div key={index} className="icon-box-inner">
+                              {ele?.flexibility && (
+                                <div>
+                                  <span>
+                                    <CommitIcon />
+                                  </span>
+                                  <p>Flexibility</p>
+                                </div>
+                              )}
+                              {ele?.train && (
+                                <div>
+                                  <span>
+                                    <TramIcon />
+                                  </span>
+                                  <p>Train</p>
+                                </div>
+                              )}
+                              {ele?.bus && (
+                                <div>
+                                  <span>
+                                    <DirectionsBusIcon />
+                                  </span>
+                                  <p>Bus</p>
+                                </div>
+                              )}
+                              {ele?.cab && (
+                                <div>
+                                  <span>
+                                    <DirectionsCarIcon />
+                                  </span>
+                                  <p>Cab</p>
+                                </div>
+                              )}
+                              {ele?.moterBike && (
+                                <div>
+                                  <span>
+                                    <TwoWheelerIcon />
+                                  </span>
+                                  <p>Moterbike</p>
+                                </div>
+                              )}
+                              {ele?.hotel && (
+                                <div>
+                                  <span>
+                                    <ApartmentIcon />
+                                  </span>
+                                  <p>Hotel</p>
+                                </div>
+                              )}
+                              {ele?.homeStays && (
+                                <div>
+                                  <span>
+                                    <HolidayVillageIcon />
+                                  </span>
+                                  <p>Homestays</p>
+                                </div>
+                              )}
+                              {ele?.guestHouse && (
+                                <div>
+                                  <span>
+                                    <LocationCityIcon />
+                                  </span>
+                                  <p>Guesthouse</p>
+                                </div>
+                              )}
+                              {ele?.camp && (
+                                <div>
+                                  <span>
+                                    <CabinIcon />
+                                  </span>
+                                  <p>Camp</p>
+                                </div>
+                              )}
+                              {ele?.cruise && (
+                                <div>
+                                  <span>
+                                    <BlurOnIcon />
+                                  </span>
+                                  <p>Cruise</p>
+                                </div>
+                              )}
+                              {ele?.sightSeeing && (
+                                <div>
+                                  <span>
+                                    <DeckIcon />
+                                  </span>
+                                  <p>Sightseeing</p>
+                                </div>
+                              )}
+                              {ele?.guide && (
+                                <div>
+                                  <span>
+                                    <EngineeringIcon />
+                                  </span>
+                                  <p>Guide</p>
+                                </div>
+                              )}
+                              {ele?.meals && (
+                                <div>
+                                  <span>
+                                    <FastfoodIcon />
+                                  </span>
+                                  <p>Meals</p>
+                                </div>
+                              )}
+                              {ele?.breakfast && (
+                                <div>
+                                  <span>
+                                    <DinnerDiningIcon />
+                                  </span>
+                                  <p>Daily Breakfast</p>
+                                </div>
+                              )}
+                              {ele?.drink && (
+                                <div>
+                                  <span>
+                                    <LiquorIcon />
+                                  </span>
+                                  <p>Complimentary Drink</p>
+                                </div>
+                              )}
+                              {ele?.visa && (
+                                <div>
+                                  <span>
+                                    <ArticleIcon />
+                                  </span>
+                                  <p>Visa</p>
+                                </div>
+                              )}
+                              {ele?.travelInsurance && (
+                                <div>
+                                  <span>
+                                    <AccountBalanceIcon />
+                                  </span>
+                                  <p>Travel Insurance</p>
+                                </div>
+                              )}
+                              {ele?.safeTravel && (
+                                <div>
+                                  <span>
+                                    <ParaglidingIcon />
+                                  </span>
+                                  <p>Safe to Travel</p>
+                                </div>
+                              )}
+                              {ele?.wildlife && (
+                                <div>
+                                  <span>
+                                    <NaturePeopleIcon />
+                                  </span>
+                                  <p>Wildlife</p>
+                                </div>
+                              )}
+                              {ele?.heritage && (
+                                <div>
+                                  <span>
+                                    <LandslideIcon />
+                                  </span>
+                                  <p>Heritage</p>
+                                </div>
+                              )}
+                              {ele?.adventure && (
+                                <div>
+                                  <span>
+                                    <KitesurfingIcon />
+                                  </span>
+                                  <p>Adventure</p>
+                                </div>
+                              )}
+                              {ele?.beach && (
+                                <div>
+                                  <span>
+                                    <PoolIcon />
+                                  </span>
+                                  <p>Beach</p>
+                                </div>
+                              )}
+                              {ele?.hillStation && (
+                                <div>
+                                  <span>
+                                    <DownhillSkiingIcon />
+                                  </span>
+                                  <p>Hill Station</p>
+                                </div>
+                              )}
+                              {ele?.nature && (
+                                <div>
+                                  <span>
+                                    <ForestIcon />
+                                  </span>
+                                  <p>Nature</p>
+                                </div>
+                              )}
+                              {ele?.wellness && (
+                                <div>
+                                  <span>
+                                    <SelfImprovementIcon />
+                                  </span>
+                                  <p>Wellness</p>
+                                </div>
+                              )}
+                              {ele?.hiddenGem && (
+                                <div>
+                                  <span>
+                                    <FitnessCenterIcon />
+                                  </span>
+                                  <p>Hidden Gem</p>
+                                </div>
+                              )}
+                              {ele?.tax && (
+                                <div>
+                                  <span>
+                                    <FolderDeleteIcon />
+                                  </span>
+                                  <p>Price Inclusive Tax</p>
+                                </div>
+                              )}
+                              {ele?.discount && (
+                                <div>
+                                  <span>
+                                    <LocalOfferIcon />
+                                  </span>
+                                  <p>50% Off</p>
+                                </div>
+                              )}
+                              {ele?.waterActivities && (
+                                <div>
+                                  <span>
+                                    <KayakingIcon />
+                                  </span>
+                                  <p>Water Activities</p>
+                                </div>
+                              )}
+                              {ele?.optionalActivities && (
+                                <div>
+                                  <span>
+                                    <SportsKabaddiIcon />
+                                  </span>
+                                  <p>Optional Activities</p>
+                                </div>
+                              )}
+                              {ele?.flexibleBooking && (
+                                <div>
+                                  <span>
+                                    <BookmarkAddIcon />
+                                  </span>
+                                  <p>Flexible Booking</p>
+                                </div>
+                              )}
+                              {ele?.wifi && (
+                                <div>
+                                  <span>
+                                    <WifiPasswordIcon />
+                                  </span>
+                                  <p>WIFI</p>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
 
-                        <div className="destination-new">
-                          <ul>
-                            {item?.destination?.slice(0, 3).map((destinationItem, index) => (
+                      <div className="destination-new">
+                        <ul>
+                          {item?.destination
+                            ?.slice(0, 3)
+                            .map((destinationItem, index) => (
                               <li key={index}>{destinationItem?.addMore}</li>
                             ))}
-                          </ul>
-                        </div>
-                      </div>
-
-                      <div className="priceBook-new">
-                        <div className="priceBookOne">
-                          {/* <h3>{`${item?.days - 1}N`} / {`${item?.days}D`}</h3> */}
-                          <span>Offer Price</span>
-                          <p>₹{' '} {item?.pakage_amount?.amount}</p>
-                          
-                        </div>
-                        <h4 className="show-more-package-new" style={{fontSize:"20px"}}>Show More<ArrowForwardIosIcon /></h4>
+                        </ul>
                       </div>
                     </div>
+
+                    <div className="priceBook-new">
+                      <div className="priceBookOne">
+                        {/* <h3>{`${item?.days - 1}N`} / {`${item?.days}D`}</h3> */}
+                        <span>Offer Price</span>
+                        <p>₹ {item?.pakage_amount?.amount}</p>
+                      </div>
+                      <h4
+                        className="show-more-package-new"
+                        style={{ fontSize: "20px" }}
+                      >
+                        Show More
+                        <ArrowForwardIosIcon />
+                      </h4>
+                    </div>
                   </div>
-                );
-              })
-          ) :
-            (
-              <div className="filteredNotFound">
-                {/* <img src={packageFilter} alt="filter image" /> */}
-                <h1>Result not found</h1>
-              </div>
-            )
-          }
+                </div>
+              );
+            })
+          ) : (
+            <div className="filteredNotFound">
+              {/* <img src={packageFilter} alt="filter image" /> */}
+              <h1>Result not found</h1>
+            </div>
+          )}
         </div>
       </div>
     </div>
-
-
   );
 };
 
 export default HolidayPackageResult;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

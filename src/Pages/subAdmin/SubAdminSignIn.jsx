@@ -345,7 +345,7 @@ const SubAdminLoginForm = () => {
                   </div>
 
                   <div className="login__fieldsub">
-                    <i className="login__iconsub fas fa-lock">
+                    <i className="login__iconsub">
                       <FaLock />
                     </i>
                     <input
@@ -382,7 +382,7 @@ const SubAdminLoginForm = () => {
 
                   <button className="button login__submitsub" type="submit">
                     <span className="button__text">Login</span>
-                    <i className="button__iconsub fas fa-chevron-right">
+                    <i className="button__iconsub">
                       <FaSignInAlt />
                     </i>
                   </button>

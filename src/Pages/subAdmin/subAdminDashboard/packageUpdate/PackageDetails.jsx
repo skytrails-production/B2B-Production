@@ -19,7 +19,8 @@ import "react-toastify/dist/ReactToastify.css";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { Alert } from "@mui/material";
 import LinearProgress from "@mui/material";
-
+import CloseIcon from "@mui/icons-material/Close"; // Import the Close icon
+import ViewPackageDetails from "./ViewPackageDetails";
 function PackageDetails() {
   const reducerState = useSelector((state) => state);
   const access =
@@ -43,16 +44,17 @@ function PackageDetails() {
       const response = await axios.get(
         ` ${apiURL.baseURL}/skyTrails/international/getAllAdminPackage`
       );
-      console.log(response.data, "----------------------");
-      setHolidayPackage(response.data.data.pakage);
+      const data = response.data.data.pakage;
+      const reversedData = data.reverse();
+      setHolidayPackage(reversedData);
     } catch (error) {
       console.error("Error fetching holiday packages:", error);
     }
   };
 
-  useEffect(() => {
-    fetchHolidayPackages();
-  }, []);
+  // useEffect(() => {
+  //   fetchHolidayPackages();
+  // }, []);
 
   const style = {
     position: "absolute",
@@ -100,6 +102,11 @@ function PackageDetails() {
   const [editPackageData, setEditPackageData] = useState(null);
   const [selectedPackageApprove, setSelectedPackageApprove] = useState("");
   const [selectedPackageDelete, setSelectedPackageDelete] = useState("");
+  const [loadingApproval, setLoadingApproval] = useState({}); // Map for tracking loading states
+
+  const [openViewDetails, setOpenViewDetails] = useState(false);
+  const [packageDetails, setPackageDetails] = useState(null); // Store package details
+  const [isModalVisible, setIsModalVisible] = useState(false); // Control modal visibility
 
   // const fetchHolidayPackages = async () => {
   //   try {
@@ -231,10 +238,71 @@ function PackageDetails() {
 
   useEffect(() => {
     fetchHolidayPackages();
-  }, [handleClose, handleDelete]);
+  }, []);
 
+  const handleOpenViewDetails = async (row) => {
+    const packageId = row._id;
+
+    // Set loading state for the specific package
+    setLoadingApproval((prevState) => ({ ...prevState, [packageId]: true }));
+
+    try {
+      // Fetch the package details using the provided GET API
+      const res = await axios.get(
+        `${apiURL.baseURL}/skyTrails/international/getone/${packageId}`
+      );
+
+      if (res.status === 200 && res.data) {
+        const packageDetails = res.data;
+
+        // Save the fetched package details in localStorage
+        localStorage.setItem("packageDetails", JSON.stringify(packageDetails));
+
+        // Retrieve and console the stored package details
+        const storedPackageDetails = JSON.parse(
+          localStorage.getItem("packageDetails")
+        );
+        console.log("Stored package details:", storedPackageDetails);
+
+        setOpenViewDetails(true);
+
+        // Handle the fetched package details (e.g., show in modal or console)
+        setPackageDetails(packageDetails);
+
+        // Open a modal to show the details
+        setIsModalVisible(true);
+      } else {
+        toast.error("Failed to fetch package details.");
+      }
+    } catch (error) {
+      console.error("Error fetching package details:", error);
+      toast.error("Error fetching package details. Please try again.");
+    } finally {
+      // Reset loading state for the specific package
+      setLoadingApproval((prevState) => ({ ...prevState, [packageId]: false }));
+    }
+  };
+
+  const handleCloseViewDetails = () => {
+    setOpenViewDetails(false);
+  };
   const columns = [
-    
+    {
+      field: "createdAt",
+      headerName: "Created At",
+      width: 200,
+      headerClassName: "custom-header",
+      valueGetter: (params) => {
+        const createdAt = params.row.createdAt;
+        return createdAt
+          ? new Date(createdAt).toLocaleDateString("en-GB", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+            })
+          : "N/A";
+      },
+    },
     {
       field: "pakage_title",
       headerName: "Package Title",
@@ -358,6 +426,20 @@ function PackageDetails() {
         </Button>
       ),
     },
+    {
+      field: "viewDetails",
+      headerName: "View-Details",
+      headerClassName: "custom-header",
+      width: 150,
+      renderCell: (params) => (
+        <Button
+          style={{ color: "#21325D" }}
+          onClick={() => handleOpenViewDetails(params.row)}
+        >
+          View Details
+        </Button>
+      ),
+    },
   ];
 
   return (
@@ -376,7 +458,7 @@ function PackageDetails() {
         }}
       >
         <Typography variant="h5" className="adtable-heading">
-           Holiday Package
+          Holiday Package
         </Typography>
       </div>
       {access !== "PACKAGE_HANDLER" ? (
@@ -584,6 +666,74 @@ function PackageDetails() {
           </Box>
         </Box>
       </Modal>
+
+
+      <Modal
+          open={openViewDetails}
+          onClose={handleCloseViewDetails}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "100%",
+              maxWidth: "80%",
+              maxHeight: "90vh",
+              bgcolor: "background.paper",
+              border: "2px solid #000",
+              boxShadow: 24,
+              p: 4,
+              overflowY: "auto",
+              borderRadius: "8px", // Optional: Add border radius for rounded corners
+              position: "relative", // Add relative positioning for the close icon
+            }}
+          >
+            {/* Close Icon */}
+            <CloseIcon
+              onClick={handleCloseViewDetails}
+              sx={{
+                position: "absolute",
+                top: "10px",
+                right: "10px",
+                cursor: "pointer",
+                color: "#000",
+                fontSize: "1.5rem", // Adjust the font size as needed
+              }}
+            />
+            {/* Modal Content */}
+            <Box>
+              <ViewPackageDetails />
+            </Box>
+            {/* Optional: Close Button */}
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                mt: 2, // Margin top for spacing
+              }}
+            >
+              <button
+                onClick={handleCloseViewDetails}
+                style={{
+                  backgroundColor: "blue",
+                  color: "white",
+                  width: "70px",
+                  borderRadius: "5px",
+                  boxShadow: "2px 5px grey",
+                  border: "none",
+                  padding: "5px",
+                  cursor: "pointer",
+                }}
+              >
+                Close
+              </button>
+            </Box>
+          </Box>
+        </Modal>
     </div>
   );
 }

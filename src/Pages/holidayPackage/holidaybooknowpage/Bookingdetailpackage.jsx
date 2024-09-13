@@ -117,7 +117,8 @@ const Bookingdetailpackage = () => {
           </div>
           <div className="col-lg-12 mb-4 packageImgBox">
             <div className="PackageImg">
-              <img src={onePackage?.pakage_img} alt="" />
+              <img src={onePackage?.pakage_img||onePackage?.package_img[0]} alt="" />
+             
             </div>
             {/* <div className="packageLocation">
               <FmdGoodIcon />

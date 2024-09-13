@@ -83,8 +83,7 @@
   }
   
   /* Blue background for PENDING status */
-  
-  
+
   .subada-table-container {
   
     max-width: 1000px;
@@ -101,11 +100,7 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Your desired box shadow */
     border-radius: 8px; /* Your desired border radius */
   }
-  
-  
-  
-  
-  
+
   .no-data-message {
     display: flex;
     justify-content: center;

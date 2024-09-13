@@ -104,6 +104,33 @@ function SearchData() {
               backgroundColor: "#E73C33",
             }}
           >
+            <TextField
+              type="text"
+              value={searchTerm}
+              onChange={handleSearch}
+              placeholder="Search by name, ID, etc."
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+                style: {
+                  // Change the placeholder color to black
+                  color: "black",
+                },
+              }}
+              inputProps={{
+                style: {
+                  // Inline style for placeholder
+                  color: "black", // This affects the text color inside the input
+                  "::placeholder": {
+                    color: "black", // This affects the placeholder color
+                  },
+                },
+              }}
+              style={{ backgroundColor: "#fff", borderRadius: "5px" }}
+            />
             <Typography
               variant="h5"
               className="adtable-heading"

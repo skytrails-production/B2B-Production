@@ -17,6 +17,7 @@ const Usertable = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
   const reducerState = useSelector((state) => state);
+
   const access =
     reducerState?.subadminLogin?.subadminloginData?.result?.data?.authType;
 
@@ -144,8 +145,23 @@ const Usertable = () => {
                     <SearchIcon />
                   </InputAdornment>
                 ),
+                style: {
+                  // Change the placeholder color to black
+                  color: "black",
+                },
               }}
+              inputProps={{
+                style: {
+                  // Inline style for placeholder
+                  color: "black", // This affects the text color inside the input
+                  "::placeholder": {
+                    color: "black", // This affects the placeholder color
+                  },
+                },
+              }}
+              style={{ backgroundColor: "#fff", borderRadius: "5px" }}
             />
+
             <Typography variant="h5" className="adtable-heading">
               User Table
             </Typography>
