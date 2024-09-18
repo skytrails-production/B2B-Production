@@ -175,7 +175,7 @@ const InventoryUser = () => {
         style={{ position: "absolute", top: 10, zIndex: 1, fontWeight: "bold" }}
       >
         <Typography variant="h5" className="adtable-heading">
-          Inventory User
+          Hotel Partner
         </Typography>
       </div>
 

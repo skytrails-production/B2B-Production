@@ -38,6 +38,7 @@ const CreateSubAdminPage = () => {
   const [chipData, setChipData] = useState({});
   const [message, setMessage] = useState("");
   const[display,setDisplay]=useState(false);
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -72,7 +73,7 @@ const CreateSubAdminPage = () => {
       ...formData,
       // dynamicProperties: dynamicPropertiesString,
       dynamicProperties: chipData
-    };
+    }; 
 
     try {
       const response = await fetch(`${apiURL.baseURL}/skytrails/api/subAdmin/createSubAdmin`, {

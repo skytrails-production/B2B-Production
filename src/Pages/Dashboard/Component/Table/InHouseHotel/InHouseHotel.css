@@ -1,0 +1,38 @@
+/* .tabletop {
+  
+  //border:5px solid rgb(245, 9, 49);
+  
+} */
+.tbody {
+  background-color: white;
+}
+
+/* InventoryUser.css */
+.tabletop .ant-table-tbody > tr > td {
+  background-color: #f0f0f0; /* Change this to your desired color */
+  color: black;
+  
+}
+
+.inventory-heading {
+  font-size: 24px;
+  font-weight: bold;
+
+  text-align: center; /* Adjust as needed */
+}
+
+/* InventoryUser.css */
+.tabletop .ant-table-tbody > tr > td {
+  background-color: #f0f0f0; /* Change this to your desired color */
+}
+
+.adsearch-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.adtable-heading {
+  font-size: 24px;
+  font-weight: bold;
+}

@@ -19,7 +19,7 @@ import profilePicUrl from "../../../Images/Admin.svg";
 import WebIcon from "@mui/icons-material/Web";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
-import Carrertable from "./Table/Career/Carrertable"
+import Carrertable from "./Table/Career/Carrertable";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 import {
   ListItem,
@@ -37,7 +37,7 @@ import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import AirplanemodeActiveIcon from "@mui/icons-material/AirplanemodeActive";
-import FlightInventory from "./Table/FlightInventory/FlightInventory"
+import FlightInventory from "./Table/FlightInventory/FlightInventory";
 import Tables from "./Table/Table";
 import Usertables from "./Table/UserTable";
 import SubAdminTable from "./Table/subAdmin";
@@ -157,11 +157,9 @@ import UploadFileIcon from "@mui/icons-material/UploadFile";
 import BlogData from "../../Historytable/BlogData";
 
 import InventoryUser from "./Table/inventoryTable/InventoryUser";
-
+import InHouseHotel from "./Table/InHouseHotel/InHouseHotel";
 import Careercategory from "./Table/Career/Careercategory";
 import Careercategoryvalue from "./Table/Career/Careercategoryvalue";
-
-
 
 const drawerWidth = 240;
 
@@ -333,27 +331,7 @@ export default function VerticalTabs() {
     navigate("/addEvents");
   };
 
-
-
-// //////////////////////////////////////////////
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  // //////////////////////////////////////////////
 
   const createMarkup = () => {
     navigate("/addMarkup");
@@ -379,11 +357,10 @@ export default function VerticalTabs() {
   };
   const addPackagebanner = () => {
     navigate("/admin/addPackagebanner");
-
-   }
-   const addPopular=()=>{
-    navigate("/admin/addPopulardestination")
-   }
+  };
+  const addPopular = () => {
+    navigate("/admin/addPopulardestination");
+  };
 
   //  const carrerPage =() => {
   //   navigate("/admin/carrerPage");
@@ -1052,8 +1029,12 @@ export default function VerticalTabs() {
                   </ListItemIcon>
                   Carrer Page
                 </MenuItem> */}
-                <MenuItem onClick={() => { handleClose(); addPackCat(); }}>
-
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    addPackCat();
+                  }}
+                >
                   <ListItemIcon>
                     <PersonAdd fontSize="small" />
                   </ListItemIcon>
@@ -1594,7 +1575,38 @@ export default function VerticalTabs() {
                   <PeopleOutlinedIcon sx={{ color: "white" }} />
                 </ListItemIcon>
                 <ListItemText
-                  primary="Inventory User"
+                  primary="Hotel Partner"
+                  sx={{ opacity: open ? 1 : 0, color: "white" }}
+                />
+              </ListItemButton>
+            </ListItem>
+
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => handleMenuItemClick("Inhouse Hotel")}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                  ...((menuData === "Inhouse Hotel"
+                    ? activeMenuItemClass
+                    : inactiveMenuItemClass) || {}),
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <PeopleOutlinedIcon sx={{ color: "white" }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Inhouse Hotel"
                   sx={{ opacity: open ? 1 : 0, color: "white" }}
                 />
               </ListItemButton>
@@ -1743,7 +1755,7 @@ export default function VerticalTabs() {
                       />
                     </ListItemIcon>
                     <ListItemText
-                      primary="Agent  Bookings"
+                      primary="Agent Cancel"
                       sx={{ color: "white", marginLeft: "10px" }}
                     />
                   </ListItemButton>
@@ -1872,7 +1884,7 @@ export default function VerticalTabs() {
                       />
                     </ListItemIcon>
                     <ListItemText
-                      primary="User Bookings"
+                      primary="User Cancel"
                       sx={{ color: "white", marginLeft: "10px" }}
                     />
                   </ListItemButton>
@@ -2937,8 +2949,6 @@ export default function VerticalTabs() {
               </ListItemButton>
             </ListItem>
 
-
-
             <ListItem
               disablePadding
               sx={{ display: "block" }}
@@ -2975,10 +2985,6 @@ export default function VerticalTabs() {
               </ListItemButton>
             </ListItem>
 
-
-
-
-
             {/* <ListItem
               disablePadding
               sx={{ display: "block" }}
@@ -3010,16 +3016,7 @@ export default function VerticalTabs() {
               </ListItemButton>
             </ListItem> */}
 
-
-
             {/* ////////////////////////////////////////////////////////////////////// */}
-
-
-
-
-
-
-
 
             <ListItem disablePadding sx={{ display: "block" }}>
               <ListItemButton
@@ -3044,7 +3041,11 @@ export default function VerticalTabs() {
                 </ListItemIcon>
                 <ListItemText
                   primary="Career"
-                  sx={{ opacity: open ? 1 : 0, color: "white", marginLeft: "20px" }}
+                  sx={{
+                    opacity: open ? 1 : 0,
+                    color: "white",
+                    marginLeft: "20px",
+                  }}
                 />
               </ListItemButton>
               <Collapse in={openCollapseTen} timeout="auto" unmountOnExit>
@@ -3070,7 +3071,9 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      <ArticleIcon sx={{ color: "white", marginLeft: "20px" }} />
+                      <ArticleIcon
+                        sx={{ color: "white", marginLeft: "20px" }}
+                      />
                     </ListItemIcon>
                     <ListItemText
                       primary="Career Department"
@@ -3101,7 +3104,9 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      <ArticleIcon sx={{ color: "white", marginLeft: "20px" }} />
+                      <ArticleIcon
+                        sx={{ color: "white", marginLeft: "20px" }}
+                      />
                     </ListItemIcon>
                     <ListItemText
                       primary="Job Category"
@@ -3132,7 +3137,9 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      <ArticleIcon sx={{ color: "white", marginLeft: "20px" }} />
+                      <ArticleIcon
+                        sx={{ color: "white", marginLeft: "20px" }}
+                      />
                     </ListItemIcon>
                     <ListItemText
                       primary="Career Form"
@@ -3163,7 +3170,9 @@ export default function VerticalTabs() {
                         justifyContent: "center",
                       }}
                     >
-                      < ArticleIcon sx={{ color: "white", marginLeft: "20px" }} />
+                      <ArticleIcon
+                        sx={{ color: "white", marginLeft: "20px" }}
+                      />
                     </ListItemIcon>
                     <ListItemText
                       primary="Carrer Data"
@@ -3205,46 +3214,6 @@ export default function VerticalTabs() {
               </Collapse>
             </ListItem>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             <ListItem
               disablePadding
               sx={{ display: "block" }}
@@ -3280,8 +3249,6 @@ export default function VerticalTabs() {
                 />
               </ListItemButton>
             </ListItem>
-
-            
 
             <ListItem
               disablePadding
@@ -3748,19 +3715,14 @@ export default function VerticalTabs() {
             </div>
           ) : (
             <div>
-
-              {menuData === "profile" && (
-                <AdminProfile />
-              )}
-              {menuData === "profile" && (
-                <AdminProfile />
-              )}
-              {menuData === "GRN Booking" &&<Grnuser/>}
-              {menuData === "Carrer Data" && <Carrertable/>}
-              {menuData === "Careerform" && <Careerform/>}
-              {menuData === "CareerCategory" && (<Careercategory/>)}
-              {menuData === "Carrer value" && <Careercategoryvalue/>}
-              {menuData === "Downloadcsv" && <Downloadcsv/>}
+              {menuData === "profile" && <AdminProfile />}
+              {menuData === "profile" && <AdminProfile />}
+              {menuData === "GRN Booking" && <Grnuser />}
+              {menuData === "Carrer Data" && <Carrertable />}
+              {menuData === "Careerform" && <Careerform />}
+              {menuData === "CareerCategory" && <Careercategory />}
+              {menuData === "Carrer value" && <Careercategoryvalue />}
+              {menuData === "Downloadcsv" && <Downloadcsv />}
 
               {menuData === "Packageenquiry" && <Package />}
               {menuData === "apppost" && <Apppost />}
@@ -3780,6 +3742,7 @@ export default function VerticalTabs() {
               {menuData === "Home" && <AdminDashboard />}
               {menuData === "Agent Table" && <Tables />}
               {menuData === "Inventory User" && <InventoryUser />}
+              {menuData === "Inhouse Hotel" && <InHouseHotel />}
               {menuData === "User Table" && <Usertables />}
               {menuData === "EventList" && <EventList />}
               {menuData === "EnquiryList" && <Enquirylist />}
