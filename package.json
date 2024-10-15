@@ -24,6 +24,7 @@
     "antd": "^5.19.1",
     "axios": "^1.2.2",
     "bootstrap": "^5.2.3",
+    "browser-image-compression": "^2.0.2",
     "caniuse-lite": "^1.0.30001564",
     "context": "^3.0.23",
     "dayjs": "^1.11.10",
