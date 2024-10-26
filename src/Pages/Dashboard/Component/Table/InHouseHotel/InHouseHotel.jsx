@@ -23,7 +23,7 @@ import BuildCircleIcon from "@mui/icons-material/BuildCircle"; // Example icon f
 import LocationOnIcon from "@mui/icons-material/LocationOn"; // Icon for address
 import HotelIcon from "@mui/icons-material/Hotel"; // Icon for total rooms
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom"; // Icon for available rooms
-
+import { motion } from "framer-motion";
 //import { message, Modal, Input } from "antd"; // Import the message component from antd
 import "./InHouseHotel.css";
 import { Card, CardContent } from "@mui/material";
@@ -116,13 +116,13 @@ const InHouseHotel = () => {
     {
       field: "channelMngrName",
       headerName: "Channel Manager Name",
-      width: 220,
+      width: 200,
       valueGetter: (params) => params.row.partnerId?.channelMngrName || "", // Access nested channelMngrName
     },
     {
-      field: "channelMngrName",
+      field: "hotelName",
       headerName: "Hotel Name",
-      width: 220,
+      width: 400,
       valueGetter: (params) => params.row.hotelName || "", // Access nested channelMngrName
     },
 
@@ -271,551 +271,706 @@ const InHouseHotel = () => {
             <Box>
               {/* Hotel Name Section */}
 
-              <Box
-                sx={{ display: "flex", justifyContent: "center", gap: "50px" }}
+              <motion.div
+                initial={{ opacity: 0, y: 50 }} // Initial state before animation
+                animate={{ opacity: 1, y: 0 }} // Animation state when mounted
+                transition={{ duration: 0.5 }} // Duration of the animation
+                viewport={{ once: false }}
               >
-                <div>
-                  {InHouseHotel.hotelImages &&
-                  InHouseHotel.hotelImages.length > 0 ? (
-                    <div>
-                      <img
-                        src={InHouseHotel.hotelImages[0]} // Display the first image only
-                        alt="Hotel Image 1"
-                        style={{
-                          width: "300px", // Adjust size as needed
-                          height: "250px",
-                          objectFit: "cover", // Maintain aspect ratio
-                        }}
-                      />
-                    </div>
-                  ) : (
-                    <p>No images available</p>
-                  )}
-                </div>
-
-                {/* Hotel Description */}
-                <Typography
-                  variant="body1"
+                <Box
                   sx={{
-                    // fontStyle: "italic",
-                    color: "#555",
-                    textAlign: "center",
-                    mb: 3,
-                    textAlign: "justify",
+                    display: "flex",
+                    justifyContent: "center",
+                    gap: "50px",
                   }}
                 >
+                  <div>
+                    <motion.div
+                      initial={{ opacity: 0, y: 50 }} // Initial state before animation
+                      animate={{ opacity: 1, y: 0 }} // Animation state when mounted
+                      transition={{ duration: 0.5 }} // Duration of the animation
+                      viewport={{ once: false }}
+                    >
+                      {InHouseHotel.hotelImages &&
+                      InHouseHotel.hotelImages.length > 0 ? (
+                        <div>
+                          <img
+                            src={InHouseHotel.hotelImages[0]} // Display the first image only
+                            alt="Hotel Image 1"
+                            style={{
+                              width: "300px", // Adjust size as needed
+                              height: "250px",
+                              objectFit: "cover", // Maintain aspect ratio
+                            }}
+                          />
+                        </div>
+                      ) : (
+                        <p>No images available</p>
+                      )}
+                    </motion.div>
+                  </div>
+                  <motion.div
+                    initial={{ opacity: 0, y: -50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.3 }} // Add a delay for a staggered effect
+                    viewport={{ once: false }}
+                  >
+                    {/* Hotel Description */}
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        // fontStyle: "italic",
+                        color: "#555",
+                        textAlign: "center",
+                        mb: 3,
+                        textAlign: "justify",
+                      }}
+                    >
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          fontWeight: "bold",
+                          textAlign: "center",
+                          color: "#21325D",
+                          mb: 2,
+                        }}
+                      >
+                        {InHouseHotel.hotelName}
+                      </Typography>
+                      {InHouseHotel.description}
+                    </Typography>
+                    {/* hotelState */}
+                  </motion.div>
+                </Box>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: -50 }} // Starts invisible and above the viewport
+                whileInView={{ opacity: 1, y: 0 }} // Fades in and moves to its final position
+                transition={{ duration: 0.5 }} // Animation duration
+                viewport={{ once: false }} // Only animate once when it comes into view
+              >
+                <Box sx={{ mb: 2 }}>
                   <Typography
-                    variant="h4"
+                    variant="h6"
+                    sx={{ fontWeight: "bold", color: "#333", mb: 1, mt: 1 }}
+                  >
+                    Address:
+                  </Typography>
+                  <motion.div
+                    initial={{ opacity: 0, y: -50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.3 }} // Add a delay for a staggered effect
+                    viewport={{ once: false }}
+                  >
+                    <Box display="flex" alignItems="center">
+                      <LocationOnIcon
+                        sx={{ color: "#21325D", mr: 1, fontsize: "100px" }}
+                      />
+                      <Typography variant="body1">
+                        {InHouseHotel.hotelAddress}, {InHouseHotel.hotelCity},{" "}
+                        {InHouseHotel.hotelState}, {InHouseHotel.hotelCountry}
+                      </Typography>
+                    </Box>
+                  </motion.div>
+                </Box>
+                <motion.div
+                  initial={{ opacity: 0, y: -50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 }} // Add a delay for a staggered effect
+                  viewport={{ once: false }}
+                >
+                  <Box sx={{ display: "flex", mb: 2, gap: "5rem" }}>
+                    <Box>
+                      <Typography
+                        variant="h6"
+                        sx={{ fontWeight: "bold", color: "#333" }}
+                      >
+                        Start Date:
+                      </Typography>
+                      <Typography variant="body1">
+                        {InHouseHotel.startFrom}
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <Typography
+                        variant="h6"
+                        sx={{ fontWeight: "bold", color: "#333" }}
+                      >
+                        Available Date:
+                      </Typography>
+                      <Typography variant="body1">
+                        {InHouseHotel.availableDate}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: -50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 }} // Add a delay for a staggered effect
+                  viewport={{ once: false }}
+                >
+                  <Box
                     sx={{
-                      fontWeight: "bold",
-                      textAlign: "center",
-                      color: "#21325D",
-                      mb: 2,
+                      display: "flex",
+                      flexWrap: "wrap",
+                      gap: 2, // Gap between items
+                      mb: 2, // Margin bottom for overall container
                     }}
                   >
-                    {InHouseHotel.hotelName}
-                  </Typography>
-                  {InHouseHotel.description}
-                </Typography>
-                {/* hotelState */}
-              </Box>
+                    <Box sx={{ flex: "1 1 200px" }}>
+                      <Typography
+                        variant="h6"
+                        sx={{ fontWeight: "bold", color: "#333" }}
+                      >
+                        Hotel State:
+                      </Typography>
+                      <Typography variant="body1">
+                        {InHouseHotel.hotelState}
+                      </Typography>
+                    </Box>
 
-              {/* Hotel Address */}
-              {/* <Box sx={{ mb: 2 }}>
-                <Typography
-                  variant="h6"
-                  sx={{ fontWeight: "bold", color: "#333" }}
-                >
-                  Address:
-                </Typography>
-                <Typography variant="body1">
-                  {InHouseHotel.hotelAddress}, {InHouseHotel.hotelCity},{" "}
-                  {InHouseHotel.hotelState}, {InHouseHotel.hotelCountry}
-                </Typography>
-              </Box> */}
-              <Box sx={{ mb: 2 }}>
-                <Typography
-                  variant="h6"
-                  sx={{ fontWeight: "bold", color: "#333", mb: 1, mt: 1 }}
-                >
-                  Address:
-                </Typography>
-                <Box display="flex" alignItems="center">
-                  <LocationOnIcon
-                    sx={{ color: "#21325D", mr: 1, fontsize: "100px" }}
-                  />
-                  <Typography variant="body1">
-                    {InHouseHotel.hotelAddress}, {InHouseHotel.hotelCity},{" "}
-                    {InHouseHotel.hotelState}, {InHouseHotel.hotelCountry}
-                  </Typography>
-                </Box>
-              </Box>
-              <Box sx={{ display: "flex", mb: 2, gap: "5rem" }}>
-                <Box>
-                  <Typography
-                    variant="h6"
-                    sx={{ fontWeight: "bold", color: "#333" }}
-                  >
-                    Start Date:
-                  </Typography>
-                  <Typography variant="body1">
-                    {InHouseHotel.startFrom}
-                  </Typography>
-                </Box>
-                <Box>
-                  <Typography
-                    variant="h6"
-                    sx={{ fontWeight: "bold", color: "#333" }}
-                  >
-                    Available Date:
-                  </Typography>
-                  <Typography variant="body1">
-                    {InHouseHotel.availableDate}
-                  </Typography>
-                </Box>
-              </Box>
+                    <Box sx={{ flex: "1 1 200px" }}>
+                      <Typography
+                        variant="h6"
+                        sx={{ fontWeight: "bold", color: "#333" }}
+                      >
+                        Locality:
+                      </Typography>
+                      <Typography variant="body1">
+                        {InHouseHotel.locality}
+                      </Typography>
+                    </Box>
 
-              <Box
-                sx={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: 2, // Gap between items
-                  mb: 2, // Margin bottom for overall container
-                }}
-              >
-                <Box sx={{ flex: "1 1 200px" }}>
-                  <Typography
-                    variant="h6"
-                    sx={{ fontWeight: "bold", color: "#333" }}
-                  >
-                    Hotel State:
-                  </Typography>
-                  <Typography variant="body1">
-                    {InHouseHotel.hotelState}
-                  </Typography>
-                </Box>
+                    <Box sx={{ flex: "1 1 200px" }}>
+                      <Typography
+                        variant="h6"
+                        sx={{ fontWeight: "bold", color: "#333" }}
+                      >
+                        Hotel City:
+                      </Typography>
+                      <Typography variant="body1">
+                        {InHouseHotel.hotelCity}
+                      </Typography>
+                    </Box>
 
-                <Box sx={{ flex: "1 1 200px" }}>
-                  <Typography
-                    variant="h6"
-                    sx={{ fontWeight: "bold", color: "#333" }}
-                  >
-                    Locality:
-                  </Typography>
-                  <Typography variant="body1">
-                    {InHouseHotel.locality}
-                  </Typography>
-                </Box>
+                    <Box sx={{ flex: "1 1 200px" }}>
+                      <Typography
+                        variant="h6"
+                        sx={{ fontWeight: "bold", color: "#333" }}
+                      >
+                        Hotel Code:
+                      </Typography>
+                      <Typography variant="body1">
+                        {InHouseHotel.hotelCode}
+                      </Typography>
+                    </Box>
 
-                <Box sx={{ flex: "1 1 200px" }}>
-                  <Typography
-                    variant="h6"
-                    sx={{ fontWeight: "bold", color: "#333" }}
-                  >
-                    Hotel City:
-                  </Typography>
-                  <Typography variant="body1">
-                    {InHouseHotel.hotelCity}
-                  </Typography>
-                </Box>
-
-                <Box sx={{ flex: "1 1 200px" }}>
-                  <Typography
-                    variant="h6"
-                    sx={{ fontWeight: "bold", color: "#333" }}
-                  >
-                    Hotel Code:
-                  </Typography>
-                  <Typography variant="body1">
-                    {InHouseHotel.hotelCode}
-                  </Typography>
-                </Box>
-
-                <Box sx={{ flex: "1 1 200px" }}>
-                  <Typography
-                    variant="h6"
-                    sx={{ fontWeight: "bold", color: "#333" }}
-                  >
-                    Hotel Country:
-                  </Typography>
-                  <Typography variant="body1">
-                    {InHouseHotel.hotelCountry}
-                  </Typography>
-                </Box>
-              </Box>
-
+                    <Box sx={{ flex: "1 1 200px" }}>
+                      <Typography
+                        variant="h6"
+                        sx={{ fontWeight: "bold", color: "#333" }}
+                      >
+                        Hotel Country:
+                      </Typography>
+                      <Typography variant="body1">
+                        {InHouseHotel.hotelCountry}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </motion.div>
+              </motion.div>
               {/* cityCode */}
 
               {/* Hotel Amenities */}
-              <Paper elevation={3} sx={{ p: 3, mb: 3, borderRadius: 2 }}>
-                <Typography
-                  variant="h6"
-                  sx={{ fontWeight: "bold", color: "#21325D", mb: 2 }}
-                >
-                  Amenities:
-                </Typography>
-                <Grid container spacing={3}>
-                  {InHouseHotel.amenities &&
-                  InHouseHotel.amenities.length > 0 ? (
-                    InHouseHotel.amenities.map((amenity, index) => (
-                      <Grid item xs={12} sm={6} md={4} key={index}>
-                        <Box
-                          display="flex"
-                          alignItems="center"
-                          sx={{
-                            backgroundColor: "#f5f5f5",
-                            p: 2,
-                            borderRadius: 1,
-                            boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-                          }}
-                        >
-                          <CheckCircleIcon sx={{ color: "#4caf50", mr: 1 }} />
-                          <Typography
-                            variant="body1"
-                            sx={{ fontWeight: "500", color: "#333" }}
-                          >
-                            {amenity}
-                          </Typography>
-                        </Box>
-                      </Grid>
-                    ))
-                  ) : (
-                    <Typography variant="body1">
-                      No amenities available
-                    </Typography>
-                  )}
-                </Grid>
-              </Paper>
-
-              {/* Hotel Policies */}
-              <Paper elevation={3} sx={{ p: 3, mb: 3, borderRadius: 2 }}>
-                <Typography
-                  variant="h6"
-                  sx={{ fontWeight: "bold", color: "#21325D", mb: 2 }}
-                >
-                  Hotel Policies:
-                </Typography>
-                <Grid container spacing={3}>
-                  {InHouseHotel.hotelPolicy &&
-                  InHouseHotel.hotelPolicy.length > 0 ? (
-                    InHouseHotel.hotelPolicy.map((policy, index) => (
-                      <Grid item xs={12} sm={6} md={4} key={index}>
-                        <Box
-                          display="flex"
-                          alignItems="center"
-                          sx={{
-                            backgroundColor: "#f5f5f5",
-                            p: 2,
-                            borderRadius: 1,
-                            boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-                          }}
-                        >
-                          <PolicyIcon sx={{ color: "#4caf50", mr: 1 }} />
-                          <Typography
-                            variant="body1"
-                            sx={{ fontWeight: "500", color: "#333" }}
-                          >
-                            {policy}
-                          </Typography>
-                        </Box>
-                      </Grid>
-                    ))
-                  ) : (
-                    <Typography variant="body1">
-                      No policies available
-                    </Typography>
-                  )}
-                </Grid>
-              </Paper>
-
-              {/* Hotel Facilities */}
-              <Paper elevation={3} sx={{ p: 3, mb: 3, borderRadius: 2 }}>
-                <Typography
-                  variant="h6"
-                  sx={{ fontWeight: "bold", color: "#21325D", mb: 2 }}
-                >
-                  Facilities:
-                </Typography>
-                <Grid container spacing={3}>
-                  {InHouseHotel.facilities &&
-                  InHouseHotel.facilities.length > 0 ? (
-                    InHouseHotel.facilities.map((facility, index) => (
-                      <Grid item xs={12} sm={6} md={4} key={index}>
-                        <Box
-                          display="flex"
-                          alignItems="center"
-                          sx={{
-                            backgroundColor: "#f5f5f5",
-                            p: 2,
-                            borderRadius: 1,
-                            boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-                          }}
-                        >
-                          <BuildCircleIcon sx={{ color: "#4caf50", mr: 1 }} />
-                          <Typography
-                            variant="body1"
-                            sx={{ fontWeight: "500", color: "#333" }}
-                          >
-                            {facility}
-                          </Typography>
-                        </Box>
-                      </Grid>
-                    ))
-                  ) : (
-                    <Typography variant="body1">
-                      No facilities available
-                    </Typography>
-                  )}
-                </Grid>
-              </Paper>
-
-              {/* Hotel Rating */}
-              <Box sx={{ mb: 2 }}>
-                <Typography
-                  variant="h6"
-                  sx={{ fontWeight: "bold", color: "#333" }}
-                >
-                  Rating:
-                </Typography>
-                {InHouseHotel.rating ? (
-                  <Box display="flex" alignItems="center">
-                    <Rating
-                      name="hotel-rating"
-                      value={InHouseHotel.rating}
-                      precision={0.5} // Allows for half-star ratings
-                      readOnly
-                    />
-                    {/* <Typography variant="body1" sx={{ ml: 1 }}>
-                      {InHouseHotel.rating} stars
-                    </Typography> */}
-                  </Box>
-                ) : (
-                  <Typography variant="body1">No Rating</Typography>
-                )}
-              </Box>
-
-              {/* Rooms Information */}
-              <Box sx={{ mb: 2 }}>
-                <Typography
-                  variant="h6"
-                  sx={{ fontWeight: "bold", color: "#333" }}
-                >
-                  Rooms:
-                </Typography>
-                <Typography variant="body1">
-                  Total: {InHouseHotel.totalRooms} | Available:{" "}
-                  {InHouseHotel.availableRooms}
-                </Typography>
-              </Box>
-
-              <Box>
-                {/* Iterate over each room */}
-                {InHouseHotel.rooms && InHouseHotel.rooms.length > 0 ? (
-                  InHouseHotel.rooms.map((room, index) => (
-                    <Card
-                      key={index}
-                      sx={{ mb: 4, border: "1px solid #21325D" }}
-                    >
-                      <CardContent>
-                        <Typography
-                          variant="h6"
-                          sx={{ fontWeight: "bold", color: "#333", mb: 2 }}
-                        >
-                          Room {index + 1}: {room.room_type}
-                        </Typography>
-                        <Typography variant="body1" sx={{ mb: 2 }}>
-                          {room.description}
-                        </Typography>
-
-                        {/* Room Images */}
-                        <Typography
-                          variant="h6"
-                          sx={{ fontWeight: "bold", color: "#333" }}
-                        >
-                          Images:
-                        </Typography>
-                        <Grid container spacing={2}>
-                          {room.roomsImages.map((image, imgIndex) => (
-                            <Grid item xs={6} key={imgIndex}>
-                              <img
-                                src={image}
-                                alt={`Room ${imgIndex + 1}`}
-                                style={{ width: "70%", borderRadius: "8px" }}
-                              />
-                            </Grid>
-                          ))}
-                        </Grid>
-
-                        {/* Room Information */}
-                        <Paper
-                          elevation={3}
-                          sx={{ p: 3, mt: 3, borderRadius: 2 }}
-                        >
-                          <Typography
-                            variant="h6"
-                            sx={{ fontWeight: "bold", color: "#333", mb: 2 }}
-                          >
-                            Room Information:
-                          </Typography>
-
+              <motion.div
+                initial={{ opacity: 0, y: -50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }} // Add a delay for a staggered effect
+                viewport={{ once: false }}
+              >
+                <Paper elevation={3} sx={{ p: 3, mb: 3, borderRadius: 2 }}>
+                  <Typography
+                    variant="h6"
+                    sx={{ fontWeight: "bold", color: "#21325D", mb: 2 }}
+                  >
+                    Amenities:
+                  </Typography>
+                  <Grid container spacing={3}>
+                    {InHouseHotel.amenities &&
+                    InHouseHotel.amenities.length > 0 ? (
+                      InHouseHotel.amenities.map((amenity, index) => (
+                        <Grid item xs={12} sm={6} md={4} key={index}>
                           <Box
                             display="flex"
-                            justifyContent="space-between"
-                            sx={{ alignItems: "center" }}
+                            alignItems="center"
+                            sx={{
+                              backgroundColor: "#f5f5f5",
+                              p: 2,
+                              borderRadius: 1,
+                              boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+                            }}
                           >
-                            {/* Total Rooms */}
-                            <Box display="flex" alignItems="center">
-                              <HotelIcon sx={{ color: "#1976d2", mr: 1 }} />
-                              <Typography
-                                variant="body1"
-                                sx={{ fontWeight: "medium" }}
-                              >
-                                Total Rooms: {room.totalRooms}
-                              </Typography>
-                            </Box>
-
-                            {/* Available Rooms */}
-                            <Box display="flex" alignItems="center">
-                              <MeetingRoomIcon
-                                sx={{ color: "#4caf50", mr: 1 }}
-                              />
-                              <Typography
-                                variant="body1"
-                                sx={{ fontWeight: "medium" }}
-                              >
-                                Available Rooms: {room.availableRooms}
-                              </Typography>
-                            </Box>
-                          </Box>
-                        </Paper>
-                        {/* Room Amenities */}
-                        <Paper
-                          elevation={3}
-                          sx={{ p: 3, borderRadius: 2, mt: 1 }}
-                        >
-                          <Typography
-                            variant="h6"
-                            sx={{ fontWeight: "bold", color: "#21325D", mb: 2 }}
-                          >
-                            Room Amenities:
-                          </Typography>
-                          {room.roomAmineties &&
-                          room.roomAmineties.length > 0 ? (
-                            <Grid container spacing={3}>
-                              {room.roomAmineties.map((amenity, index) => (
-                                <Grid item xs={12} sm={6} md={4} key={index}>
-                                  <Box
-                                    display="flex"
-                                    alignItems="center"
-                                    sx={{
-                                      backgroundColor: "#f5f5f5",
-                                      p: 2,
-                                      borderRadius: 1,
-                                      boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-                                    }}
-                                  >
-                                    <CheckCircleIcon
-                                      sx={{ color: "#4caf50", mr: 1 }}
-                                    />
-                                    <Typography
-                                      variant="body1"
-                                      sx={{ fontWeight: "500", color: "#333" }}
-                                    >
-                                      {amenity}
-                                    </Typography>
-                                  </Box>
-                                </Grid>
-                              ))}
-                            </Grid>
-                          ) : (
-                            <Typography variant="body1">
-                              No amenities available
+                            <CheckCircleIcon sx={{ color: "#4caf50", mr: 1 }} />
+                            <Typography
+                              variant="body1"
+                              sx={{ fontWeight: "500", color: "#333" }}
+                            >
+                              {amenity}
                             </Typography>
-                          )}
-                        </Paper>
-
-                        {/* Price Details (Weekday) */}
-                        <Box>
-                          <Typography
-                            variant="h6"
-                            sx={{ fontWeight: "bold", color: "#333", mt: 3 }}
-                          >
-                            Price Details (Weekday):
-                          </Typography>
-                          {room.priceDetails.Weekday.map(
-                            (priceDetail, priceIndex) => (
-                              <Typography key={priceIndex} variant="body1">
-                                Adults: {priceDetail.noOfAdult}, Children:{" "}
-                                {priceDetail.noOfChildren}, Price:{" "}
-                                {priceDetail.room_Price} INR
-                                {priceDetail.isCP && " (Breakfast included)"}
-                                {priceDetail.isMAP &&
-                                  " (Breakfast + Dinner/Breakfast + Lunch)included"}
-                                {priceDetail.isAP &&
-                                  " (All meals: Breakfast + Dinner/Lunch included)"}
-                              </Typography>
-                            )
-                          )}
-                        </Box>
-
-                        {/* Price Details (Weekend) */}
-                        <Typography
-                          variant="h6"
-                          sx={{ fontWeight: "bold", color: "#333", mt: 3 }}
-                        >
-                          Price Details (Weekend):
-                        </Typography>
-                        {room.priceDetails.Weekend.length > 0 ? (
-                          room.priceDetails.Weekend.map(
-                            (weekendDetail, weekendIndex) => (
-                              <Typography key={weekendIndex} variant="body1">
-                                Adults: {weekendDetail.noOfAdult}, Children:{" "}
-                                {weekendDetail.noOfChildren}, Price:{" "}
-                                {weekendDetail.room_Price} INR
-                                {weekendDetail.isCP && " (Breakfast included)"}
-                                {weekendDetail.isMAP &&
-                                  " (Breakfast + Dinner/Breakfast + Lunch)included"}
-                                {weekendDetail.isAP &&
-                                  " (All meals: Breakfast + Dinner/Lunch included)"}
-                              </Typography>
-                            )
-                          )
-                        ) : (
-                          <Typography variant="body1">
-                            No weekend pricing available
-                          </Typography>
-                        )}
-                      </CardContent>
-                    </Card>
-                  ))
-                ) : (
-                  <Typography variant="body1">No rooms available</Typography>
-                )}
-              </Box>
-
-              {/* Close Button */}
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  mt: 2,
-                }}
+                          </Box>
+                        </Grid>
+                      ))
+                    ) : (
+                      <Typography variant="body1">
+                        No amenities available
+                      </Typography>
+                    )}
+                  </Grid>
+                </Paper>
+              </motion.div>
+              {/* Hotel Policies */}
+              <motion.div
+                initial={{ opacity: 0, y: -50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }} // Add a delay for a staggered effect
+                viewport={{ once: false }}
               >
-                <Button
-                  onClick={handleCloseViewDetails}
-                  variant="contained"
+                <Paper elevation={3} sx={{ p: 3, mb: 3, borderRadius: 2 }}>
+                  <Typography
+                    variant="h6"
+                    sx={{ fontWeight: "bold", color: "#21325D", mb: 2 }}
+                  >
+                    Hotel Policies:
+                  </Typography>
+                  <Grid container spacing={3}>
+                    {InHouseHotel.hotelPolicy &&
+                    InHouseHotel.hotelPolicy.length > 0 ? (
+                      InHouseHotel.hotelPolicy.map((policy, index) => (
+                        <Grid item xs={12} sm={6} md={4} key={index}>
+                          <Box
+                            display="flex"
+                            alignItems="center"
+                            sx={{
+                              backgroundColor: "#f5f5f5",
+                              p: 2,
+                              borderRadius: 1,
+                              boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+                            }}
+                          >
+                            <PolicyIcon sx={{ color: "#4caf50", mr: 1 }} />
+                            <Typography
+                              variant="body1"
+                              sx={{ fontWeight: "500", color: "#333" }}
+                            >
+                              {policy}
+                            </Typography>
+                          </Box>
+                        </Grid>
+                      ))
+                    ) : (
+                      <Typography variant="body1">
+                        No policies available
+                      </Typography>
+                    )}
+                  </Grid>
+                </Paper>
+              </motion.div>
+              {/* Hotel Facilities */}
+              <motion.div
+                initial={{ opacity: 0, y: -50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }} // Add a delay for a staggered effect
+                viewport={{ once: false }}
+              >
+                <Paper elevation={3} sx={{ p: 3, mb: 3, borderRadius: 2 }}>
+                  <Typography
+                    variant="h6"
+                    sx={{ fontWeight: "bold", color: "#21325D", mb: 2 }}
+                  >
+                    Facilities:
+                  </Typography>
+                  <Grid container spacing={3}>
+                    {InHouseHotel.facilities &&
+                    InHouseHotel.facilities.length > 0 ? (
+                      InHouseHotel.facilities.map((facility, index) => (
+                        <Grid item xs={12} sm={6} md={4} key={index}>
+                          <Box
+                            display="flex"
+                            alignItems="center"
+                            sx={{
+                              backgroundColor: "#f5f5f5",
+                              p: 2,
+                              borderRadius: 1,
+                              boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+                            }}
+                          >
+                            <BuildCircleIcon sx={{ color: "#4caf50", mr: 1 }} />
+                            <Typography
+                              variant="body1"
+                              sx={{ fontWeight: "500", color: "#333" }}
+                            >
+                              {facility}
+                            </Typography>
+                          </Box>
+                        </Grid>
+                      ))
+                    ) : (
+                      <Typography variant="body1">
+                        No facilities available
+                      </Typography>
+                    )}
+                  </Grid>
+                </Paper>
+              </motion.div>
+              {/* Hotel Rating */}
+              <motion.div
+                initial={{ opacity: 0, y: -50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }} // Add a delay for a staggered effect
+                viewport={{ once: false }}
+              >
+                <Box sx={{ mb: 2 }}>
+                  <Typography
+                    variant="h6"
+                    sx={{ fontWeight: "bold", color: "#333" }}
+                  >
+                    Rating:
+                  </Typography>
+                  {InHouseHotel.rating ? (
+                    <Box display="flex" alignItems="center">
+                      <Rating
+                        name="hotel-rating"
+                        value={InHouseHotel.rating}
+                        precision={0.5} // Allows for half-star ratings
+                        readOnly
+                      />
+                      {/* <Typography variant="body1" sx={{ ml: 1 }}>
+                      {InHouseHotel.rating} stars
+                    </Typography> */}
+                    </Box>
+                  ) : (
+                    <Typography variant="body1">No Rating</Typography>
+                  )}
+                </Box>
+              </motion.div>
+
+              {/* Rooms Information */}
+              <motion.div
+                initial={{ opacity: 0, y: -50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }} // Add a delay for a staggered effect
+                viewport={{ once: false }}
+              >
+                <Box sx={{ mb: 2 }}>
+                  <Typography
+                    variant="h6"
+                    sx={{ fontWeight: "bold", color: "#333" }}
+                  >
+                    Rooms:
+                  </Typography>
+                  <Typography variant="body1">
+                    Total: {InHouseHotel.totalRooms} | Available:{" "}
+                    {InHouseHotel.availableRooms}
+                  </Typography>
+                </Box>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: -50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }} // Add a delay for a staggered effect
+                viewport={{ once: false }}
+              >
+                <Box>
+                  {/* Iterate over each room */}
+                  {InHouseHotel.rooms && InHouseHotel.rooms.length > 0 ? (
+                    InHouseHotel.rooms.map((room, index) => (
+                      <Card
+                        key={index}
+                        sx={{ mb: 4, border: "1px solid #21325D" }}
+                      >
+                        <motion.div
+                          initial={{ opacity: 0, y: -50 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.5, delay: 0.3 }} // Add a delay for a staggered effect
+                          viewport={{ once: false }}
+                        >
+                          <CardContent>
+                            <motion.div
+                              initial={{ opacity: 0, y: 50 }} // Initial state before animation
+                              animate={{ opacity: 1, y: 0 }} // Animation state when mounted
+                              transition={{ duration: 0.5 }} // Duration of the animation
+                              viewport={{ once: false }}
+                            >
+                              <Typography
+                                variant="h6"
+                                sx={{
+                                  fontWeight: "bold",
+                                  color: "#333",
+                                  mb: 2,
+                                }}
+                              >
+                                Room {index + 1}: {room.room_type}
+                              </Typography>
+                              <Typography variant="body1" sx={{ mb: 2 }}>
+                                {room.description}
+                              </Typography>
+
+                              {/* Room Images */}
+                              <Typography
+                                variant="h6"
+                                sx={{ fontWeight: "bold", color: "#333" }}
+                              >
+                                Images:
+                              </Typography>
+                              <Grid container spacing={2}>
+                                {room.roomsImages.map((image, imgIndex) => (
+                                  <Grid item xs={6} key={imgIndex}>
+                                    <img
+                                      src={image}
+                                      alt={`Room ${imgIndex + 1}`}
+                                      style={{
+                                        width: "70%",
+                                        borderRadius: "8px",
+                                      }}
+                                    />
+                                  </Grid>
+                                ))}
+                              </Grid>
+                            </motion.div>
+
+                            {/* Room Information */}
+                            <Paper
+                              elevation={3}
+                              sx={{ p: 3, mt: 3, borderRadius: 2 }}
+                            >
+                              <Typography
+                                variant="h6"
+                                sx={{
+                                  fontWeight: "bold",
+                                  color: "#333",
+                                  mb: 2,
+                                }}
+                              >
+                                Room Information:
+                              </Typography>
+
+                              <Box
+                                display="flex"
+                                justifyContent="space-between"
+                                sx={{ alignItems: "center" }}
+                              >
+                                {/* Total Rooms */}
+                                <Box display="flex" alignItems="center">
+                                  <HotelIcon sx={{ color: "#1976d2", mr: 1 }} />
+                                  <Typography
+                                    variant="body1"
+                                    sx={{ fontWeight: "medium" }}
+                                  >
+                                    Total Rooms: {room.totalRooms}
+                                  </Typography>
+                                </Box>
+
+                                {/* Available Rooms */}
+                                <Box display="flex" alignItems="center">
+                                  <MeetingRoomIcon
+                                    sx={{ color: "#4caf50", mr: 1 }}
+                                  />
+                                  <Typography
+                                    variant="body1"
+                                    sx={{ fontWeight: "medium" }}
+                                  >
+                                    Available Rooms: {room.availableRooms}
+                                  </Typography>
+                                </Box>
+                              </Box>
+                            </Paper>
+                            {/* Room Amenities */}
+                            <Paper
+                              elevation={3}
+                              sx={{ p: 3, borderRadius: 2, mt: 1 }}
+                            >
+                              <Typography
+                                variant="h6"
+                                sx={{
+                                  fontWeight: "bold",
+                                  color: "#21325D",
+                                  mb: 2,
+                                }}
+                              >
+                                Room Amenities:
+                              </Typography>
+                              <motion.div
+                                initial={{ opacity: 0, y: -50 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: 0.3 }} // Add a delay for a staggered effect
+                                viewport={{ once: false }}
+                              >
+                                {room.roomAmineties &&
+                                room.roomAmineties.length > 0 ? (
+                                  <Grid container spacing={3}>
+                                    {room.roomAmineties.map(
+                                      (amenity, index) => (
+                                        <Grid
+                                          item
+                                          xs={12}
+                                          sm={6}
+                                          md={4}
+                                          key={index}
+                                        >
+                                          <Box
+                                            display="flex"
+                                            alignItems="center"
+                                            sx={{
+                                              backgroundColor: "#f5f5f5",
+                                              p: 2,
+                                              borderRadius: 1,
+                                              boxShadow:
+                                                "0 2px 8px rgba(0,0,0,0.1)",
+                                            }}
+                                          >
+                                            <CheckCircleIcon
+                                              sx={{ color: "#4caf50", mr: 1 }}
+                                            />
+                                            <Typography
+                                              variant="body1"
+                                              sx={{
+                                                fontWeight: "500",
+                                                color: "#333",
+                                              }}
+                                            >
+                                              {amenity}
+                                            </Typography>
+                                          </Box>
+                                        </Grid>
+                                      )
+                                    )}
+                                  </Grid>
+                                ) : (
+                                  <Typography variant="body1">
+                                    No amenities available
+                                  </Typography>
+                                )}
+                              </motion.div>
+                            </Paper>
+
+                            {/* Price Details (Weekday) */}
+                            <Box>
+                              <Typography
+                                variant="h6"
+                                sx={{
+                                  fontWeight: "bold",
+                                  color: "#333",
+                                  mt: 3,
+                                }}
+                              >
+                                Price Details (Weekday):
+                              </Typography>
+                              <motion.div
+                                initial={{ opacity: 0, y: -50 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: 0.3 }} // Add a delay for a staggered effect
+                                viewport={{ once: false }}
+                              >
+                                {room.priceDetails.Weekday.map(
+                                  (priceDetail, priceIndex) => (
+                                    <Typography
+                                      key={priceIndex}
+                                      variant="body1"
+                                    >
+                                      Adults: {priceDetail.noOfAdult}, Children:{" "}
+                                      {priceDetail.noOfChildren}, Price:{" "}
+                                      {priceDetail.room_Price} INR
+                                      {priceDetail.isCP &&
+                                        " (Breakfast included)"}
+                                      {priceDetail.isMAP &&
+                                        " (Breakfast + Dinner/Breakfast + Lunch)included"}
+                                      {priceDetail.isAP &&
+                                        " (All meals: Breakfast + Dinner/Lunch included)"}
+                                    </Typography>
+                                  )
+                                )}
+                              </motion.div>
+                            </Box>
+
+                            {/* Price Details (Weekend) */}
+                            <Typography
+                              variant="h6"
+                              sx={{ fontWeight: "bold", color: "#333", mt: 3 }}
+                            >
+                              Price Details (Weekend):
+                            </Typography>
+                            <motion.div
+                              initial={{ opacity: 0, y: -50 }}
+                              whileInView={{ opacity: 1, y: 0 }}
+                              transition={{ duration: 0.5, delay: 0.3 }} // Add a delay for a staggered effect
+                              viewport={{ once: false }}
+                            >
+                              {room.priceDetails.Weekend.length > 0 ? (
+                                room.priceDetails.Weekend.map(
+                                  (weekendDetail, weekendIndex) => (
+                                    <Typography
+                                      key={weekendIndex}
+                                      variant="body1"
+                                    >
+                                      Adults: {weekendDetail.noOfAdult},
+                                      Children: {weekendDetail.noOfChildren},
+                                      Price: {weekendDetail.room_Price} INR
+                                      {weekendDetail.isCP &&
+                                        " (Breakfast included)"}
+                                      {weekendDetail.isMAP &&
+                                        " (Breakfast + Dinner/Breakfast + Lunch)included"}
+                                      {weekendDetail.isAP &&
+                                        " (All meals: Breakfast + Dinner/Lunch included)"}
+                                    </Typography>
+                                  )
+                                )
+                              ) : (
+                                <Typography variant="body1">
+                                  No weekend pricing available
+                                </Typography>
+                              )}
+                            </motion.div>
+                          </CardContent>
+                        </motion.div>
+                      </Card>
+                    ))
+                  ) : (
+                    <Typography variant="body1">No rooms available</Typography>
+                  )}
+                </Box>
+              </motion.div>
+              {/* Close Button */}
+              <motion.div
+                initial={{ opacity: 0, y: -50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }} // Add a delay for a staggered effect
+                viewport={{ once: false }}
+              >
+                <Box
                   sx={{
-                    px: 4,
-                    py: 1.5,
-                    borderRadius: "8px",
-                    boxShadow: "0px 4px 10px rgba(0,0,0,0.1)", // Softer button shadow
-                    backgroundColor: "#21325D",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    mt: 2,
                   }}
                 >
-                  Close
-                </Button>
-              </Box>
+                  <Button
+                    onClick={handleCloseViewDetails}
+                    variant="contained"
+                    sx={{
+                      px: 4,
+                      py: 1.5,
+                      borderRadius: "8px",
+                      boxShadow: "0px 4px 10px rgba(0,0,0,0.1)", // Softer button shadow
+                      backgroundColor: "#21325D",
+                    }}
+                  >
+                    Close
+                  </Button>
+                </Box>
+              </motion.div>
             </Box>
           ) : (
             <Box

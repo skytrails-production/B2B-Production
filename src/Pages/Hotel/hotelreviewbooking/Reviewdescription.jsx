@@ -33,7 +33,7 @@ import {
   validateName,
   validatePAN,
 } from "../../../utils/validation";
-import { swalModal } from "../../../../src/utils/swal";
+import { swalModal } from "../../../utils/swal";
 const styleLoader = {
   position: "absolute",
   top: "50%",
@@ -901,6 +901,7 @@ const Flightdetail = () => {
                                     </div>
                                   )
                                 )}
+                                
                               {noOfRooms[roomIndex]?.NoOfChild > 0 &&
                                 Array.from(
                                   {

@@ -4,113 +4,168 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Box, Flex, Spacer, Text } from "@chakra-ui/react";
 import "./hotelbooknow.css";
 import { Divider, Grid, Typography } from "@mui/material";
-import bed from "../../../../Images/bed.png";
-import availableRooms from "../../../../Images/Hotel/availableRooms.png";
-import hotelMap from "../../../../Images/Hotel/hotelMap.png";
-import hotelDetails from "../../../../Images/Hotel/hotelDetails.png";
-import imageGallery from "../../../../Images/Hotel/imageGallery.png";
-
+// import bed from "../../../Images/bed.png";
+import availableRooms from "../../../../../Images/Hotel/availableRooms.png";
+import hotelMap from "../../../../../Images/Hotel/hotelMap.png";
+import hotelDetails from "../../../../../Images/Hotel/hotelDetails.png";
+import imageGallery from "../../../../../Images/Hotel/imageGallery.png";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import Input from "@mui/material/Input";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import NativeSelect from "@mui/material/NativeSelect";
+import Checkbox from "@mui/material/Checkbox";
+import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
+import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
+import Link from "@mui/material/Link";
+// import Rating from "../hotelresult/Rating";
 import Hoteldetailaccordian from "./Hoteldetailaccordian";
 import StarIcon from "@mui/icons-material/Star";
-
+import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
+import Loader from "../../Loader/Loader";
 import { useDispatch, useSelector, useReducer } from "react-redux";
-import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
-import { clearHotelSelectedRoom } from "../../../../Redux/HotelGrn/hotel";
-
-import HotelLoading from "../hotelLoading/HotelLoading";
+import {
+  clearHotelBlockReducer,
+  hotelBlockRoomAction,
+  hotelRoomAction,
+  hotelSearchInfoAction,
+} from "../../../../../Redux/Hotel/hotel";
+import HotelLoading from "../../hotelLoading/HotelLoading";
 import Swal from "sweetalert2";
-import { swalModal } from "../../../../utils/swal";
-import axios from "axios";
-import { apiURL } from "../../../../Constants/constant";
-import CustomModal from "../swal/model";
+import { swalModal } from "../../../../../utils/swal";
+import dayjs from "dayjs";
+
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
-const HotelBooknowGrm = () => {
+const HotelBooknowTbo = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const reducerState = useSelector((state) => state);
  
-  const [loader, setLoader] = useState(true);
-  const [showRooms, setShowRooms] = useState(10);
+  const [loader, setLoader] = useState(false);
+
   const ResultIndex = sessionStorage.getItem("ResultIndex");
   const HotelCode = sessionStorage.getItem("HotelCode");
 
-  useEffect(() => {
-    if (
-      reducerState?.hotelSearchResultGRN?.hotelDetails?.data?.data?.errors
-        ?.length > 0
-    ) {
-      swalModal("hotel", "room not found", false);
-      <CustomModal />;
-      navigate("/hotels/hotelsearchs");
-    }
-  }, [reducerState?.hotelSearchResultGRN?.hotelDetails?.data?.data?.errors]);
 
   useEffect(() => {
     if (
-      reducerState?.hotelSearchResultGRN?.hotelDetails?.status === 200 &&
-      reducerState?.hotelSearchResultGRN?.hotelGallery?.data?.data?.images
-        ?.regular?.length > 0
-    ) {
-      // navigate("/hotels/hotelsearchs/HotelBooknowgrm");
-      setLoader(false);
-    }
-  }, [
-    reducerState?.hotelSearchResultGRN?.hotelDetails?.status ||
-      reducerState?.hotelSearchResultGRN?.hotelGallery?.data?.data?.images,
-  ]);
-
-  useEffect(() => {
-    dispatch(clearHotelSelectedRoom());
-  }, []);
-
-  useEffect(() => {
-    if (
-      reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult?.Error
+      reducerState?.hotelSearchResultGRN?.hotelInfo?.HotelInfoResult?.Error
         ?.ErrorCode !== 0 &&
-      reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult?.Error
+      reducerState?.hotelSearchResultGRN?.hotelInfo?.HotelInfoResult?.Error
         ?.ErrorCode !== undefined
     ) {
-      // swalModal("py",reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult.Error?.ErrorMessage,true)
-      swalModal(
-        "py",
-        "'We're sorry, but there was an issue with your hotel booking",
-        true
-      );
+      // swalModal("py",reducerState?.hotelSearchResultGRN?.hotelInfo?.HotelInfoResult.Error?.ErrorMessage,true)
+      // swalModal(
+      //   "py",
+      //   "'We're sorry, but there was an issue with your hotel booking",
+      //   true
+      // );
+      // Swal.fire({
+      //   title: "Failed!",
+      //   text: reducerState?.hotelSearchResultGRN?.hotelInfo?.HotelInfoResult
+      //     .Error?.ErrorMessage,
+      //   icon: "question",
+      //   timer: 3000,
+      //   showClass: {
+      //     popup: `
+      //       animate__animated
+      //       animate__fadeInUp
+      //       animate__faster
+      //     `
+      //   },
+      //   hideClass: {
+      //     popup: `
+      //       animate__animated
+      //       animate__fadeOutDown
+      //       animate__faster
+      //     `
+      //   }
+      // })
+      // sessionStorage.removeItem("HotelCode");
+      // sessionStorage.removeItem("ResultIndex");
+      // navigate("/");
+      navigate("/hotels/hotelsearchs/HotelBooknowTbo");
 
-      sessionStorage.removeItem("HotelCode");
-      sessionStorage.removeItem("ResultIndex");
-      navigate("/");
     }
   }, [
-    reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult?.Error
+    reducerState?.hotelSearchResultGRN?.hotelInfo?.HotelInfoResult?.Error
       ?.ErrorCode,
   ]);
-
- 
-
-  useEffect(() => {
-    if (reducerState?.hotelSearchResult?.isLoadingHotelRoom == true) {
-      setLoader(true);
-    }
-  }, [reducerState?.hotelSearchResult?.isLoadingHotelRoom]);
+  
 
   useEffect(() => {
     if (
-      reducerState?.hotelSearchResult?.hotelRoom?.GetHotelRoomResult
+      ResultIndex === undefined ||
+      ResultIndex === null ||
+      HotelCode === undefined ||
+      HotelCode === null
+    ) {
+      navigate("/hotels/hotelsearchs");
+    } else {
+      const payload = {
+        ResultIndex: ResultIndex,
+        HotelCode: HotelCode,
+        EndUserIp: reducerState?.ip?.ipData,
+        TokenId: reducerState?.ip?.tokenData,
+        TraceId:
+          reducerState?.hotelSearchResultGRN?.ticketData?.data?.data?.TraceId,
+      };
+    
+      dispatch(hotelSearchInfoAction(payload));
+      dispatch(hotelRoomAction(payload));
+    }
+    dispatch(clearHotelBlockReducer())
+  }, []);
+
+
+  useEffect(() => {
+    if (reducerState?.hotelSearchResultGRN?.isLoadingHotelRoom == true) {
+      setLoader(true);
+    }
+  }, [reducerState?.hotelSearchResultGRN?.isLoadingHotelRoom]);
+
+  useEffect(() => {
+    if (
+      reducerState?.hotelSearchResultGRN?.hotelRoom?.GetHotelRoomResult
         ?.HotelRoomsDetails?.length >= 0
     ) {
       setLoader(false);
     }
   }, [
-    reducerState?.hotelSearchResult?.hotelRoom?.GetHotelRoomResult
+    reducerState?.hotelSearchResultGRN?.hotelRoom?.GetHotelRoomResult
       ?.HotelRoomsDetails,
   ]);
 
-  const result =
-    reducerState?.hotelSearchResult?.ticketData?.data?.data?.HotelSearchResult;
+  // useEffect(() => {
+  //   if (!loader && reducerState?.hotelSearchResult?.blockRoom?.BlockRoomResult) {
+  //     navigate("ReviewbookingTbo");
+  //   }
+  // });
 
+ 
+  const hotelll = reducerState?.hotelSearchResultGRN;
+  
+  const hotelInfo =
+    reducerState?.hotelSearchResult?.hotelInfo?.HotelInfoResult;
+  const hotelRoom =
+    reducerState?.hotelSearchResult?.hotelRoom?.GetHotelRoomResult;
+
+  const star = (data) => {
+    const stars = [];
+    for (let i = 0; i < data; i++) {
+      stars.push(<StarIcon key={i} style={{ color: "#FF8900" }} />);
+    }
+    return stars;
+  };
+  const hotelContactNo = hotelInfo?.HotelDetails?.HotelContactNo;
+  const result =
+    reducerState?.hotelSearchResultGRN?.ticketData?.data?.data
+     ;
+
+  
   let totalAdults = 0;
   let totalChildren = 0;
 
@@ -120,10 +175,13 @@ const HotelBooknowGrm = () => {
   });
 
   const storedFormData = JSON.parse(sessionStorage.getItem("hotelFormData"));
-
+  
+  const data = storedFormData?.dynamicFormData[0];
+  
   const hotelMainReducer =
     reducerState?.hotelSearchResultGRN?.ticketData?.data?.data;
 
+  
   return (
     <>
       {loader ? (
@@ -137,15 +195,24 @@ const HotelBooknowGrm = () => {
               <div className="col-lg-12 col-md-12 col-sm-12 mb-3">
                 <div className="hotelBookNowOuter-new">
                   <div className="hotelBookNowHeader-new">
+                    {/* <p>Your Search criteria:{storedFormData?.city},{' '} India</p>
+                    <p>Duration: {storedFormData?.night}{' '}Nights</p>
+                    <p>{storedFormData?.checkIn}- {storedFormData?.checkOut}</p>
+                    <p>Guest(s): {totalAdults}Adult(s) </p>
+                    <p>Room(s): {storedFormData?.room}</p> */}
                     <div className="serach-hotel-discribe-new">
                       <p className="serach-hotel-discribe-new-content">
+                        {" "}
                         City, Property Name Or Location
                       </p>
                       <p className="serach-hotel-discribe-new-content1">
                         {storedFormData?.city}{" "}
                       </p>
                     </div>
-
+                    {/* <div className="serach-hotel-discribe-new">
+                      <p>Duration</p>
+                      <p>{storedFormData?.night}</p>
+                    </div> */}
                     <div className="serach-hotel-discribe-new">
                       <div style={{ display: "flex", gap: "5px" }}>
                         <p className="serach-hotel-discribe-new-content">
@@ -166,7 +233,6 @@ const HotelBooknowGrm = () => {
                           />
                         </svg>
                       </div>
-
                       <p className="serach-hotel-discribe-new-content1">
                         {dayjs(hotelMainReducer?.checkin).format("DD MMM, YY")}
                       </p>
@@ -192,18 +258,14 @@ const HotelBooknowGrm = () => {
                           />
                         </svg>
                       </div>
-
                       <p className="serach-hotel-discribe-new-content1">
-                        <p>
-                          {dayjs(hotelMainReducer?.checkout).format(
-                            "DD MMM, YY"
-                          )}
-                        </p>
+                        {dayjs(hotelMainReducer?.checkout).format("DD MMM, YY")}
                       </p>
                     </div>
                     <div className="serach-hotel-discribe-new">
                       <div style={{ display: "flex", gap: "5px" }}>
                         <p className="serach-hotel-discribe-new-content">
+                          {" "}
                           Rooms & Guests
                         </p>
                         <svg
@@ -221,11 +283,10 @@ const HotelBooknowGrm = () => {
                           />
                         </svg>
                       </div>
-
                       <p className="serach-hotel-discribe-new-content1">
-                        {hotelMainReducer?.no_of_rooms}Room,
-                        {hotelMainReducer?.no_of_adults}
-                        Adults,{storedFormData?.noOfChild}Children
+                        {storedFormData?.room}Room,
+                        {storedFormData?.noOfAdults}Adults,
+                        {storedFormData?.noOfChild}Children
                       </p>
                     </div>
                   </div>
@@ -279,4 +340,4 @@ const HotelBooknowGrm = () => {
   );
 };
 
-export default HotelBooknowGrm;
+export default HotelBooknowTbo;

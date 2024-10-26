@@ -78,7 +78,7 @@ function* hotelBookRoomRequest(action) {
     // console.log("action:👍", action?.payload[1]);
     const data = yield call(userApi.hotelBookRoom, action?.payload[0]);
 
-    console.error("check book response", data);
+    // console.error("check book response", data);
 
     yield put(fetchBookRoomHotel(data));
 
@@ -89,9 +89,9 @@ function* hotelBookRoomRequest(action) {
         EndUserIp: action?.payload[1]?.EndUserIp,
         TokenId: action?.payload[1]?.TokenId,
       });
-      console.error("getDetails", getDetails);
+      // console.error("getDetails", getDetails);
 
-      console.error("BookingId", BookingId);
+      // console.error("BookingId", BookingId);
 
       const updatedGetDetails = {
         ...getDetails,

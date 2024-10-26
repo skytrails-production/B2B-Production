@@ -454,3 +454,18 @@ font-weight: 500;
 line-height: normal;
 text-decoration-line: underline;
 }
+
+.othInc {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.othInc span {
+  padding: 2px 8px;
+  border: 1px solid green;
+  border-radius: 3px;
+  color: rgb(3, 87, 3);
+  background-color: rgba(171, 247, 171, 0.521);
+}

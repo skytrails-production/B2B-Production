@@ -373,9 +373,9 @@ background: #E73C34;
   height: 10px;
 }
 
-.roomCompo-new div > div {
+/* .roomCompo-new div > div {
   width: 100%;
-}
+} */
 
 .hotelBookNowHeader-new {
   display: flex;

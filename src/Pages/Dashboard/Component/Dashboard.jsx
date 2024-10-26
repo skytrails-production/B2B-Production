@@ -14,11 +14,11 @@ import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Careerform from "./Table/Career/Careerform";
 import Logout from "@mui/icons-material/Logout";
-import profilePicUrl from "../../../Images/Admin.svg";
+
 // import profilePicUrl from '../../../Images/Admin.svg'
 import WebIcon from "@mui/icons-material/Web";
 import InventoryIcon from "@mui/icons-material/Inventory";
-import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+
 import Carrertable from "./Table/Career/Carrertable";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 import {
@@ -34,8 +34,7 @@ import AirplaneTicketIcon from "@mui/icons-material/AirplaneTicket";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
-import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
-import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
+
 import AirplanemodeActiveIcon from "@mui/icons-material/AirplanemodeActive";
 import FlightInventory from "./Table/FlightInventory/FlightInventory";
 import Tables from "./Table/Table";
@@ -43,13 +42,13 @@ import Usertables from "./Table/UserTable";
 import SubAdminTable from "./Table/subAdmin";
 import MarkUpAmount from "./Table/MarkUpAmount";
 import PackageDetails from "./Table/packageUpdate/PackageDetails";
-import EditHolidayPackage from "./Table/packageUpdate/EditPackage";
+
 import { useLocation, useNavigate } from "react-router-dom";
 import ForexData from "./Table/Forex/ForexData";
 import VisaData from "./Table/VisaData/VisaData";
-import { useDispatch, useSelector, useReducer } from "react-redux";
+import { useDispatch } from "react-redux";
 import { adminSignOut } from "../../../Redux/Auth/AdminSignOut/actionAdminSignOut";
-import STLOGO from "../../../Images/ST-Main-Logo.png";
+
 import RiseLoader from "react-spinners/RiseLoader";
 import HotelBookings from "./Table/HotelBookings/HotelBookings";
 import FlightBookings from "./Table/FlightBookings/Flightbookings";
@@ -76,17 +75,15 @@ import {
   Menu,
   MenuItem,
   Divider,
-  InputBase,
-  Badge,
+
   CircularProgress,
 } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+
 import { FormControl, InputLabel, Select } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+
 import Groups3Icon from "@mui/icons-material/Groups3";
 import AdminDashboard from "./AdminDashboard";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+
 import OfferList from "./Table/OfferList/OfferList";
 import AgentCancelHotel from "./Table/CancelTicketRequest/AgentCancelHotel";
 import AgentCancelFlight from "./Table/CancelTicketRequest/AgentCancelFlight";
@@ -146,7 +143,7 @@ import {
   CollectionsBookmark as TotalBookingsIcon,
   EmojiEvents as EmojiEventsIcon,
 } from "@mui/icons-material";
-import { Center } from "@chakra-ui/layout";
+
 import axios from "axios";
 import { PiBackpackThin } from "react-icons/pi";
 import Snackbar from "@mui/material/Snackbar";

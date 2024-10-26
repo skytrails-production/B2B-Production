@@ -126,6 +126,13 @@ export const hotelReducer = (state = initState, action) => {
         isError: false,
         showSuccessMessage: true,
       };
+    case types.HOTEL_BLOCK_CLEAR_TVO:
+      console.log("HOTEL_BLOCK_CLEAR_TVO",)
+      return{
+        ...state,
+        blockRoom: [],
+
+      }
     case types.CLEAR_HOTEL_REDUCER:
       return {
         ticketData: [],

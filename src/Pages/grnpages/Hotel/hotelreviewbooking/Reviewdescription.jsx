@@ -98,14 +98,14 @@ const Flightdetail = () => {
   useEffect(() => {
     if (isLoad?.length == 0) {
       setLoader(true);
-      // console.log("truehai bhai");
+      
     }
   }, [isLoad]);
 
   useEffect(() => {
     if (isLoad?.length >= 0) {
       setLoader(false);
-      // console.log("truehai bhai");
+     
     }
   }, [isLoad]);
 
@@ -259,8 +259,7 @@ const Flightdetail = () => {
     if (authenticUser !== 200) {
       setIsLoginModalOpen(true);
     } else {
-      // console.log("passenger data is hittting")
-
+      
       dispatch(PassengersAction(passengerData));
 
       const payload = {
@@ -355,6 +354,7 @@ const Flightdetail = () => {
                   style={{ display: "flex", justifyContent: "space-between" }}
                 >
                   <h2> Room Details</h2>
+                  
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"

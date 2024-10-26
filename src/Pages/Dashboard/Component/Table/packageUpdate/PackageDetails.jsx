@@ -3,8 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { searchPackageAction } from "../../../../../Redux/SearchPackage/actionSearchPackage";
 import { apiURL } from "../../../../../Constants/constant";
-import { Box, Button, MenuItem, Select, CircularProgress } from "@mui/material";
+import {
+  Box,
+  Button,
+  MenuItem,
+  Select,
+  CircularProgress,
+  TextField,
+  InputAdornment,
+} from "@mui/material";
 import "./packageUpdate.css";
+import SearchIcon from "@mui/icons-material/Search";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import axios from "axios";
 import Typography from "@mui/material/Typography";
@@ -22,35 +31,11 @@ import { Spin } from "antd";
 import CloseIcon from "@mui/icons-material/Close"; // Import the Close icon
 function PackageDetails() {
   const reducerState = useSelector((state) => state);
-  // const holidayPackage = reducerState?.searchResult?.packageSearchResult?.data?.data?.pakage;
-
-  // useEffect(() => {
-  //     const payload = {
-  //         destination: "",
-  //         days: 0,
-  //     };
-  //     dispatch(searchPackageAction(payload));
-  // }, []);
   const [holidayPackage, setHolidayPackage] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingApproval, setLoadingApproval] = useState({}); // Map for tracking loading states
-
-  // const fetchHolidayPackages = async () => {
-  //     try {
-  //         const response = await axios.get(
-  //             ` ${apiURL.baseURL}/skyTrails/international/getAllAdminPackage`
-  //         );
-  //         console.log(response.data, "----------------------");
-  //         setHolidayPackage(response.data.data.pakage);
-  //     } catch (error) {
-  //         console.error("Error fetching holiday packages:", error);
-  //     }
-  // };
-
-  // useEffect(() => {
-
-  //     fetchHolidayPackages();
-  // }, []);
+  const [searchTerm, setSearchTerm] = useState("");
+  
 
   const style = {
     position: "absolute",
@@ -100,15 +85,17 @@ function PackageDetails() {
   const [selectedPackageDelete, setSelectedPackageDelete] = useState("");
   const [packageDetails, setPackageDetails] = useState(null); // Store package details
   const [isModalVisible, setIsModalVisible] = useState(false); // Control modal visibility
-
+  const [filteredData, setFilteredData] = useState([]);
   const fetchHolidayPackages = async () => {
     try {
       const response = await axios.get(
         `${apiURL.baseURL}/skyTrails/international/getAllAdminPackage`
       );
       const data = response.data.data.pakage;
-      const reversedData = data.reverse(); // Reverse the order of the data
-      setHolidayPackage(reversedData);
+       const reversedData = data.reverse(); // Reverse the order of the data
+       setHolidayPackage(reversedData);
+      setFilteredData(reversedData);
+      console.log((setFilteredData(reversedData)),"=========")
     } catch (error) {
       console.error("Error fetching holiday packages:", error);
     }
@@ -121,12 +108,6 @@ function PackageDetails() {
     sessionStorage.setItem("selectedPackage", JSON.stringify(item));
     setOpenView(true);
   };
-
-  // const handleOpenViewDetails = (item) => {
-  //   sessionStorage.setItem("selectedPackage", JSON.stringify(item));
-  //   setOpenView(true);
-  // };
-
   const handleOpenViewDetails = async (row) => {
     const packageId = row._id;
 
@@ -170,6 +151,15 @@ function PackageDetails() {
     }
   };
 
+  const handleSearch = (e) => {
+    const term = e.target.value.toLowerCase();
+    setSearchTerm(term);
+    const filtered = holidayPackage.filter((item) =>
+      item.pakage_title?.toLowerCase().includes(term)
+    );
+    setFilteredData(filtered);
+  };
+
   const handleCloseView = () => {
     setOpenView(false);
   };
@@ -188,40 +178,6 @@ function PackageDetails() {
 
   const handleCloseApprove = () => setOpenApprove(false);
 
-  // const handleApprove = async (event, row) => {
-  //   const packageId = row._id;
-  //   const activeStatus = event.target.value;
-  //   try {
-  //     const res = await axios({
-  //       method: "post",
-  //       url: `${apiURL.baseURL}/skyTrails/international/setactive`,
-  //       data: {
-  //         pakageId: packageId,
-  //         isAdmin: isAdmin,
-  //         activeStatus: activeStatus,
-  //       },
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
-  //     if (res.status === 200) {
-  //       handleCloseApprove();
-  //       fetchHolidayPackages();
-  //       toast.success("Package approved successfully!", {
-  //         position: "top-right",
-  //         autoClose: 3000,
-  //         hideProgressBar: false,
-  //         closeOnClick: true,
-  //         pauseOnHover: true,
-  //         draggable: true,
-  //       });
-  //     }
-  //   } catch (error) {
-  //     console.error("error while approving this package");
-  //   }
-  // };
-
-  // Handle the approval of a specific package
   const handleApprove = async (event, row) => {
     const packageId = row._id;
     const activeStatus = event.target.value;
@@ -537,6 +493,19 @@ function PackageDetails() {
             fontWeight: "bold",
           }}
         >
+          <TextField
+            type="text"
+            value={searchTerm}
+            onChange={handleSearch}
+            placeholder="Search by name etc."
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
           <Typography variant="h5" className="adtable-heading">
             Holiday Packages
           </Typography>
@@ -572,7 +541,7 @@ function PackageDetails() {
             </div>
           ) : (
             <DataGrid
-              rows={holidayPackage}
+            rows={filteredData}
               columns={columns}
               pageSize={5}
               checkboxSelection

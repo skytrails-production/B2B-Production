@@ -40,6 +40,7 @@ import welcomeDrink from "../SVGs/welcomeDrink.svg";
 import freeGym from "../SVGs/freeGym.svg";
 import Food from "../SVGs/Food.svg";
 import "./hotelaccording.css";
+
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
@@ -141,9 +142,11 @@ export default function CustomizedAccordions() {
   const handleShowMore = () => {
     setShowRooms((prev) => prev + 10);
   };
+
   useEffect(() => {
     setSelectedRoom(hotelinfoGRN?.rates?.[selectedRoomIndex]);
   }, [selectedRoomIndex]);
+  
   return (
     <div>
       <div className="container">
@@ -198,7 +201,7 @@ export default function CustomizedAccordions() {
                       .map((item, index) => (
                         <div className="roomCompo" key={index}>
                           <div
-                            className="offer_area "
+                            className="offer_area"
                             onClick={() => handleRoomSelection(index)}
                             style={{
                               cursor: "pointer",
@@ -226,6 +229,7 @@ export default function CustomizedAccordions() {
                                       </p>
                                     </div>
                                   ))}
+
 
                                   {item?.boarding_details?.[0] ===
                                   "Room Only" ? (

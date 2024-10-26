@@ -44,10 +44,12 @@ import Busbookingconfirmation from "../Pages/Bus/busbookingconfirmation/Busbooki
 import SightseeingResult from "../Pages/sightseeing/sightseeingresult/SightseeingResult";
 import SightseeingGuestDetail from "../Pages/sightseeing/sightseeingGuestDetail/SightseeingGuestsalesummary";
 import HotelBooknow from "../Pages/Hotel/hotelbokknow/HotelBooknow";
+import HotelBooknowTbo from "../Pages/grnpages/Hotel/Tbo/hotelbokknow/HotelBooknowTbo";
 import HotelBooknowGrm from "../Pages/grnpages/Hotel/hotelbooknow/HotelBooknowGrm";
 import Guestdetail from "../Pages/Hotel/guestdetail/Guestdetail";
 import Reviewbooking from "../Pages/Hotel/hotelreviewbooking/Reviewbooking";
 import ReviewbookingGrn from "../Pages/grnpages/Hotel/hotelreviewbooking/ReviewbookingGrn";
+import ReviewbookingTbo from "../Pages/grnpages/Hotel/Tbo/hotelreviewbookingTbo/ReviewbookingTbo";
 import Bus from "../Pages/Bus/Bus";
 import SightseeingReviewBooking from "../Pages/sightseeing/sightseeingreviewbooking/SightseeingReviewBooking";
 import SightseeingBookingConfirmation from "../Pages/sightseeing/sightseeingbookingconfirmation/SightseeingBookingConfirmation";
@@ -146,6 +148,7 @@ import HotelTicketDB from "../Pages/grnpages/Hotel/guestdetail/HotelTicketDB";
 import Passengerdetailamd from "../Pages/Flight/flightresult/Passengerdetailamd";
 import FlightReviewbookingamd from "../Pages/Flight/flightreviewbooking/FlightReviewbookingamd";
 import Flightbookingconfirmationamd from "../Pages/Flight/flightbookingconfirmation/Flightbookingconfirmationamd";
+import GuestdetailTbo from "../Pages/grnpages/Hotel/Tbo/guestdetailTbo/GuestdetailTbo";
 // import Carrerform from "../Pages/Dashboard/Component/Table/Careerform";
 const MainPage = () => {
   const dispatch = useDispatch();
@@ -503,11 +506,11 @@ const MainPage = () => {
                   element={<MainBox />}
                   style={{ color: "inherit", textDecoration: "inherit" }}
                 />
-                {/* <Route
+                <Route
                   path="/Hotel"
                   element={<Hotel />}
                   style={{ color: "inherit", textDecoration: "inherit" }}
-                /> */}
+                />
                 <Route exact path="flightresult" element={<Flightresult />} />
 
                 <Route
@@ -538,11 +541,31 @@ const MainPage = () => {
                   path="/hotels/hotelsearchs"
                   element={<HotelSearchs />}
                 />
+
+                <Route
+                  exact
+                  path="/hotels/hotelsearchs/HotelBooknowTbo"
+                  element={<HotelBooknowTbo />}
+                />
                 <Route
                   exact
                   path="/hotels/hotelsearchs/HotelBooknowgrm"
                   element={<HotelBooknowGrm />}
                 />
+
+                <Route
+                  exact
+                  path="/hotels/hotelsearchs/HotelBooknowTbo/ReviewbookingTbo"
+                  element={<ReviewbookingTbo />}
+                />
+                 {/* /GuestdetailTbo */}<Route
+                  exact
+                  path="/GuestdetailTbo"
+                  element={<GuestdetailTbo />}
+                />
+
+
+
                 <Route
                   exact
                   path="/hotels/hotelsearchs/guestDetails"

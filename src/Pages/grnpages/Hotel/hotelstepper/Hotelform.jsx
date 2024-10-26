@@ -39,11 +39,23 @@ const variants = {
 let FromTimeout;
 let FromCurrentValue;
 
+// const initialSelectedFromData = {
+//   cityCode: "124054",
+//   cityName: "New Delhi",
+//   countryCode: "IN",
+//   countryName: "India",
+// };
+
 const initialSelectedFromData = {
-  cityCode: "124054",
-  cityName: "New Delhi",
-  countryCode: "IN",
-  countryName: "India",
+  cityName: "Delhi",
+  tboCityCode: 130443,
+  tboCountryName: "India",
+  tboCountryCode: "IN",
+  tbostateProvince: "DELHI",
+  tbostateProvinceCode: "DL",
+  grnCityCode: 124054,
+  grnCountryName: "India",
+  grnCountryCode: "IN",
 };
 const initialSelectedToData = {
   countryCode: "IN",
@@ -62,17 +74,20 @@ const fetchFromCity = (value, callback) => {
 
   const cityData = () => {
     axios
-      .get(
-        `${apiURL.baseURL}/skyTrails/grnconnect/searchcityandhotel?keyword=${value}`
-      )
+      .get(`${apiURL.baseURL}/skyTrails/tboandgrn/citylist?keyword=${value}`)
       .then((response) => {
         if (FromCurrentValue === value) {
           const { data } = response.data;
           const cityList = data.cityList.map((item) => ({
-            value: `city-${item.cityCode}`,
-            name: item.cityName,
-            code: item.countryCode,
-            cityCode: item.countryName,
+            value: `city-${item?.grnCityCode}`,
+            name: item?.cityName,
+            code: item?.grnCountryCode,
+            cityCode: item?.grnCountryName,
+            tboCityCode: item?.tboCityCode,
+            tboCountryCode: item?.tboCountryCode,
+            tboCountryName: item?.tboCountryName,
+            tbostateProvince: item?.tbostateProvince,
+            tbostateProvinceCode: item?.tbostateProvinceCode,
             item,
             type: "city",
           }));
@@ -226,6 +241,8 @@ const HotelForm = () => {
   const currentDates = new Date();
   const [selectedFrom, setSelectedFrom] = useState(initialSelectedFromData);
   const [toggleSearch, setToggleSearch] = useState(false);
+  const [SelectedcityCode, setCityCode] = useState("");
+  const [SelectedtboCityCode, setTboCityCode] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -249,11 +266,23 @@ const HotelForm = () => {
       ChildAge: [],
     },
   ]);
+  // const initialSelectedCityData = {
+  //   cityCode: "124054",
+  //   cityName: "New Delhi",
+  //   countryCode: "IN",
+  //   countryName: "India",
+  // };
+
   const initialSelectedCityData = {
-    cityCode: "124054",
-    cityName: "New Delhi",
-    countryCode: "IN",
-    countryName: "India",
+    cityName: "Delhi",
+    tboCityCode: 130443,
+    tboCountryName: "India",
+    tboCountryCode: "IN",
+    tbostateProvince: "DELHI",
+    tbostateProvinceCode: "DL",
+    grnCityCode: 124054,
+    grnCountryName: "India",
+    grnCountryCode: "IN",
   };
 
   const [selectNationality, setSelectNationality] = useState(
@@ -269,7 +298,7 @@ const HotelForm = () => {
 
   const [searchTermLast, setSearchTermLast] = useState(initialSelectedCityData);
   const reducerState = useSelector((state) => state);
-
+ 
   useEffect(() => {
     const storedData = SecureStorage.getItem("revisitHotelDataGRN");
     const parsedStoredData = JSON.parse(storedData);
@@ -334,13 +363,13 @@ const HotelForm = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `${apiURL.baseURL}/skyTrails/grnconnect/searchcityandhotel?keyword=${searchTerm}`
+        `${apiURL.baseURL}/skyTrails/tboandgrn/citylist?keyword=${searchTerm}`
       );
       setResults(response.data);
 
       setLoading(false);
     } catch (error) {
-      console.error("Error fetching cities:", error);
+    
       setLoading(false);
     }
   };
@@ -430,25 +459,52 @@ const HotelForm = () => {
     });
   };
 
+  // const handleStartDateChange = async (date) => {
+  //   console.log(`handleStartDateChange`, "datessss");
+  //   setValues({ ...values, departure: date });
+
+  //   setErrors((pre) => ({ ...pre, departure: "" }));
+
+  //   if (values?.checkOutDeparture && values?.checkOutDeparture <= date) {
+  //     const increasedDate = new Date(date);
+  //     increasedDate.setDate(increasedDate.getDate() + 1);
+  //     console.log(
+  //       increasedDate.setDate(increasedDate.getDate() + 1),
+  //       "increasedatessss"
+  //     );
+  //     setValues({
+  //       ...values,
+  //       checkOutDeparture: increasedDate,
+  //       departure: date,
+  //     });
+  //   }
+  //   setNewDepartDate(dayjs(date).format("DD MMM, YY"));
+  // };
+
   const handleStartDateChange = async (date) => {
     setValues({ ...values, departure: date });
+    setErrors((prev) => ({ ...prev, departure: "" }));
+   
 
-    setErrors((pre) => ({ ...pre, departure: "" }));
+    if (!values?.checkOutDeparture || values?.checkOutDeparture <= date) {
+      // Parse the provided date
+      const givenDate = new Date(date);
 
-    if (values?.checkOutDeparture && values?.checkOutDeparture <= date) {
-      const increasedDate = new Date(date);
-      increasedDate.setDate(increasedDate.getDate() + 1);
-      setValues({
-        ...values,
-        checkOutDeparture: increasedDate,
-        departure: date,
-      });
+      // Add one day to the date
+      const minDate = new Date(givenDate);
+      minDate.setDate(minDate.getDate() + 1);
+      setMinReturnDate(minDate);
+      const nextDay = new Date(date);
+      nextDay.setDate(nextDay.getDate() + 1);
+      setValues({ ...values, checkOutDeparture: nextDay, departure: date });
     }
+    // setNewDepartDate(dayjs(date).format("DD MMM, YY"));
   };
 
   const handleEndDateChange = (date) => {
     setValues({ ...values, checkOutDeparture: date });
     setErrors((pre) => ({ ...pre, checkOutDeparture: "" }));
+    setNewReturnDate(dayjs(date).format("DD MMM, YY"));
   };
 
   const currentDate = new Date(values.departure);
@@ -494,13 +550,14 @@ const HotelForm = () => {
       sessionStorage.setItem("searchLastterm", JSON.stringify(searchTermLast));
 
       if (selectedFrom.hotelName) {
+       
         const payload = {
           rooms: [...dynamicFormData],
           rates: "concise",
           hotel_codes: [`${selectedFrom.hotelCode}`],
           currency: "INR",
           client_nationality: selectNationality?.countryCode || "In",
-          checkin: dayjs(newDepartDate).format("YYYY-MM-DD"),
+          checkin: dayjs().format("YYYY-MM-DD"),
           checkout: dayjs(newReturnDate).format("YYYY-MM-DD"),
           cutoff_time: 30000,
           version: "2.0",
@@ -513,13 +570,16 @@ const HotelForm = () => {
         const payload = {
           rooms: [...dynamicFormData],
           rates: "concise",
-          cityCode: selectedFrom.cityCode,
+          cityCode: selectedFrom.grnCityCode,
           currency: "INR",
           client_nationality: selectNationality?.countryCode || "In",
-          checkin: dayjs(newDepartDate).format("YYYY-MM-DD"),
-          checkout: dayjs(newReturnDate).format("YYYY-MM-DD"),
+          checkin: dayjs(values?.departure).format("YYYY-MM-DD"),
+          checkout: dayjs(values?.checkOutDeparture).format("YYYY-MM-DD"),
           cutoff_time: 30000,
           version: "2.0",
+          tboCityCode: selectedFrom.tboCityCode,
+          EndUserIp: reducerState.ip.ipData,
+          TokenId: reducerState.ip.tokenData,
         };
 
         sessionStorage.setItem("grnPayload", JSON.stringify(payload));
@@ -532,10 +592,10 @@ const HotelForm = () => {
         "revisitHotelDataGRN",
         JSON.stringify([
           {
-            cityCode: searchTermLast.cityCode,
+            cityCode: searchTermLast.tboCityCode,
             cityName: searchTermLast.cityName,
-            countryCode: searchTermLast.countryCode,
-            countryName: searchTermLast.countryName,
+            countryCode: searchTermLast.tboCountryCode,
+            countryName: searchTermLast.tboCountryName,
             checkin: dayjs(values?.departure).format("YYYY-MM-DD"),
             checkout: dayjs(values?.checkOutDeparture).format("YYYY-MM-DD"),
             rooms: [...dynamicFormData],
@@ -577,7 +637,7 @@ const HotelForm = () => {
   const nationality = sessionData.get("nationality");
 
   const handleFromSelect = (item) => {
-    setSelectedFrom(item);
+     setSelectedFrom(item);
   };
 
   return (
@@ -642,7 +702,8 @@ const HotelForm = () => {
                 name="checkOut"
                 dateFormat="dd MMMyy"
                 placeholderText="Select Check-Out Date"
-                minDate={values?.departure || new Date()} // Disable dates before Check-In date
+                minDate={minReturnDate || new Date()}
+                // Disable dates before Check-In date
                 isClearable
                 // id="datepic"
                 autoComplete="off"

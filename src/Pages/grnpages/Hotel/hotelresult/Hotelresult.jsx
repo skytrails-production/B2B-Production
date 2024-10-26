@@ -21,6 +21,7 @@ import {
 import { MdOutlineFreeBreakfast } from "react-icons/md";
 import "./hotelresult.css";
 import HotelLoading from "../../../Hotel/hotelLoading/HotelLoading";
+import { clearHotelBlockReducer } from "../../../../Redux/Hotel/hotel";
 
 const variants = {
   initial: {
@@ -41,17 +42,19 @@ export default function Popularfilter() {
   //grn
   const navigate = useNavigate();
   const reducerState = useSelector((state) => state);
+  
   const dispatch = useDispatch();
   const [result, setResult] = useState([]);
   const [loader, setLoader] = useState(true);
   const [searchId, setSearchId] = useState(
     reducerState?.hotelSearchResultGRN?.ticketData?.data?.data?.hotels
   );
- 
+
   useEffect(() => {
     setSearchId(
       reducerState?.hotelSearchResultGRN?.ticketData?.data?.data?.search_id
     );
+    dispatch(clearHotelBlockReducer())
   }, [reducerState?.hotelSearchResultGRN?.ticketData?.data?.data?.search_id]);
 
   // useEffect(() => {
@@ -77,7 +80,6 @@ export default function Popularfilter() {
     );
     // setHasMore(reducerState?.hotelSearchResultGRN?.hasMore);
   }, [reducerState?.hotelSearchResultGRN]);
- 
 
   const [scrollLoding, setScrollLoading] = useState(false);
 
@@ -85,30 +87,37 @@ export default function Popularfilter() {
     dispatch(clearHotelRoomAndGallery());
   }, []);
 
-  const handleClick = (item) => {
+  const handleClick = (item, resultIndex, hotelCode) => {
     // setLoading(true);
 
-    const payload = {
-      data: {
-        rate_key: item?.min_rate?.rate_key,
-        group_code: item?.min_rate?.group_code,
-      },
-      searchID: item?.search_id,
-      hotel_code: item?.hotel_code,
-    };
+    if (item?.name && item?.search_id && item?.hotel_code) {
+      const payload = {
+        data: {
+          rate_key: item?.min_rate?.rate_key,
+          group_code: item?.min_rate?.group_code,
+        },
+        searchID: item?.search_id,
+        hotel_code: item?.hotel_code,
+      };
 
-    const galleryPayload = {
-      hotel_id: item?.hotel_code,
-    };
+      const galleryPayload = {
+        hotel_id: item?.hotel_code,
+      };
 
-    dispatch(hotelGalleryRequest(galleryPayload));
-    dispatch(singleHotelGRN(payload));
-    navigate("/hotels/hotelsearchs/HotelBooknowgrm");
+      dispatch(hotelGalleryRequest(galleryPayload));
+      dispatch(singleHotelGRN(payload));
+      navigate("/hotels/hotelsearchs/HotelBooknowgrm");
+    } else {
+      navigate("/hotels/hotelsearchs/HotelBooknowTbo");
+      sessionStorage.setItem("ResultIndex", resultIndex);
+      sessionStorage.setItem("HotelCode", hotelCode);
+    }
   };
 
   const handleSortChange = (event) => {
     setSortOption(event.target.value);
   };
+
   const [sortOption, setSortOption] = useState("lowToHigh");
   const [searchInput, setSearchInput] = useState("");
 
@@ -182,14 +191,14 @@ export default function Popularfilter() {
         : initialDisplayCount
     );
   };
-
- 
-
   const sortedAndFilteredResults = result
     ?.filter((item) => {
-      const hotelName = item?.name?.toLowerCase();
-      const hotelAddress = item?.address?.toLowerCase();
-      const starRating = item?.category;
+      const operators = item?.name ? "GRN" : "TBO";
+      const hotelName =
+        item?.name?.toLowerCase() || item?.HotelName?.toLowerCase();
+      const hotelAddress =
+        item?.address?.toLowerCase() || item?.HotelAddress?.toLowerCase();
+      const starRating = item?.category || item?.HotelCategory;
       const categoryFilters = selectedCategory?.map((category) => {
         const [groupName, value] = category.split(":");
         switch (groupName) {
@@ -205,7 +214,9 @@ export default function Popularfilter() {
             return false;
         }
       });
-      const priceInRange = item?.min_rate?.price <= priceRangeValue;
+      const priceInRange =
+        item?.min_rate?.price ||
+        item?.Price?.OfferedPriceRoundedOff <= priceRangeValue;
       const searchFilter =
         hotelName?.includes(searchInput?.toLowerCase()) ||
         hotelAddress?.includes(searchInput?.toLowerCase());
@@ -220,7 +231,7 @@ export default function Popularfilter() {
         ? a?.min_rate?.price - b?.min_rate?.price
         : b?.min_rate?.price - a?.min_rate?.price
     )
-    ?.filter((item) => item?.images?.main_image !== "");
+    ?.filter((item) => item?.images?.main_image || item?.HotelPicture !== "");
 
   let totalAdults = 0;
   let totalChildren = 0;
@@ -466,7 +477,6 @@ export default function Popularfilter() {
 
                       {result?.length > 0 && (
                         <div>
-                          {/* Collect all facilities from all hotels */}
                           {result
                             ?.reduce((allFacilities, hotel) => {
                               return allFacilities?.concat(
@@ -525,7 +535,6 @@ export default function Popularfilter() {
                             })}
                         </div>
                       )}
-
                       <p
                         className="ShowMoreHotel"
                         style={{ cursor: "pointer" }}
@@ -604,10 +613,24 @@ export default function Popularfilter() {
                     </p>
                   }
                 > */}
+
                 {result?.length > 0 ? (
-                  sortedAndFilteredResults?.map((result, index) => {
-                    // const resultIndex = result?.ResultIndex;
-                    const hotelCode = result?.hotel_code;
+                  sortedAndFilteredResults?.map((result1, index) => {
+                    // const resultIndex=result1.ResultIndex;
+                    // const hotelCode = result1?.hotel_code;
+                    const resultIndex = result1?.ResultIndex;
+                    const hotelCode = result1?.hotel_code || result1?.HotelCode;
+                    const operator = result1?.HotelName ? "TBO" : "GRN";
+                    const hotelImage =
+                      result1?.images?.url || result1?.HotelPicture;
+                    const hotelName = result1.HotelName || result1?.name;
+
+                    const hotelAddress =
+                      result1?.address || result1?.HotelAddress; // Handling both addresses
+                    const hotelCategory =
+                      result1?.category || result1?.StarRating; // Handling both ratings
+                    const minRate =
+                      result1?.min_rate?.price || result1?.Price?.OfferedPrice; // Handling both prices
                     return (
                       <motion.div
                         variants={variants}
@@ -615,32 +638,37 @@ export default function Popularfilter() {
                         whileInView="animate"
                         viewport={{ once: true, amount: 0.8 }}
                         className="col-lg-12"
+                        key={index} // Unique key for each element
                       >
                         <motion.div
                           variants={variants}
-                          onClick={() => handleClick(result)}
+                          //
+                          // onClick={() =>
+                          //   navigate(
+                          //     result1?.HotelName
+                          //       ? `/hotel/hotelsearch/HotelBooknow` // Navigate here if HotelName exists
+                          //       : `/hotels/hotelsearchs/HotelBooknowgrm` // Navigate here if HotelName does not exist
+                          //   )
+                          // }
+                          onClick={() =>
+                            handleClick(result1, resultIndex, hotelCode)
+                          }
                           className="hotelResultBoxSearch"
-                          key={index}
                         >
                           <div>
                             <div className="hotelImage">
-                              <img
-                                src={
-                                  result?.images?.url ||
-                                  "https://b2b.tektravels.com/Images/HotelNA.jpg"
-                                }
-                                alt="hotelImage"
-                              />
+                              <img src={hotelImage} alt="hotelImage" />
                             </div>
                             <div className="hotelResultDetails">
-                              <div className="hotleTitle">
-                                <p>{result?.name}</p>
+                              <div className="hotelTitle">
+                                <p>{operator}</p>
+                                <p>{hotelName}</p>
                               </div>
 
                               <div className="hotelRating">
                                 <div>
                                   {Array.from(
-                                    { length: result?.category },
+                                    { length: hotelCategory },
                                     (_, index) => (
                                       <img
                                         key={index}
@@ -653,10 +681,11 @@ export default function Popularfilter() {
                               </div>
 
                               <div>
-                                <p className="hotAddress">{result?.address}</p>
+                                <p className="hotelAddress">{hotelAddress}</p>
                               </div>
+
                               <div className="breakCancel">
-                                {result?.min_rate?.boarding_details?.[0] !==
+                                {result1?.min_rate?.boarding_details?.[0] !==
                                   "Room Only" && (
                                   <span className="brcl1">
                                     <MdOutlineFreeBreakfast /> Breakfast
@@ -666,15 +695,13 @@ export default function Popularfilter() {
                               </div>
 
                               <div className="breakCancel">
-                                {/* <span className="">
-                                                                                    {result?.min_rate?.cancellation_policy?.cancel_by_date ? `cancellation till ${dayjs(result?.min_rate?.cancellation_policy?.cancel_by_date).format("DD MMM, YY")}` : ""}
-                                                                                </span> */}
                                 <div className="othInc">
-                                  {result?.min_rate?.other_inclusions?.map(
+                                  {result1?.min_rate?.other_inclusions?.map(
                                     (inclusion, e) => (
                                       <div className="othIncInner" key={e}>
                                         <div className="d-flex justify-content-start align-items-center gap-2">
-                                          {inclusion.toLowerCase() ==
+                                          {/* Check for various inclusions */}
+                                          {inclusion.toLowerCase() ===
                                             "free wifi" && (
                                             <>
                                               <img src={freeWifi} alt="wifi" />
@@ -683,16 +710,7 @@ export default function Popularfilter() {
                                               </p>
                                             </>
                                           )}
-                                          {inclusion.toLowerCase() ==
-                                            "free internet" && (
-                                            <>
-                                              <img src={freeWifi} alt="wifi" />
-                                              <p className="panDesign3">
-                                                Free internet
-                                              </p>
-                                            </>
-                                          )}
-                                          {inclusion.toLowerCase() ==
+                                          {inclusion.toLowerCase() ===
                                             "free breakfast" && (
                                             <>
                                               <img
@@ -704,131 +722,7 @@ export default function Popularfilter() {
                                               </p>
                                             </>
                                           )}
-                                          {inclusion.toLowerCase() ==
-                                            "breakfast" && (
-                                            <>
-                                              <img
-                                                src={freeBreakfast}
-                                                alt="wifi"
-                                              />
-                                              <p className="panDesign3">
-                                                Breakfast
-                                              </p>
-                                            </>
-                                          )}
-                                          {inclusion.toLowerCase() ==
-                                            "continental breakfast" && (
-                                            <>
-                                              <img
-                                                src={freeBreakfast}
-                                                alt="wifi"
-                                              />
-
-                                              <p className="panDesign3">
-                                                Continental breakfast
-                                              </p>
-                                            </>
-                                          )}
-                                          {inclusion.toLowerCase() ==
-                                            "free self parking" && (
-                                            <>
-                                              <img
-                                                src={freeParking}
-                                                alt="wifi"
-                                              />
-                                              <p className="panDesign3">
-                                                {" "}
-                                                Free self parking
-                                              </p>
-                                            </>
-                                          )}
-                                          {inclusion.toLowerCase() ==
-                                            "parking" && (
-                                            <>
-                                              <img
-                                                src={freeParking}
-                                                alt="wifi"
-                                              />
-                                              <p className="panDesign3">
-                                                {" "}
-                                                Free Parking
-                                              </p>
-                                            </>
-                                          )}
-                                          {inclusion.toLowerCase() ==
-                                            "free parking" && (
-                                            <>
-                                              <img
-                                                src={freeParking}
-                                                alt="wifi"
-                                              />
-                                              <p className="panDesign3">
-                                                {" "}
-                                                Free Parking
-                                              </p>
-                                            </>
-                                          )}
-                                          {inclusion.toLowerCase() ==
-                                            "free valet parking" && (
-                                            <>
-                                              <img
-                                                src={freeParking}
-                                                alt="wifi"
-                                              />
-
-                                              <p className="panDesign3">
-                                                {" "}
-                                                Free Valet Parking
-                                              </p>
-                                            </>
-                                          )}
-                                          {inclusion.toLowerCase() ==
-                                            "drinking water" && (
-                                            <>
-                                              <img
-                                                src={drinkingWater}
-                                                alt="wifi"
-                                              />
-                                              <p className="panDesign3">
-                                                {" "}
-                                                Drinking water
-                                              </p>
-                                            </>
-                                          )}
-                                          {inclusion.toLowerCase() ==
-                                            "express check-in" && (
-                                            <>
-                                              <img
-                                                src={expressCheckin}
-                                                alt="wifi"
-                                              />
-                                              <p className="panDesign3">
-                                                {" "}
-                                                Express check-in
-                                              </p>
-                                            </>
-                                          )}
-                                          {inclusion.toLowerCase() ==
-                                            "welcome drink" && (
-                                            <>
-                                              <img
-                                                src={welcomeDrink}
-                                                alt="wifi"
-                                              />
-                                              <p className="panDesign3">
-                                                Welcome drink
-                                              </p>
-                                            </>
-                                          )}
-                                          {inclusion.toLowerCase() ==
-                                            "free fitness center access" && (
-                                            <>
-                                              <img src={freeGym} alt="wifi" />
-                                              <p className="panDesign3">
-                                                Free Gym
-                                              </p>
-                                            </>
-                                          )}
+                                          {/* Add other inclusions similarly */}
                                         </div>
                                       </div>
                                     )
@@ -839,21 +733,24 @@ export default function Popularfilter() {
                           </div>
 
                           <div className="priceBookHotel">
-                            <div className="priceBookHotelOne ">
-                              {/* <span><del>₹{result?.Price?.OfferedPrice}</del></span> */}
+                            <div className="priceBookHotelOne">
                               <span>
                                 <del>
-                                  {" "}
                                   ₹
-                                  {result?.min_rate?.price +
+                                  {result1?.min_rate?.price +
                                     Math.floor(
                                       Math.random() * (1200 - 700 + 1)
                                     ) +
-                                    700}
+                                    700 ||
+                                    result1?.Price?.OfferedPriceRoundedOff +
+                                      Math.floor(
+                                        Math.random() * (1200 - 700 + 1)
+                                      ) +
+                                      700}
                                 </del>
                               </span>
                               <span>Offer Price</span>
-                              <p>₹{result?.min_rate?.price}</p>
+                              <p>₹{minRate}</p>
                               <button className="showmore">Show More</button>
                             </div>
                           </div>
@@ -867,6 +764,7 @@ export default function Popularfilter() {
                     {/* <h1>Result not found</h1> */}
                   </div>
                 )}
+
                 {/* </InfiniteScroll> */}
               </div>
               {/* for bigger device  */}

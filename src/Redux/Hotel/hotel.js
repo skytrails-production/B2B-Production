@@ -100,3 +100,8 @@ export const clearHotelReducer = () => {
     type: types.CLEAR_HOTEL_REDUCER,
   };
 };
+export const clearHotelBlockReducer = () => {
+  return {
+    type: types.HOTEL_BLOCK_CLEAR_TVO,
+  };
+};

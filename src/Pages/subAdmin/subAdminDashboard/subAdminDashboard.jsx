@@ -75,6 +75,7 @@ import AirplaneTicketIcon from "@mui/icons-material/AirplaneTicket";
 import AirplanemodeActiveIcon from "@mui/icons-material/AirplanemodeActive";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import Visacategory from "./Visacategory";
+import CreateVisa from "./Visapagesub/CreateVisa";
 import VisaCountry from "./VisaCountry";
 import VisaDocumentCategory from "./VisaDocumentCategory";
 import VisaDocumenttype from "./VisaDocumenttype";
@@ -264,6 +265,7 @@ function ResponsiveDrawer(props) {
 
   const getevent = location.pathname === "/subAdmin/dashboard/getevent";
   const searchdata = location.pathname === "/subAdmin/dashboard/searchdata";
+  const createsvisa = location.pathname === "/subAdmin/dashboard/visacreateform";
   const visaCountryform =
     location.pathname === "/subAdmin/dashboard/visacountryform";
   const visaCountrysform =
@@ -381,6 +383,11 @@ function ResponsiveDrawer(props) {
     navigate("/subAdmin/dashboard/visacountryform");
   };
 
+  const handleVisaCreate = () => {
+    setvisaCountryform(true);
+    navigate("/subAdmin/dashboard/visacreateform");
+  };
+
   const handleVisaCountrysForm = () => {
     setvisaCountrysform(true);
     navigate("/subAdmin/dashboard/visacountrysform");
@@ -415,6 +422,7 @@ function ResponsiveDrawer(props) {
     setaddCoupons(true);
     navigate("/subAdmin/dashboard/addcouponscode");
   };
+
   const handleRelationship = () => {
     setRelationship(true);
     navigate("/subAdmin/dashboard/relationship");
@@ -1298,7 +1306,7 @@ function ResponsiveDrawer(props) {
             <ListItemButton onClick={handleHolidayPackage}>
               <WebIcon sx={{ color: "white", fontSize: "15px" }} />
               <ListItemText style={{ color: "white", marginLeft: "5px" }}>
-                 Holiday Package
+                Holiday Package
               </ListItemText>
             </ListItemButton>
           </ListItem>
@@ -1686,6 +1694,9 @@ function ResponsiveDrawer(props) {
                     <MenuItem value="option5" onClick={handleRequireDocuemts}>
                       Required Documents
                     </MenuItem>
+                    <MenuItem value="option6" onClick={handleVisaCreate}>
+                      Create Visa
+                    </MenuItem>
                   </Select>
                 </FormControl>
               </div>
@@ -2051,6 +2062,7 @@ function ResponsiveDrawer(props) {
         <Typography paragraph>{visacategory && <Visacategory />}</Typography>
 
         <Typography paragraph>{visacountry && <VisaCountry />}</Typography>
+        <Typography paragraph>{createsvisa && <CreateVisa />}</Typography>
         <Typography paragraph>
           {visaCategorysform && <Visacategorys />}
         </Typography>

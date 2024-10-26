@@ -9,8 +9,10 @@ import { ClearAllActionReturn } from "../Redux/FlightFareQuoteRule/actionFlightQ
 import { flightReducerClear } from "../Redux/FlightBook/actionFlightBook";
 import { clearOneWayReducer } from "../Redux/FlightSearch/OneWay/oneWay";
 import { clearPassengersReducer } from "../Redux/Passengers/passenger";
+import { clearHotelReducer } from "../Redux/Hotel/hotel";
 function MainBoxNew() {
   const reducerState = useSelector((state) => state);
+console.log(reducerState,"reducerState");
   const dispatch = useDispatch();
   function AllFlightCLEAR_Function() {
     dispatch(ClearAllActionReturn());
@@ -18,6 +20,7 @@ function MainBoxNew() {
     dispatch(flightReducerClear());
 
     dispatch(clearOneWayReducer());
+    dispatch(clearHotelReducer())
     // await dispatch(clearOneWayEMTReducer())
     dispatch(clearPassengersReducer());
     sessionStorage.removeItem("infants");
