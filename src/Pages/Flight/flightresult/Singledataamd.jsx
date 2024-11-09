@@ -1,36 +1,37 @@
-import React, {useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import flightdir from "../../../Images/flgihtdir.png";
 import dayjs from "dayjs";
 import { useDispatch, useSelector, useReducer } from "react-redux";
 import Luggage from "./Luggage";
 import { FaArrowRight } from "react-icons/fa";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import Backdrop from '@mui/material/Backdrop';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
+import Backdrop from "@mui/material/Backdrop";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
 import { IoEllipsisVerticalOutline } from "react-icons/io5";
-import Fade from '@mui/material/Fade';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import Fade from "@mui/material/Fade";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 // import { FaArrowRight } from 'react-icons/fa';
 
 const style = {
-  position: 'absolute' ,
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 800,
-  bgcolor: 'background.paper',
+  bgcolor: "background.paper",
   // border: '2px solid #000',
   boxShadow: 24,
   p: 4,
 };
 
+
 function Singledataamd(props) {
   const navigate = useNavigate();
   // console.log(props, "props");
-const dispatch = useDispatch();
-const reducerState = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const reducerState = useSelector((state) => state);
 
   const amdresponse = props?.flight?.flightDetails;
   const ResultIndex = props?.flight;
@@ -50,144 +51,129 @@ const reducerState = useSelector((state) => state);
     const minutes = timedifference % 60;
     return `${hours}hr ${minutes}min`;
   }
-// console.log("reducerState//////singledata////////////////////",reducerState)
+  // console.log("reducerState//////singledata////////////////////",reducerState)
 
-const flightname = reducerState?.flightnameReducer?.data?.data;
+  const flightname = reducerState?.flightnameReducer?.data?.data;
 
-// console.log("citynames",citynames[0],flightname[0]);
+  // console.log("citynames",citynames[0],flightname[0]);
 
+  const img = amdresponse?.flightInformation?.companyId?.marketingCarrier;
+  const description =
+    props?.flight?.fare?.[0]?.pricingMessage?.description ||
+    props?.flight[0]?.fare?.[0]?.pricingMessage?.description;
 
+  let renderDescription = null;
 
-const img = amdresponse?.flightInformation?.companyId?.marketingCarrier;
-const description = props?.flight?.fare?.[0]?.pricingMessage?.description || props?.flight[0]?.fare?.[0]?.pricingMessage?.description;
+  if (Array.isArray(description)) {
+    renderDescription = null;
+  } else if (typeof description === "string") {
+    const words = description.split(" ");
 
-let renderDescription = null;
+    const formattedDescription = words
+      .map((word, index) => (index === 0 ? word : word.toLowerCase()))
+      .join(" ");
 
-if (Array.isArray(description)) {
- 
-  renderDescription = null;
-} else if (typeof description === 'string') {
+    renderDescription = (
+      <p style={{ color: "green" }}>{formattedDescription}</p>
+    );
+  } else {
+    renderDescription = null;
+  }
 
-  const words = description.split(' ');
+  const locationdeparture =
+    amdresponse?.flightInformation?.location?.[1]?.locationId;
 
-  const formattedDescription = words
-    .map((word, index) => (index === 0 ? word : word.toLowerCase()))
-    .join(' ');
+  const locationarrival =
+    amdresponse?.flightInformation?.location?.[0]?.locationId;
 
- 
-  renderDescription = <p style={{ color: "green" }}>{formattedDescription}</p>;
-} else {
-  
-  renderDescription = null;
-}
+  const [getairlineName, setGetAirlineName] = useState("");
+  const [departurename, setdeparturename] = useState("");
+  const [arrivalname, setarrivalnamename] = useState("");
 
+  useEffect(() => {
+    // Extract the marketing carrier code from the amadeusItem object
+    const marketingCarrier = img;
+    // const cityname = img;
 
-const locationdeparture =
-amdresponse?.flightInformation?.location?.[1]?.locationId;
+    // Find the airline object that matches the marketing carrier code
+    const matchedAirline = flightname.find(
+      (airline) => airline.airlineCode === marketingCarrier
+    );
 
-const locationarrival =
-amdresponse?.flightInformation?.location?.[0]?.locationId;
+    // console.log("matchedAirline",matchedAirline)
 
+    // const citynamevalue =
 
+    // Set the airline name if a match is found
+    if (matchedAirline) {
+      setGetAirlineName(matchedAirline.airlineName);
+    } else {
+      setGetAirlineName("No matching airline found");
+    }
+  }, []);
 
-const [getairlineName, setGetAirlineName] = useState('');
-const [departurename, setdeparturename] = useState("");
-const [arrivalname, setarrivalnamename] = useState("");
+  useEffect(() => {
+    const cityAirline = citynames.find(
+      (cityairline) => cityairline.id === locationdeparture
+    );
 
-    useEffect(() => {
-      // Extract the marketing carrier code from the amadeusItem object
-      const marketingCarrier = img;
-      // const cityname = img;
+    const arrivalAirline = citynames.find(
+      (cityairlinearrival) => cityairlinearrival.id === locationarrival
+    );
 
-      // Find the airline object that matches the marketing carrier code
-      const matchedAirline = flightname.find(
-        airline => airline.airlineCode === marketingCarrier,
-      );
+    // console.log("cityAirline",arrivalAirline)
 
-      // console.log("matchedAirline",matchedAirline)
+    if (cityAirline) {
+      setdeparturename(cityAirline.name);
+    } else {
+      setdeparturename("No matching airline found");
+    }
 
-      // const citynamevalue = 
+    if (arrivalAirline) {
+      setarrivalnamename(arrivalAirline.name);
+    } else {
+      setarrivalnamename("No matching airline found");
+    }
+  }, []);
 
-      // Set the airline name if a match is found
-      if (matchedAirline) {
-        setGetAirlineName(matchedAirline.airlineName);
-      } else {
-        setGetAirlineName('No matching airline found');
-      }
-    }, []);
+  // console.log("cityname",cityname)
 
-    useEffect(() => {
-      const cityAirline = citynames.find(
-        cityairline => cityairline.id === locationdeparture,
-      );
+  // console.log("getairlineName",getairlineName);
 
+  const citynames = reducerState?.CitynameReducer?.data?.data;
+  function findAirlineByCode(code) {
+    const data = citynames?.find(
+      (citynames) => citynames?.airlineCode === code
+    );
 
-      const arrivalAirline = citynames.find(
-        cityairlinearrival => cityairlinearrival.id === locationarrival,
-      );
+    return data?.airlineName;
+  }
+  function findAirportByCode(code) {
+    const data = citynames?.find(
+      (citynames) => citynames?.AirportCode === code
+    );
 
-      // console.log("cityAirline",arrivalAirline)
-
-      if (cityAirline) {
-        setdeparturename(cityAirline.name);
-      } else {
-        setdeparturename('No matching airline found');
-      }
-
-
-      if (arrivalAirline) {
-        setarrivalnamename(arrivalAirline.name);
-      } else {
-        setarrivalnamename('No matching airline found');
-      }
-    }, []);
-
-
-    // console.log("cityname",cityname)
-
-// console.log("getairlineName",getairlineName);
-
-
-const citynames = reducerState?.CitynameReducer?.data?.data;
-function findAirlineByCode(code) {
-  const data = citynames?.find(citynames => citynames?.airlineCode === code)
-
-  return data?.airlineName;
-}
-function findAirportByCode(code) {
-  const data = citynames?.find(citynames => citynames?.AirportCode === code)
-
-  return data?.name;
-  }
-
-
-
-
-
-
-
-
-
-
-
-
+    return data?.name;
+  }
 
   const handleClick = () => {
-    navigate("/Passengerdetailamd", {state: {ResultIndex }});
-  }
+    navigate("/Passengerdetailamd", { state: { ResultIndex } });
+  };
   // console.log("props",props);
 
-  const flightclass =  props?.flight?.fareDetails?.groupOfFares?.productInformation?.cabinProduct
-?.rbd || props?.flight?.[0]?.fareDetails?.groupOfFares?.productInformation?.cabinProduct
-?.rbd;
-// console.log("flightclass",flightclass, props)
-  
+  const flightclass =
+    props?.flight?.fareDetails?.groupOfFares?.productInformation?.cabinProduct
+      ?.rbd ||
+    props?.flight?.[0]?.fareDetails?.groupOfFares?.productInformation
+      ?.cabinProduct?.rbd;
+  // console.log("flightclass",flightclass, props)
+
   const flightnumber = amdresponse?.flightInformation?.flightOrtrainNumber;
 
- 
-
   const fare = props?.flight?.TotalPublishFare;
-  const faredata = Number(props?.flight?.monetaryDetail?.[0]?.amount)-Number(props?.flight?.monetaryDetail?.[1]?.amount);
+  const faredata =
+    Number(props?.flight?.monetaryDetail?.[0]?.amount) -
+    Number(props?.flight?.monetaryDetail?.[1]?.amount);
   const datearrival = moment(
     amdresponse?.flightInformation?.productDateTime?.dateOfArrival,
     "DDMMYYYY"
@@ -204,7 +190,9 @@ function findAirportByCode(code) {
     amdresponse?.flightInformation?.productDateTime?.timeOfDeparture,
     "HHmm"
   ).format("h:mm A");
-  const seats =  ResultIndex?.fareDetails?.groupOfFares?.productInformation?.cabinProduct?.avlStatus;
+  const seats =
+    ResultIndex?.fareDetails?.groupOfFares?.productInformation?.cabinProduct
+      ?.avlStatus;
   // console.log("seats",seats)
   const dateconversion = dateConversion(departuretime, arrivaltime);
   // const CabinBaggage = props?.flight?.baggage?.freeBagAllownceInfo?.baggageDetails?.freeAllowance === "15" ? "7KG " : " Included "
@@ -213,10 +201,16 @@ function findAirportByCode(code) {
   //   console.log("seats",locationarrival,fare,arrivaltime,dateconversion);
 
   // console.log(datearrival, "flight amd");
-  const weightbaggage = props?.flight?.baggage?.freeBagAllownceInfo?.baggageDetails?.unitQualifier === "K" ? "KG" : `${props?.flight?.baggage?.freeBagAllownceInfo?.baggageDetails?.unitQualifier}`
-  const baggage = props?.flight?.baggage?.freeBagAllownceInfo?.baggageDetails?.quantityCode
-  === "W" ? `${props?.flight?.baggage?.freeBagAllownceInfo?.baggageDetails?.freeAllowance} ${weightbaggage}` : `(${(props?.flight?.baggage?.freeBagAllownceInfo?.baggageDetails?.freeAllowance)} × 23KG) `;
-
+  const weightbaggage =
+    props?.flight?.baggage?.freeBagAllownceInfo?.baggageDetails
+      ?.unitQualifier === "K"
+      ? "KG"
+      : `${props?.flight?.baggage?.freeBagAllownceInfo?.baggageDetails?.unitQualifier}`;
+  const baggage =
+    props?.flight?.baggage?.freeBagAllownceInfo?.baggageDetails
+      ?.quantityCode === "W"
+      ? `${props?.flight?.baggage?.freeBagAllownceInfo?.baggageDetails?.freeAllowance} ${weightbaggage}`
+      : `(${props?.flight?.baggage?.freeBagAllownceInfo?.baggageDetails?.freeAllowance} × 23KG) `;
 
   // const [showModal, setShowModal] = useState(false);
 
@@ -232,35 +226,33 @@ function findAirportByCode(code) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-
   const namestate = reducerState?.searchReducer?.search[0]?.name;
   const namedestnation = reducerState?.searchReducer?.search[1]?.name;
 
-  const overallduration = props?.flight?.propFlightGrDetail?.flightProposal[1]?.ref;
-const hours = Math.floor(overallduration / 100); // Get the first two digits
-    const minutes = overallduration % 100;
+  const overallduration =
+    props?.flight?.propFlightGrDetail?.flightProposal[1]?.ref;
+  const hours = Math.floor(overallduration / 100); // Get the first two digits
+  const minutes = overallduration % 100;
 
-    const formattedTime = `${hours}hr ${minutes < 10 ? '0' : ''}${minutes}min`;
+  const formattedTime = `${hours}hr ${minutes < 10 ? "0" : ""}${minutes}min`;
 
-// console.log("props",formattedTime);
-
- 
+  // console.log("props",formattedTime);
 
   return (
     <div className="singleFlightBox">
-      <div className="singleFlightBoxOne" style={{alignItems:"flex-start"}}>
+      <div className="singleFlightBoxOne" style={{ alignItems: "flex-start" }}>
         <div>
           <img
             src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${img}.png`}
             alt="flightImg"
-            style={{height:"50px",width:"50px",borderRadius:"33%"}}
+            style={{ height: "50px", width: "50px", borderRadius: "33%" }}
           />{" "}
         </div>
         <span> {getairlineName} </span>
         <p>
           {img} {flightnumber}
         </p>
-        <p style={{color:"green",fontSize:"8px"}}>{renderDescription}</p>
+        <p style={{ color: "green", fontSize: "8px" }}>{renderDescription}</p>
       </div>
       <div className="singleFlightBoxTwo">
         {/* <span> {locationarrival} </span> */}
@@ -279,7 +271,7 @@ const hours = Math.floor(overallduration / 100); // Get the first two digits
       </div>
       <div className="singleFlightBoxFour">
         {/* <span>{locationdeparture}</span> */}
-       
+
         <span>{departurename}</span>
 
         <p>{datearrival}</p>
@@ -290,141 +282,229 @@ const hours = Math.floor(overallduration / 100); // Get the first two digits
         <p>Publish</p>
       </div>
       <div className="singleFlightBoxSix">
-      <Luggage
-        destination={locationdeparture}
-        origin={locationarrival}
-        cabin="7 kg"
-        checkin={baggage}
-        fareClass={flightclass}
-      />
-      {/* <Nonrefundable /> */}
-    </div>
-    <div>
-      <div className="singleFlightBoxSeven">
-        <button
-        onClick={() => {
-          handleClick();
-        }}
-        >
-         
-          Book
-          
-        </button>
-       
+        <Luggage
+          destination={locationdeparture}
+          origin={locationarrival}
+          cabin="7 kg"
+          checkin={baggage}
+          fareClass={flightclass}
+        />
+        {/* <Nonrefundable /> */}
       </div>
-
-
-     
-
+      <div>
+        <div className="singleFlightBoxSeven">
+          <button
+            onClick={() => {
+              handleClick();
+            }}
+          >
+            Book
+          </button>
+        </div>
 
         <div>
-        <Button style={{color:"#E73C34",border:"none"}} onClick={handleOpen}> View details <FaArrowRight/></Button>
-      
-      <Modal
-        aria-labelledby="flight-details-modal-title"
-        aria-describedby="flight-details-modal-description"
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-       className="modalcolor rmvBG"
-        slots={{ backdrop: Backdrop }}
-        slotProps={{
-          backdrop: {
-            timeout: 500,
-          },
-        }}
-      >
-        <Fade in={open}>
-          <Box sx={style}  className="modalcolor">
-            <div style={{display:"flex", justifyContent:"space-between"}}>
-              <Typography id="flight-details-modal-title" variant="h6" component="h2">
-                Flight Details
-              </Typography>
-              <span className="close1" onClick={handleClose} style={{cursor: 'pointer'}}>&times;</span>
-            </div>
-            <div style={{display:"flex",flexDirection:"column",gap:"12px"}}>
-              <div>
-                <div style={{display:"flex",flexDirection:"row",gap:"20px", color:"red", fontSize:"25px"}}>
-                  {/* <p>{namestate}</p>  */}
-                  <p>{findAirportByCode(locationarrival)}</p>
-                  <p style={{color:"black"}}><FaArrowRight/></p>
-                  <p>{findAirportByCode(locationdeparture)}</p>
-                  <div style={{fontSize:"18px",color:"black", display:"flex", gap:"12px",textAlign:"center",justifyContent:"center",alignItems:"center"}}>
-                    <p>{datedeparture},</p>
-                    <p>{formattedTime}</p>
-                  </div>
+          <Button
+            style={{ color: "#E73C34", border: "none" }}
+            onClick={handleOpen}
+          >
+            {" "}
+            View details <FaArrowRight />
+          </Button>
+
+          <Modal
+            aria-labelledby="flight-details-modal-title"
+            aria-describedby="flight-details-modal-description"
+            open={open}
+            onClose={handleClose}
+            closeAfterTransition
+            className="modalcolor rmvBG"
+            slots={{ backdrop: Backdrop }}
+            slotProps={{
+              backdrop: {
+                timeout: 500,
+              },
+            }}
+          >
+            <Fade in={open}>
+              <Box sx={style} className="modalcolor">
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <Typography
+                    id="flight-details-modal-title"
+                    variant="h6"
+                    component="h2"
+                  >
+                    Flight Details
+                  </Typography>
+                  <span
+                    className="close1"
+                    onClick={handleClose}
+                    style={{ cursor: "pointer" }}
+                  >
+                    &times;
+                  </span>
                 </div>
-              </div>
-              <div>
-                <div style={{display:"flex",gap:"12px"}}>
-                  <div style={{height:"50px",width:"50px",borderRadius:"33%"}}>
-                    <img
-                      style={{height:"50px",width:"50px",borderRadius:"33%"}}
-                      src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${img}.png`}
-                      alt="flightImg"
-                    />
-                  </div>
-                  <p style={{display:"flex",justifyContent:"center",alignItems:"center", fontSize:"18px"}}>{getairlineName}</p>
-                </div>
-              </div>
-              <div style={{margin:"12px", backgroundColor:"#E73D3487"}}>
-                <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between",padding:"12px"}}>
-                  <div>
-                    <div style={{display:"flex",flexDirection:"row",padding:"12px",gap:"12px"}}>
-                      <p>{departuretime}</p>
-                      <p>{findAirportByCode(locationarrival)}</p>
-                    </div>
-                    <div style={{display:"flex",alignItems:"center",justifyContent:"center"}}>
-                    <IoEllipsisVerticalOutline />
-                    </div>
-                    <div style={{display:"flex",flexDirection:"row",padding:"12px",gap:"12px"}}>
-                      <p>{arrivaltime}</p>
-                      <p>{findAirportByCode(locationdeparture)}</p>
-                    </div>
-                  </div>
-                 
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "12px",
+                  }}
+                >
                   <div>
                     <div
                       style={{
                         display: "flex",
                         flexDirection: "row",
-                        gap: "25px",
+                        gap: "20px",
+                        color: "red",
+                        fontSize: "25px",
                       }}
                     >
-                      <div>
-                        <p>Baggage</p>
-                        <p>Adult</p>
-                      </div>
-                      <div>
-                        <p>Checkin</p>
-                        <p>{baggage}</p>
-                      </div>
-                      <div>
-                        <p>Cabin</p>
-                        <p>7 kg</p>
+                      {/* <p>{namestate}</p>  */}
+                      <p>{findAirportByCode(locationarrival)}</p>
+                      <p style={{ color: "black" }}>
+                        <FaArrowRight />
+                      </p>
+                      <p>{findAirportByCode(locationdeparture)}</p>
+                      <div
+                        style={{
+                          fontSize: "18px",
+                          color: "black",
+                          display: "flex",
+                          gap: "12px",
+                          textAlign: "center",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <p>{datedeparture},</p>
+                        <p>{formattedTime}</p>
                       </div>
                     </div>
                   </div>
-                  
+                  <div>
+                    <div style={{ display: "flex", gap: "12px" }}>
+                      <div
+                        style={{
+                          height: "50px",
+                          width: "50px",
+                          borderRadius: "33%",
+                        }}
+                      >
+                        <img
+                          style={{
+                            height: "50px",
+                            width: "50px",
+                            borderRadius: "33%",
+                          }}
+                          src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${img}.png`}
+                          alt="flightImg"
+                        />
+                      </div>
+                      <p
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          fontSize: "18px",
+                        }}
+                      >
+                        {getairlineName}
+                      </p>
+                    </div>
+                  </div>
+                  <div style={{ margin: "12px", backgroundColor: "#E73D3487" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        padding: "12px",
+                      }}
+                    >
+                      <div>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            padding: "12px",
+                            gap: "12px",
+                          }}
+                        >
+                          <p>{departuretime}</p>
+                          <p>{findAirportByCode(locationarrival)}</p>
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <IoEllipsisVerticalOutline />
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            padding: "12px",
+                            gap: "12px",
+                          }}
+                        >
+                          <p>{arrivaltime}</p>
+                          <p>{findAirportByCode(locationdeparture)}</p>
+                        </div>
+                      </div>
+
+                      <div>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            gap: "25px",
+                          }}
+                        >
+                          <div>
+                            <p>Baggage</p>
+                            <p>Adult</p>
+                          </div>
+                          <div>
+                            <p>Checkin</p>
+                            <p>{baggage}</p>
+                          </div>
+                          <div>
+                            <p>Cabin</p>
+                            <p>7 kg</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <div style={{ fontSize: "20px", fontWeight: "bold" }}>
+                      {" "}
+                      ₹{faredata}
+                    </div>
+                    <div className="singleFlightBoxSeven">
+                      <Button
+                        variant="contained"
+                        onClick={() => {
+                          handleClick();
+                        }}
+                      >
+                        Book
+                      </Button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div style={{display:"flex",justifyContent:"space-between"}}>
-                <div style={{fontSize:"20px",fontWeight:"bold"}}> ₹{faredata}</div>
-                <div className="singleFlightBoxSeven">
-                  <Button variant="contained" onClick={() => {
-                    handleClick();
-                  }}>Book</Button>
-                </div>
-              </div>
-            </div>
-          </Box>
-        </Fade>
-      </Modal>
-    </div>
-
-
-
-
+              </Box>
+            </Fade>
+          </Modal>
+        </div>
       </div>
 
       {/* {reducerState?.return?.returnData?.data?.data?.Response?.Results[1] ? (

@@ -57,7 +57,9 @@ import FixedDeparture from "./Table/FixedDeparture/FixedDeparture";
 import FixedDepartureControl from "./Table/FixedDepartureControl/FixedDepartureControl";
 import AgentHotelBookings from "./Table/AgentHotelBookings/AgentHotelBookings";
 import AgentFlightBookings from "./Table/AgentFlightBookings/AgentFlightBookings";
+
 import AgentBusBookings from "./Table/AgentBusBookings/AgentBusBookings";
+import Demopost from "./Table/Itenary/ItenaryCreate";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import AgentRequest from "./Table/AgentRequest/AgentRequest";
 import AgentHotelChangeRequest from "./Table/ChangeRequest/AgentRequest/AgentChangeHotel";
@@ -75,7 +77,6 @@ import {
   Menu,
   MenuItem,
   Divider,
-
   CircularProgress,
 } from "@mui/material";
 
@@ -125,6 +126,7 @@ import Citypackage from "../../Historytable/Citypackage";
 import Apppost from "../../Historytable/Apppost";
 import Enquirylist from "../../Historytable/Enquirylist";
 import PackageBannerAd from "../../Historytable/PackageBannerAd";
+
 import Quiz from "../../Historytable/Quiz";
 import PopularDest from "../../Historytable/PopularDest";
 //import UpdateFeed from "./Table/UpdateFeed";
@@ -1550,6 +1552,42 @@ export default function VerticalTabs() {
             <ListItem
               disablePadding
               sx={{ display: "block" }}
+              onClick={() => handleMenuItemClick("demopost")}
+              className={
+                menuData === "demopost"
+                  ? "active-menu-item"
+                  : "inactive-menu-item"
+              }
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                  ...((menuData === "Demopost"
+                    ? activeMenuItemClass
+                    : inactiveMenuItemClass) || {}),
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <WebIcon sx={{ color: "white" }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Create Itenary Plan"
+                  sx={{ opacity: open ? 1 : 0, color: "white" }}
+                />
+              </ListItemButton>
+            </ListItem>
+
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
               onClick={() => handleMenuItemClick("Inventory User")}
             >
               <ListItemButton
@@ -2481,6 +2519,7 @@ export default function VerticalTabs() {
                     />
                   </ListItemButton>
                 </ListItem>
+
                 <ListItem
                   disablePadding
                   sx={{ display: "block", marginLeft: "20px" }}
@@ -3769,12 +3808,16 @@ export default function VerticalTabs() {
               {menuData === "Visa Request" && <VisaData />}
               {menuData === "Hotel Bookings" && <AgentHotelBookings />}
               {menuData === "Flight Bookings" && <AgentFlightBookings />}
+
               {menuData === "Bus Bookings" && <AgentBusBookings />}
+              {menuData === "demopost" && <Demopost />}
+
               {menuData === "Hotel Booking" && <HotelBookings />}
               {menuData === "Flight Booking" && <FlightBookings />}
               {menuData === "Bus Booking" && <BusBookings />}
               {menuData === "OfferList" && <OfferList />}
               {menuData === "packagebanner" && <PackageBannerAd />}
+
               {menuData === "popularDestination" && <PopularDest />}
               {menuData === "fixedDeparture" && <FixedDeparture />}
               {menuData === "fixedDepartureControl" && (

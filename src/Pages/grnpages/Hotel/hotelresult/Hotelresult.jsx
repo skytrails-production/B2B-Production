@@ -193,7 +193,7 @@ export default function Popularfilter() {
   };
   const sortedAndFilteredResults = result
     ?.filter((item) => {
-      // const operators = item?.name ? "GRN" : "TBO";
+      
       const hotelName =
         item?.name?.toLowerCase() || item?.HotelName?.toLowerCase();
       const hotelAddress =
@@ -620,7 +620,7 @@ export default function Popularfilter() {
                     // const hotelCode = result1?.hotel_code;
                     const resultIndex = result1?.ResultIndex;
                     const hotelCode = result1?.hotel_code || result1?.HotelCode;
-                    // const operator = result1?.HotelName ? "TBO" : "GRN";
+                  
                     const hotelImage =
                       result1?.images?.url || result1?.HotelPicture;
                     const hotelName = result1.HotelName || result1?.name;
@@ -661,7 +661,7 @@ export default function Popularfilter() {
                             </div>
                             <div className="hotelResultDetails">
                               <div className="hotelTitle">
-                                {/* <p>{operator}</p> */}
+                             
                                 <p>{hotelName}</p>
                               </div>
 

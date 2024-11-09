@@ -47,6 +47,7 @@ import LandslideIcon from "@mui/icons-material/Landslide";
 import KitesurfingIcon from "@mui/icons-material/Kitesurfing";
 import PoolIcon from "@mui/icons-material/Pool";
 import DownhillSkiingIcon from "@mui/icons-material/DownhillSkiing";
+import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import ForestIcon from "@mui/icons-material/Forest";
 import SelfImprovementIcon from "@mui/icons-material/SelfImprovement";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
@@ -78,6 +79,11 @@ const label = { inputProps: { "aria-label": "Checkbox demo" } };
 const CreateHolidayPackage = () => {
   const dispatch = useDispatch();
   const reducerState = useSelector((state) => state);
+  const [country, setCountry] = useState("");
+  const [date, setDate] = useState("");
+  const [isDomesticChecked, setIsDomesticChecked] = useState(false);
+  const [isDomesticDisabled, setIsDomesticDisabled] = useState(false);
+  const [isInternationalDisabled, setIsInternationalDisabled] = useState(false);
   const userId = reducerState?.logIn?.loginData?.data?.data?.id;
   const [loader, setLoader] = useState(false);
   const navigate = useNavigate();
@@ -150,6 +156,7 @@ const CreateHolidayPackage = () => {
     if (
       userData?.personal_details?.address_details?.city === "" ||
       userData?.personal_details?.address_details?.country === "" ||
+      userData.personal_details?.address_details?.date === "" ||
       userData?.personal_details?.address_details?.pincode === "" ||
       userData?.personal_details?.address_details?.residential_address === "" ||
       userData?.personal_details?.first_name === "" ||
@@ -198,11 +205,37 @@ const CreateHolidayPackage = () => {
     relaxation: false,
   });
 
+  const handleCountryChange = (event) => {
+    const inputCountry = event.target.value.trim();
+    setCountry(inputCountry);
+
+    if (inputCountry === "") {
+      setTag({ domestic: false, international: false });
+      setIsDomesticDisabled(false);
+      setIsInternationalDisabled(false);
+      console.log(
+        "----------------------------------------------------------------"
+      );
+    } else if (inputCountry.toLowerCase() === "india") {
+      // If country is India, select Domestic and disable International
+      setTag({ ...tag, domestic: true });
+      setIsDomesticDisabled(false);
+      setIsInternationalDisabled(true);
+      console.log("Country is India - Domestic selected:", true);
+    } else {
+      // For any other country, select International and disable Domestic
+      setTag({ ...tag, international: true });
+      setIsDomesticDisabled(true);
+      setIsInternationalDisabled(false);
+      console.log("Country is not India - International selected:", true);
+    }
+  };
+
   const handleTagChange = (e) => {
-    setTag({
+    setTag(() => ({
       ...tag,
       [e.target.name]: e.target.checked,
-    });
+    }));
   };
 
   const [scheduleType, setScheduleType] = useState({
@@ -221,6 +254,7 @@ const CreateHolidayPackage = () => {
 
   const [checkedItem, setCheckedItem] = useState({
     flexibility: false,
+    flight: false,
     train: false,
     bus: false,
     cab: false,
@@ -309,6 +343,13 @@ const CreateHolidayPackage = () => {
   const [html, setHtml] = useState("");
   const [daysDetailsValues, setDaysDetails] = useState([]);
 
+  // const handleTagChangep = (event) => {
+  //   const { name, checked } = event.target;
+  //   if (name === "domestic") {
+  //     setIsDomesticChecked(checked);
+  //   }
+  // };
+
   const handleDaysDetail = (index, e) => {
     const newValues = [...daysDetailsValues];
     newValues[index] = e.target.value;
@@ -364,6 +405,7 @@ const CreateHolidayPackage = () => {
         pakage_title: formData.get("package_title"),
         destination: inputList,
         country: formData.get("country"),
+        package_expiry_date: formData.get("package_expiry_date"),
         days: days,
         schedule: {
           flexible: true,
@@ -376,6 +418,7 @@ const CreateHolidayPackage = () => {
         },
         insclusions: [
           { flexibility: checkedItem.flexibility },
+          { flight: checkedItem.flight },
           { train: checkedItem.train },
           { bus: checkedItem.bus },
           { cab: checkedItem.cab },
@@ -485,6 +528,15 @@ const CreateHolidayPackage = () => {
     return Object.keys(filteredObj).length;
   };
 
+  const today = new Date();
+
+  // Calculate the date one month from today
+  const oneMonthFromToday = new Date(today);
+  oneMonthFromToday.setMonth(today.getMonth() + 1);
+  const oneMonthFromTodayFormatted = oneMonthFromToday
+    .toISOString()
+    .split("T")[0];
+
   return (
     <div className="container-xxl">
       <div className="row">
@@ -523,6 +575,25 @@ const CreateHolidayPackage = () => {
                       <span id="error1">Package Name is required</span>
                     )}
                 </div>
+                <div className="mb-3">
+                  <label className="form-label">
+                    Package Expiry Date <span style={{ color: "red" }}>*</span>
+                  </label>
+                  <input
+                    type="date"
+                    name="package_expiry_date"
+                    id="package_expiry_date"
+                    className="form-control"
+                    min={oneMonthFromTodayFormatted}
+                  />
+                  {sub &&
+                    document.getElementById("package_expiry_date")?.value ===
+                      "" && (
+                      <span id="error2" style={{ color: "red" }}>
+                        Package Expiry Date is required
+                      </span>
+                    )}
+                </div>
                 <div class="mb-3">
                   <label class="form-label">
                     Upload a picture of the package{" "}
@@ -549,8 +620,10 @@ const CreateHolidayPackage = () => {
                     type="text"
                     name="country"
                     id="user_card_document"
-                    class="form-control input_file"
+                    className="form-control input_file"
                     placeholder="Enter Country"
+                    value={country}
+                    onChange={handleCountryChange}
                   />
                   {sub &&
                     document.getElementById("user_card_document").files
@@ -653,7 +726,7 @@ const CreateHolidayPackage = () => {
                   </Box>
                 </div>
 
-                <div class="mb-3">
+                {/* <div class="mb-3">
                   <div
                     style={{
                       display: "flex",
@@ -736,7 +809,8 @@ const CreateHolidayPackage = () => {
                       </Box>
                     </Box>
                   </div>
-                </div>
+                </div> */}
+
                 <div class="mb-3">
                   <label class="form-label">
                     Set up package price <span style={{ color: "red" }}>*</span>
@@ -799,9 +873,321 @@ const CreateHolidayPackage = () => {
                     <span style={{ color: "red" }}>*</span>
                   </label>
                 </Box>
+
                 <Grid container>
                   <Grid item lg={5} md={5} sm={12} mt={3}>
                     <Box>
+                      <Box
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="center"
+                      >
+                        <Box
+                          display="flex"
+                          textAlign="center"
+                          gap="10px"
+                          alignItems="center"
+                        >
+                          <FlightTakeoffIcon />
+                          <Typography
+                            sx={{
+                              fontSize: "14px",
+                              color: "#252525",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Flight
+                          </Typography>
+                        </Box>
+                        <Box display="flex" gap="10px">
+                          <Checkbox
+                            value="true"
+                            name="flight"
+                            onChange={handleChange}
+                            checked={checkedItem.flight === "true"}
+                            {...label}
+                            icon={<CheckCircleOutlineIcon />}
+                            checkedIcon={<CheckCircleIcon />}
+                          />
+                          <Checkbox
+                            {...label}
+                            value="false"
+                            name="flight"
+                            checked={checkedItem.flight === "false"}
+                            onChange={handleChange}
+                            icon={<HighlightOffIcon />}
+                            checkedIcon={<CancelIcon />}
+                          />
+                        </Box>
+                      </Box>
+                      <Box
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="center"
+                      >
+                        <Box display="flex" gap="10px">
+                          <ApartmentIcon />
+                          <Typography
+                            sx={{
+                              fontSize: "14px",
+                              color: "#252525",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Hotel
+                          </Typography>
+                        </Box>
+                        <Box display="flex" gap="10px">
+                          <Checkbox
+                            value="true"
+                            name="hotel"
+                            onChange={handleChange}
+                            checked={checkedItem.hotel === "true"}
+                            {...label}
+                            icon={<CheckCircleOutlineIcon />}
+                            checkedIcon={<CheckCircleIcon />}
+                          />
+                          <Checkbox
+                            {...label}
+                            value="false"
+                            name="hotel"
+                            checked={checkedItem.hotel === "false"}
+                            onChange={handleChange}
+                            icon={<HighlightOffIcon />}
+                            checkedIcon={<CancelIcon />}
+                          />
+                        </Box>
+                      </Box>
+
+                      <Box
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="center"
+                      >
+                        <Box display="flex" gap="10px">
+                          <DirectionsCarIcon />
+                          <Typography
+                            sx={{
+                              fontSize: "14px",
+                              color: "#252525",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Cab
+                          </Typography>
+                        </Box>
+                        <Box display="flex" gap="10px">
+                          <Checkbox
+                            value="true"
+                            name="cab"
+                            onChange={handleChange}
+                            checked={checkedItem.cab === "true"}
+                            {...label}
+                            icon={<CheckCircleOutlineIcon />}
+                            checkedIcon={<CheckCircleIcon />}
+                          />
+                          <Checkbox
+                            {...label}
+                            value="false"
+                            name="cab"
+                            checked={checkedItem.cab === "false"}
+                            onChange={handleChange}
+                            icon={<HighlightOffIcon />}
+                            checkedIcon={<CancelIcon />}
+                          />
+                        </Box>
+                      </Box>
+                      <Box
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="center"
+                      >
+                        <Box display="flex" gap="10px">
+                          <FastfoodIcon />
+                          <Typography
+                            sx={{
+                              fontSize: "14px",
+                              color: "#252525",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Meals
+                          </Typography>
+                        </Box>
+                        <Box display="flex" gap="10px">
+                          <Checkbox
+                            {...label}
+                            value="true"
+                            name="meals"
+                            onChange={handleChange}
+                            checked={checkedItem.meals === "true"}
+                            {...label}
+                            icon={<CheckCircleOutlineIcon />}
+                            checkedIcon={<CheckCircleIcon />}
+                          />
+                          <Checkbox
+                            {...label}
+                            value="false"
+                            name="meals"
+                            checked={checkedItem.meals === "false"}
+                            onChange={handleChange}
+                            icon={<HighlightOffIcon />}
+                            checkedIcon={<CancelIcon />}
+                          />
+                        </Box>
+                      </Box>
+                      <Box
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="center"
+                      >
+                        <Box display="flex" gap="10px">
+                          <DinnerDiningIcon />
+                          <Typography
+                            sx={{
+                              fontSize: "14px",
+                              color: "#252525",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Daily Breakfast
+                          </Typography>
+                        </Box>
+                        <Box display="flex" gap="10px">
+                          <Checkbox
+                            value="true"
+                            name="breakfast"
+                            onChange={handleChange}
+                            checked={checkedItem.breakfast === "true"}
+                            {...label}
+                            icon={<CheckCircleOutlineIcon />}
+                            checkedIcon={<CheckCircleIcon />}
+                          />
+                          <Checkbox
+                            {...label}
+                            value="false"
+                            name="breakfast"
+                            checked={checkedItem.breakfast === "false"}
+                            onChange={handleChange}
+                            icon={<HighlightOffIcon />}
+                            checkedIcon={<CancelIcon />}
+                          />
+                        </Box>
+                      </Box>
+                      <Box
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="center"
+                      >
+                        <Box display="flex" gap="10px">
+                          <BlurOnIcon />
+                          <Typography
+                            sx={{
+                              fontSize: "14px",
+                              color: "#252525",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Cruise
+                          </Typography>
+                        </Box>
+                        <Box display="flex" gap="10px">
+                          <Checkbox
+                            value="true"
+                            name="cruise"
+                            onChange={handleChange}
+                            checked={checkedItem.cruise === "true"}
+                            {...label}
+                            icon={<CheckCircleOutlineIcon />}
+                            checkedIcon={<CheckCircleIcon />}
+                          />
+                          <Checkbox
+                            {...label}
+                            value="false"
+                            name="cruise"
+                            checked={checkedItem.cruise === "false"}
+                            onChange={handleChange}
+                            icon={<HighlightOffIcon />}
+                            checkedIcon={<CancelIcon />}
+                          />
+                        </Box>
+                      </Box>
+                      <Box
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="center"
+                      >
+                        <Box display="flex" gap="10px">
+                          <ArticleIcon />
+                          <Typography
+                            sx={{
+                              fontSize: "14px",
+                              color: "#252525",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Visa
+                          </Typography>
+                        </Box>
+                        <Box display="flex" gap="10px">
+                          <Checkbox
+                            value="true"
+                            name="visa"
+                            onChange={handleChange}
+                            checked={checkedItem.visa === "true"}
+                            {...label}
+                            icon={<CheckCircleOutlineIcon />}
+                            checkedIcon={<CheckCircleIcon />}
+                          />
+                          <Checkbox
+                            {...label}
+                            value="false"
+                            name="visa"
+                            checked={checkedItem.visa === "false"}
+                            onChange={handleChange}
+                            icon={<HighlightOffIcon />}
+                            checkedIcon={<CancelIcon />}
+                          />
+                        </Box>
+                      </Box>
+                      <Box
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="center"
+                      >
+                        <Box display="flex" gap="10px">
+                          <DeckIcon />
+                          <Typography
+                            sx={{
+                              fontSize: "14px",
+                              color: "#252525",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Sightseeing
+                          </Typography>
+                        </Box>
+                        <Box display="flex" gap="10px">
+                          <Checkbox
+                            value="true"
+                            name="sightSeeing"
+                            onChange={handleChange}
+                            checked={checkedItem.sightSeeing === "true"}
+                            {...label}
+                            icon={<CheckCircleOutlineIcon />}
+                            checkedIcon={<CheckCircleIcon />}
+                          />
+                          <Checkbox
+                            {...label}
+                            value="false"
+                            name="sightSeeing"
+                            checked={checkedItem.sightSeeing === "false"}
+                            onChange={handleChange}
+                            icon={<HighlightOffIcon />}
+                            checkedIcon={<CancelIcon />}
+                          />
+                        </Box>
+                      </Box>
                       <Box
                         display="flex"
                         justifyContent="space-between"
@@ -845,6 +1231,7 @@ const CreateHolidayPackage = () => {
                           />
                         </Box>
                       </Box>
+
                       <Box
                         display="flex"
                         justifyContent="space-between"
@@ -921,44 +1308,7 @@ const CreateHolidayPackage = () => {
                           />
                         </Box>
                       </Box>
-                      <Box
-                        display="flex"
-                        justifyContent="space-between"
-                        alignItems="center"
-                      >
-                        <Box display="flex" gap="10px">
-                          <DirectionsCarIcon />
-                          <Typography
-                            sx={{
-                              fontSize: "14px",
-                              color: "#252525",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            Cab
-                          </Typography>
-                        </Box>
-                        <Box display="flex" gap="10px">
-                          <Checkbox
-                            value="true"
-                            name="cab"
-                            onChange={handleChange}
-                            checked={checkedItem.cab === "true"}
-                            {...label}
-                            icon={<CheckCircleOutlineIcon />}
-                            checkedIcon={<CheckCircleIcon />}
-                          />
-                          <Checkbox
-                            {...label}
-                            value="false"
-                            name="cab"
-                            checked={checkedItem.cab === "false"}
-                            onChange={handleChange}
-                            icon={<HighlightOffIcon />}
-                            checkedIcon={<CancelIcon />}
-                          />
-                        </Box>
-                      </Box>
+
                       <Box
                         display="flex"
                         justifyContent="space-between"
@@ -997,44 +1347,7 @@ const CreateHolidayPackage = () => {
                           />
                         </Box>
                       </Box>
-                      <Box
-                        display="flex"
-                        justifyContent="space-between"
-                        alignItems="center"
-                      >
-                        <Box display="flex" gap="10px">
-                          <ApartmentIcon />
-                          <Typography
-                            sx={{
-                              fontSize: "14px",
-                              color: "#252525",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            Hotel
-                          </Typography>
-                        </Box>
-                        <Box display="flex" gap="10px">
-                          <Checkbox
-                            value="true"
-                            name="hotel"
-                            onChange={handleChange}
-                            checked={checkedItem.hotel === "true"}
-                            {...label}
-                            icon={<CheckCircleOutlineIcon />}
-                            checkedIcon={<CheckCircleIcon />}
-                          />
-                          <Checkbox
-                            {...label}
-                            value="false"
-                            name="hotel"
-                            checked={checkedItem.hotel === "false"}
-                            onChange={handleChange}
-                            icon={<HighlightOffIcon />}
-                            checkedIcon={<CancelIcon />}
-                          />
-                        </Box>
-                      </Box>
+
                       <Box
                         display="flex"
                         justifyContent="space-between"
@@ -1149,82 +1462,7 @@ const CreateHolidayPackage = () => {
                           />
                         </Box>
                       </Box>
-                      <Box
-                        display="flex"
-                        justifyContent="space-between"
-                        alignItems="center"
-                      >
-                        <Box display="flex" gap="10px">
-                          <BlurOnIcon />
-                          <Typography
-                            sx={{
-                              fontSize: "14px",
-                              color: "#252525",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            Cruise
-                          </Typography>
-                        </Box>
-                        <Box display="flex" gap="10px">
-                          <Checkbox
-                            value="true"
-                            name="cruise"
-                            onChange={handleChange}
-                            checked={checkedItem.cruise === "true"}
-                            {...label}
-                            icon={<CheckCircleOutlineIcon />}
-                            checkedIcon={<CheckCircleIcon />}
-                          />
-                          <Checkbox
-                            {...label}
-                            value="false"
-                            name="cruise"
-                            checked={checkedItem.cruise === "false"}
-                            onChange={handleChange}
-                            icon={<HighlightOffIcon />}
-                            checkedIcon={<CancelIcon />}
-                          />
-                        </Box>
-                      </Box>
-                      <Box
-                        display="flex"
-                        justifyContent="space-between"
-                        alignItems="center"
-                      >
-                        <Box display="flex" gap="10px">
-                          <DeckIcon />
-                          <Typography
-                            sx={{
-                              fontSize: "14px",
-                              color: "#252525",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            Sightseeing
-                          </Typography>
-                        </Box>
-                        <Box display="flex" gap="10px">
-                          <Checkbox
-                            value="true"
-                            name="sightSeeing"
-                            onChange={handleChange}
-                            checked={checkedItem.sightSeeing === "true"}
-                            {...label}
-                            icon={<CheckCircleOutlineIcon />}
-                            checkedIcon={<CheckCircleIcon />}
-                          />
-                          <Checkbox
-                            {...label}
-                            value="false"
-                            name="sightSeeing"
-                            checked={checkedItem.sightSeeing === "false"}
-                            onChange={handleChange}
-                            icon={<HighlightOffIcon />}
-                            checkedIcon={<CancelIcon />}
-                          />
-                        </Box>
-                      </Box>
+
                       <Box
                         display="flex"
                         justifyContent="space-between"
@@ -1263,83 +1501,7 @@ const CreateHolidayPackage = () => {
                           />
                         </Box>
                       </Box>
-                      <Box
-                        display="flex"
-                        justifyContent="space-between"
-                        alignItems="center"
-                      >
-                        <Box display="flex" gap="10px">
-                          <FastfoodIcon />
-                          <Typography
-                            sx={{
-                              fontSize: "14px",
-                              color: "#252525",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            Meals
-                          </Typography>
-                        </Box>
-                        <Box display="flex" gap="10px">
-                          <Checkbox
-                            {...label}
-                            value="true"
-                            name="meals"
-                            onChange={handleChange}
-                            checked={checkedItem.meals === "true"}
-                            {...label}
-                            icon={<CheckCircleOutlineIcon />}
-                            checkedIcon={<CheckCircleIcon />}
-                          />
-                          <Checkbox
-                            {...label}
-                            value="false"
-                            name="meals"
-                            checked={checkedItem.meals === "false"}
-                            onChange={handleChange}
-                            icon={<HighlightOffIcon />}
-                            checkedIcon={<CancelIcon />}
-                          />
-                        </Box>
-                      </Box>
-                      <Box
-                        display="flex"
-                        justifyContent="space-between"
-                        alignItems="center"
-                      >
-                        <Box display="flex" gap="10px">
-                          <DinnerDiningIcon />
-                          <Typography
-                            sx={{
-                              fontSize: "14px",
-                              color: "#252525",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            Daily Breakfast
-                          </Typography>
-                        </Box>
-                        <Box display="flex" gap="10px">
-                          <Checkbox
-                            value="true"
-                            name="breakfast"
-                            onChange={handleChange}
-                            checked={checkedItem.breakfast === "true"}
-                            {...label}
-                            icon={<CheckCircleOutlineIcon />}
-                            checkedIcon={<CheckCircleIcon />}
-                          />
-                          <Checkbox
-                            {...label}
-                            value="false"
-                            name="breakfast"
-                            checked={checkedItem.breakfast === "false"}
-                            onChange={handleChange}
-                            icon={<HighlightOffIcon />}
-                            checkedIcon={<CancelIcon />}
-                          />
-                        </Box>
-                      </Box>
+
                       <Box
                         display="flex"
                         justifyContent="space-between"
@@ -1372,44 +1534,6 @@ const CreateHolidayPackage = () => {
                             value="false"
                             name="drink"
                             checked={checkedItem.drink === "false"}
-                            onChange={handleChange}
-                            icon={<HighlightOffIcon />}
-                            checkedIcon={<CancelIcon />}
-                          />
-                        </Box>
-                      </Box>
-                      <Box
-                        display="flex"
-                        justifyContent="space-between"
-                        alignItems="center"
-                      >
-                        <Box display="flex" gap="10px">
-                          <ArticleIcon />
-                          <Typography
-                            sx={{
-                              fontSize: "14px",
-                              color: "#252525",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            Visa
-                          </Typography>
-                        </Box>
-                        <Box display="flex" gap="10px">
-                          <Checkbox
-                            value="true"
-                            name="visa"
-                            onChange={handleChange}
-                            checked={checkedItem.visa === "true"}
-                            {...label}
-                            icon={<CheckCircleOutlineIcon />}
-                            checkedIcon={<CheckCircleIcon />}
-                          />
-                          <Checkbox
-                            {...label}
-                            value="false"
-                            name="visa"
-                            checked={checkedItem.visa === "false"}
                             onChange={handleChange}
                             icon={<HighlightOffIcon />}
                             checkedIcon={<CancelIcon />}
@@ -2177,19 +2301,34 @@ const CreateHolidayPackage = () => {
                 <div className="tag__Container">
                   <div className="relevant__tag">
                     <label class="label__container">
+                      {/* <input
+                        type="checkbox"
+                        name="domestic"
+                        checked={isDomesticChecked}
+                        onChange={handleTagChange}
+                      /> */}
                       <input
                         type="checkbox"
                         name="domestic"
+                        checked={tag.domestic}
+                        disabled={isDomesticDisabled}
                         onChange={handleTagChange}
                       />
-                      {/* <div class="checkmark"></div> */}
                       <span className="tag__title">Domestic</span>
                     </label>
 
                     <label class="label__container">
+                      {/* <input
+                        type="checkbox"
+                        name="international"
+                        disabled={isInternationalDisabled}
+                        onChange={(e) => setIsDomesticChecked(false)}
+                      /> */}
                       <input
                         type="checkbox"
                         name="international"
+                        checked={tag.international}
+                        disabled={isInternationalDisabled}
                         onChange={handleTagChange}
                       />
                       {/* <div class="checkmark"></div> */}
@@ -2324,6 +2463,7 @@ const CreateHolidayPackage = () => {
                       {/* <div class="checkmark"></div> */}
                       <span className="tag__title">Bagpacker</span>
                     </label>
+
                     <label class="label__container">
                       <input
                         type="checkbox"
@@ -2351,16 +2491,6 @@ const CreateHolidayPackage = () => {
                       />
                       {/* <div class="checkmark"></div> */}
                       <span className="tag__title">historical</span>
-                    </label>
-
-                    <label class="label__container">
-                      <input
-                        type="checkbox"
-                        name="domestic"
-                        onChange={handleTagChange}
-                      />
-                      {/* <div class="checkmark"></div> */}
-                      <span className="tag__title">Domestic</span>
                     </label>
 
                     <label class="label__container">
