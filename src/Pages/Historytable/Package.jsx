@@ -208,10 +208,17 @@ function Package() {
       valueGetter: (params) => params.row.packageId?.country || "N/A",
     },
     {
-      field: "packageId.pakage_title",
-      headerName: "Package Title",
+      field: "createdAt",
+      headerName: "Date",
       width: 220,
-      valueGetter: (params) => params.row.packageId?.pakage_title || "N/A",
+      valueFormatter: (params) => {
+        const date = new Date(params.value);
+        return date.toLocaleDateString("en-GB", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        });
+      },
     },
     {
       field: "packageId.pakage_amount",
@@ -241,7 +248,6 @@ function Package() {
       valueGetter: (params) => (params.row.connected ? "Yes" : "No"),
     },
     { field: "noOfPeople", headerName: "No Of People", width: 220 },
-    { field: "status", headerName: "Status", width: 220 },
   ];
 
   return (

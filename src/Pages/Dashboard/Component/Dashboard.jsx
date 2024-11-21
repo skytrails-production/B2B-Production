@@ -160,7 +160,7 @@ import InventoryUser from "./Table/inventoryTable/InventoryUser";
 import InHouseHotel from "./Table/InHouseHotel/InHouseHotel";
 import Careercategory from "./Table/Career/Careercategory";
 import Careercategoryvalue from "./Table/Career/Careercategoryvalue";
-
+import CreateReview from "./Table/CreateReview";
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -377,6 +377,10 @@ export default function VerticalTabs() {
   const createBlog = () => {
     navigate("/admin/createBlog");
   };
+
+  const createReview=()=>{
+    navigate("/admin/createReview");
+  }
   // /adminprofile
   // const AdminProfile = () => {
   //   // Navigate to the desired route when the button is clicked
@@ -1088,6 +1092,19 @@ export default function VerticalTabs() {
                   </ListItemIcon>
                   Create Blog
                 </MenuItem>
+
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    createReview();
+                  }}
+                >
+                  <ListItemIcon>
+                    <DynamicFeedIcon fontSize="small" />
+                  </ListItemIcon>
+                  Create Review
+                </MenuItem>
+
 
                 {/* <MenuItem
                   onClick={() => {

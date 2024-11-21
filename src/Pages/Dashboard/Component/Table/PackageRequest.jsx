@@ -62,10 +62,14 @@ const PackageRequest = () => {
     { field: "phone", headerName: "Phone Number", minWidth: 150 },
     { field: "departureCity", headerName: "Departure City", minWidth: 150 },
     { field: "destination", headerName: "Destination", minWidth: 150 },
-
     { field: "status", headerName: "Status", minWidth: 100 },
+    { field: "adult", headerName: "Adults", minWidth: 100 }, // Added adult field
+    { field: "budget", headerName: "Budget", minWidth: 120 }, // Added budget field
+    { field: "child", headerName: "Children", minWidth: 100 }, // Added child field
+    { field: "msg", headerName: "Message", minWidth: 200 }, // Added message field
+    { field: "travelDate", headerName: "Travel Date", minWidth: 150 }, // Added travelDate field
   ];
-
+  
   return (
     <div
       className="user-table-container"

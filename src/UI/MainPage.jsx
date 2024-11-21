@@ -149,6 +149,7 @@ import Passengerdetailamd from "../Pages/Flight/flightresult/Passengerdetailamd"
 import FlightReviewbookingamd from "../Pages/Flight/flightreviewbooking/FlightReviewbookingamd";
 import Flightbookingconfirmationamd from "../Pages/Flight/flightbookingconfirmation/Flightbookingconfirmationamd";
 import GuestdetailTbo from "../Pages/grnpages/Hotel/Tbo/guestdetailTbo/GuestdetailTbo";
+import CreateReview from "../Pages/Dashboard/Component/Table/CreateReview";
 // import Carrerform from "../Pages/Dashboard/Component/Table/Careerform";
 const MainPage = () => {
   const dispatch = useDispatch();
@@ -355,6 +356,7 @@ const MainPage = () => {
       location.pathname === "/adminlogin" ||
       location.pathname === "/admin/addnotification" ||
       location.pathname === "/admin/createQuiz" ||
+      location.pathname==="/admin/createReview"||
       location.pathname === "/admin/createBlog" ||
       location.pathname === "/subAdmin/dashboard/Agentflightcancel" ||
       location.pathname === "/subAdmin/dashboard/Agenthotelcancel" ||
@@ -839,6 +841,11 @@ const MainPage = () => {
                   exact
                   path="/admin/createQuiz"
                   element={<CreateQuiz />}
+                />
+                <Route
+                  exact
+                  path="/admin/CreateReview"
+                  element={<CreateReview />}
                 />
                 <Route
                   exact
