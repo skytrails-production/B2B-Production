@@ -39,6 +39,7 @@ import AirplanemodeActiveIcon from "@mui/icons-material/AirplanemodeActive";
 import FlightInventory from "./Table/FlightInventory/FlightInventory";
 import Tables from "./Table/Table";
 import Usertables from "./Table/UserTable";
+import PackageRequest from "./Table/PackageRequest";
 import SubAdminTable from "./Table/subAdmin";
 import MarkUpAmount from "./Table/MarkUpAmount";
 import PackageDetails from "./Table/packageUpdate/PackageDetails";
@@ -278,6 +279,7 @@ export default function VerticalTabs() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
   const handleMenuItemClick = (menuItem) => {
     // console.log(menuItem,menuData,"hello")
     setLoading(true);
@@ -287,6 +289,7 @@ export default function VerticalTabs() {
       setLoading(false);
     }, 500);
   };
+
   const [anchorEl, setAnchorEl] = useState(null);
   const openAccountMenu = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -1549,6 +1552,39 @@ export default function VerticalTabs() {
               </ListItemButton>
             </ListItem>
 
+            {/* package requests */}
+
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => handleMenuItemClick("Package Request")}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                  ...((menuData === "Package Request"
+                    ? activeMenuItemClass
+                    : inactiveMenuItemClass) || {}),
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <PeopleOutlinedIcon sx={{ color: "white" }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Package Request"
+                  sx={{ opacity: open ? 1 : 0, color: "white" }}
+                />
+              </ListItemButton>
+            </ListItem>
+
             <ListItem
               disablePadding
               sx={{ display: "block" }}
@@ -1677,6 +1713,9 @@ export default function VerticalTabs() {
                 />
               </ListItemButton>
             </ListItem>
+
+           
+
             <ListItem
               disablePadding
               sx={{ display: "block" }}
@@ -3777,6 +3816,7 @@ export default function VerticalTabs() {
               {menuData === "Documenttype" && <Visacountry />}
               {menuData === "Home" && <AdminDashboard />}
               {menuData === "Agent Table" && <Tables />}
+              {menuData === "Package Request" && <PackageRequest />}
               {menuData === "Inventory User" && <InventoryUser />}
               {menuData === "Inhouse Hotel" && <InHouseHotel />}
               {menuData === "User Table" && <Usertables />}
