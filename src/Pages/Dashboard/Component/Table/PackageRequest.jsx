@@ -8,6 +8,7 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import "./UserTable.css";
+import { apiURL } from "../../../../Constants/constant";
 
 const PackageRequest = () => {
   const [userData, setUserData] = useState([]);
@@ -22,7 +23,7 @@ const PackageRequest = () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `http://localhost:8000/skyTrails/api/user/callBackRequests/getAllCallBackRequests`
+          `${apiURL.baseURL}/skyTrails/api/user/callBackRequests/getAllCallBackRequests`
         );
         const data = response.data.result;
 
