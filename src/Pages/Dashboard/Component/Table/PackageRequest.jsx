@@ -58,6 +58,19 @@ const PackageRequest = () => {
 
   const columns = [
     { field: "name", headerName: "Name", minWidth: 150 },
+    {
+      field: "createdAt",
+      headerName: "Date",
+      width: 220,
+      valueFormatter: (params) => {
+        const date = new Date(params.value);
+        return date.toLocaleDateString("en-GB", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        });
+      },
+    },
     { field: "email", headerName: "Email", minWidth: 200 },
     { field: "phone", headerName: "Phone Number", minWidth: 150 },
     { field: "departureCity", headerName: "Departure City", minWidth: 150 },
@@ -69,7 +82,7 @@ const PackageRequest = () => {
     { field: "msg", headerName: "Message", minWidth: 200 }, // Added message field
     { field: "travelDate", headerName: "Travel Date", minWidth: 150 }, // Added travelDate field
   ];
-  
+
   return (
     <div
       className="user-table-container"

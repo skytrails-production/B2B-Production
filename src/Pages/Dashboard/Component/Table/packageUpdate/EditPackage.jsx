@@ -7,7 +7,7 @@ import {
   Typography,
   FormControlLabel,
   RadioGroup,
-  Radio
+  Radio,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import "./packageUpdate.css";
@@ -70,51 +70,47 @@ import axios from "axios";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const EditHolidayPackage = ({ onClose, packageData }) => {
-
-
   const location = useLocation();
-
 
   const dispatch = useDispatch();
   const reducerState = useSelector((state) => state);
   // const userId = reducerState?.logIn?.loginData?.data?.data?.id;
   const [loader, setLoader] = useState(false);
 
-
-
-
   const navigate = useNavigate();
   // const onePackage = reducerState?.searchOneResult?.OneSearchPackageResult?.data?.data;
-
 
   const selectedPackage = JSON.parse(sessionStorage.getItem("selectedPackage"));
 
   // console.log(selectedPackage, "one package")
 
-
-  const [packageTitle, setPackageTitle] = useState(selectedPackage?.pakage_title)
-  const [packageCountry, setPackageCountry] = useState(selectedPackage?.country)
+  const [packageTitle, setPackageTitle] = useState(
+    selectedPackage?.pakage_title
+  );
+  const [packageCountry, setPackageCountry] = useState(
+    selectedPackage?.country
+  );
   const [days, setDays] = useState(selectedPackage?.days);
   const ListItem = styled("li")(({ theme }) => ({
     margin: theme.spacing(0.5),
   }));
   const [input, setInput] = React.useState("");
 
-
   const [chipData, setChipData] = useState([]);
   // console.log(chipData, "chip data")
 
   useEffect(() => {
-    const storedData = JSON.parse(sessionStorage.getItem('selectedPackage'));
+    const storedData = JSON.parse(sessionStorage.getItem("selectedPackage"));
 
     if (storedData) {
       setChipData(storedData?.destination);
     }
   }, []);
 
-
   const handleDelete = (chipToDelete) => () => {
-    setChipData((chips) => chips.filter((chip) => chip.addMore !== chipToDelete.addMore));
+    setChipData((chips) =>
+      chips.filter((chip) => chip.addMore !== chipToDelete.addMore)
+    );
     // updateSessionStorage();
   };
 
@@ -128,12 +124,7 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
 
   const inputList = chipData.map((item) => ({ addMore: item.addMore }));
 
-
-
-
-
-  // amount logic 
-
+  // amount logic
 
   const [amount, setAmount] = useState(selectedPackage?.pakage_amount?.amount);
 
@@ -174,10 +165,8 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
     relaxation: false,
   });
 
-
   useEffect(() => {
     const storedData = selectedPackage?.select_tags;
-
 
     if (storedData) {
       const initialCheckedItem = {};
@@ -198,9 +187,6 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
     });
   };
 
-
-
-
   // const handleChange = (event) => {
   //   setCheckedItem({
   //     ...checkedItem,
@@ -208,9 +194,7 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
   //   });
   // };
 
-
-  // logic of inclusion radio buttons 
-
+  // logic of inclusion radio buttons
 
   const [checkedItem, setCheckedItem] = useState({
     flexibility: false,
@@ -254,7 +238,7 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
       const initialCheckedItem = {};
       storedData.forEach((item) => {
         const key = Object.keys(item)[0];
-        initialCheckedItem[key] = item[key] === 'true' || item[key] === true;;
+        initialCheckedItem[key] = item[key] === "true" || item[key] === true;
       });
       setCheckedItem(initialCheckedItem);
     }
@@ -271,10 +255,7 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
       ...prevCheckedItem,
       [name]: checked,
     }));
-
   };
-
-
 
   const styles1 = {
     container: {
@@ -300,12 +281,7 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
     },
   };
 
-
-
-
-
   // logic for schedule
-
 
   const [scheduleType, setScheduleType] = useState({
     flexible: false,
@@ -323,70 +299,31 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
     const selectedScheduleType = event.target.value;
 
     setScheduleType({
-      flexible: selectedScheduleType === 'flexible',
-      fixed_departure: selectedScheduleType === 'fixed_departure',
+      flexible: selectedScheduleType === "flexible",
+      fixed_departure: selectedScheduleType === "fixed_departure",
     });
   };
 
-  // console.log(scheduleType, "schedule type")
-  // useEffect(() => {
-  //   if (selectedPackage && selectedPackage?.schedule) {
-  //     setScheduleType(selectedPackage?.schedule?.fixed_departure === true ? 'fixed_departure' : 'flexible');
-  //   }
-  // }, []);
-
-  // const handleRadioChange = (event) => {
-  //   setScheduleType(event.target.value);
-  // };
-
-
-
-  // logic for hotel details 
-
-
-  const [hotelDetails, setHotelDetails] = useState(selectedPackage?.hotel_details);
+  const [hotelDetails, setHotelDetails] = useState(
+    selectedPackage?.hotel_details
+  );
 
   const [inclusion, setInclusion] = useState(selectedPackage?.insclusion_note);
 
   const [exclusion, setExclusion] = useState(selectedPackage?.exclusion_note);
-  const [termAndCondition, setTermAndCondition] = useState(selectedPackage?.term_Conditions);
-  const [cancellation, setCancellation] = useState(selectedPackage?.cancellation_Policy)
-  const [overView, setOverView] = useState(selectedPackage?.overview)
-
+  const [termAndCondition, setTermAndCondition] = useState(
+    selectedPackage?.term_Conditions
+  );
+  const [cancellation, setCancellation] = useState(
+    selectedPackage?.cancellation_Policy
+  );
+  const [overView, setOverView] = useState(selectedPackage?.overview);
 
   const handleHotel = (e) => {
     setHotelDetails(e.target.value);
   };
 
-
   const [sub, setSub] = useState(false);
-
-
-
-
-  // image logic here
-  // const [packageImage, setPackageImage] = useState(selectedPackage?.pakage_img);
-
-  // useEffect(() => {
-  //   const storedImage = selectedPackage?.pakage_img;
-  //   if (storedImage) {
-  //     setPackageImage(storedImage);
-  //   }
-  // }, []);
-
-  // const handleImageChange = (event) => {
-  //   const newImage = event.target.files[0];
-  //   setPackageImage(newImage);
-
-  // };
-
-  // useEffect(() => {
-  //   console.log(packageImage, "package image")
-  // }, [packageImage]);
-
-
-
-
 
   // Text editor Onchange
   const [html, setHtml] = useState("");
@@ -409,7 +346,7 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
   };
   useEffect(() => {
     if (reducerState?.createPackage?.showSuccessMessage == true) {
-      setLoader(false)
+      setLoader(false);
       Swal.fire({
         icon: "success",
         title: "Done.",
@@ -418,94 +355,71 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
         confirmButtonText: "OK",
       }).then((result) => {
         if (result.isConfirmed) {
-
         }
       });
-
     }
   }, [reducerState?.createPackage]);
 
   // Form handle code
   const handleEditPackage = async (event) => {
+    console.log("Edit package initiated...");
     event.preventDefault();
     setLoader(true);
     setSub(true);
 
-    const file1 = document.getElementById("user_card_document").files;
-
+    const file1 = document.getElementById("user_card_document")?.files[0];
     const formData = new FormData(event.target);
-    if (
-      exclusion === "" ||
-      chipData.length === 0 ||
-      amount === 0 ||
-      termAndCondition === "" ||
-      cancellation === "" ||
-      filterTrueProps(checkedItem) === 0 ||
-      filterTrueProps(tag) === 0
-    ) {
-      setTimeout(() => {
-        setSub(false);
-      }, 7000);
 
-      setLoader(false);
-      return;
-    } else {
-      const payload = {
-        packageId: selectedPackage?._id,
-        pakage_title: formData.get("package_title"),
-        destination: inputList,
-        country: formData.get("country"),
-        days: days,
-        flexible: scheduleType,
-        pakage_amount: {
-          currency: "INR",
-          amount: amount,
-        },
+    // Validation checks
+
+    // Constructing the payload
+    const payload = {
+      packageId: selectedPackage?._id,
+      pakage_title: formData.get("package_title"),
+      destination: inputList,
+      country: formData.get("country"),
+      days: days,
+      flexible: scheduleType,
+      pakage_amount: {
         currency: "INR",
+        amount: amount,
+      },
+      currency: "INR",
+      insclusions: Object.entries(checkedItem)
+        .filter(([key, value]) => value)
+        .map(([key]) => ({ [key]: true })),
+      hotel_details: hotelDetails,
+      insclusion_note: inclusion,
+      exclusion_note: exclusion,
+      detailed_ltinerary: daysDetailsValues,
+      overview: overView,
+      select_tags: Object.entries(tag)
+        .filter(([key, value]) => value)
+        .map(([key]) => ({ [key]: true })),
+      term_Conditions: termAndCondition,
+      cancellation_Policy: cancellation,
+    };
 
-        insclusions: Object.entries(checkedItem)
-          .filter(([key, value]) => value)
-          .map(([key]) => ({ [key]: true })),
-        hotel_details: hotelDetails,
-        insclusion_note: inclusion,
-        exclusion_note: exclusion,
-        detailed_ltinerary: daysDetailsValues,
-        overview: overView,
-        select_tags: Object.entries(tag)
-          .filter(([key, value]) => value)
-          .map(([key]) => ({ [key]: true })),
+    try {
+      const res = await axios({
+        method: "put",
+        url: `${apiURL.baseURL}/skyTrails/international/editPackage`,
+        data: { ...payload, images: file1 },
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
-        term_Conditions: termAndCondition,
-        cancellation_Policy: cancellation,
-      };
-      // console.warn({ ...payload, images: file1 }, "paylod")
-      // const formData1 = new FormData();
-      // formData1.append("images", file1);
-      // formData1.append("data", JSON.stringify(payload));
-      const formData = new FormData();
-
-      // Append each selected file
-      for (let i = 0; i < file1.length; i++) {
-          formData.append("files", file1[i]);
-      }
-
-      try {
-        const res = await axios({
-          method: "put",
-          url: `${apiURL.baseURL}/skyTrails/international/editPackage`,
-          formData,
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-
-        // Handle the response
-        // console.log(res.data);
-        setLoader(false);
-        onClose();
-      } catch (error) {
-        console.error('Error editing package', error);
-      }
+      // Success response
+      console.log("Package updated successfully:", res.data);
+      setLoader(false);
+      onClose();
+    } catch (error) {
+      // Error handling
+      console.error("Error editing package:", error);
+      console.error("Payload used in the request:", payload);
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -532,21 +446,10 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
     return Object.keys(filteredObj).length;
   };
 
-
   // console.log(selectedPackage?.pakage_title, "hii i am on edit package form ")
 
   return (
     <div className="container-xxl">
-      {/* <div className="row">
-        <div className="col-lg-12">
-          <div className="headerBoxOuter">
-            <div className="headerBox">
-              <p>Create a Holiday Package</p>
-            </div>
-          </div>
-        </div>
-      </div> */}
-
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
@@ -583,12 +486,10 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
                     name="user_card_document"
                     id="user_card_document"
                     class="form-control input_file"
-                    multiple
-                    placeholder="Select upto five Image"
-                  // defaultValue={packageImage}
-                  // onChange={handleImageChange}
+                    placeholder="Enter Your Package Title"
+                    // defaultValue={packageImage}
+                    // onChange={handleImageChange}
                   />
-
                 </div>
                 <div class="mb-3">
                   <label class="form-label">
@@ -727,8 +628,6 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
                       paddingLeft: "10px",
                     }}
                   >
-
-
                     <Box display="flex" alignItems="center" gap="5px">
                       <Box className="radio">
                         <input
@@ -777,14 +676,10 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
                         >
                           Flexible
                         </Typography>
-
                       </Box>
                     </Box>
-
-
                   </Box>
                 </div>
-
 
                 <div class="mb-3">
                   <label class="form-label">
@@ -2175,7 +2070,11 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
                                 value={daysDetailsValues[i]}
                                 onChange={(event) => handleDaysDetail(i, event)}
                                 containerProps={{
-                                  style: { resize: "vertical", height: "300px", overflow: "scroll" },
+                                  style: {
+                                    resize: "vertical",
+                                    height: "300px",
+                                    overflow: "scroll",
+                                  },
                                 }}
                               />
                             </span>
@@ -2484,12 +2383,11 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
                         </div>
                         {sub &&
                           document.getElementById("term_Conditions").value ===
-                          "" && (
+                            "" && (
                             <span id="error1">EnterTerm & Conditions</span>
                           )}
                       </Box>
                     </div>
-
                   </div>
                 </div>
 
@@ -2522,14 +2420,12 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
                   </div>
                 </div>
                 <div className="buttonBoxPackage">
-
                   <button type="submit" class="packageSubmit">
                     {loader ? (
                       <div id="packageloadingdetails"></div>
                     ) : (
                       "Submit Request"
-                    )
-                    }
+                    )}
                   </button>
                 </div>
               </div>
@@ -2542,7 +2438,3 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
 };
 
 export default EditHolidayPackage;
-
-
-
-
