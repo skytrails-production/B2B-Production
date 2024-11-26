@@ -14,14 +14,18 @@ import {
 import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import "./CreateReview.css";
-import { apiURL } from "../../../../Constants/constant";
-const CreatePackageReview = () => {
+import { apiURL } from "../../../../../Constants/constant";
+
+const CreateReview = () => {
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
+  const selectedPackage = JSON.parse(sessionStorage.getItem("selectedPackage"));
+  console.log(selectedPackage?._id, "selectedPackage");
 
   const handleSubmit = async (values) => {
     const formData = new FormData();
 
+    // Append all form values to formData
     Object.entries(values).forEach(([key, value]) => {
       if (key === "images" && value?.fileList) {
         value.fileList.forEach((file) =>
@@ -31,6 +35,11 @@ const CreatePackageReview = () => {
         formData.append(key, value);
       }
     });
+
+    // Append packageId from sessionStorage
+    if (selectedPackage?._id) {
+      formData.append("packageId", selectedPackage._id);
+    }
 
     setLoading(true);
     try {
@@ -98,7 +107,9 @@ const CreatePackageReview = () => {
               <Form.Item
                 name="travelDate"
                 label="Travel Date"
-                rules={[{ required: true, message: "Travel date is required" }]}
+                // rules={[
+                //   { required: true, message: "Travel date is required" },
+                // ]}
               >
                 <DatePicker style={{ width: "100%" }} />
               </Form.Item>
@@ -109,7 +120,9 @@ const CreatePackageReview = () => {
               <Form.Item
                 name="starRating"
                 label="Star Rating"
-                rules={[{ required: true, message: "Star rating is required" }]}
+                rules={[
+                  { required: true, message: "Star rating is required" },
+                ]}
               >
                 <Rate />
               </Form.Item>
@@ -117,17 +130,6 @@ const CreatePackageReview = () => {
           </Row>
 
           <Row gutter={[16, 16]}>
-            {/* Package ID */}
-            <Col span={12}>
-              <Form.Item
-                name="packageId"
-                label="Package ID"
-                rules={[{ required: true, message: "Package ID is required" }]}
-              >
-                <Input placeholder="Enter package ID" />
-              </Form.Item>
-            </Col>
-
             {/* Package Type */}
             <Col span={12}>
               <Form.Item name="packageType" label="Package Type">
@@ -136,12 +138,13 @@ const CreatePackageReview = () => {
             </Col>
           </Row>
 
+          {/* Positive Review Checkbox */}
           <Form.Item name="isPositive" valuePropName="checked">
             <Checkbox>Is this a positive review?</Checkbox>
           </Form.Item>
 
-          {/* Images Upload */}
-          {/* <Form.Item name="images" label="Upload Images">
+          {/* Upload Images */}
+          <Form.Item name="images" label="Upload Images">
             <Upload
               listType="picture"
               multiple
@@ -149,7 +152,7 @@ const CreatePackageReview = () => {
             >
               <Button icon={<UploadOutlined />}>Upload Images</Button>
             </Upload>
-          </Form.Item> */}
+          </Form.Item>
 
           {/* Submit Button */}
           <Form.Item>
@@ -163,4 +166,4 @@ const CreatePackageReview = () => {
   );
 };
 
-export default CreatePackageReview;
+export default CreateReview;

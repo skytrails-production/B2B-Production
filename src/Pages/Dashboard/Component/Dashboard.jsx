@@ -160,7 +160,7 @@ import InventoryUser from "./Table/inventoryTable/InventoryUser";
 import InHouseHotel from "./Table/InHouseHotel/InHouseHotel";
 import Careercategory from "./Table/Career/Careercategory";
 import Careercategoryvalue from "./Table/Career/Careercategoryvalue";
-import CreateReview from "./Table/CreateReview";
+import CreateReview from "./Table/packageUpdate/CreateReview";
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({

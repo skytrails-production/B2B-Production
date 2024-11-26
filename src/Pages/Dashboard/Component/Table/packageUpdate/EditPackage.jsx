@@ -80,30 +80,34 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
   const navigate = useNavigate();
   // const onePackage = reducerState?.searchOneResult?.OneSearchPackageResult?.data?.data;
 
-  const selectedPackage = JSON.parse(sessionStorage.getItem("selectedPackage"));
+  const selectedPackage = JSON.parse(localStorage.getItem("packageDetails"));
 
-  // console.log(selectedPackage, "one package")
+  console.log(selectedPackage, "one packagedetails");
 
   const [packageTitle, setPackageTitle] = useState(
-    selectedPackage?.pakage_title
+    selectedPackage?.data?.pakage_title
   );
   const [packageCountry, setPackageCountry] = useState(
-    selectedPackage?.country
+    selectedPackage?.data?.country
   );
-  const [days, setDays] = useState(selectedPackage?.days);
+  const [days, setDays] = useState(selectedPackage?.data?.days);
   const ListItem = styled("li")(({ theme }) => ({
     margin: theme.spacing(0.5),
   }));
   const [input, setInput] = React.useState("");
 
-  const [chipData, setChipData] = useState([]);
-  // console.log(chipData, "chip data")
+  const [chipData, setChipData] = useState([
+   ... selectedPackage?.data?.destination
+  ]);
+  
+  console.log(chipData, "chip data");
 
   useEffect(() => {
-    const storedData = JSON.parse(sessionStorage.getItem("selectedPackage"));
+    const storedData = JSON.parse(sessionStorage.getItem("packageDetails"));
 
     if (storedData) {
-      setChipData(storedData?.destination);
+      setChipData([...storedData?.data.destination]);
+      console.log(storedData?.data.destination, "storedData?.data.destination");
     }
   }, []);
 
@@ -126,7 +130,9 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
 
   // amount logic
 
-  const [amount, setAmount] = useState(selectedPackage?.pakage_amount?.amount);
+  const [amount, setAmount] = useState(
+    selectedPackage?.data?.pakage_amount?.amount
+  );
 
   const handleAmount = (e) => {
     setAmount(e.target.value);
@@ -166,8 +172,8 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
   });
 
   useEffect(() => {
-    const storedData = selectedPackage?.select_tags;
-
+    const storedData = selectedPackage?.data?.select_tags;
+    console.log(storedData, "selectedPackageTags");
     if (storedData) {
       const initialCheckedItem = {};
       storedData.forEach((item) => {
@@ -232,7 +238,7 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
   });
 
   useEffect(() => {
-    const storedData = selectedPackage?.insclusions;
+    const storedData = selectedPackage?.data?.insclusions;
 
     if (storedData) {
       const initialCheckedItem = {};
@@ -289,7 +295,7 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
   });
 
   useEffect(() => {
-    const storedData = selectedPackage?.schedule;
+    const storedData = selectedPackage?.data?.schedule;
     if (storedData) {
       setScheduleType(storedData);
     }
@@ -305,19 +311,23 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
   };
 
   const [hotelDetails, setHotelDetails] = useState(
-    selectedPackage?.hotel_details
+    selectedPackage?.data?.hotel_details
   );
 
-  const [inclusion, setInclusion] = useState(selectedPackage?.insclusion_note);
+  const [inclusion, setInclusion] = useState(
+    selectedPackage?.data?.insclusion_note
+  );
 
-  const [exclusion, setExclusion] = useState(selectedPackage?.exclusion_note);
+  const [exclusion, setExclusion] = useState(
+    selectedPackage?.data?.exclusion_note
+  );
   const [termAndCondition, setTermAndCondition] = useState(
-    selectedPackage?.term_Conditions
+    selectedPackage?.data?.term_Conditions
   );
   const [cancellation, setCancellation] = useState(
-    selectedPackage?.cancellation_Policy
+    selectedPackage?.data?.cancellation_Policy
   );
-  const [overView, setOverView] = useState(selectedPackage?.overview);
+  const [overView, setOverView] = useState(selectedPackage?.data?.overview);
 
   const handleHotel = (e) => {
     setHotelDetails(e.target.value);
@@ -329,15 +339,18 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
   const [html, setHtml] = useState("");
   // const [daysDetailsValues, setDaysDetails] = useState([]);
 
-  const [daysDetailsValues, setDaysDetails] = useState([]);
+  const [daysDetailsValues, setDaysDetails] = useState([
+    ...selectedPackage?.data?.detailed_ltinerary,
+  ]);
+  console.log(daysDetailsValues, selectedPackage, "daysDetailsvaluess");
 
-  useEffect(() => {
-    const storedData = selectedPackage.detailed_ltinerary;
+  // useEffect(() => {
+  //   //const storedData = selectedPackage.detailed_ltinerary;
 
-    if (storedData) {
-      setDaysDetails(storedData);
-    }
-  }, []);
+  //   if (storedData) {
+  //     setDaysDetails(storedData);
+  //   }
+  // }, []);
 
   const handleDaysDetail = (index, e) => {
     const newValues = [...daysDetailsValues];
@@ -374,7 +387,7 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
 
     // Constructing the payload
     const payload = {
-      packageId: selectedPackage?._id,
+      packageId: selectedPackage?.data?._id,
       pakage_title: formData.get("package_title"),
       destination: inputList,
       country: formData.get("country"),
@@ -446,6 +459,9 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
     return Object.keys(filteredObj).length;
   };
 
+
+
+
   // console.log(selectedPackage?.pakage_title, "hii i am on edit package form ")
 
   return (
@@ -515,7 +531,7 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
                     <span style={{ color: "red" }}>*</span>
                   </label>
 
-                  {chipData.length > 0 && (
+                  {chipData?.length > 0 && (
                     <Paper
                       sx={{
                         display: "flex",
@@ -531,11 +547,12 @@ const EditHolidayPackage = ({ onClose, packageData }) => {
                     >
                       {chipData.map((data, index) => {
                         let icon;
+                        console.log(data,"chip data map");
                         return (
                           <ListItem key={data.key} width="565px" height="50px">
                             <Chip
                               icon={icon}
-                              label={data.addMore}
+                              label={data?.addMore}
                               onDelete={handleDelete(data)}
                               variant={index % 2 === 0 ? "outlined" : "filled"}
                             />

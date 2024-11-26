@@ -29,13 +29,13 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { Alert } from "@mui/material";
 import { Spin } from "antd";
 import CloseIcon from "@mui/icons-material/Close"; // Import the Close icon
+import CreateReview from "./CreateReview";
 function PackageDetails() {
   const reducerState = useSelector((state) => state);
   const [holidayPackage, setHolidayPackage] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingApproval, setLoadingApproval] = useState({}); // Map for tracking loading states
   const [searchTerm, setSearchTerm] = useState("");
-  
 
   const style = {
     position: "absolute",
@@ -80,22 +80,24 @@ function PackageDetails() {
   const [open, setOpen] = React.useState(false);
   const [openApprove, setOpenApprove] = React.useState(false);
   const [openEdit, setOpenEdit] = React.useState(false);
+  const [openCreate, setOpenCreate] = useState(false);
   const [editPackageData, setEditPackageData] = useState(null);
   const [selectedPackageApprove, setSelectedPackageApprove] = useState("");
   const [selectedPackageDelete, setSelectedPackageDelete] = useState("");
   const [packageDetails, setPackageDetails] = useState(null); // Store package details
   const [isModalVisible, setIsModalVisible] = useState(false); // Control modal visibility
   const [filteredData, setFilteredData] = useState([]);
+
   const fetchHolidayPackages = async () => {
     try {
       const response = await axios.get(
         `${apiURL.baseURL}/skyTrails/international/getAllAdminPackage`
       );
       const data = response.data.data.pakage;
-       const reversedData = data.reverse(); // Reverse the order of the data
-       setHolidayPackage(reversedData);
+      const reversedData = data.reverse(); // Reverse the order of the data
+      setHolidayPackage(reversedData);
       setFilteredData(reversedData);
-      console.log((setFilteredData(reversedData)),"=========")
+      console.log(setFilteredData(reversedData), "=========");
     } catch (error) {
       console.error("Error fetching holiday packages:", error);
     }
@@ -215,13 +217,54 @@ function PackageDetails() {
     }
   };
 
-  const handleOpenEdit = (item) => {
+  // const handleOpenEdit = (item) => {
+  //   setOpenEdit(true);
+  //   console.log("handleOpenEdit")
+  //   //sessionStorage.setItem("selectedPackage", JSON.stringify(item));
+  //   localStorage.setItem("packageDetails", JSON.stringify(packageDetails));
+  // };
+
+  const handleOpenEdit = async (row) => {
+    const packageId = row._id;
     setOpenEdit(true);
+    // Set loading state for the specific package
+    setLoadingApproval((prevState) => ({ ...prevState, [packageId]: true }));
+
+    try {
+      // Fetch the package details using the provided GET API
+      const res = await axios.get(
+        `${apiURL.baseURL}/skyTrails/international/getone/${packageId}`
+      );
+
+      if (res.status === 200 && res.data) {
+        const packageDetails = res.data;
+
+        // Save the fetched package details in localStorage
+        localStorage.setItem("packageDetails", JSON.stringify(packageDetails));
+        console.log(packageDetails);
+        // Retrieve and console the stored package details
+        const storedPackageDetails = JSON.parse(
+          localStorage.getItem("packageDetails")
+        );
+      } else {
+        toast.error("Failed to fetch package details.");
+      }
+    } catch (error) {
+      console.error("Error fetching package details:", error);
+      toast.error("Error fetching package details. Please try again.");
+    } finally {
+      // Reset loading state for the specific package
+      setLoadingApproval((prevState) => ({ ...prevState, [packageId]: false }));
+    }
+  };
+
+  const handleOpenCreatePackage = (item) => {
+    setOpenCreate(true);
     sessionStorage.setItem("selectedPackage", JSON.stringify(item));
   };
 
   const handleCloseEdit = () => setOpenEdit(false);
-
+  const handleCloseCreatePackage = () => setOpenCreate(false);
   const handleOpen = (item) => {
     setOpen(true);
     setSelectedPackageDelete(item);
@@ -319,7 +362,6 @@ function PackageDetails() {
       width: 150,
       valueGetter: (params) => params.row.pakage_amount?.amount || "N/A",
     },
-
     {
       field: "edit",
       headerName: "Edit",
@@ -334,6 +376,21 @@ function PackageDetails() {
         </Button>
       ),
     },
+    {
+      field: "package Review",
+      headerName: "package Review",
+      headerClassName: "custom-header",
+      width: 200,
+      renderCell: (params) => (
+        <Button
+          style={{ color: "#21325D", border: "1px solid #21325D" }}
+          onClick={() => handleOpenCreatePackage(params.row)}
+        >
+          package Review
+        </Button>
+      ),
+    },
+
     // { field: "delete", headerName: "Delete", headerClassName: 'custom-header',  width:150, renderCell: (params) => <Button style={{ color: "#21325D" }} onClick={() => handleOpen(params.row)}>Delete</Button> },
     {
       field: "delete",
@@ -433,20 +490,7 @@ function PackageDetails() {
         );
       },
     },
-    {
-      field: "view",
-      headerName: "View",
-      headerClassName: "custom-header",
-      width: 150,
-      renderCell: (params) => (
-        <Button
-          style={{ color: "#21325D" }}
-          onClick={() => handleOpenView(params.row)}
-        >
-          View
-        </Button>
-      ),
-    },
+
     {
       field: "viewDetails",
       headerName: "View-Details",
@@ -541,7 +585,7 @@ function PackageDetails() {
             </div>
           ) : (
             <DataGrid
-            rows={filteredData}
+              rows={filteredData}
               columns={columns}
               pageSize={5}
               checkboxSelection
@@ -634,6 +678,42 @@ function PackageDetails() {
                 onClose={handleCloseEdit}
                 packageData={editPackageData}
               />
+            </Box>
+            {/* <Box
+                        sx={{
+                            display: "flex",
+                            justifyContent: 'center'
+                        }}
+                    >
+                        <button onClick={handleCloseEdit}>Close</button>
+                    </Box> */}
+          </Box>
+        </Modal>
+
+        <Modal
+          open={openCreate}
+          onClose={handleCloseCreatePackage}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "100%",
+              maxWidth: "80%",
+              maxHeight: "90vh",
+              bgcolor: "background.paper",
+              border: "2px solid #000",
+              boxShadow: 24,
+              p: 4,
+              overflowY: "auto",
+            }}
+          >
+            <Box>
+              <CreateReview />
             </Box>
             {/* <Box
                         sx={{

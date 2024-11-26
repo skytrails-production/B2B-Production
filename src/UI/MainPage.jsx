@@ -149,7 +149,7 @@ import Passengerdetailamd from "../Pages/Flight/flightresult/Passengerdetailamd"
 import FlightReviewbookingamd from "../Pages/Flight/flightreviewbooking/FlightReviewbookingamd";
 import Flightbookingconfirmationamd from "../Pages/Flight/flightbookingconfirmation/Flightbookingconfirmationamd";
 import GuestdetailTbo from "../Pages/grnpages/Hotel/Tbo/guestdetailTbo/GuestdetailTbo";
-import CreateReview from "../Pages/Dashboard/Component/Table/CreateReview";
+import CreateReview from "../Pages/Dashboard/Component/Table/packageUpdate/CreateReview";
 // import Carrerform from "../Pages/Dashboard/Component/Table/Careerform";
 const MainPage = () => {
   const dispatch = useDispatch();
