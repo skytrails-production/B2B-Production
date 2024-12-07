@@ -6,7 +6,7 @@ import { apiURL } from "../../../Constants/constant";
 const AddItenary = () => {
   const location = useLocation();
   const { id } = location.state || {};
-
+  const { TextArea } = Input;
   const [formData, setFormData] = useState({
     packageId: id || "",
     title: "",
@@ -61,12 +61,33 @@ const AddItenary = () => {
       },
       body: JSON.stringify(formData),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        console.log("Raw Response:", response); // Logs the raw response object
+        return response.json(); // Parse the JSON data
+      })
       .then((data) => {
-        message.success("Itinerary added successfully!");
+        if (data.status === 200) {
+          message.success({
+            content: data.message,
+            style: { color: "green" }, // Green for success
+          });
+        } else if (data.status === 400) {
+          message.error({
+            content: data.message,
+            style: { color: "red" }, // Red for error
+          });
+        } else {
+          message.info({
+            content: "Unexpected response.",
+            style: { color: "blue" }, // Blue for unexpected
+          });
+        }
       })
       .catch((error) => {
-        message.error("Error adding itinerary.");
+        message.error({
+          content: "Error adding itinerary.",
+          style: { color: "red" }, // Red for fetch error
+        });
         console.error("Error:", error);
       });
   };
@@ -75,7 +96,12 @@ const AddItenary = () => {
     <Form
       onFinish={handleSubmit}
       className="max-w-4xl mx-auto p-10 space-y-8"
-      style={{ backgroundColor: "#FFFFFF", padding: "10px",borderRadius: "10px",marginBottom:"8px"}}
+      style={{
+        backgroundColor: "#FFFFFF",
+        padding: "10px",
+        borderRadius: "10px",
+        marginBottom: "8px",
+      }}
     >
       <h2 className="text-4xl font-semibold text-center text-gray-800 mb-6">
         Create Itinerary
@@ -164,12 +190,20 @@ const AddItenary = () => {
                   name={`hotelEvents[${index}][description]`}
                   initialValue={event.description}
                 >
-                  <Input
+                  {/* <Input
                     name="description"
                     value={event.description}
                     onChange={(e) => handleArrayChange(e, index, "hotelEvents")}
                     placeholder="Enter description"
                     className="w-full"
+                  /> */}
+                  <TextArea
+                    name="description"
+                    value={event.description}
+                    onChange={(e) => handleArrayChange(e, index, "hotelEvents")}
+                    placeholder="Enter description"
+                    className="w-full"
+                    rows={4} // Adjust the number of rows as needed
                   />
                 </Form.Item>
               </Col>
