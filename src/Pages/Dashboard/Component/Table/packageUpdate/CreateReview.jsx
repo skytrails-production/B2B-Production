@@ -19,30 +19,42 @@ import { apiURL } from "../../../../../Constants/constant";
 const CreateReview = () => {
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
-  const selectedPackage = JSON.parse(sessionStorage.getItem("selectedPackage"));
-  console.log(selectedPackage?._id, "selectedPackage");
 
+  // Retrieve selected package ID from sessionStorage
+  const selectedPackage = JSON.parse(sessionStorage.getItem("selectedPackage"));
+  const packageId = selectedPackage?._id; // Extract package ID
+
+  // Form submission handler
   const handleSubmit = async (values) => {
     const formData = new FormData();
 
-    // Append all form values to formData
+    // Append form values to FormData
     Object.entries(values).forEach(([key, value]) => {
       if (key === "images" && value?.fileList) {
+        // Add each image to FormData
         value.fileList.forEach((file) =>
           formData.append("images", file.originFileObj)
         );
+      } else if (key === "travelDate") {
+        // Format the date to ISO string before appending
+        formData.append(key, value.format("YYYY-MM-DD"));
       } else {
         formData.append(key, value);
       }
     });
 
-    // Append packageId from sessionStorage
-    if (selectedPackage?._id) {
-      formData.append("packageId", selectedPackage._id);
+    // Append packageId to FormData
+    if (packageId) {
+      formData.append("packageId", packageId);
+    } else {
+      message.error("Package ID is missing. Please try again.");
+      return;
     }
 
     setLoading(true);
+
     try {
+      // API call to create package review
       await axios.post(
         `${apiURL.baseURL}/skyTrails/api/admin/review/createPackageReview`,
         formData,
@@ -102,16 +114,14 @@ const CreateReview = () => {
           </Form.Item>
 
           <Row gutter={[16, 16]}>
-            {/* Travel Date */}
+            {/* Section */}
             <Col span={12}>
               <Form.Item
-                name="travelDate"
-                label="Travel Date"
-                // rules={[
-                //   { required: true, message: "Travel date is required" },
-                // ]}
+                name="section"
+                label="Section"
+                rules={[{ required: true, message: "Section is required" }]}
               >
-                <DatePicker style={{ width: "100%" }} />
+                <Input placeholder="Enter section" />
               </Form.Item>
             </Col>
 
@@ -130,16 +140,44 @@ const CreateReview = () => {
           </Row>
 
           <Row gutter={[16, 16]}>
+            {/* Travel Date */}
+            <Col span={12}>
+              <Form.Item
+                name="travelDate"
+                label="Travel Date"
+                rules={[
+                  { required: true, message: "Travel date is required" },
+                ]}
+              >
+                <DatePicker
+                  style={{ width: "100%" }}
+                  getPopupContainer={(triggerNode) =>
+                    triggerNode.parentNode
+                  } // Ensure popup renders correctly
+                />
+              </Form.Item>
+            </Col>
+
             {/* Package Type */}
             <Col span={12}>
-              <Form.Item name="packageType" label="Package Type">
+              <Form.Item
+                name="packageType"
+                label="Package Type"
+                rules={[
+                  { required: true, message: "Package type is required" },
+                ]}
+              >
                 <Input placeholder="Enter package type" />
               </Form.Item>
             </Col>
           </Row>
 
           {/* Positive Review Checkbox */}
-          <Form.Item name="isPositive" valuePropName="checked">
+          <Form.Item
+            name="isPositive"
+            valuePropName="checked"
+            initialValue={false}
+          >
             <Checkbox>Is this a positive review?</Checkbox>
           </Form.Item>
 

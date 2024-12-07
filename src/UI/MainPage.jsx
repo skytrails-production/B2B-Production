@@ -150,7 +150,11 @@ import FlightReviewbookingamd from "../Pages/Flight/flightreviewbooking/FlightRe
 import Flightbookingconfirmationamd from "../Pages/Flight/flightbookingconfirmation/Flightbookingconfirmationamd";
 import GuestdetailTbo from "../Pages/grnpages/Hotel/Tbo/guestdetailTbo/GuestdetailTbo";
 import CreateReview from "../Pages/Dashboard/Component/Table/packageUpdate/CreateReview";
+import CreateHolidayPackageNew from "../Pages/HotelPackage/createholidaypackage/CreateHolidayPackageNew";
 // import Carrerform from "../Pages/Dashboard/Component/Table/Careerform";
+import PackagesList from "../Pages/HotelPackage/createholidaypackage/PackagesList";
+import AddItenary from "../Pages/HotelPackage/createholidaypackage/AddItenary";
+import HolidayAddImages from "../Pages/HotelPackage/createholidaypackage/HolidayAddImages";
 const MainPage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -910,6 +914,29 @@ const MainPage = () => {
                   path="/CreateHolidayPackage"
                   element={<CreateHolidayPackage />}
                 ></Route>
+                <Route
+                  exact
+                  path="/CreateHolidayPackagenew"
+                  element={<CreateHolidayPackageNew />}
+                ></Route>
+                <Route
+                  exact
+                  path="/AddItenary"
+                  element={<AddItenary />}
+                ></Route>
+                <Route
+                  exact
+                  path="/AddImages"
+                  element={<HolidayAddImages />}
+                ></Route>
+                <Route
+                  exact
+                  path="/PackagesList"
+                  element={<PackagesList />}
+                ></Route>
+
+
+
                 <Route
                   exact
                   path="admin/dashboard/EditHolidayPackage"

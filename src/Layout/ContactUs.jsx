@@ -5,6 +5,7 @@ import CallIcon from '@mui/icons-material/Call';
 import EmailIcon from '@mui/icons-material/Email';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Footer from './Footer';
+import { apiURL } from '../Constants/constant';
 const ContactUs = () => {
 
 
@@ -22,7 +23,7 @@ const ContactUs = () => {
     const fetchData = async () => {
         try {
             const response = await fetch(
-                'http://localhost:8000/skyTrails/staticContent/listStaticContent?type=CONTACTUS',
+                `${apiURL.baseURL}/skyTrails/staticContent/listStaticContent?type=CONTACTUS`,
             );
             const result = await response.json();
 

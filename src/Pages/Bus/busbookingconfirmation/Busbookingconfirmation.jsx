@@ -67,7 +67,6 @@ const Busbookingconfirmation = () => {
     if (reducerState?.getBusResult?.busBook?.data?.data?.BookResult) {
       if (userId) {
         const payload = userId;
-
         // console.log(payload,'userIdiii');
         dispatch(getUserDataAction(payload));
 

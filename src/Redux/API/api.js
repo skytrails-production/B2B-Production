@@ -357,7 +357,7 @@ function api() {
   const createPackage = (formData2) => {
     return axios({
       method: "POST",
-      url: "/skyTrails/international/create",
+      url: "/skyTrails/holidaypackage/create",
       baseURL: `${apiURL.baseURL}`,
       data: formData2,
       headers: {

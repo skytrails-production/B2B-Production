@@ -1,23 +1,3 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  Grid,
-  NativeSelect,
-  Typography,
-} from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
-import { styled } from "@mui/material/styles";
-import Chip from "@mui/material/Chip";
-import Paper from "@mui/material/Paper";
-// import TagFacesIcon from "@mui/icons-material/TagFaces";
-import color from "../../../color/color";
-import Editor from "react-simple-wysiwyg";
-import "./CreatePackage.css";
-//   import "./selectclickbutton.css";
-import RemoveIcon from "@mui/icons-material/Remove";
-import AddIcon from "@mui/icons-material/Add";
-
 // import DeleteIcon from "@mui/icons-material/Delete";
 import CommitIcon from "@mui/icons-material/Commit";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -74,33 +54,69 @@ import Modal from "@mui/material/Modal";
 import loginOtp from "../../../../src/Images/login-01.jpg";
 import { IoIosClose } from "react-icons/io";
 
+import {
+  Box,
+  Button,
+  FormControl,
+  Grid,
+  NativeSelect,
+  Typography,
+} from "@mui/material";
+import React, { useEffect, useRef, useState } from "react";
+import { styled } from "@mui/material/styles";
+import Chip from "@mui/material/Chip";
+import Paper from "@mui/material/Paper";
+// import TagFacesIcon from "@mui/icons-material/TagFaces";
+import color from "../../../color/color";
+import Editor from "react-simple-wysiwyg";
+import "./CreatePackage.css";
+//   import "./selectclickbutton.css";
+import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add";
+
+import axios from "axios";
+import { apiURL } from "../../../Constants/constant";
+import { Textarea } from "@chakra-ui/react";
+import { message } from "antd";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
-const CreateHolidayPackage = () => {
-  const dispatch = useDispatch();
-  const reducerState = useSelector((state) => state);
-  const [country, setCountry] = useState("");
-  const [date, setDate] = useState("");
-  const [isDomesticChecked, setIsDomesticChecked] = useState(false);
-  const [isDomesticDisabled, setIsDomesticDisabled] = useState(false);
-  const [isInternationalDisabled, setIsInternationalDisabled] = useState(false);
-  const userId = reducerState?.logIn?.loginData?.data?.data?.id;
-  const [loader, setLoader] = useState(false);
-  const navigate = useNavigate();
-  // console.log("createPackage", reducerState);
+const CreateHolidayPackageNew = () => {
+  console.log("Response--===========:");
+
   const ListItem = styled("li")(({ theme }) => ({
     margin: theme.spacing(0.5),
   }));
-  const [input, setInput] = React.useState("");
-  const [chipData, setChipData] = React.useState([]);
-  const handleDelete = (chipToDelete) => () => {
-    setChipData((chips) =>
-      chips.filter((chip) => chip.key !== chipToDelete.key)
-    );
-  };
+  const [input, setInput] = useState("");
+  const [chipData, setChipData] = useState([]); // Array of objects [{ addMore: "Delhi" }, { addMore: "Himachal Pradesh" }]
+  const [isDomesticDisabled, setIsDomesticDisabled] = useState(false);
+  const [isInternationalDisabled, setIsInternationalDisabled] = useState(false);
+  const [days, setDays] = useState(1);
+  const [amount, setAmount] = useState();
+  const [termAndCondition, setTermAndCondition] = useState("");
+
+  const [termsArray, setTermsArray] = useState([]);
+
+  const [loader, setLoader] = useState(false);
+  const [cancellation, setCancellation] = useState("");
+  const [country, setCountry] = useState(""); // For the input field
+  const [countryArray, setCountryArray] = useState([]); // For the chip list
+
+  const [cancellationPolicies, setCancellationPolicies] = useState([]);
+  const [inclusionNoteArray, setInclusionNoteArray] = useState([]);
+  const [exclusionNoteArray, setExclusionNoteArray] = useState([]);
+  const [inclusionNote, setInclusionNote] = useState("");
+  const [exclusionNote, setExclusionNote] = useState("");
+
+  const [overView, setOverView] = useState("");
+  const [notification, setNotification] = useState(null); // New state for notifications
+  const [packageHighLightArray, setPackageHighLightArray] = useState([]);
+  const [highlightText, setHighlightText] = useState("");
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
+  const [sub, setSub] = useState(false);
   const submitRef = useRef(null);
+  const navigate = useNavigate();
+  const reducerState = useSelector((state) => state);
+  const userId = reducerState?.logIn?.loginData?.data?.data?.id;
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (submitRef.current && !submitRef.current.contains(event.target)) {
@@ -113,43 +129,58 @@ const CreateHolidayPackage = () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, [submitRef]);
+
+  const handleAmount = (e) => {
+    setAmount(Number(e.target.value));
+  };
+
+  // Function to add a chip
+  const handleAddChip = () => {
+    if (input.trim()) {
+      setChipData((prev) => [...prev, { addMore: input.trim() }]);
+      setInput("");
+    }
+  };
+
+  // Function to delete a chip
+  const handleDelete = (chipToDelete) => () => {
+    setChipData((prev) =>
+      prev.filter((chip) => chip.addMore !== chipToDelete.addMore)
+    );
+  };
   const handleClose = () => {
     setOpen(false);
     // setDisableButton(false);
   };
-  const handleAddChip = () => {
-    if (input.trim() !== "") {
-      setChipData((chips) => [...chips, { key: Date.now(), addMore: input }]);
 
-      setInput("");
-    }
-  };
   const inputList = chipData.map((item) => ({ addMore: item.addMore }));
 
-  const userData = reducerState?.userData?.userData?.data?.data;
-  const openToggle = () => {
-    if (
-      userData?.personal_details?.address_details?.city === "" ||
-      userData?.personal_details?.address_details?.country === "" ||
-      userData.personal_details?.address_details?.date === "" ||
-      userData?.personal_details?.address_details?.pincode === "" ||
-      userData?.personal_details?.address_details?.residential_address === "" ||
-      userData?.personal_details?.first_name === "" ||
-      userData?.personal_details?.last_name === ""
-    ) {
-      setOpen(true);
-      return;
-    } else {
-      setOpen(false);
-    }
+  const styles1 = {
+    container: {
+      display: "flex",
+      marginLeft: "-6px",
+      marginTop: "10px",
+    },
+    input: {
+      color: "color.bluedark",
+      padding: "7px",
+      fontSize: "16px",
+      border: "2px solid blue",
+      borderRadius: "5px",
+      width: "55px",
+      textAlign: "center",
+    },
+    button: {
+      backgroundColor: "#E73C34",
+      color: "#fff",
+      borderRadius: "25px",
+      marginLeft: "5px",
+      marginRight: "5px",
+    },
   };
-  useEffect(() => {
-    openToggle();
-  }, []);
 
+  const [title, setTitle] = useState("");
   const [tag, setTag] = useState({
-    domestic: false,
-    international: false,
     budget: false,
     holiday: false,
     mid_range: false,
@@ -180,53 +211,12 @@ const CreateHolidayPackage = () => {
     relaxation: false,
   });
 
-  const handleCountryChange = (event) => {
-    const inputCountry = event.target.value.trim();
-    setCountry(inputCountry);
-
-    if (inputCountry === "") {
-      setTag({ domestic: false, international: false });
-      setIsDomesticDisabled(false);
-      setIsInternationalDisabled(false);
-      console.log(
-        "----------------------------------------------------------------"
-      );
-    } else if (inputCountry.toLowerCase() === "india") {
-      // If country is India, select Domestic and disable International
-      setTag({ ...tag, domestic: true });
-      setIsDomesticDisabled(false);
-      setIsInternationalDisabled(true);
-      console.log("Country is India - Domestic selected:", true);
-    } else {
-      // For any other country, select International and disable Domestic
-      setTag({ ...tag, international: true });
-      setIsDomesticDisabled(true);
-      setIsInternationalDisabled(false);
-      console.log("Country is not India - International selected:", true);
-    }
-  };
-
   const handleTagChange = (e) => {
     setTag(() => ({
       ...tag,
       [e.target.name]: e.target.checked,
     }));
   };
-
-  const [scheduleType, setScheduleType] = useState({
-    flexible: false,
-    fixed_departure: false,
-  });
-
-  const handleScheduleChange = (event) => {
-    const selectedScheduleType = event.target.value;
-
-    setScheduleType((prevScheduleType) => ({
-      ...prevScheduleType,
-      [selectedScheduleType]: true,
-    }));
-  };
-
   const [checkedItem, setCheckedItem] = useState({
     flexibility: false,
     flight: false,
@@ -262,30 +252,16 @@ const CreateHolidayPackage = () => {
     flexibleBooking: false,
     wifi: false,
   });
-  const styles1 = {
-    container: {
-      display: "flex",
-      marginLeft: "-6px",
-      marginTop: "10px",
-    },
-    input: {
-      color: "color.bluedark",
-      padding: "7px",
-      fontSize: "16px",
-      border: "2px solid blue",
-      borderRadius: "5px",
-      width: "55px",
-      textAlign: "center",
-    },
-    button: {
-      backgroundColor: "#E73C34",
-      color: "#fff",
-      borderRadius: "25px",
-      marginLeft: "5px",
-      marginRight: "5px",
-    },
-  };
+  const [overview, setOverview] = useState("");
+  const [packageType, setPackageType] = useState("");
 
+  const [destinations, setDestinations] = useState([]);
+
+  const [loading, setLoading] = useState(false);
+
+  const handleAddDestination = (destination) => {
+    setDestinations((prev) => [...prev, { addMore: destination }]);
+  };
   const handleChange = (event) => {
     setCheckedItem({
       ...checkedItem,
@@ -293,228 +269,198 @@ const CreateHolidayPackage = () => {
     });
   };
 
-  const [amount, setAmount] = useState(0);
-
-  const handleAmount = (e) => {
-    setAmount(e.target.value);
+  const showNotification = (message, type) => {
+    setNotification({ message, type });
+    setTimeout(() => {
+      setNotification(null); // Hide notification after 4 seconds
+    }, 4000);
   };
 
-  const [hotelDetails, setHotelDetails] = useState("");
-  const [inclusion, setInclusion] = useState("");
-  const [exclusion, setExclusion] = useState("");
-  const [termAndCondition, setTermAndCondition] = useState("");
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    // Validation
 
-  const [cancellation, setCancellation] = useState("");
-  const [overView, setOverView] = useState("");
-
-  const handleHotel = (e) => {
-    setHotelDetails(e.target.value);
-  };
-
-  const [days, setDays] = useState(1);
-  const [sub, setSub] = useState(false);
-
-  // Text editor Onchange
-  const [html, setHtml] = useState("");
-  const [daysDetailsValues, setDaysDetails] = useState([]);
-
-  // const handleTagChangep = (event) => {
-  //   const { name, checked } = event.target;
-  //   if (name === "domestic") {
-  //     setIsDomesticChecked(checked);
-  //   }
-  // };
-
-  const handleDaysDetail = (index, e) => {
-    const newValues = [...daysDetailsValues];
-    newValues[index] = e.target.value;
-    setDaysDetails(newValues);
-    // setHtml(newValues);
-  };
-  useEffect(() => {
-    if (reducerState?.createPackage?.showSuccessMessage == true) {
-      setLoader(false);
-
-      Swal.fire({
-        icon: "success",
-        title: "Done.",
-        text: ` Your Package is created Sucessfully `,
-        showCancelButton: false,
-        confirmButtonText: "OK",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          navigate("/");
-          dispatch(createPackageActionClear());
-        }
-      });
-    }
-  }, [reducerState?.createPackage]);
-
-  // Form handle code
-
-  const handleCreatePackage = (event) => {
-    event.preventDefault();
-
-    setLoader(true);
-
-    setSub(true);
-    const file1 = document.getElementById("user_card_document").files;
-
-    const formData = new FormData(event.target);
-    if (
-      exclusion === "" ||
-      file1.length === 0 ||
-      chipData.length === 0 ||
-      amount === 0 ||
-      termAndCondition === "" ||
-      cancellation === "" ||
-      filterTrueProps(checkedItem) === 0 ||
-      filterTrueProps(tag) === 0
-    ) {
-      setTimeout(() => {
-        setSub(false);
-      }, 7000);
+    if (!title) {
+      message.error("Title is required!");
       return;
-    } else {
-      const payload = {
-        userId: userId,
-        pakage_title: formData.get("package_title"),
-        destination: inputList,
-        country: formData.get("country"),
-        package_expiry_date: formData.get("package_expiry_date"),
-        days: days,
-        schedule: {
-          flexible: true,
-          fixed_departure: false,
-        },
+    }
 
-        pakage_amount: {
-          currency: "INR",
-          amount: amount,
-        },
+    if (!chipData || chipData.length === 0) {
+      message.error("At least one destination is required!");
+      return;
+    }
 
-        insclusions: [
-          { flexibility: checkedItem.flexibility },
-          { flight: checkedItem.flight },
-          { train: checkedItem.train },
-          { bus: checkedItem.bus },
-          { cab: checkedItem.cab },
-          { moterBike: checkedItem.motorbike },
-          { hotel: checkedItem.hotel },
-          { homeStays: checkedItem.homeStays },
-          { guestHouse: checkedItem.guestHouse },
-          { cruise: checkedItem.cruise },
-          { sightSeeing: checkedItem.sightSeeing },
-          { guide: checkedItem.guide },
-          { meals: checkedItem.meals },
-          { breakfast: checkedItem.breakfast },
-          { drink: checkedItem.drink },
-          { visa: checkedItem.visa },
-          { travelInsurance: checkedItem.travelInsurance },
-          { wildlife: checkedItem.wildlife },
-          { heritage: checkedItem.heritage },
-          { adventure: checkedItem.adventure },
-          { beach: checkedItem.beach },
-          { hillStation: checkedItem.hillStation },
-          { nature: checkedItem.nature },
-          { wellness: checkedItem.wellness },
-          { hiddenGem: checkedItem.hiddenGem },
-          { tax: checkedItem.tax },
-          { discount: checkedItem.discount },
-          { waterActivities: checkedItem.waterActivities },
-          { optionalActivities: checkedItem.optionalActivities },
-          { flexibleBooking: checkedItem.flexibleBooking },
-          { wifi: checkedItem.wifi },
-        ],
-        hotel_details: hotelDetails,
-        insclusion_note: inclusion,
-        exclusion_note: exclusion,
-        detailed_ltinerary: daysDetailsValues,
-        overview: overView,
-        select_tags: [
-          { domestic: tag.domestic },
-          { international: tag.international },
-          { budget: tag.budget },
-          { holiday: tag.holiday },
-          { mid_range: tag.mid_range },
-          { luxury: tag.luxury },
-          { honeymoon: tag.honeymoon },
-          { anniversary: tag.anniversary },
-          { weekend_gateway: tag.weekend_gateway },
-          { couples: tag.couples },
-          { family: tag.family },
-          { solo: tag.solo },
-          { group: tag.group },
-          { girl_only: tag.girl_only },
-          { boy_only: tag.boy_only },
-          { family_with_children: tag.family_with_children },
-          { bagpacker: tag.bagpacker },
-          { nature: tag.nature },
-          { wildlife: tag.wildlife },
-          { historical: tag.historical },
-          { piligrimage: tag.piligrimage },
-          { offbeat: tag.offbeat },
-          { sightseeing: tag.sightseeing },
-          { recreation: tag.recreation },
-          { nature: tag.nature },
-          { adventure: tag.adventure },
-          { dining: tag.dining },
-          { shopping: tag.shopping },
-          { nightlife: tag.nightlife },
-          { relaxation: tag.relaxation },
-          { nature: tag.nature },
-        ],
-        term_Conditions: termAndCondition,
-        cancellation_Policy: cancellation,
-      };
+    if (!countryArray || countryArray.length === 0) {
+      message.error("At least one country is required!");
+      return;
+    }
 
-      const formData1 = new FormData();
+    if (!packageType) {
+      message.error("Package type is required!");
+      return;
+    }
 
-      for (let i = 0; i < file1.length; i++) {
-        formData1.append("files", file1[i]);
+    if (!days) {
+      message.error("Number of days is required!");
+      return;
+    }
+
+    if (!amount) {
+      message.error("Package amount is required!");
+      return;
+    }
+
+    if (!overView) {
+      message.error("Overview is required!");
+      return;
+    }
+
+    if (!termsArray || termsArray.length === 0) {
+      message.error("Terms and conditions are required!");
+      return;
+    }
+
+    if (!cancellationPolicies || cancellationPolicies.length === 0) {
+      message.error("Cancellation policy is required!");
+      return;
+    }
+
+    // Prepare payload
+    const payload = {
+      userId,
+      title,
+      destination: chipData, // Array of destinations
+      country: countryArray, // Use the array of countries
+      packageHighLight: packageHighLightArray,
+      inclusion_note: inclusionNoteArray, // Add inclusion notes
+      exclusion_note: exclusionNoteArray, // Add exclusion notes
+      packageType,
+      days,
+      packageAmount: {
+        currency: "INR",
+        amount,
+      },
+      specialTag: [
+        { budget: tag.budget },
+        { holiday: tag.holiday },
+        { mid_range: tag.mid_range },
+        { luxury: tag.luxury },
+        { honeymoon: tag.honeymoon },
+        { anniversary: tag.anniversary },
+        { weekend_gateway: tag.weekend_gateway },
+        { couples: tag.couples },
+        { family: tag.family },
+        { solo: tag.solo },
+        { group: tag.group },
+        { girl_only: tag.girl_only },
+        { boy_only: tag.boy_only },
+        { family_with_children: tag.family_with_children },
+        { bagpacker: tag.bagpacker },
+        { nature: tag.nature },
+        { wildlife: tag.wildlife },
+        { historical: tag.historical },
+        { piligrimage: tag.piligrimage },
+        { offbeat: tag.offbeat },
+        { sightseeing: tag.sightseeing },
+        { recreation: tag.recreation },
+        { nature: tag.nature },
+        { adventure: tag.adventure },
+        { dining: tag.dining },
+        { shopping: tag.shopping },
+        { nightlife: tag.nightlife },
+        { relaxation: tag.relaxation },
+        { nature: tag.nature },
+      ],
+      inclusions: [
+        { flexibility: checkedItem.flexibility },
+        { flight: checkedItem.flight },
+        { train: checkedItem.train },
+        { bus: checkedItem.bus },
+        { cab: checkedItem.cab },
+        { moterBike: checkedItem.motorbike },
+        { hotel: checkedItem.hotel },
+        { homeStays: checkedItem.homeStays },
+        { guestHouse: checkedItem.guestHouse },
+        { cruise: checkedItem.cruise },
+        { sightSeeing: checkedItem.sightSeeing },
+        { guide: checkedItem.guide },
+        { meals: checkedItem.meals },
+        { breakfast: checkedItem.breakfast },
+        { drink: checkedItem.drink },
+        { visa: checkedItem.visa },
+        { travelInsurance: checkedItem.travelInsurance },
+        { wildlife: checkedItem.wildlife },
+        { heritage: checkedItem.heritage },
+        { adventure: checkedItem.adventure },
+        { beach: checkedItem.beach },
+        { hillStation: checkedItem.hillStation },
+        { nature: checkedItem.nature },
+        { wellness: checkedItem.wellness },
+        { hiddenGem: checkedItem.hiddenGem },
+        { tax: checkedItem.tax },
+        { discount: checkedItem.discount },
+        { waterActivities: checkedItem.waterActivities },
+        { optionalActivities: checkedItem.optionalActivities },
+        { flexibleBooking: checkedItem.flexibleBooking },
+        { wifi: checkedItem.wifi },
+      ],
+      overview: overView,
+      term_Conditions: termsArray,
+      cancellation_Policy: cancellationPolicies,
+    };
+    console.log(payload, "payload");
+    // Prepare FormData
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(payload));
+
+    // Append cover image
+    const coverImage = document.getElementById("coverImageInput")?.files[0];
+    if (!coverImage) {
+      return; // Stop the submission
+    }
+    formData.append("coverImage", coverImage);
+
+    // Append multiple files (optional)
+    const files = document.getElementById("filesInput")?.files;
+    if (files) {
+      for (let i = 0; i < files.length; i++) {
+        formData.append("files", files[i]);
       }
+    }
 
-      // formData1.append("file", file1);
-      formData1.append("data", JSON.stringify(payload));
-      // console.log(payload, "payload")
+    try {
+      setLoading(true);
 
-      dispatch(createPackageAction(formData1));
-      console.log(createPackageAction(formData1));
+      const response = await axios.post(
+        `${apiURL.baseURL}/skyTrails/holidaypackage/create`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log("Response--===========:", response.data.data._id);
+
+      localStorage.setItem("packageid", response.data.data._id);
+      const dataIdget = localStorage.getItem("packageid");
+
+      console.log(dataIdget, "dataidsss");
+      showNotification("Package Create successfully!", "success");
+      navigate("/PackagesList");
+    } catch (error) {
+      console.error(
+        "Error creating package:",
+        error.response?.data || error.message
+      );
+      alert("Failed to create the package. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
-  function validation(event) {
-    const formData = new FormData(event.target);
-    const files = document.getElementById("user_card_document").files;
-    if (
-      formData.get("exclusion_note") === "" ||
-      files.length === 0 ||
-      chipData.length === 0 ||
-      amount === 0 ||
-      formData.get("term_Conditions") === "" ||
-      formData.get("cancellation_Policy") === ""
-    ) {
-      return false;
-    }
-  }
-  const filterTrueProps = (obj) => {
-    const filteredObj = {};
-    for (const key in obj) {
-      if (obj[key]) {
-        filteredObj[key] = obj[key];
-      }
-    }
-    return Object.keys(filteredObj).length;
-  };
-
-  const today = new Date();
-
-  // Calculate the date one month from today
-  const oneMonthFromToday = new Date(today);
-  oneMonthFromToday.setMonth(today.getMonth() + 1);
-  const oneMonthFromTodayFormatted = oneMonthFromToday
-    .toISOString()
-    .split("T")[0];
+  // Function to show notification
 
   return (
     <div className="container-xxl">
@@ -522,16 +468,24 @@ const CreateHolidayPackage = () => {
         <div className="col-lg-12">
           <div className="headerBoxOuter">
             <div className="headerBox-new">
-              <p>Create a Holiday Package</p>
+              <p>Create a Holiday Package New</p>
             </div>
           </div>
         </div>
       </div>
-
+      {notification && (
+        <div
+          className={`fixed top-4 right-4 p-4 rounded-lg shadow-lg text-black transition-all duration-300 ${
+            notification.type === "success" ? "bg-green-500" : "bg-red-500"
+          }`}
+        >
+          <p>{notification.message}</p>
+        </div>
+      )}
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
-            <form onSubmit={handleCreatePackage}>
+            <form onSubmit={handleFormSubmit}>
               <div className="createHolidayPackage">
                 <div class="mb-3">
                   <label class="form-label">
@@ -544,69 +498,244 @@ const CreateHolidayPackage = () => {
                       id="package_title"
                       class="form-control"
                       placeholder="Enter Your Package Title"
+                      onChange={(e) => setTitle(e.target.value)}
                     />
                     <label for="floatingInput">
                       Give a Name to this Package
                     </label>
                   </div>
-                  {sub &&
+                  {/* {sub &&
                     document.getElementById("package_title").value === "" && (
                       <span id="error1">Package Name is required</span>
-                    )}
+                    )} */}
                 </div>
+                <Grid container>
+                  <Grid item lg={12} md={12} sm={12}>
+                    <Box my={2}>
+                      <label class="form-label">Overview</label>
+                      <div class="form-floating">
+                        <input
+                          class="form-control"
+                          name="overview"
+                          placeholder="overview"
+                          id="exclusion_note"
+                          value={overView}
+                          containerProps={{ style: { resize: "vertical" } }}
+                          onChange={(e) => setOverView(e.target.value)}
+                        ></input>
+                      </div>
+                    </Box>
+                  </Grid>
+                </Grid>
+
                 <div className="mb-3">
                   <label className="form-label">
-                    Package Expiry Date <span style={{ color: "red" }}>*</span>
+                    Package Type <span style={{ color: "red" }}>*</span>
                   </label>
-                  <input
-                    type="date"
-                    name="package_expiry_date"
-                    id="package_expiry_date"
-                    className="form-control"
-                    min={oneMonthFromTodayFormatted}
-                  />
-                  {sub &&
-                    document.getElementById("package_expiry_date")?.value ===
-                      "" && (
+                  <select
+                    name="packageType"
+                    id="packageType"
+                    className="form-control input_file"
+                    onChange={(e) => setPackageType(e.target.value)}
+                    value={packageType}
+                  >
+                    <option value="" disabled>
+                      Select Package Type
+                    </option>
+                    <option value="International">International</option>
+                    <option value="Domestic">Domestic</option>
+                  </select>
+                  {sub && packageType === "" && (
+                    <span id="error1" style={{ color: "red" }}>
+                      Please select a Package Type
+                    </span>
+                  )}
+                </div>
+
+                <div className="col-lg-12 col-md-12 col-sm-12">
+                  <Box my={2}>
+                    <label className="form-label">
+                      Package Highlights <span style={{ color: "red" }}>*</span>
+                    </label>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        flexWrap: "wrap",
+                        border: "1px solid #ccc",
+                        padding: "5px",
+                        borderRadius: "4px",
+                        minHeight: "50px",
+                      }}
+                    >
+                      {packageHighLightArray.map((highlight, index) => (
+                        <div
+                          key={index}
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            backgroundColor: "#e0e0e0",
+                            padding: "5px 10px",
+                            margin: "5px",
+                            borderRadius: "16px",
+                          }}
+                        >
+                          <span>{highlight}</span>
+                          <button
+                            type="button"
+                            style={{
+                              marginLeft: "5px",
+                              background: "transparent",
+                              border: "none",
+                              cursor: "pointer",
+                            }}
+                            onClick={() =>
+                              setPackageHighLightArray((prev) =>
+                                prev.filter(
+                                  (_, highlightIndex) =>
+                                    highlightIndex !== index
+                                )
+                              )
+                            }
+                          >
+                            ❌
+                          </button>
+                        </div>
+                      ))}
+
+                      <input
+                        type="text"
+                        placeholder="Enter a highlight and press Enter"
+                        style={{
+                          border: "none",
+                          outline: "none",
+                          flex: "1",
+                          minWidth: "150px",
+                        }}
+                        value={highlightText}
+                        onChange={(e) => setHighlightText(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (
+                            e.key === "Enter" &&
+                            highlightText.trim() !== ""
+                          ) {
+                            setPackageHighLightArray((prev) => [
+                              ...prev,
+                              highlightText.trim(),
+                            ]);
+                            setHighlightText("");
+                            e.preventDefault();
+                          }
+                        }}
+                      />
+                    </div>
+
+                    {/* Validation */}
+                    {sub && packageHighLightArray.length === 0 && (
                       <span id="error2" style={{ color: "red" }}>
-                        Package Expiry Date is required
+                        Enter at least one Package Highlight
                       </span>
                     )}
+                  </Box>
                 </div>
-                <div class="mb-3">
-                  <label class="form-label">
-                    Upload a picture of the package{" "}
-                    <span style={{ color: "red" }}>*</span>
+
+                <div className="mb-3">
+                  <label className="form-label">
+                    Enter Country <span style={{ color: "red" }}>*</span>
+                  </label>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      flexWrap: "wrap",
+                      border: "1px solid #ccc",
+                      padding: "5px",
+                      borderRadius: "4px",
+                      minHeight: "50px",
+                    }}
+                  >
+                    {countryArray.map((country, index) => (
+                      <div
+                        key={index}
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          backgroundColor: "#e0e0e0",
+                          padding: "5px 10px",
+                          margin: "5px",
+                          borderRadius: "16px",
+                        }}
+                      >
+                        <span>{country}</span>
+                        <button
+                          type="button"
+                          style={{
+                            marginLeft: "5px",
+                            background: "transparent",
+                            border: "none",
+                            cursor: "pointer",
+                          }}
+                          onClick={() =>
+                            setCountryArray((prev) =>
+                              prev.filter(
+                                (_, countryIndex) => countryIndex !== index
+                              )
+                            )
+                          }
+                        >
+                          ❌
+                        </button>
+                      </div>
+                    ))}
+
+                    <input
+                      type="text"
+                      placeholder="Enter a country and press Enter"
+                      style={{
+                        border: "none",
+                        outline: "none",
+                        flex: "1",
+                        minWidth: "150px",
+                      }}
+                      value={country}
+                      onChange={(e) => setCountry(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" && country.trim() !== "") {
+                          setCountryArray((prev) => [...prev, country.trim()]);
+                          setCountry("");
+                          e.preventDefault();
+                        }
+                      }}
+                    />
+                  </div>
+
+                  {/* Validation */}
+                  {sub && countryArray.length === 0 && (
+                    <span id="error1" style={{ color: "red" }}>
+                      Enter at least one Country
+                    </span>
+                  )}
+                </div>
+
+                <div className="mb-3">
+                  <label className="form-label">
+                    Cover Image <span style={{ color: "red" }}>*</span>
                   </label>
                   <input
                     type="file"
                     accept="image/png, image/jpeg"
-                    name="user_card_document"
-                    id="user_card_document"
-                    class="form-control input_file"
-                    multiple
-                    placeholder="Select upto five Image"
-                  />
-                  {sub &&
-                    document.getElementById("user_card_document").files
-                      .length === 0 && <span id="error1">Upload Image</span>}
-                </div>
-                <div class="mb-3">
-                  <label class="form-label">
-                    Enter Country <span style={{ color: "red" }}>*</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="country"
-                    id="user_card_document"
+                    name="coverImage"
+                    id="coverImageInput" // Match this with your JavaScript reference
                     className="form-control input_file"
-                    placeholder="Enter Country"
-                    value={country}
-                    onChange={handleCountryChange}
+                    placeholder="Select up to five images"
                   />
                   {sub &&
-                    document.getElementById("user_card_document").files
-                      .length === 0 && <span id="error1">Enter Country</span>}
+                    !document.getElementById("coverImageInput")?.files
+                      ?.length && (
+                      <span id="error1" style={{ color: "red" }}>
+                        Please upload an image
+                      </span>
+                    )}
                 </div>
 
                 <div className="mb-5">
@@ -629,19 +758,15 @@ const CreateHolidayPackage = () => {
                       }}
                       component="ul"
                     >
-                      {chipData.map((data, index) => {
-                        let icon;
-                        return (
-                          <ListItem key={data.key} width="565px" height="50px">
-                            <Chip
-                              icon={icon}
-                              label={data.addMore}
-                              onDelete={handleDelete(data)}
-                              variant={index % 2 === 0 ? "outlined" : "filled"}
-                            />
-                          </ListItem>
-                        );
-                      })}
+                      {chipData.map((data, index) => (
+                        <ListItem key={index} width="565px" height="50px">
+                          <Chip
+                            label={data.addMore}
+                            onDelete={handleDelete(data)}
+                            variant={index % 2 === 0 ? "outlined" : "filled"}
+                          />
+                        </ListItem>
+                      ))}
                     </Paper>
                   )}
 
@@ -656,11 +781,12 @@ const CreateHolidayPackage = () => {
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             handleAddChip();
+                            e.preventDefault();
                           }
                         }}
                       />
-                      <label className="flootting" for="floatingInput">
-                        Give a Name to this Package
+                      <label className="flootting" htmlFor="floatingInput">
+                        Add a Destination
                       </label>
                     </div>
 
@@ -668,16 +794,17 @@ const CreateHolidayPackage = () => {
                       onClick={handleAddChip}
                       variant="contained"
                       endIcon={<AddIcon />}
-                      style={{ backgroundColor: color.bluedark }}
+                      style={{ backgroundColor: "#1a73e8" }}
                       className="insideButton-new"
                     >
                       Add
                     </Button>
                   </div>
                 </div>
-                {sub && chipData.length === 0 && (
+
+                {/* {sub && chipData.length === 0 && (
                   <span id="error1">Package Name is required</span>
-                )}
+                )} */}
 
                 <div class="mb-3 pt-4 mt-5">
                   <label class="form-label">How Many Days ?</label>
@@ -705,94 +832,9 @@ const CreateHolidayPackage = () => {
                   </Box>
                 </div>
 
-                {/* <div class="mb-3">
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      gap: "12px",
-                    }}
-                  >
-                    <label
-                      class="form-label"
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      What is the schedule?{" "}
-                      <span style={{ color: "red" }}>*</span>
-                    </label>
-                    <Box
-                      display="flex"
-                      gap="15px"
-                      justifyContent="center"
-                      alignItems="center"
-                      style={{
-                        paddingTop: "20px",
-                        paddingBottom: "20px",
-                        borderRadius: "4px",
-                        padding: "5px",
-
-                        paddingLeft: "10px",
-                      }}
-                    >
-                      <Box display="flex" alignItems="center" gap="5px">
-                        <Box className="radio">
-                          <input
-                            type="radio"
-                            name="schedule"
-                            id="schedule"
-                            value="fixed departure"
-                            width="30px"
-                            onChange={handleScheduleChange}
-                          />
-                        </Box>
-                        <Box>
-                          <Typography
-                            style={{
-                              fontSize: "18px",
-                              color: "#000",
-
-                              fontFamily: "Montserrat",
-                            }}
-                          >
-                            Fixed Departure
-                          </Typography>
-                        </Box>
-                      </Box>
-
-                      <Box display="flex" alignItems="center" gap="5px">
-                        <Box className="radio">
-                          <input
-                            type="radio"
-                            name="schedule"
-                            id="schedule"
-                            value="flexible"
-                            onChange={handleScheduleChange}
-                          />
-                        </Box>
-                        <Box>
-                          <Typography
-                            style={{
-                              fontSize: "18px",
-                              color: "#000",
-
-                              fontFamily: "Montserrat",
-                            }}
-                          >
-                            Flexible
-                          </Typography>
-                        </Box>
-                      </Box>
-                    </Box>
-                  </div>
-                </div> */}
-
                 <div class="mb-3">
                   <label class="form-label">
-                    Set up package price <span style={{ color: "red" }}>*</span>
+                    Package Amount <span style={{ color: "red" }}>*</span>
                   </label>
                   <div className="pricing">
                     <FormControl style={{ border: "1px sold black" }}>
@@ -818,17 +860,30 @@ const CreateHolidayPackage = () => {
                       </NativeSelect>
                     </FormControl>
                     <Box display="flex" ml={1}>
-                      <input
+                      {/* <input
                         type="text"
                         name="amount"
                         placeholder="Amount"
                         onChange={handleAmount}
                         class="form-control"
+                      /> */}
+                      <input
+                        type="text"
+                        name="amount"
+                        inputMode="numeric" // Displays numeric keyboard
+                        placeholder="Amount"
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          if (/^\d*$/.test(value)) {
+                            setAmount(value);
+                          }
+                        }}
+                        class="form-control"
                       />
                     </Box>
                     <label class="form-label">Per Person</label>
                   </div>
-                  {sub && amount === 0 && <span id="error1">Amount</span>}
+                  {/* {sub && amount === 0 && <span id="error1">Amount</span>} */}
                 </div>
 
                 <Box style={{ fontSize: "16px" }}>
@@ -852,7 +907,6 @@ const CreateHolidayPackage = () => {
                     <span style={{ color: "red" }}>*</span>
                   </label>
                 </Box>
-
                 <Grid container>
                   <Grid item lg={5} md={5} sm={12} mt={3}>
                     <Box>
@@ -2137,135 +2191,6 @@ const CreateHolidayPackage = () => {
                     </Box>
                   </Grid>
                 </Grid>
-                {/* ------------------------------ */}
-                <Box my={2}>
-                  <label class="form-label">Hotel Details</label>
-                  <div class="form-floating">
-                    <Editor
-                      class="form-control"
-                      onChange={(e) => setHotelDetails(e.target.value)}
-                      value={hotelDetails}
-                      name="hotel_details"
-                      placeholder="Add Hotel Details ..."
-                      id="hotel_details"
-                      containerProps={{ style: { resize: "vertical" } }}
-                    ></Editor>
-                    {/* <label for="floatingTextarea2">Add Hotel Details ...</label> */}
-                  </div>
-                </Box>
-
-                <Grid container>
-                  <Grid item lg={12} md={12} sm={12}>
-                    <Box my={2}>
-                      <label class="form-label">Inclusion Note</label>
-                      <div class="form-floating">
-                        <Editor
-                          class="form-control"
-                          name="insclusion_note"
-                          placeholder="Add Inclusion Note ..."
-                          id="insclusion_note"
-                          value={inclusion}
-                          onChange={(e) => setInclusion(e.target.value)}
-                          containerProps={{ style: { resize: "vertical" } }}
-                        ></Editor>
-                        {/* <label for="floatingTextarea2">
-                          Add Inclusion Note
-                        </label> */}
-                      </div>
-                    </Box>
-                  </Grid>
-                </Grid>
-
-                <Grid container>
-                  <Grid item lg={12} md={12} sm={12}>
-                    <Box my={2}>
-                      <label class="form-label">Exclusion Note</label>
-                      <div class="form-floating">
-                        <Editor
-                          containerProps={{ style: { resize: "vertical" } }}
-                          class="form-control"
-                          name="exclusion_note"
-                          placeholder="Add Exclusion Note ..."
-                          id="exclusion_note"
-                          value={exclusion}
-                          onChange={(e) => setExclusion(e.target.value)}
-                        ></Editor>
-                        {/* <label for="floatingTextarea2">
-                          Add Exclusion Note
-                        </label> */}
-                      </div>
-                    </Box>
-                  </Grid>
-                </Grid>
-                <Box my={2}>
-                  <label class="form-label">
-                    {" "}
-                    Detailed Itinerary<span style={{ color: "red" }}>*</span>
-                  </label>
-                  {Array.from({ length: days }, (_, i) => (
-                    <>
-                      <Accordion style={{ marginBottom: "10px" }}>
-                        <Accordion.Item eventKey={i}>
-                          <Accordion.Header
-                            style={{
-                              backgroundColor: "#FFFBFB",
-                            }}
-                          >
-                            <p
-                              style={{ fontSize: "20px", color: "#000000" }}
-                            >{`Days ${i + 1}`}</p>
-                          </Accordion.Header>
-                          <Accordion.Body>
-                            <span
-                              key={i}
-                              type="text"
-                              name="detailed_ltinerary"
-                              placeholder={`Days ${i + 1}`}
-                              // value={daysDetailsValues[i] || ""}
-                              // onChange={(event) => handleDaysDetail(i, event)}
-                            >
-                              <Editor
-                                name="detailed_ltinerary"
-                                value={daysDetailsValues[i]}
-                                onChange={(event) => handleDaysDetail(i, event)}
-                                containerProps={{
-                                  style: {
-                                    resize: "vertical",
-                                    height: "300px",
-                                    overflow: "scroll",
-                                  },
-                                }}
-                              />
-                            </span>
-                          </Accordion.Body>
-                        </Accordion.Item>
-                      </Accordion>
-                      {sub && daysDetailsValues.length === 0 && (
-                        <span id="error1">Detailed Itinerary</span>
-                      )}
-                    </>
-                  ))}
-                </Box>
-
-                <Grid container>
-                  <Grid item lg={12} md={12} sm={12}>
-                    <Box my={2}>
-                      <label class="form-label">Overview</label>
-                      <div class="form-floating">
-                        <Editor
-                          class="form-control"
-                          name="overview"
-                          placeholder="overview"
-                          id="exclusion_note"
-                          value={overView}
-                          containerProps={{ style: { resize: "vertical" } }}
-                          onChange={(e) => setOverView(e.target.value)}
-                        ></Editor>
-                      </div>
-                    </Box>
-                  </Grid>
-                </Grid>
-
                 <div class="mb-3">
                   <label class="form-label">
                     Select Tags <span style={{ color: "red" }}>*</span>
@@ -2276,44 +2201,8 @@ const CreateHolidayPackage = () => {
                     Select tags most relevant to your packages
                   </label>
                 </div>
-
                 <div className="tag__Container">
                   <div className="relevant__tag">
-                    <label class="label__container">
-                      {/* <input
-                        type="checkbox"
-                        name="domestic"
-                        checked={isDomesticChecked}
-                        onChange={handleTagChange}
-                      /> */}
-                      <input
-                        type="checkbox"
-                        name="domestic"
-                        checked={tag.domestic}
-                        disabled={isDomesticDisabled}
-                        onChange={handleTagChange}
-                      />
-                      <span className="tag__title">Domestic</span>
-                    </label>
-
-                    <label class="label__container">
-                      {/* <input
-                        type="checkbox"
-                        name="international"
-                        disabled={isInternationalDisabled}
-                        onChange={(e) => setIsDomesticChecked(false)}
-                      /> */}
-                      <input
-                        type="checkbox"
-                        name="international"
-                        checked={tag.international}
-                        disabled={isInternationalDisabled}
-                        onChange={handleTagChange}
-                      />
-                      {/* <div class="checkmark"></div> */}
-                      <span className="tag__title">International</span>
-                    </label>
-
                     <label class="label__container">
                       <input
                         type="checkbox"
@@ -2503,33 +2392,248 @@ const CreateHolidayPackage = () => {
                     </label>
                   </div>
                 </div>
+                <div className="mb-3">
+                  <label className="form-label">
+                    Inclusion Notes <span style={{ color: "red" }}>*</span>
+                  </label>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      flexWrap: "wrap",
+                      border: "1px solid #ccc",
+                      padding: "5px",
+                      borderRadius: "4px",
+                      minHeight: "50px",
+                    }}
+                  >
+                    {inclusionNoteArray.map((note, index) => (
+                      <div
+                        key={index}
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          backgroundColor: "#e0e0e0",
+                          padding: "5px 10px",
+                          margin: "5px",
+                          borderRadius: "16px",
+                        }}
+                      >
+                        <span>{note}</span>
+                        <button
+                          type="button"
+                          style={{
+                            marginLeft: "5px",
+                            background: "transparent",
+                            border: "none",
+                            cursor: "pointer",
+                          }}
+                          onClick={() =>
+                            setInclusionNoteArray((prev) =>
+                              prev.filter((_, i) => i !== index)
+                            )
+                          }
+                        >
+                          ❌
+                        </button>
+                      </div>
+                    ))}
+                    <input
+                      type="text"
+                      placeholder="Enter an inclusion note and press Enter"
+                      style={{
+                        border: "none",
+                        outline: "none",
+                        flex: "1",
+                        minWidth: "150px",
+                      }}
+                      value={inclusionNote}
+                      onChange={(e) => setInclusionNote(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" && inclusionNote.trim() !== "") {
+                          setInclusionNoteArray((prev) => [
+                            ...prev,
+                            inclusionNote.trim(),
+                          ]);
+                          setInclusionNote("");
+                          e.preventDefault();
+                        }
+                      }}
+                    />
+                  </div>
+                  {sub && inclusionNoteArray.length === 0 && (
+                    <span id="error1" style={{ color: "red" }}>
+                      Enter at least one Inclusion Note
+                    </span>
+                  )}
+                </div>
+
+                <div className="mb-3">
+                  <label className="form-label">
+                    Exclusion Notes <span style={{ color: "red" }}>*</span>
+                  </label>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      flexWrap: "wrap",
+                      border: "1px solid #ccc",
+                      padding: "5px",
+                      borderRadius: "4px",
+                      minHeight: "50px",
+                    }}
+                  >
+                    {exclusionNoteArray.map((note, index) => (
+                      <div
+                        key={index}
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          backgroundColor: "#e0e0e0",
+                          padding: "5px 10px",
+                          margin: "5px",
+                          borderRadius: "16px",
+                        }}
+                      >
+                        <span>{note}</span>
+                        <button
+                          type="button"
+                          style={{
+                            marginLeft: "5px",
+                            background: "transparent",
+                            border: "none",
+                            cursor: "pointer",
+                          }}
+                          onClick={() =>
+                            setExclusionNoteArray((prev) =>
+                              prev.filter((_, i) => i !== index)
+                            )
+                          }
+                        >
+                          ❌
+                        </button>
+                      </div>
+                    ))}
+                    <input
+                      type="text"
+                      placeholder="Enter an exclusion note and press Enter"
+                      style={{
+                        border: "none",
+                        outline: "none",
+                        flex: "1",
+                        minWidth: "150px",
+                      }}
+                      value={exclusionNote}
+                      onChange={(e) => setExclusionNote(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" && exclusionNote.trim() !== "") {
+                          setExclusionNoteArray((prev) => [
+                            ...prev,
+                            exclusionNote.trim(),
+                          ]);
+                          setExclusionNote("");
+                          e.preventDefault();
+                        }
+                      }}
+                    />
+                  </div>
+                  {sub && exclusionNoteArray.length === 0 && (
+                    <span id="error1" style={{ color: "red" }}>
+                      Enter at least one Exclusion Note
+                    </span>
+                  )}
+                </div>
+
+                {/* ------------------------------ */}
 
                 <div className="col-lg-12 col-sm-12">
                   <div className="row">
                     <div className="col-lg-12 col-md-12 col-sm-12">
                       <Box my={2}>
-                        <label class="form-label">
-                          Term & Conditions{" "}
+                        <label className="form-label">
+                          Terms & Conditions{" "}
                           <span style={{ color: "red" }}>*</span>
                         </label>
-                        <div class="form-floating">
-                          <Editor
-                            class="form-control"
-                            name="term_Conditions"
-                            placeholder="Enter Term And Condition"
-                            id="term_Conditions"
-                            containerProps={{ style: { resize: "vertical" } }}
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            flexWrap: "wrap",
+                            border: "1px solid #ccc",
+                            padding: "5px",
+                            borderRadius: "4px",
+                            minHeight: "50px",
+                          }}
+                        >
+                          {termsArray.map((term, index) => (
+                            <div
+                              key={index}
+                              style={{
+                                display: "inline-flex",
+                                alignItems: "center",
+                                backgroundColor: "#e0e0e0",
+                                padding: "5px 10px",
+                                margin: "5px",
+                                borderRadius: "16px",
+                              }}
+                            >
+                              <span>{term}</span>
+                              <button
+                                type="button"
+                                style={{
+                                  marginLeft: "5px",
+                                  background: "transparent",
+                                  border: "none",
+                                  cursor: "pointer",
+                                }}
+                                onClick={() =>
+                                  setTermsArray((prev) =>
+                                    prev.filter(
+                                      (_, termIndex) => termIndex !== index
+                                    )
+                                  )
+                                }
+                              >
+                                ❌
+                              </button>
+                            </div>
+                          ))}
+
+                          <input
+                            type="text"
+                            placeholder="Enter a term and press Enter"
+                            style={{
+                              border: "none",
+                              outline: "none",
+                              flex: "1",
+                              minWidth: "150px",
+                            }}
                             value={termAndCondition}
                             onChange={(e) =>
                               setTermAndCondition(e.target.value)
                             }
-                          ></Editor>
+                            onKeyDown={(e) => {
+                              if (
+                                e.key === "Enter" &&
+                                termAndCondition.trim() !== ""
+                              ) {
+                                setTermsArray((prev) => [
+                                  ...prev,
+                                  termAndCondition.trim(),
+                                ]);
+                                setTermAndCondition("");
+                                e.preventDefault();
+                              }
+                            }}
+                          />
                         </div>
-                        {sub &&
-                          document.getElementById("term_Conditions").value ===
-                            "" && (
-                            <span id="error1">EnterTerm & Conditions</span>
-                          )}
+
+                        {/* Validation */}
+                        {sub && termsArray.length === 0 && (
+                          <span id="error1" style={{ color: "red" }}>
+                            Enter at least one Term & Condition
+                          </span>
+                        )}
                       </Box>
                     </div>
                   </div>
@@ -2539,30 +2643,93 @@ const CreateHolidayPackage = () => {
                   <div className="row">
                     <div className="col-lg-12 col-md-12 col-sm-12">
                       <Box my={2}>
-                        <label class="form-label">
-                          Cancellation Policy
+                        <label className="form-label">
+                          Cancellation Policy{" "}
                           <span style={{ color: "red" }}>*</span>
                         </label>
-                        <div class="form-floating">
-                          <Editor
-                            class="form-control"
-                            name="cancellation_Policy"
-                            placeholder="Cancellation Policy...."
-                            id="cancellation_Policy"
-                            containerProps={{ style: { resize: "vertical" } }}
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            flexWrap: "wrap",
+                            border: "1px solid #ccc",
+                            padding: "5px",
+                            borderRadius: "4px",
+                            minHeight: "50px",
+                          }}
+                        >
+                          {cancellationPolicies.map((policy, index) => (
+                            <div
+                              key={index}
+                              style={{
+                                display: "inline-flex",
+                                alignItems: "center",
+                                backgroundColor: "#e0e0e0",
+                                padding: "5px 10px",
+                                margin: "5px",
+                                borderRadius: "16px",
+                              }}
+                            >
+                              <span>{policy}</span>
+                              <button
+                                type="button"
+                                style={{
+                                  marginLeft: "5px",
+                                  background: "transparent",
+                                  border: "none",
+                                  cursor: "pointer",
+                                }}
+                                onClick={() =>
+                                  setCancellationPolicies((prev) =>
+                                    prev.filter(
+                                      (_, policyIndex) => policyIndex !== index
+                                    )
+                                  )
+                                }
+                              >
+                                ❌
+                              </button>
+                            </div>
+                          ))}
+
+                          <input
+                            type="text"
+                            placeholder="Enter a policy and press Enter"
+                            style={{
+                              border: "none",
+                              outline: "none",
+                              flex: "1",
+                              minWidth: "150px",
+                            }}
                             value={cancellation}
                             onChange={(e) => setCancellation(e.target.value)}
-                          ></Editor>
+                            onKeyDown={(e) => {
+                              if (
+                                e.key === "Enter" &&
+                                cancellation.trim() !== ""
+                              ) {
+                                setCancellationPolicies((prev) => [
+                                  ...prev,
+                                  cancellation.trim(),
+                                ]);
+                                setCancellation("");
+                                e.preventDefault();
+                              }
+                            }}
+                          />
                         </div>
-                        {sub &&
-                          document.getElementById("cancellation_Policy")
-                            .value === "" && (
-                            <span id="error1">Term & Conditions</span>
-                          )}
+
+                        {/* Validation */}
+                        {sub && cancellationPolicies.length === 0 && (
+                          <span id="error1" style={{ color: "red" }}>
+                            Enter at least one Cancellation Policy
+                          </span>
+                        )}
                       </Box>
                     </div>
                   </div>
                 </div>
+
                 <div className="buttonBoxPackage-new">
                   {/* <button className="draft">Save As Draft</button> */}
                   <button type="submit" class="packageSubmit">
@@ -2621,4 +2788,4 @@ const CreateHolidayPackage = () => {
   );
 };
 
-export default CreateHolidayPackage;
+export default CreateHolidayPackageNew;

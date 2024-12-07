@@ -8,4 +8,15 @@ export const Holiday = [
     path: "/CreateHolidayPackage",
     name: "Create Holiday Package",
   },
+  {
+    tittle: "Create Holiday Packagenew",
+    path: "/CreateHolidayPackagenew",
+    name: "Create Holiday Packagenew",
+  },
+  {
+    tittle: "Package List",
+    path: "/PackagesList",
+    name: "Create Holiday Packagenew images",
+  },
+
 ];
