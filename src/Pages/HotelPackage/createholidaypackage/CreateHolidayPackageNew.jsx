@@ -332,7 +332,9 @@ const CreateHolidayPackageNew = () => {
       destination: chipData, // Array of destinations
       country: countryArray, // Use the array of countries
       packageHighLight: packageHighLightArray,
-      inclusion_note: inclusionNoteArray, // Add inclusion notes
+
+      insclusion_note: inclusionNoteArray, // Add inclusion notes
+
       exclusion_note: exclusionNoteArray, // Add exclusion notes
       packageType,
       days,
