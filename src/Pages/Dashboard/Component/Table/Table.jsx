@@ -6,6 +6,8 @@ import {
   GridToolbarFilterButton,
 } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
+import { Spin } from "antd";
+
 import { useDispatch, useSelector } from "react-redux";
 import { getUserAction } from "../../../../Redux/Auth/UserData/actionUserData";
 //import { activeStatusAction } from "../../../../../Redux/Auth/activeStatus/actionActiveStatus";
@@ -147,39 +149,28 @@ export default function Tables() {
   const [imageModalOpen, setImageModalOpen] = useState(false);
   const [modalImageUrl, setModalImageUrl] = useState("");
   const [load, setLoad] = useState(false);
-  const [selectedAgentId, setSelectedAgentId] = useState('');
+  const [selectedAgentId, setSelectedAgentId] = useState("");
+
   const adminId = useSelector((state) => state.adminAuth.adminData.data.id);
 
+  const [showVendorModal, setShowVendorModal] = useState(false);
+
+  const handleShowVendorModal = (agentId) => {
+    setSelectedAgentId(agentId);
+    setShowVendorModal(true);
+  };
+
+  const handleCloseVendorModal = () => {
+    setShowVendorModal(false);
+    setAmount("");
+    setSelectedAgentId("");
+  };
 
   // const Adminid = reducerState.adminAuth.adminData.data.id;
 
   const handleShowBonusModal = (agentId) => {
     setSelectedUserId({});
     setShowBonusModal(true);
-  };
-
-
- 
-
-  const handleAddBonus = async (userId) => {
-    try {
-      setLoad(true);
-
-      const response = await axios.post(
-        `${apiURL.baseURL}/skyTrails/api/admin/distributeReward`,
-        {
-          agentId: userId,
-          rewardPercentage: parseFloat(bonus),
-        }
-      );
-
-      setSuccessMessage(response.data.responseMessage);
-      setShowBonusModal(false);
-    } catch (error) {
-      console.error("Error adding bonus:", error);
-    } finally {
-      setLoad(false);
-    }
   };
 
   const handleSortAscending = () => {
@@ -190,8 +181,6 @@ export default function Tables() {
     setSortingOrder({ field: "firstName", sort: "desc" });
   };
 
-  
-  
   const handleShow = (agentId) => {
     setSelectedAgentId(agentId);
     setShow(true);
@@ -199,8 +188,8 @@ export default function Tables() {
 
   const handleClose = () => {
     setShow(false);
-    setAmount('');
-    setSelectedAgentId('');
+    setAmount("");
+    setSelectedAgentId("");
   };
 
   const handleImageClick = (url) => {
@@ -222,6 +211,7 @@ export default function Tables() {
   }, [dispatch]);
 
   useEffect(() => {
+    console.log("++++++++++++++++tabledat");
     if (tableData) {
       const formattedRows = tableData.map((ele) => {
         return {
@@ -259,25 +249,75 @@ export default function Tables() {
     setLoading(false);
   }, [tableData]);
 
+  // const updateVendorAmount = async () => {
+  //   const amountNumber = Number(amount);
+  //   if (isNaN(amountNumber) || amountNumber <= 0) {
+  //     console.error('Invalid amount');
+  //     return;
+  //   }
+
+  //   try {
+  //     const response = await axios.put(`${apiURL.baseURL}/skyTrails/api/agent/addBalance`, {
+  //       adminId,
+  //       amount: amountNumber,
+  //       agentId: selectedAgentId,
+  //     });
+  //     console.log('Response:', response.data);
+  //     handleClose(); // Close the modal after successful update
+  //     dispatch(getUserAction());
+
+  //   } catch (error) {
+  //     console.error('Error updating vendor amount:', error);
+  //   }
+  // };
+
   const updateVendorAmount = async () => {
     const amountNumber = Number(amount);
     if (isNaN(amountNumber) || amountNumber <= 0) {
-      console.error('Invalid amount');
+      message.error("Invalid amount. Please enter a positive number.");
       return;
     }
 
     try {
-      const response = await axios.put(`${apiURL.baseURL}/skyTrails/api/agent/addBalance`, {
-        adminId,
-        amount: amountNumber,
-        agentId: selectedAgentId,
-      });
-      console.log('Response:', response.data);
-      handleClose(); // Close the modal after successful update
-      dispatch(getUserAction()); 
-
+      setLoad(true); // Show loader
+      const response = await axios.put(
+        `${apiURL.baseURL}/skyTrails/api/agent/addBalance`,
+        {
+          adminId,
+          amount: amountNumber,
+          agentId: selectedAgentId,
+        }
+      );
+      console.log("Response:", response.data);
+      message.success("Amount updated successfully!");
+      setShow(false); // Close modal on success
+      dispatch(getUserAction()); // Update state
     } catch (error) {
-      console.error('Error updating vendor amount:', error);
+      console.error("Error updating vendor amount:", error);
+      message.error("Failed to update amount!");
+    } finally {
+      setLoad(false); // Always hide loader, even after an error
+    }
+  };
+
+  const handleAddBonus = async (userId) => {
+    try {
+      setLoad(true); // Show loader
+      const response = await axios.post(
+        `${apiURL.baseURL}/skyTrails/api/admin/distributeReward`,
+        {
+          agentId: userId,
+          rewardPercentage: parseFloat(bonus),
+        }
+      );
+      setSuccessMessage(response.data.responseMessage);
+      setShowBonusModal(false); // Close modal on success
+      message.success("Bonus added successfully!"); // Optional success message
+    } catch (error) {
+      console.error("Error adding bonus:", error);
+      message.error("Failed to add bonus!"); // Optional error message
+    } finally {
+      setLoad(false); // Hide loader
     }
   };
 
@@ -296,19 +336,79 @@ export default function Tables() {
     }
   }, [sortingOrder, rows]);
 
+  const [loadingRows, setLoadingRows] = React.useState({}); // Object to track loading state for each row
+
+  console.log(loadingRows, "loadingjjjjjjjj");
+
+  // const handleToggle = async (value, userId) => {
+  //   // Set the specific row's loading state to true
+  //   setLoadingRows((prev) => ({ ...prev, [userId]: true }));
+
+  //   const payload = {
+  //     user_id: userId,
+  //     is_active: value === "active" ? 1 : 0,
+  //   };
+
+  //   try {
+  //     console.log(payload, "payload=========");
+  //     const res = await dispatch(activeStatusAction(payload)); // Perform API call
+  //     dispatch(getUserAction());
+  //     console.log(dispatch(getUserAction()), res, "response=========");
+  //     //setLoadingRows((prev) => ({ ...prev, [userId]: false })); // Set loading state back to false
+  //   } catch (error) {
+  //     console.error("Error updating status:", error);
+  //     alert("Failed to update status. Please try again.");
+  //   }
+
+  //   // finally{
+  //   //   setLoadingRows((prev) => ({...prev, [userId]: false })); // Set loading state back to false
+  //   // }
+  //   // Refresh data
+  //   setTimeout(() => {
+  //     setLoadingRows((prev) => ({ ...prev, [userId]: false }));
+  //   }, 500);
+  // };
+
+  const getAllAgentData = (userId) => {};
+
   const handleToggle = async (value, userId) => {
+    // Set the specific row's loading state to true
+    setLoadingRows((prev) => ({ ...prev, [userId]: true }));
+
     const payload = {
       user_id: userId,
       is_active: value === "active" ? 1 : 0,
     };
+
     try {
-      await dispatch(activeStatusAction(payload));
+      // Direct API call using fetch
+      const res = await fetch(`${apiURL.baseURL}/skyTrails/user/update`, {
+        method: "POST", // Assuming it's a POST request, adjust if needed
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload), // Send payload in the body
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to update status");
+      }
+
+      const data = await res.json(); // Parse the response JSON
+      console.log(data, "response");
+      dispatch(getUserAction()); // Refresh the user data
+      setLoadingRows((prev) => ({ ...prev, [userId]: false }));
+
+      // Optionally, handle success actions (e.g., updating the UI with response data)
     } catch (error) {
       console.error("Error updating status:", error);
+      alert("Failed to update status. Please try again.");
     }
-    dispatch(getUserAction());
-  };
+    setLoadingRows((prev) => ({ ...prev, [userId]: false }));
+    // Set loading state to false after the API call is done (whether success or failure)
 
+    // Refresh the user data if needed (optional)
+  };
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
   };
@@ -472,8 +572,9 @@ export default function Tables() {
                   color="success"
                   onClick={updateVendorAmount}
                   fullWidth
+                  disabled={load}
                 >
-                  Add Amount
+                  {load ? <CircularProgress size={20} /> : "Add Amount"}
                 </Button>
               </Box>
             </Modal.Body>
@@ -481,6 +582,7 @@ export default function Tables() {
         </>
       ),
     },
+
     {
       field: "addBonus",
       headerName: "Add Bonus",
@@ -551,50 +653,78 @@ export default function Tables() {
         </>
       ),
     },
-
     {
       field: "isActive",
       headerName: "Is Active",
-      width: 200,
+      width: 500,
       filterable: false,
-      renderCell: (params) => (
-        <>
-          {params.value === 1 ? (
-            <span
+      renderCell: (params) => {
+        const isLoading = loadingRows[params.row.id]; // Check if the specific row is loading
+
+        return (
+          <>
+            {params.value === 1 ? (
+              <span
+                style={{
+                  backgroundColor: "green",
+                  padding: "5px 10px",
+                  borderRadius: "7px",
+                  color: "white",
+                  marginRight: "8px",
+                }}
+              >
+                Active
+              </span>
+            ) : (
+              <span
+                style={{
+                  backgroundColor: "red",
+                  padding: "5px 10px",
+                  borderRadius: "7px",
+                  color: "white",
+                  marginRight: "8px",
+                }}
+              >
+                Inactive
+              </span>
+            )}
+
+            <div
               style={{
-                backgroundColor: "green",
-                padding: "5px 10px",
-                borderRadius: "7px",
-                color: "white",
-                marginRight: "8px",
+                position: "relative", // Ensures positioning of loader relative to the dropdown
+                display: "inline-block",
+                minWidth: "150px",
               }}
             >
-              Active
-            </span>
-          ) : (
-            <span
-              style={{
-                backgroundColor: "red",
-                padding: "5px 10px",
-                borderRadius: "7px",
-                color: "white",
-                marginRight: "8px",
-              }}
-            >
-              Inactive
-            </span>
-          )}
-          <select
-            value={params.value}
-            onChange={(e) => handleToggle(e.target.value, params.row.id)}
-            style={{ width: "150px" }}
-          >
-            <option>Update</option>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-          </select>
-        </>
-      ),
+              <select
+                value={params.value === 1 ? "active" : "inactive"}
+                onChange={(e) => handleToggle(e.target.value, params.row.id)}
+                style={{ width: "150px" }}
+                disabled={isLoading} // Disable dropdown while loading
+              >
+                <option>Update</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+
+              {isLoading && (
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)", // Center the loader
+                    zIndex: 10, // Ensure the loader is above the dropdown
+                    pointerEvents: "none", // Prevent interaction with the loader overlay
+                  }}
+                >
+                  <Spin size="small" /> {/* Ant Design Loader */}
+                </div>
+              )}
+            </div>
+          </>
+        );
+      },
     },
   ];
 
@@ -632,7 +762,7 @@ export default function Tables() {
             placeholder="Search by name, ID, etc."
             InputProps={{
               startAdornment: (
-                <InputAdornment position="start" style={{color:"white"}}>
+                <InputAdornment position="start" style={{ color: "white" }}>
                   <SearchIcon style={{ color: "white" }} />
                 </InputAdornment>
               ),

@@ -44,6 +44,10 @@ const PackagesList = () => {
     navigate(`/AddItenary`, { state: { id } });
   };
 
+  const handleNavigateToAddItineraryImage = (id) => {
+    navigate(`/AddItenaryImage`, { state: { id } });
+  };
+
   const handleNavigateToAddImages = (id) => {
     navigate(`/AddImages`, { state: { id } });
   };
@@ -59,20 +63,49 @@ const PackagesList = () => {
       dataIndex: "days",
       key: "days",
     },
+    // {
+    //   title: "Add Itinerary",
+    //   key: "addItinerary",
+    //   render: (_, record) => (
+    //     <Button
+    //       type="primary"
+    //       shape="round"
+    //       onClick={() => handleNavigateToAddItinerary(record._id)}
+    //       style={{ backgroundColor: "#1677ff", borderColor: "#1677ff" }}
+    //     >
+    //       Add Itinerary
+    //     </Button>
+
+    //   ),
+
+    //   // addItinerary Images
+
+    // },
     {
       title: "Add Itinerary",
       key: "addItinerary",
       render: (_, record) => (
-        <Button
-          type="primary"
-          shape="round"
-          onClick={() => handleNavigateToAddItinerary(record._id)}
-          style={{ backgroundColor: "#1677ff", borderColor: "#1677ff" }}
-        >
-          Add Itinerary
-        </Button>
+        <div style={{ display: "flex", gap: "10px" }}>
+          <Button
+            type="primary"
+            shape="round"
+            onClick={() => handleNavigateToAddItinerary(record._id)}
+            style={{ backgroundColor: "#1677ff", borderColor: "#1677ff" }}
+          >
+            Add Itinerary
+          </Button>
+          <Button
+            type="primary"
+            shape="round"
+            onClick={() => handleNavigateToAddItineraryImage(record._id)}
+            style={{ backgroundColor: "#52c41a", borderColor: "#52c41a" }}
+          >
+            Add Itinerary Image
+          </Button>
+        </div>
       ),
     },
+
     {
       title: "Add Images",
       key: "addImages",

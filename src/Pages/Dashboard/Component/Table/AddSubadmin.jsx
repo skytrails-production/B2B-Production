@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import './AddSubadmin.css';
-import { Select, MenuItem, CircularProgress } from '@mui/material';
-import { apiURL } from '../../../../Constants/constant';
-import { useNavigate } from 'react-router-dom';
+import { Form, Input, Button, Select, Spin, Alert } from 'antd';
 import { FaTimes, FaPlus } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { apiURL } from '../../../../Constants/constant';
+
+const { Option } = Select;
 
 const authArray = [
   'ADS_HANDLER',
@@ -21,59 +22,38 @@ const authArray = [
   'LOCALIZATION_TRANSLATION',
   'EVENT_HANDLER',
   'COUPON_CODE_HANDLER',
-  'AGENT_MANAGER'
+  'AGENT_MANAGER',
 ];
 
 const CreateSubAdminPage = () => {
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    mobile_number: '',
-    dynamicProperties: '',
-    authType: ''
-  });
-
-  const [input, setInput] = useState('');
+  const [form] = Form.useForm();
   const [chipData, setChipData] = useState({});
-  const [message, setMessage] = useState("");
-  const[display,setDisplay]=useState(false);
-  
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+  const [input, setInput] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleAddChip = () => {
-    if (input.trim() !== "") {
+    if (input.trim()) {
       const nextTaskNumber = Object.keys(chipData).length + 1;
       setChipData((chips) => ({ ...chips, [`task${nextTaskNumber}`]: input }));
-      setInput("");
+      setInput('');
     }
   };
-
 
   const handleRemoveChip = (chipKey) => {
     const { [chipKey]: removedChip, ...remainingChips } = chipData;
     setChipData(remainingChips);
   };
 
-  const navigate = useNavigate();
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-   setDisplay(true);
-   
-    const dynamicPropertiesString = JSON.stringify(chipData);
+  const handleSubmit = async (values) => {
+    setLoading(true);
+    setMessage('');
 
     const requestData = {
-      ...formData,
-      // dynamicProperties: dynamicPropertiesString,
-      dynamicProperties: chipData
-    }; 
+      ...values,
+      dynamicProperties: chipData,
+    };
 
     try {
       const response = await fetch(`${apiURL.baseURL}/skytrails/api/subAdmin/createSubAdmin`, {
@@ -83,151 +63,138 @@ const CreateSubAdminPage = () => {
         },
         body: JSON.stringify(requestData),
       });
-      setDisplay(false);
+
+      setLoading(false);
+
       if (response.ok) {
-        setMessage(`Subadmin ${formData.username} created successfully!`);
-        setTimeout(() => {
-          navigate('/admin/dashboard'); // Redirect to home after a delay
-        }, 5000);
+        setMessage(`Subadmin ${values.username} created successfully!`);
+        setTimeout(() => navigate('/admin/dashboard'), 3000);
       } else {
-        setMessage("Failed to create subadmin.");
+        setMessage('Failed to create subadmin.');
       }
-  
-      // Handle response
     } catch (error) {
       console.error('Error creating subadmin:', error.message);
-      setMessage("An error occurred while creating subadmin.");
+      setMessage('An error occurred while creating subadmin.');
+      setLoading(false);
     }
   };
 
- 
-
   return (
-    <div className="form-containers">
-      {display &&  <div className="loader-overlay" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(255, 255, 255, 0.5))', zIndex: 9999 }}>
-                     <CircularProgress color="primary" size={50} thickness={3} style={{ position: 'absolute', top: '50%', left: '49.8%', transform: 'translate(-50%, -50%)' }} />
-                </div>}
+    <div style={{ width:'60%', margin: '50px auto', padding: 20, background: '#fff', borderRadius: 10, boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}>
+      {loading && (
+        <div style={{ textAlign: 'center', marginBottom: 20 }}>
+          <Spin tip="Creating Subadmin..." />
+        </div>
+      )}
 
-                {message && <div style={{ backgroundColor: '#d4edda', color: '#155724', padding: '10px', marginBottom: '30px', borderRadius: '5px' }}>{message}</div>}
-      <header className="sectionagent headersagent">
-        <div className="headead">
-          <h2>Create Subadmin</h2>
-        </div>
-      </header>
-      <form className="form-agent" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="username" className="form-label-subAdmin">
-            Username:
-          </label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            className="form-input"
-          />
-        </div>
+      {message && (
+        <Alert
+          message={message}
+          type={message.includes('successfully') ? 'success' : 'error'}
+          showIcon
+          closable
+          style={{ marginBottom: 20 }}
+        />
+      )}
 
-        <div className="form-group">
-          <label htmlFor="email" className="form-label-subAdmin">
-            Email:
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="form-input"
-          />
-        </div>
+      <h2 style={{ textAlign: 'center', marginBottom: 20 }}>Create Subadmin</h2>
 
-        <div className="form-group">
-          <label htmlFor="password" className="form-label-subAdmin">
-            Password:
-          </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            className="form-input"
-          />
-        </div>
+      <Form form={form} layout="vertical" onFinish={handleSubmit}>
+        <Form.Item
+          name="username"
+          label="Username"
+          rules={[{ required: true, message: 'Please enter a username' }]}
+        >
+          <Input placeholder="Enter username" />
+        </Form.Item>
 
-        <div className="form-group">
-          <label htmlFor="mobile_number" className="form-label-subAdmin">
-            Mobile Number:
-          </label>
-          <input
-            type="text"
-            id="mobile_number"
-            name="mobile_number"
-            value={formData.mobile_number}
-            onChange={handleChange}
-            className="form-input"
-          />
-        </div>
-        <div className="form-group" style={{marginLeft:"-35px"}}>
-        <label htmlFor="mobile_number" className="form-label-subAdmin" style={{marginLeft:"50px"}}>
-            Properties:
-          </label>
-          <div className="dynamic-properties-container">
-            <div className="chip-container">
-              {Object.entries(chipData).map(([key, value]) => (
-                <div key={key} className="chip" >
-                  <span>{value}</span>
-                  <button onClick={() => handleRemoveChip(key)} style={{padding:"2px 2px"}}>
-                    <FaTimes />
-                  </button>
-                </div>
-              ))}
-            </div>
-            <div className="chip-input-container">
-              <input
-                type="text"
-                id="dynamicProperties"
-                name="dynamicProperties"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                className="form-input"
-                placeholder="Add dynamic property..."
-                
-              />
-              <button type="button" onClick={handleAddChip} className="add-button-plus" >
-                <FaPlus />
-              </button>
-            </div>
+        <Form.Item
+          name="email"
+          label="Email"
+          rules={[{ required: true, type: 'email', message: 'Please enter a valid email' }]}
+        >
+          <Input placeholder="Enter email" />
+        </Form.Item>
+
+        <Form.Item
+          name="password"
+          label="Password"
+          rules={[{ required: true, message: 'Please enter a password' }]}
+        >
+          <Input.Password placeholder="Enter password" />
+        </Form.Item>
+
+        <Form.Item
+          name="mobile_number"
+          label="Mobile Number"
+          rules={[{ required: true, message: 'Please enter a mobile number' }]}
+        >
+          <Input placeholder="Enter mobile number" />
+        </Form.Item>
+
+        <Form.Item label="Properties">
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginBottom: 10 }}>
+            {Object.entries(chipData).map(([key, value]) => (
+              <div
+                key={key}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  background: '#f0f0f0',
+                  padding: '5px 10px',
+                  borderRadius: 20,
+                }}
+              >
+                <span>{value}</span>
+                <button
+                  onClick={() => handleRemoveChip(key)}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    marginLeft: 10,
+                    color: '#ff4d4f',
+                    cursor: 'pointer',
+                  }}
+                >
+                  <FaTimes />
+                </button>
+              </div>
+            ))}
           </div>
-        </div>
 
+          <div style={{ display: 'flex', gap: 10 }}>
+            <Input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Add a property"
+              onPressEnter={handleAddChip}
+            />
+            <Button icon={<FaPlus />} onClick={handleAddChip}>
+              Add
+            </Button>
+          </div>
+        </Form.Item>
 
-
-        <div className="form-group" style={{ width: "95%" }}>
-          <label htmlFor="authType" className="form-label-subAdmin">
-            Auth Type:
-          </label>
-          <Select
-            id="authType"
-            name="authType"
-            value={formData.authType}
-            onChange={handleChange}
-            style={{ width: "100%", height: "10%", padding: "-100px 10px" }}
-          >
+        <Form.Item
+          name="authType"
+          label="Auth Type"
+          rules={[{ required: true, message: 'Please select an auth type' }]}
+        >
+          <Select placeholder="Select auth type">
             {authArray.map((authType) => (
-              <MenuItem key={authType} value={authType}>{authType}</MenuItem>
+              <Option key={authType} value={authType}>
+                {authType}
+              </Option>
             ))}
           </Select>
-        </div>
+        </Form.Item>
 
-        <div className="form-group-sub">
-          <button type="submit" className="form-button-sub">
+        <Form.Item>
+          <Button type="primary" htmlType="submit" block>
             Create Subadmin
-          </button>
-        </div>
-      </form>
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
   );
 };

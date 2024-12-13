@@ -1,0 +1,77 @@
+/* Custom Styles for Holiday Add Images Page */
+
+/* Card container */
+.holiday-card {
+    max-width: 700px;
+    margin: auto;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  /* Checkbox Styling */
+  .checkbox-item {
+    font-size: 16px;
+    font-weight: 500;
+  }
+  
+  .checkbox-item + .ant-checkbox-wrapper {
+    margin-left: 20px;
+  }
+  
+  .checkbox-item.ant-checkbox-wrapper {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  /* Upload section */
+  .upload-item {
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .upload-item .ant-btn {
+    background-color: #1890ff;
+    color: white;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .upload-item .ant-btn:hover {
+    background-color: #40a9ff;
+  }
+  
+  /* Submit Button Styling */
+  .submit-space {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .submit-button {
+    border-radius: 8px;
+    font-size: 16px;
+    padding: 12px;
+  }
+  
+  .submit-button:focus {
+    background-color: #40a9ff;
+  }
+  
+  /* Responsive adjustments */
+  @media screen and (max-width: 768px) {
+    .holiday-card {
+      padding: 15px;
+    }
+  
+    .submit-button {
+      font-size: 14px;
+    }
+  }
+  
+  @media screen and (max-width: 576px) {
+    .holiday-card {
+      padding: 10px;
+      max-width: 100%;
+    }
+  }
+  

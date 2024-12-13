@@ -11,6 +11,7 @@ const AddItenary = () => {
     packageId: id || "",
     title: "",
     dayNumber: "",
+    description: "",
     hotelEvents: [{ title: "", name: "", description: "" }],
     flightEvents: [{ title: "" }],
     transferEvents: [{ title: "" }],
@@ -101,6 +102,7 @@ const AddItenary = () => {
         padding: "10px",
         borderRadius: "10px",
         marginBottom: "8px",
+        width: "60%",
       }}
     >
       <h2 className="text-4xl font-semibold text-center text-gray-800 mb-6">
@@ -146,9 +148,101 @@ const AddItenary = () => {
           </Form.Item>
         </Col>
       </Row>
+      {/* Description */}
+      <Card title="Description" bordered={false} className="mb-6">
+        <Form.Item
+          name="description"
+          rules={[{ required: true, message: "Please provide a description!" }]}
+        >
+          <TextArea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            placeholder="Enter description..."
+            rows={4}
+          />
+        </Form.Item>
+      </Card>
+      <Card title="Hotel Events" bordered={false} className="mb-8">
+        {formData.hotelEvents.map((event, index) => (
+          <div key={index} className="mb-6">
+            {/* First Row: Title and Name */}
+            <Row gutter={[16, 16]}>
+              <Col span={12}>
+                <Form.Item
+                  label="Type"
+                  name={`hotelEvents[${index}][title]`}
+                  initialValue={event.title}
+                >
+                  <Input
+                    name="title"
+                    value={event.title}
+                    onChange={(e) => handleArrayChange(e, index, "hotelEvents")}
+                    placeholder="Enter title"
+                    className="w-full"
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col span={12}>
+                <Form.Item
+                  label="Name"
+                  name={`hotelEvents[${index}][name]`}
+                  initialValue={event.name}
+                >
+                  <Input
+                    name="name"
+                    value={event.name}
+                    onChange={(e) => handleArrayChange(e, index, "hotelEvents")}
+                    placeholder="Enter name"
+                    className="w-full"
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+
+            {/* Second Row: Description */}
+            <Row gutter={[16, 16]}>
+              <Col span={24}>
+                <Form.Item
+                  label="Description"
+                  name={`hotelEvents[${index}][description]`}
+                  initialValue={event.description}
+                >
+                  <TextArea
+                    name="description"
+                    value={event.description}
+                    onChange={(e) => handleArrayChange(e, index, "hotelEvents")}
+                    placeholder="Enter description"
+                    className="w-full"
+                    rows={4} // Adjust the number of rows as needed
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+
+            <Button
+              type="danger"
+              onClick={() => removeFromArray("hotelEvents", index)}
+              className="w-full md:w-auto mb-4"
+            >
+              Remove Event
+            </Button>
+          </div>
+        ))}
+        <Button
+          type="primary"
+          onClick={() =>
+            addToArray("hotelEvents", { title: "", name: "", description: "" })
+          }
+          className="w-full md:w-auto"
+        >
+          Add Hotel Event
+        </Button>
+      </Card>
 
       {/* Hotel Events */}
-      <Card title="Hotel Events" bordered={false} className="mb-8">
+      {/* <Card title="Hotel Events" bordered={false} className="mb-8">
         {formData.hotelEvents.map((event, index) => (
           <div key={index} className="mb-6">
             <Row gutter={[16, 16]}>
@@ -190,13 +284,7 @@ const AddItenary = () => {
                   name={`hotelEvents[${index}][description]`}
                   initialValue={event.description}
                 >
-                  {/* <Input
-                    name="description"
-                    value={event.description}
-                    onChange={(e) => handleArrayChange(e, index, "hotelEvents")}
-                    placeholder="Enter description"
-                    className="w-full"
-                  /> */}
+                 
                   <TextArea
                     name="description"
                     value={event.description}
@@ -227,7 +315,8 @@ const AddItenary = () => {
         >
           Add Hotel Event
         </Button>
-      </Card>
+      </Card> */}
+
       {/* Flight Events */}
       <Card title="Flight Events" bordered={false} className="mb-8">
         {formData.flightEvents.map((event, index) => (
@@ -235,7 +324,7 @@ const AddItenary = () => {
             <Row gutter={[16, 16]}>
               <Col span={8}>
                 <Form.Item
-                  label="Title"
+                  label="Type"
                   name={`flightEvents[${index}][title]`}
                   initialValue={event.title}
                 >
@@ -277,7 +366,7 @@ const AddItenary = () => {
             <Row gutter={[16, 16]}>
               <Col span={8}>
                 <Form.Item
-                  label="Title"
+                  label="Type"
                   name={`transferEvents[${index}][title]`}
                   initialValue={event.title}
                 >
@@ -319,7 +408,7 @@ const AddItenary = () => {
             <Row gutter={[16, 16]}>
               <Col span={8}>
                 <Form.Item
-                  label="Title"
+                  label="Type"
                   name={`activityEvents[${index}][title]`}
                   initialValue={event.title}
                 >
@@ -361,7 +450,7 @@ const AddItenary = () => {
             <Row gutter={[16, 16]}>
               <Col span={8}>
                 <Form.Item
-                  label="Title"
+                  label="Type"
                   name={`leisureDayEvents[${index}][title]`}
                   initialValue={event.title}
                 >

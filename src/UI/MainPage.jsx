@@ -155,6 +155,7 @@ import CreateHolidayPackageNew from "../Pages/HotelPackage/createholidaypackage/
 import PackagesList from "../Pages/HotelPackage/createholidaypackage/PackagesList";
 import AddItenary from "../Pages/HotelPackage/createholidaypackage/AddItenary";
 import HolidayAddImages from "../Pages/HotelPackage/createholidaypackage/HolidayAddImages";
+import AddItenaryImage from "../Pages/HotelPackage/createholidaypackage/AddItenaryImage";
 const MainPage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -923,6 +924,11 @@ const MainPage = () => {
                   exact
                   path="/AddItenary"
                   element={<AddItenary />}
+                ></Route>
+                <Route
+                  exact
+                  path="/AddItenaryImage"
+                  element={<AddItenaryImage/>}
                 ></Route>
                 <Route
                   exact

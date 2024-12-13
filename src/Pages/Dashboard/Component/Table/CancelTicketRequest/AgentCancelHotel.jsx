@@ -108,29 +108,29 @@ const AllHotelCancelTickets = () => {
     { field: 'destination', headerName: 'Destination', width: 150, valueGetter: (params) => params?.row?.hotelDetails?.destination },
     { field: 'rooms', headerName: 'Rooms', width: 120, valueGetter: (params) => params?.row?.hotelDetails?.room },
     { field: 'hotelName', headerName: 'Hotel Name', width: 150, valueGetter: (params) => params.row.hotelDetails.hotelName },
-    {
-      field: 'approve',
-      headerName: 'APPROVE',
-      width: 120,
-      renderCell: (params) => (
-        <div>
-          <select
-            value={selectedStatusMap.get(params.row._id) || params.row.status || ''}
-            onChange={(e) => handleStatusChange(params.row._id, e.target.value)}
-            style={{
-              backgroundColor: selectedStatusMap.get(params.row._id) === 'ACTIVE' ? '#008000' : '#FF0000',
-              color: '#FFFFFF',
-              padding: '5px',
-              borderRadius: '5px',
-            }}
-          >
-            <option value="">{params.row.status}</option>
-            <option value="ACTIVE">Active</option>
-            <option value="NOT ACTIVE">Not Active</option>
-          </select>
-        </div>
-      ),
-    },
+    // {
+    //   field: 'approve',
+    //   headerName: 'APPROVE',
+    //   width: 120,
+    //   renderCell: (params) => (
+    //     <div>
+    //       <select
+    //         value={selectedStatusMap.get(params.row._id) || params.row.status || ''}
+    //         onChange={(e) => handleStatusChange(params.row._id, e.target.value)}
+    //         style={{
+    //           backgroundColor: selectedStatusMap.get(params.row._id) === 'ACTIVE' ? '#008000' : '#FF0000',
+    //           color: '#FFFFFF',
+    //           padding: '5px',
+    //           borderRadius: '5px',
+    //         }}
+    //       >
+    //         <option value="">{params.row.status}</option>
+    //         <option value="ACTIVE">Active</option>
+    //         <option value="NOT ACTIVE">Not Active</option>
+    //       </select>
+    //     </div>
+    //   ),
+    // },
 
   ];
 

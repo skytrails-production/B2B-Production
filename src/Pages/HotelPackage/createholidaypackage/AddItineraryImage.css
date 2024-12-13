@@ -1,0 +1,44 @@
+/* Add custom styles for a more modern, sleek design */
+
+/* Upload button */
+.upload-container {
+  border: 2px solid #1890ff;
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.upload-container:hover {
+  background-color: #f0f7ff;
+  border-color: #40a9ff;
+}
+
+.upload-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: bold;
+  color: #1890ff;
+  font-size: 18px;
+}
+
+.upload-button:hover {
+  color: #40a9ff;
+}
+
+/* Submit button */
+.submit-button {
+  background-color: #1890ff;
+  border-radius: 10px;
+  border: none;
+  font-weight: bold;
+  font-size: 18px;
+  transition: all 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #40a9ff;
+}

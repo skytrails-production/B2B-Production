@@ -1,34 +1,25 @@
-// CreateSubAdminPage.js
 import React, { useState } from 'react';
-import './AddSubadmin.css';
-import { apiURL } from '../../../../Constants/constant';
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import profilePicUrl from '../../../../Images/whitelogo1.png';
-import { CircularProgress } from '@mui/material';
+import { apiURL } from '../../../../Constants/constant';
+
 const CreateAgentPage = () => {
-  const [formData, setFormData] = useState({
-    firstName:'',
-    lastName:'',
-    email: '',
-    password: '',
-    mobile_number: '',
-    panNumber: '',
-    agency_name:''
-  });
-const[load,setLoad]=useState(false);
-const[message,setMessage]=useState("");
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
- setLoad(true);
-// console.log("============",e)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,  // Added to trigger form value changes manually
+    clearErrors,  // Used to clear individual field errors
+  } = useForm();
+
+  const onSubmit = async (formData) => {
+    setLoading(true);
+    setMessage('');
 
     try {
       const response = await fetch(`${apiURL.baseURL}/skyTrails/api/admin/createAgent`, {
@@ -40,151 +31,140 @@ const[message,setMessage]=useState("");
       });
 
       if (response.ok) {
-        const data = await response.json();
-        // console.log('Agent created successfully:', data);
-       // alert('Agent created successfully!');
-        setMessage(`Agent ${formData.firstName}created successfully!`);
-        setTimeout(()=>{
-          navigate('/admin/dashboard');
-        },5000)
-       
+        setMessage(`Agent ${formData.firstName} created successfully!`);
+        setTimeout(() => navigate('/admin/dashboard'), 3000);
+      } else if (response.status === 409) {
+        setMessage(`Agent ${formData.firstName} already exists.`);
       } else {
-        if (response.status === 409) {
-         // alert('Agent with this username or email already exists!');
-          setMessage(`Agent ${formData.firstName} already created`)
-          console.error('agent already exists:', response.statusText);
-        } else {
-         // alert('Failed to create agent!');
-          setMessage("Error occured retry");
-          console.error('Failed to create agent:', response.statusText);
-        }
+        setMessage('Failed to create agent. Please try again.');
       }
     } catch (error) {
-      console.error('Error creating agent:', error.message);
-    }
-    finally{
-      setLoad(false);
+      console.error('Error creating agent:', error);
+      setMessage('An error occurred. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
+  // Handles clearing the error when the user starts typing
+  const handleInputChange = (e, fieldName) => {
+    // If there's an error, clear it when the user starts typing
+    if (errors[fieldName]) {
+      clearErrors(fieldName);
+    }
+    // Set the new value in the form
+    setValue(fieldName, e.target.value, { shouldValidate: true });
+  };
+
   return (
-    <div className="form-containers">
-        {load && (
-                <div className="loader-overlay" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(255, 255, 255, 0.5))', zIndex: 9999 }}>
-                     <CircularProgress color="primary" size={50} thickness={3} style={{ position: 'absolute', top: '50%', left: '49.8%', transform: 'translate(-50%, -50%)' }} />
-                </div>
-            )}
-              {message && <div style={{ backgroundColor: '#d4edda', color: '#155724', padding: '10px', marginBottom: '30px', borderRadius: '5px' }}>{message}</div>}
-      <header className="sectionagent headersagent">
-        <div className="headead">
-          {/* <img src={profilePicUrl} style={{ width: "80%" }} alt="Logo" /> */}
-          <h2>Create Agent</h2>
+    <div style={{ width:'60%', margin: '50px auto', padding: '20px', background: '#fff', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)', borderRadius: '8px' }}>
+      {loading && (
+        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(255, 255, 255, 0.8)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Spin size="large" tip="Creating Agent..." />
         </div>
-      </header>
-      <form className="form-agent" onSubmit={handleSubmit}>
-       
-      <div className="form-group-agent">
-      <label htmlFor="mobile_number" className="form-label-subAdmin">
-        First Name:
-      </label>
-      <input
-        type="text"
-        id="firstName"
-        name="firstName"
-        value={formData.firstName}
-        onChange={handleChange}
-        className="form-input"
-      />
-    </div>
-    <div className="form-group-agent">
-          <label htmlFor="mobile_number" className="form-label-subAdmin">
-          Last Name:
-          </label>
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            className="form-input"
-          />
-        </div>
+      )}
 
-        <div className="form-group">
-          <label htmlFor="email" className="form-label-subAdmin">
-            Email:
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="form-input"
-          />
-        </div>
+      {message && (
+        <Alert
+          message={message}
+          type={message.includes('successfully') ? 'success' : 'error'}
+          showIcon
+          closable
+          style={{ marginBottom: '20px' }}
+        />
+      )}
 
-        <div className="form-group-agent">
-          <label htmlFor="password" className="form-label-subAdmin">
-            Password:
-          </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            className="form-input"
-          />
-        </div>
+      <h2 style={{ textAlign: 'center', fontSize: '24px', fontWeight: 'bold', marginBottom: '20px' }}>Create Agent</h2>
 
-        <div className="form-group-agent">
-          <label htmlFor="mobile_number" className="form-label-subAdmin">
-            Mobile Number:
-          </label>
-          <input
-            type="text"
-            id="mobile_number"
-            name="mobile_number"
-            value={formData.mobile_number}
-            onChange={handleChange}
-            className="form-input"
+      <Form layout="vertical" onFinish={handleSubmit(onSubmit)}>
+        <Form.Item label="First Name" validateStatus={errors.firstName && 'error'} help={errors.firstName?.message}>
+          <Input
+            {...register('firstName', {
+              required: 'First name is required',
+            })}
+            placeholder="Enter first name"
+            onChange={(e) => handleInputChange(e, 'firstName')}
           />
-        </div>
+        </Form.Item>
 
-        <div className="form-group-agent">
-          <label htmlFor="panNumber" className="form-label-subAdmin">
-            PAN Number:
-          </label>
-          <input
-            type="text"
-            id="panNumber"
-            name="panNumber"
-            value={formData.panNumber}
-            onChange={handleChange}
-            className="form-input"
+        <Form.Item label="Last Name" validateStatus={errors.lastName && 'error'} help={errors.lastName?.message}>
+          <Input
+            {...register('lastName', {
+              required: 'Last name is required',
+            })}
+            placeholder="Enter last name"
+            onChange={(e) => handleInputChange(e, 'lastName')}
           />
-        </div>
-        <div className="form-group-agent">
-          <label htmlFor="agency_name" className="form-label-subAdmin">
-            Agency Name:
-          </label>
-          <input
-            type="text"
-            id="agency_name"
-            name="agency_name"
-            value={formData.agency_name}
-            onChange={handleChange}
-            className="form-input"
-          />
-        </div>
+        </Form.Item>
 
-        <div className="form-group-agent">
-          <button type="submit" className="form-button-agents">
+        <Form.Item label="Email" validateStatus={errors.email && 'error'} help={errors.email?.message}>
+          <Input
+            {...register('email', {
+              required: 'Email is required',
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: 'Invalid email address',
+              },
+            })}
+            placeholder="Enter email"
+            onChange={(e) => handleInputChange(e, 'email')}
+          />
+        </Form.Item>
+
+        <Form.Item label="Password" validateStatus={errors.password && 'error'} help={errors.password?.message}>
+          <Input.Password
+            {...register('password', {
+              required: 'Password is required',
+              minLength: {
+                value: 6,
+                message: 'Password must be at least 6 characters',
+              },
+            })}
+            placeholder="Enter password"
+            onChange={(e) => handleInputChange(e, 'password')}
+          />
+        </Form.Item>
+
+        <Form.Item label="Mobile Number" validateStatus={errors.mobile_number && 'error'} help={errors.mobile_number?.message}>
+          <Input
+            {...register('mobile_number', {
+              required: 'Mobile number is required',
+              pattern: {
+                value: /^[0-9]{10}$/,
+                message: 'Mobile number must be 10 digits',
+              },
+            })}
+            placeholder="Enter mobile number"
+            onChange={(e) => handleInputChange(e, 'mobile_number')}
+          />
+        </Form.Item>
+
+        <Form.Item label="PAN Number" validateStatus={errors.panNumber && 'error'} help={errors.panNumber?.message}>
+          <Input
+            {...register('panNumber', {
+              required: 'PAN number is required',
+            })}
+            placeholder="Enter PAN number"
+            onChange={(e) => handleInputChange(e, 'panNumber')}
+          />
+        </Form.Item>
+
+        <Form.Item label="Agency Name" validateStatus={errors.agency_name && 'error'} help={errors.agency_name?.message}>
+          <Input
+            {...register('agency_name', {
+              required: 'Agency name is required',
+            })}
+            placeholder="Enter agency name"
+            onChange={(e) => handleInputChange(e, 'agency_name')}
+          />
+        </Form.Item>
+
+        <Form.Item>
+          <Button type="primary" htmlType="submit" block style={{ marginTop: '10px' }}>
             Create Agent
-          </button>
-        </div>
-      </form>
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
   );
 };
