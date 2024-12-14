@@ -32,11 +32,11 @@ const AddItenary = () => {
         hotelStar: 3, // Default star rating
         checkIn: "",
         checkOut: "",
-        numberOfNights:""
+        numberOfNights: "",
       },
     ],
     flightEvents: [
-      {from: "", to: "", fromAirPortCode: "", toAirPortCode: "" },
+      { from: "", to: "", fromAirPortCode: "", toAirPortCode: "" },
     ],
     transferEvents: [
       {
@@ -196,180 +196,214 @@ const AddItenary = () => {
       </Card>
 
       <Card title="Hotel Events" bordered={false} className="mb-8">
-        {formData.hotelEvents.map((event, index) => (
-          <div key={index} className="mb-6">
-            {/* First Row: Title and Name */}
-            <Row gutter={[16, 16]}>
-              <Col span={12}>
-                <Form.Item
-                  label="Room Type"
-                  name={`hotelEvents[${index}][title]`}
-                  initialValue={event.title}
-                >
-                  <Input
-                    name="title"
-                    value={event.title}
-                    onChange={(e) => handleArrayChange(e, index, "hotelEvents")}
-                    placeholder="Enter title"
-                    className="w-full"
-                  />
-                </Form.Item>
-              </Col>
+        {formData.hotelEvents.length > 0 ? (
+          formData.hotelEvents.map((event, index) => (
+            <div key={index} className="mb-6">
+              {/* First Row: Title and Name */}
+              <Row gutter={[16, 16]}>
+                <Col span={12}>
+                  <Form.Item
+                    label="Room Type"
+                    name={`hotelEvents[${index}][title]`}
+                    initialValue={event.title}
+                  >
+                    <Input
+                      name="title"
+                      value={event.title}
+                      onChange={(e) =>
+                        handleArrayChange(e, index, "hotelEvents")
+                      }
+                      placeholder="Enter title"
+                      className="w-full"
+                    />
+                  </Form.Item>
+                </Col>
 
-              <Col span={12}>
-                <Form.Item
-                  label="Hotel Name"
-                  name={`hotelEvents[${index}][name]`}
-                  initialValue={event.name}
-                >
-                  <Input
-                    name="name"
-                    value={event.name}
-                    onChange={(e) => handleArrayChange(e, index, "hotelEvents")}
-                    placeholder="Enter name"
-                    className="w-full"
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
+                <Col span={12}>
+                  <Form.Item
+                    label="Hotel Name"
+                    name={`hotelEvents[${index}][name]`}
+                    initialValue={event.name}
+                  >
+                    <Input
+                      name="name"
+                      value={event.name}
+                      onChange={(e) =>
+                        handleArrayChange(e, index, "hotelEvents")
+                      }
+                      placeholder="Enter name"
+                      className="w-full"
+                    />
+                  </Form.Item>
+                </Col>
+              </Row>
 
-            {/* Second Row: Description */}
-            <Row gutter={[16, 16]}>
-              <Col span={24}>
-                <Form.Item
-                  label="Description"
-                  name={`hotelEvents[${index}][description]`}
-                  initialValue={event.description}
-                >
-                  <TextArea
-                    name="description"
-                    value={event.description}
-                    onChange={(e) => handleArrayChange(e, index, "hotelEvents")}
-                    placeholder="Enter description"
-                    className="w-full"
-                    rows={4} // Adjust the number of rows as needed
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
+              {/* Second Row: Description */}
+              <Row gutter={[16, 16]}>
+                <Col span={24}>
+                  <Form.Item
+                    label="Description"
+                    name={`hotelEvents[${index}][description]`}
+                    initialValue={event.description}
+                  >
+                    <TextArea
+                      name="description"
+                      value={event.description}
+                      onChange={(e) =>
+                        handleArrayChange(e, index, "hotelEvents")
+                      }
+                      placeholder="Enter description"
+                      className="w-full"
+                      rows={4}
+                    />
+                  </Form.Item>
+                </Col>
+              </Row>
 
-            {/* Third Row: Hotel Star and Number of Nights */}
-            <Row gutter={[16, 16]}>
-              <Col span={12}>
-                <Form.Item
-                  label="Hotel Star"
-                  name={`hotelEvents[${index}][hotelStar]`}
-                  initialValue={event.hotelStar}
-                >
-                  <Select
-                    name="hotelStar"
-                    value={event.hotelStar}
-                    onChange={(value) =>
-                      handleArrayChange(
-                        { target: { name: "hotelStar", value } },
-                        index,
-                        "hotelEvents"
-                      )
+              {/* Third Row: Hotel Star and Number of Nights */}
+              <Row gutter={[16, 16]}>
+                <Col span={12}>
+                  <Form.Item
+                    label="Hotel Star"
+                    name={`hotelEvents[${index}][hotelStar]`}
+                    initialValue={event.hotelStar}
+                  >
+                    <Select
+                      name="hotelStar"
+                      value={event.hotelStar}
+                      onChange={(value) =>
+                        handleArrayChange(
+                          { target: { name: "hotelStar", value } },
+                          index,
+                          "hotelEvents"
+                        )
+                      }
+                      placeholder="Select hotel star"
+                      className="w-full"
+                    >
+                      <Select.Option value={3}>3</Select.Option>
+                      <Select.Option value={4}>4</Select.Option>
+                      <Select.Option value={5}>5</Select.Option>
+                    </Select>
+                  </Form.Item>
+                </Col>
+
+                <Col span={12}>
+                  <Form.Item
+                    label="Number of Nights"
+                    name={`hotelEvents[${index}][numberOfNights]`}
+                    initialValue={event.numberOfNights}
+                  >
+                    <Input
+                      name="numberOfNights"
+                      type="number"
+                      value={event.numberOfNights}
+                      onChange={(e) =>
+                        handleArrayChange(e, index, "hotelEvents")
+                      }
+                      placeholder="Enter number of nights"
+                      className="w-full"
+                    />
+                  </Form.Item>
+                </Col>
+              </Row>
+
+              {/* Fourth Row: Check-In and Check-Out */}
+              <Row gutter={[16, 16]}>
+                <Col span={12}>
+                  <Form.Item
+                    label="Check-In Time"
+                    name={`hotelEvents[${index}][checkIn]`}
+                    initialValue={event.checkIn}
+                  >
+                    <Input
+                      name="checkIn"
+                      type="time"
+                      value={event.checkIn}
+                      onChange={(e) =>
+                        handleArrayChange(e, index, "hotelEvents")
+                      }
+                      placeholder="Enter check-in date"
+                      className="w-full"
+                    />
+                  </Form.Item>
+                </Col>
+
+                <Col span={12}>
+                  <Form.Item
+                    label="Check-Out Time"
+                    name={`hotelEvents[${index}][checkOut]`}
+                    initialValue={event.checkOut}
+                  >
+                    <Input
+                      name="checkOut"
+                      type="time"
+                      value={event.checkOut}
+                      onChange={(e) =>
+                        handleArrayChange(e, index, "hotelEvents")
+                      }
+                      placeholder="Enter check-out date"
+                      className="w-full"
+                    />
+                  </Form.Item>
+                </Col>
+              </Row>
+
+              {/* Buttons Row */}
+              <Row gutter={[16, 16]} justify="center">
+                <Col span={6}>
+                  <Button
+                    type="primary"
+                    onClick={() => removeFromArray("hotelEvents", index)}
+                    className="w-full"
+                    style={{ backgroundColor: "red", color: "white" }}
+                  >
+                    Remove Event
+                  </Button>
+                </Col>
+                <Col span={6}>
+                  <Button
+                    type="primary"
+                    onClick={() =>
+                      addToArray("hotelEvents", {
+                        title: "",
+                        name: "",
+                        description: "",
+                        hotelStar: 3,
+                        checkIn: "",
+                        checkOut: "",
+                        numberOfNights: "",
+                      })
                     }
-                    placeholder="Select hotel star"
                     className="w-full"
                   >
-                    <Select.Option value={3}>3</Select.Option>
-                    <Select.Option value={4}>4</Select.Option>
-                    <Select.Option value={5}>5</Select.Option>
-                  </Select>
-                </Form.Item>
-              </Col>
-
-              <Col span={12}>
-                <Form.Item
-                  label="Number of Nights"
-                  name={`hotelEvents[${index}][numberOfNights]`}
-                  initialValue={event.numberOfNights}
-                >
-                  <Input
-                    name="numberOfNights"
-                    type="number"
-                    value={event.numberOfNights}
-                    onChange={(e) => handleArrayChange(e, index, "hotelEvents")}
-                    placeholder="Enter number of nights"
-                    className="w-full"
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
-
-            {/* Fourth Row: Check-In and Check-Out */}
-            <Row gutter={[16, 16]}>
-              <Col span={12}>
-                <Form.Item
-                  label="Check-In Time"
-                  name={`hotelEvents[${index}][checkIn]`}
-                  initialValue={event.checkIn}
-                >
-                  <Input
-                    name="checkIn"
-                    type="time"
-                    value={event.checkIn}
-                    onChange={(e) => handleArrayChange(e, index, "hotelEvents")}
-                    placeholder="Enter check-in date"
-                    className="w-full"
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col span={12}>
-                <Form.Item
-                  label="Check-Out Time"
-                  name={`hotelEvents[${index}][checkOut]`}
-                  initialValue={event.checkOut}
-                >
-                  <Input
-                    name="checkOut"
-                    type="time"
-                    value={event.checkOut}
-                    onChange={(e) => handleArrayChange(e, index, "hotelEvents")}
-                    placeholder="Enter check-out date"
-                    className="w-full"
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
-
-            {/* Buttons Row */}
-            <Row gutter={[16, 16]} justify="center">
-              <Col span={6}>
-                <Button
-                  type="primary"
-                  onClick={() => removeFromArray("hotelEvents", index)}
-                  className="w-full"
-                  style={{ backgroundColor: "red", color: "white" }}
-                >
-                  Remove Event
-                </Button>
-              </Col>
-              <Col span={6}>
-                <Button
-                  type="primary"
-                  onClick={() =>
-                    addToArray("hotelEvents", {
-                      title: "",
-                      name: "",
-                      description: "",
-                      hotelStar: 3,
-                      checkIn: "",
-                      checkOut: "",
-                      numberOfNights: "",
-                    })
-                  }
-                  className="w-full"
-                >
-                  Add Hotel Event
-                </Button>
-              </Col>
-            </Row>
+                    Add Hotel Event
+                  </Button>
+                </Col>
+              </Row>
+            </div>
+          ))
+        ) : (
+          <div className="text-center">
+            <Button
+              type="primary"
+              onClick={() =>
+                addToArray("hotelEvents", {
+                  title: "",
+                  name: "",
+                  description: "",
+                  hotelStar: 3,
+                  checkIn: "",
+                  checkOut: "",
+                  numberOfNights: "",
+                })
+              }
+              className="w-full"
+            >
+              Add Hotel Event
+            </Button>
           </div>
-        ))}
+        )}
       </Card>
 
       {/* Meals Included */}
@@ -398,379 +432,473 @@ const AddItenary = () => {
         bordered={false}
         className="mb-8"
       >
-        {formData.mealsIncludedWithHotels.map((event, index) => (
-          <div key={index} className="mb-6">
-            <Row gutter={[16, 16]}>
-              <Col span={12}>
-                <Form.Item
-                  label="Location"
-                  name={`mealsIncludedWithHotels[${index}][location]`}
-                  initialValue={event.location}
-                >
-                  <Input
-                    name="location"
-                    value={event.location}
-                    onChange={(e) =>
-                      handleArrayChange(e, index, "mealsIncludedWithHotels")
-                    }
-                    placeholder="Enter location"
-                    className="w-full"
-                  />
-                </Form.Item>
-              </Col>
+        {formData.mealsIncludedWithHotels.length > 0 ? (
+          formData.mealsIncludedWithHotels.map((event, index) => (
+            <div key={index} className="mb-6">
+              <Row gutter={[16, 16]}>
+                <Col span={12}>
+                  <Form.Item
+                    label="Location"
+                    name={`mealsIncludedWithHotels[${index}][location]`}
+                    initialValue={event.location}
+                  >
+                    <Input
+                      name="location"
+                      value={event.location}
+                      onChange={(e) =>
+                        handleArrayChange(e, index, "mealsIncludedWithHotels")
+                      }
+                      placeholder="Enter location"
+                      className="w-full"
+                    />
+                  </Form.Item>
+                </Col>
 
-              <Col span={12}>
-                <Form.Item
-                  label="Meal"
-                  name={`mealsIncludedWithHotels[${index}][meal]`}
-                  initialValue={event.meal}
-                >
-                  <Input
-                    name="meal"
-                    value={event.meal}
-                    onChange={(e) =>
-                      handleArrayChange(e, index, "mealsIncludedWithHotels")
-                    }
-                    placeholder="Enter meal"
-                    className="w-full"
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={[16, 16]} justify="center">
-              <Col span={6}>
-                <Button
-                  type="primary"
-                  onClick={() =>
-                    removeFromArray("mealsIncludedWithHotels", index)
-                  }
-                  className="w-full md:w-auto mb-4"
-                  style={{ backgroundColor: "red", color: "white" }}
-                >
-                  Remove Meal Event
-                </Button>
-              </Col>
+                <Col span={12}>
+                  <Form.Item
+                    label="Meal"
+                    name={`mealsIncludedWithHotels[${index}][meal]`}
+                    initialValue={event.meal}
+                  >
+                    <Input
+                      name="meal"
+                      value={event.meal}
+                      onChange={(e) =>
+                        handleArrayChange(e, index, "mealsIncludedWithHotels")
+                      }
+                      placeholder="Enter meal"
+                      className="w-full"
+                    />
+                  </Form.Item>
+                </Col>
+              </Row>
 
-              <Col span={6}>
-                <Button
-                  type="primary"
-                  onClick={() =>
-                    addToArray("mealsIncludedWithHotels", {
-                      location: "",
-                      meal: "",
-                    })
-                  }
-                  className="w-full md:w-auto"
-                >
-                  Add Meal Event
-                </Button>
-              </Col>
-            </Row>
+              <Row gutter={[16, 16]} justify="center">
+                <Col span={6}>
+                  <Button
+                    type="primary"
+                    onClick={() =>
+                      removeFromArray("mealsIncludedWithHotels", index)
+                    }
+                    className="w-full md:w-auto mb-4"
+                    style={{ backgroundColor: "red", color: "white" }}
+                  >
+                    Remove Meal Event
+                  </Button>
+                </Col>
+
+                <Col span={6}>
+                  <Button
+                    type="primary"
+                    onClick={() =>
+                      addToArray("mealsIncludedWithHotels", {
+                        location: "",
+                        meal: "",
+                      })
+                    }
+                    className="w-full md:w-auto"
+                  >
+                    Add Meal Event
+                  </Button>
+                </Col>
+              </Row>
+            </div>
+          ))
+        ) : (
+          <div className="text-center">
+            <p className="text-gray-500">
+              No meal events added yet. Please add some meal events below:
+            </p>
+            <Button
+              type="primary"
+              onClick={() =>
+                addToArray("mealsIncludedWithHotels", {
+                  location: "",
+                  meal: "",
+                })
+              }
+              className="w-full"
+            >
+              Add Meal Event
+            </Button>
           </div>
-        ))}
+        )}
       </Card>
 
       {/* Flight Events */}
       <Card title="Flight Events" bordered={false} className="mb-8">
-        {formData.flightEvents.map((event, index) => (
-          <div key={index} className="mb-6">
-            <Row gutter={[16, 16]}>
-              <Col span={12}>
-                <Form.Item
-                  label="From"
-                  name={`flightEvents[${index}][from]`}
-                  initialValue={event.from}
-                >
-                  <Input
-                    name="from"
-                    value={event.from}
-                    onChange={(e) =>
-                      handleArrayChange(e, index, "flightEvents")
-                    }
-                    placeholder="Enter from location"
-                    className="w-full"
-                  />
-                </Form.Item>
-              </Col>
+        {formData.flightEvents.length > 0 ? (
+          formData.flightEvents.map((event, index) => (
+            <div key={index} className="mb-6">
+              <Row gutter={[16, 16]}>
+                <Col span={12}>
+                  <Form.Item
+                    label="From"
+                    name={`flightEvents[${index}][from]`}
+                    initialValue={event.from}
+                  >
+                    <Input
+                      name="from"
+                      value={event.from}
+                      onChange={(e) =>
+                        handleArrayChange(e, index, "flightEvents")
+                      }
+                      placeholder="Enter from location"
+                      className="w-full"
+                    />
+                  </Form.Item>
+                </Col>
 
-              <Col span={12}>
-                <Form.Item
-                  label="From Airport Code"
-                  name={`flightEvents[${index}][fromAirPortCode]`}
-                  initialValue={event.fromAirPortCode}
-                >
-                  <Input
-                    name="fromAirPortCode"
-                    value={event.fromAirPortCode}
-                    onChange={(e) =>
-                      handleArrayChange(e, index, "flightEvents")
-                    }
-                    placeholder="Enter airport code"
-                    className="w-full"
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
+                <Col span={12}>
+                  <Form.Item
+                    label="From Airport Code"
+                    name={`flightEvents[${index}][fromAirPortCode]`}
+                    initialValue={event.fromAirPortCode}
+                  >
+                    <Input
+                      name="fromAirPortCode"
+                      value={event.fromAirPortCode}
+                      onChange={(e) =>
+                        handleArrayChange(e, index, "flightEvents")
+                      }
+                      placeholder="Enter airport code"
+                      className="w-full"
+                    />
+                  </Form.Item>
+                </Col>
+              </Row>
 
-            <Row gutter={[16, 16]}>
-              <Col span={12}>
-                <Form.Item
-                  label="To"
-                  name={`flightEvents[${index}][to]`}
-                  initialValue={event.to}
-                >
-                  <Input
-                    name="to"
-                    value={event.to}
-                    onChange={(e) =>
-                      handleArrayChange(e, index, "flightEvents")
-                    }
-                    placeholder="Enter to location"
-                    className="w-full"
-                  />
-                </Form.Item>
-              </Col>
+              <Row gutter={[16, 16]}>
+                <Col span={12}>
+                  <Form.Item
+                    label="To"
+                    name={`flightEvents[${index}][to]`}
+                    initialValue={event.to}
+                  >
+                    <Input
+                      name="to"
+                      value={event.to}
+                      onChange={(e) =>
+                        handleArrayChange(e, index, "flightEvents")
+                      }
+                      placeholder="Enter to location"
+                      className="w-full"
+                    />
+                  </Form.Item>
+                </Col>
 
-              <Col span={12}>
-                <Form.Item
-                  label="To Airport Code"
-                  name={`flightEvents[${index}][toAirPortCode]`}
-                  initialValue={event.toAirPortCode}
-                >
-                  <Input
-                    name="toAirPortCode"
-                    value={event.toAirPortCode}
-                    onChange={(e) =>
-                      handleArrayChange(e, index, "flightEvents")
+                <Col span={12}>
+                  <Form.Item
+                    label="To Airport Code"
+                    name={`flightEvents[${index}][toAirPortCode]`}
+                    initialValue={event.toAirPortCode}
+                  >
+                    <Input
+                      name="toAirPortCode"
+                      value={event.toAirPortCode}
+                      onChange={(e) =>
+                        handleArrayChange(e, index, "flightEvents")
+                      }
+                      placeholder="Enter airport code"
+                      className="w-full"
+                    />
+                  </Form.Item>
+                </Col>
+              </Row>
+
+              <Row gutter={[16, 16]} justify="center">
+                <Col span={6}>
+                  <Button
+                    type="primary"
+                    onClick={() => removeFromArray("flightEvents", index)}
+                    className="w-full md:w-auto mb-4"
+                    style={{ backgroundColor: "red", color: "white" }}
+                  >
+                    Remove Event
+                  </Button>
+                </Col>
+                <Col span={6}>
+                  <Button
+                    type="primary"
+                    onClick={() =>
+                      addToArray("flightEvents", {
+                        from: "",
+                        fromAirPortCode: "",
+                        to: "",
+                        toAirPortCode: "",
+                      })
                     }
-                    placeholder="Enter airport code"
-                    className="w-full"
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={[16, 16]} justify="center">
-              <Col span={6}>
-                <Button
-                  type="primary"
-                  onClick={() => removeFromArray("flightEvents", index)}
-                  className="w-full md:w-auto mb-4"
-                  style={{ backgroundColor: "red", color: "white" }}
-                >
-                  Remove Event
-                </Button>
-              </Col>
-              <Col span={6}>
-                {" "}
-                <Button
-                  type="primary"
-                  onClick={() =>
-                    addToArray("flightEvents", {
-                      from: "",
-                      fromAirPortCode: "",
-                      to: "",
-                      toAirPortCode: "",
-                    })
-                  }
-                  className="w-full md:w-auto"
-                >
-                  Add Flight Event
-                </Button>
-              </Col>
-            </Row>
+                    className="w-full md:w-auto"
+                  >
+                    Add Flight Event
+                  </Button>
+                </Col>
+              </Row>
+            </div>
+          ))
+        ) : (
+          <div className="text-center">
+            <p className="text-gray-500">
+              No flight events added yet. Please add a flight event below:
+            </p>
+            <Button
+              type="primary"
+              onClick={() =>
+                addToArray("flightEvents", {
+                  from: "",
+                  fromAirPortCode: "",
+                  to: "",
+                  toAirPortCode: "",
+                })
+              }
+              className="w-full"
+            >
+              Add Flight Event
+            </Button>
           </div>
-        ))}
+        )}
       </Card>
 
       {/* Transfer Events */}
       {/* Transfer Events */}
       <Card title="Transfer Events" bordered={false} className="mb-8">
-        {formData.transferEvents.map((event, index) => (
-          <div key={index} className="mb-6">
-            {/* First Row: Title of Transfer */}
-            <Row gutter={[16, 16]}>
-              <Col span={24}>
-                <Form.Item
-                  label="Title of transfer"
-                  name={`transferEvents[${index}][title]`}
-                  initialValue={event.title}
-                >
-                  <Input
-                    name="title"
-                    value={event.title}
-                    onChange={(e) =>
-                      handleArrayChange(e, index, "transferEvents")
-                    }
-                    placeholder="Enter title"
-                    className="w-full"
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
+        {formData.transferEvents.length > 0 ? (
+          formData.transferEvents.map((event, index) => (
+            <div key={index} className="mb-6">
+              {/* First Row: Title of Transfer */}
+              <Row gutter={[16, 16]}>
+                <Col span={24}>
+                  <Form.Item
+                    label="Title of transfer"
+                    name={`transferEvents[${index}][title]`}
+                    initialValue={event.title}
+                  >
+                    <Input
+                      name="title"
+                      value={event.title}
+                      onChange={(e) =>
+                        handleArrayChange(e, index, "transferEvents")
+                      }
+                      placeholder="Enter title"
+                      className="w-full"
+                    />
+                  </Form.Item>
+                </Col>
+              </Row>
 
-            {/* Second Row: From Location and To Location */}
-            <Row gutter={[16, 16]}>
-              <Col span={12}>
-                <Form.Item
-                  label="From Location"
-                  name={`transferEvents[${index}][fromLocation]`}
-                  initialValue={event.fromLocation}
-                >
-                  <Input
-                    name="fromLocation"
-                    value={event.fromLocation}
-                    onChange={(e) =>
-                      handleArrayChange(e, index, "transferEvents")
-                    }
-                    placeholder="Enter from location"
-                    className="w-full"
-                  />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  label="To Location"
-                  name={`transferEvents[${index}][toLocation]`}
-                  initialValue={event.toLocation}
-                >
-                  <Input
-                    name="toLocation"
-                    value={event.toLocation}
-                    onChange={(e) =>
-                      handleArrayChange(e, index, "transferEvents")
-                    }
-                    placeholder="Enter to location"
-                    className="w-full"
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
+              {/* Second Row: From Location and To Location */}
+              <Row gutter={[16, 16]}>
+                <Col span={12}>
+                  <Form.Item
+                    label="From Location"
+                    name={`transferEvents[${index}][fromLocation]`}
+                    initialValue={event.fromLocation}
+                  >
+                    <Input
+                      name="fromLocation"
+                      value={event.fromLocation}
+                      onChange={(e) =>
+                        handleArrayChange(e, index, "transferEvents")
+                      }
+                      placeholder="Enter from location"
+                      className="w-full"
+                    />
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item
+                    label="To Location"
+                    name={`transferEvents[${index}][toLocation]`}
+                    initialValue={event.toLocation}
+                  >
+                    <Input
+                      name="toLocation"
+                      value={event.toLocation}
+                      onChange={(e) =>
+                        handleArrayChange(e, index, "transferEvents")
+                      }
+                      placeholder="Enter to location"
+                      className="w-full"
+                    />
+                  </Form.Item>
+                </Col>
+              </Row>
 
-            {/* Buttons Row */}
-            <Row gutter={[16, 16]} justify="center">
-              <Col span={6}>
-                <Button
-                  type="danger" // This will make the background red
-                  onClick={() => removeFromArray("transferEvents", index)}
-                  style={{ backgroundColor: "red", color: "white" }}
-                >
-                  Remove Event
-                </Button>
-              </Col>
-              <Col span={6}>
-                <Button
-                  type="primary"
-                  onClick={() =>
-                    addToArray("transferEvents", {
-                      title: "",
-                      fromLocation: "",
-                      toLocation: "",
-                    })
-                  }
-                  className="w-full md:w-auto"
-                >
-                  Add Transfer Event
-                </Button>
-              </Col>
-            </Row>
+              {/* Buttons Row */}
+              <Row gutter={[16, 16]} justify="center">
+                <Col span={6}>
+                  <Button
+                    type="danger"
+                    onClick={() => removeFromArray("transferEvents", index)}
+                    style={{ backgroundColor: "red", color: "white" }}
+                  >
+                    Remove Event
+                  </Button>
+                </Col>
+                <Col span={6}>
+                  <Button
+                    type="primary"
+                    onClick={() =>
+                      addToArray("transferEvents", {
+                        title: "",
+                        fromLocation: "",
+                        toLocation: "",
+                      })
+                    }
+                    className="w-full md:w-auto"
+                  >
+                    Add Transfer Event
+                  </Button>
+                </Col>
+              </Row>
+            </div>
+          ))
+        ) : (
+          <div className="text-center">
+            <Button
+              type="primary"
+              onClick={() =>
+                addToArray("transferEvents", {
+                  title: "",
+                  fromLocation: "",
+                  toLocation: "",
+                })
+              }
+              className="w-full md:w-auto"
+            >
+              Add Transfer Event
+            </Button>
           </div>
-        ))}
+        )}
       </Card>
 
       {/* Activity Events */}
       <Card title="Activity Events" bordered={false} className="mb-8">
-        {formData.activityEvents.map((event, index) => (
-          <div key={index} className="mb-6">
-            <Row gutter={[16, 16]}>
-              <Col span={24}>
-                <Form.Item
-                  label="Activity Title"
-                  name={`activityEvents[${index}][title]`}
-                  initialValue={event.title}
-                >
-                  <Input
-                    name="title"
-                    value={event.title}
-                    onChange={(e) =>
-                      handleArrayChange(e, index, "activityEvents")
-                    }
-                    placeholder="Activity Title"
-                    className="w-full"
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={[16, 16]} justify="center">
-              <Col span={6}>
-                <Button
-                  type="primary"
-                  onClick={() => removeFromArray("activityEvents", index)}
-                  className="w-full md:w-auto mb-4"
-                  style={{ backgroundColor: "red", color: "white" }}
-                >
-                  Remove Event
-                </Button>
-              </Col>
-              <Col span={6}>
-                <Button
-                  type="primary"
-                  onClick={() => addToArray("activityEvents", { title: "" })}
-                  className="w-full md:w-auto"
-                >
-                  Add Activity Event
-                </Button>
-              </Col>
-            </Row>
+        {formData.activityEvents.length > 0 ? (
+          formData.activityEvents.map((event, index) => (
+            <div key={index} className="mb-6">
+              <Row gutter={[16, 16]}>
+                <Col span={24}>
+                  <Form.Item
+                    label="Activity Title"
+                    name={`activityEvents[${index}][title]`}
+                    initialValue={event.title}
+                  >
+                    <Input
+                      name="title"
+                      value={event.title}
+                      onChange={(e) =>
+                        handleArrayChange(e, index, "activityEvents")
+                      }
+                      placeholder="Activity Title"
+                      className="w-full"
+                    />
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row gutter={[16, 16]} justify="center">
+                <Col span={6}>
+                  <Button
+                    type="primary"
+                    onClick={() => removeFromArray("activityEvents", index)}
+                    className="w-full md:w-auto mb-4"
+                    style={{ backgroundColor: "red", color: "white" }}
+                  >
+                    Remove Event
+                  </Button>
+                </Col>
+                <Col span={6}>
+                  <Button
+                    type="primary"
+                    onClick={() => addToArray("activityEvents", { title: "" })}
+                    className="w-full md:w-auto"
+                  >
+                    Add Activity Event
+                  </Button>
+                </Col>
+              </Row>
+            </div>
+          ))
+        ) : (
+          <div className="text-center">
+            <p className="text-gray-500">
+              No activity events added yet. Please add an activity event below:
+            </p>
+            <Button
+              type="primary"
+              onClick={() => addToArray("activityEvents", { title: "" })}
+              className="w-full"
+            >
+              Add Activity Event
+            </Button>
           </div>
-        ))}
+        )}
       </Card>
 
       {/* Leisure Day Events */}
       <Card title="Leisure Day Events" bordered={false} className="mb-8">
-        {formData.leisureDayEvents.map((event, index) => (
-          <div key={index} className="mb-6">
-            <Row gutter={[16, 16]}>
-              <Col span={24}>
-                <Form.Item
-                  label="Location Name"
-                  name={`leisureDayEvents[${index}][title]`}
-                  initialValue={event.title}
-                >
-                  <Input
-                    name="title"
-                    value={event.title}
-                    onChange={(e) =>
-                      handleArrayChange(e, index, "leisureDayEvents")
+        {formData.leisureDayEvents.length > 0 ? (
+          formData.leisureDayEvents.map((event, index) => (
+            <div key={index} className="mb-6">
+              <Row gutter={[16, 16]}>
+                <Col span={24}>
+                  <Form.Item
+                    label="Location Name"
+                    name={`leisureDayEvents[${index}][title]`}
+                    initialValue={event.title}
+                  >
+                    <Input
+                      name="title"
+                      value={event.title}
+                      onChange={(e) =>
+                        handleArrayChange(e, index, "leisureDayEvents")
+                      }
+                      placeholder="Location Name"
+                      className="w-full"
+                    />
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row gutter={[16, 16]} justify="center">
+                <Col span={6}>
+                  <Button
+                    type="primary"
+                    onClick={() => removeFromArray("leisureDayEvents", index)}
+                    className="w-full md:w-auto mb-4"
+                    style={{ backgroundColor: "red", color: "white" }}
+                  >
+                    Remove Event
+                  </Button>
+                </Col>
+                <Col span={6}>
+                  <Button
+                    type="primary"
+                    onClick={() =>
+                      addToArray("leisureDayEvents", { title: "" })
                     }
-                    placeholder="Location Name"
-                    className="w-full"
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={[16, 16]} justify="center">
-              <Col span={6}>
-                <Button
-                  type="primary"
-                  onClick={() => removeFromArray("leisureDayEvents", index)}
-                  className="w-full md:w-auto mb-4"
-                  style={{ backgroundColor: "red", color: "white" }}
-                >
-                  Remove Event
-                </Button>
-              </Col>
-              <Col span={6}>
-                <Button
-                  type="primary"
-                  onClick={() => addToArray("leisureDayEvents", { title: "" })}
-                  className="w-full md:w-auto"
-                >
-                  Add Leisure Day Event
-                </Button>
-              </Col>
-            </Row>
+                    className="w-full md:w-auto"
+                  >
+                    Add Leisure Day Event
+                  </Button>
+                </Col>
+              </Row>
+            </div>
+          ))
+        ) : (
+          <div className="text-center">
+            <p className="text-gray-500">
+              No leisure day events added yet. Please add a leisure day event
+              below:
+            </p>
+            <Button
+              type="primary"
+              onClick={() => addToArray("leisureDayEvents", { title: "" })}
+              className="w-full"
+            >
+              Add Leisure Day Event
+            </Button>
           </div>
-        ))}
+        )}
       </Card>
 
       {/* Submit Button */}

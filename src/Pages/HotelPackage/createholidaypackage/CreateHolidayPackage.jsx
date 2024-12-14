@@ -87,7 +87,7 @@ const CreateHolidayPackage = () => {
   const userId = reducerState?.logIn?.loginData?.data?.data?.id;
   const [loader, setLoader] = useState(false);
   const navigate = useNavigate();
-  // console.log("createPackage", reducerState);
+  
   const ListItem = styled("li")(({ theme }) => ({
     margin: theme.spacing(0.5),
   }));
@@ -188,21 +188,19 @@ const CreateHolidayPackage = () => {
       setTag({ domestic: false, international: false });
       setIsDomesticDisabled(false);
       setIsInternationalDisabled(false);
-      console.log(
-        "----------------------------------------------------------------"
-      );
+    
     } else if (inputCountry.toLowerCase() === "india") {
       // If country is India, select Domestic and disable International
       setTag({ ...tag, domestic: true });
       setIsDomesticDisabled(false);
       setIsInternationalDisabled(true);
-      console.log("Country is India - Domestic selected:", true);
+     
     } else {
       // For any other country, select International and disable Domestic
       setTag({ ...tag, international: true });
       setIsDomesticDisabled(true);
       setIsInternationalDisabled(false);
-      console.log("Country is not India - International selected:", true);
+     
     }
   };
 
@@ -476,10 +474,10 @@ const CreateHolidayPackage = () => {
 
       // formData1.append("file", file1);
       formData1.append("data", JSON.stringify(payload));
-      // console.log(payload, "payload")
+     
 
       dispatch(createPackageAction(formData1));
-      console.log(createPackageAction(formData1));
+      
     }
   };
 

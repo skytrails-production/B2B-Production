@@ -81,8 +81,7 @@ import { message } from "antd";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const CreateHolidayPackageNew = () => {
-  console.log("Response--===========:");
-
+ 
   const ListItem = styled("li")(({ theme }) => ({
     margin: theme.spacing(0.5),
   }));
@@ -410,7 +409,7 @@ const CreateHolidayPackageNew = () => {
       term_Conditions: termsArray,
       cancellation_Policy: cancellationPolicies,
     };
-    console.log(payload, "payload");
+  
     // Prepare FormData
     const formData = new FormData();
     formData.append("data", JSON.stringify(payload));
@@ -443,12 +442,11 @@ const CreateHolidayPackageNew = () => {
         }
       );
 
-      console.log("Response--===========:", response.data.data._id);
-
+  
       localStorage.setItem("packageid", response.data.data._id);
       const dataIdget = localStorage.getItem("packageid");
 
-      console.log(dataIdget, "dataidsss");
+     
       showNotification("Package Create successfully!", "success");
       navigate("/PackagesList");
     } catch (error) {

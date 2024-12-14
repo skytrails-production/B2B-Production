@@ -4,8 +4,8 @@ import { SpinnerCircular } from 'spinners-react';
 import CallIcon from '@mui/icons-material/Call';
 import EmailIcon from '@mui/icons-material/Email';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import Footer from './Footer';
 import { apiURL } from '../Constants/constant';
+import Footer from './Footer';
 const ContactUs = () => {
 
 
