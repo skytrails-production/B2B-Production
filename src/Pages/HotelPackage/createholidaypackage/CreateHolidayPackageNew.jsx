@@ -39,6 +39,7 @@ import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 import WifiPasswordIcon from "@mui/icons-material/WifiPassword";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { FormControl, Select,MenuItem } from "@mui/material";
 // import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 import {
@@ -54,14 +55,7 @@ import Modal from "@mui/material/Modal";
 import loginOtp from "../../../../src/Images/login-01.jpg";
 import { IoIosClose } from "react-icons/io";
 
-import {
-  Box,
-  Button,
-  FormControl,
-  Grid,
-  NativeSelect,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Grid, NativeSelect, Typography } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Chip from "@mui/material/Chip";
@@ -81,15 +75,16 @@ import { message } from "antd";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const CreateHolidayPackageNew = () => {
- 
   const ListItem = styled("li")(({ theme }) => ({
     margin: theme.spacing(0.5),
   }));
+  const [currency, setCurrency] = useState("INR");
+
   const [input, setInput] = useState("");
   const [chipData, setChipData] = useState([]); // Array of objects [{ addMore: "Delhi" }, { addMore: "Himachal Pradesh" }]
   const [isDomesticDisabled, setIsDomesticDisabled] = useState(false);
   const [isInternationalDisabled, setIsInternationalDisabled] = useState(false);
-  const [days, setDays] = useState(1);
+  const [days, setDays] = useState(2);
   const [amount, setAmount] = useState();
   const [termAndCondition, setTermAndCondition] = useState("");
 
@@ -109,6 +104,11 @@ const CreateHolidayPackageNew = () => {
   const [overView, setOverView] = useState("");
   const [notification, setNotification] = useState(null); // New state for notifications
   const [packageHighLightArray, setPackageHighLightArray] = useState([]);
+  // const [packageAmountData, setPackageAmountData] = useState([]); // Dynamic data
+
+  const [packageAmountData, setPackageAmountData] = useState([
+    { currency: "INR", packageCategory: "Standard", amount: "" },
+  ]);
   const [highlightText, setHighlightText] = useState("");
   const [open, setOpen] = useState(false);
   const [sub, setSub] = useState(false);
@@ -295,17 +295,12 @@ const CreateHolidayPackageNew = () => {
     }
 
     if (!packageType) {
-      message.error("Package type is required!");
+      message.error("packageType is required!");
       return;
     }
 
     if (!days) {
       message.error("Number of days is required!");
-      return;
-    }
-
-    if (!amount) {
-      message.error("Package amount is required!");
       return;
     }
 
@@ -335,12 +330,23 @@ const CreateHolidayPackageNew = () => {
       insclusion_note: inclusionNoteArray, // Add inclusion notes
 
       exclusion_note: exclusionNoteArray, // Add exclusion notes
+
       packageType,
       days,
-      packageAmount: {
-        currency: "INR",
-        amount,
-      },
+      // packageAmount: [
+      //   {
+      //     currency,
+      //     amount,
+      //     packageType,
+      //   },
+      // ],
+
+      packageAmount: packageAmountData.map((item) => ({
+        currency: item.currency,
+        amount: item.amount,
+        packageCategory: item.packageCategory,
+      })),
+
       specialTag: [
         { budget: tag.budget },
         { holiday: tag.holiday },
@@ -409,7 +415,7 @@ const CreateHolidayPackageNew = () => {
       term_Conditions: termsArray,
       cancellation_Policy: cancellationPolicies,
     };
-  
+
     // Prepare FormData
     const formData = new FormData();
     formData.append("data", JSON.stringify(payload));
@@ -430,7 +436,7 @@ const CreateHolidayPackageNew = () => {
     }
 
     try {
-      setLoading(true);
+      setLoader(true);
 
       const response = await axios.post(
         `${apiURL.baseURL}/skyTrails/holidaypackage/create`,
@@ -442,11 +448,9 @@ const CreateHolidayPackageNew = () => {
         }
       );
 
-  
       localStorage.setItem("packageid", response.data.data._id);
       const dataIdget = localStorage.getItem("packageid");
 
-     
       showNotification("Package Create successfully!", "success");
       navigate("/PackagesList");
     } catch (error) {
@@ -454,13 +458,43 @@ const CreateHolidayPackageNew = () => {
         "Error creating package:",
         error.response?.data || error.message
       );
-      alert("Failed to create the package. Please try again.");
+      //alert("Failed to create the package. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   // Function to show notification
+
+  const updateAmount = (selectedCurrency, selectedPackageType) => {
+    const selectedPackage = packageAmountData.find(
+      (item) =>
+        item.currency === selectedCurrency &&
+        item.packageType === selectedPackageType
+    );
+    setAmount(selectedPackage ? selectedPackage.amount : "");
+  };
+  // Handle input changes for each form entry
+  const handleInputChange = (index, field, value) => {
+    const newPackageAmountData = [...packageAmountData];
+    newPackageAmountData[index][field] = value;
+    setPackageAmountData(newPackageAmountData);
+  };
+
+  // Add a new form entry
+  const addFormField = () => {
+    setPackageAmountData([
+      ...packageAmountData,
+      { currency: "INR", packageType: "Standard", amount: "" },
+    ]);
+  };
+  // Remove a form entry by index
+  const removeFormField = (index) => {
+    const newPackageAmountData = packageAmountData.filter(
+      (_, i) => i !== index
+    );
+    setPackageAmountData(newPackageAmountData);
+  };
 
   return (
     <div className="container-xxl">
@@ -545,7 +579,7 @@ const CreateHolidayPackageNew = () => {
                     <option value="International">International</option>
                     <option value="Domestic">Domestic</option>
                   </select>
-                  {sub && packageType === "" && (
+                  {sub && setPackageType === "" && (
                     <span id="error1" style={{ color: "red" }}>
                       Please select a Package Type
                     </span>
@@ -832,60 +866,134 @@ const CreateHolidayPackageNew = () => {
                   </Box>
                 </div>
 
-                <div class="mb-3">
-                  <label class="form-label">
-                    Package Amount <span style={{ color: "red" }}>*</span>
-                  </label>
-                  <div className="pricing">
-                    <FormControl style={{ border: "1px sold black" }}>
-                      <NativeSelect
-                        style={{
-                          fontSize: "20px",
-                          color: "#000",
+                <div>
+                  <label class="form-label"> Package Amount</label>
 
-                          fontFamily: "Montserrat",
+                  {/* Render dynamic form entries */}
+                  {packageAmountData.map((entry, index) => (
+                    <div key={index} style={{ marginBottom: "20px" }}>
+                      <div
+                        style={{
+                          border: "1px solid #ddd",
+                          borderRadius: "8px",
+                          padding: "15px",
+                          backgroundColor: "#f9f9f9",
+                          marginBottom: "10px",
                         }}
                       >
-                        <option
-                          value={10}
+                        {/* First Row */}
+                        <div
                           style={{
-                            fontSize: "20px",
-                            color: "#000",
-
-                            fontFamily: "Montserrat",
+                            display: "flex",
+                            gap: "10px",
+                            marginBottom: "10px",
                           }}
                         >
-                          INR
-                        </option>
-                      </NativeSelect>
-                    </FormControl>
-                    <Box display="flex" ml={1}>
-                      {/* <input
-                        type="text"
-                        name="amount"
-                        placeholder="Amount"
-                        onChange={handleAmount}
-                        class="form-control"
-                      /> */}
-                      <input
-                        type="text"
-                        name="amount"
-                        inputMode="numeric" // Displays numeric keyboard
-                        placeholder="Amount"
-                        onChange={(e) => {
-                          const value = e.target.value;
-                          if (/^\d*$/.test(value)) {
-                            setAmount(value);
-                          }
-                        }}
-                        class="form-control"
-                      />
-                    </Box>
-                    <label class="form-label">Per Person</label>
-                  </div>
-                  {/* {sub && amount === 0 && <span id="error1">Amount</span>} */}
-                </div>
+                          {/* Currency Dropdown */}
+                          <FormControl style={{ flex: "1" }}>
+                            <Select
+                              value={entry.currency}
+                              onChange={(e) =>
+                                handleInputChange(
+                                  index,
+                                  "currency",
+                                  e.target.value
+                                )
+                              }
+                              style={{
+                                fontSize: "14px",
+                                width: "100%",
+                              }}
+                            >
+                              <MenuItem value="INR">INR</MenuItem>
+                              <MenuItem value="USD">USD</MenuItem>
+                              <MenuItem value="EUR">EUR</MenuItem>
+                            </Select>
+                          </FormControl>
 
+                          {/* Package Type Dropdown */}
+                          <FormControl style={{ flex: "1" }}>
+                            <Select
+                              value={entry.packageCategory}
+                              onChange={(e) =>
+                                handleInputChange(
+                                  index,
+                                  "packageCategory",
+                                  e.target.value
+                                )
+                              }
+                              style={{
+                                fontSize: "14px",
+                               
+                                borderRadius: "4px",
+                              }}
+                            >
+                              <MenuItem value="Standard">Standard</MenuItem>
+                              <MenuItem value="Deluxe">Deluxe</MenuItem>
+                              <MenuItem value="Luxury">Luxury</MenuItem>
+                            </Select>
+                          </FormControl>
+                        </div>
+
+                        {/* Second Row */}
+                        <div style={{ display: "flex", gap: "10px" }}>
+                          {/* Amount Input */}
+                          <Box style={{ flex: "1" }}>
+                            <input
+                              type="text"
+                              name="amount"
+                              inputMode="numeric"
+                              placeholder="Amount"
+                              value={entry.amount}
+                              onChange={(e) =>
+                                handleInputChange(
+                                  index,
+                                  "amount",
+                                  e.target.value
+                                )
+                              }
+                              style={{
+                                fontSize: "14px",
+                                padding: "8px",
+                                width: "100%",
+                                border: "1px solid #ccc",
+                                borderRadius: "4px",
+                              }}
+                            />
+                          </Box>
+                        </div>
+
+                        {/* Remove Button */}
+                        {packageAmountData.length > 1 && (
+                          <div
+                            style={{ textAlign: "right", marginTop: "10px" }}
+                          >
+                            <Button
+                              variant="outlined"
+                              color="secondary"
+                              onClick={() => removeFormField(index)}
+                              style={{ fontSize: "12px" }}
+                            >
+                              Remove
+                            </Button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+
+                  {/* Action Buttons */}
+                  <div style={{ textAlign: "center", marginTop: "20px" }}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={addFormField}
+                      style={{ marginRight: "10px" }}
+                    >
+                      Add Package
+                    </Button>
+                  </div>
+                </div>
                 <Box style={{ fontSize: "16px" }}>
                   <Typography
                     style={{

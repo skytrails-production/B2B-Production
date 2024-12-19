@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import profilePicUrl from "../../../../Images/logo.jpeg";
 import "./AddAdvertisement.css";
 import { CircularProgress } from "@mui/material";
+
 const CreateAdvertisementForm = () => {
   const [formValues, setFormValues] = useState({
     title: "",
@@ -14,32 +15,38 @@ const CreateAdvertisementForm = () => {
     remainingDays: "",
     images: "",
   });
+  const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
   const [load, setLoad] = useState(false);
+  const navigate = useNavigate();
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormValues({
-      ...formValues,
+    setFormValues((prevValues) => ({
+      ...prevValues,
       [name]: value,
       remainingDays: calculateRemainingDays(
-        formValues.startDate,
-        formValues.endDate
+        name === "startDate" ? value : formValues.startDate,
+        name === "endDate" ? value : formValues.endDate
       ),
-    });
+    }));
+    if (errors[name]) {
+      setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
+    }
   };
 
   const handleFileChange = (e) => {
-    // console.log("e==============>>>>", e)
     const file = e.target.files[0];
-    // console.log("file", file)
-    setFormValues({
-      ...formValues,
+    setFormValues((prevValues) => ({
+      ...prevValues,
       images: file,
-    });
+    }));
+    if (errors.images) {
+      setErrors((prevErrors) => ({ ...prevErrors, images: "" }));
+    }
   };
 
   const calculateRemainingDays = (startDate, endDate) => {
-    // Calculate the remaining days here
     if (startDate && endDate) {
       const start = new Date(startDate);
       const end = new Date(endDate);
@@ -49,9 +56,30 @@ const CreateAdvertisementForm = () => {
     }
     return "";
   };
-  const navigate = useNavigate();
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formValues.title.trim()) newErrors.title = "Title is required.";
+    if (!formValues.content.trim()) newErrors.content = "Content is required.";
+    if (!formValues.startDate) newErrors.startDate = "Start date is required.";
+    if (!formValues.endDate) newErrors.endDate = "End date is required.";
+    if (
+      formValues.startDate &&
+      formValues.endDate &&
+      new Date(formValues.startDate) > new Date(formValues.endDate)
+    ) {
+      newErrors.endDate = "End date cannot be earlier than start date.";
+    }
+    if (!formValues.images) newErrors.images = "An image file is required.";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent the default form submission behavior
+    e.preventDefault();
+    if (!validateForm()) return;
+
     setLoad(true);
     try {
       const formData = new FormData();
@@ -66,7 +94,6 @@ const CreateAdvertisementForm = () => {
         `${apiURL.baseURL}/skyTrails/api/admin/createadvertisment`,
         formData,
         {
-          method: "POST",
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -74,22 +101,16 @@ const CreateAdvertisementForm = () => {
       );
 
       if (response.status >= 200 && response.status < 300) {
-        // console.log('Advertisement created successfully:', response.data);
-        //alert('Advertisement created successfully!');
         setMessage("Advertisement created successfully!");
         setTimeout(() => {
           navigate("/admin/dashboard");
-        }, 5000); // Redirect to admin dashboard
+        }, 5000);
       } else {
-        //alert('Failed to create Advertisement!');
-        setMessage("Failed to create Advertisement");
-        console.error("Failed to create Advertisement:", response.statusText);
+        setMessage("Failed to create Advertisement.");
       }
-      // console.log('API Response:', response.data);
-      // Handle success or further actions as needed
     } catch (error) {
-      console.error("API Error:", error.response.data);
-      // Handle error or show error message
+      console.error("API Error:", error.response?.data || error.message);
+      setMessage("An error occurred while creating the advertisement.");
     } finally {
       setLoad(false);
     }
@@ -106,7 +127,7 @@ const CreateAdvertisementForm = () => {
             left: 0,
             width: "100%",
             height: "100%",
-            background: "rgba(255, 255, 255, 0.5))",
+            background: "rgba(255, 255, 255, 0.5)",
             zIndex: 9999,
           }}
         >
@@ -117,28 +138,17 @@ const CreateAdvertisementForm = () => {
             style={{
               position: "absolute",
               top: "50%",
-              left: "49.8%",
+              left: "50%",
               transform: "translate(-50%, -50%)",
             }}
           />
         </div>
       )}
       {message && (
-        <div
-          style={{
-            backgroundColor: "#d4edda",
-            color: "#155724",
-            padding: "10px",       
-            marginBottom: "30px",
-            borderRadius: "5px",
-          }}
-        >
-          {message}
-        </div>
+        <div className="message-container success-message">{message}</div>
       )}
       <header className="sectionagent headersagent">
         <div className="headead">
-          {/* <img src={profilePicUrl} style={{ width: "80%" }} alt="Logo" /> */}
           <h2>Create Advertisement</h2>
         </div>
       </header>
@@ -150,19 +160,22 @@ const CreateAdvertisementForm = () => {
             name="title"
             value={formValues.title}
             onChange={handleInputChange}
-            className="form-input-ads"
+            className={`form-input-ads ${errors.title ? "input-error" : ""}`}
           />
+          {errors.title && <span className="error-message">{errors.title}</span>}
         </label>
 
         <label className="form-label-add">
           Content:
           <textarea
-            type="text"
             name="content"
             value={formValues.content}
             onChange={handleInputChange}
-            className="form-textarea"
+            className={`form-textarea ${errors.content ? "input-error" : ""}`}
           />
+          {errors.content && (
+            <span className="error-message">{errors.content}</span>
+          )}
         </label>
 
         <label className="form-label-add">
@@ -172,8 +185,11 @@ const CreateAdvertisementForm = () => {
             name="startDate"
             value={formValues.startDate}
             onChange={handleInputChange}
-            className="form-input-ads"
+            className={`form-input-ads ${errors.startDate ? "input-error" : ""}`}
           />
+          {errors.startDate && (
+            <span className="error-message">{errors.startDate}</span>
+          )}
         </label>
 
         <label className="form-label-add">
@@ -183,19 +199,21 @@ const CreateAdvertisementForm = () => {
             name="endDate"
             value={formValues.endDate}
             onChange={handleInputChange}
-            className="form-input-ads"
+            className={`form-input-ads ${errors.endDate ? "input-error" : ""}`}
           />
+          {errors.endDate && (
+            <span className="error-message">{errors.endDate}</span>
+          )}
         </label>
 
         <label className="form-label-add">
           Remaining Days:
           <input
-            type="number" // Change to number input
+            type="number"
             name="remainingDays"
             value={formValues.remainingDays}
-            onChange={handleInputChange}
             className="form-input-ads"
-            readOnly // make it read-only to prevent direct user input
+            readOnly
           />
         </label>
 
@@ -205,9 +223,13 @@ const CreateAdvertisementForm = () => {
             type="file"
             accept="image/*"
             onChange={handleFileChange}
-            className="form-input-image-ads"
+            className={`form-input-image-ads ${errors.images ? "input-error" : ""}`}
           />
+          {errors.images && (
+            <span className="error-message">{errors.images}</span>
+          )}
         </label>
+
         <button type="submit" className="form-button">
           Submit
         </button>

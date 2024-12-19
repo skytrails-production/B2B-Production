@@ -1,163 +1,241 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { apiURL } from '../../../../Constants/constant';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "axios";
+import { apiURL } from "../../../../Constants/constant";
+import { useNavigate } from "react-router-dom";
+import profilePicUrl from "../../../../Images/logo.jpeg";
 import "./AddAdvertisement.css";
-import { CircularProgress } from '@mui/material';
-const CreateWebAdvertisementForm = () => {
+import { CircularProgress } from "@mui/material";
+
+const CreateAdvertisementForm = () => {
   const [formValues, setFormValues] = useState({
-    title: '',
-    content: '',
-    startDate: '',
-    endDate: '',
-    remainingDays: '',
-    addType:'',
-    images: '',
+    title: "",
+    content: "",
+    startDate: "",
+    endDate: "",
+    remainingDays: "",
+    images: "",
   });
-   const[load,setLoad]=useState(false);
-   const[message,setMessage]=useState("");
+  const [errors, setErrors] = useState({});
+  const [message, setMessage] = useState("");
+  const [load, setLoad] = useState(false);
+  const navigate = useNavigate();
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormValues({
-      ...formValues,
+    setFormValues((prevValues) => ({
+      ...prevValues,
       [name]: value,
-      remainingDays: calculateRemainingDays(formValues.startDate, formValues.endDate)
-    });
+      remainingDays: calculateRemainingDays(
+        name === "startDate" ? value : formValues.startDate,
+        name === "endDate" ? value : formValues.endDate
+      ),
+    }));
+    if (errors[name]) {
+      setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
+    }
   };
 
   const handleFileChange = (e) => {
-    // console.log("e==============>>>>", e)
     const file = e.target.files[0];
-  // console.log("file", file)
-    setFormValues({
-      ...formValues,
+    setFormValues((prevValues) => ({
+      ...prevValues,
       images: file,
-    });
+    }));
+    if (errors.images) {
+      setErrors((prevErrors) => ({ ...prevErrors, images: "" }));
+    }
   };
 
   const calculateRemainingDays = (startDate, endDate) => {
-    // Calculate the remaining days here
     if (startDate && endDate) {
       const start = new Date(startDate);
       const end = new Date(endDate);
-      const timeDifference = end.getTime() - start.getTime();
-
-    // Calculate the remaining days using Math.floor
-    const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-
+      const timeDifference = end - start;
+      const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
       return daysDifference >= 0 ? daysDifference : 0;
     }
-    return '';
+    return "";
   };
-  const navigate = useNavigate();
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formValues.title.trim()) newErrors.title = "Title is required.";
+    if (!formValues.content.trim()) newErrors.content = "Content is required.";
+    if (!formValues.startDate) newErrors.startDate = "Start date is required.";
+    if (!formValues.endDate) newErrors.endDate = "End date is required.";
+    if (
+      formValues.startDate &&
+      formValues.endDate &&
+      new Date(formValues.startDate) > new Date(formValues.endDate)
+    ) {
+      newErrors.endDate = "End date cannot be earlier than start date.";
+    }
+    if (!formValues.images) newErrors.images = "An image file is required.";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent the default form submission behavior
+    e.preventDefault();
+    if (!validateForm()) return;
+
     setLoad(true);
     try {
       const formData = new FormData();
-      formData.append('title', formValues.title);
-      formData.append('content', formValues.content);
-      formData.append('startDate', formValues.startDate);
-      formData.append('endDate', formValues.endDate);
-      formData.append('remainingDays', formValues.remainingDays);
-      formData.append('addType', formValues.addType);
-      formData.append('images', formValues.images);
-  
+      formData.append("title", formValues.title);
+      formData.append("content", formValues.content);
+      formData.append("startDate", formValues.startDate);
+      formData.append("endDate", formValues.endDate);
+      formData.append("remainingDays", formValues.remainingDays);
+      formData.append("images", formValues.images);
+
       const response = await axios.post(
-        `${apiURL.baseURL}/skyTrails/api/admin/createWebAdvertisment`,
+        `${apiURL.baseURL}/skyTrails/api/admin/createadvertisment`,
         formData,
         {
-          method: 'POST',
           headers: {
-            'Content-Type': 'multipart/form-data',
+            "Content-Type": "multipart/form-data",
           },
         }
       );
-  
+
       if (response.status >= 200 && response.status < 300) {
-        // console.log('Advertisement created successfully:', response.data);
-        //alert('Advertisement created successfully!');
-        setMessage('Advertisement created successfully');
-        setTimeout(()=>{
-          navigate('/admin/dashboard'); 
-        },5000);
-  // Redirect to admin dashboard
+        setMessage("Advertisement created successfully!");
+        setTimeout(() => {
+          navigate("/admin/dashboard");
+        }, 5000);
       } else {
-       // alert('Failed to create Advertisement!');
-       setMessage('Failed to create Advertisement');
-        console.error('Failed to create Advertisement:', response.statusText);
+        setMessage("Failed to create Advertisement.");
       }
-      // console.log('API Response:', response.data);
-      // Handle success or further actions as needed
     } catch (error) {
-      console.error('API Error:', error.response.data);
-      // Handle error or show error message
-    }
-    finally{
+      console.error("API Error:", error.response?.data || error.message);
+      setMessage("An error occurred while creating the advertisement.");
+    } finally {
       setLoad(false);
     }
   };
-  
+
   return (
     <div className="form-containers">
-           {load && (
-                <div className="loader-overlay" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(255, 255, 255, 0.5))', zIndex: 9999 }}>
-                     <CircularProgress color="primary" size={50} thickness={3} style={{ position: 'absolute', top: '50%', left: '49.8%', transform: 'translate(-50%, -50%)' }} />
-                </div>
-            )}
-              {message && <div style={{ backgroundColor: '#d4edda', color: '#155724', padding: '10px', marginBottom: '30px', borderRadius: '5px' }}>{message}</div>}
-     <header className="sectionagent headersagent">
+      {load && (
+        <div
+          className="loader-overlay"
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: "rgba(255, 255, 255, 0.5)",
+            zIndex: 9999,
+          }}
+        >
+          <CircularProgress
+            color="primary"
+            size={50}
+            thickness={3}
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+            }}
+          />
+        </div>
+      )}
+      {message && (
+        <div className="message-container success-message">{message}</div>
+      )}
+      <header className="sectionagent headersagent">
         <div className="headead">
-          {/* <img src={profilePicUrl} style={{ width: "80%" }} alt="Logo" /> */}
-          <h2>Create WebAdvertisement</h2>
+          <h2>Create Advertisement</h2>
         </div>
       </header>
-    <form onSubmit={handleSubmit} className="advertisement-form">
-      <label className="form-label">
-        Title:
-        <input type="text" name="title" value={formValues.title} onChange={handleInputChange} className="form-input-ads" />
-      </label>
+      <form onSubmit={handleSubmit} className="advertisement-form">
+        <label className="form-label-add">
+          Title:
+          <input
+            type="text"
+            name="title"
+            value={formValues.title}
+            onChange={handleInputChange}
+            className={`form-input-ads ${errors.title ? "input-error" : ""}`}
+          />
+          {errors.title && <span className="error-message">{errors.title}</span>}
+        </label>
 
-      <label className="form-label">
-        Content:
-        <textarea type="text" name="content" value={formValues.content} onChange={handleInputChange} className="form-textarea" />
-      </label>
+        <label className="form-label-add">
+          Content:
+          <textarea
+            name="content"
+            value={formValues.content}
+            onChange={handleInputChange}
+            className={`form-textarea ${errors.content ? "input-error" : ""}`}
+          />
+          {errors.content && (
+            <span className="error-message">{errors.content}</span>
+          )}
+        </label>
 
-      <label className="form-label">
-        Start Date:
-        <input type="date" name="startDate" value={formValues.startDate} onChange={handleInputChange} className="form-input-ads" />
-      </label>
+        <label className="form-label-add">
+          Start Date:
+          <input
+            type="date"
+            name="startDate"
+            value={formValues.startDate}
+            onChange={handleInputChange}
+            className={`form-input-ads ${errors.startDate ? "input-error" : ""}`}
+          />
+          {errors.startDate && (
+            <span className="error-message">{errors.startDate}</span>
+          )}
+        </label>
 
-      <label className="form-label">
-        End Date:
-        <input type="date" name="endDate" value={formValues.endDate} onChange={handleInputChange} className="form-input-ads" />
-      </label>
+        <label className="form-label-add">
+          End Date:
+          <input
+            type="date"
+            name="endDate"
+            value={formValues.endDate}
+            onChange={handleInputChange}
+            className={`form-input-ads ${errors.endDate ? "input-error" : ""}`}
+          />
+          {errors.endDate && (
+            <span className="error-message">{errors.endDate}</span>
+          )}
+        </label>
 
-      <label className="form-label">
+        <label className="form-label-add">
           Remaining Days:
           <input
-            type="number" // Change to number input
+            type="number"
             name="remainingDays"
             value={formValues.remainingDays}
-            onChange={handleInputChange}
             className="form-input-ads"
-            readOnly // make it read-only to prevent direct user input
+            readOnly
           />
         </label>
-        <label className="form-label">
-        Banner Type:
-        <input type="text" name="addType" value={formValues.addType} onChange={handleInputChange} className="form-input-ads" />
-        <label>[FLIGHTS, HOTELS, HOLIDAYS, TRAINS, CABS, BANKOFFERS, BUS]</label>
-      </label>
-      <label className="form-label-image">
-        Image:
-        <input type="file" accept="image/*" onChange={handleFileChange} className="form-input-image-ads" />
-      </label>
-      <button type="submit" className="form-button">Submit</button>
-    </form>
+
+        <label className="form-label-add-image">
+          Image:
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            className={`form-input-image-ads ${errors.images ? "input-error" : ""}`}
+          />
+          {errors.images && (
+            <span className="error-message">{errors.images}</span>
+          )}
+        </label>
+
+        <button type="submit" className="form-button">
+          Submit
+        </button>
+      </form>
     </div>
-    
   );
 };
 
-export default CreateWebAdvertisementForm;
+export default CreateAdvertisementForm;

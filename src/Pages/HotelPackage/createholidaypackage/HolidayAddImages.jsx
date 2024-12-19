@@ -9,11 +9,13 @@ import {
   Card,
   Row,
   Col,
+  Divider,
   message,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { apiURL } from "../../../Constants/constant";
 import { useLocation } from "react-router-dom";
+
 const { Title } = Typography;
 
 const HolidayAddImages = () => {
@@ -34,8 +36,6 @@ const HolidayAddImages = () => {
 
   const [loader, setLoader] = useState(false);
 
-  const packageId = localStorage.getItem("packageid");
-
   // const handleCheckboxChange = (event) => {
   //   const { name, checked } = event.target;
 
@@ -55,33 +55,20 @@ const HolidayAddImages = () => {
   const handleCheckboxChange = (event) => {
     const { name, checked } = event.target;
 
-    if (checked) {
-      // Reset all checkboxes except the one being checked
-      setFormData({
-        stays: false,
-        destinations: false,
-        activities: false,
-        [name]: true,
-      });
+    // Set all checkboxes to false, then update the selected one
+    setFormData({
+      stays: false,
+      destinations: false,
+      activities: false,
+      [name]: checked, // Set the currently clicked checkbox to true
+    });
 
-      // Clear images for other unchecked categories
-      setImages({
-        stays: [],
-        destinations: [],
-        activities: [],
-      });
-    } else {
-      // Uncheck the current checkbox
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: false,
-      }));
-
-      setImages((prevImages) => ({
-        ...prevImages,
-        [name]: [],
-      }));
-    }
+    // Clear all images if any checkbox is unchecked
+    setImages({
+      stays: [],
+      destinations: [],
+      activities: [],
+    });
   };
 
   const handleFileChange = (key, fileList) => {
@@ -103,7 +90,7 @@ const HolidayAddImages = () => {
     const url = `${apiURL.baseURL}/skyTrails/holidaypackage/addimages`;
     const formDataToSend = new FormData();
 
-    formDataToSend.append("packageId", id); // Append id to the form data
+    formDataToSend.append("packageId", id);
     const selectedKeywords = Object.keys(formData)
       .filter((key) => formData[key])
       .join(",");
@@ -147,89 +134,158 @@ const HolidayAddImages = () => {
 
   return (
     <Card
-      title={<Title level={3}>Add Images to Your Holiday Package</Title>}
       bordered={false}
       style={{
-        maxWidth: 600,
-        margin: "auto",
-        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+        maxWidth: 800,
+        margin: "40px auto",
+        boxShadow: "0 4px 15px rgba(0,0,0,0.1)",
+        borderRadius: "8px",
+        padding: "20px",
       }}
     >
+      <Title level={3} style={{ textAlign: "center", marginBottom: "20px" }}>
+        Add Images to Holiday Package
+      </Title>
       <Form onFinish={handleSubmit} layout="vertical">
-        <Row gutter={[16, 16]}>
-          <Checkbox
-            checked={formData.stays}
-            onChange={handleCheckboxChange}
-            name="stays"
-          >
-            Stays
-          </Checkbox>
-          {formData.stays && (
-            <Form.Item label="Upload Stays Images">
-              <Upload
-                multiple
-                accept="image/*"
-                fileList={images.stays}
-                onChange={({ fileList }) => handleFileChange("stays", fileList)}
-                beforeUpload={() => false}
+        {/* Stays Section */}
+        <Row style={{ marginBottom: "20px" }}>
+          <Col span={24}>
+            <Card
+              hoverable
+              size="small"
+              style={{
+                borderRadius: "8px",
+                boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+              }}
+            >
+              <Checkbox
+                checked={formData.stays}
+                onChange={handleCheckboxChange}
+                name="stays"
               >
-                <Button icon={<UploadOutlined />}>Select Files</Button>
-              </Upload>
-            </Form.Item>
-          )}
-
-          <Checkbox
-            checked={formData.destinations}
-            onChange={handleCheckboxChange}
-            name="destinations"
-          >
-            Destinations
-          </Checkbox>
-          {formData.destinations && (
-            <Form.Item label="Upload Destinations Images">
-              <Upload
-                multiple
-                accept="image/*"
-                fileList={images.destinations}
-                onChange={({ fileList }) =>
-                  handleFileChange("destinations", fileList)
-                }
-                beforeUpload={() => false}
-              >
-                <Button icon={<UploadOutlined />}>Select Files</Button>
-              </Upload>
-            </Form.Item>
-          )}
-
-          <Checkbox
-            checked={formData.activities}
-            onChange={handleCheckboxChange}
-            name="activities"
-          >
-            Activities
-          </Checkbox>
-          {formData.activities && (
-            <Form.Item label="Upload Activities Images">
-              <Upload
-                multiple
-                accept="image/*"
-                fileList={images.activities}
-                onChange={({ fileList }) =>
-                  handleFileChange("activities", fileList)
-                }
-                beforeUpload={() => false}
-              >
-                <Button icon={<UploadOutlined />}>Select Files</Button>
-              </Upload>
-            </Form.Item>
-          )}
+                Stays
+              </Checkbox>
+              {formData.stays && (
+                <>
+                  <Divider />
+                  <Form.Item label="Upload Stays Images">
+                    <Upload
+                      multiple
+                      accept="image/*"
+                      fileList={images.stays}
+                      onChange={({ fileList }) =>
+                        handleFileChange("stays", fileList)
+                      }
+                      beforeUpload={() => false}
+                    >
+                      <Button icon={<UploadOutlined />}>Select Files</Button>
+                    </Upload>
+                  </Form.Item>
+                </>
+              )}
+            </Card>
+          </Col>
         </Row>
 
-        <Space style={{ marginTop: 20 }}>
-          <Button type="primary" htmlType="submit" loading={loader} block>
-            {loader ? "Submitting..." : "Submit Request"}
-          </Button>
-        </Space>
+        {/* Destinations Section */}
+        <Row style={{ marginBottom: "20px" }}>
+          <Col span={24}>
+            <Card
+              hoverable
+              size="small"
+              style={{
+                borderRadius: "8px",
+                boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+              }}
+            >
+              <Checkbox
+                checked={formData.destinations}
+                onChange={handleCheckboxChange}
+                name="destinations"
+              >
+                Destinations
+              </Checkbox>
+              {formData.destinations && (
+                <>
+                  <Divider />
+                  <Form.Item label="Upload Destinations Images">
+                    <Upload
+                      multiple
+                      accept="image/*"
+                      fileList={images.destinations}
+                      onChange={({ fileList }) =>
+                        handleFileChange("destinations", fileList)
+                      }
+                      beforeUpload={() => false}
+                    >
+                      <Button icon={<UploadOutlined />}>Select Files</Button>
+                    </Upload>
+                  </Form.Item>
+                </>
+              )}
+            </Card>
+          </Col>
+        </Row>
+
+        {/* Activities Section */}
+        <Row>
+          <Col span={24}>
+            <Card
+              hoverable
+              size="small"
+              style={{
+                borderRadius: "8px",
+                boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+              }}
+            >
+              <Checkbox
+                checked={formData.activities}
+                onChange={handleCheckboxChange}
+                name="activities"
+              >
+                Activities
+              </Checkbox>
+              {formData.activities && (
+                <>
+                  <Divider />
+                  <Form.Item label="Upload Activities Images">
+                    <Upload
+                      multiple
+                      accept="image/*"
+                      fileList={images.activities}
+                      onChange={({ fileList }) =>
+                        handleFileChange("activities", fileList)
+                      }
+                      beforeUpload={() => false}
+                    >
+                      <Button icon={<UploadOutlined />}>Select Files</Button>
+                    </Upload>
+                  </Form.Item>
+                </>
+              )}
+            </Card>
+          </Col>
+        </Row>
+
+        {/* Submit Button */}
+        <Row justify="center" style={{ marginTop: "20px" }}>
+          <Col>
+            <Button
+             
+              htmlType="submit"
+              loading={loader}
+              style={{
+                padding: "8px 20px",
+                fontSize: "16px",
+                borderRadius: "5px",
+                backgroundColor:"#21325D",
+                color:"white"
+              }}
+            >
+              {loader ? "Submitting..." : "Submit Images"}
+            </Button>
+          </Col>
+        </Row>
       </Form>
     </Card>
   );

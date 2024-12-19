@@ -68,7 +68,6 @@
   transition: background-color 0.3s;
 }
 
-
 @media (max-width: 768px) {
   .addCoupon-div {
     width: 100%;

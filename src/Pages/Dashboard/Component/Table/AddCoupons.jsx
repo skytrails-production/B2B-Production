@@ -4,15 +4,15 @@ import Swal from "sweetalert2";
 import { apiURL } from "../../../../Constants/constant";
 import { useNavigate } from "react-router-dom";
 import "./AddCoupons.css";
-import {swalModal} from "../../../../utils/swal"
+import { swalModal } from "../../../../utils/swal";
 import { CircularProgress } from "@mui/material";
+
 const AddCoupons = () => {
   const data = JSON.parse(sessionStorage.getItem("persist:root"));
   const logdata = JSON.parse(data?.adminAuth);
   const agentID = logdata.adminData.data.id;
-  console.log(agentID,"---------------");
-  const [couponImg, setCouponImg] = useState("");
 
+  const [couponImg, setCouponImg] = useState("");
   const [formValues, setFormValues] = useState({
     title: "",
     content: "",
@@ -25,7 +25,10 @@ const AddCoupons = () => {
     uniqueId: agentID,
     images: couponImg,
   });
- const [load,setLoad]=useState(false);
+
+  const [formErrors, setFormErrors] = useState({});
+  const [load, setLoad] = useState(false);
+
   useEffect(() => {
     setFormValues({ ...formValues, uniqueId: agentID });
   }, [agentID]);
@@ -36,17 +39,63 @@ const AddCoupons = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
+    // Update the form values
     setFormValues({
       ...formValues,
       [name]: value,
+    });
+
+    // Clear the specific error for the field if it becomes valid
+    setFormErrors((prevErrors) => {
+      const updatedErrors = { ...prevErrors };
+      if (value.trim() !== "") {
+        delete updatedErrors[name];
+      }
+      return updatedErrors;
     });
   };
 
   const navigate = useNavigate();
 
+  const validateForm = () => {
+    const errors = {};
+
+    // Required fields validation
+    if (!formValues.title) errors.title = "Title is required.";
+    if (!formValues.content) errors.content = "Content is required.";
+    if (!formValues.couponCode) errors.couponCode = "Coupon Code is required.";
+    if (!formValues.discountPercentage)
+      errors.discountPercentage = "Discount Percentage is required.";
+    if (!formValues.limitAmount)
+      errors.limitAmount = "Limit Amount is required.";
+    if (!formValues.expirationDate)
+      errors.expirationDate = "Expiration Date is required.";
+    if (!formValues.termsAndCond)
+      errors.termsAndCond = "Terms and Conditions are required.";
+    if (!formValues.offerType) errors.offerType = "Offer Type is required.";
+
+    // Numeric validations
+    if (formValues.discountPercentage && isNaN(formValues.discountPercentage)) {
+      errors.discountPercentage = "Discount Percentage must be a number.";
+    }
+
+    if (formValues.limitAmount && isNaN(formValues.limitAmount)) {
+      errors.limitAmount = "Limit Amount must be a number.";
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-  setLoad(true);
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setLoad(true);
     try {
       const response = await axios.post(
         `${apiURL.baseURL}/skyTrails/api/admin/createCoupons`,
@@ -65,26 +114,44 @@ const AddCoupons = () => {
           title: "Coupon created successfully!",
         }).then(() => navigate("/admin/dashboard"));
       } else {
-        
-        swalModal('flight','Failed to create Coupon!',false);
+        swalModal("flight", "Failed to create Coupon!", false);
       }
     } catch (error) {
       console.error("API Error:", error.response.data);
-      
-      swalModal('flight','Failed to create Coupon!',false);
-    }
-    finally{
+      swalModal("flight", "Failed to create Coupon!", false);
+    } finally {
       setLoad(false);
     }
   };
 
   return (
     <div className="addCoupon-div">
-      {load &&
-          <div className="loader-overlay" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(255, 255, 255, 0.5))', zIndex: 9999 }}>
-          <CircularProgress color="primary" size={50} thickness={3} style={{ position: 'absolute', top: '50%', left: '49.8%', transform: 'translate(-50%, -50%)' }} />
-     </div>
-      }
+      {load && (
+        <div
+          className="loader-overlay"
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: "rgba(255, 255, 255, 0.5)",
+            zIndex: 9999,
+          }}
+        >
+          <CircularProgress
+            color="primary"
+            size={50}
+            thickness={3}
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "49.8%",
+              transform: "translate(-50%, -50%)",
+            }}
+          />
+        </div>
+      )}
       <h3 style={{ textAlign: "center" }} className="addCoupon-heading">
         <strong>Add Coupons Form</strong>
       </h3>
@@ -99,6 +166,11 @@ const AddCoupons = () => {
               onChange={handleInputChange}
               className="Coupon-form-input-ads"
             />
+            {formErrors.title && (
+              <span className="error-text" style={{ color: "red" }}>
+                {formErrors.title}
+              </span>
+            )}
           </label>
           <label className="Coupon-form-label">
             Content:
@@ -109,6 +181,11 @@ const AddCoupons = () => {
               onChange={handleInputChange}
               className="Coupon-form-input-ads"
             />
+            {formErrors.content && (
+              <span className="error-text" style={{ color: "red" }}>
+                {formErrors.content}
+              </span>
+            )}
           </label>
         </div>
         <div className="input-row">
@@ -121,6 +198,11 @@ const AddCoupons = () => {
               onChange={handleInputChange}
               className="Coupon-form-input-ads"
             />
+            {formErrors.couponCode && (
+              <span className="error-text" style={{ color: "red" }}>
+                {formErrors.couponCode}
+              </span>
+            )}
           </label>
           <label className="Coupon-form-label">
             Discount Percentage:
@@ -131,6 +213,11 @@ const AddCoupons = () => {
               onChange={handleInputChange}
               className="Coupon-form-input-ads"
             />
+            {formErrors.discountPercentage && (
+              <span className="error-text" style={{ color: "red" }}>
+                {formErrors.discountPercentage}
+              </span>
+            )}
           </label>
         </div>
         <div className="input-row">
@@ -143,6 +230,11 @@ const AddCoupons = () => {
               onChange={handleInputChange}
               className="Coupon-form-input-ads"
             />
+            {formErrors.limitAmount && (
+              <span className="error-text" style={{ color: "red" }}>
+                {formErrors.limitAmount}
+              </span>
+            )}
           </label>
           <label className="Coupon-form-label">
             Expiration Date:
@@ -153,11 +245,16 @@ const AddCoupons = () => {
               onChange={handleInputChange}
               className="Coupon-form-input-ads"
             />
+            {formErrors.expirationDate && (
+              <span className="error-text" style={{ color: "red" }}>
+                {formErrors.expirationDate}
+              </span>
+            )}
           </label>
         </div>
         <div className="input-row">
           <label className="Coupon-form-label">
-            Terms&Condition:
+            Terms & Conditions:
             <input
               type="text"
               name="termsAndCond"
@@ -165,6 +262,11 @@ const AddCoupons = () => {
               onChange={handleInputChange}
               className="Coupon-form-input-ads"
             />
+            {formErrors.termsAndCond && (
+              <span className="error-text" style={{ color: "red" }}>
+                {formErrors.termsAndCond}
+              </span>
+            )}
           </label>
           <label className="Coupon-form-label">
             Offer Type:
@@ -191,6 +293,11 @@ const AddCoupons = () => {
                 </option>
               ))}
             </select>
+            {formErrors.offerType && (
+              <span className="error-text" style={{ color: "red" }}>
+                {formErrors.offerType}
+              </span>
+            )}
           </label>
         </div>
         <div className="input-row">
@@ -204,9 +311,10 @@ const AddCoupons = () => {
             />
           </label>
         </div>
-        <button className="button1" type="submit">Submit</button>
+        <button className="button1" type="submit">
+          Submit
+        </button>
       </form>
-      
     </div>
   );
 };
