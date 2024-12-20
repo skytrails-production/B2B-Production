@@ -30,9 +30,11 @@ const AddItenary = () => {
         name: "",
         description: "",
         hotelStar: 3, // Default star rating
-        checkIn: "",
-        checkOut: "",
-        numberOfNights: "",
+        // checkIn:"11PM",
+        // checkOut: "2AM",
+        checkIn: "11:00", // Default Check-In Time (24-hour format)
+        checkOut: "02:00", // Default Check-Out Time
+        numberOfNights: 1,
         hotelType: "",
       },
     ],
@@ -349,33 +351,34 @@ const AddItenary = () => {
                   </Form.Item>
                 </Col>
               </Row>
+
               <Row gutter={[16, 16]}>
-              <Col span={24}>
-                <Form.Item
-                  label="Hotel Type"
-                  name={`hotelEvents[${index}][hotelType]`}
-                  initialValue={event.hotelType}
-                >
-                  <Select
-                    name="hotelType"
-                    value={event.hotelType}
-                    onChange={(value) =>
-                      handleArrayChange(
-                        { target: { name: "hotelType", value } },
-                        index,
-                        "hotelEvents"
-                      )
-                    }
-                    placeholder="Select hotel Type"
-                    className="w-full"
+                <Col span={24}>
+                  <Form.Item
+                    label="Hotel Type"
+                    name={`hotelEvents[${index}][hotelType]`}
+                    initialValue={event.hotelType}
                   >
-                    <Select.Option value="Standard">Standard</Select.Option>
-                    <Select.Option value="Deluxe">Deluxe</Select.Option>
-                    <Select.Option value="Luxury">Luxury</Select.Option>
-                  </Select>
-                </Form.Item>
-              </Col>
-             </Row>
+                    <Select
+                      name="hotelType"
+                      value={event.hotelType}
+                      onChange={(value) =>
+                        handleArrayChange(
+                          { target: { name: "hotelType", value } },
+                          index,
+                          "hotelEvents"
+                        )
+                      }
+                      placeholder="Select hotel Type"
+                      className="w-full"
+                    >
+                      <Select.Option value="Standard">Standard</Select.Option>
+                      <Select.Option value="Deluxe">Deluxe</Select.Option>
+                      <Select.Option value="Luxury">Luxury</Select.Option>
+                    </Select>
+                  </Form.Item>
+                </Col>
+              </Row>
               {/* Buttons Row */}
               <Row gutter={[16, 16]} justify="center">
                 <Col span={6}>
@@ -399,7 +402,7 @@ const AddItenary = () => {
                         hotelStar: 3,
                         checkIn: "",
                         checkOut: "",
-                        numberOfNights: "",
+                        numberOfNights: 1,
                       })
                     }
                     className="w-full"
@@ -422,7 +425,7 @@ const AddItenary = () => {
                   hotelStar: 3,
                   checkIn: "",
                   checkOut: "",
-                  numberOfNights: "",
+                  numberOfNights: 1,
                 })
               }
               className="w-full"
