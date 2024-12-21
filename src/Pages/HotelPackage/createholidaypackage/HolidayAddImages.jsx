@@ -11,14 +11,16 @@ import {
   Col,
   Divider,
   message,
+  TimePicker,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { apiURL } from "../../../Constants/constant";
 import { useLocation } from "react-router-dom";
-import { Select,Input } from "antd";
+import { Select, Input } from "antd";
+import moment from "moment";
 
 const { Title } = Typography;
-
+const { TextArea } = Input;
 const HolidayAddImages = () => {
   const location = useLocation();
   const { id } = location.state || {};
@@ -155,8 +157,25 @@ const HolidayAddImages = () => {
       formDataToSend.append("hotelType", form.getFieldValue("hotelType"));
       formDataToSend.append("hotelName", form.getFieldValue("hotelName"));
       formDataToSend.append("day", form.getFieldValue("day"));
+      formDataToSend.append(
+        "numberOfNights",
+        form.getFieldValue("numberOfNights")
+      );
+      formDataToSend.append("description", form.getFieldValue("description"));
+      formDataToSend.append("hotelStar", form.getFieldValue("hotelStar"));
+     
+      formDataToSend.append("checkIn", form.getFieldValue("checkIn"));
+      formDataToSend.append("checkOut", form.getFieldValue("checkOut"));
+      formDataToSend.append("mealsIncluded", form.getFieldValue("mealsIncluded"));
     }
 
+    if(formData.activities){
+      formDataToSend.append("title", form.getFieldValue("title"));
+      formDataToSend.append("day", form.getFieldValue("day"));
+     
+    }
+
+   
     Object.keys(images).forEach((key) => {
       images[key].forEach((file) => {
         formDataToSend.append("files", file.originFileObj);
@@ -261,14 +280,124 @@ const HolidayAddImages = () => {
                   </Form.Item>
 
                   <Form.Item
+                    label="Number Of Nights"
+                    name="numberOfNights"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter the number Of Nights!",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Enter number Of Nights " />
+                  </Form.Item>
+                  {/* Description Field (TextArea) */}
+                  <Form.Item
+                    label="Description"
+                    name="description"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter a description!",
+                      },
+                    ]}
+                  >
+                    <TextArea rows={4} placeholder="Enter description" />
+                  </Form.Item>
+
+                  <Form.Item
+                    label="Hotel Star Rating"
+                    name="hotelStar"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please select a hotel star rating!",
+                      },
+                    ]}
+                  >
+                    <Select placeholder="Select Hotel Star Rating">
+                      <Select.Option value={3}>3 Stars</Select.Option>
+                      <Select.Option value={4}>4 Stars</Select.Option>
+                      <Select.Option value={5}>5 Stars</Select.Option>
+                    </Select>
+                  </Form.Item>
+
+                  <Row gutter={16}>
+                    {/* Check-In Time Field */}
+                    <Col span={12}>
+                      <Form.Item
+                        label="Check-In Time"
+                        name="checkIn"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please select a check-in time!",
+                          },
+                        ]}
+                      >
+                        <TimePicker
+                          format="HH:mm"
+                          defaultValue={moment("02:00", "HH:mm")}
+                          placeholder="Select Check-In Time"
+                        />
+                      </Form.Item>
+                    </Col>
+
+                    <Col span={12}>
+                      {/* Check-Out Time Field */}
+                      <Form.Item
+                        label="Check-Out Time"
+                        name="checkOut"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please select a check-out time!",
+                          },
+                        ]}
+                      >
+                        <TimePicker
+                          format="HH:mm"
+                          defaultValue={moment("11:00", "HH:mm")}
+                          placeholder="Select Check-Out Time"
+                        />
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                  <Form.Item
+                    label="Meals Included"
+                    name="mealsIncluded"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please select at least one meal!",
+                      },
+                    ]}
+                  >
+                    <Select
+                      mode="multiple"
+                      placeholder="Select Meals Included"
+                      options={[
+                        { label: "Breakfast", value: "Breakfast" },
+                        { label: "Lunch", value: "Lunch" },
+                        { label: "Dinner", value: "Dinner" },
+                      ]}
+                    />
+                  </Form.Item>
+                  <Form.Item
                     label="Day"
                     name="day"
                     rules={[
                       { required: true, message: "Please select the day!" },
                     ]}
                   >
-                    <Input type="number" placeholder="Enter Number of Days" />
+                    <Input type="text" placeholder="Enter Day Number" />
                   </Form.Item>
+
+
+
+
+
+                  
 
                   <Form.Item label="Upload Stays Images">
                     <Upload
@@ -362,6 +491,24 @@ const HolidayAddImages = () => {
                     >
                       <Button icon={<UploadOutlined />}>Select Files</Button>
                     </Upload>
+                  </Form.Item>
+                  <Form.Item
+                    label="Day"
+                    name="day"
+                    rules={[
+                      { required: true, message: "Please select the day!" },
+                    ]}
+                  >
+                    <Input type="number" placeholder="Enter Number of Days" />
+                  </Form.Item>
+                  <Form.Item
+                    label="title"
+                    name="title"
+                    rules={[
+                      { required: true, message: "Please select the Title!" },
+                    ]}
+                  >
+                    <Input type="text" placeholder="Enter Number of title" />
                   </Form.Item>
                 </>
               )}

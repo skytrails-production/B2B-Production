@@ -44,9 +44,7 @@ const PackagesList = () => {
     navigate(`/AddItenary`, { state: { id } });
   };
 
-  const handleNavigateToAddItineraryImage = (id) => {
-    navigate(`/AddItenaryImage`, { state: { id } });
-  };
+ 
 
   const handleNavigateToAddImages = (id) => {
     navigate(`/AddImages`, { state: { id } });
@@ -94,14 +92,7 @@ const PackagesList = () => {
           >
             Add Itinerary
           </Button>
-          <Button
-            type="primary"
-            shape="round"
-            onClick={() => handleNavigateToAddItineraryImage(record._id)}
-            style={{ backgroundColor: "#52c41a", borderColor: "#52c41a" }}
-          >
-            Add Itinerary Image
-          </Button>
+         
         </div>
       ),
     },

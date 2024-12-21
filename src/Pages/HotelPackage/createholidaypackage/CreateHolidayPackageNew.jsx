@@ -39,7 +39,7 @@ import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 import WifiPasswordIcon from "@mui/icons-material/WifiPassword";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { FormControl, Select,MenuItem } from "@mui/material";
+import { FormControl, Select, MenuItem } from "@mui/material";
 // import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 import {
@@ -924,7 +924,7 @@ const CreateHolidayPackageNew = () => {
                               }
                               style={{
                                 fontSize: "14px",
-                               
+
                                 borderRadius: "4px",
                               }}
                             >
@@ -936,6 +936,7 @@ const CreateHolidayPackageNew = () => {
                         </div>
 
                         {/* Second Row */}
+
                         <div style={{ display: "flex", gap: "10px" }}>
                           {/* Amount Input */}
                           <Box style={{ flex: "1" }}>
@@ -945,13 +946,31 @@ const CreateHolidayPackageNew = () => {
                               inputMode="numeric"
                               placeholder="Amount"
                               value={entry.amount}
-                              onChange={(e) =>
-                                handleInputChange(
-                                  index,
-                                  "amount",
-                                  e.target.value
-                                )
-                              }
+                              onChange={(e) => {
+                                const inputValue = e.target.value;
+
+                                // Allow only numbers with optional commas in correct positions
+                                const formattedValue = inputValue.replace(
+                                  /[^0-9,]/g,
+                                  ""
+                                ); // Remove invalid characters
+                                if (
+                                  /^\d{1,3}(,\d{3})*$|^\d*$/.test(
+                                    formattedValue
+                                  )
+                                ) {
+                                  handleInputChange(
+                                    index,
+                                    "amount",
+                                    formattedValue
+                                  ); // Update only if valid
+                                }
+                              }}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                  e.preventDefault(); // Prevent Enter key default behavior
+                                }
+                              }}
                               style={{
                                 fontSize: "14px",
                                 padding: "8px",
