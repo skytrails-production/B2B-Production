@@ -25,6 +25,7 @@ const HolidayAddImages = () => {
   const location = useLocation();
   const { id } = location.state || {};
   const [form] = Form.useForm();
+  const [mealsIncluded, setmealIncluded] = useState();
 
   const [formData, setFormData] = useState({
     stays: false,
@@ -163,19 +164,23 @@ const HolidayAddImages = () => {
       );
       formDataToSend.append("description", form.getFieldValue("description"));
       formDataToSend.append("hotelStar", form.getFieldValue("hotelStar"));
-     
+
       formDataToSend.append("checkIn", form.getFieldValue("checkIn"));
       formDataToSend.append("checkOut", form.getFieldValue("checkOut"));
-      formDataToSend.append("mealsIncluded", form.getFieldValue("mealsIncluded"));
+      // Ensure mealsIncluded is sent as an array
+      const meals = form.getFieldValue("mealsIncluded");
+      if (Array.isArray(meals)) {
+        formDataToSend.append("mealsIncluded", JSON.stringify(meals));
+      } else {
+        formDataToSend.append("mealsIncluded", JSON.stringify([]));
+      }
     }
 
-    if(formData.activities){
+    if (formData.activities) {
       formDataToSend.append("title", form.getFieldValue("title"));
       formDataToSend.append("day", form.getFieldValue("day"));
-     
     }
 
-   
     Object.keys(images).forEach((key) => {
       images[key].forEach((file) => {
         formDataToSend.append("files", file.originFileObj);
@@ -265,7 +270,6 @@ const HolidayAddImages = () => {
                       <Select.Option value="Luxury">Luxury</Select.Option>
                     </Select>
                   </Form.Item>
-
                   <Form.Item
                     label="Hotel Name"
                     name="hotelName"
@@ -278,7 +282,6 @@ const HolidayAddImages = () => {
                   >
                     <Input placeholder="Enter Hotel Name" />
                   </Form.Item>
-
                   <Form.Item
                     label="Number Of Nights"
                     name="numberOfNights"
@@ -304,7 +307,6 @@ const HolidayAddImages = () => {
                   >
                     <TextArea rows={4} placeholder="Enter description" />
                   </Form.Item>
-
                   <Form.Item
                     label="Hotel Star Rating"
                     name="hotelStar"
@@ -321,7 +323,6 @@ const HolidayAddImages = () => {
                       <Select.Option value={5}>5 Stars</Select.Option>
                     </Select>
                   </Form.Item>
-
                   <Row gutter={16}>
                     {/* Check-In Time Field */}
                     <Col span={12}>
@@ -335,16 +336,16 @@ const HolidayAddImages = () => {
                           },
                         ]}
                       >
-                        <TimePicker
-                          format="HH:mm"
-                          defaultValue={moment("02:00", "HH:mm")}
+                        <Input
+                          type="time"
                           placeholder="Select Check-In Time"
+                          defaultValue="02:00"
                         />
                       </Form.Item>
                     </Col>
 
+                    {/* Check-Out Time Field */}
                     <Col span={12}>
-                      {/* Check-Out Time Field */}
                       <Form.Item
                         label="Check-Out Time"
                         name="checkOut"
@@ -355,14 +356,15 @@ const HolidayAddImages = () => {
                           },
                         ]}
                       >
-                        <TimePicker
-                          format="HH:mm"
-                          defaultValue={moment("11:00", "HH:mm")}
+                        <Input
+                          type="time"
                           placeholder="Select Check-Out Time"
+                          defaultValue="11:00"
                         />
                       </Form.Item>
                     </Col>
                   </Row>
+
                   <Form.Item
                     label="Meals Included"
                     name="mealsIncluded"
@@ -390,15 +392,22 @@ const HolidayAddImages = () => {
                       { required: true, message: "Please select the day!" },
                     ]}
                   >
-                    <Input type="text" placeholder="Enter Day Number" />
+                    <Input
+                      type="text"
+                      placeholder="Enter Day Number"
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        // Allow only numeric input
+                        if (/^\d*$/.test(value)) {
+                          // Use form instance to update field value
+                          const form =
+                            e.target.closest(".ant-form").__reactFiber$.return
+                              .stateNode;
+                          form.setFieldsValue({ day: value });
+                        }
+                      }}
+                    />
                   </Form.Item>
-
-
-
-
-
-                  
-
                   <Form.Item label="Upload Stays Images">
                     <Upload
                       multiple

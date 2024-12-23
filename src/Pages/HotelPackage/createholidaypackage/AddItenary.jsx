@@ -154,10 +154,16 @@ const AddItenary = () => {
             ]}
           >
             <Input
-              type="number"
+              type="text"
               name="dayNumber"
               value={formData.dayNumber}
-              onChange={handleChange}
+              onChange={(e) => {
+                const value = e.target.value;
+                // Allow only numbers
+                if (/^\d*$/.test(value)) {
+                  handleChange(e);
+                }
+              }}
               placeholder="Enter day number"
               className="w-full"
             />

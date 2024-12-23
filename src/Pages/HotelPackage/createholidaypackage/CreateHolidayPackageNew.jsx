@@ -275,6 +275,201 @@ const CreateHolidayPackageNew = () => {
     }, 4000);
   };
 
+  // const handleFormSubmit = async (e) => {
+  //   e.preventDefault();
+  //   // Validation
+
+  //   if (!title) {
+  //     message.error("Title is required!");
+  //     return;
+  //   }
+
+  //   if (!chipData || chipData.length === 0) {
+  //     message.error("At least one destination is required!");
+  //     return;
+  //   }
+
+  //   if (!countryArray || countryArray.length === 0) {
+  //     message.error("At least one country is required!");
+  //     return;
+  //   }
+
+  //   if (!packageType) {
+  //     message.error("packageType is required!");
+  //     return;
+  //   }
+
+  //   if (!days) {
+  //     message.error("Number of days is required!");
+  //     return;
+  //   }
+  //   if (!packageHighLightArray) {
+  //     message.error("Package Highlights are required!");
+  //     return;
+  //   }
+  //   if (!overView) {
+  //     message.error("Overview is required!");
+  //     return;
+  //   }
+
+  //   if (!termsArray || termsArray.length === 0) {
+  //     message.error("Terms and conditions are required!");
+  //     return;
+  //   }
+
+  //   if (!cancellationPolicies || cancellationPolicies.length === 0) {
+  //     message.error("Cancellation policy is required!");
+  //     return;
+  //   }
+
+  //   // Prepare payload
+  //   const payload = {
+  //     userId,
+  //     title,
+  //     destination: chipData, // Array of destinations
+  //     country: countryArray, // Use the array of countries
+  //     packageHighLight: packageHighLightArray,
+
+  //     insclusion_note: inclusionNoteArray, // Add inclusion notes
+
+  //     exclusion_note: exclusionNoteArray, // Add exclusion notes
+
+  //     packageType,
+  //     days,
+  //     // packageAmount: [
+  //     //   {
+  //     //     currency,
+  //     //     amount,
+  //     //     packageType,
+  //     //   },
+  //     // ],
+
+  //     packageAmount: packageAmountData.map((item) => ({
+  //       currency: item.currency,
+  //       amount: item.amount,
+  //       packageCategory: item.packageCategory,
+  //     })),
+
+  //     specialTag: [
+  //       { budget: tag.budget },
+  //       { holiday: tag.holiday },
+  //       { mid_range: tag.mid_range },
+  //       { luxury: tag.luxury },
+  //       { honeymoon: tag.honeymoon },
+  //       { anniversary: tag.anniversary },
+  //       { weekend_gateway: tag.weekend_gateway },
+  //       { couples: tag.couples },
+  //       { family: tag.family },
+  //       { solo: tag.solo },
+  //       { group: tag.group },
+  //       { girl_only: tag.girl_only },
+  //       { boy_only: tag.boy_only },
+  //       { family_with_children: tag.family_with_children },
+  //       { bagpacker: tag.bagpacker },
+  //       { nature: tag.nature },
+  //       { wildlife: tag.wildlife },
+  //       { historical: tag.historical },
+  //       { piligrimage: tag.piligrimage },
+  //       { offbeat: tag.offbeat },
+  //       { sightseeing: tag.sightseeing },
+  //       { recreation: tag.recreation },
+  //       { nature: tag.nature },
+  //       { adventure: tag.adventure },
+  //       { dining: tag.dining },
+  //       { shopping: tag.shopping },
+  //       { nightlife: tag.nightlife },
+  //       { relaxation: tag.relaxation },
+  //       { nature: tag.nature },
+  //     ],
+  //     inclusions: [
+  //       { flexibility: checkedItem.flexibility },
+  //       { flight: checkedItem.flight },
+  //       { train: checkedItem.train },
+  //       { bus: checkedItem.bus },
+  //       { cab: checkedItem.cab },
+  //       { moterBike: checkedItem.motorbike },
+  //       { hotel: checkedItem.hotel },
+  //       { homeStays: checkedItem.homeStays },
+  //       { guestHouse: checkedItem.guestHouse },
+  //       { cruise: checkedItem.cruise },
+  //       { sightSeeing: checkedItem.sightSeeing },
+  //       { guide: checkedItem.guide },
+  //       { meals: checkedItem.meals },
+  //       { breakfast: checkedItem.breakfast },
+  //       { drink: checkedItem.drink },
+  //       { visa: checkedItem.visa },
+  //       { travelInsurance: checkedItem.travelInsurance },
+  //       { wildlife: checkedItem.wildlife },
+  //       { heritage: checkedItem.heritage },
+  //       { adventure: checkedItem.adventure },
+  //       { beach: checkedItem.beach },
+  //       { hillStation: checkedItem.hillStation },
+  //       { nature: checkedItem.nature },
+  //       { wellness: checkedItem.wellness },
+  //       { hiddenGem: checkedItem.hiddenGem },
+  //       { tax: checkedItem.tax },
+  //       { discount: checkedItem.discount },
+  //       { waterActivities: checkedItem.waterActivities },
+  //       { optionalActivities: checkedItem.optionalActivities },
+  //       { flexibleBooking: checkedItem.flexibleBooking },
+  //       { wifi: checkedItem.wifi },
+  //     ],
+  //     overview: overView,
+  //     term_Conditions: termsArray,
+  //     cancellation_Policy: cancellationPolicies,
+  //   };
+
+  //   // Prepare FormData
+  //   const formData = new FormData();
+  //   formData.append("data", JSON.stringify(payload));
+
+  //   // Append cover image
+  //   const coverImage = document.getElementById("coverImageInput")?.files[0];
+  //   if (!coverImage) {
+  //     message.error("Cover image is required!");
+  //     return; // Stop the submission
+  //   }
+  //   formData.append("coverImage", coverImage);
+
+  //   // Append multiple files (optional)
+  //   const files = document.getElementById("filesInput")?.files;
+  //   if (files) {
+  //     for (let i = 0; i < files.length; i++) {
+  //       formData.append("files", files[i]);
+  //     }
+  //   }
+
+  //   try {
+  //     setLoader(true);
+
+  //     const response = await axios.post(
+  //       `${apiURL.baseURL}/skyTrails/holidaypackage/create`,
+  //       formData,
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       }
+  //     );
+
+  //     localStorage.setItem("packageid", response.data.data._id);
+  //     const dataIdget = localStorage.getItem("packageid");
+
+  //     showNotification("Package Create successfully!", "success");
+  //     navigate("/PackagesList");
+  //   } catch (error) {
+  //     console.error(
+  //       "Error creating package:",
+  //       error.response?.data || error.message
+  //     );
+  //     //alert("Failed to create the package. Please try again.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  // Function to show notification
+  const formData = new FormData();
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     // Validation
@@ -283,9 +478,17 @@ const CreateHolidayPackageNew = () => {
       message.error("Title is required!");
       return;
     }
+    if (!overView) {
+      message.error("Overview is required!");
+      return;
+    }
+    if (!packageType) {
+      message.error("Package Type is required!");
+      return;
+    }
 
-    if (!chipData || chipData.length === 0) {
-      message.error("At least one destination is required!");
+    if (!packageHighLightArray || packageHighLightArray.length === 0) {
+      message.error("Package Highlights are required!");
       return;
     }
 
@@ -294,8 +497,24 @@ const CreateHolidayPackageNew = () => {
       return;
     }
 
-    if (!packageType) {
-      message.error("packageType is required!");
+    // Append cover image
+    const coverImage = document.getElementById("coverImageInput")?.files[0];
+    if (!coverImage) {
+      message.error("Cover image is required!");
+      return; // Stop the submission
+    }
+    formData.append("coverImage", coverImage);
+
+    // Append multiple files (optional)
+    const files = document.getElementById("filesInput")?.files;
+    if (files) {
+      for (let i = 0; i < files.length; i++) {
+        formData.append("files", files[i]);
+      }
+    }
+
+    if (!chipData || chipData.length === 0) {
+      message.error("At least one destination is required!");
       return;
     }
 
@@ -303,9 +522,61 @@ const CreateHolidayPackageNew = () => {
       message.error("Number of days is required!");
       return;
     }
+    if (!packageAmountData) {
+      message.error("Package Amount is required!");
+      return;
+    }
 
-    if (!overView) {
-      message.error("Overview is required!");
+    // Validate inclusions
+    const inclusions = [
+      "flexibility",
+      "flight",
+      "train",
+      "bus",
+      "cab",
+      "moterBike",
+      "hotel",
+      "homeStays",
+      "guestHouse",
+      "cruise",
+      "sightSeeing",
+      "guide",
+      "meals",
+      "breakfast",
+      "drink",
+      "visa",
+      "travelInsurance",
+      "wildlife",
+      "heritage",
+      "adventure",
+      "beach",
+      "hillStation",
+      "nature",
+      "wellness",
+      "hiddenGem",
+      "tax",
+      "discount",
+      "waterActivities",
+      "optionalActivities",
+      "flexibleBooking",
+      "wifi",
+    ];
+
+    // Check if at least one inclusion is selected
+    const isValidInclusions = inclusions.some(
+      (key) => checkedItem[key] !== undefined && checkedItem[key]
+    );
+    if (!isValidInclusions) {
+      message.error("At least one inclusion must be selected!");
+      return;
+    }
+
+    if (!inclusionNoteArray || inclusionNoteArray.length === 0) {
+      message.error("Inclusion Notes are required!");
+      return;
+    }
+    if (!exclusionNoteArray || exclusionNoteArray.length === 0) {
+      message.error("Exclusion Notes are required!");
       return;
     }
 
@@ -319,6 +590,21 @@ const CreateHolidayPackageNew = () => {
       return;
     }
 
+    const isValidSpecialTag = Object.values(tag).some((value) => value); // Check if any tag is true
+    if (!isValidSpecialTag) {
+      message.error("At least one special tag is required!");
+      return;
+    }
+
+    //  Validate packageAmount: Ensure that the array is not empty and contains valid data
+    const isValidPackageAmount = packageAmountData.every(
+      (item) => item.currency && item.amount && item.packageCategory // Ensure each item has currency, amount, and packageCategory
+    );
+
+    if (!isValidPackageAmount) {
+      message.error("Please provide valid package amount details!");
+      return;
+    }
     // Prepare payload
     const payload = {
       userId,
@@ -326,27 +612,15 @@ const CreateHolidayPackageNew = () => {
       destination: chipData, // Array of destinations
       country: countryArray, // Use the array of countries
       packageHighLight: packageHighLightArray,
-
       insclusion_note: inclusionNoteArray, // Add inclusion notes
-
       exclusion_note: exclusionNoteArray, // Add exclusion notes
-
       packageType,
       days,
-      // packageAmount: [
-      //   {
-      //     currency,
-      //     amount,
-      //     packageType,
-      //   },
-      // ],
-
       packageAmount: packageAmountData.map((item) => ({
         currency: item.currency,
         amount: item.amount,
         packageCategory: item.packageCategory,
       })),
-
       specialTag: [
         { budget: tag.budget },
         { holiday: tag.holiday },
@@ -370,13 +644,11 @@ const CreateHolidayPackageNew = () => {
         { offbeat: tag.offbeat },
         { sightseeing: tag.sightseeing },
         { recreation: tag.recreation },
-        { nature: tag.nature },
         { adventure: tag.adventure },
         { dining: tag.dining },
         { shopping: tag.shopping },
         { nightlife: tag.nightlife },
         { relaxation: tag.relaxation },
-        { nature: tag.nature },
       ],
       inclusions: [
         { flexibility: checkedItem.flexibility },
@@ -417,23 +689,8 @@ const CreateHolidayPackageNew = () => {
     };
 
     // Prepare FormData
-    const formData = new FormData();
+   
     formData.append("data", JSON.stringify(payload));
-
-    // Append cover image
-    const coverImage = document.getElementById("coverImageInput")?.files[0];
-    if (!coverImage) {
-      return; // Stop the submission
-    }
-    formData.append("coverImage", coverImage);
-
-    // Append multiple files (optional)
-    const files = document.getElementById("filesInput")?.files;
-    if (files) {
-      for (let i = 0; i < files.length; i++) {
-        formData.append("files", files[i]);
-      }
-    }
 
     try {
       setLoader(true);
@@ -463,8 +720,6 @@ const CreateHolidayPackageNew = () => {
       setLoading(false);
     }
   };
-
-  // Function to show notification
 
   const updateAmount = (selectedCurrency, selectedPackageType) => {
     const selectedPackage = packageAmountData.find(

@@ -3,13 +3,13 @@ export const Holiday = [
     tittle: "Search",
     path: "/holidaypackage",
   },
+  // {
+  //   tittle: "Create Holiday Package",
+  //   path: "/CreateHolidayPackage",
+  //   name: "Create Holiday Package",
+  // },
   {
     tittle: "Create Holiday Package",
-    path: "/CreateHolidayPackage",
-    name: "Create Holiday Package",
-  },
-  {
-    tittle: "Create Holiday Packagenew",
     path: "/CreateHolidayPackagenew",
     name: "Create Holiday Packagenew",
   },
@@ -18,5 +18,4 @@ export const Holiday = [
     path: "/PackagesList",
     name: "Create Holiday Packagenew images",
   },
-
 ];
