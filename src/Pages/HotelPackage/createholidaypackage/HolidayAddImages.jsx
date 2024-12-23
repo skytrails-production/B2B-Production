@@ -169,10 +169,19 @@ const HolidayAddImages = () => {
       formDataToSend.append("checkOut", form.getFieldValue("checkOut"));
       // Ensure mealsIncluded is sent as an array
       const meals = form.getFieldValue("mealsIncluded");
+
       if (Array.isArray(meals)) {
-        formDataToSend.append("mealsIncluded", JSON.stringify(meals));
+        console.log("Meals (Array):", form.getFieldValue("mealsIncluded"));
+        formDataToSend.append(
+          "mealsIncluded",
+          JSON.stringify(form.getFieldValue("mealsIncluded"))
+        ); // You may want to stringify if it's an array
       } else {
-        formDataToSend.append("mealsIncluded", JSON.stringify([]));
+        console.log("Meals (Not Array):", form.getFieldValue("mealsIncluded"));
+        formDataToSend.append(
+          "mealsIncluded",
+          form.getFieldValue("mealsIncluded")
+        );
       }
     }
 

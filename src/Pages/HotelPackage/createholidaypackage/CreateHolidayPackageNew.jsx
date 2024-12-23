@@ -689,7 +689,7 @@ const CreateHolidayPackageNew = () => {
     };
 
     // Prepare FormData
-   
+
     formData.append("data", JSON.stringify(payload));
 
     try {
@@ -757,7 +757,7 @@ const CreateHolidayPackageNew = () => {
         <div className="col-lg-12">
           <div className="headerBoxOuter">
             <div className="headerBox-new">
-              <p>Create a Holiday Package New</p>
+              <p>Create a Holiday Package</p>
             </div>
           </div>
         </div>
