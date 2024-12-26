@@ -44,7 +44,7 @@ const AddItineraryImage = () => {
       form.resetFields();
     } catch (error) {
       message.error("Failed to add itinerary images.");
-      console.error("Error:", error);
+     
     } finally {
       setLoading(false);
     }

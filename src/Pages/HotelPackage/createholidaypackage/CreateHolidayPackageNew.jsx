@@ -580,11 +580,6 @@ const CreateHolidayPackageNew = () => {
       return;
     }
 
-    if (!termsArray || termsArray.length === 0) {
-      message.error("Terms and conditions are required!");
-      return;
-    }
-
     if (!cancellationPolicies || cancellationPolicies.length === 0) {
       message.error("Cancellation policy is required!");
       return;
@@ -711,10 +706,7 @@ const CreateHolidayPackageNew = () => {
       showNotification("Package Create successfully!", "success");
       navigate("/PackagesList");
     } catch (error) {
-      console.error(
-        "Error creating package:",
-        error.response?.data || error.message
-      );
+     
       //alert("Failed to create the package. Please try again.");
     } finally {
       setLoading(false);

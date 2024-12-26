@@ -1,3 +1,5 @@
+
+
 import React, { useState } from "react";
 import {
   Checkbox,
@@ -17,7 +19,10 @@ import { UploadOutlined } from "@ant-design/icons";
 import { apiURL } from "../../../Constants/constant";
 import { useLocation } from "react-router-dom";
 import { Select, Input } from "antd";
-import moment from "moment";
+
+
+
+
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -25,8 +30,10 @@ const HolidayAddImages = () => {
   const location = useLocation();
   const { id } = location.state || {};
   const [form] = Form.useForm();
-  const [mealsIncluded, setmealIncluded] = useState();
 
+  const [mealsIncluded, setmealIncluded] = useState();
+  // State to manage check-in time
+  
   const [formData, setFormData] = useState({
     stays: false,
     destinations: false,
@@ -171,13 +178,11 @@ const HolidayAddImages = () => {
       const meals = form.getFieldValue("mealsIncluded");
 
       if (Array.isArray(meals)) {
-        console.log("Meals (Array):", form.getFieldValue("mealsIncluded"));
         formDataToSend.append(
           "mealsIncluded",
           JSON.stringify(form.getFieldValue("mealsIncluded"))
         ); // You may want to stringify if it's an array
       } else {
-        console.log("Meals (Not Array):", form.getFieldValue("mealsIncluded"));
         formDataToSend.append(
           "mealsIncluded",
           form.getFieldValue("mealsIncluded")
@@ -241,7 +246,15 @@ const HolidayAddImages = () => {
         Add Images to Holiday Package
       </Title>
       {/* //<Form onFinish={handleSubmit} layout="vertical"> */}
-      <Form form={form} onFinish={handleSubmit} layout="vertical">
+      <Form
+        form={form}
+        onFinish={handleSubmit}
+        initialValues={{
+          checkIn: "11:00", // Default check-in time (AM)
+          checkOut: "2:00", // Default check-out time (PM)
+        }}
+        layout="vertical"
+      >
         {/* Stays Section */}
         <Row style={{ marginBottom: "20px" }}>
           <Col span={24}>
@@ -332,12 +345,14 @@ const HolidayAddImages = () => {
                       <Select.Option value={5}>5 Stars</Select.Option>
                     </Select>
                   </Form.Item>
+
                   <Row gutter={16}>
                     {/* Check-In Time Field */}
                     <Col span={12}>
                       <Form.Item
                         label="Check-In Time"
                         name="checkIn"
+                        // initialValue={checkIn}
                         rules={[
                           {
                             required: true,
@@ -345,11 +360,7 @@ const HolidayAddImages = () => {
                           },
                         ]}
                       >
-                        <Input
-                          type="time"
-                          placeholder="Select Check-In Time"
-                          defaultValue="02:00"
-                        />
+                        <Input type="time" placeholder="Select Check-In Time" />
                       </Form.Item>
                     </Col>
 
@@ -358,6 +369,7 @@ const HolidayAddImages = () => {
                       <Form.Item
                         label="Check-Out Time"
                         name="checkOut"
+                        initialValue="11:00PM"
                         rules={[
                           {
                             required: true,
@@ -368,7 +380,6 @@ const HolidayAddImages = () => {
                         <Input
                           type="time"
                           placeholder="Select Check-Out Time"
-                          defaultValue="11:00"
                         />
                       </Form.Item>
                     </Col>

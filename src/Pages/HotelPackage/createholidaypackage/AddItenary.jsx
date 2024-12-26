@@ -18,6 +18,7 @@ const AddItenary = () => {
   const location = useLocation();
   const { id } = location.state || {};
   const { TextArea } = Input;
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     packageId: id || "",
     title: "",
@@ -69,8 +70,8 @@ const AddItenary = () => {
     setFormData({ ...formData, [key]: updatedArray });
   };
 
- 
   const handleSubmit = () => {
+    setLoading(true);
     fetch(`${apiURL.baseURL}/skyTrails/holidaypackage/additinerary`, {
       method: "POST",
       headers: {
@@ -79,7 +80,7 @@ const AddItenary = () => {
       body: JSON.stringify(formData),
     })
       .then((response) => {
-        console.log("Raw Response:", response); // Logs the raw response object
+      
         return response.json(); // Parse the JSON data
       })
       .then((data) => {
@@ -88,6 +89,7 @@ const AddItenary = () => {
             content: data.message,
             style: { color: "green" }, // Green for success
           });
+          setLoading(false);
         } else if (data.status === 400) {
           message.error({
             content: data.message,
@@ -101,11 +103,15 @@ const AddItenary = () => {
         }
       })
       .catch((error) => {
-        message.error({
-          content: "Error adding itinerary.",
-          style: { color: "red" }, // Red for fetch error
-        });
-        console.error("Error:", error);
+        message
+          .error({
+            content: "Error adding itinerary.",
+            style: { color: "red" }, // Red for fetch error
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+      
       });
   };
 
@@ -503,8 +509,15 @@ const AddItenary = () => {
 
       {/* Submit Button */}
       <div className="mt-8 text-center">
-        <Button type="primary" htmlType="submit" className="w-full md:w-1/3">
-          Submit Itinerary
+        <Button
+          type="primary"
+          htmlType="submit"
+          loading={loading}
+          className="w-full md:w-1/3"
+        >
+          
+
+          {loading ? "Uploading..." : "Submit Itinerary"}
         </Button>
       </div>
     </Form>
