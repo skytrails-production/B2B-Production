@@ -12,6 +12,7 @@ function* getActiveStatus(action) {
     console.log(error);
   }
 }
+
 export function* activeSegaWatcher() {
   yield takeLatest(ACTIVE_STATUS_REQUEST, getActiveStatus);
 }

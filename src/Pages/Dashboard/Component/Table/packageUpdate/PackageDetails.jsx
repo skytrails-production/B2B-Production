@@ -91,9 +91,11 @@ function PackageDetails() {
   const fetchHolidayPackages = async () => {
     try {
       const response = await axios.get(
-        `${apiURL.baseURL}/skyTrails/international/getAllAdminPackage`
+        `${apiURL.baseURL}/skytrails/holidaypackage/admin/getallholidaypackage`
       );
-      const data = response.data.data.pakage;
+      console.log(response, "responsedata");
+      const data = response.data.data;
+      console.log(data, "data---------------");
       const reversedData = data.reverse(); // Reverse the order of the data
       setHolidayPackage(reversedData);
       setFilteredData(reversedData);
@@ -110,6 +112,7 @@ function PackageDetails() {
     sessionStorage.setItem("selectedPackage", JSON.stringify(item));
     setOpenView(true);
   };
+  
   const handleOpenViewDetails = async (row) => {
     const packageId = row._id;
 
@@ -119,9 +122,9 @@ function PackageDetails() {
     try {
       // Fetch the package details using the provided GET API
       const res = await axios.get(
-        `${apiURL.baseURL}/skyTrails/international/getone/${packageId}`
+        `${apiURL.baseURL}/skytrails/holidaypackage/singlepackage/${packageId}`
       );
-
+       console.log(res,"dataresponse")
       if (res.status === 200 && res.data) {
         const packageDetails = res.data;
 
@@ -190,9 +193,10 @@ function PackageDetails() {
     try {
       const res = await axios({
         method: "post",
-        url: `${apiURL.baseURL}/skyTrails/international/setactive`,
+        url: `${apiURL.baseURL}/skytrails/holidaypackage/setactive`,
+        ///skytrails/holidaypackage/setactive
         data: {
-          pakageId: packageId,
+          packageId: packageId,
           isAdmin: isAdmin,
           activeStatus: activeStatus,
         },
@@ -241,10 +245,12 @@ function PackageDetails() {
 
         // Save the fetched package details in localStorage
         localStorage.setItem("packageDetails", JSON.stringify(packageDetails));
+        
         console.log(packageDetails);
         // Retrieve and console the stored package details
         const storedPackageDetails = JSON.parse(
           localStorage.getItem("packageDetails")
+
         );
       } else {
         toast.error("Failed to fetch package details.");
@@ -256,8 +262,10 @@ function PackageDetails() {
       // Reset loading state for the specific package
       setLoadingApproval((prevState) => ({ ...prevState, [packageId]: false }));
     }
-  };
+  };                   
 
+
+   
   const handleOpenCreatePackage = (item) => {
     setOpenCreate(true);
     sessionStorage.setItem("selectedPackage", JSON.stringify(item));
@@ -283,7 +291,8 @@ function PackageDetails() {
     try {
       const res = await axios({
         method: "delete",
-        url: `${apiURL.baseURL}/skyTrails/international/deleteone/${packageId}`,
+        url: `${apiURL.baseURL}/skytrails/holidaypackage/deleteone/${packageId}`,
+        ///skytrails/holidaypackage/deleteone/:packageId
         data: {
           isAdmin: isAdmin,
         },
@@ -347,7 +356,7 @@ function PackageDetails() {
       headerName: "Package Title",
       width: 350,
       headerClassName: "custom-header",
-      valueGetter: (params) => params.row.pakage_title || "N/A",
+      valueGetter: (params) => params.row.title || "N/A",
     },
     {
       field: "days",
@@ -356,11 +365,11 @@ function PackageDetails() {
       headerClassName: "custom-header",
     },
     {
-      field: "pakage_amount.amount",
+      field: "packageAmount.amount",
       headerName: "Package Amount",
       headerClassName: "custom-header",
       width: 150,
-      valueGetter: (params) => params.row.pakage_amount?.amount || "N/A",
+      valueGetter: (params) => params.row.packageAmount[0]?.amount || "N/A",
     },
     {
       field: "edit",

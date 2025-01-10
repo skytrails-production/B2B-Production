@@ -31,6 +31,7 @@
     "express-validator": "^7.1.0",
     "fast-xml-parser": "^4.4.0",
     "firebase": "^10.8.0",
+    "flowbite": "^2.5.2",
     "formik": "^2.4.5",
     "framer-motion": "^6.5.1",
     "html-to-text": "^9.0.5",
@@ -99,7 +100,6 @@
   },
   "devDependencies": {
     "@locator/babel-jsx": "^0.2.2",
-    "@locator/runtime": "^0.2.2",
-    "tailwindcss": "^3.2.4"
+    "@locator/runtime": "^0.2.2"
   }
 }

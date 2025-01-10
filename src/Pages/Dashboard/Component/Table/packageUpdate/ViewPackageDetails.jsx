@@ -56,6 +56,8 @@ import { useSelector } from "react-redux";
 import Accordion from "react-bootstrap/Accordion";
 import { useNavigate } from "react-router";
 import "./ViewPackages.css";
+
+import { FaPlane, FaBus, FaBed, FaMapMarkerAlt } from "react-icons/fa";
 import { Carousel } from "antd";
 import "antd/dist/reset.css"; // Ensure Ant Design styles are imported
 
@@ -76,11 +78,14 @@ const ViewPackageDetails = () => {
   const storedPackageDetails = JSON.parse(
     localStorage.getItem("packageDetails")
   );
-
   console.log(
-    storedPackageDetails?.data?.package_img,
-    "(((((((((()))))))))))))"
+    storedPackageDetails?.data?.inclusions,
+    "storedPackageDetails?.data?.detailed_ltinerary"
   );
+
+  //storedPackageDetails?.data?.images?.stays
+
+  //const dayData = storedPackageDetails?.data?.images?.stays.filter((item) => item. itineraryDay === dayNumber);
 
   return (
     <>
@@ -95,61 +100,63 @@ const ViewPackageDetails = () => {
                     </div> */}
           <div className="col-lg-12 mb-4">
             <div className="packageName">
-              <p className="mb-3">{storedPackageDetails?.data.pakage_title}</p>
+              <p className="mb-3">{storedPackageDetails?.data?.title}</p>
               <span>
                 {`${storedPackageDetails?.data.days - 1}N`} /{" "}
                 {`${storedPackageDetails?.data?.days}D`}
               </span>
             </div>
           </div>
-          {/* <div>
-          //<img src={storedPackageDetails?.data?.package_img} alt="" />
-          </div> */}
-          <div className="carouselContainer">
-            <Carousel autoplay>
-              {storedPackageDetails?.data?.package_img?.length ? (
-                storedPackageDetails.data.package_img.map((imgUrl, index) => (
-                  <div key={index} className="PackageImg">
-                    <img
-                      src={imgUrl}
-                      alt={`Package Image ${index + 1}`}
-                      style={{ width: "100%", height: "auto" }} // Adjust width and height
-                    />
-                  </div>
-                ))
-              ) : (
-                <div>
-                  <img
-                    src={storedPackageDetails?.data?.pakage_img}
-                    alt="Fallback"
-                    style={{ width: "100%", height: "auto" }} // Adjust width and height
-                  />
+
+          <div>
+            {/* {storedPackageDetails?.data?.images?.destinations?.length > 0 && (
+              <div className="Destinations">
+                <h2>Destinations</h2>
+                <div className="carouselContainer">
+                  <Carousel autoplay>
+                    {storedPackageDetails?.data?.images?.destinations.length ? (
+                      storedPackageDetails?.data?.images?.destinations?.map(
+                        (imgUrl, index) => (
+                          <div key={index} className="PackageImg">
+                            <img
+                              src={imgUrl}
+                              alt={`Package Image ${index + 1}`}
+                              style={{ width: "100%", height: "auto" }} // Adjust width and height
+                            />
+                          </div>
+                        )
+                      )
+                    ) : (
+                      <div>
+                        <img
+                          src={storedPackageDetails?.data?.images?.destinations}
+                          alt="Fallback"
+                          style={{ width: "100%", height: "auto" }} // Adjust width and height
+                        />
+                      </div>
+                    )}
+                  </Carousel>
                 </div>
-              )}
-            </Carousel>
+               
+              </div>
+            )} */}
+
+            {/* Activities Section */}
+            {/* {storedPackageDetails?.data?.images?.activities?.length > 0 && (
+              <div className="Activities">
+                <h2>Activities</h2>
+                {storedPackageDetails?.data?.images?.activities.map(
+                  (activity, index) => (
+                    <div key={index} className="ActivityDetails">
+                      <h3>{activity.title}</h3>
+                    </div>
+                  )
+                )}
+              </div>
+            )} */}
           </div>
 
           <div className="col-lg-12 mb-4 packageImgBox">
-            {/* <div className="PackageImg">
-              <img src={viewData?.pakage_img    package_img
-} alt="" />
-            </div> */}
-            {/* <div className="PackageImg">
-              {storedPackageDetails?.data?.package_img &&
-              Array.isArray(storedPackageDetails?.data?.package_img) ? (
-                storedPackageDetails?.data?.package_img.map((imgUrl, index) => (
-                  <img
-                    key={index}
-                    src={imgUrl}
-                    alt={`Package Image ${index + 1}`}
-                    style={{ width: "200px", marginRight: "10px" }}
-                  />
-                ))
-              ) : (
-                <p>No images available</p>
-              )}
-            </div> */}
-
             <div className="packageLocation">
               <FmdGoodIcon />
             </div>
@@ -163,309 +170,319 @@ const ViewPackageDetails = () => {
             </div>
           </div>
 
+          <div className="col-lg-12 mb-4 packageDetails">
+            <h3 className="mb-3  bg-gray-700 " >Package HighLight </h3>
+            {storedPackageDetails.data.packageHighLight.map((element, i) => {
+              return (
+                <div key={i}>
+                  <p>{element}</p>
+                </div>
+              );
+            })}
+          </div>
           <div className="col-lg-12 mb-4">
             <div className="TripHighlight">
-              <p className="mb-3">Trip Highlight</p>
+              <p className="mb-3">Inclusions</p>
 
               <div className="col-lg-10">
                 <div className="icon-boxHighlight">
-                  {storedPackageDetails?.data?.insclusions?.map(
-                    (ele, index) => {
-                      if (
-                        ele?.flexibility ||
-                        ele?.train ||
-                        ele?.bus ||
-                        ele?.cab ||
-                        ele?.moterBike ||
-                        ele?.hotel ||
-                        ele?.homeStays ||
-                        ele?.guestHouse ||
-                        ele?.cruise ||
-                        ele?.sightSeeing ||
-                        ele?.guide ||
-                        ele?.meals ||
-                        ele?.breakfast ||
-                        ele?.drink ||
-                        ele?.visa ||
-                        ele?.travelInsurance ||
-                        ele?.wildlife ||
-                        ele?.heritage ||
-                        ele?.adventure ||
-                        ele?.beach ||
-                        ele?.hillStation ||
-                        ele?.nature ||
-                        ele?.wellness ||
-                        ele?.hiddenGem ||
-                        ele?.tax ||
-                        ele?.discount ||
-                        ele?.waterActivities ||
-                        ele?.optionalActivities ||
-                        ele?.flexibleBooking ||
-                        ele?.wifi
-                      ) {
-                        return (
-                          <div key={index}>
-                            {ele?.flexibility && (
-                              <div className="singleIcon">
-                                <span>
-                                  <CommitIcon />
-                                </span>
-                                <p>Flexibility</p>
-                              </div>
-                            )}
-                            {ele?.train && (
-                              <div className="singleIcon">
-                                <span>
-                                  <TramIcon />
-                                </span>
-                                <p>Train</p>
-                              </div>
-                            )}
-                            {ele?.bus && (
-                              <div className="singleIcon">
-                                <span>
-                                  <DirectionsBusIcon />
-                                </span>
-                                <p>Bus</p>
-                              </div>
-                            )}
-                            {ele?.cab && (
-                              <div className="singleIcon">
-                                <span>
-                                  <DirectionsCarIcon />
-                                </span>
-                                <p>Cab</p>
-                              </div>
-                            )}
-                            {ele?.moterBike && (
-                              <div className="singleIcon">
-                                <span>
-                                  <TwoWheelerIcon />
-                                </span>
-                                <p>Moterbike</p>
-                              </div>
-                            )}
-                            {ele?.hotel && (
-                              <div className="singleIcon">
-                                <span>
-                                  <ApartmentIcon />
-                                </span>
-                                <p>Hotel</p>
-                              </div>
-                            )}
-                            {ele?.homeStays && (
-                              <div className="singleIcon">
-                                <span>
-                                  <HolidayVillageIcon />
-                                </span>
-                                <p>Homestays</p>
-                              </div>
-                            )}
-                            {ele?.guestHouse && (
-                              <div className="singleIcon">
-                                <span>
-                                  <LocationCityIcon />
-                                </span>
-                                <p>Guesthouse</p>
-                              </div>
-                            )}
-                            {ele?.camp && (
-                              <div className="singleIcon">
-                                <span>
-                                  <CabinIcon />
-                                </span>
-                                <p>Camp</p>
-                              </div>
-                            )}
-                            {ele?.cruise && (
-                              <div className="singleIcon">
-                                <span>
-                                  <BlurOnIcon />
-                                </span>
-                                <p>Cruise</p>
-                              </div>
-                            )}
-                            {ele?.sightSeeing && (
-                              <div className="singleIcon">
-                                <span>
-                                  <DeckIcon />
-                                </span>
-                                <p>Sightseeing</p>
-                              </div>
-                            )}
-                            {ele?.guide && (
-                              <div className="singleIcon">
-                                <span>
-                                  <EngineeringIcon />
-                                </span>
-                                <p>Guide</p>
-                              </div>
-                            )}
-                            {ele?.meals && (
-                              <div className="singleIcon">
-                                <span>
-                                  <FastfoodIcon />
-                                </span>
-                                <p>Meals</p>
-                              </div>
-                            )}
-                            {ele?.breakfast && (
-                              <div className="singleIcon">
-                                <span>
-                                  <DinnerDiningIcon />
-                                </span>
-                                <p>Daily Breakfast</p>
-                              </div>
-                            )}
-                            {ele?.drink && (
-                              <div className="singleIcon">
-                                <span>
-                                  <LiquorIcon />
-                                </span>
-                                <p>Complimentary Drink</p>
-                              </div>
-                            )}
-                            {ele?.visa && (
-                              <div className="singleIcon">
-                                <span>
-                                  <ArticleIcon />
-                                </span>
-                                <p>Visa</p>
-                              </div>
-                            )}
-                            {ele?.travelInsurance && (
-                              <div className="singleIcon">
-                                <span>
-                                  <AccountBalanceIcon />
-                                </span>
-                                <p>Travel Insurance</p>
-                              </div>
-                            )}
-                            {ele?.safeTravel && (
-                              <div className="singleIcon">
-                                <span>
-                                  <ParaglidingIcon />
-                                </span>
-                                <p>Safe to Travel</p>
-                              </div>
-                            )}
-                            {ele?.wildlife && (
-                              <div className="singleIcon">
-                                <span>
-                                  <NaturePeopleIcon />
-                                </span>
-                                <p>Wildlife</p>
-                              </div>
-                            )}
-                            {ele?.heritage && (
-                              <div className="singleIcon">
-                                <span>
-                                  <LandslideIcon />
-                                </span>
-                                <p>Heritage</p>
-                              </div>
-                            )}
-                            {ele?.adventure && (
-                              <div className="singleIcon">
-                                <span>
-                                  <KitesurfingIcon />
-                                </span>
-                                <p>Adventure</p>
-                              </div>
-                            )}
-                            {ele?.beach && (
-                              <div className="singleIcon">
-                                <span>
-                                  <PoolIcon />
-                                </span>
-                                <p>Beach</p>
-                              </div>
-                            )}
-                            {ele?.hillStation && (
-                              <div className="singleIcon">
-                                <span>
-                                  <DownhillSkiingIcon />
-                                </span>
-                                <p>Hill Station</p>
-                              </div>
-                            )}
-                            {ele?.nature && (
-                              <div className="singleIcon">
-                                <span>
-                                  <ForestIcon />
-                                </span>
-                                <p>Nature</p>
-                              </div>
-                            )}
-                            {ele?.wellness && (
-                              <div className="singleIcon">
-                                <span>
-                                  <SelfImprovementIcon />
-                                </span>
-                                <p>Wellness</p>
-                              </div>
-                            )}
-                            {ele?.hiddenGem && (
-                              <div className="singleIcon">
-                                <span>
-                                  <FitnessCenterIcon />
-                                </span>
-                                <p>Hidden Gem</p>
-                              </div>
-                            )}
-                            {ele?.tax && (
-                              <div className="singleIcon">
-                                <span>
-                                  <FolderDeleteIcon />
-                                </span>
-                                <p>Price Inclusive Tax</p>
-                              </div>
-                            )}
-                            {ele?.discount && (
-                              <div className="singleIcon">
-                                <span>
-                                  <LocalOfferIcon />
-                                </span>
-                                <p>50% Off</p>
-                              </div>
-                            )}
-                            {ele?.waterActivities && (
-                              <div className="singleIcon">
-                                <span>
-                                  <KayakingIcon />
-                                </span>
-                                <p>Water Activities</p>
-                              </div>
-                            )}
-                            {ele?.optionalActivities && (
-                              <div className="singleIcon">
-                                <span>
-                                  <SportsKabaddiIcon />
-                                </span>
-                                <p>Optional Activities</p>
-                              </div>
-                            )}
-                            {ele?.flexibleBooking && (
-                              <div className="singleIcon">
-                                <span>
-                                  <BookmarkAddIcon />
-                                </span>
-                                <p>Flexible Booking</p>
-                              </div>
-                            )}
-                            {ele?.wifi && (
-                              <div className="singleIcon">
-                                <span>
-                                  <WifiPasswordIcon />
-                                </span>
-                                <p>WIFI</p>
-                              </div>
-                            )}
-                          </div>
-                        );
-                      }
+                  {storedPackageDetails?.data?.inclusions?.map((ele, index) => {
+                    console.log(ele, "elementssssssssssss");
+                    if (
+                      ele?.flexibility ||
+                      ele?.train ||
+                      ele?.bus ||
+                      ele?.cab ||
+                      ele?.moterBike ||
+                      ele?.hotel ||
+                      ele?.homeStays ||
+                      ele?.guestHouse ||
+                      ele?.cruise ||
+                      ele?.sightSeeing ||
+                      ele?.guide ||
+                      ele?.meals ||
+                      ele?.breakfast ||
+                      ele?.drink ||
+                      ele?.visa ||
+                      ele?.travelInsurance ||
+                      ele?.wildlife ||
+                      ele?.heritage ||
+                      ele?.adventure ||
+                      ele?.beach ||
+                      ele?.hillStation ||
+                      ele?.nature ||
+                      ele?.wellness ||
+                      ele?.hiddenGem ||
+                      ele?.tax ||
+                      ele?.discount ||
+                      ele?.waterActivities ||
+                      ele?.optionalActivities ||
+                      ele?.flexibleBooking ||
+                      ele?.wifi
+                    ) {
+                      console.log(`Inclusion ${index}:`, ele);
+                      return (
+                        <div key={index}>
+                          {ele?.flexibility && (
+                            <div className="singleIcon">
+                              <span>
+                                <CommitIcon />
+                              </span>
+                              <p>Flexibility</p>
+                            </div>
+                          )}
+                          {ele?.train && (
+                            <div className="singleIcon">
+                              <span>
+                                <TramIcon />
+                              </span>
+                              <p>Train</p>
+                            </div>
+                          )}
+                          {ele?.bus && (
+                            <div className="singleIcon">
+                              <span>
+                                <DirectionsBusIcon />
+                              </span>
+                              <p>Bus</p>
+                            </div>
+                          )}
+                          {ele?.cab && (
+                            <div className="singleIcon">
+                              <span>
+                                <DirectionsCarIcon />
+                              </span>
+                              <p>Cab</p>
+                            </div>
+                          )}
+                          {ele?.moterBike && (
+                            <div className="singleIcon">
+                              <span>
+                                <TwoWheelerIcon />
+                              </span>
+                              <p>Moterbike</p>
+                            </div>
+                          )}
+                          {ele?.hotel && (
+                            <div className="singleIcon">
+                              <span>
+                                <ApartmentIcon />
+                              </span>
+                              <p>Hotel</p>
+                            </div>
+                          )}
+                          {ele?.homeStays && (
+                            <div className="singleIcon">
+                              <span>
+                                <HolidayVillageIcon />
+                              </span>
+                              <p>Homestays</p>
+                            </div>
+                          )}
+                          {ele?.guestHouse && (
+                            <div className="singleIcon">
+                              <span>
+                                <LocationCityIcon />
+                              </span>
+                              <p>Guesthouse</p>
+                            </div>
+                          )}
+                          {ele?.camp && (
+                            <div className="singleIcon">
+                              <span>
+                                <CabinIcon />
+                              </span>
+                              <p>Camp</p>
+                            </div>
+                          )}
+                          {ele?.cruise && (
+                            <div className="singleIcon">
+                              <span>
+                                <BlurOnIcon />
+                              </span>
+                              <p>Cruise</p>
+                            </div>
+                          )}
+                          {ele?.sightSeeing && (
+                            <div className="singleIcon">
+                              <span>
+                                <DeckIcon />
+                              </span>
+                              <p>Sightseeing</p>
+                            </div>
+                          )}
+                          {ele?.guide && (
+                            <div className="singleIcon">
+                              <span>
+                                <EngineeringIcon />
+                              </span>
+                              <p>Guide</p>
+                            </div>
+                          )}
+                          {ele?.meals && (
+                            <div className="singleIcon">
+                              <span>
+                                <FastfoodIcon />
+                              </span>
+                              <p>Meals</p>
+                            </div>
+                          )}
+                          {ele?.breakfast && (
+                            <div className="singleIcon">
+                              <span>
+                                <DinnerDiningIcon />
+                              </span>
+                              <p>Daily Breakfast</p>
+                            </div>
+                          )}
+                          {ele?.drink && (
+                            <div className="singleIcon">
+                              <span>
+                                <LiquorIcon />
+                              </span>
+                              <p>Complimentary Drink</p>
+                            </div>
+                          )}
+                          {ele?.visa && (
+                            <div className="singleIcon">
+                              <span>
+                                <ArticleIcon />
+                              </span>
+                              <p>Visa</p>
+                            </div>
+                          )}
+                          {ele?.travelInsurance && (
+                            <div className="singleIcon">
+                              <span>
+                                <AccountBalanceIcon />
+                              </span>
+                              <p>Travel Insurance</p>
+                            </div>
+                          )}
+                          {ele?.safeTravel && (
+                            <div className="singleIcon">
+                              <span>
+                                <ParaglidingIcon />
+                              </span>
+                              <p>Safe to Travel</p>
+                            </div>
+                          )}
+                          {ele?.wildlife && (
+                            <div className="singleIcon">
+                              <span>
+                                <NaturePeopleIcon />
+                              </span>
+                              <p>Wildlife</p>
+                            </div>
+                          )}
+                          {ele?.heritage && (
+                            <div className="singleIcon">
+                              <span>
+                                <LandslideIcon />
+                              </span>
+                              <p>Heritage</p>
+                            </div>
+                          )}
+                          {ele?.adventure && (
+                            <div className="singleIcon">
+                              <span>
+                                <KitesurfingIcon />
+                              </span>
+                              <p>Adventure</p>
+                            </div>
+                          )}
+                          {ele?.beach && (
+                            <div className="singleIcon">
+                              <span>
+                                <PoolIcon />
+                              </span>
+                              <p>Beach</p>
+                            </div>
+                          )}
+                          {ele?.hillStation && (
+                            <div className="singleIcon">
+                              <span>
+                                <DownhillSkiingIcon />
+                              </span>
+                              <p>Hill Station</p>
+                            </div>
+                          )}
+                          {ele?.nature && (
+                            <div className="singleIcon">
+                              <span>
+                                <ForestIcon />
+                              </span>
+                              <p>Nature</p>
+                            </div>
+                          )}
+                          {ele?.wellness && (
+                            <div className="singleIcon">
+                              <span>
+                                <SelfImprovementIcon />
+                              </span>
+                              <p>Wellness</p>
+                            </div>
+                          )}
+                          {ele?.hiddenGem && (
+                            <div className="singleIcon">
+                              <span>
+                                <FitnessCenterIcon />
+                              </span>
+                              <p>Hidden Gem</p>
+                            </div>
+                          )}
+                          {ele?.tax && (
+                            <div className="singleIcon">
+                              <span>
+                                <FolderDeleteIcon />
+                              </span>
+                              <p>Price Inclusive Tax</p>
+                            </div>
+                          )}
+                          {ele?.discount && (
+                            <div className="singleIcon">
+                              <span>
+                                <LocalOfferIcon />
+                              </span>
+                              <p>50% Off</p>
+                            </div>
+                          )}
+                          {ele?.waterActivities && (
+                            <div className="singleIcon">
+                              <span>
+                                <KayakingIcon />
+                              </span>
+                              <p>Water Activities</p>
+                            </div>
+                          )}
+                          {ele?.optionalActivities && (
+                            <div className="singleIcon">
+                              <span>
+                                <SportsKabaddiIcon />
+                              </span>
+                              <p>Optional Activities</p>
+                            </div>
+                          )}
+                          {ele?.flexibleBooking && (
+                            <div className="singleIcon">
+                              <span>
+                                <BookmarkAddIcon />
+                              </span>
+                              <p>Flexible Booking</p>
+                            </div>
+                          )}
+                          {ele?.wifi && (
+                            <div className="singleIcon">
+                              <span>
+                                <WifiPasswordIcon />
+                              </span>
+                              <p>WIFI</p>
+                            </div>
+                          )}
+                        </div>
+                      );
                     }
-                  )}
+                  })}
                 </div>
               </div>
             </div>
@@ -513,48 +530,187 @@ const ViewPackageDetails = () => {
               </Box>
               <TabPanel value="1">
                 <div className="col-lg-12">
-                  {storedPackageDetails?.data?.detailed_ltinerary?.map(
-                    (item, index) => {
+                  {storedPackageDetails?.data?.detailed_ltinerary
+                    ?.sort((a, b) => a.dayNumber - b.dayNumber) // Sort by dayNumber
+                    ?.map((item, index) => {
                       return (
-                        <>
-                          <Box>
-                            <Box py={1}> </Box>
-                            <Accordion
-                              style={{ width: "100%" }}
-                              defaultActiveKey={
-                                index === 0 ? index.toString() : undefined
-                              } // Set defaultActiveKey to index 0
-                            >
-                              <Accordion.Item eventKey={index.toString()}>
-                                <Accordion.Header>
-                                  <Typography
-                                    color="Black"
-                                    fontSize="15px"
-                                    fontWeight="bold"
-                                  >
-                                    Day {index + 1}
-                                  </Typography>
-                                </Accordion.Header>
-                                <Accordion.Body>
-                                  <Typography
-                                    sx={{
-                                      color: "#666666",
-                                      fontSize: "14px",
-                                      fontWeight: "bold",
+                        <Box
+                          key={item._id}
+                          mb={2}
+                          boxShadow={3}
+                          p={2}
+                          borderRadius={2}
+                        >
+                          <Accordion
+                            style={{
+                              width: "100%",
+                              border: "1px solid #ddd",
+                              borderRadius: "8px",
+                              overflow: "hidden",
+                            }}
+                            defaultActiveKey={
+                              index === 0 ? index.toString() : undefined
+                            }
+                          >
+                            <Accordion.Item eventKey={index.toString()}>
+                              <Accordion.Header
+                                style={{ backgroundColor: "#f9f9f9" }}
+                              >
+                                <Typography
+                                  sx={{
+                                    color: "#333",
+                                    fontSize: "18px",
+                                    fontWeight: "bold",
+                                  }}
+                                >
+                                  Day {item.dayNumber}: {item.title}
+                                </Typography>
+                              </Accordion.Header>
+                              <Accordion.Body
+                                style={{
+                                  padding: "16px",
+                                  backgroundColor: "#fff",
+                                }}
+                              >
+                                <Typography
+                                  sx={{
+                                    color: "#555",
+                                    fontSize: "14px",
+                                    lineHeight: "1.6",
+                                  }}
+                                >
+                                  <p>
+                                    <strong
+                                      style={{
+                                        fontSize: "16px",
+                                        color: "#444",
+                                      }}
+                                    >
+                                      Description:
+                                    </strong>
+                                  </p>
+                                  <div
+                                    style={{ marginBottom: "12px" }}
+                                    dangerouslySetInnerHTML={{
+                                      __html: item.description,
                                     }}
-                                  >
-                                    <div
-                                      dangerouslySetInnerHTML={{ __html: item }}
-                                    ></div>
-                                  </Typography>
-                                </Accordion.Body>
-                              </Accordion.Item>
-                            </Accordion>
-                          </Box>
-                        </>
+                                  ></div>
+
+                                  {/* Flight Events */}
+                                  {item.flightEvents.length > 0 && (
+                                    <div style={{ marginBottom: "16px" }}>
+                                      <Typography
+                                        sx={{
+                                          fontSize: "16px",
+                                          fontWeight: "bold",
+                                          color: "#444",
+                                          marginBottom: "8px",
+                                        }}
+                                      >
+                                        <FaPlane
+                                          style={{ marginRight: "8px" }}
+                                        />
+                                        Flight Events:
+                                      </Typography>
+                                      {item.flightEvents.map((flight, idx) => (
+                                        <Box key={idx} pl={2}>
+                                          <p>Type: {flight.type}</p>
+                                          <p>
+                                            From: {flight.from} (
+                                            {flight.fromAirPortCode})
+                                          </p>
+                                          <p>
+                                            To: {flight.to} (
+                                            {flight.toAirPortCode})
+                                          </p>
+                                        </Box>
+                                      ))}
+                                    </div>
+                                  )}
+
+                                  {/* Transfer Events */}
+                                  {item.transferEvents.length > 0 && (
+                                    <div style={{ marginBottom: "16px" }}>
+                                      <Typography
+                                        sx={{
+                                          fontSize: "16px",
+                                          fontWeight: "bold",
+                                          color: "#444",
+                                          marginBottom: "8px",
+                                        }}
+                                      >
+                                        <FaBus style={{ marginRight: "8px" }} />
+                                        Transfer Events:
+                                      </Typography>
+                                      {item.transferEvents.map(
+                                        (transfer, idx) => (
+                                          <Box key={idx} pl={2}>
+                                            <p>Type: {transfer.type}</p>
+                                            <p>Title: {transfer.title}</p>
+                                            <p>From: {transfer.fromLocation}</p>
+                                            <p>To: {transfer.toLocation}</p>
+                                          </Box>
+                                        )
+                                      )}
+                                    </div>
+                                  )}
+
+                                  {/* Leisure Day Events */}
+                                  {item.leisureDayEvents.length > 0 && (
+                                    <div style={{ marginBottom: "16px" }}>
+                                      <Typography
+                                        sx={{
+                                          fontSize: "16px",
+                                          fontWeight: "bold",
+                                          color: "#444",
+                                          marginBottom: "8px",
+                                        }}
+                                      >
+                                        <FaBed style={{ marginRight: "8px" }} />
+                                        Leisure Day Events:
+                                      </Typography>
+                                      {item.leisureDayEvents.map(
+                                        (event, idx) => (
+                                          <Box key={idx} pl={2}>
+                                            <p>Event: {event}</p>
+                                          </Box>
+                                        )
+                                      )}
+                                    </div>
+                                  )}
+
+                                  {/* Attraction Events */}
+                                  {item.attractionEvents.length > 0 && (
+                                    <div style={{ marginBottom: "16px" }}>
+                                      <Typography
+                                        sx={{
+                                          fontSize: "16px",
+                                          fontWeight: "bold",
+                                          color: "#444",
+                                          marginBottom: "8px",
+                                        }}
+                                      >
+                                        <FaMapMarkerAlt
+                                          style={{ marginRight: "8px" }}
+                                        />
+                                        Attraction Events:
+                                      </Typography>
+                                      {item.attractionEvents.map(
+                                        (attraction, idx) => (
+                                          <Box key={idx} pl={2}>
+                                            <p>Attraction: {attraction}</p>
+                                          </Box>
+                                        )
+                                      )}
+                                    </div>
+                                  )}
+                                </Typography>
+                              </Accordion.Body>
+                            </Accordion.Item>
+                          </Accordion>
+                        </Box>
                       );
-                    }
-                  )}
+                    })}
                 </div>
               </TabPanel>
               <TabPanel value="2">
