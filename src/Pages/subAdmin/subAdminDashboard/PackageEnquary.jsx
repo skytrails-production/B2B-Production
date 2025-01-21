@@ -110,12 +110,13 @@ function PackageEnquary() {
     valueGetter: (params) =>params.row.packageId?.pakage_title || 'N/A',
   },
   {
-    field: "packageId.pakage_amount",
+    field: "packageId.packageAmount[0].amount",
     headerName: "Package Amount",
     width: 220,
     valueGetter: (params) =>
-      `${params.row.packageId?.pakage_amount.amount} ${
-        params.row.packageId.pakage_amount.currency
+      `${params.row.packageId.packageAmount[0].amount} ${
+        params.row.packageId.packageAmount[0].currency
+
       }`,
   },
   

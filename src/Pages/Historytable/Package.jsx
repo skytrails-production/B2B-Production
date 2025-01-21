@@ -61,11 +61,11 @@ function Package() {
                 rowDetails.packageId.country
               }</li>
               <li><strong style="color: #21325D;">Package Title:</strong> ${
-                rowDetails.packageId.pakage_title
+                rowDetails.packageId.title
               }</li> 
               <li><strong style="color: #21325D;">Package Amount:</strong> ${
-                rowDetails.packageId.pakage_amount.amount
-              } ${rowDetails.packageId.pakage_amount.currency}</li>
+                rowDetails.packageId?.packageAmount[0]?.amount
+              } </li>
       
                 <li><strong style="color: #21325D;">Full Name:</strong> ${
                   rowDetails.fullName
@@ -144,10 +144,10 @@ function Package() {
 
       // Extract specific fields from data
       const extractedData = allData.map((row) => ({
-        Country: row.packageId?.country || "N/A",
+        Country: row.packageId.country[0] || "N/A",
         "Package Title": row.packageId?.pakage_title || "N/A",
         "Package Amount":
-          `${row.packageId?.pakage_amount.amount} ${row.packageId.pakage_amount.currency}` ||
+          `${row.packageId?.packageAmount[0]?.amount} ${row.packageId?.packageAmount[0]?.currency}` ||
           "N/A",
         Name: row.fullName || "N/A",
         "Contact Number": row.contactNumber?.phone || "N/A",
@@ -157,7 +157,7 @@ function Package() {
         Child: row.child || "N/A",
         "Package Type": row.packageType || "N/A",
         "Departure Date": row.departureDate || "N/A",
-        Connected: row.connected ? "Yes" : "No",
+
         "No Of People": row.noOfPeople || "N/A",
         Status: row.status || "N/A",
       }));
@@ -202,10 +202,10 @@ function Package() {
     },
 
     {
-      field: "packageId.country",
+      field: "packageId.country[0]",
       headerName: "Country",
       width: 130,
-      valueGetter: (params) => params.row.packageId?.country || "N/A",
+      valueGetter: (params) => params?.row?.packageId?.country[0] || "N/A",
     },
     {
       field: "createdAt",
@@ -221,11 +221,11 @@ function Package() {
       },
     },
     {
-      field: "packageId.pakage_amount",
+      field: "packageId?.packageAmount[0]?.amount",
       headerName: "Package Amount",
       width: 220,
       valueGetter: (params) =>
-        `${params.row.packageId?.pakage_amount.amount} ${params.row.packageId.pakage_amount.currency}`,
+        `${params?.row?.packageId?.packageAmount[0]?.amount}`,
     },
 
     { field: "fullName", headerName: "Name", width: 270 },
@@ -241,12 +241,7 @@ function Package() {
     { field: "child", headerName: "Child", width: 220 },
     { field: "packageType", headerName: "Package Type", width: 220 },
     { field: "departureDate", headerName: "Departure Date", width: 220 },
-    {
-      field: "connected",
-      headerName: "Connected",
-      width: 220,
-      valueGetter: (params) => (params.row.connected ? "Yes" : "No"),
-    },
+
     { field: "noOfPeople", headerName: "No Of People", width: 220 },
   ];
 
