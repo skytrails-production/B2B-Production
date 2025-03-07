@@ -2,28 +2,11 @@ import { combineReducers } from "redux";
 import { logInReducer } from "./Auth/logIn/logInReducer";
 import { signUpReducer } from "./Auth/SignUp/signUpReducer";
 import { ipReducer } from "./IP/ipReducer";
-import { oneWayReducer } from "./FlightSearch/oneWayReducer";
+import { oneWayReducer } from "./FlightSearch/OneWay/oneWayReducer";
 import {searchReducer} from "./FlightSearch/Searchflight/SearchReducer";
-import { searchFlightReducer } from "./SearchFlight/searchFlightReducer";
-import { flightListReducer } from "./FlightList/fighListtReducer";
-//import { flightFareReducer } from "./FlightFareQuoteRule/flightFareReducer";
-//import { flightBookReducer } from "./FlightBook/flightBookReducer";
-import { returnReducer } from "./FlightSearch/Return/returnReducer";
-import { multicityReducer } from "./FlightSearch/Multicity/multicityReducer";
-import { airlineSeatMapReducer } from "./AirlineSeatMap/airlineSeatmapReducer";
-
-import { returnSelectedFlightReducer } from "./returnSelectedFlight/returnSelectedFlightReducer";
-import { fareQuoteRuleAirselReducer } from "./FareQuoteRuleAirsel/fareQuoteRuleAirselReducer"
-import { newFlightBookReducer } from "./newFlightBook/reducerNewFlightBook";
-
-
-import { flightHotelSuggestReducer } from "./FlightHotelSuggest/flightHotelSuggestReducer"
-import { airlineSeatMapReducerNew } from "./AirlineSeatMapNew/airlineSeatmapReducer";
-
-
 import flightnameReducer from "./FlightSearch/Airline/flightnameReducer";
 import CitynameReducer from "./FlightSearch/Cityname/CitynameReducer"
-//import { returnReducer } from "./FlightSearch/Return/returnReducer";
+import { returnReducer } from "./FlightSearch/Return/returnReducer";
 import { oneWayEMTReducer } from "./FlightSearch/OneWayEMT/oneWayEMTReducer";
 import storage from "redux-persist/lib/storage/session";
 import { LOGOUT_REQUEST } from "./Auth/logIn/actionType";
@@ -36,13 +19,11 @@ import { createPackageReducer } from "./CreatePackage/createPackageReducer";
 import { passengersReducer } from "./Passengers/passengerReducer";
 import { ActiveStatusReducer } from "./Auth/activeStatus/activeStatusReducer";
 import { MarkUpReducer } from "./Auth/markUp/markUpReducer";
-import { markUpDataReducer } from "./markup/markupReducer";
 import { ADMIN_SIGN_OUT_REQUEST } from "./Auth/AdminSignOut/actionType";
 import { searchPackageReducer } from "./SearchPackage/searchPackageReducer";
 import { searchOnePackageReducer } from "./OnePackageSearchResult/searchOnePackageReducer";
 import { hotelReducer } from "./Hotel/hotelReducer";
 import { hotelReducerGRN } from "./HotelGrn/hotelReducer";
-
 import { createForexReducer } from "./CreateForxWithMe/createForexReducer";
 import { createForex4CustomerReducer } from "./CreateForexWithCustomer/createForexReducer";
 import { forexDataReducer } from "./Auth/forexData/forexDataReducer";
@@ -58,8 +39,6 @@ import { UserDataReducer } from "./Auth/UserDataById/userDataReducer";
 import { subadminReducer } from "./SubAdminLogin/subadminReducer";
 import { adminReducer } from "./AdminLogin/adminReducer";
 import { agentProfileReducer } from "./AgentProfiltLogin/agentProfileReducer";
-//import { flightListReducer } from "./FlightList/fighListtReducer";
-
 const appReducer = combineReducers({
   logIn: logInReducer,
   signUp: signUpReducer,
@@ -67,19 +46,6 @@ const appReducer = combineReducers({
   passengers: passengersReducer,
   oneWay: oneWayReducer,
   return:returnReducer,
-  multicity: multicityReducer,
-  flightBook: flightBookReducer,
-  newFlightBook: newFlightBookReducer,
-  hotelSearchResult: hotelReducer,
-  searchResult: searchPackageReducer,
-  searchFlight: searchFlightReducer,
-  flightList: flightListReducer,
-  returnSelected: returnSelectedFlightReducer,
-  fareQuoteRuleAirselReducer: fareQuoteRuleAirselReducer,
-  searchOneResult: searchOnePackageReducer,
-  airlineSeatMap: airlineSeatMapReducer,
-  airlineSeatMapNew: airlineSeatMapReducerNew,
-  flightSuggested: flightHotelSuggestReducer,
   oneWayEMT: oneWayEMTReducer,
   flightFare: flightFareReducer,
   flightBook: flightBookReducer,
@@ -87,7 +53,6 @@ const appReducer = combineReducers({
   adminAuth: AdminAuthReducer,
   activeStatus: ActiveStatusReducer,
   addMarkUp: MarkUpReducer,
-  markup: markUpDataReducer,
   vendorAmount: vendorReducer,
   createPackage: createPackageReducer,
   packageBookingRequest: packageBookingReducer,
@@ -111,10 +76,7 @@ const appReducer = combineReducers({
   CitynameReducer:CitynameReducer,
   searchReducer:searchReducer,
   flightnameReducer:flightnameReducer,
-  agentProfileReducer:agentProfileReducer,
-  
-
-  
+  agentProfileReducer:agentProfileReducer
 });
 
 const rootReducer = (state, action) => {

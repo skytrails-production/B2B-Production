@@ -92,7 +92,7 @@ const Hoteldescription = () => {
       swalModal(
         "hotel",
         "'We're sorry, but there was an issue with your hotel booking",
-        false  
+        false
       );
 
       navigate("/");
@@ -490,7 +490,7 @@ const Hoteldescription = () => {
 
           {/* cancellation policy  */}
 
-          <div className="mt-3 col-lg-12">
+          <div className="col-lg-12 mt-3">
             <div className="bookingDetailsGuest">
               <div
                 className="bookingDetailsGuestHeader-new"
@@ -542,7 +542,7 @@ const Hoteldescription = () => {
 
           {/* hotel Norms  */}
 
-          <div className="mt-3 col-lg-12">
+          <div className="col-lg-12 mt-3">
             <div className="bookingDetailsGuest">
               <div
                 className="bookingDetailsGuestHeader-new"
@@ -596,7 +596,7 @@ const Hoteldescription = () => {
       </div>
 
       <div
-        className="mt-3 proceed-book-new-hotel"
+        className="proceed-book-new-hotel mt-3"
         style={{
           display: "flex",
           justifyContent: "center",

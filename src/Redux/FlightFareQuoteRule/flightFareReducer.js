@@ -21,8 +21,14 @@ export const flightFareReducer = (state = initialState, action) => {
       return {
         ...state,
         flightRuleData: payload?.data?.data?.Response,
-        isLoading: false,
         isLoadingRuleDone: true,
+        isError: false,
+      };
+    case types.RULE_SUCCESS_RETURN:
+      return {
+        ...state,
+        flightRuleDataReturn: payload?.data?.data?.Response,
+        isLoadingRuleDoneReturn: true,
         isError: false,
       };
 
@@ -30,6 +36,12 @@ export const flightFareReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoadingRuleDone: false,
+        isError: false,
+      };
+    case types.RULE_REQUEST_RETURN:
+      return {
+        ...state,
+        isLoadingRuleDoneReturn: true,
         isError: false,
       };
 
@@ -40,23 +52,6 @@ export const flightFareReducer = (state = initialState, action) => {
         isLoadingQuoteDone: true,
         isError: false,
       };
-
-    case types.QUOTE_REQUEST:
-      return {
-        ...state,
-        isLoading: true,
-        isLoadingQuoteDone: false,
-        isError: false,
-      };
-
-
-    case types.QUOTE_REQUEST_RETURN:
-      return {
-        ...state,
-        isLoadingQuoteDoneReturn: false,
-        isError: false,
-      };
-
     case types.QUOTE_SUCCESS_RETURN:
       return {
         ...state,
@@ -65,56 +60,47 @@ export const flightFareReducer = (state = initialState, action) => {
         isError: false,
       };
 
-    case types.RULE_REQUEST_RETURN:
+    case types.QUOTE_REQUEST:
       return {
         ...state,
-        isLoadingRuleDoneReturn: false,
+        isLoadingQuoteDone: false,
         isError: false,
       };
-
-    case types.RULE_SUCCESS_RETURN:
+    case types.QUOTE_REQUEST_RETURN:
       return {
         ...state,
-        flightRuleDataReturn: payload?.data?.data?.Response,
-        isLoadingRuleDoneReturn: true,
+        isLoadingQuoteDoneReturn: false,
         isError: false,
       };
-    case types.CLEAR_FARE_DETAILS_REDUCER:
-      // console.log('=======================================');
-      // console.log('Resetting Fare details state');
-      return {
-        ...state,
-        flightRuleData: {},
-        flightQuoteData: {},
-        isLoading: false,
-        isError: false,
-        showSuccessMessage: true,
-      };
-
     case types.SET_LOADING:
       return {
         ...state,
         isLoadingQuoteDone: false,
         isLoadingRuleDone: false,
       };
-    case types.CLEAR_ALL_FARE_DETAILS_REDUCER:
-
+    case types.FALSE_ALL_DATA:
       return {
+        ...state,
 
+        isError: false,
+        isLoadingQuoteDone: false,
+        isLoadingQuoteDoneReturn: false,
+        isLoadingRuleDone: false,
+        isLoadingRuleDoneReturn: false,
+        isLogin: false
+      };
+    case types.CLEAR_ALL_FILGHT_FARE_QUOUTE:
+      return {
         flightRuleData: {},
         flightQuoteData: {},
         flightRuleDataReturn: {},
         flightQuoteDataReturn: {},
-        isLogin: false,
-        isLoading: false,
-        isError: false,
         isLogin: false,
         isLoadingRuleDone: false,
         isLoadingQuoteDoneReturn: false,
         isLoadingRuleDoneReturn: false,
         isLoadingQuoteDone: false,
         isError: false,
-
       };
 
     default:

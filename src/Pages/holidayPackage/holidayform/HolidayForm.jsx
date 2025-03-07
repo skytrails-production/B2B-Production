@@ -59,7 +59,6 @@ const HolidayForm = () => {
     destination: "",
     daysSearch: "",
   });
-  console.log(populearSearch,"mapdata")
   const filteredPackage =
     reducerState?.searchResult?.packageSearchResult?.data?.data?.pakage;
 
@@ -113,16 +112,23 @@ const HolidayForm = () => {
     };
   }, [listRef]);
   const fetchSearchResultsPopular = async () => {
-    try {
-      const response = await axios.get(
-        `${apiURL.baseURL}/skyTrails/holidaypackage/packagecitylist?keyword=${Query}`
-      );
-      const locations = response?.data?.data || [];
-      setPopulearSearch(locations);
-    } catch (error) {
-      console.error("Error fetching data:", error);
+    //make a API call to get search results
+    const localPupulardata = await localStorage.getItem('holidayPopularSearch')
+
+    if (localPupulardata) {
+      setPopulearSearch(JSON.parse(localPupulardata))
+      // alert("localStorage")
     }
+    else {
+      const results = await axios.get(`${apiURL.baseURL}/skyTrails/packagecitylist?keyword=${Query}`);
+      await setPopulearSearch(results?.data?.data);
+      localStorage.setItem("holidayPopularSearch", JSON.stringify(results?.data?.data))
+      // console.warn(results?.data?.data)
     }
+
+    return
+    // console.warn(result)
+  }
   const fetchSearchResults = async () => {
     //make a API call to get search results
     const results = await axios.get(`${apiURL.baseURL}/skyTrails/packagecitylist?keyword=${Query}`);
@@ -338,7 +344,7 @@ export default HolidayForm;
 
 
 // <div className="container margin-pecentage-large ">
-//   <div className="px-2 mt-0 row">
+//   <div className="row mt-0 px-2">
 //     <div className="col-lg-7 bgBusImg">
 
 //     </div>

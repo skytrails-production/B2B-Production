@@ -2,41 +2,19 @@ import * as types from "./hotelActionType";
 
 export const fetchHotel = (data) => {
   return {
-    type: types.HOTEL_SUCCESSGRN,
+    type: types.HOTEL_SUCCESS_GRN,
     payload: data,
   };
 };
 
-export const hotelActionGRN = (data, page) => {
+export const hotelActionGrn = (data, page) => {
   if (data) {
-    // console.log(data, "dataaaaaaaaaaa", page)
     return {
-      type: types.HOTEL_REQUESTGRN,
+      type: types.HOTEL_REQUEST_GRN,
       payload: { data, page },
     };
   }
 };
-
-// fetch few hotel in starting
-
-export const fetchHotelFew = (data) => {
-  return {
-    type: types.HOTEL_SUCCESSGRNFEW,
-    payload: data,
-  };
-};
-
-export const hotelActionGRNFew = (data, page) => {
-  if (data) {
-    // console.log(data, "dataaaaaaaaaaa", page)
-    return {
-      type: types.HOTEL_REQUESTGRNFEW,
-      payload: { data, page },
-    };
-  }
-};
-
-// fetch few hotel in starting
 
 export const singleHotelSuccess = (data) => {
   return {
@@ -53,12 +31,14 @@ export const singleHotelGRN = (data) => {
   }
 };
 
+// gallery
 export const HotelRoomSelectSuccessGRN = (data) => {
   return {
     type: types.HOTEL_ROOMSELECT_SUCCESS,
     payload: data,
   };
 };
+
 export const HotelRoomSelectReqGRN = (data) => {
   if (data) {
     return {
@@ -67,8 +47,6 @@ export const HotelRoomSelectReqGRN = (data) => {
     };
   }
 };
-
-// gallery
 
 export const hotelGallerySuccess = (data) => {
   if (data) {
@@ -103,17 +81,27 @@ export const hotelBookRoomActionGRN = (data) => {
   }
 };
 
-// Hotel booking
-
+// Hotel bookin
 export const clearonlyHotelsGRN = () => {
   return {
-    type: types.CLEAR_HOTEL_REDUCER_GRN,
+    type: types.CLEAR_HOTEL_REDUCERGRN,
   };
 };
 
-export const clearHotelReducerGRN = () => {
+export const clearHotelReducerGrn = () => {
   return {
-    type: types.CLEAR_HOTEL_REDUCER_GRN,
+    type: types.CLEAR_HOTEL_REDUCERGRN,
+  };
+};
+export const clearHotelBlockRoomtry = () => {
+  return {
+    type: types.CLEAR_HOTEL_BLOCK_ROOMTYR,
+  };
+};
+
+export const clearHotelBlockRoom = () => {
+  return {
+    type: types.CLEAR_HOTEL_BLOCK_ROOM,
   };
 };
 
@@ -122,18 +110,15 @@ export const clearHotelRoomAndGallery = () => {
     type: types.CLEAR_HOTEL_ROOMGALLERY_GRN,
   };
 };
-export const clearHotelBlockRoom = () => {
+
+export const clearHotelSelectedRoom = () => {
   return {
-    type: types.CLEAR_HOTEL_BLOCK_ROOM,
+    type: types.CLEAR_HOTEL_SELECTED_ROOM,
   };
 };
+
 export const clearHotelRoomSelect = () => {
   return {
     type: types.CLEAR_HOTEL_ROOM_SELECT,
-  };
-};
-export const clearHotelAll = () => {
-  return {
-    type: types.CLEAR_HOTEL_ROOM_ALL,
   };
 };

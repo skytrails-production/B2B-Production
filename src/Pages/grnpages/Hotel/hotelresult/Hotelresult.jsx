@@ -15,10 +15,9 @@ import freeGym from "../SVGs/freeGym.svg";
 import {
   hotelGalleryRequest,
   singleHotelGRN,
-  // hotelActionGrn,
+  hotelActionGrn,
   clearHotelRoomAndGallery,
 } from "../../../../Redux/HotelGrn/hotel";
-import { hotelActionGRN } from "../../../../Redux/HotelGrn/hotel";
 import { MdOutlineFreeBreakfast } from "react-icons/md";
 import "./hotelresult.css";
 import HotelLoading from "../../../Hotel/hotelLoading/HotelLoading";
@@ -295,7 +294,7 @@ export default function Popularfilter() {
 
       const payloadgrn = JSON.parse(sessionStorage.getItem("Payload"));
       const grnPayload = { ...payloadgrn };
-      dispatch(hotelActionGRN(grnPayload, page));
+      dispatch(hotelActionGrn(grnPayload, page));
     }
   }, [page]);
   useEffect(() => {
@@ -310,8 +309,8 @@ export default function Popularfilter() {
         <section className="">
           <div className="container">
             <div className="row">
-              <div className="pt-4 d-none d-sm-block col-lg-3 ">
-                <div className="flightFilterBox filtersection">
+              <div className="d-none d-sm-block col-lg-3 pt-4 ">
+                <div className="flightFilterBox  filtersection">
                   <div className="filterTitle">
                     <p>Select Filters</p>
                   </div>
@@ -582,7 +581,7 @@ export default function Popularfilter() {
 
               {/* for bigger device  */}
 
-              <div className="pt-4 col-lg-9 col-md-12">
+              <div className=" col-lg-9 col-md-12 pt-4">
                 {/* <InfiniteScroll
                   dataLength={sortedAndFilteredResults.length}
                   next={fetchMoreData}
@@ -700,7 +699,7 @@ export default function Popularfilter() {
                                   {result1?.min_rate?.other_inclusions?.map(
                                     (inclusion, e) => (
                                       <div className="othIncInner" key={e}>
-                                        <div className="gap-2 d-flex justify-content-start align-items-center">
+                                        <div className="d-flex justify-content-start align-items-center gap-2">
                                           {/* Check for various inclusions */}
                                           {inclusion.toLowerCase() ===
                                             "free wifi" && (

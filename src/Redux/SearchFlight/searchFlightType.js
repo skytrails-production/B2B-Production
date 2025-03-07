@@ -1,3 +1,0 @@
-export const SEARCH_FLIGHT = "SEARCH_FLIGHT";
-export const CLEAR_FLIGHT = "CLEAR_FLIGHT";
-

@@ -1,2 +1,0 @@
-export const GET_MARKUP_DATA = "GET_MARKUP_DATA";
-export const SET_MARKUP_DATA = "sET_MARKUP_DATA";
