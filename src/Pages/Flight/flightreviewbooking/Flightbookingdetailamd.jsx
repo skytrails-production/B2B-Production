@@ -113,10 +113,10 @@ const Flightbookingdetailamd = ({ amdata, airesellRes }) => {
   const passengerData = reducerState?.passengers?.passengersData;
   // console.log(Passengers, "passenger ka data")
   const PassengersReturn = reducerState?.passengers?.passengerDataReturn;
-  const userId = reducerState?.logIn?.loginData?.data?.data?.id;
-  const currentBalance = reducerState?.userData?.userData?.data?.data?.balance;
+  const userId =  reducerState?.logIn?.loginData?.data?.data?.id;
+const currentBalance = reducerState?.userData?.userData?.data?.data?.balance;
   const imgvalue =
-    amdata?.flightDetails?.flightInformation?.companyId?.marketingCarrier ||
+      amdata?.flightDetails?.flightInformation?.companyId?.marketingCarrier ||
     amdata?.flightDetails?.[0]?.flightInformation?.companyId?.marketingCarrier;
   // console.log("amdata", amdata);
   const airlinenumber =
@@ -1142,7 +1142,7 @@ const Flightbookingdetailamd = ({ amdata, airesellRes }) => {
         </div>
       </div>
 
-      <div className="col-lg-8 my-3">
+      <div className="my-3 col-lg-8">
         {Passengers?.map((passenger, key) => {
           return (
             <>
@@ -1203,7 +1203,7 @@ const Flightbookingdetailamd = ({ amdata, airesellRes }) => {
         })}
       </div>
 
-      <div className="col-lg-12 my-3">
+      <div className="my-3 col-lg-12">
         <div class="headingflightPassenger-new">
           <p>Term & Condition</p>
         </div>

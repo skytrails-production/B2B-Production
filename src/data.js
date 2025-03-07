@@ -61,20 +61,30 @@ import {
 import { GiCardboardBox } from 'react-icons/gi';
 
 export const InnerBarLogo = [
+  // {
+  //   avatar: <FaPlane />,
+  //   name: "Flights",
+  //   path: "/flights",
+  // },
   {
     avatar: <FaPlane />,
     name: "Flights",
-    path: "/flights",
+    path: "/flightsnew",
   },
   // {
   //   avatar: <FaHotel />,
   //   name: "Hotels",
   //   path: "/hotel",
   // },
+  // {
+  //   avatar: <FaHotel />,
+  //   name: "Hotels",
+  //   path: "/hotels",
+  // },
   {
     avatar: <FaHotel />,
     name: "Hotels",
-    path: "/hotels",
+    path: "/st-hotel",
   },
   // Add more items with icons as needed
   {

@@ -8,12 +8,15 @@ import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
 import { Select } from "antd";
 import "./hotelstepper.css";
-import {
-  clearHotelReducerGrn,
-  hotelActionGrn,
-  clearHotelBlockRoomtry,
-} from "../../../../Redux/HotelGrn/hotel";
-import { hotelAction } from "../../../../Redux/Hotel/hotel";
+
+
+
+// import {
+//   hotelActionGRN ,
+  
+// } from "../../../../Redux/HotelGrn/hotel";
+import { hotelActionGRN  } from "../../../../Redux/HotelGrn/hotel";
+//import { clearHotelReducerGRN } from "../../../../Redux/HotelGrn/hotel";
 import Loader from "../Loader/Loader";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -22,6 +25,8 @@ import { motion } from "framer-motion";
 
 import SecureStorage from "react-secure-storage";
 import dayjs from "dayjs";
+import { borderRadius } from "@mui/system";
+import { clearHotelReducerGRN } from "../../../../Redux/HotelGrn/hotel";
 const variants = {
   initial: {
     y: 50,
@@ -248,7 +253,7 @@ const HotelForm = () => {
 
   useEffect(() => {
     // dispatch(clearHotelBlockRoomtry())
-    dispatch(clearHotelReducerGrn());
+    dispatch(clearHotelReducerGRN());
   }, []);
 
   // error manage
@@ -298,7 +303,7 @@ const HotelForm = () => {
 
   const [searchTermLast, setSearchTermLast] = useState(initialSelectedCityData);
   const reducerState = useSelector((state) => state);
- 
+
   useEffect(() => {
     const storedData = SecureStorage.getItem("revisitHotelDataGRN");
     const parsedStoredData = JSON.parse(storedData);
@@ -369,7 +374,6 @@ const HotelForm = () => {
 
       setLoading(false);
     } catch (error) {
-    
       setLoading(false);
     }
   };
@@ -484,7 +488,6 @@ const HotelForm = () => {
   const handleStartDateChange = async (date) => {
     setValues({ ...values, departure: date });
     setErrors((prev) => ({ ...prev, departure: "" }));
-   
 
     if (!values?.checkOutDeparture || values?.checkOutDeparture <= date) {
       // Parse the provided date
@@ -550,7 +553,6 @@ const HotelForm = () => {
       sessionStorage.setItem("searchLastterm", JSON.stringify(searchTermLast));
 
       if (selectedFrom.hotelName) {
-       
         const payload = {
           rooms: [...dynamicFormData],
           rates: "concise",
@@ -564,7 +566,7 @@ const HotelForm = () => {
         };
 
         sessionStorage.setItem("grnPayload", JSON.stringify(payload));
-        dispatch(hotelActionGrn(payload));
+        dispatch(hotelActionGRN  (payload));
         // navigate("/st-hotel/hotelresult");
       } else {
         const payload = {
@@ -583,7 +585,7 @@ const HotelForm = () => {
         };
 
         sessionStorage.setItem("grnPayload", JSON.stringify(payload));
-        dispatch(hotelActionGrn(payload));
+        dispatch(hotelActionGRN (payload));
         navigate("/hotels/hotelsearchs");
       }
       // sessionStorage.setItem("Payload", JSON.stringify(payload));
@@ -618,7 +620,7 @@ const HotelForm = () => {
       const pageNumber = 1;
 
       sessionStorage.setItem("hotelFormData", JSON.stringify(formFields));
-      //dispatch(hotelActionGrn(payload, pageNumber));
+      //dispatch(hotelActionGRN (payload, pageNumber));
       navigate("/hotels/hotelsearchs");
 
       if (reducerState?.hotelSearchResultGRN?.ticketData?.data?.data?.hotels) {
@@ -637,7 +639,7 @@ const HotelForm = () => {
   const nationality = sessionData.get("nationality");
 
   const handleFromSelect = (item) => {
-     setSelectedFrom(item);
+    setSelectedFrom(item);
   };
 
   return (
@@ -654,7 +656,7 @@ const HotelForm = () => {
         >
           <motion.div
             variants={variants}
-            className=" col-md-12 col-lg-12 col-xs-12 ps-0 mb-3"
+            className="mb-3 col-md-12 col-lg-12 col-xs-12 ps-0"
           >
             <div>
               <label className="form_label">City</label>
@@ -669,7 +671,7 @@ const HotelForm = () => {
 
           <motion.div
             variants={variants}
-            className="col-lg-4 col-md-4 col-xs-12 ps-0 mb-3"
+            className="mb-3 col-lg-4 col-md-4 col-xs-12 ps-0"
           >
             <div className="hotel_form_input">
               <label className="form_label">Check In Date</label>
@@ -683,6 +685,7 @@ const HotelForm = () => {
                 // id="datepic"
                 minDate={new Date()}
                 autoComplete="off"
+                style={{border:"1px solid #999",borderRadius:"10px"}}
               />
               {errors?.departure !== "" && (
                 <span className="error">{errors?.departure}</span>
@@ -692,7 +695,7 @@ const HotelForm = () => {
 
           <motion.div
             variants={variants}
-            className="col-lg-4 col-md-4 col-xs-12 ps-0 mb-3"
+            className="mb-3 col-lg-4 col-md-4 col-xs-12 ps-0"
           >
             <div className="hotel_form_input">
               <label className="form_label">Check Out Date</label>
@@ -707,6 +710,7 @@ const HotelForm = () => {
                 isClearable
                 // id="datepic"
                 autoComplete="off"
+                className="hotel_form_input"
               />
               {errors?.checkOutDeparture !== "" && (
                 <span className="error">{errors?.checkOutDeparture}</span>
@@ -716,7 +720,7 @@ const HotelForm = () => {
 
           <motion.div
             variants={variants}
-            className="col-lg-4 col-md-4 col-xs-12 ps-0 mb-3"
+            className="mb-3 col-lg-4 col-md-4 col-xs-12 ps-0"
           >
             <div className="hotel_form_input">
               <label className="form_label">No. of Rooms</label>
@@ -741,7 +745,7 @@ const HotelForm = () => {
           {/* <Box> */}
           <motion.div
             variants={variants}
-            className="col-lg-12 col-md-12 col-xs-12 ps-0 mb-3"
+            className="mb-3 col-lg-12 col-md-12 col-xs-12 ps-0"
           >
             {condition > 0 &&
               Array.from({ length: condition }).map((_, index) => (
@@ -758,7 +762,7 @@ const HotelForm = () => {
                   </div>
 
                   <div className="row">
-                    <div className="col-lg-6 col-md-6 col-xs-4 ps-0 mb-3 d-flex justify-content-center">
+                    <div className="mb-3 col-lg-6 col-md-6 col-xs-4 ps-0 d-flex justify-content-center">
                       <div className="hotel_form_input">
                         <label className="form_label">
                           No. of Adults (12+ Years)
@@ -783,7 +787,7 @@ const HotelForm = () => {
                         </select>
                       </div>
                     </div>
-                    <div className="col-lg-6 col-md-6 col-xs-4 ps-0 mb-3 d-flex justify-content-center">
+                    <div className="mb-3 col-lg-6 col-md-6 col-xs-4 ps-0 d-flex justify-content-center">
                       <div className="hotel_form_input">
                         <label className="form_label">
                           No. of Child (0-12 Years)
@@ -855,7 +859,7 @@ const HotelForm = () => {
 
           <motion.div
             variants={variants}
-            className="col-lg-4 col-md-4 col-xs-12 ps-0 mb-3"
+            className="mb-3 col-lg-4 col-md-4 col-xs-12 ps-0"
           >
             <div className="hotel_form_input">
               <label className="form_label">Star Rating*</label>
@@ -882,7 +886,7 @@ const HotelForm = () => {
 
           <motion.div
             variants={variants}
-            className="col-lg-4 col-md-4 col-xs-12 ps-0 mb-3"
+            className="mb-3 col-lg-4 col-md-4 col-xs-12 ps-0"
           >
             <div className="hotel_form_input">
               <label className="form_label">No. of Nights</label>
@@ -900,7 +904,7 @@ const HotelForm = () => {
 
           <motion.div
             variants={variants}
-            className="col-lg-4 col-md-4 col-xs-12 ps-0 mb-3"
+            className="mb-3 col-lg-4 col-md-4 col-xs-12 ps-0"
           >
             <div className="hotel_form_input">
               <label className="form_label">Nationality</label>
@@ -930,7 +934,7 @@ const HotelForm = () => {
           </motion.div>
 
           <motion.div variants={variants} className="row button-row">
-            <div className="col-lg-12 col-md-12 col-xs-12 pe-0 mb-3 d-flex justify-content-center hotelFormbutton-new align-items-center">
+            <div className="mb-3 col-lg-12 col-md-12 col-xs-12 pe-0 d-flex justify-content-center hotelFormbutton-new align-items-center">
               <button type="submit" style={{ border: "none", color: "#000" }}>
                 Search Hotel
               </button>

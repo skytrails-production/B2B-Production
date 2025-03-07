@@ -1,5 +1,5 @@
 export const data = [
-  { tittle: "Search", path: "/flights" },
+  // { tittle: "Search", path: "/flights" },
   { tittle: "Calendar Fare", path: "/flights/calenderfare" },
   { tittle: "Advance Search", path: "/flights/advanceSearch" },
   //     {tittle:'Import PNR',

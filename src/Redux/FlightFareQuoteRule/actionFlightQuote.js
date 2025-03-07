@@ -6,12 +6,6 @@ export const fetchRule = (data) => {
     payload: data,
   };
 };
-export const fetchRuleReturn = (data) => {
-  return {
-    type: types.RULE_SUCCESS_RETURN,
-    payload: data,
-  };
-};
 
 export const ruleAction = (data) => {
   if (data) {
@@ -28,12 +22,6 @@ export const fetchQuote = (data) => {
     payload: data,
   };
 };
-export const fetchQuoteReturn = (data) => {
-  return {
-    type: types.QUOTE_SUCCESS_RETURN,
-    payload: data,
-  };
-};
 
 export const quoteAction = (data) => {
   if (data) {
@@ -43,12 +31,27 @@ export const quoteAction = (data) => {
     };
   }
 };
-export const setLoading = (data) => {
+
+
+
+// return flight 
+
+
+export const fetchRuleReturn = (data) => {
   return {
-    type: types.SET_LOADING,
+    type: types.RULE_SUCCESS_RETURN,
     payload: data,
   };
 };
+
+
+export const fetchQuoteReturn = (data) => {
+  return {
+    type: types.QUOTE_SUCCESS_RETURN,
+    payload: data,
+  };
+};
+
 
 export const quoteActionReturn = (data) => {
   if (data) {
@@ -58,6 +61,7 @@ export const quoteActionReturn = (data) => {
     };
   }
 };
+
 export const ruleActionReturn = (data) => {
   if (data) {
     return {
@@ -74,6 +78,15 @@ export const FalseAllActionReturn = (data) => {
     };
   }
 };
+
+export const setLoading = (data) => {
+  return {
+    type: types.SET_LOADING,
+    payload: data,
+  };
+};
+
+
 export const ClearAllActionReturn = () => {
 
   return {
@@ -83,3 +96,12 @@ export const ClearAllActionReturn = () => {
 
 };
 
+
+export const resetFareData = () => ({
+
+  type: types.CLEAR_FARE_DETAILS_REDUCER,
+});
+export const resetAllFareData = () => ({
+
+  type: types.CLEAR_ALL_FARE_DETAILS_REDUCER,
+});

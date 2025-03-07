@@ -90,6 +90,8 @@ import Queue from "../Pages/Account/Queue";
 import HolidayPackages from "../Pages/Account/HolidayPackages";
 import MainBox from "../Layout/MainBoxNew";
 import CreateMarkupForm from "../Pages/Dashboard/Component/Table/AddMarkup";
+import AllOffers from "../Components/TailwindSearchComp/offerPage/AllOffers";
+
 
 import {
   useNavigate,
@@ -144,7 +146,7 @@ import HotelSearchs from "../Pages/grnpages/Hotel/hotelsearch/HotelSearch";
 import CreateQuiz from "../Pages/Dashboard/Component/Table/CreateQuiz";
 import CreateBlog from "../Pages/Dashboard/Component/Table/CreateBlog";
 import Controls from "../Pages/Account/Controls";
-import HotelTicketDB from "../Pages/grnpages/Hotel/guestdetail/HotelTicketDB";
+//import HotelTicketDB from "../Pages/grnpages/Hotel/guestdetail/HotelTicketDB";
 import Passengerdetailamd from "../Pages/Flight/flightresult/Passengerdetailamd";
 import FlightReviewbookingamd from "../Pages/Flight/flightreviewbooking/FlightReviewbookingamd";
 import Flightbookingconfirmationamd from "../Pages/Flight/flightbookingconfirmation/Flightbookingconfirmationamd";
@@ -156,6 +158,36 @@ import PackagesList from "../Pages/HotelPackage/createholidaypackage/PackagesLis
 import AddItenary from "../Pages/HotelPackage/createholidaypackage/AddItenary";
 import HolidayAddImages from "../Pages/HotelPackage/createholidaypackage/HolidayAddImages";
 import AddItenaryImage from "../Pages/HotelPackage/createholidaypackage/AddItenaryImage";
+import Home from "../Pages/home/Home";
+import ResultOnewayMain from "../Pages/flights/Oneway/ResultOneway/ResultOnewayMain";
+import BookWrapperReturn from "../Components/TailwindSearchComp/heroSection/flightSearchForm/returnSearchForm/NewBookWrapperReturn";
+import MulticityResult from "../Pages/flights/MultiCity/MulticityResult";
+import NewBookedTicket from "../Pages/flights/flightResult/NewBookTicket";
+import {
+  searchaAirportListReq,
+  searchFlightListReq,
+} from "../Redux/FlightList/actionFlightList";
+import ReturnResult from "../Pages/flights/ReturnFlight/newRetun/ReturnFlightMain";
+import PaylaterDetails from "../Mihuru/PaylaterDetails";
+import VerifyPayLater from "../Mihuru/VerifyPayLater";
+import MihuruPaymentSuccess from "../Mihuru/MihuruPaymentSuccess";
+
+import PayLaterUsereCredential from "../Mihuru/PayLaterUsereCredential";
+import TnplGeneratedPlan from "../Mihuru/TnplGeneratedPlan";
+import { GET_MARKUP_DATA } from "../Redux/markup/markupActionType";
+import { getMarkUpAction } from "../Redux/markup/markupAction";
+import GrmHotelHome from "../Pages/GRMHotel/GrmHotelHome";
+import HotelResultMain from "../Pages/GRMHotel/HotelResultMain";
+import HotelBookRoomGRN from "../Pages/GRMHotel/HotelBookRoomGRN";
+import BookingDetailsGRN from "../Pages/GRMHotel/BookingDetailsGRN";
+import BookingReviewGRN from "../Pages/GRMHotel/BookingReviewGRN";
+import HotelTicketDB from "../Pages/GRMHotel/HotelTicketDB";
+import HotelSelectroomMain from "../Pages/GRMHotel/tboHotel/hotelselectroom/HotelSelectroomMain";
+import TboGuestDetails from "../Pages/GRMHotel/tboHotel/tboGuestDetails/TboGuestDetails";
+import TboBookingHotel from "../Pages/GRMHotel/tboHotel/bookHotel/TboBookingHotel";
+import TboTicketGeneration from "../Pages/GRMHotel/tboHotel/bookHotel/TboTicketGeneration";
+
+// import BookedTicketAmd from "../Pages/flight/BookedTicketAmd";
 const MainPage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -200,7 +232,7 @@ const MainPage = () => {
       window.removeEventListener("scroll", handleResizeScroll);
     };
   }, [updateDimensions]);
-
+  console.log(reducerState, "reducerStatereducerStatereducerState");
   useEffect(() => {
     if (!windowWidth) {
       // return (
@@ -278,6 +310,9 @@ const MainPage = () => {
 
   useEffect(() => {
     dispatch(ipAction());
+    dispatch(searchFlightListReq());
+    dispatch(searchaAirportListReq());
+    dispatch(getMarkUpAction());
   }, []);
 
   useEffect(() => {
@@ -361,7 +396,7 @@ const MainPage = () => {
       location.pathname === "/adminlogin" ||
       location.pathname === "/admin/addnotification" ||
       location.pathname === "/admin/createQuiz" ||
-      location.pathname==="/admin/createReview"||
+      location.pathname === "/admin/createReview" ||
       location.pathname === "/admin/createBlog" ||
       location.pathname === "/subAdmin/dashboard/Agentflightcancel" ||
       location.pathname === "/subAdmin/dashboard/Agenthotelcancel" ||
@@ -501,6 +536,100 @@ const MainPage = () => {
           <div className="mainBox ">
             {/* header of main dashboard */}
 
+            <Routes>
+              {/* new grm hotel routes  */}
+
+              <Route path="/st-hotel" element={<GrmHotelHome />}></Route>
+              <Route path="/offers" element={<AllOffers />}></Route>
+              <Route
+                path="/st-hotel/hotelresult"
+                element={<HotelResultMain />}
+              />
+              <Route
+                path="/st-hotel/hotelresult/selectroom"
+                element={<HotelBookRoomGRN />}
+              />
+              {/* <Route
+                path="/bookedTicketSucess/:id"
+                element={<BookedTicketAmd />}
+              /> */}
+              <Route
+                path="/st-hotel/hotelresult/selectroom/guestDetails"
+                element={<BookingDetailsGRN />}
+              />
+              <Route
+                path="/st-hotel/hotelresult/selectroom/guestDetails/review"
+                element={<BookingReviewGRN />}
+              />
+
+              <Route
+                path="/st-hotel/hotelresult/selectroom/guestDetails/review/ticket"
+                element={<HotelTicketDB />}
+              />
+
+              {/* tbo routes  */}
+
+              <Route
+                exact
+                path="/st-hotel/hotelresult/HotelBooknow"
+                element={<HotelSelectroomMain />}
+              />
+              <Route
+                exact
+                path="/st-hotel/hotelresult/HotelBooknow/Reviewbooking"
+                element={<TboGuestDetails />}
+              />
+              <Route
+                exact
+                path="/st-hotel/hotelresult/HotelBooknow/Reviewbooking/bookhotel"
+                element={<TboBookingHotel />}
+              />
+              <Route
+                exact
+                path="/st-hotel/hotelresult/HotelBooknow/Reviewbooking/GuestDetail/ticket"
+                element={<TboTicketGeneration />}
+              />
+
+              {/* tbo routes  */}
+
+              {/* hotel */}
+              <Route path="/flightsnew/*" element={<Home />} />
+              <Route path="flightlist" element={<ResultOnewayMain />}></Route>
+              <Route
+                path="/ReturnResultNew/PassengerDetails"
+                element={<BookWrapperReturn />}
+              ></Route>
+              <Route path="/ReturnResult" element={<ReturnResult />}></Route>
+              <Route
+                path="/multicityresult"
+                element={<MulticityResult />}
+              ></Route>
+              <Route
+                path="/newFlight/newBookedTicket"
+                element={<NewBookedTicket />}
+              ></Route>
+              <Route
+                path="/payLaterDetails"
+                element={<PaylaterDetails />}
+              ></Route>
+              <Route
+                path="/payLaterDetails/verifyOtp"
+                element={<VerifyPayLater />}
+              ></Route>
+              <Route
+                path="/payLaterDetails/verifyOtp/userCredential"
+                element={<PayLaterUsereCredential />}
+              ></Route>
+              <Route
+                path="/payLaterDetails/verifyOtp/userCredential/tnplGeneratedplan"
+                element={<TnplGeneratedPlan />}
+              ></Route>
+              <Route
+                path="/mihurupaymentsuccess"
+                element={<MihuruPaymentSuccess />}
+              ></Route>
+            </Routes>
+
             {/* all routes of inner navbar */}
             <div className="componentsContainer">
               <Routes>
@@ -565,13 +694,12 @@ const MainPage = () => {
                   path="/hotels/hotelsearchs/HotelBooknowTbo/ReviewbookingTbo"
                   element={<ReviewbookingTbo />}
                 />
-                 {/* /GuestdetailTbo */}<Route
+                {/* /GuestdetailTbo */}
+                <Route
                   exact
                   path="/GuestdetailTbo"
                   element={<GuestdetailTbo />}
                 />
-
-
 
                 <Route
                   exact
@@ -598,13 +726,13 @@ const MainPage = () => {
                   element={<Booknow />}
                 />
                 <Route exact path="/onbording" element={<Onbording />} />
-                <Route path="/flights/*" element={<Flight />}>
+                {/* <Route path="/flights/*" element={<Flight />}>
                   <Route exact path="oneway" element={<OneWay />} />
                   <Route exact path="offShare" element={<OffShare />} />
                   <Route exact path="multiStop" element={<MultiStop />} />
                   <Route exact path="calenderfare" element={<Calander />} />
                   <Route exact path="return" element={<Return />} />
-                </Route>
+                </Route> */}
 
                 {/* <Route path="/" element={<Banner />} /> */}
 
@@ -928,7 +1056,7 @@ const MainPage = () => {
                 <Route
                   exact
                   path="/AddItenaryImage"
-                  element={<AddItenaryImage/>}
+                  element={<AddItenaryImage />}
                 ></Route>
                 <Route
                   exact
@@ -940,8 +1068,6 @@ const MainPage = () => {
                   path="/PackagesList"
                   element={<PackagesList />}
                 ></Route>
-
-
 
                 <Route
                   exact
@@ -997,6 +1123,7 @@ const MainPage = () => {
           </div>
         )}
       {/* <GotoTopBtn /> */}
+
       <div>
         <Routes>
           <Route path="login" element={<Loginnew />} />

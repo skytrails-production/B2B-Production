@@ -16,8 +16,7 @@ import StarIcon from "@mui/icons-material/Star";
 import { useDispatch, useSelector, useReducer } from "react-redux";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
-import { clearHotelSelectedRoom } from "../../../../Redux/HotelGrn/hotel";
-
+//import { clearHotelSelectedRoom } from "../../../../Redux/HotelGrn/hotel";
 import HotelLoading from "../hotelLoading/HotelLoading";
 import Swal from "sweetalert2";
 import { swalModal } from "../../../../utils/swal";
@@ -61,9 +60,9 @@ const HotelBooknowGrm = () => {
       reducerState?.hotelSearchResultGRN?.hotelGallery?.data?.data?.images,
   ]);
 
-  useEffect(() => {
-    dispatch(clearHotelSelectedRoom());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(clearHotelSelectedRoom());
+  // }, []);
 
   useEffect(() => {
     if (
@@ -134,7 +133,7 @@ const HotelBooknowGrm = () => {
 
           <div className="container-fluid margin-pecentage">
             <div className="row">
-              <div className="col-lg-12 col-md-12 col-sm-12 mb-3">
+              <div className="mb-3 col-lg-12 col-md-12 col-sm-12">
                 <div className="hotelBookNowOuter-new">
                   <div className="hotelBookNowHeader-new">
                     <div className="serach-hotel-discribe-new">
@@ -233,7 +232,7 @@ const HotelBooknowGrm = () => {
               </div>
             </div>
             <div className="row">
-              <div className="col-lg-12 col-md-12 col-sm-12 mb-0">
+              <div className="mb-0 col-lg-12 col-md-12 col-sm-12">
                 <div className="availabilityOuter">
                   <div className="availabilityInner-new">
                     <div>

@@ -23,9 +23,8 @@ import offerimg from "../../Images/offerimg.png";
 import recordsimg from "../../Images/paymenimg.png";
 import Cotactus from "./Cotactus.jsx";
 import Patners from "./Patners.jsx";
-import api from "../../Redux/API/api.js"
+import api from "../../Redux/API/api.js";
 import { IoIosDownload } from "react-icons/io";
-
 
 function Loginnew() {
   const dispatch = useDispatch();
@@ -34,7 +33,6 @@ function Loginnew() {
   const [isForget, setIsForget] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-
 
   // console.log(reducerState,"data")
 
@@ -67,28 +65,26 @@ function Loginnew() {
       setFormError("");
     } catch (error) {
       setFormError(error);
-      console.log(error,"error")
+      console.log(error, "error");
     }
   };
   const handleReset = async (e) => {
-    e.preventDefault()
-    setLoading(true)
+    e.preventDefault();
+    setLoading(true);
 
     if (!formData.email.trim()) {
       setFormError("Please fill Email Address");
       return;
-    }
-    else {
+    } else {
       // setSetLoading(true)
       let payload = {
-        "email": formData.email
-      }
-      const data = await api?.forgetPasswordLink(payload)
-      console.log(data, "forget data")
-      setLoading(false)
+        email: formData.email,
+      };
+      const data = await api?.forgetPasswordLink(payload);
+      console.log(data, "forget data");
+      setLoading(false);
     }
-
-  }
+  };
 
   useEffect(() => {
     if (reducerState?.logIn?.isLogin) {
@@ -117,7 +113,7 @@ function Loginnew() {
   return (
     <>
       {reducerState?.subadminLogin?.isLogin ||
-        reducerState?.adminAuth?.isLogin ? (
+      reducerState?.adminAuth?.isLogin ? (
         <>
           <SubAdminAccess />
         </>
@@ -147,10 +143,13 @@ function Loginnew() {
                 </div>
                 <div class="col-lg-6 col-md-6 p-0">
                   <div class="wrapper d-flex align-items-center justify-content-end h-100 bg-rgba(235, 245, 255, 0.50);">
-                    {!isForget ?
-                      <div class="card login-form">
+                    {!isForget ? (
+                      <div class="card login-form" style={{ padding: "20px" }}>
                         <div class="card-body">
-                          <h5 class="card-title " style={{ fontWeight: "bold" }}>
+                          <h5
+                            class="card-title "
+                            style={{ fontWeight: "bold" }}
+                          >
                             Login Form
                           </h5>
                           <form>
@@ -225,7 +224,14 @@ function Loginnew() {
                               >
                                 Submit
                               </Button>
-                              <div className="forgetBTN" onClick={() => (setIsForget(true), setFormError(""))}>Forget Password ?</div>
+                              <div
+                                className="forgetBTN"
+                                onClick={() => (
+                                  setIsForget(true), setFormError("")
+                                )}
+                              >
+                                Forget Password ?
+                              </div>
                             </Box>
                             {formError && (
                               <p
@@ -248,18 +254,27 @@ function Loginnew() {
                             </div>
                           </form>
                         </div>
-                      </div> :
+                      </div>
+                    ) : (
                       <div class="card login-form">
                         <div class="card-body">
-
-                          <h5 className="create-account" onClick={() => setIsForget(false)}>
+                          <h5
+                            className="create-account"
+                            onClick={() => setIsForget(false)}
+                          >
                             BACK
                           </h5>
-                          <h5 class="card-title " style={{ fontWeight: "bold" }}>
+                          <h5
+                            class="card-title "
+                            style={{ fontWeight: "bold" }}
+                          >
                             Forget Password
                           </h5>
-                          <p style={{ color: "#4a4a4a", fontSize: "10px" }}>{
-                            "We will send you a reset lik on your registered E-mail ID "}</p>
+                          <p style={{ color: "#4a4a4a", fontSize: "10px" }}>
+                            {
+                              "We will send you a reset lik on your registered E-mail ID "
+                            }
+                          </p>
 
                           <form>
                             <div class="mb-3">
@@ -317,29 +332,34 @@ function Loginnew() {
                               display="flex"
                               justifyContent="space-between"
                               width="100%"
-                            >{
-                                loading ? <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%" }}>
-
+                            >
+                              {loading ? (
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    width: "100%",
+                                  }}
+                                >
                                   <div className="loaderCon"></div>
                                 </div>
-                                  :
-
-                                  <Button
-                                    variant="contained"
-
-                                    style={{
-                                      backgroundColor: color.bluedark,
-                                      color: "white",
-                                      width: "100%",
-                                      height: "50px",
-                                      borderRadius: "8px",
-                                    }}
-                                    className="loginbutton"
-                                    onClick={handleReset}
-                                  >
-                                    Reset
-
-                                  </Button>}
+                              ) : (
+                                <Button
+                                  variant="contained"
+                                  style={{
+                                    backgroundColor: color.bluedark,
+                                    color: "white",
+                                    width: "100%",
+                                    height: "50px",
+                                    borderRadius: "8px",
+                                  }}
+                                  className="loginbutton"
+                                  onClick={handleReset}
+                                >
+                                  Reset
+                                </Button>
+                              )}
                             </Box>
                             {!formError === "" && (
                               <p
@@ -361,9 +381,9 @@ function Loginnew() {
                               </Link>
                             </div>
                           </form>
-
                         </div>
-                      </div>}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -510,7 +530,7 @@ function Loginnew() {
                       <img src={offerimg} style={{ width: "100%" }} alt="" />
                     </div>
                     <div className="about-us-grid-content">
-                      <div className="about-us-content-2 mb-3">
+                      <div className="mb-3 about-us-content-2">
                         Offering the most amazing deals.
                         {/* <br/> */}
                       </div>

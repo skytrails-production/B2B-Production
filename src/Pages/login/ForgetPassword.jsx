@@ -10,7 +10,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./login.css";
 import Footer from "../login/Footer.jsx";
 // import Footer from "../../Layout/Footer";
-import { clearErrorMsg, loginAction } from "../../Redux/Auth/logIn/actionLogin";
+import { clearErrorMsg } from "../../Redux/Auth/logIn/actionLogin.js";
 import SubAdminAccess from "../subAdmin/subAdminDashboard/subAdminaccess";
 
 import api from "../../Redux/API/api.js"

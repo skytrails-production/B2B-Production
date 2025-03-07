@@ -98,3 +98,12 @@ export const flightReducerClear=()=>{
     
   }
 }
+
+export const clearbookTicketGDS = () => {
+
+  return {
+    type: types.FLIGHT_BOOK_CLEAR_ALL_REDUCER,
+    payload: [],
+
+  }
+};

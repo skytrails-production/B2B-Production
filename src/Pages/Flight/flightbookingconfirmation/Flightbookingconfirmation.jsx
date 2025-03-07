@@ -288,7 +288,7 @@ const FlightReviewbooking = () => {
                 Terminal: item.Destination.Airport.Terminal,
                 ArrTime: item.Destination.ArrTime,
               },
-              Baggage: item.Baggage,
+              Baggage: item.Baggage, 
             };
           }
         ),

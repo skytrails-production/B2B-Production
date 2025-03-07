@@ -151,29 +151,29 @@
   background: #fff !important;
   border-width: 3px 3px 3px 3px !important;
   border-style: solid !important;
-  border-color: 3px solid #E73C34 !important;
+  border-color: 3px solid #e73c34 !important;
   width: 100%;
   text-align: center;
 }
 
 .flightdetailsTabs:nth-child(1) {
   border-radius: 8px 0px 0px 8px;
-  border: 3px solid #E73C34 !important;
+  border: 3px solid #e73c34 !important;
 }
 
 .flightdetailsTabs:nth-child(3) {
   border-radius: 0px 8px 8px 0px;
-  border: 3px solid #E73C34 !important;
+  border: 3px solid #e73c34 !important;
 }
 
 .flightdetailsTabs:nth-child(2) {
   border-width: 3px 1px 3px 1px !important;
-  border: 3px solid #E73C34 !important;
+  border: 3px solid #e73c34 !important;
 }
 
 .flightdetailsTabsActive {
   background: rgba(231, 60, 52, 0.15) !important;
-  border: 3px solid #E73C34 !important;
+  border: 3px solid #e73c34 !important;
   color: #000 !important;
 }
 
@@ -321,8 +321,8 @@
 
 .sidebar-title {
   font-weight: normal;
-  margin-bottom: 5px;
-  color: #e73c33;
+  margin-bottom: 20px;
+  color: #4f46e5;
   font-family: "Montserrat";
   font-size: 16px;
   font-style: normal;
@@ -658,7 +658,7 @@ Aesthetics
 .busDepartureMain {
   /* display: flex; */
   padding: 14px 8px;
-  background: #fffbfb;
+  background: #eee;
   border-radius: 8px;
   margin-bottom: 10px;
 }

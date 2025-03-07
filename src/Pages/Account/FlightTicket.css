@@ -74,7 +74,7 @@
 } */
 
 button:hover {
-  background-color: white;
+  /* //background-color: white; */
   color: #21325D;
 }
 
@@ -159,11 +159,11 @@ button:hover {
   gap: 20px;
 }
 
-form {
+.formunique{
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 20px;
+  padding: 20px !important;
 }
 
 form label {

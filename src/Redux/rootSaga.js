@@ -2,10 +2,14 @@ import { all } from "redux-saga/effects";
 
 import { loginWatcher } from "./Saga/logInSaga";
 import { agentProfileWatcher } from "./Saga/agentLoginSaga";
-import { signUpWatcher,onbordingWatcher } from "./Saga/signUpSaga";
+import { signUpWatcher, onbordingWatcher } from "./Saga/signUpSaga";
 import { ipWatcher } from "./Saga/ipSaga";
-import { oneWayWatcher } from "./Saga/oneWaySaga";
-import { returnWatcher } from "./Saga/returnSaga";
+import { oneWayWatcher, oneWayWatcherCombined } from "./Saga/oneWaySaga";
+import {
+  returnWatcher,
+  watchAmadeusReturnSearch,
+  watchTobKailaReturnSearch,
+} from "./Saga/returnSaga";
 import { oneWayEMTWatcher } from "./Saga/oneWayEMTSaga";
 import { flightFareWatcher } from "./Saga/flightFareSaga";
 import { flightBookWatcher } from "./Saga/flightBookSaga";
@@ -28,20 +32,31 @@ import { getVisaRequestWatcher } from "./Saga/visaRequestSaga";
 import { userVisaWatcher } from "./Saga/visaDataSaga";
 import { getHolidayBookingWatcher } from "./Saga/packageBookingSaga";
 import { hotelSearchWatcher } from "./Saga/hotelSaga";
-import { hotelSearchWatcherGRN } from "./Saga/hotelSagaGrn";
+import { hotelSearchWatcherGRN } from "./Saga/hotelSagaGRNs";
 import { watchFormSubmission } from "./Saga/HolidayPackageTravellerDetailsSaga";
 import { getHolidayBookingRequestWatcher } from "./Saga/packageBookingRequestSaga";
 import { userDataWatcher } from "./Saga/userDataSaga";
 import { balanceSubtractWatcher } from "./Saga/balanceSubtractSaga";
+import { flightListWatcher } from "./Saga/flightlListSaga";
+import { flightSeatMapWatcher } from "./Saga/airSeatMapSaga";
+import { flightBookNewWatcher } from "./Saga/newFlightBookSaga";
+import { fareQuotesRuleAirselWatcher } from "./Saga/flightQuateRuleAirselSaga";
+import { multicityWatcher } from "./Saga/multicitySaga";
+import { watchMarkup } from "./Saga/markUpsSaga";
 
 export function* rootSaga() {
   yield all([
     loginWatcher(),
+    flightListWatcher(),
+    watchAmadeusReturnSearch(),
+    watchTobKailaReturnSearch(),
+    multicityWatcher(),
     agentProfileWatcher(),
     signUpWatcher(),
     ipWatcher(),
     hotelSearchWatcherGRN(),
     oneWayWatcher(),
+    oneWayWatcherCombined(),
     returnWatcher(),
     passengersWatcher(),
     oneWayEMTWatcher(),
@@ -70,8 +85,12 @@ export function* rootSaga() {
     hotelSearchWatcher(),
     getHolidayBookingWatcher(),
     watchFormSubmission(),
+    watchMarkup(),
     userDataWatcher(),
     balanceSubtractWatcher(),
-    onbordingWatcher()
+    onbordingWatcher(),
+    fareQuotesRuleAirselWatcher(),
+    flightBookNewWatcher(),
+    flightSeatMapWatcher(),
   ]);
 }

@@ -38,7 +38,7 @@ console.log(reducerState,"reducerState");
       <div className="mainbox-container">
         <div className="content-icon">
           <div className="icon-content">
-            <Link to="/flights" style={{ textDecoration: "none" }}>
+            <Link to="/flightsnew" style={{ textDecoration: "none" }}>
               <div className="icon-content-img-content">
                 <div className="icon-content-img-content-img">
                   <svg
@@ -734,7 +734,7 @@ console.log(reducerState,"reducerState");
               </div>
             </Link>
 
-            <Link to="/hotels" style={{ textDecoration: "none" }}>
+            <Link to="/st-hotel" style={{ textDecoration: "none" }}>
               <div className="icon-content-img-content">
                 <div className="icon-content-img-content-img">
                   <svg

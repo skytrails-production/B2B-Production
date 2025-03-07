@@ -1,0 +1,35 @@
+import React from "react";
+import one from "../Images/download/one.svg";
+import two from "../Images/download/two.svg";
+import three from "../Images/download/three.svg";
+import four from "../Images/download/four.svg";
+import Heading from "./TailwindSearchComp/shared/Heading";
+
+const WhyChooseUs = () => {
+  return (
+    <div className="mx-auto mt-16 custom-container">
+      <Heading
+        // desc="Discover great prices for popular destinations"
+        isCenter={true}
+      >
+        Why Choose Us ?
+      </Heading>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
+        <div className="rounded-lg shadow-md">
+          <img className="w-100 " src={one} alt="steps" />
+        </div>
+        <div className="rounded-lg shadow-md ">
+          <img className="w-100 " src={two} alt="steps" />
+        </div>
+        <div className="rounded-lg shadow-md ">
+          <img className="w-100" src={three} alt="steps" />
+        </div>
+        <div className="rounded-lg shadow-md">
+          <img className="w-100 " src={four} alt="steps" />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default WhyChooseUs;
