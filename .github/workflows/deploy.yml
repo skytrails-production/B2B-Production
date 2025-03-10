@@ -22,4 +22,5 @@ jobs:
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSHKEY }}
+          timeout: 60m
           script: "cd /var/www/B2B-Production && ./.scripts/deploy.sh" 
