@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import "./termandcondition.css"
-// import { Audio } from 'react-loader-spinner'
+
 import { SpinnerCircular } from 'spinners-react';
 import Footer from './Footer';
 
